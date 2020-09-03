@@ -19,7 +19,20 @@ const address_details_config = ({ account_settings }) => {
         address_line_2: {
             supported_in: ['svg', 'iom', 'malta', 'maltainvest'],
             default_value: account_settings.address_line_2 ?? '',
-            rules: [['length', localize('Address line 2 is not in a proper format'), { min: 0, max: 30 }]],
+            rules: [
+                [
+                    'length',
+                    localize('Address line 2 length should be between 0 to 30 characters.'),
+                    { min: 0, max: 30 },
+                ],
+                [
+                    'regular',
+                    localize('Address line 2 is not in a proper format'),
+                    {
+                        regex: /^[a-zA-Z\s\w'.-]{0,30}$/,
+                    },
+                ],
+            ],
         },
         address_city: {
             supported_in: ['svg', 'iom', 'malta', 'maltainvest'],
@@ -30,7 +43,7 @@ const address_details_config = ({ account_settings }) => {
                     'regular',
                     localize('City field is not in a proper format'),
                     {
-                        regex: /^[a-zA-Z\s\W'.-]{1,35}$/,
+                        regex: /^[a-zA-Z\s\w'.-]{1,35}$/,
                     },
                 ],
             ],

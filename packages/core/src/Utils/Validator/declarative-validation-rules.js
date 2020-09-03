@@ -181,3 +181,23 @@ export const getPreBuildDVRs = () => {
 };
 
 export const getPasswordLengthConfig = type => ({ min: /^mt$/.test(type) ? 8 : 6, max: 25 });
+
+export const validateMainPassword = password => {
+    const errors = {};
+
+    if (
+        !validLength(password, {
+            min: 8,
+            max: 25,
+        })
+    ) {
+        errors.password = localize('You should enter {{min_number}}-{{max_number}} characters.', {
+            min_number: 8,
+            max_number: 25,
+        });
+    } else if (!validPassword(password)) {
+        errors.password = getPreBuildDVRs().password.message;
+    }
+
+    return errors;
+};
