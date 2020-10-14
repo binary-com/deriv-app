@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, Icon } from '@deriv/components';
+import { Button, Icon, Text } from '@deriv/components';
 import { localize, Localize } from '@deriv/translations';
 import { connect } from 'Stores/connect';
 import EmailSent from './email-sent.jsx';
@@ -18,9 +18,12 @@ class SendEmail extends React.Component {
                 ) : (
                     <React.Fragment>
                         <Icon icon='IcCashierAuthenticate' className='withdraw__icon' size={128} />
-                        <p className='withdraw__header'>
+                        {/* <p className='withdraw__header'>
                             <Localize i18n_default_text='To initiate a withdrawal, we need to authenticate you via email.' />
-                        </p>
+                        </p> */}
+                        <Text size='paragraph' color='general'>
+                            {localize('To initiate a withdrawal, we need to authenticate you via email.')}
+                        </Text>
                         <p className='withdraw__text'>
                             <Localize i18n_default_text='This is a safeguard against unauthorised withdrawals from your account.' />
                         </p>

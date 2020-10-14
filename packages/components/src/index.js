@@ -78,6 +78,7 @@ export { default as RelativeDatepicker } from './components/relative-datepicker'
 export { default as RemainingTime } from './components/remaining-time';
 export { default as Table } from './components/table';
 export { default as Tabs } from './components/tabs';
+export { default as Text } from './components/text';
 export { default as Toast } from './components/toast';
 export { default as ThemedScrollbars } from './components/themed-scrollbars';
 export { default as ToggleSwitch } from './components/toggle-switch';

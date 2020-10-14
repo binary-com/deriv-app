@@ -1,0 +1,27 @@
+.text {
+    @each $name, $size in $FONT_SIZES {
+        &--#{$name} {
+            font-size: $size;
+        }
+    }
+    @each $name, $color in $FONT_COLORS {
+        &--#{$name} {
+            color: $color;
+        }
+    }
+    @each $name, $weight in $FONT_WEIGHTS {
+        &--#{$name} {
+            font-weight: $weight;
+        }
+    }
+    @each $name, $align in $TEXT_ALIGN {
+        &--#{$name} {
+            text-align: $align;
+        }
+    }
+    @each $name, $lineHeight in $LINEHEIGHTS {
+        &__line-height--#{$name} {
+            line-height: $lineHeight;
+        }
+    }
+}

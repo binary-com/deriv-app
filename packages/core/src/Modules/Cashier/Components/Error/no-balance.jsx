@@ -24,9 +24,11 @@ class NoBalance extends React.Component {
                         values={{ currency: getCurrencyDisplayCode(this.props.currency) }}
                     />
                 </h2>
+
                 <p className='cashier__text'>
                     <Localize i18n_default_text='Please make a deposit to use this feature.' />
                 </p>
+
                 <Button
                     className='cashier__no-balance-button'
                     has_effect
