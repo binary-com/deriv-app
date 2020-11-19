@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -8,38 +9,48 @@ import { localize } from '@deriv/translations';
 import { connect } from 'Stores/connect';
 import BriefModal from './brief-modal.jsx';
 import SummaryModal from './summary-modal.jsx';
-
-const IntervalField = ({ values, touched, errors, handleChange, handleBlur }) => (
-    <div className='reality-check__fieldset'>
-        <Field name='interval'>
-            {({ field }) => (
-                <Input
-                    {...field}
-                    data-lpignore='true'
-                    type='text'
-                    label={localize('Time interval')}
-                    value={values.interval}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    hint={localize('Interval should be between 10-60 minutes')}
-                    required
-                    error={touched.interval && errors.interval}
-                    autoComplete='off'
-                    maxLength='2'
-                />
-            )}
-        </Field>
-    </div>
+// eslint-disable-next-line react/display-name
+const IntervalField = React.forwardRef(
+    ({ is_summary, values, touched, errors, handleChange, handleBlur, onFocus }, ref) => (
+        <div
+            className={classNames('reality-check__fieldset', {
+                'reality-check__fieldset__summary': is_summary,
+            })}
+        >
+            <Field name='interval'>
+                {({ field }) => (
+                    <Input
+                        {...(ref ? { ref } : {})}
+                        {...field}
+                        data-lpignore='true'
+                        type='text'
+                        label={localize('Time interval')}
+                        value={values.interval}
+                        onChange={handleChange}
+                        {...(typeof onFocus === 'function' ? { onFocus } : {})}
+                        onBlur={handleBlur}
+                        hint={localize('Interval should be between 10-60 minutes')}
+                        required
+                        error={touched.interval && errors.interval}
+                        autoComplete='off'
+                        maxLength='2'
+                    />
+                )}
+            </Field>
+        </div>
+    )
 );
 
 const RealityCheckModal = ({
     disableApp,
     enableApp,
     logoutClient,
+    is_onscreen_keyboard_active,
     is_visible,
     reality_check_dismissed,
     reality_check_duration,
     server_time,
+    setCurrentFocus,
     setRealityCheckDuration,
     setReportsTabIndex,
     setVisibilityRealityCheck,
@@ -78,6 +89,12 @@ const RealityCheckModal = ({
         setRealityCheckDuration(values.interval);
     };
 
+    const handleIntervalInputMobileFocus = ref => {
+        setTimeout(() => {
+            ref.scrollIntoView({ behavior: 'smooth' });
+        }, 1000);
+    };
+
     // if user has seen the brief once and set
     // the initial reality check interval
     // we can show the summary from now on
@@ -95,6 +112,9 @@ const RealityCheckModal = ({
                 reality_check_duration={reality_check_duration}
                 server_time={server_time}
                 IntervalField={IntervalField}
+                is_onscreen_keyboard_active={is_onscreen_keyboard_active}
+                setCurrentFocus={setCurrentFocus}
+                handleIntervalInputMobileFocus={handleIntervalInputMobileFocus}
             />
         );
     }
@@ -109,6 +129,9 @@ const RealityCheckModal = ({
             onSubmit={onSubmit}
             logout={logoutClient}
             IntervalField={IntervalField}
+            is_onscreen_keyboard_active={is_onscreen_keyboard_active}
+            setCurrentFocus={setCurrentFocus}
+            handleIntervalInputMobileFocus={handleIntervalInputMobileFocus}
         />
     );
 };
@@ -118,9 +141,11 @@ RealityCheckModal.propTypes = {
     enableApp: PropTypes.func,
     history: PropTypes.object,
     logoutClient: PropTypes.func,
+    is_onscreen_keyboard_active: PropTypes.bool,
     is_visible: PropTypes.bool,
     reality_check_dismissed: PropTypes.bool,
     reality_check_duration: PropTypes.number,
+    setCurrentFocus: PropTypes.func,
     setRealityCheckDuration: PropTypes.func,
     setReportsTabIndex: PropTypes.func,
     setVisibilityRealityCheck: PropTypes.func,
@@ -136,5 +161,7 @@ export default connect(({ client, common, ui }) => ({
     server_time: common.server_time,
     enableApp: ui.enableApp,
     disableApp: ui.disableApp,
+    is_onscreen_keyboard_active: ui.is_onscreen_keyboard_active,
+    setCurrentFocus: ui.setCurrentFocus,
     setReportsTabIndex: ui.setReportsTabIndex,
 }))(RealityCheckModal);
