@@ -7,7 +7,8 @@ import { WS } from 'Services/ws-methods';
 import { isDesktop, isMobile } from '@deriv/shared';
 import { localize } from '@deriv/translations';
 
-const MT5POI = ({ form_error, index, onCancel, onSubmit, value, ...props }) => {
+const MT5POI = props => {
+    const { form_error, index, onCancel, onSubmit, value } = props;
     const [poi_state, setPOIState] = React.useState('none');
 
     const validateForm = React.useCallback(() => {
