@@ -83,7 +83,7 @@ class RealAccountSignup extends React.Component {
                             onError={this.showErrorModal}
                         />
                     ),
-                    title: () => localize('Add or manage account'),
+                    title: () => (this.props.is_eu ? localize('Manage account') : localize('Add or manage account')),
                 },
                 {
                     body: () => (
@@ -137,7 +137,7 @@ class RealAccountSignup extends React.Component {
         if (has_real_account && currency) {
             if (is_eu && this.active_modal_index === modal_pages_indices.add_or_manage_account) {
                 // Manage account
-                return '379px'; // Since crypto is disabled for EU clients, lower the height of modal
+                return '420px'; // Since crypto is disabled for EU clients, lower the height of modal
             }
             if (this.active_modal_index === modal_pages_indices.finished_set_currency) {
                 return 'auto';

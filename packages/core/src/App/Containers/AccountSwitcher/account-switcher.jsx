@@ -248,9 +248,22 @@ const AccountSwitcher = props => {
         return getRemainingAccounts(getRealMT5());
     };
 
+    const canOpenMulti = () => {
+        if (props.available_crypto_currencies.length < 1 && !props.has_fiat) return true;
+        return !props.is_virtual;
+    };
+
     // SVG clients can't upgrade.
     const getRemainingRealAccounts = () => {
-        return canOpenMulti() ? [] : props.upgradeable_landing_companies;
+        if (
+            !canOpenMulti() ||
+            (props.is_eu &&
+                (props.landing_company_shortcode === 'malta' ||
+                    (props.landing_company_shortcode === 'iom' && props.upgradeable_landing_companies.length !== 0)))
+        ) {
+            return props.upgradeable_landing_companies;
+        }
+        return [];
     };
 
     const hasSetCurrency = () => {
@@ -259,12 +272,6 @@ const AccountSwitcher = props => {
 
     const canUpgrade = () => {
         return !!(props.is_virtual && props.can_upgrade_to);
-    };
-
-    const canOpenMulti = () => {
-        if (props.is_eu) return false;
-        if (props.available_crypto_currencies.length < 1 && !props.has_fiat) return true;
-        return !props.is_virtual;
     };
 
     const getTotalDemoAssets = () => {
@@ -626,6 +633,7 @@ AccountSwitcher.propTypes = {
     is_uk: PropTypes.bool,
     is_virtual: PropTypes.bool,
     is_visible: PropTypes.bool,
+    landing_company_shortcode: PropTypes.string,
     logoutClient: PropTypes.func,
     mt5_login_list: PropTypes.array,
     obj_total_balance: PropTypes.object,
@@ -659,6 +667,7 @@ const account_switcher = withRouter(
         is_virtual: client.is_virtual,
         has_fiat: client.has_fiat,
         has_any_real_account: client.has_any_real_account,
+        landing_company_shortcode: client.landing_company_shortcode,
         mt5_login_list: client.mt5_login_list,
         mt5_login_list_error: client.mt5_login_list_error,
         obj_total_balance: client.obj_total_balance,

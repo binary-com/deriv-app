@@ -272,6 +272,9 @@
     &--disabled {
         position: relative;
 
+        .currency-list__items {
+            margin-top: 6rem;
+        }
         h2,
         p {
             color: var(--text-disabled);
@@ -302,6 +305,16 @@
                 line-height: 1.5;
                 width: 78%;
                 text-align: center;
+            }
+            p:first-child {
+                margin-top: 6rem;
+                background-color: var(--general-section-1);
+                font-size: 1.2rem;
+                height: 58px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: $BORDER_RADIUS;
             }
         }
     }
@@ -380,6 +393,7 @@
     }
     &__button {
         margin-top: 1.6rem;
+        width: 100%;
     }
     @include tablet {
         form {
