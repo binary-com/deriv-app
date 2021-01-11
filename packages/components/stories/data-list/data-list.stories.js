@@ -1,9 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, number, withKnobs } from '@storybook/addon-knobs';
-import Theme from '../shared/theme';
 import DataList from 'Components/data-list';
 import 'Components/data-list/data-list.scss';
+import notes from './README.md';
+import Theme from '../shared/theme';
 
 const mock_data = [];
 for (let i = 1; i < 30; i++)
@@ -56,101 +57,122 @@ const handleScroll = e => {
 
 const stories = storiesOf('Data List', module);
 stories.addDecorator(withKnobs);
+stories.addParameters({ viewport: { defaultViewport: 'mobile2' } });
 
 stories
-    .add('Basic usage', () => (
-        <Theme is_dark={boolean('Theme', false)}>
-            <div
-                style={{
-                    margin: '20px auto',
-                    width: '100%',
-                    height: '100vh',
-                }}
-            >
-                <DataList
-                    className='container'
-                    data_source={mock_data}
-                    getRowSize={() => 72}
-                    rowRenderer={rowRenderer}
-                />
-            </div>
-        </Theme>
-    ))
-    .add('Custom width', () => (
-        <Theme is_dark={boolean('Theme', false)}>
-            <div
-                style={{
-                    margin: '20px auto',
-                    width: '100%',
-                    height: '100vh',
-                }}
-            >
-                <DataList
-                    className='container'
-                    data_source={mock_data}
-                    getRowSize={() => 72}
-                    rowRenderer={rowRenderer}
-                />
-            </div>
-        </Theme>
-    ))
-    .add('With getRowAction', () => (
-        <Theme is_dark={boolean('Theme', false)}>
-            <div
-                style={{
-                    margin: '20px auto',
-                    width: '100%',
-                    height: '100vh',
-                }}
-            >
-                <DataList
-                    className='container'
-                    data_source={mock_data}
-                    getRowSize={() => 72}
-                    rowRenderer={rowRenderer}
-                    getRowAction={handleRowAction}
-                />
-            </div>
-        </Theme>
-    ))
-    .add('With scroll', () => (
-        <Theme is_dark={boolean('Theme', false)}>
-            <div
-                style={{
-                    margin: '20px auto',
-                    width: '100%',
-                    height: '100vh',
-                }}
-            >
-                <DataList
-                    className='container'
-                    data_source={mock_data}
-                    getRowSize={() => 72}
-                    rowRenderer={rowRenderer}
-                    onScroll={handleScroll}
-                />
-            </div>
-        </Theme>
-    ))
-    .add('With footer', () => (
-        <Theme is_dark={boolean('Theme', false)}>
-            <div
-                style={{
-                    margin: '20px auto',
-                    width: '100%',
-                    height: '100vh',
-                }}
-            >
-                <DataList
-                    className='container'
-                    data_source={mock_data}
-                    getRowSize={() => 72}
-                    rowRenderer={rowRenderer}
-                    footer={{
-                        name: 'All names here',
-                        family: 'All families here',
+    .add(
+        'Basic usage',
+        () => (
+            <Theme is_dark={boolean('Theme', false)}>
+                <div
+                    style={{
+                        margin: '20px auto',
+                        width: '100%',
+                        height: '100vh',
                     }}
-                />
-            </div>
-        </Theme>
-    ));
+                >
+                    <DataList
+                        className='container'
+                        data_source={mock_data}
+                        getRowSize={() => 72}
+                        rowRenderer={rowRenderer}
+                    />
+                </div>
+            </Theme>
+        ),
+        { notes }
+    )
+    .add(
+        'Custom width',
+        () => (
+            <Theme is_dark={boolean('Theme', false)}>
+                <div
+                    style={{
+                        margin: '20px auto',
+                        width: '100%',
+                        height: '100vh',
+                    }}
+                >
+                    <DataList
+                        className='container'
+                        data_source={mock_data}
+                        getRowSize={() => 72}
+                        rowRenderer={rowRenderer}
+                    />
+                </div>
+            </Theme>
+        ),
+        { notes }
+    )
+    .add(
+        'With getRowAction',
+        () => (
+            <Theme is_dark={boolean('Theme', false)}>
+                <div
+                    style={{
+                        margin: '20px auto',
+                        width: '100%',
+                        height: '100vh',
+                    }}
+                >
+                    <DataList
+                        className='container'
+                        data_source={mock_data}
+                        getRowSize={() => 72}
+                        rowRenderer={rowRenderer}
+                        getRowAction={handleRowAction}
+                    />
+                </div>
+            </Theme>
+        ),
+        { notes }
+    )
+    .add(
+        'With scroll',
+        () => (
+            <Theme is_dark={boolean('Theme', false)}>
+                <div
+                    style={{
+                        margin: '20px auto',
+                        width: '100%',
+                        height: '100vh',
+                    }}
+                >
+                    <DataList
+                        className='container'
+                        data_source={mock_data}
+                        getRowSize={() => 72}
+                        rowRenderer={rowRenderer}
+                        onScroll={handleScroll}
+                    />
+                </div>
+            </Theme>
+        ),
+        { notes }
+    )
+    .add(
+        'With footer',
+        () => (
+            <Theme is_dark={boolean('Theme', false)}>
+                <div
+                    style={{
+                        margin: '20px auto',
+                        width: '100%',
+                        height: '100vh',
+                    }}
+                >
+                    <DataList
+                        className='container'
+                        data_source={mock_data}
+                        getRowSize={() => 72}
+                        rowRenderer={rowRenderer}
+                        footer={{
+                            name: 'All names here',
+                            family: 'All families here',
+                        }}
+                    />
+                </div>
+            </Theme>
+        ),
+        { notes }
+    );

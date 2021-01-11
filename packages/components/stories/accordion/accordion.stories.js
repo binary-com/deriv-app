@@ -36,10 +36,8 @@ storiesOf('Accordion', module)
             ];
 
             return (
-                <Wrapper is_dark={boolean('Dark Theme', false)}>
-                    <div style={{ width: '100%' }}>
-                        <Accordion style={{ width: '100%' }} list={data} />
-                    </div>
+                <Wrapper is_dark={boolean('Dark Theme', false)} is_block>
+                    <Accordion style={{ width: '100%' }} list={data} />
                 </Wrapper>
             );
         },
