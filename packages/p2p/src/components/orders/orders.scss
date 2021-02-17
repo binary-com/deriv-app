@@ -174,7 +174,7 @@
             cursor: pointer;
 
             &--attention {
-                background: var(--button-tertiary-hover);
+                background: var(--transparent-row);
             }
             &:not(.orders__table-row--header) {
                 cursor: pointer;
