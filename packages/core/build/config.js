@@ -115,6 +115,22 @@ const copyConfig = base => {
                     return transformContentUrlBase(content, path, base);
                 },
             },
+            {
+                from: path.resolve(__dirname, '../src/templates/app/apple-app-site-association.json'),
+                to: 'apple-app-site-association',
+                toType: 'file',
+                transform(content, path) {
+                    return transformContentUrlBase(content, path, base);
+                },
+            },
+            {
+                from: path.resolve(__dirname, '../src/templates/app/apple-app-site-association.json'),
+                to: '.well-known/apple-app-site-association',
+                toType: 'file',
+                transform(content, path) {
+                    return transformContentUrlBase(content, path, base);
+                },
+            },
         ],
         options: {
             concurrency: 100,
