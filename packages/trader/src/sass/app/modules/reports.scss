@@ -159,6 +159,11 @@ $side-padding: 1.2em;
                 }
             }
         }
+        .data-list {
+            &__desc--wrapper {
+                justify-content: center;
+            }
+        }
     }
 
     &__content {

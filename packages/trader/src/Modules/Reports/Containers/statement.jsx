@@ -93,6 +93,8 @@ const Statement = ({
         return map;
     }, {});
 
+    const desc_titles = [localize('Address:'), localize('Transaction:')];
+
     const mobileRowRenderer = ({ row, passthrough }) => (
         <React.Fragment>
             <div className='data-list__row'>
@@ -171,6 +173,7 @@ const Statement = ({
                                 <DataList
                                     className='statement'
                                     data_source={data}
+                                    desc_titles={desc_titles}
                                     getRowAction={getRowAction}
                                     onScroll={handleScroll}
                                     rowRenderer={mobileRowRenderer}

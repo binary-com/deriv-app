@@ -21,6 +21,7 @@ const DataList = React.memo(
         onRowsRendered,
         onScroll,
         setListRef,
+        desc_titles,
         ...other_props
     }) => {
         const [is_loading, setLoading] = React.useState(true);
@@ -79,6 +80,7 @@ const DataList = React.memo(
             const getContent = ({ measure } = {}) => (
                 <DataListRow
                     action_desc={action_desc}
+                    desc_titles={desc_titles}
                     destination_link={destination_link}
                     is_new_row={!items_transition_map_ref.current[row_key]}
                     is_scrolling={is_scrolling}
@@ -183,6 +185,7 @@ DataList.Cell = DataListCell;
 DataList.propTypes = {
     className: PropTypes.string,
     data_source: PropTypes.array,
+    desc_titles: PropTypes.arrayOf(PropTypes.string),
     footer: PropTypes.object,
     getRowAction: PropTypes.func,
     getRowSize: PropTypes.func,

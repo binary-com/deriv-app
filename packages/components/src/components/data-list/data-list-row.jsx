@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import MobileDescription from './mobile-description.jsx';
 
-const DataListRow = ({ action_desc, destination_link, row_gap, row_key, rowRenderer, ...other_props }) => {
+const DataListRow = ({ action_desc, desc_titles, destination_link, row_gap, row_key, rowRenderer, ...other_props }) => {
     const [show_desc, setShowDesc] = React.useState(false);
 
     return (
@@ -29,7 +30,7 @@ const DataListRow = ({ action_desc, destination_link, row_gap, row_key, rowRende
                                     {action_desc.component ? (
                                         <div>{action_desc.component}</div>
                                     ) : (
-                                        <p className='statement__row--detail-text'>{action_desc.message}</p>
+                                        <MobileDescription desc={action_desc} desc_titles={desc_titles} />
                                     )}
                                 </div>
                             ) : (
@@ -47,6 +48,7 @@ const DataListRow = ({ action_desc, destination_link, row_gap, row_key, rowRende
 
 DataListRow.propTypes = {
     action_desc: PropTypes.object,
+    desc_titles: PropTypes.arrayOf(PropTypes.string),
     destination_link: PropTypes.string,
     row_gap: PropTypes.number,
     row_key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
