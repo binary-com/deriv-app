@@ -69,6 +69,7 @@ const Popup = ({
                     header_backgound_color={header_backgound_color}
                     height='636px'
                     is_open={should_show_popup}
+                    portalId='modal_root_absolute'
                     renderTitle={() => header()}
                     toggleModal={togglePopupModal}
                     width='776px'

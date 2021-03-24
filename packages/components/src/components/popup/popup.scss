@@ -27,9 +27,12 @@
         &__icon {
             position: absolute;
             right: 4%;
+            top: 0.5rem;
+            pointer-events: none;
 
             @include mobile {
                 right: 10%;
+                top: -1.2rem;
             }
         }
 
@@ -142,6 +145,7 @@
         }
         &__title {
             &--popup {
+                align-items: flex-start;
                 @include mobile {
                     align-items: flex-start;
                 }

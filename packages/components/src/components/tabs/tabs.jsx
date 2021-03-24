@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Tab from './tab.jsx';
 import { useConstructor } from '../../hooks';
@@ -204,4 +203,4 @@ Tabs.propTypes = {
     top: PropTypes.bool,
 };
 
-export default withRouter(Tabs);
+export default Tabs;
