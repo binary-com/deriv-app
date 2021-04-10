@@ -1,7 +1,14 @@
-.total-balance {
+.dw-total-balance {
     align-items: flex-end;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    position: relative;
+
+    &__wrapper {
+        align-items: flex-end;
+        display: flex;
+        flex-direction: column;
+    }
 
     @include mobile {
         align-items: flex-start;
@@ -26,6 +33,9 @@
         display: flex;
         height: 8rem;
         justify-content: center;
+        position: absolute;
+        right: 0;
+        top: 100%;
         width: 14rem;
     }
 

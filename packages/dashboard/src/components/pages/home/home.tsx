@@ -3,9 +3,9 @@ import * as React from 'react';
 import { DesktopWrapper, Text, VerticalTab } from '@deriv/components';
 import { localize } from '@deriv/translations';
 import { TRoute, TRouteGroup } from 'Types';
+import MyApps from 'Components/my-apps';
 
 import TempButtons from 'Components/temp-buttons';
-import TempMyApps from 'Components/pages/temp-my-apps';
 
 const Home: React.FC = () => {
     const list = [
@@ -14,7 +14,7 @@ const Home: React.FC = () => {
             icon: 'IcUserOutline',
             label: localize('My Deriv'),
             is_routed: true,
-            value: () => <TempMyApps />,
+            value: () => <MyApps />,
         },
         {
             label: '',

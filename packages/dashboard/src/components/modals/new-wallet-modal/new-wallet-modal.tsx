@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Modal, RealWalletCard, Text, Icon } from '@deriv/components';
 import { isMobile } from '@deriv/shared';
 import { localize } from '@deriv/translations';
-import { getWalletLabels } from 'Constants/wallet-labels';
+import { getWalletLabels } from 'Constants/component-labels';
 
 type TNewWalletModalProps = {
     onClose: () => void;

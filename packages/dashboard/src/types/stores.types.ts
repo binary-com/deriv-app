@@ -2,6 +2,7 @@ import { GetFinancialAssessment, GetSettings, ResidenceList, StatesList } from '
 import {
     TAccountCategory,
     TAccountType,
+    TAccountList,
     TClientProps,
     TConfigProps,
     TCurrenciesList,
@@ -19,6 +20,7 @@ export type TClientStore = {
     financial_assessment: GetFinancialAssessment;
     residence_list: ResidenceList;
     states_list: StatesList;
+    accounts_list: TAccountList;
     account_settings?: GetSettings;
     upgrade_info: TUpgradeInfo;
     residence: string;

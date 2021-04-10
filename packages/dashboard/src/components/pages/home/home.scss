@@ -4,6 +4,12 @@
     &__content {
         background-color: inherit;
         height: auto;
+
+        &--floating {
+            max-width: unset;
+            min-width: unset;
+            margin-left: unset;
+        }
     }
 
     &__tab-meta-wrapper {

@@ -4,14 +4,23 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
 
     &__actions-container {
-        display: flex;
-        flex-direction: row;
-        height: 4.3rem;
-        justify-content: space-between;
+        // display: flex;
+        // flex-direction: row;
+        // height: 4.3rem;
+        // justify-content: space-between;
+        // padding-left: 1.6rem;
+        // width: calc(100% - 18rem);
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        height: 5rem;
         padding-left: 1.6rem;
-        width: calc(100% - 18rem);
+        width: calc(100% - 16rem);
+        align-items: center;
+        position: absolute;
+        bottom: 0;
     }
 
     &__action {

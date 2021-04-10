@@ -5,11 +5,17 @@
     justify-content: space-between;
 
     &__actions-container {
+        // align-self: center;
+        // display: flex;
+        // flex-direction: row;
+        // height: 4.3rem;
+        // justify-content: space-between;
+        // width: calc(100% - 3.2rem);
         align-self: center;
-        display: flex;
-        flex-direction: row;
-        height: 4.3rem;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        height: 5rem;
+        align-items: center;
         width: calc(100% - 3.2rem);
 
         &--temporarily-unavailable {

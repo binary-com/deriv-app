@@ -9,5 +9,5 @@ export const getCardLabels = () => ({
     BROKER: 'Broker',
     SERVER: 'Server',
     DEMO: 'Demo',
-    ADD_REAL: 'Add real',
+    ENABLE: 'Enable',
 });

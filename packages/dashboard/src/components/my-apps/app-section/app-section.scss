@@ -1,0 +1,41 @@
+.dw-app-section {
+    display: flex;
+    flex-direction: column;
+    padding: 2.4rem 0 2.4rem;
+
+    &-header {
+        display: flex;
+        align-items: center;
+        gap: 1.7rem;
+        position: relative;
+
+        &__chevron-icon {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            transform: rotate(0deg);
+        }
+        &--active &__chevron-icon {
+            transform: rotate(180deg);
+        }
+        &__add {
+            background: var(--button-primary-default-1);
+            border-radius: 1.6rem;
+            width: 3.2rem;
+            position: absolute;
+            right: 0;
+        }
+    }
+    &-container {
+        display: flex;
+        flex-direction: row;
+        padding-top: 2.4rem;
+        gap: 2.4rem;
+
+        &--banner {
+            flex-direction: column;
+        }
+    }
+    &__separator {
+        border-bottom: 1px solid var(--general-section-1);
+    }
+}

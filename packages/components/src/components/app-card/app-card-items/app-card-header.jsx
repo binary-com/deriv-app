@@ -36,7 +36,7 @@ const AppCardHeader = ({ card_labels, is_swap_free, onAddRealClick }) => (
                 size='xxxs'
                 weight='bold'
             >
-                {card_labels.ADD_REAL}
+                {card_labels.ENABLE}
             </Text>
         </div>
     </div>

@@ -59,8 +59,8 @@
     --wallet-webmoney: #{$gradient-webmoney};
 
     // App Cards gradient background
-    --app-card-virtual: #{$gradient-virtual};
-    --app-card-virtual-swap-free: #{$gradient-virtual-swap-free};
+    --app-card-virtual: #{$gradient-color-black-4};
+    --app-card-virtual-swap-free: #{$gradient-color-black-3};
 
     .theme--light {
         // General
@@ -93,6 +93,7 @@
         --purchase-disabled-section: #{$color-grey-4};
         // Buttons
         --button-primary-default: var(--brand-red-coral);
+        --button-primary-default-1: #{$alpha-color-red-1};
         --button-secondary-default: #{$color-grey-1};
         --button-tertiary-default: transparent;
         --button-primary-light-default: #{$alpha-color-red-2};
@@ -194,7 +195,9 @@
         --purchase-section-2: #{$color-red-3};
         --purchase-disabled-main: #{$color-black-4};
         --purchase-disabled-section: #{$color-black};
+        // Button
         --button-primary-default: var(--brand-red-coral);
+        --button-primary-default-1: #{$alpha-color-red-1};
         --button-secondary-default: #{$color-grey-7};
         --button-tertiary-default: transparent;
         --button-primary-light-default: #{$alpha-color-red-2};

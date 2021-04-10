@@ -1,0 +1,141 @@
+.app-banner {
+    display: flex;
+    position: relative;
+
+    @include mobile {
+        height: 27.7rem;
+        width: 32.8rem;
+    }
+
+    &__container {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        justify-content: space-between;
+        padding: 0 2.4rem;
+    }
+
+    &__column {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: calc(100% - 4.8rem);
+
+        &--swap-free {
+            height: calc(100% - 7.2rem);
+        }
+        &--trading-app {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(80px, 1fr));
+            gap: 2.4rem;
+            position: unset;
+            margin-bottom: 3.2rem;
+            width: 100%;
+        }
+        &--small {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            position: unset;
+            flex-direction: unset;
+            width: 47.3rem;
+
+            &-swap-free {
+                direction: rtl;
+            }
+            &-trading-app {
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
+        }
+        &-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2.4rem;
+
+            &--trading-app {
+                margin-top: unset;
+                justify-content: center;
+            }
+            &--small {
+                flex-direction: column;
+                margin-top: unset;
+            }
+            &-app {
+                &-wrapper {
+                    display: flex;
+                    align-items: center;
+
+                    &--trading-app {
+                        flex-direction: column;
+                    }
+                    &--small {
+                        flex-direction: column;
+                        padding: 0.8rem;
+                    }
+                }
+                &-name {
+                    margin-left: 0.8rem;
+
+                    &--trading-app {
+                        margin-top: 0.4rem;
+                    }
+                }
+                &-icon {
+                    height: 4rem;
+                    width: 4rem;
+
+                    &--small {
+                        margin: 0.4rem;
+                    }
+                }
+            }
+        }
+    }
+
+    &__apps {
+        &-wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            &--trading-app {
+                width: 100%;
+                height: calc(100% - 4.5rem);
+                justify-content: flex-end;
+            }
+        }
+    }
+    &__button {
+        background: var(--button-primary-default-1);
+
+        &-wrapper {
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            bottom: 2.4rem;
+            left: 2.4rem;
+            width: calc(100% - 4.8rem);
+        }
+        .dc-btn__text {
+            color: var(--brand-red-coral);
+        }
+        @include mobile {
+            margin-top: 1.6rem;
+        }
+    }
+
+    &__text {
+        position: absolute;
+        top: 2.4rem;
+        left: 2.4rem;
+        width: 16.4rem;
+
+        &--trading-app {
+            width: 18.4rem;
+        }
+    }
+}

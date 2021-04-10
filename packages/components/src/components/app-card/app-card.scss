@@ -87,7 +87,7 @@
             }
             &--add-real {
                 height: 2.4rem;
-                background: var(--badge-blue);
+                background: var(--brand-red-coral);
                 margin-right: unset;
                 cursor: pointer;
 
@@ -295,12 +295,6 @@
                 background: var(--brand-red-coral);
                 transition: transform 0.2s;
                 cursor: pointer;
-
-                @include desktop {
-                    &:hover {
-                        transform: scale(1.3);
-                    }
-                }
             }
         }
     }

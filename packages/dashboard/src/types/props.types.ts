@@ -1,5 +1,5 @@
 import { GetFinancialAssessment, GetSettings, ResidenceList, StatesList } from '@deriv/api-types';
-import { TCurrenciesList } from 'Types';
+import { TAccountList, TCurrenciesList } from 'Types';
 import { TUpgradeInfo } from './params.types';
 
 export type TClientProps = {
@@ -11,6 +11,7 @@ export type TClientProps = {
     financial_assessment: GetFinancialAssessment;
     residence_list: ResidenceList;
     states_list: StatesList;
+    accounts_list: TAccountList;
     account_settings?: GetSettings;
     upgrade_info: TUpgradeInfo;
     residence: string;

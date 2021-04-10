@@ -1,7 +1,5 @@
 .wallet-banner {
     display: flex;
-    height: 20rem;
-    width: 93.6rem;
     position: relative;
 
     @include mobile {
@@ -10,10 +8,13 @@
     }
 
     &--button {
-        background: #0796e0; // TODO: Update once dashboard colors are merged
+        background: var(--button-primary-default-1);
         margin-top: 0.8rem;
         width: 11.3rem;
 
+        .dc-btn__text {
+            color: var(--brand-red-coral);
+        }
         @include mobile {
             margin-top: 1.6rem;
         }

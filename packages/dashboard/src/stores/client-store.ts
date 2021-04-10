@@ -58,11 +58,12 @@ class ClientStore extends BaseStore {
     @computed
     public get has_wallet_account(): boolean {
         // TODO: return boolean based on existence of wallet accounts in `accounts_list`
-        return !!this.accounts_list?.some(account => account.is_wallet);
+        return !!this.accounts_list?.some(account => account.wallet);
     }
 
     @action
     public init(client_props: TClientProps): void {
+        this.accounts_list = client_props.accounts_list;
         this.is_logged_in = client_props.is_logged_in;
         this.loginid = client_props.loginid;
         this.currency = client_props.currency;
