@@ -30,8 +30,8 @@ const personal_details_config = ({ residence_list, account_settings, is_dashboar
             default_value: account_settings.first_name ?? '',
             rules: [
                 ['req', localize('First name is required')],
-                ['letter_symbol', getErrorMessages().letter_symbol()],
-                ['length', localize('First name should be between 2 and 30 characters.'), { min: 2, max: 30 }],
+                ['alphabet_symbol', getErrorMessages().alphabet_symbol()],
+                ['length', localize('First name should be between 2 and 50 characters.'), { min: 2, max: 50 }],
             ],
         },
         last_name: {
@@ -39,8 +39,8 @@ const personal_details_config = ({ residence_list, account_settings, is_dashboar
             default_value: account_settings.last_name ?? '',
             rules: [
                 ['req', localize('Last name is required')],
-                ['letter_symbol', getErrorMessages().letter_symbol()],
-                ['length', localize('Last name should be between 2 and 30 characters.'), { min: 2, max: 30 }],
+                ['alphabet_symbol', getErrorMessages().alphabet_symbol()],
+                ['length', localize('Last name should be between 2 and 50 characters.'), { min: 2, max: 50 }],
             ],
         },
         date_of_birth: {
