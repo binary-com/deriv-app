@@ -58,8 +58,8 @@ const LiveChat = ({ is_mobile_drawer, has_cookie_account }) => {
                 const { loginid, email, landing_company_shortcode, currency, residence, first_name, last_name } =
                     client_information || {};
 
-                client_first_name = first_name;
-                client_last_name = last_name;
+                client_first_name = first_name ?? ' ';
+                client_last_name = last_name ?? ' ';
 
                 /* the session variables are sent to CS team dashboard to notify user has logged in
                 and also acts as custom variables to trigger targeted engagement */
@@ -69,7 +69,7 @@ const LiveChat = ({ is_mobile_drawer, has_cookie_account }) => {
                     landing_company_shortcode: landing_company_shortcode ?? '',
                     currency: currency ?? '',
                     residence: residence ?? '',
-                    email: email ?? '',
+                    email: email ?? ' ',
                     utm_source: utm_source ?? '',
                     utm_medium: utm_medium ?? '',
                     utm_campaign: utm_campaign ?? '',
