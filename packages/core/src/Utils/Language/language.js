@@ -28,5 +28,6 @@ export const changeLanguage = key => {
     if (key === 'EN') {
         window.localStorage.setItem('i18n_language', key);
     }
+
     window.location.replace(getURL(key));
 };
