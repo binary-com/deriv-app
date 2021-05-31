@@ -12,7 +12,7 @@ function endChat() {
     });
 
     customerSDK.on('connected', () => {
-        if (window.LiveChatWidget.get('chat_data')) {
+        if (!!window.LiveChatWidget._h && window.LiveChatWidget.get('chat_data')) {
             const { chatId, threadId } = window.LiveChatWidget.get('chat_data');
             if (threadId) {
                 customerSDK.deactivateChat({ chatId });
