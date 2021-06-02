@@ -142,7 +142,6 @@ const MT5AccountCard = ({
     is_hovered,
     existing_data,
     has_mt5_account,
-    has_mt5_account_error,
     has_real_account,
     is_accounts_switcher_on,
     is_button_primary,
@@ -426,11 +425,7 @@ const MT5AccountCard = ({
                 <React.Fragment>
                     {should_show_trade_servers && (
                         <MobileWrapper>
-                            <AddTradeServerButton
-                                ref={button_ref}
-                                onSelectAccount={onSelectAccount}
-                                is_disabled={has_mt5_account_error}
-                            />
+                            <AddTradeServerButton ref={button_ref} onSelectAccount={onSelectAccount} />
                         </MobileWrapper>
                     )}
                 </React.Fragment>
@@ -442,11 +437,7 @@ const MT5AccountCard = ({
                     classNames='mt5-account-card__add-server'
                     unmountOnExit
                 >
-                    <AddTradeServerButton
-                        ref={button_ref}
-                        onSelectAccount={onSelectAccount}
-                        is_disabled={has_mt5_account_error}
-                    />
+                    <AddTradeServerButton ref={button_ref} onSelectAccount={onSelectAccount} />
                 </CSSTransition>
             </DesktopWrapper>
         </div>

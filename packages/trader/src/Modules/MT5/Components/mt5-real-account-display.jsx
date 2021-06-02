@@ -158,7 +158,6 @@ const MT5RealAccountDisplay = ({
                           <MT5AccountCard
                               key={index}
                               has_mt5_account={has_mt5_account}
-                              has_mt5_account_error={has_mt5_account_error}
                               title={localize('Synthetic')}
                               is_hovered={index === active_hover}
                               is_disabled={isMT5AccountCardDisabled('synthetic')}

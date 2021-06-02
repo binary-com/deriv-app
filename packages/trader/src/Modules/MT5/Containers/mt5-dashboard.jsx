@@ -147,7 +147,8 @@ class MT5Dashboard extends React.Component {
             has_malta_account,
             has_maltainvest_account,
             has_mt5_account,
-            has_mt5_account_error,
+            has_mt5_real_account_error,
+            has_mt5_demo_account_error,
             mt5_disabled_signup_types,
             has_real_account,
             NotificationMessages,
@@ -163,6 +164,8 @@ class MT5Dashboard extends React.Component {
         const should_show_missing_real_account =
             !is_eu && is_logged_in && !has_real_account && upgradeable_landing_companies?.length > 0;
         if ((!country && is_logged_in) || is_logging_in) return <Loading />; // Wait for country name to be loaded before rendering
+
+        const has_mt5_account_error = this.state.is_demo_tab ? has_mt5_demo_account_error : has_mt5_real_account_error;
 
         return (
             <React.Fragment>
@@ -222,7 +225,7 @@ class MT5Dashboard extends React.Component {
                                                 is_logged_in={is_logged_in}
                                                 has_maltainvest_account={has_maltainvest_account}
                                                 has_malta_account={has_malta_account}
-                                                has_mt5_account_error={mt5_disabled_signup_types.demo}
+                                                has_mt5_account_error={mt5_disabled_signup_types.real}
                                                 openAccountNeededModal={openAccountNeededModal}
                                                 current_list={current_list}
                                                 account_status={account_status}
@@ -252,7 +255,7 @@ class MT5Dashboard extends React.Component {
                                             is_eu={is_eu}
                                             is_logged_in={is_logged_in}
                                             has_maltainvest_account={has_maltainvest_account}
-                                            has_mt5_account_error={mt5_disabled_signup_types.real}
+                                            has_mt5_account_error={mt5_disabled_signup_types.demo}
                                             openAccountNeededModal={openAccountNeededModal}
                                             standpoint={standpoint}
                                             is_loading={is_loading}
@@ -440,7 +443,8 @@ export default withRouter(
         residence: client.residence,
         residence_list: client.residence_list,
         has_mt5_account: modules.mt5.has_mt5_account,
-        has_mt5_account_error: client.has_account_error_in_mt5_list,
+        has_mt5_real_account_error: client.has_account_error_in_mt5_real_list,
+        has_mt5_demo_account_error: client.has_account_error_in_mt5_demo_list,
         has_real_account: client.has_active_real_account,
         setAccountType: modules.mt5.setAccountType,
         setMt5PasswordResetModal: modules.mt5.setMt5PasswordResetModal,
