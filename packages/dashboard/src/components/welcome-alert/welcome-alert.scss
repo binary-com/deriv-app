@@ -1,0 +1,45 @@
+.dw-alert-box {
+    display: flex;
+    justify-content: space-between;
+    margin: 2.4rem 0 0.8rem;
+    padding: 1.6rem;
+    background: var(--general-section-1);
+    border-radius: 0.8rem;
+
+    &__left {
+        &-main-text {
+            margin-right: 0.8rem;
+        }
+        &-sub-text {
+            font-weight: 400;
+        }
+    }
+    &__right {
+        display: flex;
+        align-items: center;
+        &-icon {
+            cursor: pointer;
+        }
+        &-sub-text {
+            margin-right: 0.8rem;
+            font-weight: 400;
+        }
+    }
+
+    @include mobile {
+        flex-direction: column;
+        margin: 1.6rem;
+
+        &__left {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.6rem;
+            &-main-text {
+                margin-bottom: 0.4rem;
+            }
+            &-sub-text {
+                font-weight: bold;
+            }
+        }
+    }
+}

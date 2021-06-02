@@ -1,0 +1,14 @@
+.dw-quick-guide-footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
+    padding: 2.4rem 1.6rem;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 2px solid var(--general-section-1);
+    &__submit-btn {
+        margin-left: 0.8rem;
+    }
+}
