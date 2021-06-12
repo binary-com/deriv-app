@@ -45,12 +45,12 @@
 #  mahdiaryayi-fs
 #  mehrzad-fs
 #  mustofa-binary
-#  negar-binary
-#  negarn
 #  nijil-binary
 #  reza-fs
 #  sara-fs
-#  zaki-binary
+#  matin-binary
+#  sean-binary
+#  yashim-binary
 
 
 
@@ -72,7 +72,7 @@
 #  Used for approving all relevant changes to Account
 #
 #   - reza-fs
-#   - zaki-binary
+#   - yashim-binary
 
 # ==============================================================
 #  binary-com/deriv-bot
@@ -83,7 +83,6 @@
 #   - carol-binary
 #   - mehrzad-fs
 #   - nijil-binary
-#   - negarn
 
 # ==============================================================
 #  binary-com/deriv-core
@@ -91,6 +90,8 @@
 #  Used for approving all relevant changes to Core
 #
 #   - balakrishna-binary
+#   - matin-binary
+#   - mustofa-binary
 
 
 # ==============================================================
@@ -98,9 +99,7 @@
 # ==============================================================
 #  Used for approving all relevant changes to P2P
 #
-#   - mustofa-binary
-#   - negarn
-
+#   - carol-binary
 
 # ==============================================================
 #  binary-com/deriv-shared
@@ -113,7 +112,7 @@
 #   - balakrishna-binary
 #   - reza-fs
 #   - sara-fs
-#   - zaki-binary
+#   - mustofa-binary
 
 
 # ==============================================================
@@ -126,9 +125,7 @@
 #   - amirghadimi-fs
 #   - balakrishna-binary
 #   - mahdiaryayi-fs
-#   - negarn
 #   - reza-fs
-#   - zaki-binary
 
 # ==============================================================
 #  binary-com/deriv-publisher
@@ -142,7 +139,8 @@
 # ==============================================================
 #  Used for approving all relevant changes to Dashboard
 #
-#   - mustofa-binary
+#   - matin-binary
+#   - sean-binary
 
 
 ######################################################################################################
@@ -163,7 +161,7 @@
 # (in case no pattern matches a path in a PR - this should be treated as a bug and result in adding the path to CODEOWNERS)
 # ==============================================================
 
-*                                                               @ashkanx @negarn
+*                                                               @ashkanx
 
 
 
