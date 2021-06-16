@@ -42,12 +42,7 @@ const CFDDemoAccountDisplay = ({
         if (is_eu || is_eu_country) {
             return specifications[platform].eu_real_financial_specs;
         }
-        return {
-            [localize('Leverage')]: localize('Up to 1:1000'),
-            [localize('Margin call')]: localize('150%'),
-            [localize('Stop out level')]: localize('75%'),
-            [localize('Number of assets')]: localize('50+'),
-        };
+        return specifications[platform].real_financial_specs;
     }, [is_eu, is_eu_country, residence, platform]);
 
     return is_loading ? (
