@@ -78,6 +78,7 @@
     }
   },
   "dependencies": {
+    "@deriv/publisher": "0.0.1-beta4",
     "dotenv": "^8.2.0"
   }
 }

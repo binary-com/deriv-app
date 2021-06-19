@@ -34,6 +34,7 @@
   "dependencies": {
     "@deriv/components": "^1.0.0",
     "@deriv/deriv-api": "^1.0.7",
+    "@deriv/onramp": "^1.0.0",
     "@deriv/p2p": "^0.7.3",
     "@deriv/shared": "^1.0.0",
     "@deriv/translations": "^1.0.0",

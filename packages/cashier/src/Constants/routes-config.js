@@ -9,7 +9,7 @@ import {
     AccountTransfer,
     PaymentAgentTransfer,
     P2PCashier,
-    OnRamp,
+    OnrampCashier,
 } from '../Containers';
 
 // Error Routes
@@ -72,7 +72,7 @@ const initRoutesConfig = () => [
             {
                 id: 'gtm-onramp-tab',
                 path: routes.cashier_onramp,
-                component: OnRamp,
+                component: OnrampCashier,
                 getTitle: () => localize('Fiat onramp'),
                 icon_component: 'IcCashierOnRamp',
             },
