@@ -25,8 +25,8 @@ class ProofOfIdentity extends React.Component {
     }
 
     render() {
-        const from_platform = getPlatformRedirect(this.props.app_routing_history);
-        const should_show_redirect_btn = from_platform.name === 'P2P';
+        const from_platform = getPlatformRedirect(this.props?.app_routing_history);
+        const should_show_redirect_btn = from_platform?.name === 'P2P';
 
         if (this.props.is_virtual) return <DemoMessage />;
         if (this.props.has_missing_required_field) return <MissingPersonalDetails />;
@@ -51,11 +51,11 @@ class ProofOfIdentity extends React.Component {
                                     <Button
                                         primary
                                         className='proof-of-identity__redirect'
-                                        onClick={() => this.routeBackTo(from_platform.route)}
+                                        onClick={() => this.routeBackTo(from_platform?.route)}
                                     >
                                         <Localize
                                             i18n_default_text='Back to {{platform_name}}'
-                                            values={{ platform_name: from_platform.name }}
+                                            values={{ platform_name: from_platform?.name }}
                                         />
                                     </Button>
                                 )

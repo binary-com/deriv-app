@@ -27,7 +27,7 @@ export const clientNotifications = (ui = {}, client = {}) => {
             primary_btn: {
                 text: localize('Learn more'),
                 onClick: () => {
-                    window.open(getStaticUrl('/p2p/v1'), '_blank');
+                    window.open(getStaticUrl('/p2p'), '_blank');
                 },
             },
             secondary_btn: { text: localize('Skip') },
