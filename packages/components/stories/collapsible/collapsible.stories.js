@@ -4,7 +4,7 @@ import Collapsible from 'Components/collapsible';
 // import 'Components/dropdown/dropdown.scss';
 import notes from './README.md';
 
-storiesOf('Collapsible', module)
+storiesOf('Data Display|Collapsible', module)
     .add(
         'Top',
         () => (

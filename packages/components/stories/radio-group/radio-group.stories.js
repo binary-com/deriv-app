@@ -5,7 +5,7 @@ import { withInfo } from '@storybook/addon-info';
 import RadioGroup from 'Components/radio-group';
 import Theme from '../shared/theme';
 
-const stories = storiesOf('Radio Group', module);
+const stories = storiesOf('Data Entry|Radio Group', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

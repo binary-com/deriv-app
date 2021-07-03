@@ -3,7 +3,7 @@ import Div100vhContainer from 'Components/div100vh-container';
 import React from 'react';
 import notes from './README.md';
 
-storiesOf('Div100vhContainer', module).add(
+storiesOf('Layout|Div100vhContainer', module).add(
     'Main function',
     () => {
         return (

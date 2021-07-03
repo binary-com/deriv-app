@@ -9,7 +9,7 @@ import notes from './README.md';
 import Wrapper from '../shared/wrapper';
 import './fade-wrapper.stories.scss';
 
-storiesOf('FadeWrapper', module)
+storiesOf('Animation|Transitions/FadeWrapper', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

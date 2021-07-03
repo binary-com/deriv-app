@@ -6,7 +6,7 @@ import FixedSize from './stories/fixed-size';
 import notes from './README.md';
 import './styles.scss';
 
-const stories = storiesOf('Table', module);
+const stories = storiesOf('Data Display|Table', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

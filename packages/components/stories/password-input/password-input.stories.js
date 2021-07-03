@@ -5,7 +5,7 @@ import Basic from './stories/basic';
 import HasError from './stories/has-error';
 import notes from './README.md';
 
-const stories = storiesOf('PasswordInput', module);
+const stories = storiesOf('Data Entry|Password.Input', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

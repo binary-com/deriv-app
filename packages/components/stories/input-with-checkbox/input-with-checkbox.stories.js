@@ -7,7 +7,7 @@ import InputWithCheckbox from 'Components/input-wth-checkbox';
 import React, { useState } from 'react';
 import notes from './README.md';
 
-storiesOf('InputWithCheckbox', module)
+storiesOf('Data Entry|Input With Checkbox', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

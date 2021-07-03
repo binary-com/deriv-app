@@ -7,7 +7,7 @@ import notes from './README.md';
 import Wrapper from '../shared/wrapper';
 import InputField from 'Components/input-field';
 
-storiesOf('InputField', module)
+storiesOf('Data Entry|InputField', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

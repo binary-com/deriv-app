@@ -8,7 +8,7 @@ import React from 'react';
 import notes from './README.md';
 import './label.stories.scss';
 
-storiesOf('Label', module)
+storiesOf('Data Display|Status Label', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

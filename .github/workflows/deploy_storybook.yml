@@ -1,0 +1,36 @@
+name: Test Build and Deploy Storybook to Vercel
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - packages/components/**
+
+jobs:
+  deploy_storybook:
+    if: ${{ github.repository == 'binary-com/deriv-app' || github.repository == 'zaki-binary/deriv-app' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm install
+      - run: npm run bootstrap && npm run build components
+      - run: |
+          npm run test
+          echo "Exited with '$?'"
+        working-directory: ./packages/components
+      - name: Deploy storybook
+        id: storybook_preview_url
+        uses: amondnet/vercel-action@v20
+        with:
+            vercel-token: ${{ secrets.VERCEL_TOKEN }}
+            vercel-org-id: ${{ secrets.VERCEL_STORYBOOK_ORG_ID}}
+            vercel-project-id: ${{ secrets.VERCEL_STORYBOOK_PROJECT_ID}}
+            github-comment: false
+

@@ -7,7 +7,7 @@ import Button from 'Components/button';
 import { FlexWrapper, GroupWrapper, ButtonWrapper, Text } from './shared-style';
 import Theme from '../shared/theme';
 
-const stories = storiesOf('Button', module);
+const stories = storiesOf('Data Entry|Button.Button', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

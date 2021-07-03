@@ -2,12 +2,12 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { withInfo } from '@storybook/addon-info';
 import { boolean } from '@storybook/addon-knobs';
-import Wrapper from '../shared/wrapper';
-import Counter from 'Components/counter';
 import React from 'react';
+import Counter from 'Components/counter';
 import notes from './README.md';
+import Wrapper from '../shared/wrapper';
 
-storiesOf('Counter', module)
+storiesOf('Data Display|Counter', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

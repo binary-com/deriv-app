@@ -6,7 +6,7 @@ import IsDisabled from './stories/is-disabled';
 import notes from './README.md';
 import './styles.scss';
 
-const stories = storiesOf('SwipeableWrapper', module);
+const stories = storiesOf('Other|SwipeableWrapper', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 stories.addParameters({ viewport: { defaultViewport: 'mobile2' } });

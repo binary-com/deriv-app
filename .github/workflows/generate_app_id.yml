@@ -2,7 +2,7 @@ name: Deriv App ID Generator
 
 on:
     issue_comment:
-        types: [edited]
+        types: [created]
 
 jobs:
     generate_app_id:

@@ -5,7 +5,7 @@ import { withInfo } from '@storybook/addon-info';
 import Text from 'Components/text';
 import Theme from '../shared/theme';
 
-const stories = storiesOf('Text', module);
+const stories = storiesOf('Typography|Text', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

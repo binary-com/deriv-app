@@ -6,7 +6,7 @@ import React from 'react';
 import TickPicker from 'Components/tick-picker';
 import Theme from '../shared/theme';
 
-const stories = storiesOf('Tick picker', module);
+const stories = storiesOf('Data Entry|Tick picker', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

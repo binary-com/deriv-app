@@ -6,7 +6,7 @@ import React from 'react';
 import notes from './README.md';
 import './mobile-deawer.stories.scss';
 
-storiesOf('MobileDrawer', module).add(
+storiesOf('Data Display|Mobile Drawer', module).add(
     'Main function',
     () => {
         const [is_open, set_is_open] = React.useState(true);

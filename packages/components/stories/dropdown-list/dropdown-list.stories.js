@@ -8,7 +8,7 @@ import notes from './README.md';
 import Wrapper from '../shared/wrapper';
 import './dropdown-list.stories.scss';
 
-storiesOf('DropdownList', module)
+storiesOf('Data Entry|Select/DropdownList', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

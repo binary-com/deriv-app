@@ -9,7 +9,7 @@ import IconTradeTypes from 'Components/icon-trade-types';
 import TradeTypes from './tradeTypes';
 import './icon-trade-types.stories.scss';
 
-storiesOf('IconTradeTypes', module)
+storiesOf('Assets|IconTradeTypes', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

@@ -7,7 +7,7 @@ import HasRedirect from './stories/has-redirect';
 import notes from './README.md';
 import './styles.scss';
 
-const stories = storiesOf('PageError', module);
+const stories = storiesOf('Feedback|PageError', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

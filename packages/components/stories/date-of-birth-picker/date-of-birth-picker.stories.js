@@ -8,7 +8,7 @@ import { toMoment } from '@deriv/shared';
 import React from 'react';
 import notes from './README.md';
 
-storiesOf('DateOfBirthPicker', module)
+storiesOf('Data Entry|Date/DateOfBirthPicker', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

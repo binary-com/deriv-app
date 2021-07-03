@@ -6,7 +6,7 @@ import { toMoment } from '@deriv/shared';
 import DatePicker from 'Components/date-picker';
 import Theme from '../shared/theme';
 
-const stories = storiesOf('DatePicker', module);
+const stories = storiesOf('Data Entry|Date/DatePicker', module);
 
 const FlexWrapper = ({ children, justifyContent = 'center' }) => (
     <div

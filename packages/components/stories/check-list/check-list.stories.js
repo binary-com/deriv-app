@@ -3,11 +3,11 @@ import { withKnobs } from '@storybook/addon-knobs';
 import { withInfo } from '@storybook/addon-info';
 import { boolean } from '@storybook/addon-knobs';
 import Wrapper from '../shared/wrapper';
-import Checklist from 'Components/checklist';
 import React from 'react';
+import Checklist from 'Components/checklist';
 import notes from './README.md';
 
-storiesOf('CheckList', module)
+storiesOf('Data Display|CheckList', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

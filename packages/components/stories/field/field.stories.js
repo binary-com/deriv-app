@@ -8,7 +8,7 @@ import Wrapper from '../shared/wrapper';
 import Field from 'Components/field';
 import RadioGroup from 'Components/radio-group';
 
-storiesOf('Field', module)
+storiesOf('Feedback|FieldErrorMessage', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

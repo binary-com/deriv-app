@@ -7,7 +7,7 @@ import HasError from './stories/has-error';
 import Disabled from './stories/disabled';
 import notes from './README.md';
 
-const stories = storiesOf('DatePickerNative', module);
+const stories = storiesOf('Data Entry|Date/DatePickerNative', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 stories.addParameters({ viewport: { defaultViewport: 'mobile2' } });

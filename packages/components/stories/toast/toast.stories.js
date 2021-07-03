@@ -5,7 +5,7 @@ import React from 'react';
 import Toast from 'Components/toast';
 import Theme from '../shared/theme';
 
-const stories = storiesOf('Toast', module);
+const stories = storiesOf('Data Display|Toast', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

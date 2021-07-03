@@ -7,7 +7,7 @@ import notMultiplierOpen from './stories/notMultiplier-open';
 import multiplierOpen from './stories/multiplier-open';
 import multiplierCompleted from './stories/multiplier-completed';
 
-const stories = storiesOf('ContractCard', module);
+const stories = storiesOf('Platform UI|ContractCard', module);
 
 stories.addDecorator(withInfo);
 // stories.addDecorator(withKnobs);

@@ -36,7 +36,7 @@ const progress_bars = [
     },
 ];
 
-storiesOf('Progress Bar', module).add('Basic usage', () => (
+storiesOf('Feedback|Progress Bar', module).add('Basic usage', () => (
     <div
         style={{
             display: 'grid',

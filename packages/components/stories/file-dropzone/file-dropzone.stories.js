@@ -8,7 +8,7 @@ import Wrapper from '../shared/wrapper';
 import FileDropzone from 'Components/file-dropzone';
 import Icon from 'Components/icon';
 
-storiesOf('FileDropzone', module)
+storiesOf('Data Entry|File/FileDropzone', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

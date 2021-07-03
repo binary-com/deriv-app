@@ -7,7 +7,7 @@ import Checkbox from 'Components/checkbox';
 import React, { useState } from 'react';
 import notes from './README.md';
 
-storiesOf('CheckBox', module)
+storiesOf('Data Entry|CheckBox', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

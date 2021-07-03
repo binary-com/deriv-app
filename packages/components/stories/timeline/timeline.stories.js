@@ -5,7 +5,7 @@ import { withInfo } from '@storybook/addon-info';
 import Timeline from 'Components/timeline';
 import Theme from '../shared/theme';
 
-const stories = storiesOf('Timeline', module);
+const stories = storiesOf('Data Display|Timeline', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, number, withKnobs } from '@storybook/addon-knobs';
-import Theme from '../shared/theme';
 import DataTable from 'Components/data-table/data-table.jsx';
+import Theme from '../shared/theme';
 import 'Components/data-table/data-table.scss';
 import './data-table.stories.css';
 
@@ -10,8 +10,8 @@ const mock_data = [];
 for (let i = 1; i < 30; i++)
     mock_data.push({
         id: i,
-        name: 'Test name ' + i,
-        family: 'Test family ' + i,
+        name: `Test name ${i}`,
+        family: `Test family ${i}`,
     });
 
 const mock_columns = [
@@ -49,7 +49,7 @@ const handleScroll = e => {
     console.log(scrollTop, scrollHeight, clientHeight);
 };
 
-const stories = storiesOf('Data Table', module);
+const stories = storiesOf('Data Display|Data Table', module);
 stories.addDecorator(withKnobs);
 
 stories

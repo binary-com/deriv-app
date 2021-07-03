@@ -7,7 +7,7 @@ import Accordion from 'Components/accordion';
 import React from 'react';
 import notes from './README.md';
 
-storiesOf('Accordion', module)
+storiesOf('Data Display|Accordion', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

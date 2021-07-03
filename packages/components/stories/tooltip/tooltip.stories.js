@@ -7,7 +7,7 @@ import HasIcon from './stories/has-icon';
 import notes from './README.md';
 import './styles.scss';
 
-const stories = storiesOf('Tooltip', module);
+const stories = storiesOf('Data Display|Tooltip', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

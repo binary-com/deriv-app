@@ -7,7 +7,7 @@ import notes from './README.md';
 import Wrapper from '../shared/wrapper';
 import FormSubmitErrorMessage from 'Components/form-submit-error-message';
 
-storiesOf('FormSubmitErrorMessage', module)
+storiesOf('Data Entry|Form Wizard/FormSubmit.ErrorMessage', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

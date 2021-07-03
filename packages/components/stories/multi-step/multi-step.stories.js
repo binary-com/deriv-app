@@ -5,7 +5,7 @@ import Basic from './stories/basic';
 import notes from './README.md';
 import './styles.scss';
 
-const stories = storiesOf('MultiStep', module);
+const stories = storiesOf('Data Entry|Form Wizard/MultiStep', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

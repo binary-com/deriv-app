@@ -5,7 +5,7 @@ import React from 'react';
 import Switch from 'Components/toggle-switch';
 import Theme from '../shared/theme';
 
-const stories = storiesOf('Toggle switch', module);
+const stories = storiesOf('Data Entry|Toggle switch', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

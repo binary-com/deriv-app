@@ -4,7 +4,7 @@ import Numpad from 'Components/numpad';
 import { boolean, text, number, withKnobs } from '@storybook/addon-knobs';
 import Theme from '../shared/theme';
 
-storiesOf('Numpad', module)
+storiesOf('Platform UI|Numpad', module)
     .add('Basic usage (Duration)', () => {
         const [value, setValue] = React.useState(100);
         return (

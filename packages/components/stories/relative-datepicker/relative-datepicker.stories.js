@@ -3,7 +3,7 @@ import notes from './README.md';
 import React from 'react';
 import RelativeDatepicker from 'Components/relative-datepicker';
 
-storiesOf('Relative-DatePicker', module).add(
+storiesOf('Data Entry|Date/Relative-DatePicker', module).add(
     'Main function',
     () => {
         return (

@@ -9,7 +9,7 @@ import notes from './README.md';
 import Theme from '../shared/theme';
 import { Text } from '../button/shared-style';
 
-const stories = storiesOf('Icon', module);
+const stories = storiesOf('Assets|Icon', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

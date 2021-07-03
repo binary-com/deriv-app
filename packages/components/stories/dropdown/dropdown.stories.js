@@ -40,7 +40,7 @@ const WithStateDropdown = props => {
     );
 };
 
-storiesOf('Dropdown', module).add(
+storiesOf('Data Entry|Select/Dropdown', module).add(
     'Simple usage',
     () => (
         <div

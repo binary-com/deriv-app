@@ -9,7 +9,7 @@ import OnlyHorizontal from './stories/only-horizontal';
 import OnlyHorizontalOverlay from './stories/only-horizontal-overlay';
 import notes from './README.md';
 
-const stories = storiesOf('ThemedScrollbars', module);
+const stories = storiesOf('Layout|ThemedScrollbars', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

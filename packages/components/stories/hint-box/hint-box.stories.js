@@ -5,7 +5,7 @@ import InfoHint from './stories/InfoHint';
 import NotInfoHint from './stories/NotInfoHint';
 import notes from './README.md';
 
-const stories = storiesOf('HintBox', module);
+const stories = storiesOf('Data Display|HintBox', module);
 
 stories.addDecorator(withInfo);
 stories.addDecorator(withKnobs);

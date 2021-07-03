@@ -1,0 +1,32 @@
+name: Deploy Deriv Application
+
+on:
+  pull_request:
+    branches:
+      - master
+jobs:
+  deploy_app:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Deploy Application
+        id: preview_url
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_DERIV_ORG_ID}}
+          vercel-project-id: ${{ secrets.VERCEL_DERIV_PROJECT_ID}}
+          vercel-project-name: deriv-app
+          github-comment: false
+      - name: Create commit comment
+        uses: peter-evans/commit-comment@v1
+        with:
+          body: |
+            This pull request was automatically deployed with Vercel ([learn more][1]).
+            To see the preview of your deployment, click below
+            :white_check_mark: Preview: {{ steps.preview_url.outputs.preview-url }}
+
+            [1]: https://vercel.link/github-learn-more
+

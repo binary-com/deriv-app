@@ -8,7 +8,7 @@ import HasError from './stories/has-error';
 import Disabled from './stories/disabled';
 import notes from './README.md';
 
-const stories = storiesOf('SelectNative', module);
+const stories = storiesOf('Data Entry|Select/SelectNative', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

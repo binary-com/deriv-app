@@ -5,7 +5,7 @@ import Basic from './stories/basic';
 import notes from './README.md';
 import './styles.scss';
 
-const stories = storiesOf('SendEmailTemplate', module);
+const stories = storiesOf('Other|SendEmailTemplate', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

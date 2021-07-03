@@ -4,7 +4,7 @@ import { withInfo } from '@storybook/addon-info';
 import Basic from './stories/basic';
 import notes from './README.md';
 
-const stories = storiesOf('StaticUrl', module);
+const stories = storiesOf('Other|StaticUrl', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

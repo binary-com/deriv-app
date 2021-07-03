@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import notes from './README.md';
 import './drawer.stories.scss';
 
-storiesOf('Drawer', module)
+storiesOf('Platform UI|BotDrawer', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

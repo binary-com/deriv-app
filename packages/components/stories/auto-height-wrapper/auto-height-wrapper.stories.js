@@ -4,7 +4,7 @@ import ThemedScrollbars from 'Components/themed-scrollbars';
 import React from 'react';
 import notes from './README.md';
 
-storiesOf('AutoHeightWrapper', module).add(
+storiesOf('Layout|AutoHeightWrapper', module).add(
     'Main function',
     () => {
         return (

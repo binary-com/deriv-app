@@ -8,7 +8,7 @@ import Button from 'Components/button';
 import React from 'react';
 import notes from './README.md';
 
-storiesOf('MobileFullPageModal', module)
+storiesOf('Data Display|Mobile Full Page Modal', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

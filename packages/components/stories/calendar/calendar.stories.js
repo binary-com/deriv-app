@@ -6,7 +6,7 @@ import { toMoment } from '@deriv/shared';
 import Calendar from 'Components/calendar';
 import Theme from '../shared/theme';
 
-const stories = storiesOf('Calendar', module);
+const stories = storiesOf('Data Entry|Date.Calendar', module);
 
 const FlexWrapper = ({ children, justifyContent = 'center' }) => (
     <div

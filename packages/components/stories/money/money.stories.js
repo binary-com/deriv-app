@@ -1,13 +1,12 @@
 import { storiesOf } from '@storybook/react';
-import { withKnobs } from '@storybook/addon-knobs';
+import { withKnobs, boolean } from '@storybook/addon-knobs';
 import { withInfo } from '@storybook/addon-info';
-import { boolean } from '@storybook/addon-knobs';
-import Wrapper from '../shared/wrapper';
-import Money from 'Components/money';
 import React from 'react';
+import Money from 'Components/money';
 import notes from './README.md';
+import Wrapper from '../shared/wrapper';
 
-storiesOf('Money', module)
+storiesOf('Other|Money', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

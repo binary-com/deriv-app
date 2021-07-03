@@ -6,7 +6,7 @@ import Carousel from 'Components/carousel';
 import Button from 'Components/button';
 import Theme from '../shared/theme';
 
-const stories = storiesOf('Carousel', module);
+const stories = storiesOf('Data Display|Carousel', module);
 
 const FlexWrapper = ({ children, justifyContent = 'center' }) => (
     <div

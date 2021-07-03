@@ -11,7 +11,7 @@ import TabsOnTop from './stories/tabs-on-top';
 import notes from './README.md';
 import './styles.scss';
 
-const stories = storiesOf('Tabs', module);
+const stories = storiesOf('Data Display|Tabs', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

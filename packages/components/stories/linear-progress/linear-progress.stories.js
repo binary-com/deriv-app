@@ -2,12 +2,12 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { withInfo } from '@storybook/addon-info';
 import { boolean } from '@storybook/addon-knobs';
-import Wrapper from '../shared/wrapper';
-import LinearProgress from 'Components/linear-progress';
 import React from 'react';
+import LinearProgress from 'Components/linear-progress';
 import notes from './README.md';
+import Wrapper from '../shared/wrapper';
 
-storiesOf('LinearProgress', module)
+storiesOf('Feedback|Progress/Linear Progress', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

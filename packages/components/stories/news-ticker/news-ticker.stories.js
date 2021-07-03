@@ -7,7 +7,7 @@ import Text from 'Components/text';
 import NewsTicker from 'Components/news-ticker';
 
 const flags = ['de', 'en', 'es', 'fr', 'id', 'it', 'pl', 'pt', 'ru', 'th', 'uk', 'vi', 'zh-cn', 'zh-tw'];
-const stories = storiesOf('News Ticker', module);
+const stories = storiesOf('Data Display|News Ticker', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 stories.add('Basic usage', () => {

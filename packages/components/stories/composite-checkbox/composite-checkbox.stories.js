@@ -8,7 +8,7 @@ import CompositeCheckbox from 'Components/composite-checkbox/composite-checkbox.
 import 'Components/composite-checkbox/composite-checkbox.scss';
 import 'Components/checkbox/checkbox.scss';
 
-const stories = storiesOf('CompositeCheckbox', module);
+const stories = storiesOf('Data Entry|CompositeCheckbox', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

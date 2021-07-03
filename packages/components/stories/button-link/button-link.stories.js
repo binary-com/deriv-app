@@ -8,7 +8,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import notes from './README.md';
 
-storiesOf('ButtonLink', module)
+storiesOf('Data Entry/Button.ButtonLink', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

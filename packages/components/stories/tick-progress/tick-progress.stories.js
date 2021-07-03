@@ -28,7 +28,7 @@ const tick_progresses = [
     },
 ];
 
-storiesOf('Tick Progress', module)
+storiesOf('Feedback|Tick Progress', module)
     .add('Basic usage', () => (
         <div
             style={{

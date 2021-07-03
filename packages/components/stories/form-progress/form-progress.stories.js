@@ -8,7 +8,7 @@ import Wrapper from '../shared/wrapper';
 import FormProgress from 'Components/form-progress';
 import Button from 'Components/button';
 
-storiesOf('FormProgress', module)
+storiesOf('Data Entry|Form Wizard/FormProgress', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

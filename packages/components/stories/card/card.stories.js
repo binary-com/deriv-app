@@ -8,7 +8,7 @@ import { Text } from '../button/shared-style';
 import Theme from '../shared/theme';
 import './card.stories.scss';
 
-const stories = storiesOf('Card', module);
+const stories = storiesOf('Data Display|Card', module);
 
 stories.addDecorator(withKnobs).addDecorator(withInfo);
 

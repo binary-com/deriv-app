@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import Popover from '../../src/components/popover/popover';
 
 const portal_container = 'root';
-storiesOf('Popover', module).add('Basic usage', () => (
+storiesOf('Data Display|Popover/Popover', module).add('Basic usage', () => (
     <div
         style={{
             display: 'flex',

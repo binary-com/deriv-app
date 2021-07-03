@@ -5,7 +5,7 @@ import notes from './README.md';
 import Button from 'Components/button';
 import './mobile-dialog.stories.scss';
 
-storiesOf('MobileDialog', module).add(
+storiesOf('Data Display|Mobile Dialog', module).add(
     'Main function',
     () => {
         const [is_visible, set_is_visible] = useState(false);

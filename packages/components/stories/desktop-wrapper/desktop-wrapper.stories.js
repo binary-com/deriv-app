@@ -3,7 +3,7 @@ import DesktopWrapper from 'Components/desktop-wrapper';
 import React from 'react';
 import notes from './README.md';
 
-storiesOf('DesktopWrapper', module).add(
+storiesOf('Layout|DesktopWrapper', module).add(
     'Main function',
     () => {
         return (

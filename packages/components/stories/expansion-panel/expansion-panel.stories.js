@@ -7,7 +7,7 @@ import ExpansionPanel from 'Components/expansion-panel';
 import notes from './README.md';
 import Wrapper from '../shared/wrapper';
 
-storiesOf('ExpansionPanel', module)
+storiesOf('Platform UI|BotExpansionPanel', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

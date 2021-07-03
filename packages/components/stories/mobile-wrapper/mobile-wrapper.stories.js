@@ -3,7 +3,7 @@ import MobileWrapper from 'Components/mobile-wrapper';
 import React from 'react';
 import notes from './README.md';
 
-storiesOf('MobileWrapper', module).add(
+storiesOf('Layout|Mobile Wrapper', module).add(
     'Main function',
     () => {
         return (

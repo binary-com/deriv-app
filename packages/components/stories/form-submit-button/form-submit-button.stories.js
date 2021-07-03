@@ -3,11 +3,11 @@ import { withKnobs } from '@storybook/addon-knobs';
 import { withInfo } from '@storybook/addon-info';
 import { boolean } from '@storybook/addon-knobs';
 import React from 'react';
+import FormSubmitButton from 'Components/form-submit-button';
 import notes from './README.md';
 import Wrapper from '../shared/wrapper';
-import FormSubmitButton from 'Components/form-submit-button';
 
-storiesOf('FormSubmitButton', module)
+storiesOf('Data Entry|Form Wizard/FormSubmit.Button', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(

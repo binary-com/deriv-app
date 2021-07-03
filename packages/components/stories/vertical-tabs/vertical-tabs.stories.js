@@ -83,7 +83,7 @@ const list = [
     },
 ];
 
-const stories = storiesOf('Vertical Tabs', module);
+const stories = storiesOf('Data Display|Vertical Tabs', module);
 stories.addDecorator(withKnobs);
 stories.add('Basic usage', () => {
     const [vertical_tab_index, setVerticalTabIndex] = React.useState(0);

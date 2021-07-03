@@ -8,7 +8,7 @@ import Button from 'Components/button';
 import React, { useState } from 'react';
 import notes from './README.md';
 
-storiesOf('Dialog', module)
+storiesOf('Feedback|Dialog', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add(
