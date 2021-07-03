@@ -67,6 +67,7 @@
     "test:jest": "jest --all --maxWorkers=2",
     "test:qa": "cd e2e_tests &&  jest -c ./jest.config.js --maxWorkers=2 --detectOpenHandles",
     "test:performance": "cd e2e_tests &&  jest -c ./jest.config.js --maxWorkers=2 --detectOpenHandles performance",
+    "test:comparison": "cd e2e_tests &&  jest -c ./jest.config.js --maxWorkers=2 --detectOpenHandles comparison",
     "test:typecheck": "lerna exec --scope=@deriv/dashboard -- npm run test:typecheck",
     "stylelint:fix": "stylelint \"./packages/*/src/**/*.s(a|c)ss\" --fix",
     "translate": "f () { lerna exec --scope @deriv/translations -- npm run translate ;}; f",

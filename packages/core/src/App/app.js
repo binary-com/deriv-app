@@ -3,6 +3,7 @@ import { configure } from 'mobx';
 import NetworkMonitor from 'Services/network-monitor';
 // import OutdatedBrowser      from 'Services/outdated-browser';
 import RootStore from 'Stores';
+import CommonResources from 'Services/common-resources';
 
 configure({ enforceActions: 'observed' });
 
@@ -55,6 +56,8 @@ const initStore = notification_messages => {
     setStorageEvents(root_store);
 
     NetworkMonitor.init(root_store);
+    CommonResources.init(root_store);
+
     // TODO: Re-enable and update browser checking
     // OutdatedBrowser.init(root_store);!
     root_store.client.init();

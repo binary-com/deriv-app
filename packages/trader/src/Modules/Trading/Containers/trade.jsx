@@ -12,6 +12,43 @@ import { ChartBottomWidgets, ChartToolbarWidgets, ChartTopWidgets, DigitsWidget 
 import FormLayout from '../Components/Form/form-layout.jsx';
 import AllMarkers from '../../SmartChart/Components/all-markers.jsx';
 
+/**
+ * ChartInitalMasterData function is responsible to provide a fake/temprary data
+ * for chart graph for the initial request, till the stream engine retrive the
+ * real data back. for now it only provide a fake data, but later we need to
+ * connect it to the websocket to retrive the requested symbol last data
+ */
+// TODO : ChartInitalMasterData should return the inital market last data
+// as a temprary information
+function ChartInitalMasterData() {
+    const _date = new Date();
+    _date.setMinutes(_date.getMinutes(), 0, 0);
+
+    let price = 8350.41;
+    price += parseFloat((price * 0.02 * Math.random() - price * 0.01).toFixed(2));
+    const mock_items = [
+        {
+            Date: _date.toISOString().slice(0, 19),
+            Close: price,
+        },
+    ];
+    for (let i = 1; i < 10; i++) {
+        const old_price = mock_items[mock_items.length - 1].Close;
+        const change = old_price * 0.02 * Math.random() - old_price * 0.01; // random between +/-1% of current price
+        const new_price = parseFloat(old_price + parseFloat(change.toFixed(2))).toFixed(4);
+        _date.setMinutes(_date.getMinutes() - i * 2, 0, 0);
+        const item = {
+            Date: _date.toISOString().slice(0, 19),
+            Open: parseFloat(new_price - 10.5),
+            High: parseFloat(new_price + 15.5),
+            Low: parseFloat(new_price - 15),
+            Close: parseFloat(new_price),
+        };
+        mock_items.push(item);
+    }
+    return mock_items;
+}
+
 const BottomWidgetsMobile = ({ tick, digits, setTick, setDigits }) => {
     React.useEffect(() => {
         setTick(tick);
@@ -261,6 +298,7 @@ const ChartMarkers = connect(({ modules, ui, client }) => ({
 const Chart = props => {
     const {
         active_symbols,
+        trading_times,
         chart_layout,
         chart_type,
         chartStateChange,
@@ -334,10 +372,17 @@ const Chart = props => {
     // max ticks to display for mobile view for tick chart
     const max_ticks = granularity === 0 ? 8 : 24;
 
-    if (!symbol || active_symbols.length === 0) return null;
+    if (!symbol || !trading_times || active_symbols?.length === 0) return null;
 
     return (
         <SmartChartWithRef
+            initialData={{
+                masterData: ChartInitalMasterData(),
+                activeSymbols: active_symbols,
+                tradingTimes: {
+                    trading_times: trading_times,
+                },
+            }}
             ref={charts_ref}
             barriers={barriers}
             bottomWidgets={show_digits_stats && isDesktop() ? bottomWidgets : props.bottomWidgets}
@@ -404,7 +449,7 @@ Chart.propTypes = {
     wsSubscribe: PropTypes.func,
 };
 
-const ChartTrade = connect(({ modules, ui, common }) => ({
+const ChartTrade = connect(({ client, modules, ui, common }) => ({
     is_socket_opened: common.is_socket_opened,
     granularity: modules.contract_trade.granularity,
     chart_type: modules.contract_trade.chart_type,
@@ -434,7 +479,8 @@ const ChartTrade = connect(({ modules, ui, common }) => ({
     wsForgetStream: modules.trade.wsForgetStream,
     wsSendRequest: modules.trade.wsSendRequest,
     wsSubscribe: modules.trade.wsSubscribe,
-    active_symbols: modules.trade.active_symbols,
+    active_symbols: client.active_symbols,
+    trading_times: client.trading_times,
     should_refresh: modules.trade.should_refresh_active_symbols,
     resetRefresh: modules.trade.resetRefresh,
     has_alternative_source: modules.trade.has_alternative_source,

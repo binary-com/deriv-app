@@ -12,6 +12,11 @@ class Trader extends Common {
         this.page = page;
     }
 
+    async navigateLocal() {
+        await this.blockExternals();
+        await this.page.goto('https://localhost.binary.sx/');
+    }
+
     async waitForChart() {
         await this.page.waitForSelector('.chart-container__loader', { state: 'hidden', timeout: 600000 });
         await this.page.waitForSelector('.ciq-menu.ciq-enabled', { timeout: 120000 });
