@@ -54,7 +54,7 @@ OnRampProviderCard.propTypes = {
 };
 
 export default connect(({ modules, ui }) => ({
-    setSelectedProvider: modules.cashier.onramp.setSelectedProvider,
+    setSelectedProvider: modules.cashier.general.onramp.setSelectedProvider,
     is_dark_mode_on: ui.is_dark_mode_on,
     is_mobile: ui.is_mobile,
 }))(OnRampProviderCard);

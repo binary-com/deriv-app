@@ -144,18 +144,18 @@ CashierDefault.propTypes = {
 };
 
 export default connect(({ client, modules, ui }) => ({
-    accounts_list: modules.cashier.config.account_transfer.accounts_list,
+    accounts_list: modules.cashier.general.config.account_transfer.accounts_list,
     currency: client.currency,
     is_dark_mode_on: ui.is_dark_mode_on,
     is_eu: client.is_eu,
     is_landing_company_loaded: client.is_landing_company_loaded,
     is_mobile: ui.is_mobile,
-    is_p2p_enabled: modules.cashier.is_p2p_enabled,
-    is_payment_agent_visible: modules.cashier.is_payment_agent_visible,
+    is_p2p_enabled: modules.cashier.general.is_p2p_enabled,
+    is_payment_agent_visible: modules.cashier.general.is_payment_agent_visible,
     is_switching: client.is_switching,
     openRealAccountSignup: ui.openRealAccountSignup,
-    setIsCashierDefault: modules.cashier.setIsCashierDefault,
-    setIsDeposit: modules.cashier.setIsDeposit,
+    setIsCashierDefault: modules.cashier.general.setIsCashierDefault,
+    setIsDeposit: modules.cashier.general.setIsDeposit,
     setManageRealAccountActiveTabIndex: ui.setManageRealAccountActiveTabIndex,
     toggleAccountsDialog: ui.toggleAccountsDialog,
 }))(CashierDefault);

@@ -2,7 +2,7 @@ import { action, computed, observable, reaction } from 'mobx';
 import { localize } from '@deriv/translations';
 import { getKebabCase, isCryptocurrency, routes, websiteUrl } from '@deriv/shared';
 import OnrampProviders from 'Config/on-ramp-providers';
-import BaseStore from '../base-store';
+import BaseStore from './base-store';
 
 export default class OnRampStore extends BaseStore {
     @observable api_error = null;
@@ -189,7 +189,7 @@ export default class OnRampStore extends BaseStore {
 
         const deposit_address_interval = setInterval(() => getDepositAddressFromApi, 3000);
         const getDepositAddressFromApi = () => {
-            this.root_store.modules.cashier.WS.authorized
+            this.root_store.modules.cashier.general.WS.authorized
                 .cashier('deposit', { provider: 'crypto', type: 'api' })
                 .then(response => {
                     let should_clear_interval = false;

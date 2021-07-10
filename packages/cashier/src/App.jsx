@@ -1,8 +1,8 @@
 import React from 'react';
 import { setWebsocket } from '@deriv/shared';
 import { init } from '_common/server_time';
-import Routes from './Containers/routes.jsx';
-import { MobxContentProvider } from './Stores/connect';
+import Routes from 'Containers/routes.jsx';
+import { MobxContentProvider } from 'Stores/connect';
 
 class App extends React.Component {
     constructor(props) {

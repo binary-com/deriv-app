@@ -46,5 +46,5 @@ NoBalance.propTypes = {
 
 export default connect(({ client, modules }) => ({
     currency: client.currency,
-    setTabIndex: modules.cashier.setCashierTabIndex,
+    setTabIndex: modules.cashier.general.setCashierTabIndex,
 }))(withRouter(NoBalance));

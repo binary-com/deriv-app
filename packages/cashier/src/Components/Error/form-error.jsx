@@ -92,5 +92,5 @@ FormError.propTypes = {
 export default connect(({ modules, ui }) => ({
     disableApp: ui.disableApp,
     enableApp: ui.enableApp,
-    setErrorMessage: modules.cashier.setErrorMessage,
+    setErrorMessage: modules.cashier.general.setErrorMessage,
 }))(FormError);

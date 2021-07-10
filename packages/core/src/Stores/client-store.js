@@ -1477,7 +1477,7 @@ export default class ClientStore extends BaseStore {
     setBalanceOtherAccounts(obj_balance) {
         // Balance subscription response received when mt5 transfer is in progress should be ignored.
         // After mt5 transfer is done, `balanceAll` is requested along with `mt5LoginList` in order to update the correct balance.
-        if (this.root_store.modules?.cashier?.isMT5TransferInProgress()) return;
+        if (this.root_store.modules?.cashier?.general.isMT5TransferInProgress()) return;
 
         // Only the first response of balance:all will include all accounts
         // subsequent requests will be single account balance updates

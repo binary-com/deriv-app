@@ -16,9 +16,11 @@ import {
     CFD_PLATFORMS,
 } from '@deriv/shared';
 import { localize, Localize } from '@deriv/translations';
+import CashierNotifications from 'Containers/cashier-notifications.jsx';
 import OnRampStore from './on-ramp-store';
-import BaseStore from '../base-store';
-import CashierNotifications from '../../Containers/cashier-notifications.jsx';
+import BaseStore from './base-store';
+import ErrorStore from './error-store';
+import VerificationStore from './verification-store';
 
 const hasTransferNotAllowedLoginid = loginid => loginid.startsWith('MX');
 
@@ -54,24 +56,12 @@ class Config {
     }
 }
 
-class ConfigError {
-    @observable message = '';
-    @observable code = '';
-    @observable fields = '';
-    @observable is_show_full_page = false;
-    @observable onClickButton = null;
-    @observable is_ask_uk_funds_protection = false;
-    @observable is_self_exclusion_max_turnover_set = false;
-    @observable is_ask_authentication = false;
-    @observable is_ask_financial_risk_approval = false;
-}
-
 class ConfigPaymentAgent {
     list = [];
 
     @observable agents = [];
     @observable container = 'payment_agent';
-    @observable error = new ConfigError();
+    @observable error = new ErrorStore();
     @observable filtered_list = [];
     @observable is_name_selected = true;
     @observable is_withdraw = false;
@@ -81,7 +71,7 @@ class ConfigPaymentAgent {
     @observable receipt = {};
     @observable selected_bank = 0;
     @observable supported_banks = [];
-    @observable verification = new ConfigVerification();
+    @observable verification = new VerificationStore();
     @observable active_tab_index = 0;
 
     @action.bound
@@ -92,7 +82,7 @@ class ConfigPaymentAgent {
 
 class ConfigPaymentAgentTransfer {
     @observable container = 'payment_agent_transfer';
-    @observable error = new ConfigError();
+    @observable error = new ErrorStore();
     @observable is_payment_agent = false;
     @observable is_try_transfer_successful = false;
     @observable is_transfer_successful = false;
@@ -104,7 +94,7 @@ class ConfigPaymentAgentTransfer {
 class ConfigAccountTransfer {
     @observable accounts_list = [];
     @observable container = 'account_transfer';
-    @observable error = new ConfigError();
+    @observable error = new ErrorStore();
     @observable has_no_account = false;
     @observable has_no_accounts_balance = false;
     @observable is_transfer_confirm = false;
@@ -134,17 +124,7 @@ class ConfigAccountTransfer {
     }
 }
 
-class ConfigVerification {
-    is_button_clicked = false;
-    timeout_button = '';
-
-    @observable error = new ConfigError();
-    @observable is_email_sent = false;
-    @observable is_resend_clicked = false;
-    @observable resend_timeout = 60;
-}
-
-export default class CashierStore extends BaseStore {
+export default class GeneralStore extends BaseStore {
     constructor({ root_store, WS }) {
         super({ root_store });
         this.WS = WS;
@@ -175,14 +155,14 @@ export default class CashierStore extends BaseStore {
         account_transfer: new ConfigAccountTransfer(),
         deposit: {
             ...toJS(new Config({ container: 'deposit' })),
-            error: new ConfigError(),
+            error: new ErrorStore(),
         },
         payment_agent: new ConfigPaymentAgent(),
         payment_agent_transfer: new ConfigPaymentAgentTransfer(),
         withdraw: {
             ...toJS(new Config({ container: 'withdraw' })),
-            error: new ConfigError(),
-            verification: new ConfigVerification(),
+            error: new ErrorStore(),
+            verification: new VerificationStore(),
         },
     };
 
@@ -523,20 +503,14 @@ export default class CashierStore extends BaseStore {
     @action.bound
     setErrorMessage(error, onClickButton, is_show_full_page, is_verification_error) {
         // for errors that need to show a button, reset the form
-        const error_object = {
-            onClickButton,
-            code: error.code,
-            message: error.message,
-            is_show_full_page: is_show_full_page || /InvalidToken|WrongResponse/.test(error.code),
-            ...(getPropertyValue(error, ['details', 'fields']) && {
-                fields: error.details.fields,
-            }),
-        };
-
         if (is_verification_error && this.config[this.active_container].verification) {
-            this.config[this.active_container].verification.error = error_object;
+            this.config[this.active_container].verification.error.setErrorObject(
+                error,
+                onClickButton,
+                is_show_full_page
+            );
         } else {
-            this.config[this.active_container].error = error_object;
+            this.config[this.active_container].error.setErrorObject(error, onClickButton, is_show_full_page);
         }
     }
 
@@ -550,43 +524,31 @@ export default class CashierStore extends BaseStore {
                 this.setErrorMessage(error, null, true);
                 break;
             case 'ASK_UK_FUNDS_PROTECTION':
-                this.config[this.active_container].error = {
-                    is_ask_uk_funds_protection: true,
-                };
+                this.config[this.active_container].error.setIsAskUkFundsProtection(true);
                 break;
             case 'ASK_SELF_EXCLUSION_MAX_TURNOVER_SET':
-                this.config[this.active_container].error = {
-                    is_self_exclusion_max_turnover_set: true,
-                };
+                this.config[this.active_container].error.setIsSelfExclusionMaxTurnoverSet(true);
                 break;
             case 'ASK_AUTHENTICATE':
             case 'ASK_AGE_VERIFICATION':
-                this.config[this.active_container].error = {
-                    is_ask_authentication: true,
-                };
+                this.config[this.active_container].error.setIsAskAuthentication(true);
                 break;
             case 'FinancialAssessmentRequired':
             case 'ASK_FINANCIAL_RISK_APPROVAL':
-                this.config[this.active_container].error = {
-                    is_ask_financial_risk_approval: true,
-                };
+                this.config[this.active_container].error.setIsAskFinancialRiskApproval(true);
                 break;
             default:
-                this.config[this.active_container].error = {
-                    is_ask_uk_funds_protection: false,
-                    is_self_exclusion_max_turnover_set: false,
-                    is_ask_authentication: false,
-                    is_ask_financial_risk_approval: false,
-                };
+                this.config[this.active_container].error.setIsAskUkFundsProtection(false);
+                this.config[this.active_container].error.setIsSelfExclusionMaxTurnoverSet(false);
+                this.config[this.active_container].error.setIsAskAuthentication(false);
+                this.config[this.active_container].error.setIsAskFinancialRiskApproval(false);
                 this.setErrorMessage(error);
         }
     }
 
     @action.bound
     setErrorConfig(config_name, value) {
-        this.config[this.active_container].error = {
-            [config_name]: value,
-        };
+        this.config[this.active_container].error.setErrorConfig(config_name, value);
     }
 
     @action.bound
@@ -621,17 +583,17 @@ export default class CashierStore extends BaseStore {
 
     @action.bound
     setVerificationEmailSent(is_email_sent, container = this.active_container) {
-        this.config[container].verification.is_email_sent = is_email_sent;
+        this.config[container].verification.setIsEmailSent(is_email_sent);
     }
 
     @action.bound
     setVerificationResendClicked(is_resend_clicked, container = this.active_container) {
-        this.config[container].verification.is_resend_clicked = is_resend_clicked;
+        this.config[container].verification.setIsResendClicked(is_resend_clicked);
     }
 
     @action.bound
     setVerificationResendTimeout(resend_timeout, container = this.active_container) {
-        this.config[container].verification.resend_timeout = resend_timeout;
+        this.config[container].verification.setResendTimeout(resend_timeout);
     }
 
     clearTimeoutCashierUrl(container = this.active_container) {

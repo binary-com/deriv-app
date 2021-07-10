@@ -4,9 +4,9 @@ import { Modal, SelectNative, ReadMore, Text } from '@deriv/components';
 import { routes, isMobile } from '@deriv/shared';
 import { Localize, localize } from '@deriv/translations';
 import { connect } from 'Stores/connect';
-import OnRampProviderCard from '../Components/on-ramp-provider-card.jsx';
-import OnRampProviderPopup from '../Components/on-ramp-provider-popup.jsx';
-import SideNote from '../Components/side-note.jsx';
+import OnRampProviderCard from 'Components/on-ramp-provider-card.jsx';
+import OnRampProviderPopup from 'Components/on-ramp-provider-popup.jsx';
+import SideNote from 'Components/side-note.jsx';
 import 'Sass/on-ramp.scss';
 
 const OnRampSideNote = () => {
@@ -139,13 +139,13 @@ OnRamp.propTypes = {
 };
 
 export default connect(({ modules, common }) => ({
-    filtered_onramp_providers: modules.cashier.onramp.filtered_onramp_providers,
-    is_onramp_modal_open: modules.cashier.onramp.is_onramp_modal_open,
-    onMountOnramp: modules.cashier.onramp.onMountOnramp,
-    onUnmountOnramp: modules.cashier.onramp.onUnmountOnramp,
-    onramp_popup_modal_title: modules.cashier.onramp.onramp_popup_modal_title,
-    resetPopup: modules.cashier.onramp.resetPopup,
+    filtered_onramp_providers: modules.cashier.general.onramp.filtered_onramp_providers,
+    is_onramp_modal_open: modules.cashier.general.onramp.is_onramp_modal_open,
+    onMountOnramp: modules.cashier.general.onramp.onMountOnramp,
+    onUnmountOnramp: modules.cashier.general.onramp.onUnmountOnramp,
+    onramp_popup_modal_title: modules.cashier.general.onramp.onramp_popup_modal_title,
+    resetPopup: modules.cashier.general.onramp.resetPopup,
     routeTo: common.routeTo,
-    setIsOnRampModalOpen: modules.cashier.onramp.setIsOnRampModalOpen,
-    should_show_dialog: modules.cashier.onramp.should_show_dialog,
+    setIsOnRampModalOpen: modules.cashier.general.onramp.setIsOnRampModalOpen,
+    should_show_dialog: modules.cashier.general.onramp.should_show_dialog,
 }))(OnRamp);

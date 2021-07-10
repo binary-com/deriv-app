@@ -63,7 +63,7 @@ EmailSent.propTypes = {
 };
 
 export default connect(({ modules }) => ({
-    resendVerificationEmail: modules.cashier.resendVerificationEmail,
-    sendVerificationEmail: modules.cashier.sendVerificationEmail,
-    setVerificationResendClicked: modules.cashier.setVerificationResendClicked,
+    resendVerificationEmail: modules.cashier.general.resendVerificationEmail,
+    sendVerificationEmail: modules.cashier.general.sendVerificationEmail,
+    setVerificationResendClicked: modules.cashier.general.setVerificationResendClicked,
 }))(EmailSent);

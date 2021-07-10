@@ -112,7 +112,7 @@ export default withRouter(
         is_logging_in: client.is_logging_in,
         is_virtual: client.is_virtual,
         residence: client.residence,
-        setNotificationCount: modules.cashier.setNotificationCount,
+        setNotificationCount: modules.cashier.general.setNotificationCount,
         is_mobile: ui.is_mobile,
     }))(P2PCashier)
 );

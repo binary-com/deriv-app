@@ -124,8 +124,8 @@ MaxTurnoverForm.propTypes = {
 
 export default connect(({ client, modules, ui }) => ({
     currency: client.currency,
-    onMount: modules.cashier.onMount,
-    setErrorConfig: modules.cashier.setErrorConfig,
+    onMount: modules.cashier.general.onMount,
+    setErrorConfig: modules.cashier.general.setErrorConfig,
     removeNotificationByKey: ui.removeNotificationByKey,
     removeNotificationMessageByKey: ui.removeNotificationMessageByKey,
 }))(MaxTurnoverForm);

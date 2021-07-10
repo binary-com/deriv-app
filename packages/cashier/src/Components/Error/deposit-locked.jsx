@@ -125,7 +125,7 @@ export default connect(({ client, modules }) => ({
     is_financial_information_incomplete: client.is_financial_information_incomplete,
     is_trading_experience_incomplete: client.is_trading_experience_incomplete,
     is_financial_account: client.is_financial_account,
-    is_ask_financial_risk_approval: modules.cashier.config.deposit.error.is_ask_financial_risk_approval,
-    onMount: modules.cashier.onMount,
+    is_ask_financial_risk_approval: modules.cashier.general.config.deposit.error.is_ask_financial_risk_approval,
+    onMount: modules.cashier.general.onMount,
     standpoint: client.standpoint,
 }))(DepositsLocked);

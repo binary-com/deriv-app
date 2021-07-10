@@ -2,12 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Loading } from '@deriv/components';
 import { connect } from 'Stores/connect';
-import Error from '../Components/Error/error.jsx';
-import NoBalance from '../Components/Error/no-balance.jsx';
-import Virtual from '../Components/Error/virtual.jsx';
-import PaymentAgentTransferConfirm from '../Components/Confirm/payment-agent-transfer-confirm.jsx';
-import PaymentAgentTransferForm from '../Components/Form/payment-agent-transfer-form.jsx';
-import PaymentAgentTransferReceipt from '../Components/Receipt/payment-agent-transfer-receipt.jsx';
+import Error from 'Components/Error/error.jsx';
+import NoBalance from 'Components/Error/no-balance.jsx';
+import Virtual from 'Components/Error/virtual.jsx';
+import PaymentAgentTransferConfirm from 'Components/Confirm/payment-agent-transfer-confirm.jsx';
+import PaymentAgentTransferForm from 'Components/Form/payment-agent-transfer-form.jsx';
+import PaymentAgentTransferReceipt from 'Components/Receipt/payment-agent-transfer-receipt.jsx';
 
 const PaymentAgentTransfer = ({
     balance,
@@ -73,12 +73,12 @@ PaymentAgentTransfer.propTypes = {
 export default connect(({ client, modules }) => ({
     balance: client.balance,
     is_virtual: client.is_virtual,
-    container: modules.cashier.config.payment_agent_transfer.container,
-    error: modules.cashier.config.payment_agent_transfer.error,
-    is_loading: modules.cashier.is_loading,
-    is_transfer_successful: modules.cashier.config.payment_agent_transfer.is_transfer_successful,
-    is_try_transfer_successful: modules.cashier.config.payment_agent_transfer.is_try_transfer_successful,
-    onMount: modules.cashier.onMountPaymentAgentTransfer,
-    onUnMount: modules.cashier.resetPaymentAgentTransfer,
-    setActiveTab: modules.cashier.setActiveTab,
+    container: modules.cashier.general.config.payment_agent_transfer.container,
+    error: modules.cashier.general.config.payment_agent_transfer.error,
+    is_loading: modules.cashier.general.is_loading,
+    is_transfer_successful: modules.cashier.general.config.payment_agent_transfer.is_transfer_successful,
+    is_try_transfer_successful: modules.cashier.general.config.payment_agent_transfer.is_try_transfer_successful,
+    onMount: modules.cashier.general.onMountPaymentAgentTransfer,
+    onUnMount: modules.cashier.general.resetPaymentAgentTransfer,
+    setActiveTab: modules.cashier.general.setActiveTab,
 }))(PaymentAgentTransfer);

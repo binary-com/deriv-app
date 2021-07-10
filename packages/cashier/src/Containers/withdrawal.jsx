@@ -4,15 +4,15 @@ import { Loading } from '@deriv/components';
 import { Localize } from '@deriv/translations';
 import { isCryptocurrency, isDesktop } from '@deriv/shared';
 import { connect } from 'Stores/connect';
-import Withdraw from '../Components/withdraw.jsx';
-import SendEmail from '../Components/Email/send-email.jsx';
-import Error from '../Components/Error/error.jsx';
-import NoBalance from '../Components/Error/no-balance.jsx';
-import Virtual from '../Components/Error/virtual.jsx';
-import WithdrawalLocked from '../Components/Error/withdrawal-locked.jsx';
-import CashierLocked from '../Components/Error/cashier-locked.jsx';
-import SideNote from '../Components/side-note.jsx';
-import USDTSideNote from '../Components/usdt-side-note.jsx';
+import Withdraw from 'Components/withdraw.jsx';
+import SendEmail from 'Components/Email/send-email.jsx';
+import Error from 'Components/Error/error.jsx';
+import NoBalance from 'Components/Error/no-balance.jsx';
+import Virtual from 'Components/Error/virtual.jsx';
+import WithdrawalLocked from 'Components/Error/withdrawal-locked.jsx';
+import CashierLocked from 'Components/Error/cashier-locked.jsx';
+import SideNote from 'Components/side-note.jsx';
+import USDTSideNote from 'Components/usdt-side-note.jsx';
 
 const WithdrawalSideNote = () => {
     const notes = [
@@ -124,17 +124,17 @@ Withdrawal.propTypes = {
 
 export default connect(({ client, modules }) => ({
     balance: client.balance,
-    check10kLimit: modules.cashier.check10kLimit,
-    container: modules.cashier.config.withdraw.container,
+    check10kLimit: modules.cashier.general.check10kLimit,
+    container: modules.cashier.general.config.withdraw.container,
     currency: client.currency,
-    error: modules.cashier.config.withdraw.error,
-    iframe_url: modules.cashier.config.withdraw.iframe_url,
-    is_10k_withdrawal_limit_reached: modules.cashier.is_10k_withdrawal_limit_reached,
-    is_cashier_locked: modules.cashier.is_cashier_locked,
+    error: modules.cashier.general.config.withdraw.error,
+    iframe_url: modules.cashier.general.config.withdraw.iframe_url,
+    is_10k_withdrawal_limit_reached: modules.cashier.general.is_10k_withdrawal_limit_reached,
+    is_cashier_locked: modules.cashier.general.is_cashier_locked,
     is_virtual: client.is_virtual,
-    is_withdrawal_locked: modules.cashier.is_withdrawal_locked,
+    is_withdrawal_locked: modules.cashier.general.is_withdrawal_locked,
     verification_code: client.verification_code.payment_withdraw,
-    verify_error: modules.cashier.config.withdraw.verification.error,
-    setActiveTab: modules.cashier.setActiveTab,
-    setErrorMessage: modules.cashier.setErrorMessage,
+    verify_error: modules.cashier.general.config.withdraw.verification.error,
+    setActiveTab: modules.cashier.general.setActiveTab,
+    setErrorMessage: modules.cashier.general.setErrorMessage,
 }))(Withdrawal);

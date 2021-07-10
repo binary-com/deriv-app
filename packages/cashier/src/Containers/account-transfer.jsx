@@ -3,15 +3,15 @@ import React from 'react';
 import { Loading } from '@deriv/components';
 import { WS } from '@deriv/shared';
 import { connect } from 'Stores/connect';
-import AccountTransferNoAccount from '../Components/Error/account-transfer-no-account.jsx';
-import Error from '../Components/Error/error.jsx';
-import NoBalance from '../Components/Error/no-balance.jsx';
-import Virtual from '../Components/Error/virtual.jsx';
-import CashierLocked from '../Components/Error/cashier-locked.jsx';
-import TransferLock from '../Components/Error/transfer-locked.jsx';
-import AccountTransferForm from '../Components/Form/account-transfer-form.jsx';
-import AccountTransferReceipt from '../Components/Receipt/account-transfer-receipt.jsx';
-import AccountTransferConfirm from '../Components/Confirm/account-transfer-confirm.jsx';
+import AccountTransferNoAccount from 'Components/Error/account-transfer-no-account.jsx';
+import Error from 'Components/Error/error.jsx';
+import NoBalance from 'Components/Error/no-balance.jsx';
+import Virtual from 'Components/Error/virtual.jsx';
+import CashierLocked from 'Components/Error/cashier-locked.jsx';
+import TransferLock from 'Components/Error/transfer-locked.jsx';
+import AccountTransferForm from 'Components/Form/account-transfer-form.jsx';
+import AccountTransferReceipt from 'Components/Receipt/account-transfer-receipt.jsx';
+import AccountTransferConfirm from 'Components/Confirm/account-transfer-confirm.jsx';
 
 const AccountTransfer = ({
     accounts_list,
@@ -112,18 +112,18 @@ AccountTransfer.propTypes = {
 export default connect(({ client, modules }) => ({
     is_virtual: client.is_virtual,
     is_switching: client.is_switching,
-    accounts_list: modules.cashier.config.account_transfer.accounts_list,
-    container: modules.cashier.config.account_transfer.container,
-    error: modules.cashier.config.account_transfer.error,
-    has_no_account: modules.cashier.config.account_transfer.has_no_account,
-    has_no_accounts_balance: modules.cashier.config.account_transfer.has_no_accounts_balance,
-    is_cashier_locked: modules.cashier.is_cashier_locked,
-    is_loading: modules.cashier.is_loading,
-    is_transfer_confirm: modules.cashier.config.account_transfer.is_transfer_confirm,
-    is_transfer_successful: modules.cashier.config.account_transfer.is_transfer_successful,
-    is_transfer_lock: modules.cashier.is_transfer_lock,
-    onMount: modules.cashier.onMountAccountTransfer,
-    setActiveTab: modules.cashier.setActiveTab,
-    setAccountTransferAmount: modules.cashier.setAccountTransferAmount,
-    setIsTransferConfirm: modules.cashier.setIsTransferConfirm,
+    accounts_list: modules.cashier.general.config.account_transfer.accounts_list,
+    container: modules.cashier.general.config.account_transfer.container,
+    error: modules.cashier.general.config.account_transfer.error,
+    has_no_account: modules.cashier.general.config.account_transfer.has_no_account,
+    has_no_accounts_balance: modules.cashier.general.config.account_transfer.has_no_accounts_balance,
+    is_cashier_locked: modules.cashier.general.is_cashier_locked,
+    is_loading: modules.cashier.general.is_loading,
+    is_transfer_confirm: modules.cashier.general.config.account_transfer.is_transfer_confirm,
+    is_transfer_successful: modules.cashier.general.config.account_transfer.is_transfer_successful,
+    is_transfer_lock: modules.cashier.general.is_transfer_lock,
+    onMount: modules.cashier.general.onMountAccountTransfer,
+    setActiveTab: modules.cashier.general.setActiveTab,
+    setAccountTransferAmount: modules.cashier.general.setAccountTransferAmount,
+    setIsTransferConfirm: modules.cashier.general.setIsTransferConfirm,
 }))(AccountTransfer);

@@ -4,15 +4,15 @@ import { Loading } from '@deriv/components';
 // import { Localize } from '@deriv/translations';
 import { isCryptocurrency, isDesktop } from '@deriv/shared';
 import { connect } from 'Stores/connect';
-import CashierContainer from '../Components/cashier-container.jsx';
-import Error from '../Components/Error/error.jsx';
-import Virtual from '../Components/Error/virtual.jsx';
-import CashierLocked from '../Components/Error/cashier-locked.jsx';
-import DepositsLocked from '../Components/Error/deposit-locked.jsx';
-import FundsProtection from '../Components/Error/funds-protection.jsx';
-import MaxTurnover from '../Components/Form/max-turnover-form.jsx';
-// import SideNote from '../Components/side-note.jsx';
-import USDTSideNote from '../Components/usdt-side-note.jsx';
+import CashierContainer from 'Components/cashier-container.jsx';
+import Error from 'Components/Error/error.jsx';
+import Virtual from 'Components/Error/virtual.jsx';
+import CashierLocked from 'Components/Error/cashier-locked.jsx';
+import DepositsLocked from 'Components/Error/deposit-locked.jsx';
+import FundsProtection from 'Components/Error/funds-protection.jsx';
+import MaxTurnover from 'Components/Form/max-turnover-form.jsx';
+// import SideNote from 'Components/side-note.jsx';
+import USDTSideNote from 'Components/usdt-side-note.jsx';
 
 // const DepositeSideNote = () => {
 //     const notes = [
@@ -116,17 +116,17 @@ Deposit.propTypes = {
 };
 
 export default connect(({ client, modules }) => ({
-    is_cashier_locked: modules.cashier.is_cashier_locked,
-    is_deposit_locked: modules.cashier.is_deposit_locked,
+    is_cashier_locked: modules.cashier.general.is_cashier_locked,
+    is_deposit_locked: modules.cashier.general.is_deposit_locked,
     is_switching: client.is_switching,
     is_virtual: client.is_virtual,
-    container: modules.cashier.config.deposit.container,
+    container: modules.cashier.general.config.deposit.container,
     currency: client.currency,
-    error: modules.cashier.config.deposit.error,
-    iframe_height: modules.cashier.config.deposit.iframe_height,
-    iframe_url: modules.cashier.config.deposit.iframe_url,
-    is_loading: modules.cashier.is_loading,
-    onMount: modules.cashier.onMount,
-    setActiveTab: modules.cashier.setActiveTab,
+    error: modules.cashier.general.config.deposit.error,
+    iframe_height: modules.cashier.general.config.deposit.iframe_height,
+    iframe_url: modules.cashier.general.config.deposit.iframe_url,
+    is_loading: modules.cashier.general.is_loading,
+    onMount: modules.cashier.general.onMount,
+    setActiveTab: modules.cashier.general.setActiveTab,
     standpoint: client.standpoint,
 }))(Deposit);

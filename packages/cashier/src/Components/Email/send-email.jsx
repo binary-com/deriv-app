@@ -43,8 +43,8 @@ SendEmail.propTypes = {
 };
 
 export default connect(({ modules }) => ({
-    is_email_sent: modules.cashier.config.withdraw.verification.is_email_sent,
-    is_resend_clicked: modules.cashier.config.withdraw.verification.is_resend_clicked,
-    resend_timeout: modules.cashier.config.withdraw.verification.resend_timeout,
-    sendVerificationEmail: modules.cashier.sendVerificationEmail,
+    is_email_sent: modules.cashier.general.config.withdraw.verification.is_email_sent,
+    is_resend_clicked: modules.cashier.general.config.withdraw.verification.is_resend_clicked,
+    resend_timeout: modules.cashier.general.config.withdraw.verification.resend_timeout,
+    sendVerificationEmail: modules.cashier.general.sendVerificationEmail,
 }))(SendEmail);
