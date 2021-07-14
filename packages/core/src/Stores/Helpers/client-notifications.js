@@ -111,8 +111,38 @@ export const clientNotifications = (ui = {}, client = {}) => {
         cashier_locked: {
             key: 'cashier_locked',
             header: localize('Cashier disabled'),
-            message: localize(
-                'Deposits and withdrawals have been disabled on your account. Please check your email for more details.'
+            message: (
+                <Localize
+                    i18n_default_text='We’re updating our cashier system and it’ll be back online soon. Please see our <0>status page</0> for updates.'
+                    components={[
+                        <a
+                            key={0}
+                            className='link'
+                            rel='noopener noreferrer'
+                            target='_blank'
+                            href='https://deriv.statuspage.io/'
+                        />,
+                    ]}
+                />
+            ),
+            type: 'warning',
+        },
+        system_maintenance: {
+            key: 'system_maintenance',
+            header: localize('System Maintenance'),
+            message: (
+                <Localize
+                    i18n_default_text='We’re updating our cashier system and it’ll be back online soon. Please see our <0>status page</0> for updates.'
+                    components={[
+                        <a
+                            key={0}
+                            className='link'
+                            rel='noopener noreferrer'
+                            target='_blank'
+                            href='https://deriv.statuspage.io/'
+                        />,
+                    ]}
+                />
             ),
             type: 'warning',
         },
@@ -412,11 +442,19 @@ const hasMissingRequiredField = (account_settings, client, isAccountOfType) => {
     }
 };
 
-const getStatusValidations = status_arr =>
-    status_arr.reduce((validations, stats) => {
+const getStatusValidations = status_arr => {
+    return status_arr.reduce((validations, stats) => {
         validations[stats] = true;
         return validations;
     }, {});
+};
+
+const getCashierValidations = cashier_arr => {
+    return cashier_arr.reduce((validations, code) => {
+        validations[code] = true;
+        return validations;
+    }, {});
+};
 
 const addVerificationNotifications = (identity, document, addNotificationMessage) => {
     if (identity.status === 'expired') addNotificationMessage(clientNotifications().poi_expired);
@@ -440,6 +478,7 @@ const checkAccountStatus = (
         prompt_client_to_authenticate,
         risk_classification,
         status,
+        cashier_validation,
     } = account_status;
 
     const {
@@ -452,6 +491,8 @@ const checkAccountStatus = (
         max_turnover_limit_not_set,
         allow_document_upload,
     } = getStatusValidations(status);
+
+    const { system_maintenance } = getCashierValidations(cashier_validation);
 
     addVerificationNotifications(identity, document, addNotificationMessage);
 
@@ -470,8 +511,10 @@ const checkAccountStatus = (
 
     if (needs_poa && !(document.status === 'expired')) addNotificationMessage(clientNotifications().needs_poa);
     if (needs_poi && !(identity.status === 'expired')) addNotificationMessage(clientNotifications().needs_poi);
-    if (cashier_locked) addNotificationMessage(clientNotifications().cashier_locked);
-    if (withdrawal_locked) {
+
+    if (system_maintenance) addNotificationMessage(clientNotifications().system_maintenance);
+    else if (cashier_locked) addNotificationMessage(clientNotifications().cashier_locked);
+    else if (withdrawal_locked) {
         // if client is withdrawal locked but it's because they need to authenticate
         // and they have submitted verification documents,
         // we should wait for review of documents to be done and show a different message
