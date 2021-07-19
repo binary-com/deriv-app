@@ -468,6 +468,7 @@ $side-padding: 1.2em;
     .sell_time,
     .purchase_time {
         text-align: left;
+        min-width: 120px;
     }
     .profit_loss {
         font-weight: bold;
