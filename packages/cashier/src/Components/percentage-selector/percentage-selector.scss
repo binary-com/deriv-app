@@ -1,0 +1,19 @@
+.percentage-selector {
+    display: flex;
+    justify-content: space-around;
+    width: 36rem;
+
+    &-block {
+        cursor: pointer;
+        display: flex;
+        background-color: var(--general-section-1);
+        height: 2.4rem;
+        width: 8.7rem;
+    }
+
+    &__block-container {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+}
