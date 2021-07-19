@@ -27,14 +27,14 @@ const StakeLossAndLimitsInputs = () => {
     const { errors, handleBlur, handleChange, values } = useFormikContext();
     return (
         <React.Fragment>
-            <SectionTitle title={<Localize i18n_default_text='Your stake and loss limits' />} />
+            <SectionTitle title={<Localize i18n_default_text='Your spending and loss limits' />} />
             <div className='da-self-exclusion__item-wrapper'>
                 <div className='da-self-exclusion__item'>
                     <h3 className='da-self-exclusion__item-title'>
                         <Localize i18n_default_text='24 hours' />
                     </h3>
                     <Text as='p' size='xs' className='da-self-exclusion__item-field'>
-                        <Localize i18n_default_text='Max. total stake' />
+                        <Localize i18n_default_text='Max. total spending' />
                     </Text>
                     <Field name='max_turnover'>
                         {({ field }) => (
@@ -77,7 +77,7 @@ const StakeLossAndLimitsInputs = () => {
                         <Localize i18n_default_text='7 days' />
                     </h3>
                     <Text as='p' size='xs' className='da-self-exclusion__item-field'>
-                        <Localize i18n_default_text='Max. total stake' />
+                        <Localize i18n_default_text='Max. total spending' />
                     </Text>
                     <Field name='max_7day_turnover'>
                         {({ field }) => (
@@ -120,7 +120,7 @@ const StakeLossAndLimitsInputs = () => {
                         <Localize i18n_default_text='30 days' />
                     </h3>
                     <Text as='p' size='xs' className='da-self-exclusion__item-field'>
-                        <Localize i18n_default_text='Max. total stake' />
+                        <Localize i18n_default_text='Max. total spending' />
                     </Text>
                     <Field name='max_30day_turnover'>
                         {({ field }) => (

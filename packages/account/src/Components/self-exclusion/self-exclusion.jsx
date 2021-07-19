@@ -18,6 +18,8 @@ import SelfExclusionModal from './self-exclusion-modal.jsx';
 import SelfExclusionWrapper from './self-exclusion-wrapper.jsx';
 import SelfExclusionForm from './self-exclusion-form.jsx';
 
+const NO_SPENDING_LIMIT_TURNOVER = 99999999999999;
+
 const SelfExclusion = ({
     currency,
     footer_ref,
@@ -316,9 +318,14 @@ const SelfExclusion = ({
             }
 
             if (isMounted()) {
+                const self_exclusion_value = { ...exclusion_data.current, ...response_to_string };
+                const max_30day_turnover = Number(self_exclusion_value.max_30day_turnover);
+                if (max_30day_turnover === NO_SPENDING_LIMIT_TURNOVER) {
+                    self_exclusion_value.max_30day_turnover = '';
+                }
                 setState({
                     is_loading: false,
-                    self_exclusions: { ...exclusion_data.current, ...response_to_string },
+                    self_exclusions: self_exclusion_value,
                 });
             }
         }

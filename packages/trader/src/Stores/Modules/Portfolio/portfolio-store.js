@@ -88,6 +88,7 @@ export default class PortfolioStore extends BaseStore {
 
     @action.bound
     async transactionHandler(response) {
+        this.root_store.client.transactionResponseCall(response);
         if ('error' in response) {
             this.error = response.error.message;
         }

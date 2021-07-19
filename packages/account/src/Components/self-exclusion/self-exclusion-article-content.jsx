@@ -12,7 +12,7 @@ export const selfExclusionArticleItems = ({ is_eu, is_uk, is_deriv_crypto, is_ap
             {
                 component: (
                     <Localize
-                        i18n_default_text='These trading limits and self-exclusion help you control the amount of money and time you spend on Deriv.com and exercise <0>responsible trading</0>.'
+                        i18n_default_text='These spending limits and self-exclusion help you control the amount of money and time you spend on Deriv.com and exercise <0>responsible trading</0>.'
                         components={[
                             <a
                                 key={0}
@@ -30,13 +30,13 @@ export const selfExclusionArticleItems = ({ is_eu, is_uk, is_deriv_crypto, is_ap
         if (is_uk) {
             eu_items.push({
                 component: (
-                    <Localize i18n_default_text='These trading limits are optional, and you can strengthen them at any time. If you don’t wish to set a specific limit, leave the field blank. If you live in the United Kingdom, Customer Support can only remove or weaken your trading limits after 24 hours of receiving the request. If you live in the Isle of Man, Customer Support can only remove or weaken your trading limits after your trading limit period has expired.' />
+                    <Localize i18n_default_text='These spending limits are optional, and you can strengthen them at any time. If you don’t wish to set a specific limit, leave the field blank. If you live in the United Kingdom, Customer Support can only remove or weaken your spending limits after 24 hours of receiving the request. If you live in the Isle of Man, Customer Support can only remove or weaken your spending limits after your spending limit period has expired.' />
                 ),
             });
         } else {
             eu_items.push({
                 component: (
-                    <Localize i18n_default_text='These trading limits are optional, and you can strengthen them at any time. If you don’t wish to set a specific limit, leave the field blank. Customer Support can only remove or weaken your trading limits after 24 hours of receiving the request.' />
+                    <Localize i18n_default_text='These spending limits are optional, and you can strengthen them at any time. If you don’t wish to set a specific limit, leave the field blank. Customer Support can only remove or weaken your spending limits after 24 hours of receiving the request.' />
                 ),
             });
         }
@@ -160,7 +160,7 @@ const SelfExclusionArticleContent = ({ is_in_overlay }) => {
                 descriptions={keyed_article_items}
                 done_text={localize('Done')}
                 overlay_ref={overlay_ref}
-                title={localize('Trading limits')}
+                title={localize('Spending limits')}
                 toggleOverlay={toggleArticle}
             />
         );
@@ -181,7 +181,7 @@ const SelfExclusionArticleContent = ({ is_in_overlay }) => {
                     weight='bold'
                     className='da-self-exclusion-article__content-header'
                 >
-                    <Localize i18n_default_text='About trading limits and self-exclusion' />
+                    <Localize i18n_default_text='About spending limits and self-exclusion' />
                 </Text>
                 <Icon icon='IcCross' className='da-self-exclusion-article__content-icon' onClick={toggleArticle} />
             </div>

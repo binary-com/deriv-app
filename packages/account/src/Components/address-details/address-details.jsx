@@ -117,142 +117,148 @@ const AddressDetails = ({
                 <AutoHeightWrapper default_height={350} height_offset={isDesktop() ? 80 : null}>
                     {({ setRef, height }) => (
                         <form ref={setRef} onSubmit={handleSubmit}>
-                            <Div100vhContainer
-                                className='details-form'
-                                height_offset={is_dashboard ? '222px' : '90px'}
-                                is_disabled={isDesktop()}
-                            >
-                                {!is_dashboard && (
-                                    <Text
-                                        as='p'
-                                        align='left'
-                                        size='xxs'
-                                        line_height='l'
-                                        className='details-form__description'
-                                    >
-                                        <strong>
-                                            <Localize i18n_default_text='Only use an address for which you have proof of residence - ' />
-                                        </strong>
-                                        <Localize i18n_default_text='a recent utility bill (e.g. electricity, water, gas, landline, or internet), bank statement, or government-issued letter with your name and this address.' />
-                                    </Text>
-                                )}
-                                <ThemedScrollbars height={height} className='details-form__scrollbar'>
-                                    {is_dashboard && (
-                                        <div className='details-form__sub-header'>
-                                            <Text size={isMobile() ? 'xs' : 'xxs'} align={isMobile() && 'center'}>
-                                                {localize(
-                                                    'We need this for verification. If the information you provide is fake or inaccurate, you won’t be able to deposit and withdraw.'
-                                                )}
-                                            </Text>
-                                        </div>
+                            <Modal.Body>
+                                <Div100vhContainer
+                                    className='details-form'
+                                    height_offset={is_dashboard ? '222px' : '90px'}
+                                    is_disabled={isDesktop()}
+                                >
+                                    {!is_dashboard && (
+                                        <Text
+                                            as='p'
+                                            align='left'
+                                            size='xxs'
+                                            line_height='l'
+                                            className='details-form__description'
+                                        >
+                                            <strong>
+                                                <Localize i18n_default_text='Only use an address for which you have proof of residence - ' />
+                                            </strong>
+                                            <Localize i18n_default_text='a recent utility bill (e.g. electricity, water, gas, landline, or internet), bank statement, or government-issued letter with your name and this address.' />
+                                        </Text>
                                     )}
-                                    <div className='details-form__elements'>
-                                        <InputField
-                                            name='address_line_1'
-                                            required={is_svg || is_dashboard}
-                                            label={
-                                                is_svg || is_dashboard
-                                                    ? localize('First line of address*')
-                                                    : localize('First line of address')
-                                            }
-                                            maxLength={255}
-                                            placeholder={localize('First line of address')}
-                                        />
-                                        <InputField
-                                            name='address_line_2'
-                                            required={is_dashboard}
-                                            label={
-                                                is_dashboard
-                                                    ? localize('Second line of address*')
-                                                    : localize('Second line of address')
-                                            }
-                                            maxLength={255}
-                                            placeholder={localize('Second line of address')}
-                                        />
-                                        <InputField
-                                            name='address_city'
-                                            required={is_svg || is_dashboard}
-                                            label={
-                                                is_svg || is_dashboard ? localize('Town/City*') : localize('Town/City')
-                                            }
-                                            placeholder={localize('Town/City')}
-                                        />
-                                        {!has_fetched_states_list && (
-                                            <div className='details-form__loader'>
-                                                <Loading is_fullscreen={false} />
+                                    <ThemedScrollbars height={height} className='details-form__scrollbar'>
+                                        {is_dashboard && (
+                                            <div className='details-form__sub-header'>
+                                                <Text size={isMobile() ? 'xs' : 'xxs'} align={isMobile() && 'center'}>
+                                                    {localize(
+                                                        'We need this for verification. If the information you provide is fake or inaccurate, you won’t be able to deposit and withdraw.'
+                                                    )}
+                                                </Text>
                                             </div>
                                         )}
-                                        {states_list?.length > 0 ? (
-                                            <Field name='address_state'>
-                                                {({ field }) => (
-                                                    <>
-                                                        <DesktopWrapper>
-                                                            <Autocomplete
-                                                                {...field}
-                                                                {...(address_state_to_display && {
-                                                                    value: address_state_to_display,
-                                                                })}
-                                                                data-lpignore='true'
-                                                                autoComplete='new-password' // prevent chrome autocomplete
-                                                                type='text'
-                                                                label={localize('State/Province')}
-                                                                list_items={states_list}
-                                                                onItemSelection={({ value, text }) => {
-                                                                    setFieldValue(
-                                                                        'address_state',
-                                                                        value ? text : '',
-                                                                        true
-                                                                    );
-                                                                    setAddressStateToDisplay('');
-                                                                }}
-                                                                list_portal_id={is_dashboard ? '' : 'modal_root'}
-                                                            />
-                                                        </DesktopWrapper>
-                                                        <MobileWrapper>
-                                                            <SelectNative
-                                                                placeholder={localize('Please select')}
-                                                                label={localize('State/Province')}
-                                                                value={address_state_to_display || values.address_state}
-                                                                list_items={states_list}
-                                                                use_text={true}
-                                                                onChange={e => {
-                                                                    setFieldValue(
-                                                                        'address_state',
-                                                                        e.target.value,
-                                                                        true
-                                                                    );
-                                                                    setAddressStateToDisplay('');
-                                                                }}
-                                                            />
-                                                        </MobileWrapper>
-                                                    </>
-                                                )}
-                                            </Field>
-                                        ) : (
-                                            // Fallback to input field when states list is empty / unavailable for country
+                                        <div className='details-form__elements'>
                                             <InputField
-                                                name='address_state'
-                                                label={localize('State/Province')}
-                                                placeholder={localize('State/Province')}
+                                                name='address_line_1'
+                                                required={is_svg || is_dashboard}
+                                                label={
+                                                    is_svg || is_dashboard
+                                                        ? localize('First line of address*')
+                                                        : localize('First line of address')
+                                                }
+                                                maxLength={255}
+                                                placeholder={localize('First line of address')}
                                             />
-                                        )}
-                                        <InputField
-                                            name='address_postcode'
-                                            required={is_gb_residence || is_dashboard}
-                                            label={
-                                                is_dashboard
-                                                    ? localize('Postal/ZIP Code*')
-                                                    : localize('Postal/ZIP Code')
-                                            }
-                                            placeholder={localize('Postal/ZIP Code')}
-                                            onChange={e => {
-                                                setFieldTouched('address_postcode', true);
-                                                handleChange(e);
-                                            }}
-                                        />
-                                    </div>
-                                </ThemedScrollbars>
-                            </Div100vhContainer>
+                                            <InputField
+                                                name='address_line_2'
+                                                required={is_dashboard}
+                                                label={
+                                                    is_dashboard
+                                                        ? localize('Second line of address*')
+                                                        : localize('Second line of address')
+                                                }
+                                                maxLength={255}
+                                                placeholder={localize('Second line of address')}
+                                            />
+                                            <InputField
+                                                name='address_city'
+                                                required={is_svg || is_dashboard}
+                                                label={
+                                                    is_svg || is_dashboard
+                                                        ? localize('Town/City*')
+                                                        : localize('Town/City')
+                                                }
+                                                placeholder={localize('Town/City')}
+                                            />
+                                            {!has_fetched_states_list && (
+                                                <div className='details-form__loader'>
+                                                    <Loading is_fullscreen={false} />
+                                                </div>
+                                            )}
+                                            {states_list?.length > 0 ? (
+                                                <Field name='address_state'>
+                                                    {({ field }) => (
+                                                        <>
+                                                            <DesktopWrapper>
+                                                                <Autocomplete
+                                                                    {...field}
+                                                                    {...(address_state_to_display && {
+                                                                        value: address_state_to_display,
+                                                                    })}
+                                                                    data-lpignore='true'
+                                                                    autoComplete='new-password' // prevent chrome autocomplete
+                                                                    type='text'
+                                                                    label={localize('State/Province')}
+                                                                    list_items={states_list}
+                                                                    onItemSelection={({ value, text }) => {
+                                                                        setFieldValue(
+                                                                            'address_state',
+                                                                            value ? text : '',
+                                                                            true
+                                                                        );
+                                                                        setAddressStateToDisplay('');
+                                                                    }}
+                                                                    list_portal_id={is_dashboard ? '' : 'modal_root'}
+                                                                />
+                                                            </DesktopWrapper>
+                                                            <MobileWrapper>
+                                                                <SelectNative
+                                                                    placeholder={localize('Please select')}
+                                                                    label={localize('State/Province')}
+                                                                    value={
+                                                                        address_state_to_display || values.address_state
+                                                                    }
+                                                                    list_items={states_list}
+                                                                    use_text={true}
+                                                                    onChange={e => {
+                                                                        setFieldValue(
+                                                                            'address_state',
+                                                                            e.target.value,
+                                                                            true
+                                                                        );
+                                                                        setAddressStateToDisplay('');
+                                                                    }}
+                                                                />
+                                                            </MobileWrapper>
+                                                        </>
+                                                    )}
+                                                </Field>
+                                            ) : (
+                                                // Fallback to input field when states list is empty / unavailable for country
+                                                <InputField
+                                                    name='address_state'
+                                                    label={localize('State/Province')}
+                                                    placeholder={localize('State/Province')}
+                                                />
+                                            )}
+                                            <InputField
+                                                name='address_postcode'
+                                                required={is_gb_residence || is_dashboard}
+                                                label={
+                                                    is_dashboard
+                                                        ? localize('Postal/ZIP Code*')
+                                                        : localize('Postal/ZIP Code')
+                                                }
+                                                placeholder={localize('Postal/ZIP Code')}
+                                                onChange={e => {
+                                                    setFieldTouched('address_postcode', true);
+                                                    handleChange(e);
+                                                }}
+                                            />
+                                        </div>
+                                    </ThemedScrollbars>
+                                </Div100vhContainer>
+                            </Modal.Body>
                             <Modal.Footer has_separator is_bypassed={isMobile()}>
                                 <FormSubmitButton
                                     is_disabled={isSubmitDisabled(errors)}

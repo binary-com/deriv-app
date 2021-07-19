@@ -32,6 +32,7 @@ const storage_key = 'client.accounts';
 const store_name = 'client_store';
 const eu_shortcode_regex = new RegExp('^(maltainvest|malta|iom)$');
 const eu_excluded_regex = new RegExp('^mt$');
+const NO_SPENDING_LIMIT_TURNOVER = 99999999999999;
 
 export default class ClientStore extends BaseStore {
     @observable loginid;
@@ -106,6 +107,8 @@ export default class ClientStore extends BaseStore {
 
     @observable trading_servers = [];
 
+    @observable last_transaction;
+
     is_mt5_account_list_updated = false;
 
     constructor(root_store) {
@@ -158,12 +161,55 @@ export default class ClientStore extends BaseStore {
             : undefined;
     }
 
+    /**
+     * As discussed we have 3 scenario to show reality check
+     * one:
+     * 1. if landing company has reality check
+     * 2. if balance is not 0
+     * 3. start showing reality check
+     *
+     * two:
+     * 1. if landing company has reality check
+     * 2. if balance is 0
+     * 3. subscribe to transaction
+     * 4. call statement, if the length is 0
+     * 5. whenever has any transaction and start showing reality check
+     *
+     * three:
+     * 1. if landing company has reality check
+     * 2. if balance is 0
+     * 3. subscribe to transaction
+     * 4. call statement, if the length is more than 0
+     * 5. start showing reality check
+     */
     @computed
     get is_reality_check_visible() {
         if (!this.loginid || !this.landing_company) {
             return false;
         }
-        return !!(this.has_reality_check && !this.reality_check_dismissed);
+
+        const balance = parseFloat(this.balance);
+
+        if (!this.has_reality_check) return false;
+        // scenario one
+        if (!this.reality_check_dismissed && balance > 0) return true;
+
+        // scenario two
+        if (
+            !this.reality_check_dismissed &&
+            balance === 0 &&
+            this.statement.count === 0 &&
+            !!this.last_transaction?.action
+        )
+            return true;
+
+        // scenario three
+        if (!this.reality_check_dismissed && balance === 0 && this.statement.count > 0) return true;
+
+        // another scenario
+        if (this.has_reality_check && !this.self_exclusion.max_30day_turnover) return true;
+
+        return false;
     }
 
     @computed
@@ -1219,6 +1265,8 @@ export default class ClientStore extends BaseStore {
             if (account_settings) this.setPreferredLanguage(account_settings.preferred_language);
             await this.fetchResidenceList();
 
+            await this.getSelfExclusion();
+
             if (account_settings && !account_settings.residence) {
                 this.root_store.ui.toggleSetResidenceModal(true);
             }
@@ -1359,6 +1407,7 @@ export default class ClientStore extends BaseStore {
 
     @action.bound
     setPreSwitchAccount(is_pre_switch) {
+        this.has_reality_check = false;
         this.pre_switch_broadcast = is_pre_switch;
     }
 
@@ -1525,10 +1574,12 @@ export default class ClientStore extends BaseStore {
             const total_real = getPropertyValue(obj_balance, ['total', 'deriv']);
             const total_mt5 = getPropertyValue(obj_balance, ['total', CFD_PLATFORMS.MT5]);
             const total_dxtrade = getPropertyValue(obj_balance, ['total', CFD_PLATFORMS.DXTRADE]);
+            const current_account = getPropertyValue(obj_balance, ['accounts', obj_balance.loginid]);
             // in API streaming responses MT5 balance is not re-sent, so we need to reuse the first mt5 total sent
             const has_mt5 = !isEmptyObject(total_mt5);
             const has_dxtrade = !isEmptyObject(total_dxtrade);
             this.obj_total_balance = {
+                current_account: current_account?.balance,
                 amount_real: +total_real.amount,
                 amount_mt5: has_mt5 ? +total_mt5.amount : this.obj_total_balance.amount_mt5,
                 amount_dxtrade: has_dxtrade ? +total_dxtrade.amount : this.obj_total_balance.amount_dxtrade,
@@ -2019,6 +2070,13 @@ export default class ClientStore extends BaseStore {
     }
 
     @action.bound
+    transactionResponseCall(response) {
+        if (response.transaction) {
+            this.last_transaction = response.transaction;
+        }
+    }
+
+    @action.bound
     getChangeableFields() {
         const get_settings =
             Object.keys(this.account_settings).length === 0
@@ -2074,6 +2132,33 @@ export default class ClientStore extends BaseStore {
     @computed
     get has_residence() {
         return !!this.accounts[this.loginid]?.residence;
+    }
+
+    @action.bound
+    setSpendingLimitTradingStatistics(values, form_props) {
+        // when there is no spending limit set, system set it as 9999999xx by default
+        const max_30day_turnover = !!values.max_30day_turnover ? values.max_30day_turnover : NO_SPENDING_LIMIT_TURNOVER;
+        WS.send({ set_self_exclusion: 1, max_30day_turnover: max_30day_turnover }).then(response => {
+            if (response.error) {
+                form_props?.setStatus(response.error);
+            } else {
+                runInAction(() => (this.self_exclusion.max_30day_turnover = max_30day_turnover));
+                if (this.root_store.modules.cashier) {
+                    this.root_store.modules.cashier.setErrorConfig('is_self_exclusion_max_turnover_set', false);
+                }
+                if (this.root_store.ui) {
+                    this.root_store.ui.removeNotificationByKey({ key: 'max_turnover_limit_not_set' });
+                    this.root_store.ui.removeNotificationMessageByKey({ key: 'max_turnover_limit_not_set' });
+                }
+            }
+            form_props?.setSubmitting(false);
+        });
+    }
+
+    @action.bound
+    setSpendingLimit(interval) {
+        this.setVisibilityRealityCheck(0);
+        this.setRealityCheckDuration(interval);
     }
 
     @action.bound
