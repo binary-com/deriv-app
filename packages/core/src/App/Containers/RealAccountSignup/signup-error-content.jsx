@@ -52,7 +52,7 @@ const TryAgain = ({ text, onConfirm }) => (
     </Button>
 );
 
-const ErrorCTA = ({ code, onConfirm }) => {
+const ErrorCTA = ({ code, onClose, onConfirm }) => {
     switch (code) {
         case 'CurrencyTypeNotAllowed':
             return <TryAgain text={localize('Try a different currency')} onConfirm={onConfirm} />;
@@ -60,6 +60,8 @@ const ErrorCTA = ({ code, onConfirm }) => {
             return <TryAgain text={localize('Try a different phone number')} onConfirm={onConfirm} />;
         case 'DuplicateAccount':
             return null;
+        case 'ForbiddenPostcode':
+            return <TryAgain text={localize('OK')} onConfirm={onClose} />;
         default:
             return (
                 <StaticUrl href='help-centre' type='button' className='dc-btn dc-btn--primary'>
@@ -71,13 +73,13 @@ const ErrorCTA = ({ code, onConfirm }) => {
     }
 };
 
-const SignupErrorContent = ({ message, code, onConfirm }) => {
+const SignupErrorContent = ({ message, code, onClose, onConfirm }) => {
     return (
         <div className='account-wizard--error'>
             <Icon icon='IcAccountError' size={115} />
             <Heading code={code} />
             <Message code={code} message={message} />
-            <ErrorCTA code={code} onConfirm={onConfirm} />
+            <ErrorCTA code={code} onClose={onClose} onConfirm={onConfirm} />
         </div>
     );
 };

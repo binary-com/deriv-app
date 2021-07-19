@@ -138,6 +138,7 @@ const RealAccountSignup = ({
                 <SignupErrorContent
                     message={local_props.state_value.error_message}
                     code={local_props.state_value.error_code}
+                    onClose={closeModal}
                     onConfirm={onErrorConfirm}
                 />
             ),
