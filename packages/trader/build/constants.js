@@ -5,7 +5,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 // const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const IgnorePlugin = require('webpack').IgnorePlugin;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const path = require('path');
 const StylelintPlugin = require('stylelint-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -108,7 +108,7 @@ const MINIMIZERS = !IS_RELEASE
               exclude: /(smartcharts)/,
               parallel: 2,
           }),
-          new OptimizeCssAssetsPlugin(),
+          new CssMinimizerPlugin(),
       ];
 
 const plugins = (base, is_test_env, is_mocha_only) => [

@@ -31,10 +31,10 @@
     "commander": "^3.0.2",
     "crc-32": "^1.2.0",
     "glob": "^7.1.5",
-    "i18next": "^18.0.0",
+    "i18next": "^20.3.2",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-i18next": "^11.0.0"
+    "react-i18next": "^11.11.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",

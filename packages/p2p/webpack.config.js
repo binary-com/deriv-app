@@ -1,5 +1,5 @@
 const publisher_utils = require('@deriv/publisher/utils');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 // const BundleAnalyzerPlugin    = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -126,7 +126,7 @@ module.exports = function () {
                           test: /\.js$/,
                           parallel: 2,
                       }),
-                      new OptimizeCssAssetsPlugin(),
+                      new CssMinimizerPlugin()
                   ]
                 : [],
         },

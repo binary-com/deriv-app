@@ -7,42 +7,34 @@ const copyConfig = base => {
         {
             from: path.resolve(__dirname, '../node_modules/@deriv/bot-web-ui/dist/bot/css/'),
             to: 'bot/css/',
-            flatten: true,
         },
         {
             from: path.resolve(__dirname, '../node_modules/@deriv/bot-web-ui/dist/bot/media/**'),
             to: 'media',
-            flatten: true,
         },
         {
             from: path.resolve(__dirname, '../node_modules/@deriv/bot-web-ui/dist/bot/js/*.*'),
             to: 'bot/js/',
-            flatten: true,
         },
         {
-            from: path.resolve(__dirname, '../../../node_modules/@deriv/deriv-charts/dist/*.smartcharts.*'),
+            from: path.resolve(__dirname, '../../../node_modules/@deriv/deriv-charts/dist'),
             to: 'js/smartcharts/',
-            flatten: true,
         },
         {
             from: path.resolve(__dirname, '../node_modules/@deriv/account/dist/account/js/**'),
             to: 'account/js',
-            flatten: true,
         },
         {
             from: path.resolve(__dirname, '../node_modules/@deriv/account/dist/account/css/**'),
             to: 'account/css',
-            flatten: true,
         },
         {
-            from: path.resolve(__dirname, '../node_modules/@deriv/cashier/dist/cashier/js/**'),
+            from: path.resolve(__dirname, '../node_modules/@deriv/cashier/dist/cashier/js/'),
             to: 'cashier/js',
-            flatten: true,
         },
         {
             from: path.resolve(__dirname, '../node_modules/@deriv/cashier/dist/cashier/css/**'),
             to: 'cashier/css',
-            flatten: true,
         },
         {
             from: path.resolve(__dirname, '../node_modules/@deriv/cashier/dist/cashier/public/**'),
@@ -73,7 +65,6 @@ const copyConfig = base => {
         {
             from: path.resolve(__dirname, '../src/public/images/common/static_images/**'),
             to: 'public/images/common',
-            flatten: true,
         },
         // { from: path.resolve(__dirname, '../src/public/images/common/og_image.gif'), to: 'images/common/og_image.gif' }, // Once the design for og_image is ready, bring this back.
         { from: path.resolve(__dirname, '../src/public/images/common/logos/platform_logos/**') },

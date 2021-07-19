@@ -1,7 +1,7 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const IgnorePlugin = require('webpack').IgnorePlugin;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 
@@ -94,7 +94,7 @@ const MINIMIZERS = !IS_RELEASE
               test: /\.js$/,
               parallel: 2,
           }),
-          new OptimizeCssAssetsPlugin(),
+          new CssMinimizerPlugin(),
       ];
 
 const plugins = () => [

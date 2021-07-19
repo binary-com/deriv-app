@@ -1,4 +1,4 @@
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -131,7 +131,7 @@ module.exports = function () {
                           test: /\.js$/,
                           parallel: 2,
                       }),
-                      new OptimizeCssAssetsPlugin(),
+                      new CssMinimizerPlugin()
                   ]
                 : [],
         },
