@@ -86,6 +86,13 @@ commands:
           name: "Build all packages for deriv dashboard"
           command: npm run build:dashboard
 
+  build_storybook:
+    description: "Build storybook"
+    steps:
+      - run:
+          name: "Build all packages for deriv storybook"
+          command: npm run build:storybook
+
   notify_slack:
     description: "Notify slack"
     steps:
@@ -98,14 +105,14 @@ commands:
   versioning:
     description: "Version the branch"
     parameters:
-      target_branch:
+      version_name:
         type: string
     steps:
       - attach_workspace:
           at: packages/core/dist
       - run:
           name: Tag
-          command: echo "<< parameters.target_branch >>-$(date -u +"%Y-%m-%dT%H:%M:%SZ")" > packages/core/dist/version
+          command: echo "<< parameters.version_name >>-$(date -u +"%Y-%m-%dT%H:%M:%SZ")" > packages/core/dist/version
 
   docker_build_push:
     description: "Build and Push image to docker hub"
@@ -116,6 +123,9 @@ commands:
       docker_image_name:
         type: string
         default: "deriv-app"
+      docker_file:
+        type: string
+        default: "Dockerfile"
     steps:
       - setup_remote_docker:
           docker_layer_caching: true
@@ -123,7 +133,7 @@ commands:
           name: Building docker image
           command: |
             TAG=${CIRCLE_TAG:-$CIRCLE_SHA1}
-            docker build -t ${DOCKHUB_ORGANISATION}/<< parameters.docker_image_name >>:${TAG} -t ${DOCKHUB_ORGANISATION}/<< parameters.docker_image_name >>:<< parameters.docker_image_latest_tag >> .
+            docker build -t ${DOCKHUB_ORGANISATION}/<< parameters.docker_image_name >>:${TAG} -t ${DOCKHUB_ORGANISATION}/<< parameters.docker_image_name >>:<< parameters.docker_image_latest_tag >>  -f << parameters.docker_file >> .
       - run:
           name: Pushing Image to docker hub
           command: |
@@ -136,6 +146,9 @@ commands:
       k8s_namespace:
         type: string
         default: "deriv-app-staging"
+      k8s_service:
+        type: string
+        default: "deriv-app"
     steps:
       - k8s/install-kubectl
       - run:
@@ -146,7 +159,7 @@ commands:
             git clone https://github.com/binary-com/devops-ci-scripts
             cd devops-ci-scripts/k8s-build_tools
             echo $CA_CRT | base64 --decode > ca.crt
-            ./release.sh deriv-app ${TAG}
+            ./release.sh << parameters.k8s_service >> ${TAG}
 jobs:
   build:
     docker:
@@ -164,6 +177,26 @@ jobs:
       - npm_install_from_cache
       - build_dashboard
 
+  release_storybook:
+    docker:
+      - image: circleci/node:12.18.0-stretch
+    steps:
+      - git_checkout_from_cache
+      - npm_install_from_cache
+      - build_storybook
+      - versioning:
+          version_name: storybook
+      - docker_build_push:
+          docker_image_latest_tag: latest
+          docker_image_name: "deriv-app-storybook"
+          docker_file: "Dockerfile-storybook"
+      - k8s_deploy:
+          k8s_namespace: "deriv-app-storybook-production"
+          k8s_service: "deriv-app-storybook"
+      - notify_slack
+    environment:
+      NODE_ENV: production
+
   release_staging:
     docker:
       - image: circleci/node:12.18.0-stretch
@@ -172,7 +205,7 @@ jobs:
       - npm_install_from_cache
       - build
       - versioning:
-          target_branch: staging
+          version_name: staging
       - docker_build_push
       - k8s_deploy
       - notify_slack
@@ -187,7 +220,7 @@ jobs:
       - npm_install_from_cache
       - build_dashboard
       - versioning:
-          target_branch: staging-dashboard
+          version_name: staging-dashboard
       - docker_build_push:
           docker_image_name: deriv-app-dashboard
           docker_image_latest_tag: latest-staging-dashboard
@@ -203,14 +236,14 @@ jobs:
       - npm_install_from_cache
       - build
       - versioning:
-          target_branch: production
+          version_name: production
       - docker_build_push:
           docker_image_latest_tag: latest
       - k8s_deploy:
           k8s_namespace: "deriv-app-production"
       - notify_slack
     environment:
-      NODE_ENV: staging
+      NODE_ENV: production
 
   release_production_dashboard:
     docker:
@@ -220,13 +253,13 @@ jobs:
       - npm_install_from_cache
       - build_dashboard
       - versioning:
-          target_branch: production-dashboard
+          version_name: production-dashboard
       - docker_build_push:
           docker_image_name: deriv-app-dashboard
           docker_image_latest_tag: latest
       - notify_slack
     environment:
-      NODE_ENV: staging
+      NODE_ENV: production
   
   build_and_test:
     docker:
@@ -240,13 +273,25 @@ jobs:
           command: npm test
 
 workflows:
+  release_storybook:
+    jobs:
+      - release_storybook:
+          context: binary-frontend-artifact-upload
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^storybook.*/
+
   release_staging:
     jobs:
       - release_staging:
+          context: binary-frontend-artifact-upload
           filters:
             branches:
               only: /^master$/
       - release_staging_dashboard:
+          context: binary-frontend-artifact-upload
           filters:
             branches:
               only: /^master$/
