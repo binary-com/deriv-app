@@ -1,6 +1,8 @@
 import { localize } from '@deriv/translations';
+import { config } from '../../../../constants/config';
 import { runIrreversibleEvents } from '../../../utils';
 import ApiHelpers from '../../../../services/api/api-helpers';
+import DBotStore from '../../../dbot-store';
 
 /* eslint-disable */
 Blockly.Blocks.trade_definition_market = {
@@ -49,10 +51,14 @@ Blockly.Blocks.trade_definition_market = {
 
         this.enforceLimitations();
 
+        const forexHideList = config.lists.FOREX_HIDE_LIST;
+
         const { active_symbols } = ApiHelpers.instance;
+        const { is_virtual, residence } = DBotStore.instance.client;
         const market_dropdown = this.getField('MARKET_LIST');
         const submarket_dropdown = this.getField('SUBMARKET_LIST');
         const symbol_dropdown = this.getField('SYMBOL_LIST');
+        const shouldHideForex = is_virtual && forexHideList.includes(residence);
         const market = market_dropdown.getValue();
         const submarket = submarket_dropdown.getValue();
         const symbol = symbol_dropdown.getValue();
@@ -61,9 +67,13 @@ Blockly.Blocks.trade_definition_market = {
         // market options and Jump Diffusion Indices from
         // submarket options for Synthetic Indices
         // until multipliers are available for DBot
-        const market_options = active_symbols
-            .getMarketDropdownOptions()
-            .filter(option => option[1] !== 'cryptocurrency');
+
+        const market_options = active_symbols.getMarketDropdownOptions().filter(option => {
+            if (option[1] === 'cryptocurrency') return false;
+            else if (shouldHideForex && option[1] === 'forex') return false;
+            else return true;
+        });
+
         const submarket_options =
             market === 'synthetic_index'
                 ? active_symbols.getSubmarketDropdownOptions(market).filter(option => option[1] !== 'jump_index')

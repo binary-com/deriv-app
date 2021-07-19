@@ -58,7 +58,6 @@ const QuickStrategyForm = ({
             const validation_errors = validateQuickStrategy(values);
             const is_valid = Object.keys(validation_errors).length === 0;
             const is_submit_enabled = !isSubmitting && is_valid;
-
             return (
                 <Form
                     className={classNames('quick-strategy__form', {
@@ -466,6 +465,7 @@ const ContentRenderer = props => {
         is_onscreen_keyboard_active,
         is_mobile,
         is_stop_button_visible,
+        residence,
         onChangeDropdownItem,
         onChangeInputValue,
         onHideDropdownList,
@@ -476,12 +476,27 @@ const ContentRenderer = props => {
         setCurrentFocus,
         selected_duration_unit,
     } = props;
+    const forexHideList = config.lists.FOREX_HIDE_LIST;
+    const shouldHideForex = forexHideList.includes(residence);
     const symbol_dropdown_options = symbol_dropdown
         .map(symbol => ({
             component: <MarketOption symbol={symbol} />,
             ...symbol,
         }))
-        .filter(option => option.group !== 'Cryptocurrencies' && option.group !== 'Jump Indices'); // Until Crypto enabled for Dbot
+        .filter(option => {
+            if (option.group === 'Cryptocurrencies' || option.group === 'Jump Indices') return false;
+            // Until Crypto enabled for Dbot
+            else if (
+                shouldHideForex &&
+                !(option.group === 'Daily Reset Indices' || option.group === 'Continuous Indices')
+            )
+                return false;
+            return true;
+        }); // Until Forex multiplier enabled for Dbot
+
+    const has_cached_symbol = symbol_dropdown_options.some(symbol => symbol.value === selected_symbol.value);
+    const selected_symbol_option = has_cached_symbol ? selected_symbol : symbol_dropdown_options[0];
+
     const trade_type_dropdown_options = trade_type_dropdown.map(trade_type => ({
         component: <TradeTypeOption trade_type={trade_type} />,
         ...trade_type,
@@ -511,7 +526,7 @@ const ContentRenderer = props => {
                             symbol_dropdown={symbol_dropdown_options}
                             trade_type_dropdown={trade_type_dropdown_options}
                             is_mobile={is_mobile}
-                            selected_symbol={selected_symbol}
+                            selected_symbol={selected_symbol_option}
                             selected_trade_type={selected_trade_type}
                             selected_duration_unit={selected_duration_unit}
                             description={description}
@@ -573,6 +588,7 @@ QuickStrategy.propTypes = {
     onChangeSymbolInput: PropTypes.func,
     onHideDropdownList: PropTypes.func,
     onScrollStopDropdownList: PropTypes.func,
+    residence: PropTypes.string,
     setActiveTabIndex: PropTypes.func,
     setCurrentFocus: PropTypes.func,
     selected_symbol: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
@@ -584,7 +600,7 @@ QuickStrategy.propTypes = {
     validateQuickStrategy: PropTypes.func,
 };
 
-export default connect(({ run_panel, quick_strategy, ui }) => ({
+export default connect(({ run_panel, quick_strategy, client, ui }) => ({
     active_index: quick_strategy.active_index,
     createStrategy: quick_strategy.createStrategy,
     duration_unit_dropdown: quick_strategy.duration_unit_dropdown,
@@ -601,6 +617,7 @@ export default connect(({ run_panel, quick_strategy, ui }) => ({
     onChangeSymbolInput: quick_strategy.onChangeSymbolInput,
     onHideDropdownList: quick_strategy.onHideDropdownList,
     onScrollStopDropdownList: quick_strategy.onScrollStopDropdownList,
+    residence: client.residence,
     setActiveTabIndex: quick_strategy.setActiveTabIndex,
     selected_symbol: quick_strategy.selected_symbol,
     selected_trade_type: quick_strategy.selected_trade_type,
