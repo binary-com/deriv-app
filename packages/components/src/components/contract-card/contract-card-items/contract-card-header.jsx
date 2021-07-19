@@ -15,12 +15,12 @@ const ContractCardHeader = ({
     contract_info,
     display_name,
     getCardLabels,
+    getContractTypeDisplay,
     has_progress_slider,
     id,
     is_mobile,
     is_sell_requested,
     is_valid_to_sell,
-    getContractTypeDisplay,
     onClickSell,
     server_time,
 }) => {
@@ -109,12 +109,13 @@ const ContractCardHeader = ({
 
 ContractCardHeader.propTypes = {
     contract_info: PropTypes.object,
+    display_name: PropTypes.string,
     getCardLabels: PropTypes.func,
     getContractTypeDisplay: PropTypes.func,
     has_progress_slider: PropTypes.bool,
     is_mobile: PropTypes.bool,
     is_sell_requested: PropTypes.bool,
-    is_sold: PropTypes.bool,
+    is_valid_to_sell: PropTypes.bool,
     onClickSell: PropTypes.func,
     server_time: PropTypes.object,
 };

@@ -52,6 +52,14 @@ export const config = {
         CURRENCY: ['USD', 'EUR', 'GBP', 'AUD', ...CRYPTO_CURRENCIES],
     },
     opposites: {
+        MULTIPLIER: [
+            {
+                MULTUP: localize('Up'),
+            },
+            {
+                MULTDOWN: localize('Down'),
+            },
+        ],
         CALLPUT: [
             {
                 CALL: localize('Rise'),
@@ -201,6 +209,7 @@ export const config = {
         digits: ['matchesdiffers', 'evenodd', 'overunder'],
     },
     TRADE_TYPE_CATEGORIES: {
+        multiplier: ['multiplier'],
         callput: ['callput', 'callputequal', 'higherlower'],
         touchnotouch: ['touchnotouch'],
         inout: ['endsinout', 'staysinout'],
@@ -221,11 +230,12 @@ export const config = {
         callputspread: localize('Call Spread/Put Spread'),
         highlowticks: localize('High/Low Ticks'),
         runs: localize('Only Ups/Only Downs'),
+        multiplier: localize('Multipliers'),
     },
     BARRIER_CATEGORIES: {
         euro_atm: ['callput', 'callputequal'],
         euro_non_atm: ['endsinout', 'higherlower', 'callputspread'],
-        american: ['staysinout', 'touchnotouch', 'highlowticks', 'runs'],
+        american: ['staysinout', 'touchnotouch', 'highlowticks', 'runs', 'multiplier'],
         non_financial: ['digits', 'overunder', 'evenodd', 'matchesdiffers'],
         asian: ['asians'],
         reset: ['reset'],

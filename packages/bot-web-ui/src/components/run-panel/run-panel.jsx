@@ -264,6 +264,7 @@ const RunPanel = ({
                 is_mobile_full_width={false}
                 className={'dc-dialog__wrapper--fixed'}
                 has_close_icon
+                onClose={onCloseDialog}
             >
                 {dialog_options.message}
             </Dialog>

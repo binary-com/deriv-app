@@ -2,6 +2,7 @@ import { getRoundedNumber } from '@deriv/shared';
 import { sell, openContractReceived } from './state/actions';
 import { contractStatus, contract as broadcastContract } from '../utils/broadcast';
 import { doUntilDone } from '../utils/helpers';
+import DBotStore from '../../../scratch/dbot-store';
 
 export default Engine =>
     class OpenContract extends Engine {
@@ -52,6 +53,8 @@ export default Engine =>
             this.contractId = contract_id;
             doUntilDone(() => this.api.send({ proposal_open_contract: 1, contract_id, subscribe: 1 }))
                 .then(data => {
+                    const { populateConfig } = DBotStore.instance;
+                    populateConfig(data.proposal_open_contract);
                     this.openContractId = data.proposal_open_contract.id;
                 })
                 .catch(error => {

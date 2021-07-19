@@ -24,6 +24,39 @@
             border: 1px solid var(--border-normal);
             appearance: none;
         }
+        &--currency {
+            position: absolute;
+            height: 3.2rem;
+            right: 4rem;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            background: transparent;
+            border-color: transparent;
+            z-index: 2;
+            color: inherit;
+
+            &-symbol {
+                font-size: 1.4rem;
+                line-height: 1.5;
+                padding-bottom: 0.2rem;
+            }
+            &:before {
+                @include typeface(--paragraph-center-normal-black);
+                color: inherit;
+            }
+        }
+    }
+    &__popover {
+        /* postcss-bem-linter: ignore */
+        .dc-checkbox {
+            margin-top: 0.8rem;
+
+            /* postcss-bem-linter: ignore */
+            &__label {
+                font-size: inherit;
+            }
+        }
     }
     &__button {
         margin-top: 0.8rem;

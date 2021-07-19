@@ -18,9 +18,10 @@ import InputWithCheckbox from '../../input-wth-checkbox';
 
 const ContractUpdateForm = props => {
     const {
-        contract,
         addToast,
+        contract,
         current_focus,
+        error_message_alignment,
         getCardLabels,
         onMouseLeave,
         removeToast,
@@ -98,7 +99,7 @@ const ContractUpdateForm = props => {
             addToast={addToast}
             removeToast={removeToast}
             current_focus={current_focus}
-            classNameInlinePrefix='trade-container__currency'
+            classNameInlinePrefix='dc-contract-card-dialog__input--currency'
             currency={currency}
             error_messages={error_messages.take_profit}
             is_single_currency={true}
@@ -107,7 +108,7 @@ const ContractUpdateForm = props => {
             label={getCardLabels().TAKE_PROFIT}
             name='contract_update_take_profit'
             onChange={onChange}
-            error_message_alignment='right'
+            error_message_alignment={error_message_alignment || 'right'}
             value={contract_update_take_profit}
             is_disabled={!!is_valid_to_cancel}
             setCurrentFocus={setCurrentFocus}
@@ -119,7 +120,7 @@ const ContractUpdateForm = props => {
             addToast={addToast}
             removeToast={removeToast}
             current_focus={current_focus}
-            classNameInlinePrefix='trade-container__currency'
+            classNameInlinePrefix='dc-contract-card-dialog__input--currency'
             currency={currency}
             defaultChecked={has_contract_update_stop_loss}
             error_messages={error_messages.stop_loss}
@@ -129,7 +130,7 @@ const ContractUpdateForm = props => {
             max_value={buy_price - cancellation_price}
             name='contract_update_stop_loss'
             onChange={onChange}
-            error_message_alignment='right'
+            error_message_alignment={error_message_alignment || 'right'}
             value={contract_update_stop_loss}
             is_disabled={!!is_valid_to_cancel}
             setCurrentFocus={setCurrentFocus}
@@ -186,8 +187,9 @@ ContractUpdateForm.propTypes = {
     addToast: PropTypes.func,
     contract: PropTypes.object,
     current_focus: PropTypes.string,
-    onMouseLeave: PropTypes.func,
+    error_message_alignment: PropTypes.string,
     getCardLabels: PropTypes.func,
+    onMouseLeave: PropTypes.func,
     removeToast: PropTypes.func,
     setCurrentFocus: PropTypes.func,
     status: PropTypes.string,

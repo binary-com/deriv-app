@@ -46,8 +46,8 @@ ContractCardDialog.propTypes = {
     children: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     is_visible: PropTypes.bool,
     left: PropTypes.number,
-    toggle_ref: PropTypes.object,
     toggleDialog: PropTypes.func,
+    toggle_ref: PropTypes.object,
     top: PropTypes.number,
 };
 

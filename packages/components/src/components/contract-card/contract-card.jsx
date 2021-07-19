@@ -58,6 +58,7 @@ ContractCard.MultiplierCloseActions = MultiplierCloseActions;
 ContractCard.Sell = ContractCardSell;
 
 ContractCard.propTypes = {
+    children: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     contract_info: PropTypes.object,
     getCardLabels: PropTypes.func,
     getContractPath: PropTypes.func,
