@@ -22,6 +22,7 @@ const DatePicker = React.memo(props => {
         mode,
         max_date,
         min_date,
+        start_date,
         name,
         onBlur,
         onChange,
@@ -164,7 +165,7 @@ const DatePicker = React.memo(props => {
     const getInputValue = () => (mode === 'duration' ? duration : date);
 
     const getCalendarValue = new_date => {
-        if (!new_date) return isMobile() ? null : toMoment(max_date).format(date_format);
+        if (!new_date) return isMobile() ? null : toMoment(start_date || max_date).format(date_format);
         return convertDateFormat(new_date, display_format, date_format);
     };
 

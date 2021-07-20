@@ -1,0 +1,106 @@
+.manual-poi {
+    margin: 0 -1rem;
+
+    &--mobile {
+        margin: 0;
+        padding: 4rem 0.6rem 0;
+    }
+
+    .dc-timeline {
+        &__container {
+            flex: 1;
+            max-width: 63.4rem;
+
+            @at-root .manual-poi--mobile .dc-timeline__container {
+                max-width: none;
+            }
+        }
+        &__title {
+            font-size: var(--text-size-s);
+            line-height: 2.4rem;
+            margin: -4px 0 2.4rem;
+        }
+    }
+    .dc-card__wrapper:last-of-type {
+        margin-bottom: 4rem !important;
+    }
+    &__card {
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        justify-content: flex-start;
+        user-select: none;
+
+        .dc-icon {
+            flex: none;
+        }
+    }
+    &__card-content {
+        margin: 0 0 0 2.4rem;
+        width: 100%;
+
+        @at-root .manual-poi--mobile & {
+            margin: 0 0 0 1.6rem;
+        }
+
+        p {
+            max-width: 45.8rem;
+
+            @at-root .manual-poi--mobile & {
+                max-width: 15.2rem;
+            }
+        }
+        p:first-of-type {
+            margin-bottom: 0.8rem;
+        }
+    }
+    &__card-icon {
+        flex: none;
+    }
+    &__detail-header {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        cursor: pointer;
+        width: 100%;
+        grid-column-gap: 1rem;
+        align-content: start;
+    }
+    &__upload-icons {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        height: 10rem;
+        grid-gap: 1rem;
+        margin: 1rem 0 0;
+        @include desktop {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        &--no-margin {
+            margin: 0;
+            text-align: center;
+            align-items: center;
+        }
+    }
+    &__upload-container {
+        position: relative;
+        width: 100%;
+    }
+    &__image-preview {
+        width: 28.8rem;
+        height: 16rem;
+        background-image: var(--poi-background-image-upload-preview);
+        background-size: cover;
+        border-radius: $BORDER_RADIUS;
+
+        &-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+    }
+    &__confirm-buttons {
+        display: grid;
+        grid-gap: 1rem;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

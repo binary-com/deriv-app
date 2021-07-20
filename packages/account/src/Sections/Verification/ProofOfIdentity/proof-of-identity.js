@@ -10,9 +10,9 @@ export const onfido_status_codes = {
     suspected: 'suspected',
 };
 
-export const getIdentityStatus = (identity, needs_verification, is_mlt_mx, allow_poi_resubmission) => {
+export const getIdentityStatus = (identity, needs_verification, is_mlt_mx, is_nigeria, allow_poi_resubmission) => {
     const { status } = identity;
-    const onfido_unsupported = !identity.services.onfido.is_country_supported;
+    const onfido_unsupported = !identity.services.onfido.is_country_supported || is_nigeria;
     const submissions_allowed = needs_verification?.includes('identity');
     const status_allowed = ['pending', 'verified'];
 
@@ -24,6 +24,7 @@ export const getIdentityStatus = (identity, needs_verification, is_mlt_mx, allow
         }
         return onfido_status_codes[status];
     }
+
     if (onfido_unsupported) return onfido_status_codes.unsupported;
     return onfido_status_codes.onfido;
 };

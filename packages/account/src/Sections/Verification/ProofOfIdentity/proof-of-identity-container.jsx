@@ -7,6 +7,13 @@ import Limited from 'Components/poi-limited';
 import Unverified from 'Components/poi-unverified';
 import NotRequired from 'Components/poi-not-required';
 import RejectedReasons from 'Components/poi-rejected-reasons';
+
+import UploadComplete from 'Components/poi-upload-complete';
+import Unsupported from 'Components/poi-unsupported';
+import Expired from 'Components/poi-expired';
+import OnfidoFailed from 'Components/poi-onfido-failed';
+import Verified from 'Components/poi-verified';
+
 import ErrorMessage from 'Components/error-component';
 import Onfido from './onfido.jsx';
 import { getIdentityStatus, onfido_status_codes } from './proof-of-identity';
@@ -25,6 +32,7 @@ const ProofOfIdentityContainer = ({
     is_message_enabled = true,
     is_description_enabled = true,
     is_mx_mlt,
+    is_nigeria,
     height,
     redirect_button,
 }) => {
@@ -90,7 +98,13 @@ const ProofOfIdentityContainer = ({
 
             const { identity, needs_verification } = account_status_obj.authentication;
 
-            const identity_status = getIdentityStatus(identity, needs_verification, is_mx_mlt, allow_poi_resubmission);
+            const identity_status = getIdentityStatus(
+                identity,
+                needs_verification,
+                is_mx_mlt,
+                is_nigeria,
+                allow_poi_resubmission
+            );
 
             const has_no_rejections = !rejected_reasons?.length;
 
@@ -185,20 +199,40 @@ const ProofOfIdentityContainer = ({
     if (has_rejected_reasons && !is_continue_uploading)
         return <RejectedReasons rejected_reasons={rejected_reasons_key} setContinueUploading={setContinueUploading} />;
 
-    return (
-        <Onfido
-            country_code={country_code_key}
-            documents_supported={documents_supported}
-            status={status}
-            onfido_service_token={onfido_service_token}
-            needs_poa={needs_poa}
-            height={height ?? null}
-            handleComplete={handleComplete}
-            is_message_enabled={is_message_enabled}
-            is_description_enabled={is_description_enabled}
-            redirect_button={redirect_button}
-        />
-    );
+    const common_props = {
+        needs_poa,
+        is_description_enabled,
+        redirect_button,
+    };
+
+    const onfido_props = {
+        country_code: country_code_key,
+        documents_supported,
+        onfido_service_token,
+        is_message_enabled,
+        height: height ?? null,
+        handleComplete,
+        ...common_props,
+    };
+
+    switch (status) {
+        case onfido_status_codes.onfido:
+            return <Onfido {...onfido_props} />;
+        case onfido_status_codes.unsupported:
+            return <Unsupported {...onfido_props} />;
+        case onfido_status_codes.pending:
+            return <UploadComplete {...common_props} />;
+        case onfido_status_codes.rejected:
+            return <OnfidoFailed {...common_props} />;
+        case onfido_status_codes.verified:
+            return <Verified {...common_props} />;
+        case onfido_status_codes.expired:
+            return <Expired {...common_props} />;
+        case onfido_status_codes.suspected:
+            return <OnfidoFailed {...common_props} />;
+        default:
+            return null;
+    }
 };
 
 ProofOfIdentityContainer.propTypes = {

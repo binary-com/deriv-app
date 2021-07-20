@@ -1,0 +1,188 @@
+.manual-poi-details {
+    margin: 0 -1rem;
+    max-width: 67.2rem;
+    height: 100%;
+    display: flex;
+
+    &--mobile {
+        padding: 2.4rem 1.6rem;
+    }
+
+    h3 {
+        margin-bottom: 2.5rem;
+    }
+    &__form {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    &__fields-content {
+        flex: auto;
+    }
+    &__fields-wrap {
+        display: flex;
+        margin-bottom: 0.7rem;
+
+        .manual-poi-details--mobile & {
+            flex-wrap: wrap;
+        }
+    }
+    &__field {
+        margin-bottom: 3.5rem;
+
+        &:first-of-type {
+            margin-right: 2.4rem;
+
+            .manual-poi-details--mobile & {
+                margin-right: 0;
+            }
+        }
+    }
+    &__divider {
+        height: 2px;
+        background-color: var(--general-section-1);
+        margin-bottom: 2.4rem;
+
+        &--m16 {
+            margin-bottom: 1.6rem;
+        }
+    }
+    &__uploaders-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        .dc-file-dropzone__message {
+            width: 100%;
+            max-width: none;
+            pointer-events: all;
+        }
+    }
+    &__uploader {
+        position: relative;
+        width: 100%;
+        max-width: 32.4rem;
+        height: 25rem;
+        margin-bottom: 1.6rem;
+
+        .manual-poi-details--mobile & {
+            max-width: none;
+        }
+
+        &--full {
+            max-width: none;
+        }
+    }
+    &__uploader-details {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 0 1.5rem;
+        min-height: 19.2rem;
+
+        &--preview {
+            padding: 0 2.4rem;
+            max-height: 20.3rem;
+        }
+
+        p {
+            margin-bottom: 2.4rem;
+
+            @at-root .manual-poi-details__uploader-details--preview p {
+                margin-bottom: 0;
+            }
+        }
+    }
+    &__uploader-image {
+        position: relative;
+        width: 100%;
+        max-width: 27.6rem;
+        height: 16.6rem;
+        border-radius: 0.8rem;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        margin-bottom: 1.6rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        &--has-frame {
+            background-size: contain;
+        }
+
+        .manual-poi-details--mobile & {
+            height: 13.4rem;
+        }
+    }
+    &__uploader-frame {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: auto;
+    }
+    &__uploader-remove {
+        position: absolute;
+        top: 0.8rem;
+        right: 0.8rem;
+        cursor: pointer;
+        transition: transform 0.25s linear;
+
+        &:hover {
+            transform: scale(1.25, 1.25);
+        }
+    }
+    &__uploader-icon {
+        width: 12.8rem;
+        height: 7.9rem;
+        margin-bottom: 1.5rem;
+    }
+    &__icons {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 1.7rem;
+    }
+    &__icons-item {
+        flex: 0.25;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 1rem;
+        min-height: 9.2rem;
+
+        .manual-poi-details--mobile & {
+            flex: none;
+            width: 50%;
+            min-height: 7.6rem;
+        }
+
+        p {
+            max-width: 12.4rem;
+
+            .manual-poi-details--mobile & {
+                max-width: 13.2rem;
+            }
+        }
+
+        svg {
+            height: 4.8rem;
+        }
+    }
+    &__btns {
+        height: 7.2rem;
+        flex: none;
+        border-top: 2px solid var(--general-section-1);
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        .dc-btn:not(:last-of-type) {
+            margin-right: 0.8rem;
+        }
+    }
+}

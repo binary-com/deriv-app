@@ -41,6 +41,7 @@ class ProofOfIdentity extends React.Component {
                             getAccountStatus={WS.authorized.getAccountStatus}
                             addNotificationByKey={this.props.addNotificationByKey}
                             is_mx_mlt={this.props.is_mx_mlt}
+                            is_nigeria={this.props.is_nigeria}
                             removeNotificationByKey={this.props.removeNotificationByKey}
                             removeNotificationMessage={this.props.removeNotificationMessage}
                             refreshNotifications={this.props.refreshNotifications}
@@ -73,6 +74,7 @@ export default connect(({ client, ui, common }) => ({
     has_missing_required_field: client.has_missing_required_field,
     is_virtual: client.is_virtual,
     is_mx_mlt: client.landing_company_shortcode === 'iom' || client.landing_company_shortcode === 'malta',
+    is_nigeria: client.residence === 'ng',
     refreshNotifications: client.refreshNotifications,
     addNotificationByKey: ui.addNotificationMessageByKey,
     removeNotificationByKey: ui.removeNotificationByKey,

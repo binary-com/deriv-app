@@ -70,6 +70,9 @@
                 margin-top: -3em;
             }
         }
+        &--is-noclick {
+            cursor: auto;
+        }
         &:hover,
         &:focus {
             outline: 0;

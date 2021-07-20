@@ -3,6 +3,7 @@
         display: flex;
         border-left: var(--brand-red-coral) solid 1px;
         position: relative;
+        margin-left: 1.2rem;
 
         &--no-border {
             border-left: unset;
@@ -14,6 +15,10 @@
     }
     &__title {
         max-width: 500px;
+
+        @at-root .dc-timeline__flex--disabled & {
+            color: $color-grey-7;
+        }
     }
     &__oval {
         width: 24px;
@@ -25,7 +30,15 @@
         margin-right: 8px;
         position: absolute;
         padding-left: 1px;
-        left: -13px;
+        left: -12px;
+
+        @at-root .dc-timeline__flex--disabled & {
+            background-color: $color-grey-7;
+        }
+    }
+    &__number {
+        position: relative;
+        left: -1px;
     }
     &__content {
         margin: 16px 0;

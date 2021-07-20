@@ -5,14 +5,9 @@ import { ThemedScrollbars, usePrevious, Text } from '@deriv/components';
 import { init } from 'onfido-sdk-ui';
 import { isMobile, routes } from '@deriv/shared';
 import { getLanguage, Localize } from '@deriv/translations';
-import UploadComplete from 'Components/poi-upload-complete';
-import Unsupported from 'Components/poi-unsupported';
-import Expired from 'Components/poi-expired';
 import OnfidoFailed from 'Components/poi-onfido-failed';
-import Verified from 'Components/poi-verified';
 import getOnfidoPhrases from 'Constants/onfido-phrases';
 import MissingPersonalDetails from 'Components/poi-missing-personal-details';
-import { onfido_status_codes } from './proof-of-identity';
 
 const onfido_container_id = 'onfido';
 
@@ -44,7 +39,6 @@ const Onfido = ({
     height,
     is_message_enabled,
     onfido_service_token,
-    status,
     ...props
 }) => {
     const [onfido_init, setOnfido] = React.useState(null);
@@ -53,7 +47,7 @@ const Onfido = ({
     // didMount hook
     // added eslint-disable-line below as the init func needs to be wrapped in a useCallback but its an external sdk
     React.useEffect(() => {
-        if (status === onfido_status_codes.onfido && onfido_service_token) {
+        if (onfido_service_token) {
             initOnfido();
         }
         return () => {
@@ -117,38 +111,20 @@ const Onfido = ({
     React.useEffect(() => {
         if (previous_onfido_service_token && onfido_service_token) {
             if (previous_onfido_service_token !== onfido_service_token) {
-                if (status === onfido_status_codes.onfido && onfido_service_token) {
+                if (onfido_service_token) {
                     initOnfido();
                 }
             }
         }
-    }, [initOnfido, previous_onfido_service_token, onfido_service_token, status]);
+    }, [initOnfido, previous_onfido_service_token, onfido_service_token]);
 
-    if (status === onfido_status_codes.unsupported) return <Unsupported {...props} />;
-
-    if (onfido_service_token?.error?.code === 'InvalidPostalCode' && status !== 'verified') {
+    if (onfido_service_token?.error?.code === 'InvalidPostalCode') {
         return <MissingPersonalDetails has_invalid_postal_code from='proof_of_identity' />;
-    } else if (onfido_init_error && onfido_service_token?.error && status !== 'verified') {
+    } else if (onfido_init_error && onfido_service_token?.error) {
         return <OnfidoFailed {...props} />;
     }
 
-    if (status === onfido_status_codes.onfido)
-        return <OnfidoContainer height={height} is_message_enabled={is_message_enabled} />;
-
-    switch (status) {
-        case onfido_status_codes.pending:
-            return <UploadComplete {...props} />;
-        case onfido_status_codes.rejected:
-            return <OnfidoFailed {...props} />;
-        case onfido_status_codes.verified:
-            return <Verified {...props} />;
-        case onfido_status_codes.expired:
-            return <Expired {...props} />;
-        case onfido_status_codes.suspected:
-            return <OnfidoFailed suspected={onfido_status_codes.suspected} {...props} />;
-        default:
-            return null;
-    }
+    return <OnfidoContainer height={height} is_message_enabled={is_message_enabled} />;
 };
 
 Onfido.propTypes = {
@@ -159,7 +135,6 @@ Onfido.propTypes = {
     height: PropTypes.number,
     is_message_enabled: PropTypes.bool,
     onfido_service_token: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    status: PropTypes.oneOf(Object.keys(onfido_status_codes)),
 };
 
 export default Onfido;
