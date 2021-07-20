@@ -1,8 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Loading } from '@deriv/components';
+import { useHistory } from 'react-router-dom';
+import { routes } from '@deriv/shared';
+import { Button, Loading, Text } from '@deriv/components';
+import { Localize, localize } from '@deriv/translations';
 
-const CashierContainer = ({ iframe_height, iframe_url, is_loading }) => {
+const CashierContainer = ({ iframe_height, iframe_url, is_crypto, is_loading }) => {
+    const history = useHistory();
     return (
         <div className='cashier__wrapper'>
             {is_loading && <Loading is_fullscreen={false} />}
@@ -14,6 +18,24 @@ const CashierContainer = ({ iframe_height, iframe_url, is_loading }) => {
                     frameBorder='0'
                     scrolling='auto'
                 />
+            )}
+            {is_crypto && (
+                <div className='cashier__transfer-onramp'>
+                    <div className='cashier__transfer-onramp__header'>
+                        <Text line_height='xxl'>
+                            <Localize i18n_default_text='Looking for a way to buy cryptocurrency?' />
+                        </Text>
+                    </div>
+                    <div>
+                        <Button
+                            className='cashier__transfer-onramp__button'
+                            has_effect
+                            text={localize('Try our Fiat onramp')}
+                            onClick={() => history.push(routes.cashier_onramp)}
+                            primary
+                        />
+                    </div>
+                </div>
             )}
         </div>
     );

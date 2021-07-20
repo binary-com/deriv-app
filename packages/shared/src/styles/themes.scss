@@ -120,6 +120,7 @@
         --state-disabled: #{$color-grey-3};
         // Border
         --border-normal: #{$color-grey-5};
+        --border-normal-1: #{$color-grey-5};
         --border-hover: #{$color-grey-1};
         --border-hover-1: #{$color-black-9};
         --border-active: var(--brand-secondary);
@@ -226,6 +227,7 @@
         --state-disabled: #{$color-black-4};
         // Border
         --border-normal: #{$color-black-8};
+        --border-normal-1: #{$color-grey-5};
         --border-hover: #{$color-grey-7};
         --border-hover-1: #{$color-black-9};
         --border-active: var(--brand-secondary);

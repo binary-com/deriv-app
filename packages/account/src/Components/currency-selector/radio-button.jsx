@@ -39,7 +39,16 @@ const USTPopover = ({ id }) => {
 };
 
 // Radio input
-const RadioButton = ({ field: { name, value, onChange, onBlur }, id, label, className, ...props }) => {
+const RadioButton = ({
+    field: { name, value, onChange, onBlur },
+    icon,
+    id,
+    label,
+    second_line_label,
+    className,
+    onClick,
+    ...props
+}) => {
     return (
         <React.Fragment>
             <input
@@ -60,13 +69,26 @@ const RadioButton = ({ field: { name, value, onChange, onBlur }, id, label, clas
                     'currency-list__item--selected': id === value,
                     'currency-list__item--current': props.selected,
                 })}
+                onClick={onClick}
             >
-                <Icon className='currency-list__icon' icon={`IcCurrency-${id.toLowerCase()}`} />
-                {/^(UST|eUSDT)$/i.test(id) && <USTPopover id={id} />}
-                <div className='label currency-list__item-text'>
-                    <div className='currency-list__item-label'>{label}</div>
-                    <div className='currency-list__item-code'>({getCurrencyDisplayCode(id)})</div>
-                </div>
+                {icon ? (
+                    <React.Fragment>
+                        <Icon className='currency-list__icon' icon={icon} />
+                        <div className='label currency-list__item-text'>
+                            <div className='currency-list__item-label'>{label}</div>
+                            <div className='currency-list__item-code'>{second_line_label}</div>
+                        </div>
+                    </React.Fragment>
+                ) : (
+                    <React.Fragment>
+                        <Icon className='currency-list__icon' icon={`IcCurrency-${id.toLowerCase()}`} />
+                        {/^(UST|eUSDT)$/i.test(id) && <USTPopover id={id} />}
+                        <div className='label currency-list__item-text'>
+                            <div className='currency-list__item-label'>{label}</div>
+                            <div className='currency-list__item-code'>({getCurrencyDisplayCode(id)})</div>
+                        </div>
+                    </React.Fragment>
+                )}
             </label>
         </React.Fragment>
     );

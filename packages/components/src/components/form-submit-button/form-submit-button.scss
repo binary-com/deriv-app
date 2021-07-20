@@ -3,6 +3,7 @@
     align-items: center;
     justify-content: flex-end;
     align-self: flex-end;
+    background-color: var(--general-main-1);
 
     &:only-child {
         width: 100%;

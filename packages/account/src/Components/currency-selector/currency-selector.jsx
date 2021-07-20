@@ -145,7 +145,7 @@ const CurrencySelector = ({
                                 is_disabled={isDesktop()}
                             >
                                 <ThemedScrollbars is_bypassed={isMobile()} height={height}>
-                                    {reorderCurrencies(fiat).length > 0 && (
+                                    {!!reorderCurrencies(fiat)?.length && (
                                         <React.Fragment>
                                             <RadioButtonGroup
                                                 id='currency'
@@ -168,10 +168,10 @@ const CurrencySelector = ({
                                                     />
                                                 ))}
                                             </RadioButtonGroup>
-                                            {reorderCurrencies(crypto, 'crypto').length > 0 && <Hr />}
+                                            {!!reorderCurrencies(crypto, 'crypto')?.length && <Hr />}
                                         </React.Fragment>
                                     )}
-                                    {reorderCurrencies(crypto, 'crypto').length > 0 && (
+                                    {!!reorderCurrencies(crypto, 'crypto')?.length && (
                                         <React.Fragment>
                                             <RadioButtonGroup
                                                 id='currency'

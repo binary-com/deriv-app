@@ -17,6 +17,7 @@ import {
 } from '@deriv/shared';
 import { localize, Localize } from '@deriv/translations';
 import OnRampStore from './on-ramp-store';
+import AccountPromptDialog from '../account-prompt-dialog-store';
 import BaseStore from '../base-store';
 import CashierNotifications from '../../Containers/cashier-notifications.jsx';
 
@@ -160,6 +161,8 @@ export default class CashierStore extends BaseStore {
             root_store: this.root_store,
             WS: this.WS,
         });
+
+        this.account_prompt_dialog = new AccountPromptDialog(this.root_store);
         this.init();
     }
 
@@ -169,7 +172,9 @@ export default class CashierStore extends BaseStore {
     @observable cashier_route_tab_index = 0;
     @observable is_10k_withdrawal_limit_reached = undefined;
     @observable is_deposit = false;
+    @observable should_show_all_available_currencies = false;
     @observable is_cashier_default = true;
+    @observable deposit_target = '';
 
     @observable config = {
         account_transfer: new ConfigAccountTransfer(),
@@ -225,8 +230,23 @@ export default class CashierStore extends BaseStore {
     }
 
     @action.bound
+    setShouldShowAllAvailableCurrencies(value) {
+        this.should_show_all_available_currencies = value;
+    }
+
+    @action.bound
     setIsCashierDefault(is_cashier_default) {
         this.is_cashier_default = is_cashier_default;
+    }
+
+    @action.bound
+    setDepositTarget(target) {
+        this.deposit_target = target;
+    }
+
+    @action.bound
+    continueRoute() {
+        this.root_store.common.routeTo(this.deposit_target);
     }
 
     @action.bound
@@ -260,6 +280,7 @@ export default class CashierStore extends BaseStore {
                 if (this.root_store.client.is_logged_in) {
                     await this.checkP2pStatus();
                     await this.filterPaymentAgentList();
+                    this.account_prompt_dialog.resetLastLocation();
                 }
             }
         );
@@ -354,7 +375,7 @@ export default class CashierStore extends BaseStore {
             }
         } else if (isCryptocurrency(this.root_store.client.currency)) {
             this.setLoading(false);
-            this.setContainerHeight('540');
+            this.setContainerHeight('380');
             this.setIframeUrl(response_cashier.cashier);
             // crypto cashier can only be accessed once and the session expires
             // so no need to set timeouts to keep the session alive
@@ -375,7 +396,7 @@ export default class CashierStore extends BaseStore {
     setIsP2pVisible(is_p2p_visible) {
         this.is_p2p_visible = is_p2p_visible;
         if (!is_p2p_visible && window.location.pathname.endsWith(routes.cashier_p2p)) {
-            this.root_store.common.routeTo(routes.cashier_deposit);
+            this.root_store.common.routeTo(this.account_prompt_dialog.last_location ?? routes.cashier_deposit);
         }
     }
 

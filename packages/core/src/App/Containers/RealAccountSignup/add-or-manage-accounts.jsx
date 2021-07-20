@@ -19,13 +19,19 @@ const AddOrManageAccounts = props => {
         createCryptoAccount,
         current_currency_type,
         has_fiat,
+        is_add_crypto,
+        is_add_fiat,
         is_eu,
         is_loading,
         manage_real_account_tab_index,
         onError,
         onSuccessSetAccountCurrency,
+        openRealAccountSignup,
+        resetRealAccountSignupTarget,
         setCurrency,
         setLoading,
+        setIsDeposit,
+        setShouldShowCancel,
     } = props;
 
     const initial_active_index =
@@ -42,6 +48,7 @@ const AddOrManageAccounts = props => {
             setLoading(false);
         };
         fetchMt5LoginList();
+        return () => setShouldShowCancel(false);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -71,6 +78,8 @@ const AddOrManageAccounts = props => {
                     .then(() => {
                         onSuccessSetAccountCurrency('', value);
                         setSubmitting(false);
+                        resetRealAccountSignupTarget();
+                        setIsDeposit(true);
                     })
                     .catch(error => {
                         onError(error);
@@ -82,6 +91,10 @@ const AddOrManageAccounts = props => {
 
     const updateValue = (index, value, setSubmitting) => {
         manageOrChangeAccount(value, setSubmitting);
+    };
+
+    const onClickBack = () => {
+        openRealAccountSignup('choose');
     };
 
     const hasNoAvailableCrypto = () => {
@@ -106,6 +119,45 @@ const AddOrManageAccounts = props => {
             />
         </div>
     );
+
+    if (is_add_crypto)
+        return (
+            <ThemedScrollbars is_bypassed={isMobile()} autohide={false}>
+                <div
+                    className={classNames('add-crypto-currency', {
+                        'account-wizard--disabled': hasNoAvailableCrypto(),
+                    })}
+                >
+                    <AddCryptoCurrency
+                        className='account-wizard__body'
+                        onSubmit={updateValue}
+                        onClickBack={onClickBack}
+                        value={form_value}
+                        form_error={form_error}
+                        should_show_crypto_only
+                        hasNoAvailableCrypto={hasNoAvailableCrypto}
+                    />
+                </div>
+            </ThemedScrollbars>
+        );
+
+    if (is_add_fiat) {
+        return (
+            <ThemedScrollbars is_bypassed={isMobile()} autohide={false}>
+                <div className='change-currency'>
+                    <AddCryptoCurrency
+                        className='account-wizard__body'
+                        onSubmit={updateValue}
+                        value={form_value}
+                        form_error={form_error}
+                        should_show_fiat_only
+                        hasNoAvailableCrypto={hasNoAvailableCrypto}
+                        is_add_fiat
+                    />
+                </div>
+            </ThemedScrollbars>
+        );
+    }
 
     return (
         <ThemedScrollbars is_bypassed={isMobile()} autohide={false}>
@@ -177,10 +229,12 @@ AddOrManageAccounts.propTypes = {
     can_change_fiat_currency: PropTypes.bool,
     current_currency_type: PropTypes.string,
     is_loading: PropTypes.bool,
+    is_add_crypto: PropTypes.bool,
     setLoading: PropTypes.func,
+    setShouldShowCancel: PropTypes.func,
 };
 
-export default connect(({ client, ui }) => ({
+export default connect(({ client, modules, ui }) => ({
     available_crypto_currencies: client.available_crypto_currencies,
     can_change_fiat_currency: client.can_change_fiat_currency,
     current_currency_type: client.current_currency_type,
@@ -189,5 +243,9 @@ export default connect(({ client, ui }) => ({
     is_eu: client.is_eu,
     manage_real_account_tab_index: ui.manage_real_account_tab_index,
     setCurrency: client.setAccountCurrency,
+    setShouldShowCancel: ui.setShouldShowCancel,
     createCryptoAccount: client.createCryptoAccount,
+    openRealAccountSignup: ui.openRealAccountSignup,
+    resetRealAccountSignupTarget: ui.resetRealAccountSignupTarget,
+    setIsDeposit: modules.cashier.setIsDeposit,
 }))(AddOrManageAccounts);

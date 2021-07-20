@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Loading } from '@deriv/components';
 import { connect } from 'Stores/connect';
 import CashierLocked from '../Components/Error/cashier-locked.jsx';
 import PaymentAgentList from '../Components/payment-agent-list.jsx';
@@ -9,6 +10,7 @@ const PaymentAgent = ({
     container,
     is_cashier_locked,
     is_payment_agent_withdraw,
+    is_switching,
     is_virtual,
     setActiveTab,
     verification_code,
@@ -21,6 +23,10 @@ const PaymentAgent = ({
         setActiveTab(container);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    if (is_switching) {
+        return <Loading className='payment-agent__loader' />;
+    }
 
     if (is_virtual) {
         return <Virtual />;
@@ -45,6 +51,7 @@ PaymentAgent.propTypes = {
 
 export default connect(({ client, modules }) => ({
     is_cashier_locked: modules.cashier.is_cashier_locked,
+    is_switching: client.is_switching,
     is_virtual: client.is_virtual,
     verification_code: client.verification_code.payment_agent_withdraw,
     container: modules.cashier.config.payment_agent.container,

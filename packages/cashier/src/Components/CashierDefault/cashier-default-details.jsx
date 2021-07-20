@@ -13,7 +13,7 @@ const CashierDefaultDetails = ({
 }) => {
     return (
         <div className='cashier-default-detail'>
-            <Text size='sm' weight='bold'>
+            <Text size='sm' weight='bold' color='prominent'>
                 {detail_header}
             </Text>
             <div className='cashier-default-detail__div' onClick={detail_click}>
@@ -21,13 +21,10 @@ const CashierDefaultDetails = ({
                     <Text size='xs' className='cashier-default-detail__text'>
                         {detail_description}
                     </Text>
-                    <Icon icon='IcChevronRightBold' size={16} />
+                    <Icon icon={is_dark_mode_on ? 'IcChevronRightBoldDark' : 'IcChevronRightBold'} size={16} />
                 </div>
-                {detail_contents?.map((content, idx) => (
-                    <div key={`${content.title}${idx}`} className='cashier-default-detail__array'>
-                        <Text size='xxs' weight='bold' color='less-prominent'>
-                            {content.title}
-                        </Text>
+                {detail_contents?.map((content, id) => (
+                    <div key={id} className='cashier-default-detail__array'>
                         <div className='cashier-default-detail__icons'>
                             <NewsTicker speed={10}>
                                 <div className={classNames({ 'cashier-default-detail__icons-array': !is_mobile })}>
@@ -36,7 +33,7 @@ const CashierDefaultDetails = ({
                                             <div key={`${icon}${index}`} className='cashier-default-detail__icon'>
                                                 <Icon
                                                     icon={is_dark_mode_on ? icon.dark : icon.light}
-                                                    width={icon.size ?? 72}
+                                                    width={72}
                                                     height={45}
                                                 />
                                             </div>

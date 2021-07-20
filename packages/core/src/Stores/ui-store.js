@@ -7,6 +7,7 @@ import {
     isTouchDevice,
     platform_name,
     isMobile,
+    routes,
 } from '@deriv/shared';
 import { sortNotifications, sortNotificationsMobile } from 'App/Components/Elements/NotificationMessage';
 import { MAX_MOBILE_WIDTH, MAX_TABLET_WIDTH } from 'Constants/ui';
@@ -88,6 +89,7 @@ export default class UIStore extends BaseStore {
     // real account signup
     @observable is_real_acc_signup_on = false;
     @observable real_account_signup_target = undefined;
+    @observable deposit_real_account_signup_target = undefined;
     @observable has_real_account_signup_ended = false;
 
     // account types modal
@@ -147,6 +149,10 @@ export default class UIStore extends BaseStore {
 
     // onboarding
     @observable should_show_multipliers_onboarding = false;
+    @observable choose_crypto_currency_target = null;
+
+    // add crypto accounts
+    @observable should_show_cancel = false;
 
     getDurationFromUnit = unit => this[`duration_${unit}`];
 
@@ -415,6 +421,17 @@ export default class UIStore extends BaseStore {
     }
 
     @action.bound
+    setShouldShowCancel(value) {
+        this.should_show_cancel = value;
+    }
+
+    @action.bound
+    resetRealAccountSignupTarget() {
+        this.deposit_real_account_signup_target = this.real_account_signup_target;
+        this.real_account_signup_target = '';
+    }
+
+    @action.bound
     setManageRealAccountActiveTabIndex(index) {
         this.manage_real_account_tab_index = index;
     }
@@ -422,7 +439,7 @@ export default class UIStore extends BaseStore {
     @action.bound
     closeRealAccountSignup() {
         this.is_real_acc_signup_on = false;
-        this.real_account_signup_target = '';
+        this.resetRealAccountSignupTarget();
         setTimeout(() => {
             this.resetRealAccountSignupParams();
             this.setRealAccountSignupEnd(true);
@@ -769,5 +786,19 @@ export default class UIStore extends BaseStore {
     @action.bound
     toggleShouldShowMultipliersOnboarding(value) {
         this.should_show_multipliers_onboarding = value;
+    }
+
+    @action.bound
+    shouldNavigateAfterChooseCrypto(next_location) {
+        this.choose_crypto_currency_target = next_location;
+    }
+
+    @action.bound
+    continueRouteAfterChooseCrypto() {
+        this.root_store.common.routeTo(this.choose_crypto_currency_target);
+
+        if (this.choose_crypto_currency_target === routes.cashier_deposit) {
+            this.root_store.modules.cashier.setIsDeposit(true);
+        }
     }
 }

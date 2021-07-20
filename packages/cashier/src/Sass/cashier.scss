@@ -26,7 +26,6 @@
     }
     &__content {
         width: 100%;
-        background: var(--status-default);
 
         &-header {
             margin-bottom: 3.2rem;
@@ -39,6 +38,9 @@
     }
     &__wrapper {
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
         &,
         &--align-left {
@@ -94,6 +96,25 @@
                 .barspinner {
                     margin-top: 6rem;
                 }
+            }
+        }
+    }
+    &__transfer-onramp {
+        border-top: 2px solid var(--border-normal-1);
+        width: 51rem;
+
+        &__header {
+            margin-top: 1.6rem;
+        }
+
+        &__button {
+            margin: 1.6em 1rem 0 !important;
+
+            &:not(:last-child) {
+                margin-right: 1em;
+            }
+            @include mobile {
+                height: 2.8rem !important;
             }
         }
     }
@@ -480,7 +501,7 @@
                 align-items: flex-start;
                 padding: 1.6rem;
                 position: static;
-                border: 2px solid var(--general-section-1);
+                border: 2px solid var(--border-normal-1);
                 border-radius: $BORDER_RADIUS * 2;
                 margin: 0.8rem 0rem;
                 cursor: pointer;
@@ -543,6 +564,7 @@
     &__button {
         min-width: 25.8rem;
         padding: 6px 16px;
+        margin-right: 0.1rem;
     }
 }
 
@@ -1469,3 +1491,7 @@ div.payment-agent-transfer {
     }
 }
 /* stylelint-enable plugin/selector-bem-pattern */
+
+.acc-prompt-dialog {
+    padding: 0 1rem;
+}

@@ -28,7 +28,6 @@
         grid-template-areas: (
             'logo name name' 'logo description buy' 'logo description buy' 'logo payment-icons payment-icons'
         );
-        min-height: 156px;
 
         & + & {
             margin: 1.6rem 0rem;

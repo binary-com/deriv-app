@@ -9,6 +9,7 @@ const FormSubmitButton = ({
     className,
     has_cancel,
     form_error,
+    cancel_icon,
     is_center,
     is_disabled,
     is_absolute,
@@ -35,7 +36,17 @@ const FormSubmitButton = ({
                     {form_error}
                 </Text>
             )}
-            {has_cancel && <Button has_effect onClick={onCancel} text={cancel_label} type='button' secondary large />}
+            {has_cancel && (
+                <Button
+                    has_effect
+                    onClick={onCancel}
+                    text={cancel_label}
+                    type='button'
+                    secondary
+                    large
+                    icon={cancel_icon}
+                />
+            )}
             <Button
                 has_effect
                 is_disabled={is_disabled}

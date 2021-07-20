@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import {
+    Button,
     DesktopWrapper,
     Div100vhContainer,
     FadeWrapper,
@@ -11,14 +12,16 @@ import {
     Loading,
 } from '@deriv/components';
 import { localize } from '@deriv/translations';
-import { getSelectedRoute, isMobile, routes, WS } from '@deriv/shared';
+import { getSelectedRoute, getStaticUrl, isMobile, routes, WS } from '@deriv/shared';
 import { connect } from 'Stores/connect';
+import AccountPromptDialog from '../Components/account-prompt-dialog.jsx';
 import 'Sass/cashier.scss';
 
 const Cashier = ({
     history,
     is_account_transfer_visible,
     is_account_setting_loaded,
+    is_cashier_default,
     is_logged_in,
     is_logging_in,
     is_onramp_tab_visible,
@@ -92,9 +95,10 @@ const Cashier = ({
     }
     return (
         <FadeWrapper is_visible={is_visible} className='cashier-page-wrapper' keyname='cashier-page-wrapper'>
+            <AccountPromptDialog />
             <div className='cashier'>
                 <PageOverlay
-                    header={isMobile() ? selected_route.getTitle() : localize('Cashier')}
+                    header={isMobile() && !is_cashier_default ? selected_route.getTitle() : localize('Cashier')}
                     onClickClose={onClickClose}
                 >
                     <DesktopWrapper>
@@ -109,16 +113,15 @@ const Cashier = ({
                             is_full_width
                             is_routed
                             list={getMenuOptions()}
-                            // TODO: Uncomment when design for responsive screen is available
-                            // tab_headers_note={
-                            //     <Button
-                            //         id='cashier_learn_more'
-                            //         className='cashier-page-wrapper__button'
-                            //         text={localize('Learn more about payment methods')}
-                            //         onClick={() => window.open(getStaticUrl('/payment-methods'))}
-                            //         secondary
-                            //     />
-                            // }
+                            tab_headers_note={
+                                <Button
+                                    id='cashier_learn_more'
+                                    className='cashier-page-wrapper__button'
+                                    text={localize('Learn more about payment methods')}
+                                    onClick={() => window.open(getStaticUrl('/payment-methods'))}
+                                    secondary
+                                />
+                            }
                             // TODO: Uncomment when Ewallet.Exchange is available
                             // tab_headers_note={
                             //     should_show_tab_headers_note ? (
@@ -161,6 +164,7 @@ Cashier.propTypes = {
     history: PropTypes.object,
     is_account_transfer_visible: PropTypes.bool,
     is_account_setting_loaded: PropTypes.bool,
+    is_cashier_default: PropTypes.bool,
     is_logged_in: PropTypes.bool,
     is_logging_in: PropTypes.bool,
     is_onramp_tab_visible: PropTypes.bool,
@@ -181,6 +185,7 @@ Cashier.propTypes = {
 };
 
 export default connect(({ client, common, modules, ui }) => ({
+    is_cashier_default: modules.cashier.is_cashier_default,
     is_account_transfer_visible: modules.cashier.is_account_transfer_visible,
     is_account_setting_loaded: client.is_account_setting_loaded,
     is_logged_in: client.is_logged_in,
