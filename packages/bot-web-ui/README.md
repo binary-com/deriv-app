@@ -1,14 +1,23 @@
+# Binary Bot
+
+Visual automation for binary.com [bot.binary.com](https://bot.binary.com)
+
 [![Build Status](https://travis-ci.org/binary-com/binary-bot.svg?branch=master)](https://travis-ci.org/binary-com/binary-bot)
 [![Coverage Status](https://coveralls.io/repos/github/binary-com/binary-bot/badge.svg?branch=master)](https://coveralls.io/github/binary-com/binary-bot?branch=master)
 
-# Binary Bot
+**In this document**
 
-## Index
+-   [Other documents](#other-documents)
+-   [Development](#development)
+    -   [Deploying to local gh-pages](#deploying-to-local-gh-pages)
+-   [Release](#release)
+-   [To update to latest version](#to-update-to-latest-version)
+-   [Running the CLI command](#running-the-cli-command)
 
-- [General](docs/README.md) - Contains general philosophy and overview of this package
-- [Modules docs](docs/Modules/README.md) - Contains implementation guides (i.e., scaffolding, code usage)
+## Other documents
 
-Visual automation for binary.com [bot.binary.com](https://bot.binary.com)
+-   [General](docs/README.md) - Contains general philosophy and overview of this package
+-   [Modules docs](docs/Modules/README.md) - Contains implementation guides (i.e., scaffolding, code usage)
 
 Visit [wiki](https://github.com/binary-com/binary-bot/wiki) for more info.
 
@@ -30,7 +39,7 @@ npm start
 npm run release --branch [branchname] # can contain /
 ```
 
-## Deployment/Release
+## Release
 
 ```
 gulp test-deploy # for local test deploy
@@ -54,6 +63,7 @@ bot bot-example.js
 ```
 
 ### Running with a specific endpoint
+
 **Use only if you know what you're doing**
 
 ```
@@ -61,6 +71,7 @@ ENDPOINT='wss://ws.binaryws.com/websockets/v3?l=en&app_id=1169' bot bot-example.
 ```
 
 ### CLI examples:
+
 [`speed-test.js`](https://github.com/binary-com/binary-bot/blob/master/cli-examples/speed-test.js)
 
 ## Think you found a bug?

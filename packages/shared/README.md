@@ -1,35 +1,53 @@
 # `@deriv/shared`
+
 > Responsible for the shared utilities and styles for all packages.
 
-## Index
+**In this document**
 
-- [General](docs/README.md) - Contains general philosophy and overview of this package
-- [Modules docs](docs/Modules/README.md) - Contains implementation guides (i.e., scaffolding, code usage)
+-   [Commands](#commands)
+-   [Usage](#Usage)
+    -   [Base styles](base-styles)
+        -   [Resources loader](#resources-loader)
+        -   [Browser css reset](#browser-css-reset)
+        -   [Google fonts](#google-fonts)
+    -   [ Utility functions](#utility-functions)
 
-##Commands:
-setup :
-  ```sh 
-  lerna bootstrap
-  ```
-serve : 
-  ```sh 
-  npm run serve
-  ```
-build : 
-  ```sh 
-  npm run build
-  ```
-test  :
-  ```sh 
-  npm run test
-  ```
+## Commands
+
+Setup:
+
+```sh
+lerna bootstrap
+```
+
+Serve:
+
+```sh
+npm run serve
+```
+
+Build :
+
+```sh
+npm run build
+```
+
+Test:
+
+```sh
+npm run test
+```
 
 ## Usage
 
 ### Base styles
 
-#### Fonts, Constants, Mixins, Themes, Devices:
-Run `npm i sass-resources-loader --save-dev` and add the following in your webpack css loader
+#### Resources loader
+
+For Fonts, Constants, Mixins, Themes, Devices:
+
+1. Run `npm i sass-resources-loader --save-dev`
+2. Add the following in your webpack css loader
 
 ```js {
     loader: 'sass-resources-loader',
@@ -39,17 +57,20 @@ Run `npm i sass-resources-loader --save-dev` and add the following in your webpa
 }
 ```
 
-#### Browser css reset:
+#### Browser css reset
+
 ```scss
-@import @deriv/shared/utils/styles/reset.scss
+@import @deriv / shared/utils/styles/reset.scss;
 ```
 
-#### Google fonts:
+#### Google fonts
+
 ```scss
-@import @deriv/shared/utils/styles/google-fonts.scss
+@import @deriv / shared/utils/styles/google-fonts.scss;
 ```
 
 ### Utility functions
+
 ```js
 import { toMoment } '@deriv/shared'
 ```

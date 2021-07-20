@@ -2,17 +2,23 @@
 
 >
 
--   Extract new string translations to crowdin
--   Staging / dev branch is the source of truth for strings that should be translated.
+-   Extract new string translations to Crowdin
+-   Staging/dev branch is the source of truth for strings that should be translated.
 -   React i18next configuration and translation components
     >
 
-## Index
+**In this document**
 
--   [General](docs/README.md) - Contains general philosophy and overview of this package
--   [Modules docs](docs/Modules/README.md) - Contains implementation guides (i.e., scaffolding, code usage)
+-   [Requirements](#requirements)
+-   [Extracting translations](#extracting-translations)
+    -   [Setup](#setup)
+    -   [Translate](#translate)
+-   [Project translations](#project-translations)
+    -   [Setup](#setup)
+    -   [Usage](#usage)
+-   [FAQ](#faq)
 
-# Requirements:
+## Requirements:
 
 -   Crowdin CLI: download here: https://support.crowdin.com/cli-tool/#installation
 -   `CROWDIN_API_KEY` environment variables to your `~/.bash_profile`
@@ -21,14 +27,18 @@
 
 ## Extracting translations
 
-### Setup: add the crowdin API key to your ~/.bash_profile
+### Setup
+
+Add the Crowdin API key to your ~/.bash_profile
 
 ```sh
    $ echo "export CROWDIN_API_KEY='apikeyhere'" >> ~/.bash_profile
    $ source ~/.bash_profile
 ```
 
-### To update strings to be translated in crowdin
+### Translate
+
+To update strings to be translated in Crowdin
 
 ```sh
    $ npm run translate

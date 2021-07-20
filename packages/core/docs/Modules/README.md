@@ -1,17 +1,28 @@
+# Modules
+
+**In this document**
+
+-   [Socket Base](#socket-base)
+    -   [One time requests](#one-time-requests)
+    -   [Subscriptions](#subscriptions)
+    -   [Cache](#cache)
+    -   [Storage](#storage)
+    -   [Authorized](#authorized)
+
 ## Socket Base
 
 The purpose of this module is to provide an abstract API for the rest of the application.
-Under the hood it uses the `DerivAPIBasic` package which is part of the `@deriv/DerivAPI`
+Under the hood, it uses the `DerivAPIBasic` package which is part of the `@deriv/DerivAPI`
 package.
 
-The reason we need such abstractions is to hide complexities of dealing with API
+The reason we need such abstractions is to hide the complexities of dealing with API
 and keep accessing to the API data fast and easy.
 
 ### One time requests
 
-Requests are sent via calls (usually camelCase version of the message type).
+Requests are sent via calls (usually a camelCase version of the message type).
 The requests return a Promise which resolves when the response comes back from the API
-regardless of success or failure of the request.
+regardless of the success or failure of the request.
 
 The original response is returned to the caller wrapped in the resolved promise.
 
@@ -29,7 +40,7 @@ const poc = await WS.proposalOpenContract(contract_id);
 
 Subscription is done using `subscribe[RequestType]` calls available from the socket
 base module. They all expect to receive a request and a callback, the callback is
-called whenever there's a new response (regardless of a success or failure).
+called whenever there's a new response (regardless of success or failure).
 
 Under the hood the subscribe calls are made on an `RxJS` based subscription, and
 a `Subscriber` object is returned from each subscription.
@@ -47,7 +58,7 @@ subscriber.unsubscribe();
 
 ### Cache
 
-`WS.cache` provides an in memory fast cache which currently lives as long as the
+`WS.cache` provides an in-memory fast cache that currently lives as long as the
 page is visible, when you refresh the page, the cache will be reset automatically.
 
 To use the cache you can call `WS.cache` following the method call:
@@ -58,7 +69,7 @@ const active_symbols = await WS.cache.activeSymbols('brief');
 
 Beware that using the cache will provide the method matching the `DerivAPI`
 specifications, and any override we have in the socket base won't work, this results
-in an potentially inconsistent API. Fortunately currently most of the overridden
+in a potentially inconsistent API. Fortunately, currently most of the overridden
 calls are not supposed to work with caching, so we've dodged that bullet for now.
 
 In the future, it's best to avoid adding new method overrides in the Socket base
@@ -68,19 +79,19 @@ be created for that.
 ### Storage
 
 Very similar to `WS.cache`, `WS.storage` provides an interface to read information
-from a permanent storage, if available. The permanent storage currently used is
+from permanent storage, if available. The permanent storage currently used is
 the socket cache module, therefore the expiry of the fields related to the
 storage is defined in there.
 
 By default `WS.cache` looks up `WS.storage` first, if it's unavailable then looks up
 the API.
 
-Same as cache, method calls on the `WS.storage` are passed to `DerivAPI` so method
+Same as cache, method calls on the `WS.storage` are passed to `DerivAPI` so the method
 overrides won't work.
 
 ### Authorized
 
-There's a `WS.authorized` interface which can be used to make sure the API is authorized
+There's a `WS.authorized` interface that can be used to make sure the API is authorized
 before making the requests. The method calls used with `authorize` are passed
 to the socket base and support overrides.
 

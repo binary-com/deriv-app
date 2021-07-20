@@ -2,12 +2,26 @@
   @deriv/dashboard
 </h1>
 
-## Index
+**In this docuemnt**
+
+-   [Other documents](#other-documents)
+-   [Pre-installation](#Pre-installation)
+-   [Editor helpers](#editor-helpers)
+-   [Quick start](#Quick-start)
+-   [Differences](#Differences)
+    -   [JavaScript](#JavaScript)
+    -   [TypeScript](#TypeScript)
+-   [Types](#Types)
+-   [Types vs Interfaces](#types-vs-interfaces)
+-   [Type and Interface prefix](#type-and-interface-prefix)
+-   [Gotchas](#gotchas)
+
+## Other documents
 
 -   [General](docs/README.md) - Contains general philosophy and overview of this package
 -   [Modules docs](docs/Modules/README.md) - Contains implementation guides (i.e., adding types, use observer, etc.)
 
-## Requirements
+## Pre-installation
 
 -   node
 -   npm
@@ -18,7 +32,7 @@
 -   Stylelint setup in your editor https://stylelint.io/
 -   Eslint setup in your editor https://eslint.org/
 
-## 🚀 Quick start
+## Quick start
 
 1.  **Install your dependencies:**
 
@@ -94,7 +108,7 @@ package.json
 
 ---
 
-# Differences
+## Differences
 
 Defining components in TypeScript is not very different from doing so in JavaScript, but the first thing you'll notice is that we now no longer have any PropTypes and there are a bunch of new keywords added. Take the example below on how to define a component:
 
@@ -132,7 +146,7 @@ As you can see, TypeScript is a lot more explicit and we have to state the type 
 
 ---
 
-# Types
+## Types
 
 In most cases types will be defined within the same component, however, when a type should be shared across multiple files, you may put it in the `src/types` folder. In this folder we have 3 named folders:
 
@@ -140,15 +154,16 @@ In most cases types will be defined within the same component, however, when a t
 -   `props.types.ts`: Contains shared types for component props
 -   `stores.types.ts`: Contains types for the app's stores
 
-In general try to append any new types to these files before creating a new `*.types.ts` file here.
+In general, try to append any new types to these files before creating a new `*.types.ts` file here.
 
 ---
 
-# Types vs Interfaces
+## Types vs Interfaces
 
-With the latest typescript version, functionalities and capabilities of both types and interface become more similar. Hence for dashboard project, here are the cases when to use types or interfaces
+With the latest typescript version, functionalities and capabilities of both types and interfaces become more similar. Hence for dashboard project, here are the cases when to use types or interfaces
 
 Do use types to typecheck react proptypes object
+
 ```tsx
 
 const About: React.FC<TAbout> = ({ title, description }) => {
@@ -161,7 +176,7 @@ type TAbout = {
 };
 ```
 
-Do use types to typecheck a function. aside from the similar ability it possess with interface, you can use types to typecheck the argument and the return type of a function.
+Do use types to typecheck a function. Aside from the similar ability, it possesses with the interface, you can use types to type-check the argument and the return type of a function.
 
 ```ts
 type TStatusShape = {
@@ -180,33 +195,34 @@ const isEu: TWebsiteStatus = (website_status) => {
 ```
 
 --TODO add cases when to use interfaces--
+
 ```ts
-    // noop
+// noop
 ```
 
 ## Type and Interface prefix
+
 The name shape of type/interface prefixed with `T` for type and `I` for Interface that is used for react props. The idea is to differentiate the component name and the type name, as for the other used for type, it might not necessarily need to be prefixed.
 
 ```ts
 type MarketType = {
     icon: string;
     title: string;
-}
+};
 
 type TInstruments = {
     title: string;
-    active_symbols: MarketType[]
-}
-
+    active_symbols: MarketType[];
+};
 ```
 
 ---
 
-# Gotchas
+## Gotchas
 
-In @deriv/dashboard we no longer use a `connect` function to inject props into our components, instead we use hooks for everything (`useStores`). In addition, if you're rendering observables you will have to wrap your component in an `observer` call imported from `mobx-react-lite` to ensure the stores and UI are synchronised (i.e. it will re-render when an observable changes).
+In @deriv/dashboard we no longer use a `connect` function to inject props into our components, instead, we use hooks for everything (`useStores`). In addition, if you're rendering observables you will have to wrap your component in an `observer` call imported from `mobx-react-lite` to ensure the stores and UI are synchronised (i.e. it will re-render when an observable change).
 
-A couple things to remember:
+A couple of things to remember:
 
 Wrap at the export level, not at the component definition level:
 
@@ -232,7 +248,7 @@ const MyComponent: React.FC = observer(() => {
 export default MyComponent;
 ```
 
-Also make sure to keep the `observer` wrapper as close to the component as possible. For example, if you're using `withRouter` wrapper from `react-router-dom`:
+Also, make sure to keep the `observer` wrapper as close to the component as possible. For example, if you're using `withRouter` wrapper from `react-router-dom`:
 
 ### Do
 

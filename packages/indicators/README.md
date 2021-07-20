@@ -1,5 +1,15 @@
 # `@deriv/indicators`
 
+**In this document**
+
+-   [Simple Moving Average](#simple-moving-average)
+-   [Exponential Moving Average (EMA)](<#exponential-moving-average-(EMA)>)
+-   [Bollinger Band (BB)](<#bollinger-band-(BB)>)
+-   [Relative Strength Index (RSI)](<#relative-strength-index-(RSI)>)
+-   [Moving Average Convergence Divergence (MACD)](<#moving-average-convergence-divergence-(MACD)>)
+-   [Usage](#usage)
+    -   Indicators](#Indicators)
+
 ## Simple Moving Average
 
 A simple moving average (SMA) is an arithmetic moving average calculated by adding the closing price of the security for a number of time periods and then dividing this total by the number of time periods.
@@ -8,27 +18,23 @@ A simple moving average (SMA) is an arithmetic moving average calculated by addi
 -   [What is the Simple Moving Average?](http://tradingsim.com/blog/simple-moving-average/)
 -   [Moving Averages - Simple and Exponential](http://stockcharts.com/school/doku.php?id=chart_school:technical_indicators:moving_averages)
 
-#### Calculate a single value, from array of numbers:
+### Calculate a single value, from an array of numbers:
 
 Input array of numbers:
 
-```
+```js
 const data = [1, 10, 100, 1000, 10000];
 const result = simpleMovingAverage(data, { periods: 3 });
 ```
 
-#### Calculate a single value from array of candles:
+### Calculate a single value from an array of candles:
 
-```
-const data = [
-    { close: 1 },
-    { close: 2 },
-    { close: 3 },
-];
+```js
+const data = [{ close: 1 }, { close: 2 }, { close: 3 }];
 const result = simpleMovingAverage(data, { periods: 3, field: 'close' });
 ```
 
-#### Calculate an array of values from array of numbers:
+### Calculate an array of values from an array of numbers:
 
 ```
 const data = [1, 2, 3, ...];
@@ -48,7 +54,7 @@ Bollinger Bands® are volatility bands placed above and below a moving average. 
 
 -   [BB @ Investopedia](http://www.investopedia.com/terms/b/bollingerbands.asp)
 
-#### Calculate a single value, from array of numbers:
+### Calculate a single value, from an array of numbers:
 
 Input array of numbers:
 
@@ -63,7 +69,7 @@ Returned value is an array of three items:
 [middleValue, upperValue, lowerValue]
 ```
 
-#### Calculate a single value from array of candles:
+### Calculate a single value from an array of candles:
 
 ```
 const data = [
@@ -74,7 +80,7 @@ const data = [
 const result = bollingerBands(data, { periods: 3, field: 'close' });
 ```
 
-#### Calculate an array of values from array of numbers:
+### Calculate an array of values from an array of numbers:
 
 ```
 const data = [1, 2, 3, ...];
