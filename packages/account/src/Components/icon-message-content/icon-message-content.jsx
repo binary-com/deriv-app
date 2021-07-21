@@ -64,6 +64,6 @@ IconMessageContent.propTypes = {
     full_width: PropTypes.bool,
     icon: PropTypes.object,
     message: PropTypes.oneOfType([PropTypes.node, PropTypes.string, PropTypes.object]),
-    text: PropTypes.string,
+    text: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 export default IconMessageContent;

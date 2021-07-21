@@ -1,29 +1,27 @@
 export const populateVerificationStatus = account_status => {
-    const { document, identity, needs_verification } = account_status.authentication;
+    const { attempts, document, identity, needs_verification } = account_status.authentication;
     const has_poa = !(document && document.status === 'none');
     const has_poi = !(identity && identity.status === 'none');
     const needs_poa = needs_verification.length && needs_verification.includes('document');
     const needs_poi = needs_verification.length && needs_verification.includes('identity');
 
-    const is_unwelcome = account_status.status.some(status => status === 'unwelcome');
     const allow_document_upload = account_status.status.some(status => status === 'allow_document_upload');
-    const allow_poi_resubmission = account_status.status.some(status => status === 'allow_poi_resubmission');
-    const onfido_supported_docs = identity.services.onfido.documents_supported;
-    const country_code = identity.services.onfido.country_code;
-    const submissions_left = identity.services.onfido.submissions_left;
-    const rejected_reasons = identity.services.onfido.last_rejected;
+    const identity_status = identity.status;
+
+    const { idv, onfido, manual } = identity.services;
+    const identity_last_attempt = attempts.latest;
 
     return {
         allow_document_upload,
-        allow_poi_resubmission,
-        country_code,
         has_poa,
         has_poi,
-        is_unwelcome,
         needs_poa,
         needs_poi,
-        onfido_supported_docs,
-        rejected_reasons,
-        submissions_left,
+        needs_verification,
+        idv,
+        onfido,
+        manual,
+        identity_status,
+        identity_last_attempt,
     };
 };

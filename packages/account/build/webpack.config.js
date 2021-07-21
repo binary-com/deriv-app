@@ -45,6 +45,7 @@ module.exports = function (env, argv) {
             'poi-unverified': 'Components/poi-unverified',
             'poi-upload-complete': 'Components/poi-upload-complete',
             'poi-verified': 'Components/poi-verified',
+            'proof-of-identity': 'Sections/Verification/ProofOfIdentity/proof-of-identity.jsx',
             'proof-of-identity-container': 'Sections/Verification/ProofOfIdentity/proof-of-identity-container.jsx',
             'proof-of-address-container': 'Sections/Verification/ProofOfAddress/proof-of-address-container.jsx',
             'self-exclusion': 'Components/self-exclusion',

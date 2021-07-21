@@ -3,11 +3,10 @@ import { PropTypes } from 'prop-types';
 import { Icon } from '@deriv/components';
 import { PlatformContext } from '@deriv/shared';
 import { localize } from '@deriv/translations';
-import ContinueTradingButton from 'Components/poa-continue-trading-button';
 import PoaButton from 'Components/poa-button';
 import IconMessageContent from 'Components/icon-message-content';
 
-export const Verified = ({ needs_poa, is_description_enabled, redirect_button }) => {
+export const Verified = ({ needs_poa, redirect_button, is_from_external }) => {
     const { is_dashboard } = React.useContext(PlatformContext);
     const message = localize('Your proof of identity is verified');
     if (!needs_poa) {
@@ -23,7 +22,7 @@ export const Verified = ({ needs_poa, is_description_enabled, redirect_button })
                 }
                 className='account-management-dashboard'
             >
-                {is_description_enabled && <ContinueTradingButton />}
+                {!is_from_external && redirect_button}
             </IconMessageContent>
         );
     }
@@ -40,8 +39,12 @@ export const Verified = ({ needs_poa, is_description_enabled, redirect_button })
             className='account-management-dashboard'
             text={localize('To continue trading, you must also submit a proof of address.')}
         >
-            {is_description_enabled && <PoaButton />}
-            {redirect_button}
+            {!is_from_external && (
+                <>
+                    <PoaButton />
+                    {redirect_button}
+                </>
+            )}
         </IconMessageContent>
     );
 };

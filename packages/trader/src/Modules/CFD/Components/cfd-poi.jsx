@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { AutoHeightWrapper, FormSubmitButton, Div100vhContainer, Modal } from '@deriv/components';
 import { ProofOfIdentityContainer } from '@deriv/account';
-import { isDesktop, isMobile, WS } from '@deriv/shared';
+import { isDesktop, isMobile } from '@deriv/shared';
 import { localize } from '@deriv/translations';
 
 const CFDPOI = ({ authentication_status, form_error, index, onCancel, onSubmit, value, ...props }) => {
@@ -11,14 +11,14 @@ const CFDPOI = ({ authentication_status, form_error, index, onCancel, onSubmit, 
     const [poi_state, setPOIState] = React.useState('none');
     const validateForm = React.useCallback(() => {
         const errors = {};
-        if (!['pending', 'verified'].includes(poi_state) && !['pending', 'verified'].includes(identity_status)) {
+        if (!['pending'].includes(poi_state) || !['pending', 'verified'].includes(identity_status)) {
             errors.poi_state = true;
         }
         return errors;
     }, [poi_state, identity_status]);
 
     const is_next_btn_disabled = !(
-        ['pending', 'verified'].includes(poi_state) || ['pending', 'verified'].includes(identity_status)
+        ['pending'].includes(poi_state) || ['pending', 'verified'].includes(identity_status)
     );
 
     return (
@@ -41,20 +41,10 @@ const CFDPOI = ({ authentication_status, form_error, index, onCancel, onSubmit, 
                                     is_disabled={isDesktop()}
                                 >
                                     <ProofOfIdentityContainer
-                                        {...props}
-                                        serviceToken={WS.serviceToken}
-                                        notificationEvent={WS.notificationEvent}
-                                        getAccountStatus={WS.authorized.getAccountStatus}
                                         height={height}
-                                        onStateChange={({ status }) => {
-                                            const poi_status = ['pending', 'verified'].includes(identity_status)
-                                                ? identity_status
-                                                : status;
-                                            setPOIState(poi_status);
-                                        }}
-                                        is_trading_button_enabled={false}
-                                        is_description_enabled={false}
-                                        is_message_enabled={false}
+                                        is_from_external={true}
+                                        onStateChange={({ status }) => setPOIState(status)}
+                                        {...props}
                                     />
                                 </Div100vhContainer>
                                 <Modal.Footer is_bypassed={isMobile()}>

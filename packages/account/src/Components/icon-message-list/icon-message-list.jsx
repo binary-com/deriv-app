@@ -63,7 +63,7 @@ const IconMessageList = ({ className, icon, message, message_list, onContinue })
                         <Button
                             type='button'
                             className='account-management__continue'
-                            onClick={() => onContinue(true)}
+                            onClick={onContinue}
                             large
                             text={localize('Upload Document')}
                             primary

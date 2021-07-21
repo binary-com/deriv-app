@@ -30,18 +30,19 @@ const getFilteredItems = (val, list, should_filter_by_char) => {
 };
 const Autocomplete = React.memo(props => {
     const {
+        autoComplete,
         className,
         dropdown_offset,
-        onItemSelection,
-        value,
-        list_items,
-        autoComplete,
-        onHideDropdownList,
-        onScrollStop,
-        list_portal_id,
-        is_alignment_top,
-        should_filter_by_char,
+        error,
         input_id,
+        is_alignment_top,
+        list_items,
+        list_portal_id,
+        onHideDropdownList,
+        onItemSelection,
+        onScrollStop,
+        should_filter_by_char,
+        value,
         ...other_props
     } = props;
 
@@ -240,6 +241,7 @@ const Autocomplete = React.memo(props => {
                 <Input
                     {...other_props}
                     className='dc-autocomplete__field'
+                    error={error}
                     autoComplete={autoComplete}
                     onKeyDown={onKeyPressed}
                     onInput={filterList}

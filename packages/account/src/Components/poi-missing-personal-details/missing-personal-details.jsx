@@ -36,7 +36,7 @@ export const MissingPersonalDetails = ({ has_invalid_postal_code, from }) => {
                 <Icon icon={is_dashboard ? 'IcAccountMissingDetailsDashboard' : 'IcAccountMissingDetails'} size={128} />
             }
         >
-            <GoToPersonalDetailsButton />
+            <GoToPersonalDetailsButton from={from} />
         </IconMessageContent>
     );
 };

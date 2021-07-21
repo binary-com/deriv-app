@@ -1,11 +1,11 @@
 import { Formik } from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
+import ProofOfIdentityContainer from '@deriv/account';
 import { AutoHeightWrapper, FormSubmitButton, Div100vhContainer } from '@deriv/components';
-import { ProofOfIdentityContainer } from '@deriv/account';
-import { isDesktop, isMobile } from '@deriv/shared';
+import { isDesktop, isMobile, WS } from '@deriv/shared';
 import { localize } from '@deriv/translations';
-import WS from 'Services/ws-methods';
+import { connect } from 'Stores/connect';
 
 class ProofOfIdentityForm extends React.PureComponent {
     state = {
@@ -53,8 +53,7 @@ class ProofOfIdentityForm extends React.PureComponent {
                                             getAccountStatus={WS.authorized.getAccountStatus}
                                             height={height}
                                             onStateChange={this.onStateChange}
-                                            is_trading_button_enabled={false}
-                                            is_description_enabled={false}
+                                            is_from_external={true}
                                         />
                                     </Div100vhContainer>
                                     <FormSubmitButton
@@ -88,4 +87,13 @@ ProofOfIdentityForm.propTypes = {
     value: PropTypes.object,
 };
 
-export default ProofOfIdentityForm;
+export default connect(({ client, common }) => ({
+    account_status: client.account_status,
+    app_routing_history: common.app_routing_history,
+    fetchResidenceList: client.fetchResidenceList,
+    is_switching: client.is_switching,
+    is_virtual: client.is_virtual,
+    refreshNotifications: client.refreshNotifications,
+    routeBackInApp: common.routeBackInApp,
+    should_allow_authentication: client.should_allow_authentication,
+}))(ProofOfIdentityForm);
