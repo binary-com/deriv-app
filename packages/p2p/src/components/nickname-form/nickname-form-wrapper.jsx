@@ -13,7 +13,7 @@ const NicknameFormWrapper = ({ children }) => {
     }
 
     return (
-        <Modal className='dp2p-nickname__container' width={440} is_open={general_store.should_show_popup}>
+        <Modal className='dp2p-nickname__container' width='440px' is_open={general_store.should_show_popup}>
             {children}
         </Modal>
     );

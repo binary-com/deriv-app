@@ -79,22 +79,23 @@ export default class GeneralStore extends BaseStore {
 
     @action.bound
     createAdvertiser(name) {
-        requestWS({ p2p_advertiser_create: 1, name }).then(response => {
+        requestWS({
+            p2p_advertiser_create: 1,
+            name,
+        }).then(response => {
             const { sendbird_store, buy_sell_store } = this.root_store;
             const { p2p_advertiser_create } = response;
 
-            if (response) {
-                if (response.error) {
-                    this.setNicknameError(response.error.message);
-                } else {
-                    this.setAdvertiserId(p2p_advertiser_create.id);
-                    this.setIsAdvertiser(!!p2p_advertiser_create.is_approved);
-                    this.setNickname(p2p_advertiser_create.name);
-                    this.setNicknameError(undefined);
-                    sendbird_store.handleP2pAdvertiserInfo(response);
-                    this.toggleNicknamePopup();
-                    buy_sell_store.hideVerification();
-                }
+            if (response.error) {
+                this.setNicknameError(response.error.message);
+            } else {
+                this.setAdvertiserId(p2p_advertiser_create.id);
+                this.setIsAdvertiser(!!p2p_advertiser_create.is_approved);
+                this.setNickname(p2p_advertiser_create.name);
+                this.setNicknameError(undefined);
+                sendbird_store.handleP2pAdvertiserInfo(response);
+                this.toggleNicknamePopup();
+                buy_sell_store.hideVerification();
             }
         });
     }
@@ -292,11 +293,6 @@ export default class GeneralStore extends BaseStore {
     }
 
     @action.bound
-    resetNicknameErrorState() {
-        this.setNicknameError(undefined);
-    }
-
-    @action.bound
     setActiveIndex(active_index) {
         this.active_index = active_index;
     }
@@ -439,7 +435,7 @@ export default class GeneralStore extends BaseStore {
     @action.bound
     toggleNicknamePopup() {
         this.setShouldShowPopup(!this.should_show_popup);
-        this.resetNicknameErrorState();
+        this.setNicknameError(undefined);
     }
 
     @action.bound
