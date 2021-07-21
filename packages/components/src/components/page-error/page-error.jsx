@@ -1,8 +1,10 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { isMobile } from '@deriv/shared';
 import ButtonLink from '../button-link/button-link.jsx';
 import DesktopWrapper from '../desktop-wrapper/desktop-wrapper.jsx';
+import MobileWrapper from '../mobile-wrapper/mobile-wrapper.jsx';
 import Text from '../text/text.jsx';
 
 const PageError = ({
@@ -29,16 +31,28 @@ const PageError = ({
         // if image_url is passed we should split the page to two columns and left-align messages
         <div className='dc-page-error__container'>
             {!!image_url && (
-                <DesktopWrapper>
-                    <img
-                        className={classNameImage}
-                        src={image_url}
-                        alt={'404'}
-                        loading='lazy'
-                        width='607px' // width and height should be specified so it doesn't jump to the right after image loads
-                        height='366px'
-                    />
-                </DesktopWrapper>
+                <>
+                    <DesktopWrapper>
+                        <img
+                            className={classNameImage}
+                            src={image_url}
+                            alt={'404'}
+                            loading='lazy'
+                            width='607px' // width and height should be specified so it doesn't jump to the right after image loads
+                            height='366px'
+                        />
+                    </DesktopWrapper>
+                    <MobileWrapper>
+                        <img
+                            className={classNameImage}
+                            src={image_url}
+                            alt={'404'}
+                            loading='lazy'
+                            width='328px'
+                            height='200px'
+                        />
+                    </MobileWrapper>
+                </>
             )}
             <div
                 className={classNames('dc-page-error__box', {
@@ -64,6 +78,7 @@ const PageError = ({
                                 <Text
                                     as='p'
                                     size='s'
+                                    align={isMobile() ? 'center' : 'left'}
                                     line_height='x'
                                     key={index}
                                     className='dc-page-error__message-paragraph'
@@ -73,6 +88,7 @@ const PageError = ({
                                 <Text
                                     as='p'
                                     size='s'
+                                    align={isMobile() ? 'center' : 'left'}
                                     line_height='x'
                                     key={index}
                                     className='dc-page-error__message-paragraph'

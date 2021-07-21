@@ -11,6 +11,9 @@
                 justify-content: left;
             }
         }
+        @media screen and (max-width: 1024px) {
+            flex-wrap: wrap;
+        }
     }
     &__box {
         background: var(--general-main-1);
@@ -61,7 +64,6 @@
         }
     }
     &__btn {
-        margin: 0 1rem;
         min-width: 14rem;
 
         &-wrapper {

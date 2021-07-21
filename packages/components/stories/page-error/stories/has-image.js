@@ -12,7 +12,7 @@ const HasImage = () => (
             image_url={image_404}
             messages={[
                 'You may have followed a broken link, or the page has moved to a new address.',
-                'Error Code: 404 page not found',
+                'Error code: 404 page not found',
             ]}
         />
     </Wrapper>
