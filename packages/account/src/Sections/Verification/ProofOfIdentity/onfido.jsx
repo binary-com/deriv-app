@@ -82,6 +82,8 @@ const Onfido = ({
                 },
                 token: onfido_service_token,
                 useModal: false,
+                forceCrossDevice: true,
+                useLiveDocumentCapture: true,
                 onComplete,
                 steps: [
                     {
