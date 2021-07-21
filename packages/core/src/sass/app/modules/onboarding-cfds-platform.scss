@@ -1,0 +1,143 @@
+.platform-onboarding {
+    padding: 20px;
+
+    @include desktop {
+        padding: 20px 0 0;
+        overflow: unset;
+        max-width: 99.6rem;
+        margin: auto;
+        height: calc(100vh - 7.2rem);
+    }
+
+    .platform-onbordering-title {
+        margin-bottom: 2.4rem;
+    }
+
+    .dc-table {
+        &__header {
+            height: 8rem;
+            display: grid;
+            grid-template-columns: 50% 50%;
+            border-bottom-width: 0;
+            background-color: var(--general-main-1);
+
+            @include desktop {
+                grid-template-columns: 22% 38.5% 38.5%;
+                border-bottom-width: 1px;
+            }
+        }
+
+        &__head {
+            justify-content: center;
+            padding: 1.6rem;
+
+            .dc-icon {
+                margin-right: 8px;
+            }
+        }
+
+        &__footer {
+            .dc-table__row {
+                border-bottom: none;
+            }
+
+            .platform-table-row {
+                padding-top: 0;
+
+                .platform-table-col:first-of-type {
+                    position: initial;
+                }
+            }
+            .platform-table-col {
+                padding: 2.4rem 1.6rem;
+            }
+        }
+
+        &__row {
+            @include mobile {
+                border: none;
+            }
+        }
+
+        &__cell:not(:first-of-type) {
+            @include mobile {
+                border-bottom: 1px solid var(--general-section-1);
+                margin: 2px;
+            }
+        }
+    }
+
+    .platform-table-row,
+    .platform-table-row-items {
+        grid-template-columns: 50% 50%;
+        padding-top: 31px;
+        position: relative;
+
+        @include desktop {
+            justify-content: center;
+            grid-template-columns: 22% 38.5% 38.5%;
+            padding-top: 0;
+        }
+
+        .platform-table-col:first-of-type {
+            position: absolute;
+
+            @include desktop {
+                position: static;
+            }
+        }
+    }
+    .platform-table-row-items {
+        @include desktop {
+            grid-template-columns: 22% 38.5% 38.5%;
+        }
+
+        .platform-table-col {
+            justify-content: initial;
+
+            @include mobile {
+                display: flex;
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+            @include desktop {
+                justify-content: center;
+            }
+
+            .platform-item {
+                @include mobile {
+                    width: 33.3%;
+                    height: 4.8rem;
+                    justify-content: flex-start;
+                    padding: 0;
+                }
+            }
+        }
+    }
+
+    .platform-table-col {
+        padding: 1.6rem 0;
+        justify-content: center;
+    }
+
+    .platform-item {
+        padding: 0 0.7rem;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        @include desktop {
+            padding: 0.8rem;
+        }
+
+        &__text {
+            padding-top: 0.4rem;
+        }
+    }
+
+    .dc-btn {
+        display: flex;
+        flex: 1;
+    }
+}

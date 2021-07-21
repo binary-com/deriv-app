@@ -13,6 +13,7 @@ export const deriv_urls = Object.freeze({
     DERIV_COM_STAGING: 'https://staging.deriv.com',
     DERIV_DASHBOARD_PRODUCTION: `https://myapps.${domain_url}`,
     DERIV_DASHBOARD_STAGING: 'https://staging-myapps.deriv.com',
+    DERIV_DASHBOARD_HOST_NAME: `myapps.${domain_url}`,
     DERIV_APP_PRODUCTION: `https://app.${domain_url}`,
     DERIV_APP_STAGING: 'https://staging-app.deriv.com',
     SMARTTRADER_PRODUCTION: `https://smarttrader.${domain_url}`,

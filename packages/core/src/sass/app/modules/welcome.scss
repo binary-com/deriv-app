@@ -9,6 +9,12 @@
 
 .welcome-cr {
     background-color: var(--general-section-4);
+    padding: 2.4rem 1.6rem 0;
+    height: 100vh;
+
+    @include desktop {
+        padding: 10.2rem 0 0;
+    }
 }
 
 .welcome {
@@ -16,6 +22,7 @@
 
     &__header {
         margin: 2.4rem;
+        margin-top: 0;
     }
 
     &__main {
@@ -74,6 +81,12 @@
             align-items: center;
             flex-basis: 32px;
             display: flex;
+
+            @include mobile {
+                position: absolute;
+                top: 3.4rem;
+                right: 0.5rem;
+            }
         }
 
         &__body {
@@ -92,6 +105,12 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+
+            &-description {
+                @include mobile {
+                    margin-right: 1.7rem;
+                }
+            }
         }
 
         &__options {
@@ -100,7 +119,7 @@
 
         &__option {
             padding: 0 0.2rem;
-            border-right: 1px solid var(--general-section-1);
+            border-right: 1px solid var(--border-hover);
             line-break: anywhere;
 
             &:first-of-type {

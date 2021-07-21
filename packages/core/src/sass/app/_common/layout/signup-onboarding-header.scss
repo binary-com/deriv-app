@@ -1,0 +1,33 @@
+/** @define header; weak */
+.signup-onboarding-header {
+    position: fixed;
+    z-index: 99999999;
+    box-sizing: border-box;
+    height: $HEADER_HEIGHT_SIGNUP;
+    width: 100%;
+    top: 0;
+    transition: opacity 0.3s;
+    backface-visibility: hidden;
+    color: $color-white;
+    background-color: $color-black;
+
+    &__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        height: inherit;
+
+        .signup-onboarding-header__link {
+            display: contents;
+        }
+    }
+
+    &__icon {
+        margin: 0 5px;
+    }
+
+    @include mobile {
+        height: $MOBILE_HEADER_HEIGHT_SIGNUP;
+    }
+}

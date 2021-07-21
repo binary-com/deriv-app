@@ -44,7 +44,6 @@ export default class UIStore extends BaseStore {
     // @observable is_purchase_confirm_on    = false;
     @observable is_services_error_visible = false;
     @observable is_unsupported_contract_modal_visible = false;
-    @observable is_account_signup_modal_visible = false;
     @observable is_set_residence_modal_visible = false;
     @observable is_reset_password_modal_visible = false;
     @observable is_reset_trading_password_modal_visible = false;
@@ -146,7 +145,7 @@ export default class UIStore extends BaseStore {
     @observable manage_real_account_tab_index = 0;
 
     // onboarding
-    @observable should_show_multipliers_onboarding = false;
+    @observable onboarding_contract_type = null;
 
     getDurationFromUnit = unit => this[`duration_${unit}`];
 
@@ -596,11 +595,6 @@ export default class UIStore extends BaseStore {
     }
 
     @action.bound
-    toggleAccountSignupModal(state_change = !this.is_account_signup_modal_visible) {
-        this.is_account_signup_modal_visible = state_change;
-    }
-
-    @action.bound
     toggleSetResidenceModal(state_change = !this.is_set_residence_modal_visible) {
         this.is_set_residence_modal_visible = state_change;
     }
@@ -767,7 +761,7 @@ export default class UIStore extends BaseStore {
     }
 
     @action.bound
-    toggleShouldShowMultipliersOnboarding(value) {
-        this.should_show_multipliers_onboarding = value;
+    setOnboardingContractType(value) {
+        this.onboarding_contract_type = value;
     }
 }

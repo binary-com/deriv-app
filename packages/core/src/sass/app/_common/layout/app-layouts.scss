@@ -102,6 +102,11 @@
     &--is-route-modal {
         background-color: var(--overlay-outside-dialog);
     }
+    &--is-onboarding {
+        height: 100vh;
+        height: -webkit-fill-available;
+        padding: $HEADER_HEIGHT_SIGNUP 0 0;
+    }
     @include mobile {
         // no footer:
         margin-bottom: 0;
@@ -115,6 +120,11 @@
         &--is-dashboard {
             height: calc(100% - #{$MOBILE_HEADER_HEIGHT_DASHBOARD});
             margin-top: $MOBILE_HEADER_HEIGHT_DASHBOARD;
+        }
+        &--is-onboarding {
+            height: 100vh;
+            height: -webkit-fill-available;
+            padding: $MOBILE_HEADER_HEIGHT_SIGNUP 0 0;
         }
         .ciq-menu {
             top: 0;

@@ -5,6 +5,7 @@ import { Loading } from '@deriv/components';
 import { localize } from '@deriv/translations';
 import { Redirect } from 'App/Containers/Redirect';
 import Endpoint from 'Modules/Endpoint';
+import { Onboarding } from 'App/Containers/Onboarding';
 
 // Error Routes
 const Page404 = React.lazy(() => import(/* webpackChunkName: "404" */ 'Modules/Page404'));
@@ -465,6 +466,7 @@ const initRoutesConfig = ({ is_dashboard }) => [
     { path: routes.index, component: RouterRedirect, getTitle: () => '', to: routes.root },
     { path: routes.endpoint, component: Endpoint, getTitle: () => 'Endpoint' }, // doesn't need localization as it's for internal use
     { path: routes.redirect, component: Redirect, getTitle: () => localize('Redirect') },
+    { path: routes.onboarding, component: Onboarding, getTitle: () => localize('Onboarding') },
     {
         path: routes.complaints_policy,
         component: lazyLoadComplaintsPolicy(),

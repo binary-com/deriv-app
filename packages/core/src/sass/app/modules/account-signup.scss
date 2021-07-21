@@ -1,190 +1,106 @@
-/* @define account-signup; weak */
 .account-signup {
-    margin: 1.6rem 1.6rem 0;
-    form {
-        @include mobile {
-            height: 365px;
-        }
-    }
-    & .dc-select-native {
-        &__placeholder {
-            background-color: var(--general-main-2);
-        }
-    }
-    & .signup-separator-container {
-        width: calc(100% + 40px);
-        border-bottom: 1px solid var(--general-section-1);
-        margin: 2.4rem 0 1.4rem;
+    &__residence-selection,
+    &__password-selection {
+        padding-top: 2rem;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
 
         @include mobile {
-            display: none;
+            padding: 2rem 2.4rem 0;
+        }
+
+        &--footer {
+            width: 100%;
+            padding: 1.6rem 0;
+            margin-top: 2rem;
+            display: flex;
+            justify-content: flex-end;
+
+            @include desktop {
+                border-top: 1px solid var(--general-section-2);
+                margin-top: 10rem;
+                padding: 1.6rem 2.4rem;
+            }
         }
     }
+
+    &__password-selection {
+        &--main {
+            padding: 0 0.8rem 2.4rem;
+
+            @include desktop {
+                padding: 0 2.4rem 2.4rem;
+            }
+        }
+
+        &--footer {
+            margin-top: 0;
+            &-has-error {
+                flex-direction: column;
+            }
+        }
+    }
+
+    &__residence-field {
+        padding: 0 2.4rem;
+    }
+
+    &__heading {
+        margin-bottom: 1.6rem;
+    }
+
+    &__receive-update-checkbox {
+        padding: 1.6rem 0;
+    }
+
     &__error-wrapper {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-gap: 0.8rem;
         margin: 0;
+    }
 
-        @include mobile {
-            margin-left: unset;
-        }
+    &__subtext--error {
+        margin-bottom: 1rem;
     }
-    &__receive-update-checkbox {
-        & .dc-checkbox__box {
-            align-self: flex-start;
-            margin: 0.1rem 0.8rem 0;
-        }
-        & .dc-checkbox__label {
-            font-size: 1.2rem;
-            line-height: 1.5;
-        }
-        @include mobile {
-            margin-bottom: 3rem;
-        }
-    }
-    &__hidden-checkbox {
-        visibility: hidden;
-    }
-    &__residence-selection,
-    &__password-selection {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-flow: nowrap column;
-        background-color: var(--general-main-2);
-        width: calc(100% + 8rem);
-        padding: 2rem 4rem;
-        border-radius: 1rem;
-        position: relative;
-        left: 50%;
-        transform: translate(-50%);
 
-        @include mobile {
-            width: calc(95vw - 20px);
-            height: 100%;
-            padding: 6rem 4rem;
-            background-color: var(--general-main-2);
-        }
-    }
-    .dc-password-input {
-        &__visibility-icon {
-            background-color: var(--general-main-2);
-        }
-    }
-    &__residence-selection {
-        .dc-select-native {
-            margin-bottom: 2.5rem;
-        }
-        @include mobile {
-            height: 100%;
-            & .dc-select-native {
-                margin-bottom: 4.8rem;
-            }
-        }
-    }
-    &__password-selection {
-        .account-signup__heading {
-            padding-top: 1.5rem;
-            margin-bottom: 4.3rem;
-
-            @include mobile {
-                padding-top: 0;
-                text-align: center;
-                margin-top: -3rem;
-            }
-        }
-        & .dc-password-meter__container {
-            max-height: 4rem;
-            margin-bottom: 3.3rem;
-            @include desktop {
-                width: calc(100% - 3.2rem);
-            }
-            @include mobile {
-                width: 100%;
-            }
-        }
-        & .dc-field--error {
-            top: 4.4rem;
-        }
-        .initial-loader__barspinner {
-            @include mobile {
-                margin: 0;
-            }
-        }
-    }
-    &__heading {
-        margin-bottom: 0.8rem;
-        @include mobile {
-            margin-bottom: 0;
-            margin-top: -7rem;
-        }
-    }
-    &__text {
-        text-align: center;
-        margin-bottom: 3.3rem;
-    }
-    &__subtext {
-        margin: 1rem 0 2.4rem;
-        @include mobile {
-            margin-bottom: 3.4rem;
-        }
-
-        &--error {
-            @include mobile {
-                margin-top: -1.4rem;
-                margin-bottom: 0.8rem;
-            }
-        }
-    }
-    &__btn {
-        align-self: flex-end;
-        margin: 0;
-        background-color: var(--button-primary-default);
-        font-weight: bold;
-        color: var(--text-colored-background);
-
-        &:hover {
-            background-color: var(--button-primary-hover);
-        }
-        &--disabled {
-            opacity: 0.32;
-            cursor: not-allowed;
-        }
-        @include mobile {
-            height: 4rem;
-            bottom: 2rem;
-            left: 0;
-            right: 0;
-            position: absolute;
-            width: calc(100% - 8rem);
-            margin: 0 auto;
-        }
-    }
-    &__residence-field {
-        margin-bottom: 2.7rem;
-
-        @include desktop {
-            min-width: 30rem;
-        }
-    }
-    &__password-field {
-        width: 100%;
-    }
     @include mobile {
-        width: calc(95vw - 20px);
-        border-radius: 1rem;
-        padding: 0;
-        position: relative;
-        left: 50%;
-        transform: translate(-50%);
-        margin: 0;
-        text-align: center;
+        &__btn {
+            flex: 1;
+        }
     }
 }
 
-@media screen and (min-width: 320px) and (max-width: 450px) {
-    .account-signup__password-selection {
-        height: calc(100% + 8rem);
+.account-signup-wrapper {
+    .dc-dialog {
+        &__dialog {
+            max-height: initial;
+            min-width: 384px;
+        }
+
+        &__content {
+            max-width: 38.4rem;
+            margin-bottom: initial;
+        }
+    }
+
+    @include mobile {
+        background-color: var(--general-main-1);
+
+        .dc-dialog {
+            &__dialog {
+                border-radius: 0;
+                box-shadow: none;
+
+                &--has-margin {
+                    width: 100%;
+                }
+            }
+
+            &__header-wrapper__centered {
+                border-radius: 0;
+            }
+        }
     }
 }

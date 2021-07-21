@@ -43,10 +43,18 @@
             .dc-dialog__dialog {
                 transform: translate3d(0, 0, 0);
                 opacity: 1;
+
+                &--no-padding {
+                    padding: 0;
+                }
             }
         }
         &--has-portal {
             background-color: transparent;
+        }
+
+        &--has-icon {
+            background-color: var(--general-section-4);
         }
     }
     &__dialog {
@@ -74,6 +82,22 @@
             width: 100%;
             display: flex;
             justify-content: space-between;
+
+            &__centered {
+                justify-content: center;
+                border-radius: 8px 8px 0 0;
+                display: flex;
+                width: 100%;
+                background-color: var(--general-section-1);
+
+                .dc-text {
+                    padding-top: 2.5rem;
+                }
+
+                .dc-dialog__header-verification-icon {
+                    margin: 2.3rem 0.9rem 0.1rem 1.1rem;
+                }
+            }
         }
         &--close {
             cursor: pointer;
@@ -121,6 +145,19 @@
             &--has-margin {
                 min-width: unset;
                 width: calc(100vw - 4.8rem);
+            }
+        }
+
+        &__header {
+            align-self: flex-start;
+            margin-bottom: 2.4rem;
+
+            &-wrapper {
+                &__centered {
+                    .dc-dialog__header-verification-icon {
+                        margin: 2rem 0 0.5rem 1rem;
+                    }
+                }
             }
         }
     }

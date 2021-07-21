@@ -12,6 +12,7 @@
 
 // Layout
 @import 'app/_common/layout/dashboard-platform-header';
+@import 'app/_common/layout/signup-onboarding-header';
 @import 'app/_common/layout/app-layouts';
 @import 'app/_common/layout/header';
 @import 'app/_common/layout/dashboard-header';
@@ -54,3 +55,4 @@
 //@import 'app/modules/contract/bottom-widgets';
 @import 'app/modules/external-link';
 @import 'app/modules/welcome';
+@import 'app/modules/onboarding-cfds-platform';

@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import Head from './table-head.jsx';
 import Header from './table-header.jsx';
+import Footer from './table-footer.jsx';
 import Body from './table-body.jsx';
 import Row from './table-row.jsx';
 import Cell from './table-cell.jsx';
@@ -35,6 +36,6 @@ Table.Header = Header;
 Table.Body = Body;
 Table.Row = Row;
 Table.Cell = Cell;
-// TODO add footer
+Table.Footer = Footer;
 
 export default Table;

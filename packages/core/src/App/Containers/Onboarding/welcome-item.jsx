@@ -8,12 +8,12 @@ const Options = ({ options }) => (
         {options.map(option => (
             <React.Fragment key={option}>
                 <DesktopWrapper>
-                    <Text size='xxxs' color='less-prominent' className='welcome-item__option'>
+                    <Text size='xxxs' className='welcome-item__option'>
                         {option}
                     </Text>
                 </DesktopWrapper>
                 <MobileWrapper>
-                    <Text size='xxxxs' color='less-prominent' className='welcome-item__option'>
+                    <Text size='xxxxs' className='welcome-item__option'>
                         {option}
                     </Text>
                 </MobileWrapper>
@@ -53,7 +53,7 @@ const WelcomeItem = ({ title, description, options, onClick, icon, mobileIcon, s
                     <Text as='h3' weight='bold' color='prominent' size='s'>
                         {title}
                     </Text>
-                    <Text as='p' color='prominent' size='xs'>
+                    <Text as='p' color='prominent' size='xs' className='welcome-item__main-description'>
                         {description}
                     </Text>
                 </MobileWrapper>
