@@ -65,6 +65,12 @@ const copyConfig = base => {
         { from: path.resolve(__dirname, '../src/root_files/robots.txt'), to: 'robots.txt', toType: 'file' },
         { from: path.resolve(__dirname, '../src/root_files/sitemap.xml'), to: 'sitemap.xml', toType: 'file' },
         {
+            from: path.resolve(__dirname, '../src/root_files/apple-app-site-association'),
+            to: '.well-known/apple-app-site-association',
+            toType: 'file',
+        },
+        { from: path.resolve(__dirname, '../src/root_files/assetlinks.json'), to: 'assetlinks.json', toType: 'file' },
+        {
             from: path.resolve(__dirname, '../src/public/images/favicons/favicon.ico'),
             to: 'favicon.ico',
             toType: 'file',
@@ -87,8 +93,8 @@ const copyConfig = base => {
             from: path.resolve(__dirname, '../src/templates/app/manifest.json'),
             to: 'manifest.json',
             toType: 'file',
-            transform(content, path) {
-                return transformContentUrlBase(content, path, base);
+            transform(content, transform_path) {
+                return transformContentUrlBase(content, transform_path, base);
             },
         },
     ];
