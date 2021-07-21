@@ -40,7 +40,15 @@
     <P2P />;
     ```
 
-4.  **File Structure**
+4.  **Serve P2P**
+
+    When serving `p2p`, serve `cashier` as well.
+
+    ```sh
+    npm run serve
+    ```
+
+5.  **File Structure**
 
 ```
 src
@@ -53,8 +61,12 @@ src
     │   │   ├── orders.scss
     │   ├── ...
     │   └── app.jsx
+    ├── stores/
+    │   ├── advertiser-page-store.js
+    │   ├── ...
+    │   └── index.js
     ├── utils/
-    │   ├── timer.js // TODO
+    │   ├── chat-message.js
     │   ├── ...
     ├── index.js
 
@@ -62,23 +74,3 @@ index.js // publish file
 webpack.config.js
 package.json
 ```
-
-5. **Translations**
-
-Update translations in Crowdin and get new translations from Crowdin
-
-Requirements:
-
--   Crowdin CLI: https://support.crowdin.com/cli-tool/#installation
--   `CROWDIN_API_KEY` environment variables to your `~/.bash_profile`
-
-1. Run the script below
-
-```sh
-    sh scripts/update-translations.sh
-```
-
--   Extracts new translations strings and pushes them to Crowdin
--   Fetches new translations strings from Crowdin
-
-2.  Make a PR from the newly created branch `p2p_translations` to dev
