@@ -83,10 +83,13 @@ const Carousel = ({
                 <div className='dc-carousel__container'>
                     {show_nav && nav_position === 'middle' && sliced_list_length > 1 && (
                         <span
-                            className={classNames('dc-carousel__icon', { 'dc-carousel__icon--left': is_mt5 })}
+                            className={classNames('dc-carousel__icon', { 'dc-carousel__icon--mt5': is_mt5 })}
                             onClick={handlePrevClick}
                         >
-                            <Icon icon='IcChevronLeft' size='24' />
+                            <Icon
+                                icon={is_mt5 ? 'IcChevronLeftBoldMt5' : 'IcChevronLeft'}
+                                size={is_mt5 ? '28' : '24'}
+                            />
                         </span>
                     )}
 
@@ -111,8 +114,14 @@ const Carousel = ({
                     </div>
 
                     {show_nav && nav_position === 'middle' && sliced_list_length > 1 && (
-                        <span className='dc-carousel__icon' onClick={handleNextClick}>
-                            <Icon icon='IcChevronRight' size='24' />
+                        <span
+                            className={classNames('dc-carousel__icon', { 'dc-carousel__icon--mt5': is_mt5 })}
+                            onClick={handleNextClick}
+                        >
+                            <Icon
+                                icon={is_mt5 ? 'IcChevronRightBoldMt5' : 'IcChevronRight'}
+                                size={is_mt5 ? '28' : '24'}
+                            />
                         </span>
                     )}
                 </div>
