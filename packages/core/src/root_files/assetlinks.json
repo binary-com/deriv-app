@@ -1,0 +1,5 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target" : { "namespace": "android_app", "package_name": "com.deriv.app",
+                 "sha256_cert_fingerprints": ["94:6D:09:5A:69:12:B0:1F:67:60:8A:F4:DD:26:78:D7:24:C9:B8:BA"] }
+  }]
