@@ -95,6 +95,11 @@
     backface-visibility: hidden;
     background-color: var(--general-main-1);
 
+    &--is-dashboard {
+        margin: $DASHBOARD_HEADER_HEIGHT 0 $FOOTER_HEIGHT;
+        height: calc(100vh - #{$DASHBOARD_HEADER_HEIGHT} - #{$FOOTER_HEIGHT});
+    }
+
     &--is-disabled:after {
         opacity: 1;
         pointer-events: auto;

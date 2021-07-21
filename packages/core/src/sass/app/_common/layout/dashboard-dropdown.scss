@@ -1,0 +1,82 @@
+.dashboard-header-dropdown {
+    display: flex;
+    width: auto;
+    position: absolute;
+    padding: 2.2rem 0.8rem;
+    z-index: 99;
+    height: auto;
+    transform: translateY(7.2rem);
+    background-color: var(--general-main-1);
+    box-shadow: 0 16px 20px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 0.4rem;
+    transition: opacity 0.3s, transform 0.3s;
+    overflow: visible;
+    will-change: display, left, opacity;
+    animation-name: FadeInDown;
+    animation-fill-mode: both;
+    animation-duration: 0.3s;
+
+    @include mobile {
+        display: none;
+    }
+
+    &:after {
+        content: ' ';
+        position: absolute;
+        top: -9px;
+        border-top: none;
+        border-right: 15px solid transparent;
+        border-left: 15px solid transparent;
+        border-bottom: 15px solid var(--general-main-1);
+    }
+
+    &__wrapper {
+        justify-content: flex-start;
+        align-items: flex-start;
+        width: 100% !important;
+
+        .active {
+            border: 0.2rem solid var(--brand-secondary);
+        }
+
+        &__card {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            max-width: 42rem;
+        }
+    }
+
+    &__card-link {
+        position: relative;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 1rem 1.6rem;
+        text-decoration: none;
+        color: var(--text-prominent);
+
+        &__icon {
+            margin-right: 1.9rem;
+        }
+
+        &:hover {
+            background-color: #{$color-grey-12};
+            opacity: 1;
+        }
+    }
+}
+
+@keyframes FadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(7.2rem) rotateY(-15deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(7.2rem) rotateY(0);
+    }
+}

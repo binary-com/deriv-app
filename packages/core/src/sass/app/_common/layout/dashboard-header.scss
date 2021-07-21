@@ -4,7 +4,7 @@
     position: fixed;
     z-index: 99;
     box-sizing: border-box;
-    height: $HEADER_HEIGHT;
+    height: $DASHBOARD_HEADER_HEIGHT;
     width: 100%;
     top: 0;
     transition: opacity 0.3s;
@@ -88,6 +88,24 @@
 
         > * {
             cursor: pointer;
+
+            &:before {
+                content: '';
+                position: absolute;
+                transition: width 0.25s;
+                height: 0.2rem;
+                width: 0;
+                background-color: var(--brand-red-coral);
+                bottom: 2.3rem;
+            }
+
+            &:hover,
+            &:active {
+                text-shadow: 0 0 0.8px var(--general-main-1), 0 0 0.8px var(--general-main-1);
+                &:before {
+                    width: 1.6rem;
+                }
+            }
         }
 
         @include mobile {
@@ -103,7 +121,7 @@
         position: fixed;
         z-index: 100;
         box-sizing: border-box;
-        height: $HEADER_HEIGHT;
+        height: $DASHBOARD_HEADER_HEIGHT;
         width: 100%;
         top: 0;
         background-color: var(--general-main-1);
