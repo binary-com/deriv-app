@@ -463,6 +463,22 @@ $FLOATING_HEADER_HEIGHT: 41px;
             }
         }
     }
+    &--indicator-mobile {
+        .sc-toolbar-widget {
+            background: transparent;
+            border-width: 0;
+            bottom: auto;
+            top: 64px;
+            width: auto;
+            height: 40px;
+            display: flex;
+        }
+    }
+    &--no-indicator-mobile {
+        .ciq-menu.sc-studies {
+            display: none !important;
+        }
+    }
     // smartchart library style fixes
     .smartcharts-mobile {
         .sc-categorical-display {

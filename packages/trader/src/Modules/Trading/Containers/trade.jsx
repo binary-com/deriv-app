@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { DesktopWrapper, Div100vhContainer, MobileWrapper, SwipeableWrapper, usePrevious } from '@deriv/components';
 import { isDesktop, isMobile } from '@deriv/shared';
 import ChartLoader from 'App/Components/Elements/chart-loader.jsx';
@@ -57,6 +58,8 @@ const Trade = ({
     const [category, setCategory] = React.useState(null);
     const [subcategory, setSubcategory] = React.useState(null);
     const [is_digits_widget_active, setIsDigitsWidgetActive] = React.useState(false);
+
+    const extra_small_device = window.innerHeight < 480;
 
     React.useEffect(() => {
         onMount();
@@ -137,7 +140,10 @@ const Trade = ({
                     using css vh is not returning correct screen height */}
             <Div100vhContainer
                 id='chart_container'
-                className='chart-container'
+                className={classNames('chart-container', {
+                    'chart-container--indicator-mobile': isMobile() && !extra_small_device,
+                    'chart-container--no-indicator-mobile': isMobile() && extra_small_device,
+                })}
                 is_disabled={isDesktop()}
                 height_offset='259px'
             >
@@ -331,6 +337,8 @@ const Chart = props => {
 
     const barriers = main_barrier ? [main_barrier, ...extra_barriers] : extra_barriers;
 
+    const extra_small_device = window.innerHeight < 480;
+
     // max ticks to display for mobile view for tick chart
     const max_ticks = granularity === 0 ? 8 : 24;
 
@@ -341,6 +349,7 @@ const Chart = props => {
             ref={charts_ref}
             barriers={barriers}
             bottomWidgets={show_digits_stats && isDesktop() ? bottomWidgets : props.bottomWidgets}
+            clearStudyLegend={extra_small_device}
             crosshair={isMobile() ? 0 : undefined}
             crosshairTooltipLeftAllow={560}
             showLastDigitStats={isDesktop() ? show_digits_stats : false}
@@ -373,6 +382,21 @@ const Chart = props => {
             getMarketsOrder={getMarketsOrder}
             yAxisMargin={{
                 top: isMobile() ? 76 : 106,
+            }}
+            getIndicatorHeightRatio={(chart_height, indicator_count) => {
+                const is_small_screen = chart_height < 780;
+                const is_extra_small_screen = chart_height < 320;
+                const denominator = indicator_count >= 5 ? indicator_count : indicator_count + 1;
+                let reserved_height = 0;
+                if (isMobile() && is_extra_small_screen) reserved_height = 70;
+                else if (isMobile() && is_small_screen) reserved_height = 120;
+                else reserved_height = 320;
+
+                const indicators_height = Math.round((chart_height - reserved_height) / denominator);
+                return {
+                    height: indicators_height,
+                    percent: indicators_height / chart_height,
+                };
             }}
         >
             <ChartMarkers />
