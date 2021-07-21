@@ -298,7 +298,6 @@ const ReplayChart = connect(({ modules, ui, common }) => {
         theme: ui.is_dark_mode_on && !should_force_light_theme ? 'dark' : 'light',
         position: ui.is_chart_layout_default ? 'bottom' : 'left',
         countdown: ui.is_chart_countdown_visible,
-        assetInformation: false, // ui.is_chart_asset_info_visible,
         isHighestLowestMarkerEnabled: false, // TODO: Pending UI
     };
 

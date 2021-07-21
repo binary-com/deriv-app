@@ -109,7 +109,6 @@ export default connect(({ chart_store, common, ui }) => ({
     chart_type: chart_store.chart_type,
     onSymbolChange: chart_store.onSymbolChange,
     settings: {
-        assetInformation: false, // ui.is_chart_asset_info_visible,
         countdown: true,
         isHighestLowestMarkerEnabled: false, // TODO: Pending UI,
         language: common.current_language.toLowerCase(),

@@ -410,7 +410,6 @@ const ChartTrade = connect(({ modules, ui, common }) => ({
     chart_type: modules.contract_trade.chart_type,
     chartStateChange: modules.trade.chartStateChange,
     settings: {
-        assetInformation: false, // ui.is_chart_asset_info_visible,
         countdown: ui.is_chart_countdown_visible,
         isHighestLowestMarkerEnabled: false, // TODO: Pending UI,
         language: common.current_language.toLowerCase(),
