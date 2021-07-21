@@ -55,7 +55,7 @@
         "@babel/preset-env": "^7.12.11",
         "@babel/preset-react": "^7.12.10",
         "@babel/preset-typescript": "^7.12.7",
-        "@deriv/api-types": "1.0.36",
+        "@deriv/api-types": "1.0.47",
         "@deriv/publisher": "^0.0.1-beta4",
         "@types/classnames": "^2.2.11",
         "@types/object.fromentries": "^2.0.0",
