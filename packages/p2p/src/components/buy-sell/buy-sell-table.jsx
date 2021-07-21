@@ -4,7 +4,7 @@ import { InfiniteDataList, Loading, Table } from '@deriv/components';
 import { isDesktop } from '@deriv/shared';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import { localize } from 'Components/i18next';
+import { Localize, localize } from 'Components/i18next';
 import Empty from 'Components/empty/empty.jsx';
 import { TableError } from 'Components/table/table-error.jsx';
 import { useStores } from 'Stores';
@@ -82,7 +82,14 @@ const BuySellTable = ({ onScroll }) => {
         );
     }
 
-    return <Empty className='buy-sell__empty' has_tabs icon='IcCashierNoAds' title={localize('There are no ads.')} />;
+    return (
+        <Empty
+            className='buy-sell__empty'
+            has_tabs
+            icon='IcCashierNoAds'
+            title={<Localize i18n_default_text='There are no ads.' />}
+        />
+    );
 };
 
 BuySellTable.displayName = 'BuySellTable';
