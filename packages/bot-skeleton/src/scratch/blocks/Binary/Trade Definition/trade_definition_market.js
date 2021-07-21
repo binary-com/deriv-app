@@ -58,16 +58,10 @@ Blockly.Blocks.trade_definition_market = {
         const symbol = symbol_dropdown.getValue();
 
         // Temporary solution to remove Crytocurrencies from
-        // market options and Jump Diffusion Indices from
-        // submarket options for Synthetic Indices
-        // until multipliers are available for DBot
+        // market options until multipliers are available for DBot
         const market_options = active_symbols
             .getMarketDropdownOptions()
             .filter(option => option[1] !== 'cryptocurrency');
-        const submarket_options =
-            market === 'synthetic_index'
-                ? active_symbols.getSubmarketDropdownOptions(market).filter(option => option[1] !== 'jump_index')
-                : active_symbols.getSubmarketDropdownOptions(market);
 
         const populateMarketDropdown = () => {
             market_dropdown.updateOptions(market_options, {
@@ -81,7 +75,7 @@ Blockly.Blocks.trade_definition_market = {
             populateMarketDropdown();
         } else if (event.type === Blockly.Events.BLOCK_CHANGE && event.blockId === this.id) {
             if (event.name === 'MARKET_LIST') {
-                submarket_dropdown.updateOptions(submarket_options, {
+                submarket_dropdown.updateOptions(active_symbols.getSubmarketDropdownOptions(market), {
                     default_value: submarket,
                     should_pretend_empty: true,
                     event_group: event.group,

@@ -481,7 +481,7 @@ const ContentRenderer = props => {
             component: <MarketOption symbol={symbol} />,
             ...symbol,
         }))
-        .filter(option => option.group !== 'Cryptocurrencies' && option.group !== 'Jump Indices'); // Until Crypto enabled for Dbot
+        .filter(option => option.group !== 'Cryptocurrencies'); // Until Crypto enabled for Dbot
     const trade_type_dropdown_options = trade_type_dropdown.map(trade_type => ({
         component: <TradeTypeOption trade_type={trade_type} />,
         ...trade_type,
