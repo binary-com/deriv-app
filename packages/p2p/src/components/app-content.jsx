@@ -12,7 +12,6 @@ import NicknameForm from './nickname-form';
 import Orders from './orders/orders.jsx';
 import TemporarilyBarredHint from './temporarily-barred-hint';
 import UnsupportedAccount from './unsupported-account';
-import Download from './verification/download.jsx';
 import Verification from './verification/verification.jsx';
 
 const AppContent = () => {
@@ -35,10 +34,6 @@ const AppContent = () => {
     }
 
     if (general_store.props.should_show_verification) {
-        if (general_store.is_advertiser) {
-            return <Download />;
-        }
-
         return <Verification should_wrap />;
     }
 

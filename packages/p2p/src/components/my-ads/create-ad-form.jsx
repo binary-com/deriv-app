@@ -165,13 +165,16 @@ const CreateAdForm = () => {
                                                             // rather than falsy values.
                                                             !is_sell_advert || available_balance == null
                                                                 ? undefined
-                                                                : localize('Your DP2P balance is {{ dp2p_balance }}', {
-                                                                      dp2p_balance: `${formatMoney(
-                                                                          currency,
-                                                                          available_balance,
-                                                                          true
-                                                                      )} ${currency}`,
-                                                                  })
+                                                                : localize(
+                                                                      'Your Deriv P2P balance is {{ dp2p_balance }}',
+                                                                      {
+                                                                          dp2p_balance: `${formatMoney(
+                                                                              currency,
+                                                                              available_balance,
+                                                                              true
+                                                                          )} ${currency}`,
+                                                                      }
+                                                                  )
                                                         }
                                                         is_relative_hint
                                                         required

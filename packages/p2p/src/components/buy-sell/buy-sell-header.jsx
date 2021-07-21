@@ -78,7 +78,7 @@ const BuySellHeader = ({ is_visible, table_type, setTableType }) => {
                     button_text={localize('Got it')}
                     className='buy-sell__header-match-ads__popover'
                     is_open={is_no_match_tooltip_open}
-                    message={localize('See the ads that match your DP2P balance and limit.')}
+                    message={localize('See the ads that match your Deriv P2P balance and limit.')}
                     setIsOpen={setIsNoMatchTooltipOpen}
                 >
                     <Icon icon='IcInfoOutline' size={16} />

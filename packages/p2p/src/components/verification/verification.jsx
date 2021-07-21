@@ -61,7 +61,7 @@ const Verification = ({ should_wrap }) => {
                     </div>
                     <div className='dp2p-verification__text-description'>
                         <Text as='p' size='xs' line_height='s' align='center'>
-                            <Localize i18n_default_text='To use DP2P, you need to choose a display name (a nickname) and verify your identity.' />
+                            <Localize i18n_default_text='To use Deriv P2P, you need to choose a display name (a nickname) and verify your identity.' />
                         </Text>
                     </div>
                 </div>

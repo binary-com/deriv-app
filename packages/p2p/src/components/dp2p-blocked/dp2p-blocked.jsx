@@ -9,7 +9,7 @@ const Dp2pBlocked = () => {
         <div className='dp2p-blocked'>
             <Icon icon='IcCashierDp2pBlocked' size={128} />
             <Text className='dp2p-blocked__title' color='prominent' line_height='m' size='s' weight='bold'>
-                <Localize i18n_default_text='Your DP2P cashier is blocked' />
+                <Localize i18n_default_text='Your Deriv P2P cashier is blocked' />
             </Text>
             <Dp2pBlockedDescription />
             <Dp2pBlockedChecklist />

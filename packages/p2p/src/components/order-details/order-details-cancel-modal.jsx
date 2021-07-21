@@ -44,7 +44,7 @@ const OrderDetailsCancelModal = ({ hideCancelOrderModal, order_id, should_show_c
                 {order_store.cancels_remaining > 1 ? (
                     <Text color='prominent' size='xs'>
                         <Localize
-                            i18n_default_text='If you cancel your order {{cancellation_limit}} times in {{cancellation_period}} hours, you will be blocked from using DP2P for {{block_duration}} hours. <br /> ({{number_of_cancels_remaining}} cancellations remaining.)'
+                            i18n_default_text='If you cancel your order {{cancellation_limit}} times in {{cancellation_period}} hours, you will be blocked from using Deriv P2P for {{block_duration}} hours. <br /> ({{number_of_cancels_remaining}} cancellations remaining.)'
                             values={{
                                 block_duration: order_store.cancellation_block_duration,
                                 cancellation_limit: order_store.cancellation_limit,
@@ -56,7 +56,7 @@ const OrderDetailsCancelModal = ({ hideCancelOrderModal, order_id, should_show_c
                 ) : (
                     <Text color='prominent' size='xs'>
                         <Localize
-                            i18n_default_text='If you cancel this order, you’ll be blocked from using DP2P for {{block_duration}} hours.'
+                            i18n_default_text='If you cancel this order, you’ll be blocked from using Deriv P2P for {{block_duration}} hours.'
                             values={{
                                 block_duration: order_store.cancellation_block_duration,
                             }}

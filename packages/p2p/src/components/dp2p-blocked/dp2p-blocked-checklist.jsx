@@ -19,7 +19,7 @@ const Dp2pBlockedChecklist = () => {
                         pathname: routes.financial_assessment,
                         state: {
                             custom_button_options: {
-                                button_text: localize('Back to DP2P'),
+                                button_text: localize('Back to Deriv P2P'),
                                 icon_text: undefined,
                                 route_to_path: routes.cashier_p2p,
                                 is_hard_redirect: true,

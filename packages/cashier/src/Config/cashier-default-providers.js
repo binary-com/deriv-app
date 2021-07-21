@@ -91,7 +91,7 @@ const createDp2pProvider = onClick => {
         detail_description: localize(
             'Deposit in your local currency via peer-to-peer exchange with fellow traders in your country.'
         ),
-        detail_header: localize('Deposit with DP2P'),
+        detail_header: localize('Deposit with Deriv P2P'),
     };
 };
 
