@@ -5,3 +5,7 @@ import './std_dev_multiplier_down';
 import './fast_ema_period';
 import './slow_ema_period';
 import './signal_ema_period';
+import './candle_list';
+import './k_period';
+import './k_slowing_period';
+import './d_period';

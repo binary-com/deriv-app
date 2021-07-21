@@ -1,14 +1,14 @@
 import { localize } from '@deriv/translations';
 
-Blockly.Blocks.period = {
+Blockly.Blocks.candle_list = {
     init() {
         this.jsonInit({
-            message0: localize('Period {{ input_period }}', { input_period: '%1' }),
+            message0: localize('Candle List %1'),
             args0: [
                 {
                     type: 'input_value',
-                    name: 'PERIOD',
-                    check: null,
+                    name: 'CANDLE_LIST',
+                    check: 'Array',
                 },
             ],
             colour: Blockly.Colours.Base.colour,
@@ -25,25 +25,22 @@ Blockly.Blocks.period = {
     allowed_parents: [
         'atr_statement',
         'atra_statement',
-        'bb_statement',
-        'bba_statement',
-        'ema_statement',
-        'emaa_statement',
-        'macda_statement',
+        'fr_statement',
+        'fra_statement',
         'pc_statement',
         'pca_statement',
-        'rsi_statement',
-        'rsia_statement',
-        'sma_statement',
-        'smaa_statement',
+        'psar_statement',
+        'psara_statement',
+        'so_statement',
+        'soa_statement',
         'wr_statement',
         'wra_statement',
     ],
     getRequiredValueInputs() {
         return {
-            PERIOD: null,
+            CANDLE_LIST: null,
         };
     },
 };
 
-Blockly.JavaScript.period = () => {};
+Blockly.JavaScript.candle_list = () => {};

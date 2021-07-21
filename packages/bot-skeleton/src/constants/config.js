@@ -247,14 +247,26 @@ export const config = {
     DIGIT_CATEGORIES: ['digits', 'highlowticks'],
     INDEPEDENT_BLOCKS: ['block_holder', 'tick_analysis', 'loader', 'procedures_defreturn', 'procedures_defnoreturn'],
     bbResult: [
-        [localize('upper'), '1'],
-        [localize('middle'), '0'],
-        [localize('lower'), '2'],
+        [localize('Upper'), '1'],
+        [localize('Middle'), '0'],
+        [localize('Lower'), '2'],
     ],
     macdFields: [
         [localize('Histogram'), '0'],
         [localize('MACD'), '1'],
         [localize('Signal'), '2'],
+    ],
+    priceChannelResult: [
+        [localize('Lower'), '0'],
+        [localize('Upper'), '1'],
+    ],
+    fractalResult: [
+        [localize('Low'), '0'],
+        [localize('High'), '1'],
+    ],
+    stochasticOscillatorPeriod: [
+        [localize('%K'), '0'],
+        [localize('%D'), '1'],
     ],
     gd: {
         cid: '828416594271-b4bhia944ecegn3j327oeb4l8o803bts.apps.googleusercontent.com',

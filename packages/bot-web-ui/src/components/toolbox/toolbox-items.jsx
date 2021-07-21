@@ -320,6 +320,203 @@ export const ToolboxItems = ReactDomServer.renderToStaticMarkup(
                         </Block>
                     </Statement>
                 </Block>
+                <Block type='pc_statement'>
+                    <Field name='PRICECHANNEL_RESULT'>0</Field>
+                    <Statement name='STATEMENT'>
+                        <Block type='candle_list' deletable='false' movable='false'>
+                            <Value name='CANDLE_LIST' />
+                            <Next>
+                                <Block type='period' deletable='false' movable='false'>
+                                    <Value name='PERIOD'>
+                                        <Shadow type='math_number'>
+                                            <Field name='NUM'>10</Field>
+                                        </Shadow>
+                                    </Value>
+                                </Block>
+                            </Next>
+                        </Block>
+                    </Statement>
+                </Block>
+                <Block type='pca_statement'>
+                    <Statement name='STATEMENT'>
+                        <Block type='candle_list' deletable='false' movable='false'>
+                            <Value name='CANDLE_LIST' />
+                            <Next>
+                                <Block type='period' deletable='false' movable='false'>
+                                    <Value name='PERIOD'>
+                                        <Shadow type='math_number'>
+                                            <Field name='NUM'>10</Field>
+                                        </Shadow>
+                                    </Value>
+                                </Block>
+                            </Next>
+                        </Block>
+                    </Statement>
+                </Block>
+                <Block type='psar_statement'>
+                    <Statement name='STATEMENT'>
+                        <Block type='candle_list' deletable='false' movable='false'>
+                            <Value name='CANDLE_LIST' />
+                        </Block>
+                    </Statement>
+                </Block>
+                <Block type='psara_statement'>
+                    <Statement name='STATEMENT'>
+                        <Block type='candle_list' deletable='false' movable='false'>
+                            <Value name='CANDLE_LIST' />
+                        </Block>
+                    </Statement>
+                </Block>
+                <Block type='fr_statement'>
+                    <Field name='FRACTAL_RESULT'>0</Field>
+                    <Statement name='STATEMENT'>
+                        <Block type='candle_list' deletable='false' movable='false'>
+                            <Value name='CANDLE_LIST' />
+                        </Block>
+                    </Statement>
+                </Block>
+                <Block type='fra_statement'>
+                    <Field name='FRACTAL_RESULT'>0</Field>
+                    <Statement name='STATEMENT'>
+                        <Block type='candle_list' deletable='false' movable='false'>
+                            <Value name='CANDLE_LIST' />
+                        </Block>
+                    </Statement>
+                </Block>
+                <Block type='atr_statement'>
+                    <Statement name='STATEMENT'>
+                        <Block type='candle_list' deletable='false' movable='false'>
+                            <Value name='CANDLE_LIST' />
+                            <Next>
+                                <Block type='period' deletable='false' movable='false'>
+                                    <Value name='PERIOD'>
+                                        <Shadow type='math_number'>
+                                            <Field name='NUM'>10</Field>
+                                        </Shadow>
+                                    </Value>
+                                </Block>
+                            </Next>
+                        </Block>
+                    </Statement>
+                </Block>
+                <Block type='atra_statement'>
+                    <Statement name='STATEMENT'>
+                        <Block type='candle_list' deletable='false' movable='false'>
+                            <Value name='CANDLE_LIST' />
+                            <Next>
+                                <Block type='period' deletable='false' movable='false'>
+                                    <Value name='PERIOD'>
+                                        <Shadow type='math_number'>
+                                            <Field name='NUM'>10</Field>
+                                        </Shadow>
+                                    </Value>
+                                </Block>
+                            </Next>
+                        </Block>
+                    </Statement>
+                </Block>
+                <Block type='so_statement'>
+                    <Field name='STOCHASTIC_OSCILLATOR_PERIOD'>0</Field>
+                    <Statement name='STATEMENT'>
+                        <Block type='candle_list' deletable='false' movable='false'>
+                            <Value name='CANDLE_LIST' />
+                            <Next>
+                                <Block type='k_period' deletable='false' movable='false'>
+                                    <Value name='K_PERIOD'>
+                                        <Shadow type='math_number'>
+                                            <Field name='NUM'>14</Field>
+                                        </Shadow>
+                                    </Value>
+                                    <Next>
+                                        <Block type='k_slowing_period' deletable='false' movable='false'>
+                                            <Value name='K_SLOWING_PERIOD'>
+                                                <Shadow type='math_number'>
+                                                    <Field name='NUM'>1</Field>
+                                                </Shadow>
+                                            </Value>
+                                            <Next>
+                                                <Block type='d_period' deletable='false' movable='false'>
+                                                    <Value name='D_PERIOD'>
+                                                        <Shadow type='math_number'>
+                                                            <Field name='NUM'>3</Field>
+                                                        </Shadow>
+                                                    </Value>
+                                                </Block>
+                                            </Next>
+                                        </Block>
+                                    </Next>
+                                </Block>
+                            </Next>
+                        </Block>
+                    </Statement>
+                </Block>
+                <Block type='soa_statement'>
+                    <Field name='STOCHASTIC_OSCILLATOR_PERIOD'>0</Field>
+                    <Statement name='STATEMENT'>
+                        <Block type='candle_list' deletable='false' movable='false'>
+                            <Value name='CANDLE_LIST' />
+                            <Next>
+                                <Block type='k_period' deletable='false' movable='false'>
+                                    <Value name='K_PERIOD'>
+                                        <Shadow type='math_number'>
+                                            <Field name='NUM'>14</Field>
+                                        </Shadow>
+                                    </Value>
+                                    <Next>
+                                        <Block type='k_slowing_period' deletable='false' movable='false'>
+                                            <Value name='K_SLOWING_PERIOD'>
+                                                <Shadow type='math_number'>
+                                                    <Field name='NUM'>1</Field>
+                                                </Shadow>
+                                            </Value>
+                                            <Next>
+                                                <Block type='d_period' deletable='false' movable='false'>
+                                                    <Value name='D_PERIOD'>
+                                                        <Shadow type='math_number'>
+                                                            <Field name='NUM'>3</Field>
+                                                        </Shadow>
+                                                    </Value>
+                                                </Block>
+                                            </Next>
+                                        </Block>
+                                    </Next>
+                                </Block>
+                            </Next>
+                        </Block>
+                    </Statement>
+                </Block>
+                <Block type='wr_statement'>
+                    <Statement name='STATEMENT'>
+                        <Block type='candle_list' deletable='false' movable='false'>
+                            <Value name='CANDLE_LIST' />
+                            <Next>
+                                <Block type='period' deletable='false' movable='false'>
+                                    <Value name='PERIOD'>
+                                        <Shadow type='math_number'>
+                                            <Field name='NUM'>14</Field>
+                                        </Shadow>
+                                    </Value>
+                                </Block>
+                            </Next>
+                        </Block>
+                    </Statement>
+                </Block>
+                <Block type='wra_statement'>
+                    <Statement name='STATEMENT'>
+                        <Block type='candle_list' deletable='false' movable='false'>
+                            <Value name='CANDLE_LIST' />
+                            <Next>
+                                <Block type='period' deletable='false' movable='false'>
+                                    <Value name='PERIOD'>
+                                        <Shadow type='math_number'>
+                                            <Field name='NUM'>14</Field>
+                                        </Shadow>
+                                    </Value>
+                                </Block>
+                            </Next>
+                        </Block>
+                    </Statement>
+                </Block>
             </Category>
 
             <Category name={localize('Tick and candle analysis')} id='tick_analysis'>

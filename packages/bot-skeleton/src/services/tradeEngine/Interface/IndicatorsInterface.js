@@ -8,6 +8,18 @@ import {
     relativeStrengthIndex as rsi,
     relativeStrengthIndexArray as rsia,
     macdArray as macda,
+    priceChannel as pc,
+    priceChannelArray as pca,
+    parabolicSAR as psar,
+    parabolicSARArray as psara,
+    fractal as fr,
+    fractalArray as fra,
+    averageTrueRange as atr,
+    averageTrueRangeArray as atra,
+    stochasticOscillator as so,
+    stochasticOscillatorArray as soa,
+    williamRIndicator as wr,
+    williamRIndicatorArray as wra,
 } from '@deriv/indicators';
 
 export default Interface =>
@@ -23,6 +35,18 @@ export default Interface =>
                 bb: (input, config, field) => this.decorate(bb, input, config)[field],
                 bba: (input, config, field) => this.decorate(bba, input, config).map(r => r[field]),
                 macda: (input, config, field) => this.decorate(macda, input, config).map(r => r[field]),
+                pc: (input, periods, field) => this.decorate(pc, input, { periods, field }),
+                pca: (input, periods, field) => this.decorate(pca, input, { periods, field }),
+                psar: input => this.decorate(psar, input, {}),
+                psara: input => this.decorate(psara, input, {}),
+                fr: (input, field) => this.decorate(fr, input, { field }),
+                fra: (input, field) => this.decorate(fra, input, { field }),
+                atr: (input, periods) => this.decorate(atr, input, { periods }),
+                atra: (input, periods) => this.decorate(atra, input, { periods }),
+                so: (input, config) => this.decorate(so, input, config),
+                soa: (input, config) => this.decorate(soa, input, config),
+                wr: (input, periods) => this.decorate(wr, input, { periods }),
+                wra: (input, periods) => this.decorate(wra, input, { periods }),
             };
         }
 

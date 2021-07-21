@@ -21,6 +21,10 @@ export const exponentialMovingAverage = (data, config, init_val) => {
         return (vals[0] - init_val) * weighting_multiplier + init_val;
     }
 
+    if (Object.is(init_val, NaN)) {
+        return NaN;
+    }
+
     if (data.length < periods) {
         throw new Error('Periods longer than data length');
     }

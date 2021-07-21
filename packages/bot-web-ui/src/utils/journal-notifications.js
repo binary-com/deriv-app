@@ -67,6 +67,10 @@ export const isCustomJournalMessage = (
         pushMessage(message.toString());
         return true;
     }
+    if (typeof message === 'object') {
+        pushMessage(message.toString());
+        return true;
+    }
 
     return false;
 };
