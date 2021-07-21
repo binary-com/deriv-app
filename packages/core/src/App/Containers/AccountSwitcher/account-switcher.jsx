@@ -94,14 +94,16 @@ const AccountSwitcher = props => {
 
     useOnClickOutside(wrapper_ref, closeAccountsDialog, validateClickOutside);
 
-    const redirectToMt5 = account_type => {
+    const redirectToMt5 = async account_type => {
         closeAccountsDialog();
-        props.history.push(`${routes.mt5}#${account_type}`);
+        await props.history.push(routes.mt5);
+        window.location.hash = account_type;
     };
 
-    const redirectToDXTrade = account_type => {
+    const redirectToDXTrade = async account_type => {
         closeAccountsDialog();
-        props.history.push(`${routes.dxtrade}#${account_type}`);
+        await props.history.push(routes.dxtrade);
+        window.location.hash = account_type;
     };
 
     const hasRequiredCredentials = () => {
@@ -132,8 +134,8 @@ const AccountSwitcher = props => {
         }
     };
 
-    const redirectToMt5Real = () => {
-        redirectToMt5('real');
+    const redirectToMt5Real = market_type => {
+        redirectToMt5(`real-${market_type}`);
     };
 
     // TODO: Uncomment when real account is launched
@@ -157,12 +159,12 @@ const AccountSwitcher = props => {
     //     redirectToDXTradeReal();
     // };
 
-    const redirectToMt5Demo = () => {
-        redirectToMt5('demo');
+    const redirectToMt5Demo = market_type => {
+        redirectToMt5(`demo-${market_type}`);
     };
 
-    const redirectToDXTradeDemo = () => {
-        redirectToDXTrade('demo');
+    const redirectToDXTradeDemo = market_type => {
+        redirectToDXTrade(`demo-${market_type}`);
     };
 
     const setAccountCurrency = () => {
@@ -408,7 +410,7 @@ const AccountSwitcher = props => {
                                 is_disabled={account.is_disabled}
                                 is_virtual={account.is_virtual}
                                 loginid={account.loginid}
-                                onClickAccount={account.is_disabled ? undefined : () => doSwitch(account.loginid)}
+                                redirectAccount={account.is_disabled ? undefined : () => doSwitch(account.loginid)}
                                 onClickResetVirtualBalance={resetBalance}
                                 selected_loginid={props.account_loginid}
                             />
@@ -449,7 +451,7 @@ const AccountSwitcher = props => {
                                                 has_balance={'balance' in account}
                                                 has_error={account.has_error}
                                                 loginid={account.display_login}
-                                                onClickAccount={redirectToMt5Demo}
+                                                redirectAccount={() => redirectToMt5Demo(account.market_type)}
                                                 platform={CFD_PLATFORMS.MT5}
                                             />
                                         ))}
@@ -501,7 +503,7 @@ const AccountSwitcher = props => {
                                         })}`}
                                         has_balance={'balance' in account}
                                         loginid={account.display_login}
-                                        onClickAccount={redirectToDXTradeDemo}
+                                        redirectAccount={() => redirectToDXTradeDemo(account.market_type)}
                                         platform={CFD_PLATFORMS.DXTRADE}
                                     />
                                 ))}
@@ -559,7 +561,7 @@ const AccountSwitcher = props => {
                                         is_virtual={account.is_virtual}
                                         is_eu={props.is_eu}
                                         loginid={account.loginid}
-                                        onClickAccount={
+                                        redirectAccount={
                                             account.is_disabled ? undefined : () => doSwitch(account.loginid)
                                         }
                                         selected_loginid={props.account_loginid}
@@ -639,7 +641,7 @@ const AccountSwitcher = props => {
                                                 has_balance={'balance' in account}
                                                 has_error={account.has_error}
                                                 loginid={account.display_login}
-                                                onClickAccount={redirectToMt5Real}
+                                                redirectAccount={() => redirectToMt5Real(account.market_type)}
                                                 server={findServerForAccount(account)}
                                                 platform={CFD_PLATFORMS.MT5}
                                             />
@@ -711,7 +713,7 @@ const AccountSwitcher = props => {
                                                 has_balance={'balance' in account}
                                                 has_error={account.has_error}
                                                 loginid={account.display_login}
-                                                onClickAccount={redirectToDXTradeReal}
+                                                redirectAccount={() => redirectToDXTradeReal(account.market_type}
                                                 platform={CFD_PLATFORMS.DXTRADE}
                                             />
                                         ))}

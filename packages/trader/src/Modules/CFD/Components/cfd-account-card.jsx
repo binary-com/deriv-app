@@ -222,6 +222,7 @@ const CFDAccountCard = ({
             <div
                 className={classNames('cfd-account-card', { 'cfd-account-card__logged-out': !is_logged_in })}
                 ref={ref}
+                id={`${type.category}-${type.type}`}
             >
                 {has_popular_banner && (
                     <div className='cfd-account-card__banner'>
