@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Loading } from '@deriv/components';
+import { Loading, Text } from '@deriv/components';
 import { Localize } from '@deriv/translations';
 import { isCryptocurrency, isDesktop } from '@deriv/shared';
 import { connect } from 'Stores/connect';
@@ -19,6 +19,11 @@ const WithdrawalSideNote = () => {
         <Localize
             i18n_default_text='Do not enter an address linked to an ICO purchase or crowdsale. If you do, the ICO tokens will not be credited into your account.'
             key={0}
+        />,
+        <Localize
+            i18n_default_text='It may take up to <0>6 confirmations</0> for your funds to be reflected in your destination wallet.'
+            key={2}
+            components={[<Text key={0} size='xxs' weight='bold' />]}
         />,
         /*
         <Localize

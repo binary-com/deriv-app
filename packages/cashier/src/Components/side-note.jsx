@@ -5,7 +5,9 @@ import { DesktopWrapper, Text } from '@deriv/components';
 const SideNoteBullet = ({ children }) => (
     <div className='cashier-side-note__bullet-wrapper'>
         <div className='cashier-side-note__bullet' />
-        <span>{children}</span>
+        <Text className='cashier-side-note__text' size='xxs'>
+            {children}
+        </Text>
     </div>
 );
 
