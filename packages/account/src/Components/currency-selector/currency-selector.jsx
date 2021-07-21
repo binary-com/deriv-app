@@ -205,7 +205,7 @@ const CurrencySelector = ({
                                             : 'currency-selector--deriv-account'
                                     }
                                     is_disabled={isSubmitDisabled(values)}
-                                    is_center={!has_currency}
+                                    is_center={false}
                                     is_absolute={set_currency || is_dashboard}
                                     label={getSubmitLabel()}
                                     {...(has_cancel

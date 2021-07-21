@@ -45,7 +45,7 @@ const SetCurrency = ({
     };
 
     const noCryptoAvailable = () => {
-        return available_crypto_currencies.length === 0 && has_fiat;
+        return available_crypto_currencies.length === 0 && has_fiat && props.currency;
     };
 
     if (is_loading) return <LoadingModal />;

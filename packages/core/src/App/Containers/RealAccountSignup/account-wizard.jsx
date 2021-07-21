@@ -12,12 +12,12 @@ import AcceptRiskForm from './accept-risk-form.jsx';
 import { getItems } from './account-wizard-form';
 import 'Sass/details-form.scss';
 
-const StepperHeader = ({ has_target, has_real_account, has_currency, items, getCurrentStep, getTotalSteps }) => {
+const StepperHeader = ({ has_target, has_real_account, items, getCurrentStep, getTotalSteps }) => {
     const step = getCurrentStep() - 1;
     const step_title = items[step].header.title;
     return (
         <React.Fragment>
-            {(!has_real_account || has_target) && has_currency && (
+            {(!has_real_account || has_target) && (
                 <React.Fragment>
                     <DesktopWrapper>
                         <FormProgress steps={items} current_step={step} />
@@ -44,20 +44,6 @@ const StepperHeader = ({ has_target, has_real_account, has_currency, items, getC
                     </MobileWrapper>
                 </React.Fragment>
             )}
-            <DesktopWrapper>
-                {has_real_account && (!has_target || !has_currency) && (
-                    <div className='account-wizard__set-currency'>
-                        {!has_currency && (
-                            <p>
-                                <Localize i18n_default_text='You have an account that do not have currency assigned. Please choose a currency to trade with this account.' />
-                            </p>
-                        )}
-                        <Text as='h2' weight='bold' align='center'>
-                            <Localize i18n_default_text='Please choose your currency' />
-                        </Text>
-                    </div>
-                )}
-            </DesktopWrapper>
         </React.Fragment>
     );
 };
@@ -204,15 +190,13 @@ const AccountWizard = props => {
         return props.realAccountSignup(clone);
     };
 
-    const setAccountCurrency = () => props.setAccountCurrency(form_values().currency);
-
     const updateValue = (index, value, setSubmitting, goToNextStep) => {
         saveFormData(index, value);
         clearError();
 
         // Check if account wizard is not finished
-        if ((!props.has_currency && props.has_real_account) || index + 1 >= state_items.length) {
-            createRealAccount(setSubmitting);
+        if (index + 1 >= state_items.length) {
+            createRealAccount();
         } else {
             goToNextStep();
         }
@@ -241,38 +225,26 @@ const AccountWizard = props => {
         return properties;
     };
 
-    const createRealAccount = setSubmitting => {
+    const createRealAccount = () => {
         props.setLoading(true);
-        if (props.has_real_account && !props.has_currency) {
-            setAccountCurrency()
-                .then(response => {
-                    props.onFinishSuccess(response.echo_req.set_account_currency.toLowerCase());
-                })
-                .catch(error_message => {
-                    setFormError(error_message);
-                    setSubmitting(false);
-                })
-                .finally(() => props.setLoading(false));
-        } else {
-            submitForm()
-                .then(response => {
-                    if (props.real_account_signup_target === 'maltainvest') {
-                        props.onFinishSuccess(response.new_account_maltainvest.currency.toLowerCase());
-                    } else if (props.real_account_signup_target === 'samoa') {
-                        props.onOpenWelcomeModal(response.new_account_samoa.currency.toLowerCase());
-                    } else {
-                        props.onFinishSuccess(response.new_account_real.currency.toLowerCase());
-                    }
-                })
-                .catch(error => {
-                    if (error.code === 'show risk disclaimer') {
-                        setShouldAcceptFinancialRisk(true);
-                    } else {
-                        props.onError(error, state_items);
-                    }
-                })
-                .finally(() => props.setLoading(false));
-        }
+        submitForm()
+            .then(response => {
+                if (props.real_account_signup_target === 'maltainvest') {
+                    props.onFinishSuccess(response.new_account_maltainvest.currency.toLowerCase());
+                } else if (props.real_account_signup_target === 'samoa') {
+                    props.onOpenWelcomeModal(response.new_account_samoa.currency.toLowerCase());
+                } else {
+                    props.onFinishSuccess(response.new_account_real.currency.toLowerCase());
+                }
+            })
+            .catch(error => {
+                if (error.code === 'show risk disclaimer') {
+                    setShouldAcceptFinancialRisk(true);
+                } else {
+                    props.onError(error, state_items);
+                }
+            })
+            .finally(() => props.setLoading(false));
     };
 
     const onAcceptRisk = () => {
@@ -342,7 +314,6 @@ AccountWizard.propTypes = {
     realAccountSignup: PropTypes.func,
     residence: PropTypes.string,
     residence_list: PropTypes.array,
-    setAccountCurrency: PropTypes.func,
 };
 
 export default connect(({ client, ui }) => ({
@@ -353,7 +324,6 @@ export default connect(({ client, ui }) => ({
     upgrade_info: client.upgrade_info,
     real_account_signup_target: ui.real_account_signup_target,
     has_currency: !!client.currency,
-    setAccountCurrency: client.setAccountCurrency,
     residence: client.residence,
     residence_list: client.residence_list,
     states_list: client.states_list,
