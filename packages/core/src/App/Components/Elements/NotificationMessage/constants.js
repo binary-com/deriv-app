@@ -31,7 +31,14 @@ export const sortNotifications = (() => {
         success: 6,
     };
 
-    return (a, b) => notification_order[a.type] - notification_order[b.type];
+    const notification_order_variant = {
+        account: 1,
+        system: 2,
+    };
+
+    return (a, b) =>
+        notification_order_variant[a.variant] - notification_order_variant[b.variant] ||
+        notification_order[a.type] - notification_order[b.type];
 })();
 
 export const sortNotificationsMobile = (() => {
@@ -44,5 +51,12 @@ export const sortNotificationsMobile = (() => {
         success: 6,
     };
 
-    return (a, b) => notification_order_mobile[a.type] - notification_order_mobile[b.type];
+    const notification_order_mobile_variant = {
+        account: 1,
+        system: 2,
+    };
+
+    return (a, b) =>
+        notification_order_mobile_variant[a.variant] - notification_order_mobile_variant[b.variant] ||
+        notification_order_mobile[a.type] - notification_order_mobile[b.type];
 })();

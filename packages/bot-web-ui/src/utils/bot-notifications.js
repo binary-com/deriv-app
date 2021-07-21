@@ -8,6 +8,7 @@ export const switch_account_notification = {
         'Our system will finish any DBot trades that are running, and DBot will not place any new trades.'
     ),
     type: 'warning',
+    variant: 'account',
     is_persistent: true,
 };
 
@@ -20,6 +21,7 @@ export const journalError = onClick => {
             onClick,
         },
         type: 'danger',
+        variant: 'account',
         platform: [platform_name.DBot],
         is_disposable: true,
     };
