@@ -89,8 +89,8 @@
             &.active {
                 border: solid 2px var(--border-active);
             }
-            &:not(.active):hover &__background {
-                opacity: 1;
+            &:not(.active):hover {
+                background: var(--state-hover);
             }
             @include mobile {
                 width: 302px;
