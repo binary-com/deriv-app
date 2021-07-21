@@ -1,4 +1,7 @@
+const baseConfigForPackages = require('../../jest.config.base');
+
 module.exports = {
+    ...baseConfigForPackages,
     moduleNameMapper: {
         '\\.s(c|a)ss$': '<rootDir>/../../__mocks__/styleMock.js',
         '^.+\\.svg$': '<rootDir>/../../__mocks__/styleMock.js',
@@ -11,8 +14,4 @@ module.exports = {
         '^Sections/(.*)$': '<rootDir>/src/Sections/$1',
         '^Sections$': '<rootDir>/src/Sections/index.js',
     },
-    testRegex: '(/__tests__/.*|(\\.)(test|spec))\\.js?$',
-    setupFiles: ['<rootDir>/../../jest.setup.js'],
-    // This is needed to transform es modules imported from node_modules of the target component.
-    transformIgnorePatterns: ['/node_modules/(?!react-virtualized).+\\.js$'],
 };
