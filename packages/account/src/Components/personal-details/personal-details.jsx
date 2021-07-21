@@ -435,7 +435,6 @@ const PersonalDetails = ({
                                                             name='tax_identification_number'
                                                             label={localize('Tax Identification Number')}
                                                             placeholder={localize('Tax Identification Number')}
-                                                            warn={warning_items?.tax_identification_number}
                                                         />
                                                         <div
                                                             onClick={e => {
