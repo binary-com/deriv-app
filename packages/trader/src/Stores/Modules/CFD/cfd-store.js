@@ -284,7 +284,28 @@ export default class CFDStore extends BaseStore {
     }
 
     @action.bound
+    async creatMT5Password(values, actions) {
+        const response = await WS.tradingPlatformPasswordChange({
+            new_password: values.password,
+            platform: CFD_PLATFORMS.MT5,
+        });
+        if (response.error) {
+            this.setError(true, response.error);
+            actions.resetForm({});
+            actions.setSubmitting(false);
+            actions.setStatus({ success: false });
+            return true;
+        }
+        return false;
+    }
+
+    @action.bound
     async submitMt5Password(values, actions) {
+        if (this.root_store.client.is_mt5_password_not_set) {
+            const has_error = await this.creatMT5Password(values, actions);
+            if (has_error) return;
+        }
+
         this.resetFormErrors();
         const response = await this.openMT5Account(values);
         if (!response.error) {
@@ -312,7 +333,28 @@ export default class CFDStore extends BaseStore {
     }
 
     @action.bound
+    async createCFDPassword(values, actions) {
+        const response = await WS.tradingPlatformPasswordChange({
+            new_password: values.password,
+            platform: CFD_PLATFORMS.DXTRADE,
+        });
+        if (response.error) {
+            this.setError(true, response.error);
+            actions.resetForm({});
+            actions.setSubmitting(false);
+            actions.setStatus({ success: false });
+            return true;
+        }
+        return false;
+    }
+
+    @action.bound
     async submitCFDPassword(values, actions) {
+        if (this.root_store.client.is_dxtrade_password_not_set) {
+            const has_error = await this.createCFDPassword(values, actions);
+            if (has_error) return;
+        }
+
         const response = await this.openCFDAccount(values);
         if (!response.error) {
             WS.tradingPlatformAccountsList(values.platform).then(

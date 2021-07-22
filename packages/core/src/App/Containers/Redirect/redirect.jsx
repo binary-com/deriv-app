@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { loginUrl, routes, PlatformContext } from '@deriv/shared';
+import { loginUrl, routes, PlatformContext, CFD_PLATFORMS } from '@deriv/shared';
 import { getLanguage } from '@deriv/translations';
 import { connect } from 'Stores/connect';
 import { WS } from 'Services';
@@ -41,6 +41,33 @@ const Redirect = ({
             break;
         }
         case 'trading_platform_password_reset': {
+            const redirect_to = url_params.get('redirect_to');
+
+            if (redirect_to) {
+                let pathname = '';
+                switch (redirect_to) {
+                    case CFD_PLATFORMS.MT5:
+                        pathname = routes.mt5;
+                        break;
+                    case CFD_PLATFORMS.DERIVX:
+                        pathname = routes.dxtrade;
+                        break;
+                    case 'password':
+                        pathname = routes.passwords;
+                        break;
+                    default:
+                        break;
+                }
+
+                if (pathname) {
+                    history.push({
+                        pathname,
+                        search: url_query_string,
+                    });
+                    redirected_to_route = true;
+                }
+            }
+
             setResetTradingPasswordModalOpen(true);
             break;
         }

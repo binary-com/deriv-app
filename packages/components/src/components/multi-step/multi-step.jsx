@@ -13,6 +13,7 @@ const MultiStep = React.forwardRef(({ className, lbl_previous, steps }, ref) => 
 
     React.useImperativeHandle(ref, () => ({
         goNextStep,
+        goPrevStep,
     }));
 
     const goNextStep = () => setStep(step + 1);
@@ -29,7 +30,7 @@ const MultiStep = React.forwardRef(({ className, lbl_previous, steps }, ref) => 
 
     return (
         <div className={classNames('multi-step', className)}>
-            {step !== 0 && prev_btn}
+            {step !== 0 && lbl_previous && prev_btn}
             <div className='multi-step__component'>{component}</div>
         </div>
     );

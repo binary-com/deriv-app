@@ -7,7 +7,7 @@ import DerivComLogo from '../../../Assets/ic-brand-deriv-red.svg';
 import DerivGoLight from '../../../Assets/ic-brand-deriv-go-light.svg';
 import DerivGoDark from '../../../Assets/ic-brand-deriv-go-dark.svg';
 
-const PasswordsStatic = ({ is_dark_mode_on, is_deriv_password, is_trading_password_required, is_dxtrade_allowed }) => (
+const PasswordsStatic = ({ is_dark_mode_on, is_deriv_password, is_mt5_password_not_set, is_dxtrade_allowed }) => (
     <React.Fragment>
         {is_deriv_password ? (
             <div className='account__passwords-item-left'>
@@ -48,7 +48,7 @@ const PasswordsStatic = ({ is_dark_mode_on, is_deriv_password, is_trading_passwo
                         ? localize('Use this to log in and trade with DMT5 and Deriv X.')
                         : localize('Use this to log in and trade with DMT5.')}
                 </Text>
-                {!is_trading_password_required && (
+                {!is_mt5_password_not_set && (
                     <React.Fragment>
                         <Text className='passwords-static__text' color='prominent' size='xs' weight='lighter'>
                             {localize('Apps you have linked to this password:')}
@@ -73,7 +73,7 @@ const PasswordsStatic = ({ is_dark_mode_on, is_deriv_password, is_trading_passwo
 PasswordsStatic.PropTypes = {
     is_dark_mode_on: PropTypes.bool,
     is_deriv_password: PropTypes.bool,
-    is_trading_password_required: PropTypes.bool,
+    is_mt5_password_not_set: PropTypes.bool,
     is_dxtrade_allowed: PropTypes.bool,
 };
 

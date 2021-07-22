@@ -506,8 +506,6 @@ $MIN_HEIGHT_FLOATING: calc(
         display: flex;
         flex-direction: column;
         &-wrapper {
-            display: flex;
-            justify-content: space-between;
             margin: 0.8rem 0 4rem;
 
             .passwords-social-buttons {
@@ -521,49 +519,37 @@ $MIN_HEIGHT_FLOATING: calc(
                 margin-bottom: 2.4rem;
             }
         }
-        &-item-left {
-            width: 38.4rem;
-            margin-right: 2.4rem;
-            display: flex;
-            flex-direction: column;
 
-            .passwords-static {
-                &__text {
-                    margin-bottom: 1.6rem;
-                }
-                &__single-icon {
-                    margin-right: 0.4rem;
-                }
-                &__icons {
-                    display: inline-grid;
-                    grid-column-gap: 0.8rem;
-                    grid-template-columns: 3.2rem 3.2rem 3.2rem 3.2rem;
-
-                    @include tablet {
-                        margin-bottom: 2.4rem;
-                    }
-                }
-                &__logo-container {
-                    display: flex;
-                    align-items: center;
-                    margin-bottom: 0.8rem;
-                }
+        .passwords-platform {
+            &__desc {
+                margin-bottom: 1.6rem;
             }
-
-            @include mobile {
-                width: 100%;
-                margin-right: unset;
+            &__content {
+                display: flex;
+                align-items: center;
+                gap: 1.6rem;
+                margin-top: 1.6rem;
+            }
+            &__single-icon {
+                margin-right: 0.4rem;
+            }
+            &__icons {
+                display: inline-grid;
+                grid-column-gap: 0.8rem;
+                grid-template-columns: 3.2rem 3.2rem 3.2rem 3.2rem;
                 margin-bottom: 2.4rem;
             }
-        }
-        &-item-right {
-            max-width: 48.6rem;
-            flex-grow: 1;
-
-            @include mobile {
-                width: 100%;
+            &__logo-container {
+                display: flex;
+                align-items: center;
                 margin-bottom: 0.8rem;
             }
+        }
+
+        @include mobile {
+            width: 100%;
+            margin-right: unset;
+            margin-bottom: 2.4rem;
         }
         &-fieldset {
             max-width: 48.6rem;
@@ -590,7 +576,7 @@ $MIN_HEIGHT_FLOATING: calc(
             border-radius: $BORDER_RADIUS;
             width: fit-content;
             height: 4rem;
-            cursor: default;
+            cursor: pointer;
         }
 
         @include mobile {

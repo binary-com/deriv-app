@@ -457,8 +457,13 @@ export default class ClientStore extends BaseStore {
     }
 
     @computed
-    get is_trading_password_required() {
-        return this.account_status?.status?.includes('trading_password_required');
+    get is_mt5_password_not_set() {
+        return this.account_status?.status?.includes('mt5_password_not_set');
+    }
+
+    @computed
+    get is_dxtrade_password_not_set() {
+        return this.account_status?.status?.includes('dxtrade_password_not_set');
     }
 
     @computed

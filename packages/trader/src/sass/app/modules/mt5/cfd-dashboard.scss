@@ -98,7 +98,6 @@
         &--heading {
             @include typeface(--title-center-bold-black, none);
             color: var(--text-general);
-            line-height: 1.5;
         }
     }
     &__missing-real {
@@ -559,8 +558,6 @@
     }
     &--balance {
         @include typeface(--title-left-bold-black);
-        line-height: 1.5;
-        margin-top: -0.4rem;
         color: var(--text-profit-success);
     }
     &__banner {
@@ -595,15 +592,14 @@
         padding: 1.5rem 1.6rem 1.6rem; // -1 for border
 
         &--description {
-            display: inline-block;
-            margin-left: 1.6em;
-            max-width: 19.2em;
+            display: flex;
+            margin-left: 1.6rem;
+            max-width: 19.2rem;
+            flex-direction: column;
 
-            .cfd-account-card--heading {
-                margin-bottom: 0.8rem;
-            }
             .cfd-account-card--paragraph {
                 width: 18.3rem;
+                padding-top: 0.8rem;
             }
         }
         &--has-banner {
@@ -667,86 +663,8 @@
             }
         }
     }
-    &__specification {
-        &-icon {
-            transform: rotate(180deg);
-            vertical-align: middle;
-            &--collapsed {
-                transform: rotate(0deg);
-            }
-        }
-        @include mobile {
-            padding: 0 1rem;
-        }
-        &-title {
-            overflow: hidden;
-            text-align: center;
-            width: 100%;
-            cursor: pointer;
-            user-select: none;
-
-            &-wrapper {
-                position: relative;
-                width: 100%;
-                padding: 0 1.5rem;
-            }
-
-            &:before {
-                background-color: var(--text-less-prominent);
-                content: '';
-                display: inline-block;
-                height: 1px;
-                position: relative;
-                vertical-align: middle;
-                width: 50%;
-                right: 0.5em;
-                margin-left: -50%;
-            }
-            &:after {
-                background-color: var(--text-less-prominent);
-                content: '';
-                display: inline-block;
-                height: 1px;
-                position: relative;
-                vertical-align: middle;
-                width: 50%;
-                left: 0.5em;
-                margin-right: -50%;
-            }
-        }
-        &-content {
-            position: absolute;
-            display: grid;
-            align-content: start;
-            justify-items: center;
-            height: 100%;
-            overflow: hidden;
-            width: calc(100% - 3rem);
-            transform: none;
-            transform-origin: top center;
-            opacity: 0.95;
-            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.3s linear;
-            z-index: 2;
-            background-color: var(--general-main-1);
-
-            &--is-collapsed {
-                transform: scale(1, 0);
-                opacity: 0;
-            }
-            @include mobile {
-                width: calc(100% - 2rem);
-            }
-        }
-        &-description {
-            @include typeface(--paragraph-left-normal-prominent);
-            padding: 1.6rem 0;
-        }
-        &-table {
-            width: fit-content;
-        }
-    }
     &__login-specs {
-        margin: 1.6rem 0;
+        margin: 0.8rem 0;
         width: 100%;
         padding: 0 1.8rem;
 
@@ -761,7 +679,6 @@
                 vertical-align: middle;
                 .cfd-account-card--paragraph {
                     color: var(--text-general);
-                    padding-left: 0.8rem;
                 }
             }
             &-data {
@@ -796,6 +713,32 @@
         align-content: center;
         border-left: 1px solid var(--border-normal);
     }
+    &__password {
+        &-box {
+            display: flex;
+            align-items: center;
+        }
+        &-text {
+            border: 1px solid var(--border-normal);
+            border-radius: $BORDER_RADIUS;
+            padding: 0.4rem;
+            font-family: Courier, monospace;
+            overflow: hidden;
+            margin-right: 0.4rem;
+            flex: 1;
+        }
+        &-action {
+            padding: 0;
+            height: auto;
+
+            .dc-text {
+                font-size: var(--text-size-xxxs);
+            }
+        }
+        &-tooltip {
+            width: 20rem;
+        }
+    }
     &__account-selection {
         align-items: center;
         display: flex;
@@ -804,13 +747,12 @@
         margin: 0 1.6rem 1.5rem; // -1 for border
         padding: 0;
         text-decoration: none;
-        width: 27rem;
+        width: calc(100% - 3.2rem);
         @include typeface(--paragraph-center-bold-black, none);
 
         &--primary {
             background-color: var(--brand-red-coral);
             color: var(--text-colored-background);
-            margin-top: 1rem;
         }
         &--secondary {
             background-color: transparent;
@@ -849,11 +791,12 @@
     }
     &__manage {
         display: flex;
-        width: 272px;
+        width: calc(100% - 3.2rem);
 
         .dc-btn {
             width: 100%;
             margin-bottom: 1.6rem;
+            height: 4rem;
 
             &:not(:last-child) {
                 margin-right: 1.6rem;
@@ -873,6 +816,12 @@
                 pointer-events: none;
             }
         }
+    }
+    &__divider {
+        width: calc(100% - 3.2rem);
+        margin-left: 1.6rem;
+        border-top: 1px solid var(--general-section-1);
+        margin-top: 1rem;
     }
     @include mobile {
         width: calc(100vw - 3.2rem);
@@ -900,21 +849,6 @@
     }
     &--error-message {
         margin-bottom: 1em;
-    }
-    &__trading-password {
-        &-wrapper {
-            display: grid;
-            grid-auto-rows: auto;
-            justify-items: center;
-            grid-gap: 1rem;
-            margin-top: 3.2rem;
-        }
-        &-text {
-            margin-bottom: 1.4rem;
-        }
-        &-note {
-            margin-top: 1.4rem;
-        }
     }
     &__investor-wrapper {
         margin: 3.2rem 0.5rem 0;
@@ -1113,6 +1047,9 @@
                 margin: -2.7rem 0 2.4rem;
                 color: var(--text-less-prominent);
             }
+            &__account-title {
+                margin-bottom: 1.6rem;
+            }
         }
         &_cfd-dashboard__compare-accounts {
             width: 904px;
@@ -1287,6 +1224,30 @@
         overflow: hidden;
     }
 }
+
+.cfd-change-password {
+    &__description {
+        margin-bottom: 2.4rem;
+    }
+
+    &__icon {
+        margin-left: 2.3rem;
+        margin-bottom: 1.4rem;
+        flex: none;
+    }
+
+    &-confirmation {
+        &__description {
+            margin-top: 0.8rem;
+            margin-bottom: 2.4rem;
+        }
+    }
+}
+
+.cfd-trading-password {
+    margin-top: 3.2rem;
+}
+
 .dc-modal__container_cfd-financial-stp-signup-modal {
     max-height: calc(100vh - 102px) !important;
     @include desktop {

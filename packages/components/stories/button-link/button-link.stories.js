@@ -18,11 +18,7 @@ storiesOf('ButtonLink', module)
             return (
                 <Wrapper is_dark={boolean('Dark Theme', false)}>
                     <BrowserRouter>
-                        <ButtonLink
-                            to='#'
-                            onClick={action('clicked')}
-                            size='medium'
-                        >
+                        <ButtonLink to='#' onClick={action('clicked')} size='medium'>
                             <p>This is a button link</p>
                         </ButtonLink>
                     </BrowserRouter>

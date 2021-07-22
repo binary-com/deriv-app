@@ -99,6 +99,17 @@ export const getAccountListKey = (account, platform) => {
     })}@${platform === CFD_PLATFORMS.DXTRADE ? account.market_type : account.server}`;
 };
 
+export const getCFDPlatformLabel = platform => {
+    switch (platform) {
+        case CFD_PLATFORMS.MT5:
+            return 'DMT5';
+        case CFD_PLATFORMS.DXTRADE:
+            return 'Deriv X';
+        default:
+            return '';
+    }
+};
+
 export const isLandingCompanyEnabled = ({ landing_companies, platform, type }) => {
     if (platform === CFD_PLATFORMS.MT5) {
         if (type === 'gaming') return !!landing_companies?.mt_gaming_company?.financial;

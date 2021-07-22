@@ -126,6 +126,52 @@
             flex-direction: row;
         }
     }
+    &__create-password {
+        padding: 0 1.2rem;
+
+        &-content {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            align-items: center;
+
+            @include desktop {
+                margin-top: -2.5rem;
+            }
+
+            .dc-icon {
+                margin-left: 1.1rem;
+                flex: none;
+            }
+        }
+        &-title {
+            margin-top: 2.4rem;
+            margin-bottom: 0.8rem;
+        }
+        &-description {
+            max-width: 30rem;
+            margin-bottom: 1.6rem;
+        }
+    }
+    &__change-password-confirmation {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        max-width: 30rem;
+
+        @include desktop {
+            margin-top: -2.5rem;
+        }
+
+        &-wrapper {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+        .dc-form-submit-button {
+            margin-bottom: 2.2rem;
+        }
+    }
 }
 
 .dc-modal__container_top-up-virtual {
@@ -294,18 +340,6 @@
         & .dc-form-submit-button {
             all: unset;
         }
-    }
-}
-
-.mt5-trading-password-required {
-    display: grid;
-    grid-auto-rows: auto;
-    grid-gap: 1.2rem;
-    justify-items: center;
-    margin: 2.4rem;
-    @include tablet-up {
-        max-width: 364px;
-        margin: 0 3.2rem 3.2rem;
     }
 }
 

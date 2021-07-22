@@ -407,6 +407,7 @@ import './dxtrade/ic-dxtrade-device-tablet-light.svg';
 import './dxtrade/ic-dxtrade-device-tablet.svg';
 import './dxtrade/ic-dxtrade-financial-platform.svg';
 import './dxtrade/ic-dxtrade-financial.svg';
+import './dxtrade/ic-dxtrade-one-password.svg';
 import './dxtrade/ic-dxtrade-synthetic-platform.svg';
 import './dxtrade/ic-dxtrade-synthetic.svg';
 import './flag/ic-flag-de.svg';

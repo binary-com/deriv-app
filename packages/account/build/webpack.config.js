@@ -47,6 +47,7 @@ module.exports = function (env, argv) {
             'poi-verified': 'Components/poi-verified',
             'proof-of-identity-container': 'Sections/Verification/ProofOfIdentity/proof-of-identity-container.jsx',
             'proof-of-address-container': 'Sections/Verification/ProofOfAddress/proof-of-address-container.jsx',
+            'reset-trading-password-modal': 'Components/reset-trading-password-modal',
             'self-exclusion': 'Components/self-exclusion',
             'scrollbars-container': 'Components/scrollbars-container',
             'sent-email-modal': 'Components/sent-email-modal',

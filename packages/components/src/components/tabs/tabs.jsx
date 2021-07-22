@@ -34,7 +34,7 @@ const Tabs = ({
     const active_tab_ref = React.useRef();
     const tabs_wrapper_ref = React.useRef();
     const pushHash = hash => {
-        history.replace(`${history.location.pathname}#${hash}`);
+        history.replace(`${history.location.pathname}${window.location.search}#${hash}`);
     };
 
     const setActiveLineStyle = React.useCallback(() => {

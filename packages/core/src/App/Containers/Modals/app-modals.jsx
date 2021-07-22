@@ -10,9 +10,6 @@ const AccountSignupModal = React.lazy(() =>
 const ResetOrUnlinkPasswordModal = React.lazy(() =>
     import(/* webpackChunkName: "reset-or-unlink-password-modal" */ '../ResetOrUnlinkPasswordModal')
 );
-const ResetTradingPasswordModal = React.lazy(() =>
-    import(/* webpackChunkName: "reset-trading-password-modal" */ '../ResetTradingPasswordModal')
-);
 const RedirectToLoginModal = React.lazy(() =>
     import(/* webpackChunkName: "reset-password-modal" */ '../RedirectToLoginModal')
 );
@@ -46,9 +43,6 @@ const AppModals = ({
             break;
         case 'reset_password':
             ComponentToLoad = <ResetOrUnlinkPasswordModal />;
-            break;
-        case 'trading_platform_password_reset':
-            ComponentToLoad = <ResetTradingPasswordModal />;
             break;
         case 'signup':
             ComponentToLoad = <AccountSignupModal />;

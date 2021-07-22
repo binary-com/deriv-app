@@ -2,23 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Formik, Form } from 'formik';
+import { useHistory } from 'react-router-dom';
 import { Button, Dialog, Icon, PasswordInput, PasswordMeter, Text } from '@deriv/components';
-import { getErrorMessages, validPassword, validLength } from '@deriv/shared';
+import { getErrorMessages, validPassword, validLength, WS, getCFDPlatformLabel } from '@deriv/shared';
 import { localize, Localize } from '@deriv/translations';
-import { connect } from 'Stores/connect';
-import { WS } from 'Services';
 
-const ResetTradingPassword = ({
-    setDialogTitleFunc,
-    toggleResetTradingPasswordModal,
-    verification_code,
-    is_dxtrade_allowed,
-}) => {
+const ResetTradingPassword = ({ setDialogTitleFunc, toggleResetTradingPasswordModal, verification_code, platform }) => {
     const handleSubmit = (values, actions) => {
         actions.setSubmitting(true);
+
         const params = {
             new_password: values.password,
             verification_code,
+            platform,
         };
 
         WS.tradingPlatformPasswordReset(params).then(async response => {
@@ -63,7 +59,7 @@ const ResetTradingPassword = ({
                 validate={validateReset}
                 onSubmit={handleSubmit}
             >
-                {({ handleBlur, errors, values, touched, isSubmitting, handleChange, status }) => (
+                {({ handleBlur, errors, values, touched, isSubmitting, setFieldTouched, handleChange, status }) => (
                     <Form>
                         <React.Fragment>
                             {status.error_msg && (
@@ -110,11 +106,12 @@ const ResetTradingPassword = ({
                                         <Localize i18n_default_text='Success' />
                                     </Text>
                                     <Text align='center' as='p' size='xs' className='reset-trading-password__subtext'>
-                                        {is_dxtrade_allowed
-                                            ? localize(
-                                                  'You have a new trading password. Use this to log in to DMT5 and Deriv X.'
-                                              )
-                                            : localize('You have a new trading password. Use this to log in to DMT5.')}
+                                        {localize(
+                                            'You have a new {{platform}} password to log in to your {{platform}} accounts on the web and mobile apps.',
+                                            {
+                                                platform: getCFDPlatformLabel(platform),
+                                            }
+                                        )}
                                     </Text>
                                     <Button
                                         type='button'
@@ -129,7 +126,12 @@ const ResetTradingPassword = ({
                             {!status.error_msg && !status.reset_complete && (
                                 <div className='reset-trading-password__set-password'>
                                     <Text as='p' weight='bold' className='reset-trading-password__heading'>
-                                        <Localize i18n_default_text='Set new trading password' />
+                                        <Localize
+                                            i18n_default_text='Create a new {{platform}} password'
+                                            values={{
+                                                platform: getCFDPlatformLabel(platform),
+                                            }}
+                                        />
                                     </Text>
                                     <fieldset className='reset-trading-password__input-field'>
                                         <PasswordMeter
@@ -141,8 +143,13 @@ const ResetTradingPassword = ({
                                                 autoComplete='new-password'
                                                 className='reset-trading-password__password-field'
                                                 name='password'
-                                                label={localize('Trading password')}
-                                                onChange={handleChange}
+                                                label={localize('{{platform}} password', {
+                                                    platform: getCFDPlatformLabel(platform),
+                                                })}
+                                                onChange={e => {
+                                                    setFieldTouched('password', true);
+                                                    handleChange(e);
+                                                }}
                                                 onBlur={handleBlur}
                                                 error={touched.password && errors.password}
                                                 value={values.password}
@@ -188,6 +195,7 @@ ResetTradingPassword.propTypes = {
     setDialogTitleFunc: PropTypes.func,
     toggleResetTradingPasswordModal: PropTypes.func,
     verification_code: PropTypes.string,
+    platform: PropTypes.string,
 };
 
 const ResetTradingPasswordModal = ({
@@ -197,12 +205,20 @@ const ResetTradingPasswordModal = ({
     is_visible,
     toggleResetTradingPasswordModal,
     verification_code,
-    is_dxtrade_allowed,
+    platform,
 }) => {
     const [dialog_title, setDialogTitle] = React.useState('');
+    const history = useHistory();
+    React.useEffect(() => {
+        history.replace({
+            search: '',
+        });
+    }, [history]);
+
     const setDialogTitleFunc = is_invalid_token => {
         setDialogTitle(is_invalid_token ? localize('Reset trading password') : '');
     };
+
     return (
         <Dialog
             className='reset-trading-password__dialog'
@@ -218,7 +234,7 @@ const ResetTradingPasswordModal = ({
                 toggleResetTradingPasswordModal={toggleResetTradingPasswordModal}
                 verification_code={verification_code}
                 setDialogTitleFunc={setDialogTitleFunc}
-                is_dxtrade_allowed={is_dxtrade_allowed}
+                platform={platform}
             />
         </Dialog>
     );
@@ -229,17 +245,9 @@ ResetTradingPasswordModal.propTypes = {
     enableApp: PropTypes.func,
     is_loading: PropTypes.bool,
     is_visible: PropTypes.bool,
-    is_dxtrade_allowed: PropTypes.bool,
     toggleResetTradingPasswordModal: PropTypes.func,
     verification_code: PropTypes.string,
+    platform: PropTypes.string,
 };
 
-export default connect(({ ui, client }) => ({
-    disableApp: ui.disableApp,
-    enableApp: ui.enableApp,
-    is_loading: ui.is_loading,
-    is_visible: ui.is_reset_trading_password_modal_visible,
-    toggleResetTradingPasswordModal: ui.setResetTradingPasswordModalOpen,
-    verification_code: client.verification_code.trading_platform_password_reset,
-    is_dxtrade_allowed: client.is_dxtrade_allowed,
-}))(ResetTradingPasswordModal);
+export default ResetTradingPasswordModal;

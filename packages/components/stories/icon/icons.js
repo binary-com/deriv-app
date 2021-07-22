@@ -421,6 +421,7 @@ export const icons = {
         'IcDxtradeDeviceTablet',
         'IcDxtradeFinancialPlatform',
         'IcDxtradeFinancial',
+        'IcDxtradeOnePassword',
         'IcDxtradeSyntheticPlatform',
         'IcDxtradeSynthetic',
     ],
