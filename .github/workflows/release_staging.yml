@@ -3,6 +3,8 @@ on:
   push:
     branches:
     - master
+  pull_request:
+      
 
 jobs:
   build_test_and_upload_artifact:
@@ -49,11 +51,14 @@ jobs:
     - uses: actions/download-artifact@v3.0.1
       with:
         path: packages
-    - uses: "./.github/actions/publish_to_pages_staging"
-      with:       
-        NODE_ENV: staging
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    - name: Display structure of downloaded files
+      run: ls -R
+      
+        # - uses: "./.github/actions/publish_to_pages_staging"
+    #   with:       
+    #     NODE_ENV: staging
+    #     CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    #     CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
 
   send_slack_notification:
@@ -64,9 +69,9 @@ jobs:
       needs: [build_test_and_upload_artifact, publish_cloudflare_staging]
       steps:
       - uses: technote-space/workflow-conclusion-action@v3
-      - uses: "./.github/actions/send_slack_notifications"
-        with:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          status: ${{ env.WORKFLOW_CONCLUSION }}
-          release_type: Production 
-          version: $(echo cat packages/core/dist/version | bash)
+      # - uses: "./.github/actions/send_slack_notifications"
+      #   with:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #     status: ${{ env.WORKFLOW_CONCLUSION }}
+      #     release_type: Production 
+      #     version: $(echo cat packages/core/dist/version | bash)
