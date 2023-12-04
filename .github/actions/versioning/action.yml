@@ -18,4 +18,5 @@ runs:
         version="${{ inputs.RELEASE_TYPE }}-GH_Run#:${{ github.run_number }}-Date:$current_date"
         echo "Setting version to: $version"
         echo "version=$version" >> $GITHUB_ENV
+        echo $version > packages/core/dist/version.txt
       shell: bash
