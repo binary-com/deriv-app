@@ -7,7 +7,9 @@ import { api_base } from '@deriv/bot-skeleton/src/services/api/api-base';
 import { DesktopWrapper, Dialog, MobileWrapper, Tabs } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
+import { useFeatureFlags } from '@deriv/hooks';
 import { Analytics } from '@deriv-com/analytics';
+import ServerBot from '../server-bot';
 import TradingViewModal from 'Components/trading-view-chart/trading-view-modal';
 import { DBOT_TABS, TAB_IDS } from 'Constants/bot-contents';
 import { useDBotStore } from 'Stores/useDBotStore';
@@ -42,7 +44,8 @@ const AppWrapper = observer(() => {
     const init_render = React.useRef(true);
     const { ui } = useStore();
     const { url_hashed_values, is_mobile } = ui;
-    const hash = ['dashboard', 'bot_builder', 'chart', 'tutorial'];
+    const { is_next_server_bot_enabled } = useFeatureFlags();
+    const hash = ['dashboard', 'bot_builder', 'chart', 'tutorial', 'server_bot'];
 
     let tab_value: number | string = active_tab;
     const GetHashedValue = (tab: number) => {
@@ -182,6 +185,17 @@ const AppWrapper = observer(() => {
                                 <Tutorial />
                             </div>
                         </div>
+                        {is_next_server_bot_enabled ? (
+                            <div
+                                icon='IcDashboardComponentTab'
+                                label={<Localize i18n_default_text='Server bot' />}
+                                id='id-server-bot'
+                            >
+                                <ServerBot />
+                            </div>
+                        ) : (
+                            <></>
+                        )}
                     </Tabs>
                 </div>
             </div>

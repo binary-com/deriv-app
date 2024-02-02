@@ -37,7 +37,23 @@ const getErrorMessage = (dir: 'MIN' | 'MAX', value: number, type = 'DEFAULT') =>
     return errors[type][dir];
 };
 
-const FormikWrapper: React.FC<TFormikWrapper> = observer(({ children }) => {
+export const initial_value: TFormData = {
+    symbol: qs_config.QUICK_STRATEGY.DEFAULT.symbol,
+    tradetype: '',
+    durationtype: qs_config.QUICK_STRATEGY.DEFAULT.durationtype,
+    stake: '1',
+    loss: '0',
+    profit: '0',
+    size: String(qs_config.QUICK_STRATEGY.DEFAULT.size),
+    duration: '1',
+    unit: String(qs_config.QUICK_STRATEGY.DEFAULT.unit),
+    action: 'RUN',
+    max_stake: 10,
+    boolean_max_stake: false,
+    last_digit_prediction: 1,
+};
+
+export const FormikWrapper: React.FC<TFormikWrapper> = observer(({ children }) => {
     const { quick_strategy } = useDBotStore();
     const {
         selected_strategy,
@@ -49,22 +65,6 @@ const FormikWrapper: React.FC<TFormikWrapper> = observer(({ children }) => {
     } = quick_strategy;
     const config: TConfigItem[][] = STRATEGIES[selected_strategy]?.fields;
     const [dynamic_schema, setDynamicSchema] = useState(Yup.object().shape({}));
-
-    const initial_value: TFormData = {
-        symbol: qs_config.QUICK_STRATEGY.DEFAULT.symbol,
-        tradetype: '',
-        durationtype: qs_config.QUICK_STRATEGY.DEFAULT.durationtype,
-        stake: '1',
-        loss: '0',
-        profit: '0',
-        size: String(qs_config.QUICK_STRATEGY.DEFAULT.size),
-        duration: '1',
-        unit: String(qs_config.QUICK_STRATEGY.DEFAULT.unit),
-        action: 'RUN',
-        max_stake: 10,
-        boolean_max_stake: false,
-        last_digit_prediction: 1,
-    };
 
     React.useEffect(() => {
         const data = JSON.parse(localStorage.getItem('qs-fields') || '{}');
