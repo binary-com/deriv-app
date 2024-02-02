@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { useActiveAccount } from '@deriv/api';
-import { Loader, Text } from '@deriv-com/ui';
+import { Loader, Text, useDevice } from '@deriv-com/ui';
 import { AvailableP2PBalanceModal, DailyLimitModal } from '../../../../components';
-import { useAdvertiserStats, useDevice } from '../../../../hooks';
+import { useAdvertiserStats } from '../../../../hooks';
 import InfoOutlineIcon from '../../../../public/ic-info-outline.svg';
 import { numberToCurrencyText } from '../../../../utils';
 import { MyProfileDailyLimit } from '../MyProfileDailyLimit';

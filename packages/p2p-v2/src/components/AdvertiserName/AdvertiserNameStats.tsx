@@ -1,6 +1,6 @@
 import React from 'react';
-import { Loader, Text } from '@deriv-com/ui';
-import { useAdvertiserStats, useDevice } from '../../hooks';
+import { Loader, Text, useDevice } from '@deriv-com/ui';
+import { useAdvertiserStats } from '../../hooks';
 import ThumbUpIcon from '../../public/ic-thumb-up.svg';
 import BlockedUserOutlineIcon from '../../public/ic-user-blocked-outline.svg';
 import { StarRating } from '../StarRating';

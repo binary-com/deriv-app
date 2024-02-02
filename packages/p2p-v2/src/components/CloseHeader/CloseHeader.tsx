@@ -1,6 +1,5 @@
 import React from 'react';
-import { Text } from '@deriv-com/ui';
-import { useDevice } from '../../hooks';
+import { Text, useDevice } from '@deriv-com/ui';
 import CrossIcon from '../../public/ic-cross.svg';
 import './CloseHeader.scss';
 

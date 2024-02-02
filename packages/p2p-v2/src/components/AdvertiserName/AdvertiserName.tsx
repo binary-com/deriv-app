@@ -1,6 +1,6 @@
 import React from 'react';
-import { Loader, Text } from '@deriv-com/ui';
-import { useAdvertiserStats, useDevice } from '../../hooks';
+import { Loader, Text, useDevice } from '@deriv-com/ui';
+import { useAdvertiserStats } from '../../hooks';
 import { UserAvatar } from '../UserAvatar';
 import AdvertiserNameBadges from './AdvertiserNameBadges';
 import AdvertiserNameStats from './AdvertiserNameStats';

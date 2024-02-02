@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDevice } from '../../../../hooks';
+import { useDevice } from '@deriv-com/ui';
 import { MyProfileBalance } from '../MyProfileBalance';
 import { AdvertiserName, AdvertiserNameToggle } from '../../../../components';
 import './MyProfileContent.scss';

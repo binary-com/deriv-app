@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Loader, Text } from '@deriv-com/ui';
-import { useDevice, usePoiPoaStatus } from '../../hooks';
+import { Loader, Text, useDevice } from '@deriv-com/ui';
+import { usePoiPoaStatus } from '../../hooks';
 import SendEmailIcon from '../../public/ic-send-email.svg';
 import { Checklist } from '../Checklist';
 import './Verification.scss';

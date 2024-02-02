@@ -1,6 +1,6 @@
 import React from 'react';
-import { Tab, Tabs } from '@deriv-com/ui';
-import { useDevice, useQueryString } from '../../../../hooks';
+import { Tab, Tabs, useDevice } from '@deriv-com/ui';
+import { useQueryString } from '../../../../hooks';
 import { MyProfileAdDetails } from '../MyProfileAdDetails';
 import { MyProfileContent } from '../MyProfileContent';
 import { MyProfileCounterparties } from '../MyProfileCounterparties';

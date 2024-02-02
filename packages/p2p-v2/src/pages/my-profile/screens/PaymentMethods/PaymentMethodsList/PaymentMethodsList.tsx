@@ -1,8 +1,9 @@
 import React from 'react';
+import { useDevice } from '@deriv-com/ui';
 import { TAdvertiserPaymentMethods, TSelectedPaymentMethod } from 'types';
 import { FullPageMobileWrapper } from '../../../../../components';
 import { PaymentMethodsHeader } from '../../../../../components/PaymentMethodsHeader';
-import { useDevice, useQueryString } from '../../../../../hooks';
+import { useQueryString } from '../../../../../hooks';
 import { TFormState } from '../../../../../reducers/types';
 import AddNewButton from './AddNewButton';
 import PaymentMethodsListContent from './PaymentMethodsListContent';

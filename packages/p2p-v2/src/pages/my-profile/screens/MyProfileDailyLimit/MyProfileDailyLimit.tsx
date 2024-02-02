@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useActiveAccount } from '@deriv/api';
-import { Button, Text } from '@deriv-com/ui';
+import { Button, Text, useDevice } from '@deriv-com/ui';
 import DailyLimitModal from '../../../../components/Modals/DailyLimitModal/DailyLimitModal';
-import { useAdvertiserStats, useDevice } from '../../../../hooks';
+import { useAdvertiserStats } from '../../../../hooks';
 import './MyProfileDailyLimit.scss';
 
 const MyProfileDailyLimit = () => {

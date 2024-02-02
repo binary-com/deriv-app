@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { p2p } from '@deriv/api';
-import { Button, Loader } from '@deriv-com/ui';
+import { Button, Loader, useDevice } from '@deriv-com/ui';
 import { FullPageMobileWrapper, TextArea } from '../../../../components';
-import { useDevice, useQueryString } from '../../../../hooks';
+import { useQueryString } from '../../../../hooks';
 import './MyProfileAdDetails.scss';
 
 type TMYProfileAdDetailsTextAreaProps = {
