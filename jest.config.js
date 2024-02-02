@@ -8,6 +8,7 @@ module.exports = {
         '!/component-tests/',
     ],
     coverageReporters: ['lcov'],
+    reporters: ['default', 'jest-junit'],
     coverageDirectory: './coverage/',
     clearMocks: true,
     projects: ['<rootDir>/packages/*/jest.config.js', '<rootDir>/packages/*/jest.config.ts'],

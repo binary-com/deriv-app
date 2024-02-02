@@ -13,6 +13,7 @@ module.exports = {
     ],
     coverageReporters: ['lcov'],
     coverageDirectory: './coverage/',
+    reporters: ['default', 'jest-junit'],
     testRegex: '(/__tests__/.*|(\\.)(test|spec))\\.(js|jsx|tsx|ts)?$',
     // This is needed to transform es modules imported from node_modules of the target component.
     transformIgnorePatterns: ['/node_modules/(?!@enykeev/react-virtualized).+\\.js$'],

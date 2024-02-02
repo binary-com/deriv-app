@@ -1,0 +1,20 @@
+name: Test Space test restuls
+description: Publish test results to Testspace
+inputs:
+  domain:
+    description: "Testspace domain"
+    required: true
+  token:
+    description: "Testspace token"
+    required: true
+runs:
+  using: composite
+
+  steps:
+    - uses: testspace-com/setup-testspace@v1
+      with:
+        domain: ${{inputs.domain}}
+        token: ${{ inputs.TESTSPACE_TOKEN }}
+    - name: Publish Results to Testspace
+      run: testspace ./junit.xml
+      shell: bash
