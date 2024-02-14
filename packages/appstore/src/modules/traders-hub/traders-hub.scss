@@ -1,10 +1,11 @@
 .traders-hub {
-    max-width: 123.2rem;
+    max-width: 128rem;
     margin: auto;
-    padding: 5rem 0;
+    padding: 4rem;
 
-    @include mobile {
-        padding: 2rem;
+    @include new-not-desktop {
+        max-width: 60rem;
+        padding: 1.6rem;
         width: 100%;
     }
 
@@ -28,8 +29,8 @@
         overflow: scroll !important;
 
         &--eu-user {
-            @include mobile {
-                height: calc(550px) !important;
+            @include new-not-desktop {
+                height: calc(55rem) !important;
             }
         }
 
@@ -53,7 +54,7 @@
     backface-visibility: hidden;
     background: var(--icon-grey-background);
 
-    @include mobile {
+    @include new-not-desktop {
         min-height: 8rem;
         border: 1px solid var(--icon-grey-background);
     }
@@ -61,7 +62,7 @@
     &-text {
         padding: 0 3rem;
 
-        @include mobile {
+        @include new-not-desktop {
             padding: 0 1.5rem;
         }
     }

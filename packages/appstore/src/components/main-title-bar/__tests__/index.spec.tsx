@@ -53,6 +53,14 @@ jest.mock('@deriv/api', () => ({
     }),
 }));
 
+jest.mock('@deriv-com/ui', () => ({
+    useDevice: jest.fn(() => ({
+        isDesktop: true,
+        isMobile: false,
+        isTablet: false,
+    })),
+}));
+
 describe('MainTitleBar', () => {
     const mock_store = mockStore({
         exchange_rates: {

@@ -12,6 +12,14 @@ jest.mock('App/Components/Layout/Header', () => {
     };
 });
 
+jest.mock('@deriv-com/ui', () => ({
+    useDevice: jest.fn(() => ({
+        isDesktop: true,
+        isMobile: false,
+        isTablet: false,
+    })),
+}));
+
 describe('ShowNotifications', () => {
     let store: TStores;
     beforeEach(() => {

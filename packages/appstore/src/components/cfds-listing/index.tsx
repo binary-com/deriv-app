@@ -1,7 +1,8 @@
 import React from 'react';
 import { observer, useStore } from '@deriv/stores';
 import { Text, StaticUrl } from '@deriv/components';
-import { isMobile, formatMoney, getAuthenticationStatusInfo, Jurisdiction, MT5_ACCOUNT_STATUS } from '@deriv/shared';
+import { formatMoney, getAuthenticationStatusInfo, Jurisdiction, MT5_ACCOUNT_STATUS } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import { localize, Localize } from '@deriv/translations';
 import ListingContainer from 'Components/containers/listing-container';
 import AddOptionsAccount from 'Components/add-options-account';
@@ -15,6 +16,7 @@ import { useCFDCanGetMoreMT5Accounts, useMT5SVGEligibleToMigrate } from '@deriv/
 import MigrationBanner from '@deriv/cfd/src/Containers/migration-banner/migration-banner';
 
 const CFDsListing = observer(() => {
+    const { isDesktop } = useDevice();
     const {
         client,
         modules: { cfd },
@@ -157,12 +159,12 @@ const CFDsListing = observer(() => {
     return (
         <ListingContainer
             title={
-                !isMobile() && (
+                isDesktop && (
                     <div className='cfd-accounts__title'>
                         <Text size='sm' weight='bold' color='prominent'>
                             {localize('CFDs')}
                         </Text>
-                        <CompareAccount accounts_sub_text={accounts_sub_text} is_desktop={!isMobile()} />
+                        <CompareAccount accounts_sub_text={accounts_sub_text} is_desktop={isDesktop} />
                     </div>
                 )
             }
@@ -177,7 +179,7 @@ const CFDsListing = observer(() => {
                 </Text>
             }
         >
-            {isMobile() && <CompareAccount accounts_sub_text={accounts_sub_text} />}
+            {!isDesktop && <CompareAccount accounts_sub_text={accounts_sub_text} />}
             <AddDerivAccount />
             <div className='cfd-full-row' style={{ paddingTop: '2rem' }}>
                 <Text line_height='m' weight='bold' color='prominent'>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, Popover } from '@deriv/components';
 import { localize } from '@deriv/translations';
-import { isMobile } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import BalanceText from 'Components/elements/text/balance-text';
 import { observer, useStore } from '@deriv/stores';
 import './asset-summary.scss';
@@ -9,6 +9,7 @@ import TotalAssetsLoader from 'Components/pre-loader/total-assets-loader';
 import { useTotalAccountBalance, useCFDAccounts, usePlatformAccounts, useExchangeRate } from '@deriv/hooks';
 
 const AssetSummary = observer(() => {
+    const { isDesktop } = useDevice();
     const { exchange_rates } = useExchangeRate();
 
     const { traders_hub, client, common, modules } = useStore();
@@ -59,13 +60,13 @@ const AssetSummary = observer(() => {
         <div className='asset-summary'>
             {has_active_related_deriv_account || selected_account_type === 'demo' ? (
                 <React.Fragment>
-                    {!isMobile() ? (
+                    {isDesktop ? (
                         <Text align='right' key={`asset-summary--key-${current_language}`} size='xs' line_height='s'>
                             {localize('Total assets')}
                         </Text>
                     ) : null}
                     <Popover
-                        alignment={isMobile() ? 'top' : 'left'}
+                        alignment={isDesktop ? 'left' : 'top'}
                         message={
                             is_eu_user ? eu_mt5_allowed_total_assets : localize('Total assets in all your accounts')
                         }

@@ -1,0 +1,21 @@
+.traders-hub {
+    .dc-button-menu__toggle {
+        @include desktop {
+            &:hover:not(.dc-button-menu__button--active) {
+                background-color: var(--state-normal) !important;
+            }
+        }
+
+        @include new-desktop {
+            &:hover:not(.dc-button-menu__button--active) {
+                background-color: var(--state-hover) !important;
+            }
+        }
+    }
+
+    .dc-themed-scrollbars-wrapper li {
+        @include new-not-desktop {
+            padding: 0 1.1rem;
+        }
+    }
+}

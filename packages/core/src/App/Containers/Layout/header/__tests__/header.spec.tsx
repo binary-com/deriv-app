@@ -19,6 +19,13 @@ jest.mock('../default-header', () => () => <div data-testid='dt_default_header'>
 jest.mock('../dtrader-header', () => () => <div data-testid='dt_dtrader_header'>MockedDTraderHeader</div>);
 // eslint-disable-next-line react/display-name
 jest.mock('../traders-hub-header', () => () => <div data-testid='dt_traders_hub_header'>MockedTradersHubHeader</div>);
+jest.mock('@deriv-com/ui', () => ({
+    useDevice: jest.fn(() => ({
+        isDesktop: true,
+        isMobile: false,
+        isTablet: false,
+    })),
+}));
 
 describe('Header', () => {
     const store = mockStore({

@@ -28,7 +28,7 @@
         }
     }
 
-    @include mobile {
+    @include new-not-desktop {
         display: flex;
         justify-content: space-between;
         height: 4rem;
@@ -49,7 +49,7 @@
         height: #{$HEADER_HEIGHT - 1px};
         align-items: center;
 
-        @include mobile {
+        @include new-not-desktop {
             height: 3.8rem;
         }
 
@@ -59,7 +59,7 @@
         }
     }
 
-    &__mobile-parent {
+    &__new-not-desktop-parent {
         display: flex;
         align-items: center;
         padding: 1rem;
@@ -79,17 +79,17 @@
                 padding: 2.5rem;
                 cursor: pointer;
 
-                @include mobile {
+                @include new-not-desktop {
                     padding: 1rem;
                 }
             }
 
             &--notifications {
-                @include mobile {
+                @include new-not-desktop {
                     padding: 0 2rem 0 1rem;
                 }
                 &__cashier {
-                    @include mobile {
+                    @include new-not-desktop {
                         padding-right: 1rem;
                     }
                 }
@@ -97,11 +97,11 @@
 
             &--account-toggle {
                 height: #{$HEADER_HEIGHT - 1px};
-                @include mobile {
+                @include new-not-desktop {
                     height: 3.8rem;
                 }
                 .acc-info__wrapper {
-                    @include mobile {
+                    @include new-not-desktop {
                         margin-right: 0;
                     }
                     .acc-info__separator {
@@ -115,7 +115,7 @@
     &__menu-middle {
         display: flex;
         align-items: center;
-        margin-left: 1rem;
+        margin-inline: 1rem;
         justify-content: space-between;
     }
 
@@ -124,7 +124,7 @@
         padding: 0 1rem 0 1.5rem;
         margin-bottom: 0.2rem !important;
 
-        @include mobile {
+        @include new-not-desktop {
             margin-left: 0.7rem;
         }
     }
@@ -171,7 +171,7 @@
         margin-left: 0.8rem;
         background: var(--general-section-2);
 
-        @include mobile {
+        @include new-not-desktop {
             height: 2.4rem;
         }
     }
@@ -225,17 +225,13 @@
     &__setting {
         margin-right: 2.2rem;
 
-        // @include mobile {
-        //     margin-left: 2.2rem;
-        // }
-
         &--icon {
             cursor: pointer;
         }
     }
 
     &__notification {
-        @include mobile {
+        @include new-not-desktop {
             .notifications-toggle {
                 margin-right: 0;
             }

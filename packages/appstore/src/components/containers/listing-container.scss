@@ -5,7 +5,7 @@
     padding: 2.4rem;
     border-radius: 2.4rem;
 
-    @include mobile {
+    @include new-not-desktop {
         border: none;
         padding: 2.4rem 0;
     }
@@ -14,7 +14,7 @@
         display: inline-flex;
         width: 100%;
 
-        @include mobile {
+        @include new-not-desktop {
             display: block;
             width: 100%;
         }
@@ -30,7 +30,7 @@
             align-items: center;
         }
 
-        @include mobile {
+        @include new-not-desktop {
             display: flex;
             flex-direction: row;
             margin-right: 0;
@@ -45,7 +45,7 @@
         gap: 1.6rem 4.8rem;
         padding-top: 2rem;
 
-        @include mobile {
+        @include new-not-desktop {
             display: flex;
             flex-direction: column;
         }
@@ -59,7 +59,7 @@
     grid-column: 1 / span 3;
     gap: 1.6rem 4.8rem;
 
-    @include mobile {
+    @include new-not-desktop {
         display: block;
         width: 100%;
     }

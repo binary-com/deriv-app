@@ -1,3 +1,5 @@
+const baseConfig = require('./jest.config.base');
+
 module.exports = {
     collectCoverage: false,
     collectCoverageFrom: [
@@ -17,6 +19,6 @@ module.exports = {
         '^.+\\.(ts|tsx)?$': 'ts-jest',
     },
     testRegex: '(/__tests__/.*|(\\.)(test|spec))\\.(js|jsx|tsx|ts)?$',
-    transformIgnorePatterns: ['/node_modules/(?!@enykeev/react-virtualized).+\\.js$'],
+    transformIgnorePatterns: baseConfig.transformIgnorePatterns,
     testPathIgnorePatterns: ['/integration-tests/'],
 };

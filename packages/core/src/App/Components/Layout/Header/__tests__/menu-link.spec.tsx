@@ -24,6 +24,14 @@ jest.mock('@deriv/shared', () => ({
     getStaticUrl: jest.fn(() => 'MockUrl'),
 }));
 
+jest.mock('@deriv-com/ui', () => ({
+    useDevice: jest.fn(() => ({
+        isDesktop: true,
+        isMobile: false,
+        isTablet: false,
+    })),
+}));
+
 describe('MenuLink', () => {
     const mockRootStore = mockStore({});
     let mock_props: React.ComponentProps<typeof MenuLink>;

@@ -6,6 +6,13 @@ import CFDsListing from '../index';
 jest.mock('Components/containers/listing-container', () =>
     jest.fn(({ children }) => <div data-testid='listing-container'>{children}</div>)
 );
+jest.mock('@deriv-com/ui', () => ({
+    useDevice: jest.fn(() => ({
+        isDesktop: true,
+        isMobile: false,
+        isTablet: false,
+    })),
+}));
 
 describe('CFDsListing', () => {
     const mock = mockStore({

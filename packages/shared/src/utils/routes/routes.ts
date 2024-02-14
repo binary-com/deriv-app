@@ -92,3 +92,13 @@ export const routes = {
     // Cashier V2
     cashier_v2: '/cashier-v2',
 };
+
+export const DISABLE_LANDSCAPE_BLOCKER_ROUTES = [
+    routes.appstore,
+    routes.traders_hub,
+    routes.onboarding,
+    routes.compare_cfds,
+];
+
+export const isDisabledLandscapeRoute = (path: string) =>
+    DISABLE_LANDSCAPE_BLOCKER_ROUTES.some(route => path === route);

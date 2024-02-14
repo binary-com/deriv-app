@@ -60,3 +60,36 @@ $desktop-width: 1024px;
         @content;
     }
 }
+
+/** Need to add new breakpoints for mixins */
+$new-max-mobile-width: 600px;
+$new-min-desktop-width: 1280px;
+
+/** 
+ * Need to add new mixins too
+ * Should follow mobile-first approach, so we don't need new-mobile mixin, 
+ * but added it for now, because everything is ASAP
+ */
+@mixin new-mobile {
+    @media (max-width: #{$new-max-mobile-width}) {
+        @content;
+    }
+}
+
+@mixin new-tablet {
+    @media (min-width: #{$new-max-mobile-width + 1}) and (max-width: #{$new-min-desktop-width - 1}) {
+        @content;
+    }
+}
+
+@mixin new-desktop {
+    @media (min-width: #{$new-min-desktop-width}) {
+        @content;
+    }
+}
+
+@mixin new-not-desktop {
+    @media (max-width: #{$new-min-desktop-width - 1}) {
+        @content;
+    }
+}

@@ -6,6 +6,7 @@ import { useIsRealAccountNeededForCashier } from '@deriv/hooks';
 import { routes, platforms, formatMoney } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
+import { useDevice } from '@deriv-com/ui';
 import { MenuLinks } from 'App/Components/Layout/Header';
 import platform_config from 'App/Constants/platform-config';
 import ToggleMenuDrawer from 'App/Components/Layout/Header/toggle-menu-drawer.jsx';
@@ -24,6 +25,7 @@ type TPlatformConfig = typeof platform_config;
 type TPlatforms = typeof platforms;
 
 const TradersHubHeader = observer(() => {
+    const { isDesktop } = useDevice();
     const { client, common, traders_hub, ui } = useStore();
     const {
         account_type,
@@ -42,7 +44,6 @@ const TradersHubHeader = observer(() => {
         header_extension,
         is_accounts_switcher_on,
         is_app_disabled,
-        is_mobile,
         is_route_modal_on,
         account_switcher_disabled_message,
         toggleAccountsDialog,
@@ -89,7 +90,7 @@ const TradersHubHeader = observer(() => {
             })}
         >
             <div className='traders-hub-header__menu-left'>
-                {is_mobile && (
+                {!isDesktop && (
                     <React.Fragment>
                         <ToggleMenuDrawer {...{ platform_config: filterPlatformsForClients(platform_config) }} />
                         {header_extension && is_logged_in && <div>{header_extension}</div>}
@@ -104,7 +105,7 @@ const TradersHubHeader = observer(() => {
                         <DerivBrandLogo className='traders-hub-header__logo' />
                     </StaticUrl>
                 </div>
-                {!is_mobile && (
+                {isDesktop && (
                     <React.Fragment>
                         <div className='traders-hub-header__divider' />
                         <TradersHubHomeButton />
@@ -112,7 +113,7 @@ const TradersHubHeader = observer(() => {
                 )}
                 <MenuLinks {...{ is_traders_hub_routes: true }} />
             </div>
-            {!is_mobile && (
+            {isDesktop && (
                 <React.Fragment>
                     <div className='traders-hub-header__menu-right'>
                         <div className='traders-hub-header__divider' />
@@ -155,7 +156,7 @@ const TradersHubHeader = observer(() => {
                     {is_real_acc_signup_on && <RealAccountSignup />}
                 </React.Fragment>
             )}
-            {is_mobile && (
+            {!isDesktop && (
                 <React.Fragment>
                     <div className='traders-hub-header__mobile-parent'>
                         <div className='traders-hub-header__menu-middle'>

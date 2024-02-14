@@ -3,6 +3,7 @@ import { StoreProvider, mockStore } from '@deriv/stores';
 import { render, screen } from '@testing-library/react';
 import TradersHubHeader from '../traders-hub-header';
 import { TStores } from '@deriv/stores/types';
+import { useDevice } from '@deriv-com/ui';
 
 jest.mock('react-router', () => ({
     ...jest.requireActual('react-router'),
@@ -33,6 +34,14 @@ jest.mock('@deriv/hooks', () => ({
     }),
     useIsRealAccountNeededForCashier: () => false,
     useHasSetCurrency: () => true,
+}));
+
+jest.mock('@deriv-com/ui', () => ({
+    useDevice: jest.fn(() => ({
+        isDesktop: true,
+        isMobile: false,
+        isTablet: false,
+    })),
 }));
 
 describe('TradersHubHeader', () => {
@@ -87,11 +96,8 @@ describe('TradersHubHeader', () => {
     });
 
     it('should render the Cashier button in mobile view', () => {
-        renderComponent(
-            mockStore({
-                ui: { is_desktop: false, is_mobile: true },
-            })
-        );
+        (useDevice as jest.Mock).mockReturnValue({ isDesktop: false, isMobile: true, isTablet: false });
+        renderComponent();
         expect(screen.getByRole('button', { name: 'Cashier' })).toBeInTheDocument();
     });
 });
