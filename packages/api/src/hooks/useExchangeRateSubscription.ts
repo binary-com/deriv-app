@@ -10,12 +10,7 @@ type TPayload = WithRequiredProperty<
 const useExchangeRateSubscription = () => {
     const { data, subscribe: _subscribe, ...rest } = useSubscription('exchange_rates');
 
-    const subscribe = useCallback(
-        (payload: TPayload) => {
-            _subscribe({ payload });
-        },
-        [_subscribe]
-    );
+    const subscribe = useCallback((payload: TPayload) => _subscribe({ payload }), [_subscribe]);
 
     return {
         /** The exchange rates response */

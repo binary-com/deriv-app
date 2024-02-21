@@ -12,15 +12,15 @@ const useActiveWalletBalance = () => {
     const { data: activeWallet } = useActiveWalletAccount();
     const { data: account } = useAuthorize();
 
-    const { subscribe, data: balanceData, unsubscribe, ...rest } = useSubscription('balance');
+    const { subscribe, data: balanceData, ...rest } = useSubscription('balance');
 
     const balance = balanceData?.balance?.balance || 0;
     const currencyCode = balanceData?.balance?.currency || 'USD';
 
     useEffect(() => {
-        subscribe();
+        const unsubscribe = subscribe();
 
-        return () => unsubscribe();
+        return () => unsubscribe?.();
     }, [subscribe]);
 
     const displayBalance = displayMoney(balance, currencyCode, {

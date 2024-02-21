@@ -15,14 +15,14 @@ type TProps = {
 };
 
 const TransactionsPending: React.FC<TProps> = ({ filter = 'all' }) => {
-    const { data: transactions, isLoading, isSubscribed, resetData, subscribe, unsubscribe } = useCryptoTransactions();
+    const { data: transactions, isLoading, isSubscribed, resetData, subscribe } = useCryptoTransactions();
 
     useEffect(() => {
         resetData();
-        subscribe({ payload: { transaction_type: filter } });
+        const unsubscribe = subscribe({ payload: { transaction_type: filter } });
 
-        return () => unsubscribe();
-    }, [filter, resetData, subscribe, unsubscribe]);
+        return () => unsubscribe?.();
+    }, [filter, resetData, subscribe]);
 
     if (!isSubscribed || isLoading) return <Loader />;
 

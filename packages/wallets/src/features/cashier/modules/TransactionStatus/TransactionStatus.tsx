@@ -19,7 +19,7 @@ const TransactionStatus: React.FC<TTransactionStatus> = ({ transactionType }) =>
         isLoading: isTransactionsLoading,
         resetData,
         subscribe,
-        unsubscribe,
+        unsubscribeAll,
     } = useCryptoTransactions();
     const {
         data: wallet,
@@ -29,20 +29,21 @@ const TransactionStatus: React.FC<TTransactionStatus> = ({ transactionType }) =>
     } = useActiveWalletAccount();
 
     useEffect(() => {
-        subscribe({ payload: { transaction_type: transactionType } });
-        return () => unsubscribe();
-    }, [subscribe, transactionType, unsubscribe]);
+        const unsubscribe = subscribe({ payload: { transaction_type: transactionType } });
+
+        return () => unsubscribe?.();
+    }, [subscribe, transactionType]);
 
     const isLoading = isTransactionsLoading || isActiveWalletAccountLoading;
     const isError = !!activeWalletAccountError || !!recentTransactionsError;
     const isTransactionStatusSuccessVisible = !isLoading && !isError && wallet;
 
     const refresh = useCallback(() => {
-        unsubscribe();
+        unsubscribeAll();
         resetData();
         subscribe({ payload: { transaction_type: transactionType } });
         refetch();
-    }, [refetch, resetData, subscribe, transactionType, unsubscribe]);
+    }, [refetch, resetData, subscribe, transactionType, unsubscribeAll]);
 
     return (
         <div className='wallets-transaction-status'>

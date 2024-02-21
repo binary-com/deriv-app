@@ -16,7 +16,7 @@ jest.mock('@deriv/api-v2', () => ({
         isLoading: false,
         resetData: jest.fn(),
         subscribe: jest.fn(),
-        unsubscribe: jest.fn(),
+        unsubscribeAll: jest.fn(),
     })),
 }));
 
@@ -66,7 +66,7 @@ describe('TransactionStatus component', () => {
             isLoading: true,
             resetData: jest.fn(),
             subscribe: jest.fn(),
-            unsubscribe: jest.fn(),
+            unsubscribeAll: jest.fn(),
         }));
 
         render(<TransactionStatus />);
@@ -99,7 +99,7 @@ describe('TransactionStatus component', () => {
             isLoading: false,
             resetData: jest.fn(),
             subscribe: jest.fn(),
-            unsubscribe: jest.fn(),
+            unsubscribeAll: jest.fn(),
         }));
 
         render(<TransactionStatus />);
@@ -113,7 +113,7 @@ describe('TransactionStatus component', () => {
         const mockRefetch = jest.fn();
         const mockResetData = jest.fn();
         const mockSubscribe = jest.fn();
-        const mockUnsubscribe = jest.fn();
+        const mockUnsubscribeAll = jest.fn();
 
         (useActiveWalletAccount as jest.Mock).mockImplementation(() => ({
             data: null,
@@ -128,7 +128,7 @@ describe('TransactionStatus component', () => {
             isLoading: false,
             resetData: mockResetData,
             subscribe: mockSubscribe,
-            unsubscribe: mockUnsubscribe,
+            unsubscribeAll: mockUnsubscribeAll,
         }));
 
         render(<TransactionStatus />);
@@ -141,6 +141,6 @@ describe('TransactionStatus component', () => {
         expect(mockRefetch).toHaveBeenCalled();
         expect(mockResetData).toHaveBeenCalled();
         expect(mockSubscribe).toHaveBeenCalled();
-        expect(mockUnsubscribe).toHaveBeenCalled();
+        expect(mockUnsubscribeAll).toHaveBeenCalled();
     });
 });

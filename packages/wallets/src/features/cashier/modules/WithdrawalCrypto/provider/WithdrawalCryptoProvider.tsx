@@ -59,7 +59,8 @@ const WithdrawalCryptoProvider: React.FC<React.PropsWithChildren<TWithdrawalCryp
     const { isSuccess: isWithdrawalSuccess, mutateAsync } = useCryptoWithdrawal();
     const { getConfig } = useCurrencyConfig();
     const [withdrawalReceipt, setWithdrawalReceipt] = useState<TWithdrawalReceipt>({});
-    const { data: exchangeRates, subscribe, unsubscribe } = useExchangeRateSubscription();
+    const { data: exchangeRates, subscribe, unsubscribeAll } = useExchangeRateSubscription();
+
     const FRACTIONAL_DIGITS_CRYPTO = activeWallet?.currency_config?.fractional_digits;
     const FRACTIONAL_DIGITS_FIAT = getConfig('USD')?.fractional_digits;
 
@@ -70,8 +71,8 @@ const WithdrawalCryptoProvider: React.FC<React.PropsWithChildren<TWithdrawalCryp
                 loginid: activeWallet.loginid,
                 target_currency: activeWallet.currency,
             });
-        return () => unsubscribe();
-    }, [activeWallet?.currency, activeWallet?.loginid, subscribe, unsubscribe]);
+        return () => unsubscribeAll();
+    }, [activeWallet?.currency, activeWallet?.loginid, subscribe, unsubscribeAll]);
 
     const getClientVerificationStatus = () => {
         const isVerified = poaStatus?.is_verified && poiStatus?.is_verified;
@@ -119,7 +120,7 @@ const WithdrawalCryptoProvider: React.FC<React.PropsWithChildren<TWithdrawalCryp
         exchangeRates: {
             data: exchangeRates,
             subscribe,
-            unsubscribe,
+            unsubscribeAll,
         },
         fractionalDigits: {
             crypto: FRACTIONAL_DIGITS_CRYPTO,

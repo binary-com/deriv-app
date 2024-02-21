@@ -14,9 +14,12 @@ const useSubscription = <T extends TSocketSubscribableEndpointNames>(name: T, id
     const [isIdle, setIdle] = useState(false);
     const [error, setError] = useState<TSocketError<T>>();
     const [data, setData] = useState<TSocketResponseData<T>>();
-    const subscriber = useRef<{ unsubscribe?: VoidFunction }>();
     const idle_timeout = useRef<NodeJS.Timeout>();
+
     const { subscribe: _subscribe } = useAPI();
+    const subscribers = useRef<Map<ReturnType<ReturnType<typeof _subscribe>['subscribe']>, VoidFunction | undefined>>(
+        new Map()
+    );
 
     const subscribe = useCallback(
         (...props: TSocketAcceptableProps<T>) => {
@@ -33,7 +36,7 @@ const useSubscription = <T extends TSocketSubscribableEndpointNames>(name: T, id
             }, idle_time);
 
             try {
-                subscriber.current = _subscribe(name, payload).subscribe(
+                const subscriber = _subscribe(name, payload).subscribe(
                     response => {
                         setData(response);
                         setIsLoading(false);
@@ -43,6 +46,12 @@ const useSubscription = <T extends TSocketSubscribableEndpointNames>(name: T, id
                         setIsLoading(false);
                     }
                 );
+                subscribers.current.set(subscriber, subscriber.unsubscribe);
+
+                return () => {
+                    subscriber.unsubscribe?.();
+                    subscribers.current.delete(subscriber);
+                };
             } catch (e) {
                 setError(e as TSocketError<T>);
             }
@@ -50,16 +59,16 @@ const useSubscription = <T extends TSocketSubscribableEndpointNames>(name: T, id
         [_subscribe, name, idle_time]
     );
 
-    const unsubscribe = useCallback(() => {
-        subscriber.current?.unsubscribe?.();
+    const unsubscribeAll = useCallback(() => {
+        subscribers.current.forEach(unsubscribe => unsubscribe?.());
         setSubscribed(false);
     }, []);
 
     useEffect(() => {
         return () => {
-            unsubscribe();
+            unsubscribeAll();
         };
-    }, [unsubscribe]);
+    }, [unsubscribeAll]);
 
     useEffect(() => {
         return () => {
@@ -69,7 +78,7 @@ const useSubscription = <T extends TSocketSubscribableEndpointNames>(name: T, id
 
     return {
         subscribe,
-        unsubscribe,
+        unsubscribeAll,
         isIdle,
         isLoading,
         isSubscribed,
