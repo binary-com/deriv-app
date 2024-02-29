@@ -6,6 +6,11 @@
     "engines": {
         "node": "18.x"
     },
+    "nx": {
+        "implicitDependencies": [
+            "@deriv/api"
+        ]
+    },
     "scripts": {
         "build": "rimraf dist && NODE_OPTIONS='-r ts-node/register' webpack --progress --config \"./webpack.config.ts\"",
         "serve": "rimraf dist && concurrently \"cross-env BUILD_MODE='serve' NODE_OPTIONS='-r ts-node/register' webpack --progress --watch --config ./webpack.config.ts\" \"tsc -w --noEmit --preserveWatchOutput\"",

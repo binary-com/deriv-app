@@ -7,5 +7,28 @@ runs:
   - name: save_cache
     uses: actions/cache/save@13aacd865c20de90d75de3b17ebe84f7a17d57d2
     with:
-      path: node_modules
-      key: ${{ runner.os }}-build-master-cache-${{ hashFiles('./package-lock.json') }}
+      path: |-
+        node_modules
+        packages/account/node_modules
+        packages/api/node_modules
+        packages/api-v2/node_modules
+        packages/appstore/node_modules
+        packages/bot-skeleton/node_modules
+        packages/bot-web-ui/node_modules
+        packages/cashier/node_modules
+        packages/components/node_modules
+        packages/core/node_modules
+        packages/hooks/node_modules
+        packages/cfd/node_modules
+        packages/indicators/node_modules
+        packages/p2p/node_modules
+        packages/reports/node_modules
+        packages/shared/node_modules
+        packages/stores/node_modules
+        packages/trader/node_modules
+        packages/translations/node_modules
+        packages/utils/node_modules
+        packages/analytics/node_modules
+        packages/wallets/node_modules
+        packages/account-v2/node_modules
+      key: ${{ runner.os }}-build-master-cache-${{ hashFiles('./package-lock.json', './packages/*/package.json') }}
