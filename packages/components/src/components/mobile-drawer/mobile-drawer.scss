@@ -12,12 +12,34 @@
     }
 }
 
+@keyframes openRtlDrawer {
+    0% {
+        transform: translateX(100%);
+    }
+    60%,
+    100% {
+        transform: translateX(0);
+    }
+    80% {
+        transform: translateX(5%);
+    }
+}
+
 @keyframes closeDrawer {
     0% {
         transform: translateX(0);
     }
     100% {
         transform: translateX(-100%);
+    }
+}
+
+@keyframes closeRtlDrawer {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(100%);
     }
 }
 
@@ -28,6 +50,9 @@
     will-change: transform;
     transform: translateX(-100%);
     animation-name: openDrawer;
+    @include rtl {
+        animation-name: openRtlDrawer;
+    }
     animation-duration: 0.4s;
     animation-fill-mode: forwards;
     z-index: 10000;
@@ -114,6 +139,9 @@
             width: 16px;
             height: 16px;
             margin-right: 16px;
+            @include rtl {
+                rotate: 180deg;
+            }
         }
         &-toggle {
             display: flex;
@@ -136,6 +164,9 @@
                 width: 16px;
                 height: 16px;
                 margin-left: auto;
+                @include rtl {
+                    rotate: 180deg;
+                }
             }
         }
         &-list {
@@ -239,5 +270,8 @@
     }
     &.exit {
         animation: closeDrawer 0.3s;
+        @include rtl {
+            animation: closeRtlDrawer 0.3s;
+        }
     }
 }

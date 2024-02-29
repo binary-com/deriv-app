@@ -3,6 +3,12 @@
         display: flex;
         align-items: center;
         gap: 1.2rem;
+
+        @include rtl {
+            svg {
+                transform: rotate(180deg);
+            }
+        }
     }
 
     &__description {

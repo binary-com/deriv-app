@@ -47,7 +47,7 @@
 
         @include desktop {
             .dc-checkbox__box {
-                margin-left: unset;
+                margin-inline-start: unset;
             }
         }
 
@@ -57,7 +57,7 @@
 
         &__popover {
             align-self: flex-end;
-            margin-left: 0.4rem;
+            margin-inline-start: 0.4rem;
         }
     }
 
@@ -79,7 +79,7 @@
             border: 1px solid var(--border-normal);
             border-radius: 4px;
             display: flex;
-            margin-left: 0.8rem;
+            margin-inline-start: 0.8rem;
             position: relative;
 
             &-icon {
@@ -95,7 +95,7 @@
                 width: 7px;
                 height: 7px;
                 top: 4px;
-                right: 4px;
+                inset-inline-end: 4px;
 
                 &--disabled {
                     display: none;
@@ -104,7 +104,7 @@
 
             @include mobile {
                 justify-self: center;
-                margin-left: 0;
+                margin-inline-start: 0;
                 margin-top: 0;
             }
         }

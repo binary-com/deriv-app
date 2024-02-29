@@ -118,7 +118,9 @@
     &__active-line {
         display: block;
         position: absolute;
+        /*rtl:begin:ignore*/
         left: 0;
+        /*rtl:end:ignore*/
         height: 2px;
         background: var(--brand-red-coral);
         transition: all ease-in-out 0.3s;

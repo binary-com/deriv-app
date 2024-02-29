@@ -73,7 +73,8 @@
     &__title {
         font-size: var(--text-size-s);
         font-weight: 700;
-        margin: 1.6rem 1.6rem 1.6rem 0;
+        margin: 1.6rem 0;
+        margin-inline-end: 1.6rem;
         color: var(--text-general);
 
         &--listed {
@@ -84,7 +85,7 @@
     &__button-group {
         display: flex;
         justify-content: flex-end;
-        margin-right: 1.6rem;
+        margin-inline-end: 1.6rem;
 
         &--clear {
             height: 3.4rem;
@@ -97,7 +98,7 @@
             font-weight: 700;
             font-size: 1.4rem;
             cursor: pointer;
-            margin-right: 1.6rem;
+            margin-inline-end: 1.6rem;
         }
 
         &--open {
@@ -120,7 +121,8 @@
         height: calc(100vh - 30.4rem);
         position: relative;
         overflow: hidden;
-        margin: 0 1.6rem 1.6rem 0;
+        margin-inline-end: 1.6rem;
+        margin-bottom: 1.6rem;
 
         &-controls {
             padding: 0.7rem 0.5rem;

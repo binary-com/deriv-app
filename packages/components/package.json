@@ -76,6 +76,7 @@
         "@deriv/shared": "^1.0.0",
         "@deriv/stores": "^1.0.0",
         "@deriv/translations": "^1.0.0",
+        "@deriv/hooks": "^1.0.0",
         "classnames": "^2.2.6",
         "embla-carousel-react": "8.0.0-rc12",
         "gh-pages": "^2.1.1",

@@ -2,6 +2,7 @@
     &__label {
         position: absolute;
         font-size: var(--text-size-xs);
+        inset-inline-start: 0;
         transform: translate(0.5rem, -1rem) scale(0.75);
         z-index: 2;
         color: var(--text-prominent);

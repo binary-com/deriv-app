@@ -1,4 +1,5 @@
 /** @define app-contents; weak */
+/*rtl:begin:ignore*/
 .app-contents {
     &--show-positions-drawer:not(&--is-mobile) {
         .trade-container {
@@ -70,9 +71,9 @@
         }
     }
 }
-
 $FLOATING_HEADER_HEIGHT: 41px;
 /** @define trade-container; weak */
+
 .trade-container {
     position: relative;
     padding: 0.8em 1.2em;
@@ -81,6 +82,7 @@ $FLOATING_HEADER_HEIGHT: 41px;
     overflow: hidden;
 
     &__replay {
+        direction: ltr;
         width: 100%;
         display: flex;
         flex-direction: row;
@@ -280,6 +282,7 @@ $FLOATING_HEADER_HEIGHT: 41px;
             }
         }
         .replay-chart__container {
+            direction: ltr;
             width: 100%;
             position: relative;
             margin-left: 24px;
@@ -402,6 +405,7 @@ $FLOATING_HEADER_HEIGHT: 41px;
 }
 
 /** @define mobile-wrapper; weak */
+
 .mobile-wrapper {
     padding: 0 0.8rem;
     display: flex;
@@ -640,7 +644,6 @@ $FLOATING_HEADER_HEIGHT: 41px;
     .chartContainer {
         background: transparent;
         min-height: 100%;
-
         @include mobile {
             .flutter-chart {
                 height: calc(100% - 5px);
@@ -818,3 +821,5 @@ $FLOATING_HEADER_HEIGHT: 41px;
         );
     }
 }
+
+/* rtl:end:ignore */

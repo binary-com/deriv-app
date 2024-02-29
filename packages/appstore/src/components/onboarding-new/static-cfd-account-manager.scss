@@ -2,7 +2,7 @@
     display: flex;
     width: 38.3rem;
     margin-top: 2rem;
-    margin-right: 2rem;
+    margin-inline-end: 2rem;
     align-items: center;
     justify-content: space-between;
 
@@ -15,7 +15,7 @@
     @include mobile {
         align-items: flex-start;
         width: 31rem;
-        margin-right: 0;
+        margin-inline-end: 0;
     }
 
     &--cfds {
@@ -28,7 +28,7 @@
         &--blurry {
             opacity: 0.2;
         }
-        margin-right: 3rem;
+        margin-inline-end: 3rem;
     }
 
     &__details {
@@ -39,10 +39,10 @@
     &__buttons {
         display: flex;
         flex-direction: column;
-        margin-left: auto;
+        margin-inline-start: auto;
 
         @include mobile {
-            margin-right: 2rem;
+            margin-inline-end: 2rem;
             margin-top: 1.5rem;
         }
 
@@ -53,7 +53,7 @@
 
         &-topup {
             margin-bottom: 0.5rem;
-            margin-left: 2rem;
+            margin-inline-start: 2rem;
             cursor: not-allowed;
             pointer-events: none;
 
@@ -69,7 +69,7 @@
 
         &-trade {
             margin-bottom: 0.5rem;
-            margin-left: 2rem;
+            margin-inline-start: 2rem;
             cursor: not-allowed;
             pointer-events: none;
 

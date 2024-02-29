@@ -36,10 +36,16 @@
         &--exit {
             opacity: 0;
             transform: scale(1, 1) translate3d(-225px, 0, 0);
+            @include rtl {
+                transform: scale(1, 1) translate3d(225px, 0, 0);
+            }
         }
         &--enter-done {
             opacity: 1;
             transform: translate3d(-245px, 0, 0);
+            @include rtl {
+                transform: translate3d(245px, 0, 0);
+            }
         }
     }
     &__selector {

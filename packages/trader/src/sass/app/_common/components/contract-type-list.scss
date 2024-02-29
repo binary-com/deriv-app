@@ -50,7 +50,7 @@
     }
 
     &__title {
-        padding-left: 1.6rem;
+        padding-inline-start: 1.6rem;
         word-wrap: anywhere;
     }
 
@@ -61,7 +61,7 @@
     }
 
     &__icon {
-        margin-left: auto;
+        margin-inline-start: auto;
         @include mobile {
             display: block;
         }
@@ -112,7 +112,7 @@
 
         /* postcss-bem-linter: ignore */
         .category-wrapper + .category-wrapper {
-            margin-left: 0.4rem;
+            margin-inline-start: 0.4rem;
         }
     }
 }

@@ -23,7 +23,7 @@ const CompareAccount = ({ accounts_sub_text, is_desktop }: TCompareAccount) => {
                 color='red'
                 weight='bold'
                 line_height='s'
-                styles={is_desktop ? { marginLeft: '1rem' } : ''}
+                styles={is_desktop ? { marginInlineStart: '1rem' } : ''}
             >
                 <Localize i18n_default_text={accounts_sub_text} />
             </Text>

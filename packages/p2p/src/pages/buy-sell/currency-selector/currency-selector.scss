@@ -6,7 +6,7 @@
     }
 
     &__search-icon {
-        margin-right: 1rem;
+        margin-inline-end: 1rem;
     }
 
     .dc-dropdown-list {
@@ -61,10 +61,10 @@
         background: var(--general-main-2);
 
         &__field {
-            padding-left: 3.4rem;
+            padding-inline-start: 3.4rem;
 
             @include mobile {
-                padding-left: 2.2rem;
+                padding-inline-start: 2.2rem;
             }
         }
     }

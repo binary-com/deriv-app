@@ -126,11 +126,11 @@
                 svg {
                     width: 1.6rem;
                     height: 1.6rem;
-                    padding-right: 0;
-                    margin-right: 0.8rem;
+                    padding-inline-end: 0;
+                    margin-inline-end: 0.8rem;
 
                     @include mobile {
-                        margin-right: 0.2rem;
+                        margin-inline-end: 0.2rem;
                         // gave this -ve margin becaues we cannot
                         // overwrite the default core padding which
                         // will make the icon bigger
@@ -251,7 +251,7 @@
 .bot-builder {
     position: absolute;
     top: 6.6rem;
-    left: 1.6rem;
+    inset-inline-start: 1.6rem;
     z-index: -1;
     background: var(--general-main-1);
     height: var(--tab-content-height);
@@ -282,7 +282,7 @@
 
     @include mobile {
         top: 5.6rem;
-        left: 0;
+        inset-inline-start: 0;
         width: 100vw;
         height: var(--tab-content-height-mobile);
     }
@@ -337,6 +337,10 @@
 
     &__content {
         text-align: left;
+
+        @include rtl {
+            text-align: right;
+        }
 
         p {
             font-size: 1.4rem;

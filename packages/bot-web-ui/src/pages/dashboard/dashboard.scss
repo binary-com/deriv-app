@@ -253,7 +253,7 @@
             &__retrigger {
                 position: absolute;
                 top: 0;
-                right: 0;
+                inset-inline-end: 0;
                 padding: 2rem;
 
                 button {
@@ -290,7 +290,7 @@
             position: relative;
             background-color: var(--general-main-1);
             padding: 2.4rem;
-            margin-left: 1.6rem;
+            margin-inline-start: 1.6rem;
             display: none;
             height: calc(100vh - 16.7rem);
             overflow-y: auto;

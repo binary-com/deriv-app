@@ -8,6 +8,7 @@ const LANGUAGE_KEY = 'i18n_language';
 const DEFAULT_LANGUAGE = 'EN';
 const ALL_LANGUAGES = Object.freeze({
     ACH: 'Translations',
+    AR: 'العربية',
     EN: 'English',
     ES: 'Español',
     DE: 'Deutsch',

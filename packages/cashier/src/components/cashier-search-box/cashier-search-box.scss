@@ -1,6 +1,6 @@
 .cashier-search-box {
     width: 100%;
-    margin-right: 1.6rem;
+    margin-inline-end: 1.6rem;
     .dc-input {
         margin-bottom: 0;
         height: 3.2rem;
@@ -9,7 +9,7 @@
             padding: 0 2rem;
         }
         &__leading-icon {
-            margin-left: 0.9rem;
+            margin-inline-start: 0.9rem;
             top: 0.9rem;
         }
         &__trailing-icon {

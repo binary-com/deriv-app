@@ -1,6 +1,7 @@
 $header-height: 3.6em;
 
 // Trade page animation performance fix #perfmatters
+/*rtl:begin:ignore*/
 .trade-container + .positions-drawer {
     transition: opacity 0.4s ease;
 }
@@ -15,6 +16,7 @@ $header-height: 3.6em;
     position: fixed;
     z-index: 2;
     top: #{$HEADER_HEIGHT};
+    /*rtl:ignore*/
     left: 4px;
     box-sizing: border-box;
     opacity: 0;
@@ -44,6 +46,7 @@ $header-height: 3.6em;
         }
     }
     &--open {
+        /*rtl:ignore*/
         transform: translateX(#{$POSITIONS_DRAWER_MARGIN});
         opacity: 1;
     }
@@ -122,3 +125,4 @@ $header-height: 3.6em;
         }
     }
 }
+/*rtl:end:ignore*/

@@ -103,7 +103,7 @@
 
             @include mobile {
                 width: 100%;
-                padding-left: 0;
+                padding-inline-start: 0;
             }
 
             &--toggle-account {
@@ -121,7 +121,7 @@
             }
 
             &-compare-accounts {
-                margin-left: 1rem;
+                margin-inline-start: 1rem;
 
                 &--blurry {
                     opacity: 0.2;
@@ -169,7 +169,7 @@
                 align-items: center;
 
                 &-text {
-                    margin-left: 0.3rem;
+                    margin-inline-start: 0.3rem;
                 }
             }
 
@@ -219,7 +219,7 @@
     .Add-Square {
         display: flex;
         align-self: center;
-        margin-left: 1rem;
+        margin-inline-start: 1rem;
         opacity: 0.2;
     }
 

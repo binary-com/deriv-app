@@ -1,20 +1,23 @@
 $header-height: 3.6em;
 
 // Trade page animation performance fix #perfmatters
+/*rtl:begin:ignore*/
 .trade-container + .positions-drawer {
+    /*rtl:ignore*/
     transition: opacity 0.4s ease;
 }
 
 .positions-drawer {
     $MARGIN_TOP: #{$POSITIONS_DRAWER_MARGIN * 2};
     $MARGIN_BOTTOM: #{$POSITIONS_DRAWER_MARGIN * 2};
-
+    direction: ltr;
     width: 240px;
     height: calc(100vh - #{$HEADER_HEIGHT} - #{$FOOTER_HEIGHT} - #{$MARGIN_TOP} - #{$MARGIN_BOTTOM});
     margin-top: #{$MARGIN_TOP};
     position: fixed;
     z-index: 2;
     top: #{$HEADER_HEIGHT};
+    /*rtl:ignore*/
     left: 4px;
     box-sizing: border-box;
     opacity: 0;
@@ -44,6 +47,7 @@ $header-height: 3.6em;
         }
     }
     &--open {
+        /*rtl:ignore*/
         transform: translateX(#{$POSITIONS_DRAWER_MARGIN});
         opacity: 1;
     }
@@ -122,3 +126,4 @@ $header-height: 3.6em;
         }
     }
 }
+/*rtl:end:ignore*/

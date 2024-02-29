@@ -21,7 +21,7 @@
     }
 
     &__name {
-        padding-left: 0.8rem;
+        padding-inline-start: 0.8rem;
         width: 100%;
 
         @include mobile {
@@ -48,23 +48,23 @@
 
         &__row {
             align-items: center;
-            border-right: 1px solid var(--general-section-1);
+            border-inline-end: 1px solid var(--general-section-1);
             display: flex;
             gap: 0.8rem;
             padding: 0 0.8rem;
 
             &:first-child {
-                padding-left: unset;
+                padding-inline-start: unset;
 
                 @include mobile {
                     .block-user-count {
-                        margin-left: unset;
+                        margin-inline-start: unset;
                     }
                 }
             }
 
             &:last-child {
-                border-right: unset;
+                border-inline-end: unset;
             }
 
             .filled-icons {

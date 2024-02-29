@@ -1,4 +1,6 @@
 /** @define contract-type-dialog; */
+
+/*rtl:ignore*/
 .contract-type-dialog {
     right: 0.4em;
     width: 100%;
@@ -10,6 +12,7 @@
     height: 0;
     z-index: 999;
 
+    /*rtl:ignore*/
     &__wrapper {
         position: absolute;
         right: calc(100% + 10px);

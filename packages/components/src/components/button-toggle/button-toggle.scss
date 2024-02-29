@@ -112,7 +112,9 @@
         content: '';
         height: 100%;
         top: 0;
+        /*rtl:begin:ignore*/
         left: 0;
+        /*rtl:end:ignore*/
         z-index: 0;
         transition: transform 0.25s ease;
         pointer-events: none;
