@@ -225,13 +225,10 @@ describe('<CFDPasswordModal/>', () => {
             fireEvent.focusOut(ele_password_input);
         });
 
-        await waitFor(() => {
-            expect(validPassword).toHaveBeenCalled();
-        });
         expect(await screen.findByText(/your password cannot be the same as your email address./i)).toBeInTheDocument();
     });
 
-    it('should display error message when password contain non-english characters', async () => {
+    it('should not display error message when password contain special characters', async () => {
         validPassword.mockReturnValue(false);
 
         const store = mockStore(mockRootStore);
@@ -254,13 +251,10 @@ describe('<CFDPasswordModal/>', () => {
         });
 
         await waitFor(() => {
-            expect(validPassword).toHaveBeenCalled();
+            expect(validPassword).not.toHaveBeenCalled();
         });
 
-        expect(getErrorMessages).toHaveBeenCalled();
-        expect(
-            await screen.findByText(/Password should have lower and uppercase English letters with numbers./i)
-        ).toBeInTheDocument();
+        expect(getErrorMessages).not.toHaveBeenCalled();
     });
 
     it('should show transfer message on successful DerivX account creation', async () => {

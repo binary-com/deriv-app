@@ -649,8 +649,14 @@ const CFDPasswordModal = observer(({ form_error, platform }: TCFDPasswordModalPr
                 min_number: 8,
                 max_number: 25,
             });
-        } else if (!validPassword(values.password)) {
-            errors.password = getErrorMessages().password();
+        } else if (
+            should_set_trading_password &&
+            (platform === CFD_PLATFORMS.MT5 || platform === CFD_PLATFORMS.DXTRADE) &&
+            !RegExp(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,25}$/).test(values.password)
+        ) {
+            errors.password = localize(
+                'Your password must be 8 to 25 characters long. It must include lowercase, uppercase letters, numbers and special characters.'
+            );
         }
         if (values.password?.toLowerCase() === email.toLowerCase()) {
             errors.password = localize('Your password cannot be the same as your email address.');
