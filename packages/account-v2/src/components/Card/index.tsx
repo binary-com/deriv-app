@@ -14,5 +14,6 @@ export const Card = ({ children, className, ...props }: PropsWithChildren<TCardP
         >
             {children}
         </div>
+        
     );
 };

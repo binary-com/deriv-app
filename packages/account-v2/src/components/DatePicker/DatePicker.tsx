@@ -11,7 +11,7 @@ interface TDatePickerProps extends ComponentProps<typeof Input> {
     errorMessage?: string;
     isInvalid?: boolean;
     maxDate?: Date;
-    minDate?: Date;
+    minDate: Date;
     mobileAlignment?: 'above' | 'below';
     onDateChange: (formattedDate: string | null) => void;
     value: string;
