@@ -139,6 +139,7 @@
         "moment": "^2.29.2",
         "null-loader": "^4.0.1",
         "object.fromentries": "^2.0.0",
+        "postcss-rtlcss": "^4.0.9",
         "promise-polyfill": "^8.1.3",
         "prop-types": "^15.7.2",
         "react": "^17.0.2",

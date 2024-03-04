@@ -126,11 +126,11 @@
                 svg {
                     width: 1.6rem;
                     height: 1.6rem;
-                    padding-right: 0;
-                    margin-right: 0.8rem;
+                    padding-inline-end: 0;
+                    margin-inline-end: 0.8rem;
 
                     @include mobile {
-                        margin-right: 0.2rem;
+                        margin-inline-end: 0.2rem;
                         // gave this -ve margin becaues we cannot
                         // overwrite the default core padding which
                         // will make the icon bigger
@@ -246,12 +246,94 @@
             width: 40rem;
         }
     }
+    &__toolbox {
+        position: absolute;
+        top: 0;
+        inset-inline-start: 0;
+        width: 23.6rem;
+        padding: 0.8rem;
+        background: var(--general-main-1);
+        z-index: 1;
+
+        .db-toolbox {
+            &__title {
+                height: 2.6rem;
+                line-height: 2.6rem;
+                position: relative;
+                cursor: pointer;
+
+                &__chevron {
+                    position: absolute;
+                    inset-inline-end: 0;
+                    top: 0.3rem;
+                    transition: transform 0.3s ease;
+
+                    &--active {
+                        transform: rotate(180deg);
+                        top: -0.2rem;
+                    }
+                }
+            }
+
+            &__content {
+                border: solid 1px var(--general-section-1);
+            }
+
+            &__category-menu {
+                height: calc(100vh - 33.6rem);
+                overflow-y: scroll;
+            }
+
+            &__search {
+                padding: 1.3rem 0.8rem;
+                height: 6rem;
+            }
+
+            &__content-wrapper {
+                height: 0;
+            }
+
+            &__content-wrapper.active {
+                height: 100%;
+            }
+        }
+    }
+    &__run-strategy-wrapper {
+        @include desktop {
+            position: absolute;
+        }
+
+        inset-inline-end: 1.6rem;
+        top: 1.6rem;
+        z-index: 2;
+
+        .animation {
+            &__button {
+                background-color: var(--purchase-main-1);
+            }
+
+            &__container {
+                background-color: var(--general-main-1);
+            }
+        }
+    }
+
+    &__sidebar-wrapper {
+        &--active {
+            position: fixed;
+            inset-inline-end: 0;
+        }
+
+        &--hidden {
+            display: none;
+        }
+    }
 }
 
 .bot-builder {
     position: absolute;
     top: 6.6rem;
-    left: 1.6rem;
+    inset-inline-start: 1.6rem;
     z-index: -1;
     background: var(--general-main-1);
     height: var(--tab-content-height);
@@ -282,7 +364,7 @@
 
     @include mobile {
         top: 5.6rem;
-        left: 0;
+        inset-inline-start: 0;
         width: 100vw;
         height: var(--tab-content-height-mobile);
     }
@@ -337,6 +419,10 @@
 
     &__content {
         text-align: left;
+
+        @include rtl {
+            text-align: right;
+        }
 
         p {
             font-size: 1.4rem;

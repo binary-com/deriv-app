@@ -2,6 +2,7 @@
     &__label {
         position: absolute;
         font-size: var(--text-size-xs);
+        inset-inline-start: 0;
         transform: translate(0.5rem, -1rem) scale(0.75);
         z-index: 2;
         color: var(--text-prominent);
@@ -270,7 +271,8 @@
         width: 100%;
 
         &:not(.cfd-personal-details-modal__form *):not(.trade-container__multiplier-dropdown):not(
-                .dc-dropdown--left):not(.contract-type-info__dropdown) {
+                .dc-dropdown--left
+            ):not(.contract-type-info__dropdown) {
             margin-top: unset;
         }
 

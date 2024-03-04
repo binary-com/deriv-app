@@ -1,7 +1,15 @@
 .cashier-breadcrumb {
     width: 100%;
 
-    ul > *:not(:last-child) {
-        cursor: pointer;
+    ul {
+        & > *:not(:last-child) {
+            cursor: pointer;
+        }
+
+        @include rtl {
+            li {
+                float: right;
+            }
+        }
     }
 }

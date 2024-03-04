@@ -31,14 +31,14 @@ export const getPosition = ({
 
     const top_placement_style = {
         bottom: body_rect.bottom - (should_consider_parent_height ? top : bottom) + 8, // add 8px extra margin for better UX
-        left,
+        insetInlineStart: left,
         width,
         transformOrigin: 'bottom',
     };
 
     const bottom_placement_style = {
         top: should_consider_parent_height ? bottom : top,
-        left,
+        insetInlineStart: left,
         width,
         transformOrigin: 'top',
     };

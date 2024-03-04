@@ -1,6 +1,9 @@
 module.exports = {
     parser: 'postcss-scss',
-    plugins: {
-        'postcss-preset-env': {},
-    },
+    plugins: [
+        require('postcss-rtlcss')(),
+        {
+            'postcss-preset-env': {},
+        },
+    ],
 };

@@ -76,8 +76,8 @@
     &__button {
         width: fit-content;
         height: 100% !important;
-        border-top-right-radius: 0 !important;
-        border-bottom-right-radius: 0 !important;
+        border-start-end-radius: 0 !important;
+        border-end-end-radius: 0 !important;
     }
 
     &__container {
@@ -86,8 +86,8 @@
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
-        border-top-right-radius: $BORDER_RADIUS;
-        border-bottom-right-radius: $BORDER_RADIUS;
+        border-start-end-radius: $BORDER_RADIUS;
+        border-end-end-radius: $BORDER_RADIUS;
         border: solid 1px var(--border-normal);
         position: relative;
     }

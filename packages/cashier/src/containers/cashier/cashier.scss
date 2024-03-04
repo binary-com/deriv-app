@@ -3,7 +3,7 @@
     &__counter {
         position: absolute;
         top: 0.4rem;
-        right: -1.5rem;
+        inset-inline-end: -1.5rem;
     }
     &__content {
         width: 100%;
@@ -170,7 +170,7 @@
         }
         &-items,
         &-label {
-            justify-content: left;
+            justify-content: start;
         }
         &-items {
             svg {

@@ -20,6 +20,11 @@
         justify-content: flex-start;
         user-select: none;
 
+        @include rtl {
+            svg:not(:first-child) {
+                transform: rotate(180deg);
+            }
+        }
         .dc-icon {
             flex: none;
         }

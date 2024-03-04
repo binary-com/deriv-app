@@ -8,9 +8,14 @@
         line-height: 0.8rem;
         cursor: pointer;
         border-radius: $BORDER_RADIUS;
-        padding-right: 0.8rem;
+        padding-inline-end: 0.8rem;
+        @include rtl {
+            svg {
+                transform: rotate(180deg);
+            }
+        }
         @include mobile {
-            padding-right: 1rem;
+            padding-inline-end: 1rem;
         }
     }
 }

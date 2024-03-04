@@ -167,7 +167,7 @@
     &__line {
         position: absolute;
         top: 0;
-        left: 0;
+        inset-inline-start: 0;
         height: 2px;
         pointer-events: none;
         background: var(--state-active);

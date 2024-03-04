@@ -10,6 +10,9 @@
                 .sc-toolbar-widget,
                 .stx-panel-control {
                     transform: translate3d(248px, 0, 0);
+                    @include rtl {
+                        transform: translate3d(-248px, 0, 0);
+                    }
                 }
                 .cq-chart-controls {
                     transform: translate3d(130px, 0, 0) !important;

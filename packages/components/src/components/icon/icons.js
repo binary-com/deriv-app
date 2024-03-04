@@ -696,6 +696,7 @@ import './dxtrade/ic-dxtrade-financial-platform.svg';
 import './dxtrade/ic-dxtrade-financial.svg';
 import './dxtrade/ic-dxtrade-one-password.svg';
 import './dxtrade/ic-dxtrade-synthetic-platform.svg';
+import './flag/ic-flag-ar.svg';
 import './flag/ic-flag-de.svg';
 import './flag/ic-flag-en.svg';
 import './flag/ic-flag-es.svg';
