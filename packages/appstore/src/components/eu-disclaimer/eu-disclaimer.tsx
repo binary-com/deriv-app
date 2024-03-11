@@ -24,9 +24,8 @@ const DisclaimerLocalizedText = ({ is_wallet }: TDisclaimerLocalizedText) =>
     ) : (
         <Localize
             i18n_default_text={
-                '<0>EU statutory disclaimer</0>: CFDs are complex instruments and come with a high risk of losing money rapidly due to leverage. <0>70.1% of retail investor accounts lose money when trading CFDs with this provider</0>. You should consider whether you understand how CFDs work and whether you can afford to take the high risk of losing your money.'
+                'The products offered on our website are complex derivative products that carry a significant risk of potential loss. CFDs are complex instruments with a high risk of losing money rapidly due to leverage. 70.1% of retail investor accounts lose money when trading CFDs with this provider. You should consider whether you understand how these products work and whether you can afford to take the high risk of losing your money.'
             }
-            components={[<strong key={0} />]}
         />
     );
 
