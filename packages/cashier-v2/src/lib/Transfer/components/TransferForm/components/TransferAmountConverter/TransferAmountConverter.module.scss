@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    gap: 0.8rem;
+
+    @include mobile-cashier-v2 {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.arrow-container {
+    height: 3.45rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow-icon {
+    transition: all 0.2s ease;
+    rotate: 90deg;
+
+    @include mobile-cashier-v2 {
+        rotate: 180deg;
+    }
+
+    &--rtl {
+        rotate: -90deg;
+
+        @include mobile-cashier-v2 {
+            rotate: 0deg;
+        }
+    }
+}

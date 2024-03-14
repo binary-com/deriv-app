@@ -1,0 +1,23 @@
+.container {
+    width: 36rem;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.6rem;
+}
+
+.title {
+    margin: 0 0 1.2rem;
+
+    @include mobile-cashier-v2 {
+        margin: 0;
+    }
+}
+
+.button-group {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.8rem;
+}

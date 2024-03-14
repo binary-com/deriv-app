@@ -1,0 +1,17 @@
+.container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.account {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.account-info {
+    display: flex;
+    flex-direction: column;
+}
