@@ -101,6 +101,14 @@ describe('APIMiddleware', () => {
         expect(spydefineMeasure).toHaveBeenCalledWith('authorize');
     });
 
+    it('Should invoke the method sendWillBeCalled()', async () => {
+        const spysendWillBeCalled = jest.spyOn(api_middleware, 'sendWillBeCalled');
+
+        await api_middleware.sendWillBeCalled({ args: [{ buy: 1 }] });
+
+        expect(spysendWillBeCalled).toHaveBeenCalledWith({ args: [{ buy: 1 }] });
+    });
+
     describe('Define measure', () => {
         it('Should define measure of history API call', () => {
             const spydefineMeasure = jest.spyOn(api_middleware, 'defineMeasure');
