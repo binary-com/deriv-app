@@ -34,7 +34,7 @@ jobs:
 
       - name: Capture Vercel preview URL
         id: vercel_preview_url
-        uses: binary-com/vercel-preview-url-action@v1.0.6
+        uses: binary-com/vercel-preview-url-action@v1.0.5
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           preview_url_regexp: \[Visit Preview\]\((.*?.sx)\)
