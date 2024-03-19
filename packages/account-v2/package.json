@@ -26,7 +26,10 @@
         "react-transition-group": "4.4.2",
         "tailwind-merge": "^1.14.0",
         "usehooks-ts": "^2.7.0",
-        "yup": "^0.32.11"
+        "yup": "^0.32.11",
+        "bowser": "^2.9.0",
+        "moment": "^2.29.2"
+
     },
     "devDependencies": {
         "@testing-library/react": "^12.0.0",
