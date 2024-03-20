@@ -4,7 +4,8 @@ import { ContentFlag } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
 import RegulationsSwitcherLoader from 'Components/pre-loader/regulations-switcher-loader';
-import WalletsBanner from 'Components/wallets-banner';
+import WalletsBanner from 'Components/banners/wallets-banner';
+import BookBanner from 'Components/banners/book-banner';
 import AccountTypeDropdown from './account-type-dropdown';
 import AssetSummary from './asset-summary';
 import RegulatorSwitcher from './regulators-switcher';
@@ -25,6 +26,7 @@ const MainTitleBar = () => {
     return (
         <React.Fragment>
             <WalletsBanner />
+            <BookBanner />
             <DesktopWrapper>
                 <div className='main-title-bar'>
                     <div className='main-title-bar__right'>

@@ -4,7 +4,7 @@ import { StoreProvider, mockStore, ExchangeRatesProvider } from '@deriv/stores';
 import { APIProvider } from '@deriv/api';
 import MainTitleBar from '..';
 
-jest.mock('Components/wallets-banner', () => jest.fn(() => 'WalletsBanner'));
+jest.mock('src/components/banners/wallets-banner', () => jest.fn(() => 'WalletsBanner'));
 
 jest.mock('@deriv/api', () => ({
     ...jest.requireActual('@deriv/api'),
