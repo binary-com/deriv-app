@@ -139,15 +139,37 @@ const Redirect = observer(() => {
             setResetTradingPasswordModalOpen(true);
             break;
         }
+        case 'payment_deposit': {
+            if (is_next_wallet) {
+                history.push(routes.wallets_deposit);
+            } else {
+                history.push(routes.cashier_deposit);
+            }
+            redirected_to_route = true;
+            break;
+        }
         case 'payment_withdraw': {
             if (is_next_wallet) {
-                // passes verification_code through query param as we do not want to use localstorage/session storage
-                // though can't use "verification_code" as name param
-                // as there is general logic within client-store
-                // which removes anything which resembles code=XYZ
-                history.push(`${routes.wallets_withdrawal}?verification=${verification_code?.payment_withdraw}`);
+                if (verification_code?.payment_withdraw) {
+                    // passes verification_code through query param as we do not want to use localstorage/session storage
+                    // though can't use "verification_code" as name param
+                    // as there is general logic within client-store
+                    // which removes anything which resembles code=XYZ
+                    history.push(`${routes.wallets_withdrawal}?verification=${verification_code?.payment_withdraw}`);
+                } else {
+                    history.push(routes.wallets_withdrawal);
+                }
             } else {
                 history.push(routes.cashier_withdrawal);
+            }
+            redirected_to_route = true;
+            break;
+        }
+        case 'payment_transfer': {
+            if (is_next_wallet) {
+                history.push(routes.wallets_transfer);
+            } else {
+                history.push(routes.cashier_acc_transfer);
             }
             redirected_to_route = true;
             break;

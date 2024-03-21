@@ -79,7 +79,9 @@ export const routes = {
     // Wallets
     wallets: '/wallets',
     wallets_cashier: '/wallets/cashier',
+    wallets_deposit: '/wallets/cashier/deposit',
     wallets_withdrawal: '/wallets/cashier/withdraw',
+    wallets_transfer: 'wallets/cashier/transfer',
     wallets_compare_accounts: '/wallets/compare-accounts',
 
     // Traders Hub
