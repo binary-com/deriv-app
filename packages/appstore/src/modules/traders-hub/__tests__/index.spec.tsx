@@ -1,7 +1,6 @@
 import React from 'react';
 import { StoreProvider, mockStore } from '@deriv/stores';
 import { render, screen } from '@testing-library/react';
-import { APIProvider } from '@deriv/api';
 import TradersHub from '..';
 
 jest.mock('Components/modals/modal-manager', () => jest.fn(() => 'mockedModalManager'));
@@ -14,9 +13,7 @@ describe('TradersHub', () => {
     const render_container = (mock_store_override = {}) => {
         const mock_store = mockStore(mock_store_override);
         const wrapper = ({ children }: { children: JSX.Element }) => (
-            <APIProvider>
-                <StoreProvider store={mock_store}>{children}</StoreProvider>
-            </APIProvider>
+            <StoreProvider store={mock_store}>{children}</StoreProvider>
         );
 
         return render(<TradersHub />, {

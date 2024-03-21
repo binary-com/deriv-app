@@ -6,11 +6,16 @@ import BalanceText from 'Components/elements/text/balance-text';
 import { observer, useStore } from '@deriv/stores';
 import './asset-summary.scss';
 import TotalAssetsLoader from 'Components/pre-loader/total-assets-loader';
-import { useTotalAccountBalance, useCFDAccounts, usePlatformAccounts, useExchangeRate } from '@deriv/hooks';
+import {
+    useTotalAccountBalance,
+    useCFDAccounts,
+    usePlatformAccounts,
+    useTotalAssetCurrency,
+    useExchangeRate,
+} from '@deriv/hooks';
+import { isRatesLoaded } from '../../helpers';
 
 const AssetSummary = observer(() => {
-    const { exchange_rates } = useExchangeRate();
-
     const { traders_hub, client, common, modules } = useStore();
     const { selected_account_type, is_eu_user, no_CR_account, no_MF_account } = traders_hub;
     const { is_logging_in, is_switching, default_currency, is_landing_company_loaded, is_mt5_allowed } = client;
@@ -24,6 +29,8 @@ const AssetSummary = observer(() => {
     const platform_real_balance = useTotalAccountBalance(platform_real_accounts);
     const cfd_real_balance = useTotalAccountBalance(cfd_real_accounts);
     const cfd_demo_balance = useTotalAccountBalance(cfd_demo_accounts);
+    const total_assets_real_currency = useTotalAssetCurrency();
+    const { exchange_rates } = useExchangeRate();
 
     const is_real = selected_account_type === 'real';
 
@@ -41,9 +48,9 @@ const AssetSummary = observer(() => {
     const should_show_loader =
         ((is_switching || is_logging_in) && (eu_account || cr_account)) ||
         !is_landing_company_loaded ||
-        !exchange_rates ||
         is_loading ||
-        is_transfer_confirm;
+        is_transfer_confirm ||
+        !isRatesLoaded(is_real, total_assets_real_currency, platform_real_accounts, cfd_real_accounts, exchange_rates);
 
     if (should_show_loader) {
         return (

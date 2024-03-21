@@ -405,6 +405,21 @@ const BinarySocketBase = (() => {
 
     const changeEmail = api_request => deriv_api.send(api_request);
 
+    const getWalletMigrationState = () =>
+        deriv_api.send({
+            wallet_migration: 'state',
+        });
+
+    const startWalletMigration = () =>
+        deriv_api.send({
+            wallet_migration: 'start',
+        });
+
+    const resetWalletMigration = () =>
+        deriv_api.send({
+            wallet_migration: 'reset',
+        });
+
     return {
         init,
         openNewConnection,
@@ -493,6 +508,9 @@ const BinarySocketBase = (() => {
         triggerMt5DryRun,
         getServiceToken,
         changeEmail,
+        getWalletMigrationState,
+        startWalletMigration,
+        resetWalletMigration,
     };
 })();
 

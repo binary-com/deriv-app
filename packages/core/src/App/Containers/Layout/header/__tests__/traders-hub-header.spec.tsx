@@ -48,6 +48,11 @@ describe('TradersHubHeader', () => {
                                 next_wallet: true,
                             },
                         },
+                        traders_hub: {
+                            modal_data: {
+                                active_modal: 'currency_selection',
+                            },
+                        },
                     })
                 }
             >
@@ -55,12 +60,12 @@ describe('TradersHubHeader', () => {
             </StoreProvider>
         );
 
-    it('should render "CurrencySelectionModal" as a child component', () => {
+    it('should render "CurrencySelectionModal" as a child component', async () => {
         renderComponent();
-        expect(screen.getByText('MockedCurrencySelectionModal')).toBeInTheDocument();
+        expect(await screen.findByText('MockedCurrencySelectionModal')).toBeInTheDocument();
     });
 
-    it('should render "RealAccountSignup" as a child component', () => {
+    it('should render "RealAccountSignup" as a child component', async () => {
         const mock_store = mockStore({
             ui: {
                 is_desktop: true,
@@ -68,7 +73,7 @@ describe('TradersHubHeader', () => {
             },
         });
         renderComponent(mock_store);
-        expect(screen.getByText('MockedRealAccountSignup')).toBeInTheDocument();
+        expect(await screen.findByText('MockedRealAccountSignup')).toBeInTheDocument();
     });
 
     it('should render "View tutorial" option in the header', () => {

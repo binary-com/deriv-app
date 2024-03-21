@@ -1,7 +1,12 @@
 import React from 'react';
 import { routes } from '@deriv/shared';
 import { localize } from '@deriv/translations';
-import CFDCompareAccounts from 'Containers/cfd-compare-accounts';
+import { Loading } from '@deriv/components';
+
+const CFDCompareAccounts = React.lazy(() =>
+    import(/* webpackChunkName: "cfd-compare-accounts" */ 'Containers/cfd-compare-accounts')
+);
+
 // Error Routes
 const Page404 = React.lazy(() => import(/* webpackChunkName: "404" */ '../Modules/Page404'));
 
@@ -10,7 +15,11 @@ const initRoutesConfig = () => {
     return [
         {
             path: routes.compare_cfds,
-            component: props => <CFDCompareAccounts {...props} />,
+            component: props => (
+                <React.Suspense fallback={<Loading />}>
+                    <CFDCompareAccounts {...props} />
+                </React.Suspense>
+            ),
             getTitle: () => localize('Compare CFD accounts'),
             is_authenticated: false,
         },

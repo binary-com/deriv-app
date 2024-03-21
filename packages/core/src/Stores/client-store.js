@@ -150,6 +150,8 @@ export default class ClientStore extends BaseStore {
     is_already_attempted = false;
     real_account_signup_form_data = [];
     real_account_signup_form_step = 0;
+    wallet_migration_state;
+    wallet_migration_interval_id;
 
     constructor(root_store) {
         const local_storage_properties = ['device_data'];
@@ -217,6 +219,7 @@ export default class ClientStore extends BaseStore {
             is_already_attempted: observable,
             real_account_signup_form_data: observable,
             real_account_signup_form_step: observable,
+            wallet_migration_state: observable,
             balance: computed,
             account_open_date: computed,
             is_svg: computed,
@@ -391,6 +394,10 @@ export default class ClientStore extends BaseStore {
             setIsAlreadyAttempted: action.bound,
             setRealAccountSignupFormData: action.bound,
             setRealAccountSignupFormStep: action.bound,
+            getWalletMigrationState: action.bound,
+            setWalletMigrationState: action.bound,
+            startWalletMigration: action.bound,
+            resetWalletMigration: action.bound,
         });
 
         reaction(
@@ -423,6 +430,19 @@ export default class ClientStore extends BaseStore {
         when(
             () => !this.is_logged_in && this.root_store.ui && this.root_store.ui.is_real_acc_signup_on,
             () => this.root_store.ui.closeRealAccountSignup()
+        );
+
+        reaction(
+            () => [this.wallet_migration_state],
+            () => {
+                if (this.wallet_migration_state === 'in_progress') {
+                    this.wallet_migration_interval_id = setInterval(() => {
+                        this.getWalletMigrationState();
+                    }, 2000);
+                } else {
+                    clearInterval(this.wallet_migration_interval_id);
+                }
+            }
         );
     }
 
@@ -1624,7 +1644,10 @@ export default class ClientStore extends BaseStore {
         this.selectCurrency('');
 
         this.responsePayoutCurrencies(await WS.authorized.payoutCurrencies());
+
         if (this.is_logged_in) {
+            this.getWalletMigrationState();
+
             await WS.mt5LoginList().then(this.responseMt5LoginList);
             WS.tradingServers(CFD_PLATFORMS.MT5).then(this.responseMT5TradingServers);
 
@@ -2634,6 +2657,25 @@ export default class ClientStore extends BaseStore {
 
     setRealAccountSignupFormStep(step) {
         this.real_account_signup_form_step = step;
+    }
+
+    setWalletMigrationState(state) {
+        this.wallet_migration_state = state;
+    }
+
+    async getWalletMigrationState() {
+        const response = await WS.authorized.getWalletMigrationState();
+        if (response?.wallet_migration?.state) this.setWalletMigrationState(response?.wallet_migration?.state);
+    }
+
+    async startWalletMigration() {
+        await WS.authorized.startWalletMigration();
+        this.getWalletMigrationState();
+    }
+
+    async resetWalletMigration() {
+        await WS.authorized.resetWalletMigration();
+        this.getWalletMigrationState();
     }
 
     /** @deprecated Use `useIsP2PEnabled` from `@deriv/hooks` package instead.

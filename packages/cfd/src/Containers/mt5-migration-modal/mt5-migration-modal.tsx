@@ -4,6 +4,7 @@ import { Localize, localize } from '@deriv/translations';
 import { observer, useStore } from '@deriv/stores';
 import MT5MigrationModalContent from './mt5-migration-modal-content';
 import { MT5MigrationModalContext } from './mt5-migration-modal-context';
+import './mt5-migration-modal.scss';
 
 const MT5MigrationModal = observer(() => {
     const {

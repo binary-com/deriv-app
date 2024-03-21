@@ -31,27 +31,27 @@ describe('Header', () => {
             </StoreProvider>
         );
 
-    it('should render the "TradersHubHeader" component if user is logged in and in traders hub route', () => {
+    it('should render the "TradersHubHeader" component if user is logged in and in traders hub route', async () => {
         (useLocation as jest.Mock).mockReturnValue({
             pathname: '/appstore/traders-hub',
         });
         renderComponent();
-        expect(screen.getByTestId('dt_traders_hub_header')).toBeInTheDocument();
+        expect(await screen.findByTestId('dt_traders_hub_header')).toBeInTheDocument();
         expect(screen.getByText('MockedTradersHubHeader')).toBeInTheDocument();
     });
 
-    it('should render the "DTraderHeader" component if user is logged in and not in the traders hub route', () => {
+    it('should render the "DTraderHeader" component if user is logged in and not in the traders hub route', async () => {
         (useLocation as jest.Mock).mockReturnValue({
             pathname: '/',
         });
         renderComponent();
-        expect(screen.getByTestId('dt_dtrader_header')).toBeInTheDocument();
+        expect(await screen.findByTestId('dt_dtrader_header')).toBeInTheDocument();
         expect(screen.getByText('MockedDTraderHeader')).toBeInTheDocument();
     });
 
-    it('should render the "DefaultHeader" component if user is not logged in', () => {
+    it('should render the "DefaultHeader" component if user is not logged in', async () => {
         renderComponent(mockStore({ client: { is_logged_in: false } }));
-        expect(screen.getByTestId('dt_default_header')).toBeInTheDocument();
+        expect(await screen.findByTestId('dt_default_header')).toBeInTheDocument();
         expect(screen.getByText('MockedDefaultHeader')).toBeInTheDocument();
     });
 });

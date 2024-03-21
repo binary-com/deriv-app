@@ -1,50 +1,30 @@
-import { useCallback } from 'react';
-import { useFetch, useInvalidateQuery, useRequest } from '@deriv/api';
-import useAuthorize from './useAuthorize';
+import { useStore } from '@deriv/stores';
 
 /** A custom hook to get the status of wallet_migration API and to start/reset the migration process
- * @deprecated This hook is deprecated. Please use the hook from @deriv/api instead.
+ * This hook is for the legacy WS connection (appstore and core packages)
+ * This hook should be used in the component wrapped by observer
  */
 const useWalletMigration = () => {
-    const { isSuccess } = useAuthorize();
-
-    const invalidate = useInvalidateQuery();
-
-    /** Make a request to wallet_migration API and onSuccess it will invalidate the cached data  */
-    const { mutate } = useRequest('wallet_migration', { onSuccess: () => invalidate('wallet_migration') });
-
-    /** Fetch the wallet_migration API and refetch it every second if the status is in_progress */
-    const { data } = useFetch('wallet_migration', {
-        payload: { wallet_migration: 'state' },
-        options: {
-            refetchInterval: response => (response?.wallet_migration?.state === 'in_progress' ? 500 : false),
-            enabled: isSuccess,
-        },
-    });
-
-    const start_migration = useCallback(() => mutate({ payload: { wallet_migration: 'start' } }), [mutate]);
-
-    const reset_migration = useCallback(() => mutate({ payload: { wallet_migration: 'reset' } }), [mutate]);
-
-    const state = data?.wallet_migration?.state;
+    const { client } = useStore();
+    const { wallet_migration_state, startWalletMigration, resetWalletMigration } = client;
 
     return {
         /** The status of the wallet_migration API */
-        state,
+        state: wallet_migration_state,
         /** A boolean to check if the status is not_eligible */
-        is_ineligible: state === 'ineligible',
+        is_ineligible: wallet_migration_state === 'ineligible',
         /** A boolean to check if the status is eligible */
-        is_eligible: state === 'eligible',
+        is_eligible: wallet_migration_state === 'eligible',
         /** A boolean to check if the status is in_progress */
-        is_in_progress: state === 'in_progress',
+        is_in_progress: wallet_migration_state === 'in_progress',
         /** A boolean to check if the status is completed */
-        is_migrated: state === 'migrated',
+        is_migrated: wallet_migration_state === 'migrated',
         /** A boolean to check if the status is failed */
-        is_failed: state === 'failed',
+        is_failed: wallet_migration_state === 'failed',
         /** Sends a request to wallet_migration API to start the migration process */
-        start_migration,
+        start_migration: startWalletMigration,
         /** Sends a request to wallet_migration API to reset the migration process */
-        reset_migration,
+        reset_migration: resetWalletMigration,
     };
 };
 
