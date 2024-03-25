@@ -1,7 +1,15 @@
 import React from 'react';
 import { observer, useStore } from '@deriv/stores';
-import { Text, StaticUrl } from '@deriv/components';
-import { isMobile, formatMoney, getAuthenticationStatusInfo, Jurisdiction, MT5_ACCOUNT_STATUS } from '@deriv/shared';
+import { Loading, Text, StaticUrl } from '@deriv/components';
+import {
+    isMobile,
+    formatMoney,
+    getAuthenticationStatusInfo,
+    Jurisdiction,
+    MT5_ACCOUNT_STATUS,
+    makeLazyLoader,
+    moduleLoader,
+} from '@deriv/shared';
 import { localize, Localize } from '@deriv/translations';
 import ListingContainer from 'Components/containers/listing-container';
 import AddOptionsAccount from 'Components/add-options-account';
@@ -10,9 +18,19 @@ import PlatformLoader from 'Components/pre-loader/platform-loader';
 import CompareAccount from 'Components/compare-account';
 import GetMoreAccounts from 'Components/get-more-accounts';
 import { getHasDivider } from 'Constants/utils';
-import './cfds-listing.scss';
 import { useCFDCanGetMoreMT5Accounts, useMT5SVGEligibleToMigrate } from '@deriv/hooks';
-import MigrationBanner from '@deriv/cfd/src/Containers/migration-banner/migration-banner';
+import './cfds-listing.scss';
+
+const MigrationBanner = makeLazyLoader(
+    () =>
+        moduleLoader(
+            () =>
+                import(
+                    /* webpackChunkName: "cfd_migration-banner" */ '@deriv/cfd/src/Containers/migration-banner/migration-banner'
+                )
+        ),
+    () => <Loading />
+)();
 
 const CFDsListing = observer(() => {
     const {

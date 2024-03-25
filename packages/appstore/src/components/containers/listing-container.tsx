@@ -5,7 +5,6 @@ import { TWalletAccount } from 'Types';
 import CurrencySwitcherCard from 'Components/currency-switcher-card';
 import GridContainer from 'Components/containers/grid-container';
 import TitleCardLoader from 'Components/pre-loader/title-card-loader';
-import WalletTransferBlock from 'Components/wallet-content/wallet-transfer-block';
 import './listing-container.scss';
 
 type TListingContainerProps = {
@@ -36,9 +35,8 @@ const Options = observer(({ title, description, is_deriv_platform }: TOptionsPro
     return <TitleCardLoader />;
 });
 
-const Switcher = ({ wallet_account, is_deriv_platform }: TSwitcherProps) => {
+const Switcher = ({ is_deriv_platform }: TSwitcherProps) => {
     if (!is_deriv_platform) return null;
-    if (wallet_account) return <WalletTransferBlock wallet_account={wallet_account} />;
     return <CurrencySwitcherCard />;
 };
 
