@@ -1,15 +1,42 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useFeatureFlags, useStoreWalletAccountsList } from '@deriv/hooks';
-import { routes } from '@deriv/shared';
+import { makeLazyLoader, moduleLoader, routes } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
-import DefaultHeader from './default-header';
-import DefaultHeaderWallets from './defaut-header-wallets';
-import DTraderHeader from './dtrader-header';
-import TradersHubHeader from './traders-hub-header';
-import DTraderHeaderWallets from './dtrader-header-wallets';
-import TradersHubHeaderWallets from './traders-hub-header-wallets';
 import { useReadLocalStorage } from 'usehooks-ts';
+
+const HeaderFallback = () => <div className='header' />;
+
+const DefaultHeader = makeLazyLoader(
+    () => moduleLoader(() => import(/* webpackChunkName: "default-header" */ './default-header')),
+    () => <HeaderFallback />
+)();
+
+const DefaultHeaderWallets = makeLazyLoader(
+    () => moduleLoader(() => import(/* webpackChunkName: "default-header-wallets" */ './default-header-wallets')),
+    () => <HeaderFallback />
+)();
+
+const DTraderHeader = makeLazyLoader(
+    () => moduleLoader(() => import(/* webpackChunkName: "dtrader-header" */ './dtrader-header')),
+    () => <HeaderFallback />
+)();
+
+const DTraderHeaderWallets = makeLazyLoader(
+    () => moduleLoader(() => import(/* webpackChunkName: "dtrader-header-wallets" */ './dtrader-header-wallets')),
+    () => <HeaderFallback />
+)();
+
+const TradersHubHeader = makeLazyLoader(
+    () => moduleLoader(() => import(/* webpackChunkName: "traders-hub-header" */ './traders-hub-header')),
+    () => <HeaderFallback />
+)();
+
+const TradersHubHeaderWallets = makeLazyLoader(
+    () =>
+        moduleLoader(() => import(/* webpackChunkName: "traders-hub-header-wallets" */ './traders-hub-header-wallets')),
+    () => <HeaderFallback />
+)();
 
 const Header = observer(() => {
     const { client } = useStore();

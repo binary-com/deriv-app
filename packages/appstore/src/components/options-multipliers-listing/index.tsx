@@ -1,8 +1,7 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import { Text, StaticUrl } from '@deriv/components';
 import { ContentFlag } from '@deriv/shared';
-import { useStore } from '@deriv/stores';
+import { observer, useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
 import ListingContainer from 'Components/containers/listing-container';
 import PlatformLoader from 'Components/pre-loader/platform-loader';
@@ -10,70 +9,75 @@ import TradingAppCard from 'Components/containers/trading-app-card';
 import { BrandConfig } from 'Constants/platform-config';
 import { getHasDivider } from 'Constants/utils';
 
-const OptionsAndMultipliersListing = observer(() => {
+const OptionsTitle = observer(() => {
     const { traders_hub, client, ui } = useStore();
-    const { available_platforms, is_eu_user, is_real, no_MF_account, no_CR_account, is_demo, content_flag } =
-        traders_hub;
-    const { is_landing_company_loaded, is_eu, has_maltainvest_account, real_account_creation_unlock_date } = client;
-
-    const { setShouldShowCooldownModal, openRealAccountSignup, is_mobile } = ui;
+    const { content_flag } = traders_hub;
+    const { is_eu } = client;
+    const { is_mobile } = ui;
 
     const low_risk_cr_non_eu = content_flag === ContentFlag.LOW_RISK_CR_NON_EU;
-
     const low_risk_cr_eu = content_flag === ContentFlag.LOW_RISK_CR_EU;
+    const high_risk_cr = content_flag === ContentFlag.HIGH_RISK_CR;
+    const cr_demo = content_flag === ContentFlag.CR_DEMO;
+
+    if (is_mobile) return null;
+    if (low_risk_cr_non_eu || high_risk_cr || cr_demo) {
+        return (
+            <Text size='sm' weight='bold'>
+                <Localize i18n_default_text='Options & Multipliers' />
+            </Text>
+        );
+    } else if (low_risk_cr_eu || is_eu) {
+        return (
+            <Text size='sm' weight='bold' color='prominent'>
+                <Localize i18n_default_text='Multipliers' />
+            </Text>
+        );
+    }
+
+    return null;
+});
+
+const Description = observer(() => {
+    const { traders_hub } = useStore();
+    const { content_flag } = traders_hub;
+
+    const low_risk_cr_non_eu = content_flag === ContentFlag.LOW_RISK_CR_NON_EU;
 
     const high_risk_cr = content_flag === ContentFlag.HIGH_RISK_CR;
 
     const cr_demo = content_flag === ContentFlag.CR_DEMO;
 
-    const OptionsTitle = () => {
-        if (is_mobile) return null;
-        if (low_risk_cr_non_eu || high_risk_cr || cr_demo) {
-            return (
-                <Text size='sm' weight='bold'>
-                    <Localize i18n_default_text='Options & Multipliers' />
-                </Text>
-            );
-        } else if (low_risk_cr_eu || is_eu) {
-            return (
-                <Text size='sm' weight='bold' color='prominent'>
-                    <Localize i18n_default_text='Multipliers' />
-                </Text>
-            );
-        }
-        return null;
-    };
+    return low_risk_cr_non_eu || high_risk_cr || cr_demo ? (
+        <Text size='xs' line_height='s'>
+            <Localize
+                i18n_default_text='Earn a range of payouts by correctly predicting market movements with <0>options</0>, or get the
+upside of CFDs without risking more than your initial stake with <1>multipliers</1>.'
+                components={[
+                    <StaticUrl key={0} className='options' href='trade-types/options/digital-options/up-and-down/' />,
+                    <StaticUrl key={1} className='options' href='trade-types/multiplier/' />,
+                ]}
+            />
+        </Text>
+    ) : (
+        <Text size='xs' line_height='s'>
+            <Localize
+                i18n_default_text='Get the upside of CFDs without risking more than your initial stake with <0>Multipliers</0>.'
+                components={[<StaticUrl key={0} className='options' href='trade-types/multiplier/' />]}
+            />
+        </Text>
+    );
+});
+
+const OptionsAndMultipliersListing = observer(() => {
+    const { traders_hub, client, ui } = useStore();
+    const { available_platforms, is_eu_user, is_real, no_MF_account, no_CR_account, is_demo } = traders_hub;
+    const { is_landing_company_loaded, has_maltainvest_account, real_account_creation_unlock_date } = client;
+
+    const { setShouldShowCooldownModal, openRealAccountSignup } = ui;
 
     return (
-        <ListingContainer
-            title={<OptionsTitle />}
-            description={
-                low_risk_cr_non_eu || high_risk_cr || cr_demo ? (
-                    <Text size='xs' line_height='s'>
-                        <Localize
-                            i18n_default_text='Earn a range of payouts by correctly predicting market movements with <0>options</0>, or get the
-                    upside of CFDs without risking more than your initial stake with <1>multipliers</1>.'
-                            components={[
-                                <StaticUrl
-                                    key={0}
-                                    className='options'
-                                    href='trade-types/options/digital-options/up-and-down/'
-                                />,
-                                <StaticUrl key={1} className='options' href='trade-types/multiplier/' />,
-                            ]}
-                        />
-                    </Text>
-                ) : (
-                    <Text size='xs' line_height='s'>
-                        <Localize
-                            i18n_default_text='Get the upside of CFDs without risking more than your initial stake with <0>Multipliers</0>.'
-                            components={[<StaticUrl key={0} className='options' href='trade-types/multiplier/' />]}
-                        />
-                    </Text>
-                )
-            }
-            is_deriv_platform
-        >
+        <ListingContainer title={<OptionsTitle />} description={<Description />} is_deriv_platform>
             {is_real && (no_CR_account || no_MF_account) && (
                 <div className='full-row'>
                     <TradingAppCard

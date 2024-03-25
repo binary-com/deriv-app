@@ -1,4 +1,5 @@
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -106,7 +107,7 @@ module.exports = function (env) {
                 {
                     test: /\.(sc|sa|c)ss$/,
                     use: [
-                        'style-loader',
+                        is_release ? MiniCssExtractPlugin.loader : 'style-loader',
                         {
                             loader: 'css-loader',
                         },
@@ -186,5 +187,13 @@ module.exports = function (env) {
         ],
         //TODO: Uncomment this line when type script migrations on all packages done
         // plugins: [new CleanWebpackPlugin(), new ForkTsCheckerWebpackPlugin()],
+        plugins: is_release
+            ? [
+                  new MiniCssExtractPlugin({
+                      filename: 'appstore/css/[name].[contenthash].css',
+                      chunkFilename: 'appstore/css/[name].[contenthash].css',
+                  }),
+              ]
+            : [],
     };
 };

@@ -3,8 +3,8 @@ import { Text, Button, Modal } from '@deriv/components';
 import { useStore } from '@deriv/stores';
 import { localize, Localize } from '@deriv/translations';
 import WalletsImage from 'Assets/svgs/wallets';
-import './wallets-upgrade-modal.scss';
 import { useWalletMigration } from '@deriv/hooks';
+import './wallets-upgrade-modal.scss';
 
 const WalletsUpgradeModal = () => {
     const { traders_hub, ui } = useStore();

@@ -8,8 +8,9 @@ import TradingPlatformIconProps from 'Assets/svgs/trading-platform';
 import { TModalContent, TAccountCard, TTradingPlatformAvailableAccount } from './types';
 import { TIconTypes } from 'Types';
 import { CFD_PLATFORMS } from '@deriv/shared';
-import { getDerivedAccount, getFinancialAccount, getSwapFreeAccount } from '../../../helpers/account-helper';
+import { getDerivedAccount, getFinancialAccount, getSwapFreeAccount } from '../../../helpers';
 import { useHasSwapFreeAccount } from '@deriv/hooks';
+import './account-type-modal.scss';
 
 const AccountCard = ({ selectAccountTypeCard, account_type_card, title_and_type, description, icon }: TAccountCard) => {
     const cardSelection = (cardType: string) => {

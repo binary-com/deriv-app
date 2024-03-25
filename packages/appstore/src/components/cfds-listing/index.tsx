@@ -1,7 +1,15 @@
 import React from 'react';
 import { observer, useStore } from '@deriv/stores';
-import { Text, StaticUrl } from '@deriv/components';
-import { isMobile, formatMoney, getAuthenticationStatusInfo, Jurisdiction, MT5_ACCOUNT_STATUS } from '@deriv/shared';
+import { Loading, Text, StaticUrl } from '@deriv/components';
+import {
+    isMobile,
+    formatMoney,
+    getAuthenticationStatusInfo,
+    Jurisdiction,
+    MT5_ACCOUNT_STATUS,
+    makeLazyLoader,
+    moduleLoader,
+} from '@deriv/shared';
 import { localize, Localize } from '@deriv/translations';
 import ListingContainer from 'Components/containers/listing-container';
 import AddOptionsAccount from 'Components/add-options-account';
@@ -10,9 +18,65 @@ import PlatformLoader from 'Components/pre-loader/platform-loader';
 import CompareAccount from 'Components/compare-account';
 import GetMoreAccounts from 'Components/get-more-accounts';
 import { getHasDivider } from 'Constants/utils';
-import './cfds-listing.scss';
 import { useCFDCanGetMoreMT5Accounts, useMT5SVGEligibleToMigrate } from '@deriv/hooks';
-import MigrationBanner from '@deriv/cfd/src/Containers/migration-banner/migration-banner';
+import './cfds-listing.scss';
+
+const MigrationBanner = makeLazyLoader(
+    () =>
+        moduleLoader(
+            () =>
+                import(
+                    /* webpackChunkName: "cfd_migration-banner" */ '@deriv/cfd/src/Containers/migration-banner/migration-banner'
+                )
+        ),
+    () => <Loading />
+)();
+
+const AddDerivAccount = observer(() => {
+    const { traders_hub } = useStore();
+    const { is_real, is_eu_user, no_MF_account, no_CR_account } = traders_hub;
+
+    if (is_real) {
+        if (no_CR_account && !is_eu_user) {
+            return (
+                <div className='cfd-full-row'>
+                    <AddOptionsAccount />
+                </div>
+            );
+        } else if (no_MF_account && is_eu_user) {
+            return (
+                <div className='cfd-full-row'>
+                    <AddOptionsAccount />
+                </div>
+            );
+        }
+    }
+
+    return null;
+});
+
+const CFDsListingTitle = React.memo(({ accounts_sub_text }: { accounts_sub_text: string }) =>
+    isMobile() ? null : (
+        <div className='cfd-accounts__title'>
+            <Text size='sm' weight='bold' color='prominent'>
+                {localize('CFDs')}
+            </Text>
+            <CompareAccount accounts_sub_text={accounts_sub_text} is_desktop={!isMobile()} />
+        </div>
+    )
+);
+CFDsListingTitle.displayName = 'CFDsListingTitle';
+
+const Description = () => (
+    <Text size='xs' line_height='s'>
+        <Localize
+            i18n_default_text={
+                'Trade with leverage and tight spreads for better returns on successful trades. <0>Learn more</0>'
+            }
+            components={[<StaticUrl key={0} className='options' href='/trade-types/cfds' />]}
+        />
+    </Text>
+);
 
 const CFDsListing = observer(() => {
     const {
@@ -135,47 +199,10 @@ const CFDsListing = observer(() => {
 
     const no_real_cr_non_eu_regulator = no_CR_account && !is_eu_user && is_real;
 
-    const AddDerivAccount = () => {
-        if (is_real) {
-            if (no_CR_account && !is_eu_user) {
-                return (
-                    <div className='cfd-full-row'>
-                        <AddOptionsAccount />
-                    </div>
-                );
-            } else if (no_MF_account && is_eu_user) {
-                return (
-                    <div className='cfd-full-row'>
-                        <AddOptionsAccount />
-                    </div>
-                );
-            }
-        }
-        return null;
-    };
-
     return (
         <ListingContainer
-            title={
-                !isMobile() && (
-                    <div className='cfd-accounts__title'>
-                        <Text size='sm' weight='bold' color='prominent'>
-                            {localize('CFDs')}
-                        </Text>
-                        <CompareAccount accounts_sub_text={accounts_sub_text} is_desktop={!isMobile()} />
-                    </div>
-                )
-            }
-            description={
-                <Text size='xs' line_height='s'>
-                    <Localize
-                        i18n_default_text={
-                            'Trade with leverage and tight spreads for better returns on successful trades. <0>Learn more</0>'
-                        }
-                        components={[<StaticUrl key={0} className='options' href='/trade-types/cfds' />]}
-                    />
-                </Text>
-            }
+            title={<CFDsListingTitle accounts_sub_text={accounts_sub_text} />}
+            description={<Description />}
         >
             {isMobile() && <CompareAccount accounts_sub_text={accounts_sub_text} />}
             <AddDerivAccount />

@@ -1,7 +1,4 @@
 import { isMobile } from '@deriv/shared';
-import { localize } from '@deriv/translations';
-
-import { TTransferAccount, TWalletButton } from 'Types';
 
 /**
  * This function checks whether the current item should have a border at the bottom 'aka "divider" '.
@@ -57,89 +54,5 @@ export const getWalletCurrencyIcon = (currency: string, is_dark_mode_on: boolean
             return is_dark_mode_on ? 'IcWalletUsdCoinDark' : 'IcWalletUsdCoinLight';
         default:
             return 'Unknown';
-    }
-};
-
-export const getWalletHeaderButtons = (is_demo: boolean, handleAction?: () => void): TWalletButton[] => {
-    return is_demo
-        ? [
-              {
-                  name: 'Transfer',
-                  text: localize('Transfer'),
-                  icon: 'IcAccountTransfer',
-                  action: () => handleAction?.(),
-              },
-              {
-                  name: 'Transactions',
-                  text: localize('Transactions'),
-                  icon: 'IcStatement',
-                  action: () => handleAction?.(),
-              },
-              {
-                  name: 'Deposit',
-                  text: localize('Reset balance'),
-                  icon: 'IcCashierAdd',
-                  action: () => handleAction?.(),
-              },
-          ]
-        : [
-              {
-                  name: 'Deposit',
-                  text: localize('Deposit'),
-                  icon: 'IcCashierAdd',
-                  action: () => handleAction?.(),
-              },
-              {
-                  name: 'Withdraw',
-                  text: localize('Withdraw'),
-                  icon: 'IcCashierMinus',
-                  action: () => handleAction?.(),
-              },
-              {
-                  name: 'Transfer',
-                  text: localize('Transfer'),
-                  icon: 'IcAccountTransfer',
-                  action: () => handleAction?.(),
-              },
-              {
-                  name: 'Transactions',
-                  text: localize('Transactions'),
-                  icon: 'IcStatement',
-                  action: () => handleAction?.(),
-              },
-          ];
-};
-
-export const getAccountName = ({
-    account_type,
-    mt5_market_type,
-    display_currency_code,
-}: Partial<Pick<TTransferAccount, 'account_type' | 'display_currency_code' | 'mt5_market_type'>>): string => {
-    switch (account_type) {
-        case 'trading':
-            return localize('Deriv Apps');
-        case 'mt5': {
-            switch (mt5_market_type) {
-                case 'financial':
-                    return localize('MT5 Financial');
-                case 'synthetic':
-                    return localize('MT5 Derived');
-                case 'all':
-                    return localize('MT5 Swap-free');
-                default:
-                    return '';
-            }
-        }
-        case 'dxtrade':
-            return localize('Deriv X');
-        // @ts-expect-error Need to update @deriv/api-types to fix the TS error
-        case 'ctrader':
-            return localize('Deriv cTrader');
-        case 'wallet':
-            return localize('{{display_currency_code}} Wallet', {
-                display_currency_code,
-            });
-        default:
-            return '';
     }
 };

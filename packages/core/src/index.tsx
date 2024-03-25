@@ -19,12 +19,6 @@ if (
     registerServiceWorker();
 }
 
-// if we don't clear the local storage, then exchange_rates subscription calls won't be made when user refreshes the page
-// check packages/stores/src/providers/ExchangeRatesProvider.tsx
-
-if (window.localStorage.getItem('exchange_rates')) {
-    window.localStorage.removeItem('exchange_rates');
-}
 const has_endpoint_url = checkAndSetEndpointFromUrl();
 
 // if has endpoint url, APP will be redirected

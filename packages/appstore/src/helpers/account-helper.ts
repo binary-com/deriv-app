@@ -57,3 +57,8 @@ export const getSwapFreeAccount = (): TAccountType => ({
         'Trade swap-free CFDs on MT5 with forex, stocks, stock indices, commodities cryptocurrencies, ETFs and synthetic indices.'
     ),
 });
+
+export const getPlatformToggleOptions = (eu_title: boolean) => [
+    { text: eu_title ? localize('Multipliers') : localize('Options & Multipliers'), value: 'options' },
+    { text: localize('CFDs'), value: 'cfd' },
+];

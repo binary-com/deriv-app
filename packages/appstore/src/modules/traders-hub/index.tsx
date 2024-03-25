@@ -2,7 +2,7 @@ import React from 'react';
 import { DesktopWrapper, MobileWrapper, ButtonToggle, Div100vhContainer, Text } from '@deriv/components';
 import { isDesktop, routes, ContentFlag, checkServerMaintenance } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
-import { Localize, localize } from '@deriv/translations';
+import { Localize } from '@deriv/translations';
 import CFDsListing from 'Components/cfds-listing';
 import ModalManager from 'Components/modals/modal-manager';
 import MainTitleBar from 'Components/main-title-bar';
@@ -10,7 +10,89 @@ import OptionsAndMultipliersListing from 'Components/options-multipliers-listing
 import ButtonToggleLoader from 'Components/pre-loader/button-toggle-loader';
 import classNames from 'classnames';
 import TourGuide from '../tour-guide/tour-guide';
+import { getPlatformToggleOptions } from '../../helpers';
 import './traders-hub.scss';
+
+const GetOrderedPlatformSections = observer(({ isDesktop = false }: { isDesktop?: boolean }) => {
+    const { traders_hub, client } = useStore();
+    const { is_mt5_allowed } = client;
+    const { selected_platform_type } = traders_hub;
+
+    if (is_mt5_allowed) {
+        return isDesktop ? (
+            <OrderedPlatformSections />
+        ) : (
+            <OrderedPlatformSections
+                is_cfd_visible={selected_platform_type === 'cfd'}
+                is_options_and_multipliers_visible={selected_platform_type === 'options'}
+            />
+        );
+    }
+    return <OrderedPlatformSections is_cfd_visible={false} is_options_and_multipliers_visible={true} />;
+});
+
+const OrderedPlatformSections = observer(
+    ({
+        is_cfd_visible = true,
+        is_options_and_multipliers_visible = true,
+    }: {
+        is_cfd_visible?: boolean;
+        is_options_and_multipliers_visible?: boolean;
+    }) => {
+        const { traders_hub } = useStore();
+        const { is_eu_user } = traders_hub;
+
+        return (
+            <div
+                data-testid='dt_traders_hub'
+                className={classNames('traders-hub__main-container', {
+                    'traders-hub__main-container-reversed': is_eu_user,
+                })}
+            >
+                {is_options_and_multipliers_visible && <OptionsAndMultipliersListing />}
+                {is_cfd_visible && <CFDsListing />}
+            </div>
+        );
+    }
+);
+
+const TabsOrTitle = observer(() => {
+    const { traders_hub, client } = useStore();
+    const { is_mt5_allowed } = client;
+    const { content_flag, selected_platform_type, is_eu_user, setTogglePlatformType } = traders_hub;
+
+    const eu_title = content_flag === ContentFlag.EU_DEMO || content_flag === ContentFlag.EU_REAL || is_eu_user;
+
+    const platform_toggle_options = getPlatformToggleOptions(eu_title);
+    const platform_toggle_options_eu = getPlatformToggleOptions(eu_title).reverse();
+
+    const platformTypeChange = (event: {
+        target: {
+            value: string;
+            name: string;
+        };
+    }) => {
+        setTogglePlatformType(event.target.value);
+    };
+
+    return is_mt5_allowed ? (
+        <ButtonToggle
+            buttons_arr={is_eu_user ? platform_toggle_options_eu : platform_toggle_options}
+            className='traders-hub__button-toggle'
+            has_rounded_button
+            is_traders_hub={window.location.pathname === routes.traders_hub}
+            name='platforn_type'
+            onChange={platformTypeChange}
+            value={selected_platform_type}
+        />
+    ) : (
+        <div className='traders-hub--mt5-not-allowed'>
+            <Text size='s' weight='bold' color='prominent'>
+                <Localize i18n_default_text='Multipliers' />
+            </Text>
+        </div>
+    );
+});
 
 const TradersHub = observer(() => {
     const { traders_hub, client, ui } = useStore();
@@ -31,7 +113,7 @@ const TradersHub = observer(() => {
         has_active_real_account,
         website_status,
     } = client;
-    const { selected_platform_type, setTogglePlatformType, is_tour_open, content_flag, is_eu_user } = traders_hub;
+    const { setTogglePlatformType, is_tour_open, content_flag, is_eu_user } = traders_hub;
     const traders_hub_ref = React.useRef<HTMLDivElement>(null);
 
     const can_show_notify =
@@ -80,52 +162,7 @@ const TradersHub = observer(() => {
         return () => clearTimeout(timer);
     }, [handleScroll, is_eu_user, is_tour_open, setTogglePlatformType]);
 
-    const eu_title = content_flag === ContentFlag.EU_DEMO || content_flag === ContentFlag.EU_REAL || is_eu_user;
-
-    const getPlatformToggleOptions = () => [
-        { text: eu_title ? localize('Multipliers') : localize('Options & Multipliers'), value: 'options' },
-        { text: localize('CFDs'), value: 'cfd' },
-    ];
-    const platform_toggle_options = getPlatformToggleOptions();
-    const platform_toggle_options_eu = getPlatformToggleOptions().reverse();
-
-    const platformTypeChange = (event: {
-        target: {
-            value: string;
-            name: string;
-        };
-    }) => {
-        setTogglePlatformType(event.target.value);
-    };
     if (!is_logged_in) return null;
-
-    const OrderedPlatformSections = ({ is_cfd_visible = true, is_options_and_multipliers_visible = true }) => {
-        return (
-            <div
-                data-testid='dt_traders_hub'
-                className={classNames('traders-hub__main-container', {
-                    'traders-hub__main-container-reversed': is_eu_user,
-                })}
-            >
-                {is_options_and_multipliers_visible && <OptionsAndMultipliersListing />}
-                {is_cfd_visible && <CFDsListing />}
-            </div>
-        );
-    };
-
-    const getOrderedPlatformSections = (isDesktop = false) => {
-        if (is_mt5_allowed) {
-            return isDesktop ? (
-                <OrderedPlatformSections />
-            ) : (
-                <OrderedPlatformSections
-                    is_cfd_visible={selected_platform_type === 'cfd'}
-                    is_options_and_multipliers_visible={selected_platform_type === 'options'}
-                />
-            );
-        }
-        return <OrderedPlatformSections is_cfd_visible={false} is_options_and_multipliers_visible={true} />;
-    };
 
     return (
         <React.Fragment>
@@ -140,30 +177,12 @@ const TradersHub = observer(() => {
                     ref={traders_hub_ref}
                 >
                     <MainTitleBar />
-                    <DesktopWrapper>{getOrderedPlatformSections(true)}</DesktopWrapper>
+                    <DesktopWrapper>
+                        <GetOrderedPlatformSections isDesktop />
+                    </DesktopWrapper>
                     <MobileWrapper>
-                        {is_mt5_allowed &&
-                            (is_landing_company_loaded ? (
-                                <ButtonToggle
-                                    buttons_arr={is_eu_user ? platform_toggle_options_eu : platform_toggle_options}
-                                    className='traders-hub__button-toggle'
-                                    has_rounded_button
-                                    is_traders_hub={window.location.pathname === routes.traders_hub}
-                                    name='platforn_type'
-                                    onChange={platformTypeChange}
-                                    value={selected_platform_type}
-                                />
-                            ) : (
-                                <ButtonToggleLoader />
-                            ))}
-                        {!is_mt5_allowed && (
-                            <div className='traders-hub--mt5-not-allowed'>
-                                <Text size='s' weight='bold' color='prominent'>
-                                    <Localize i18n_default_text='Multipliers' />
-                                </Text>
-                            </div>
-                        )}
-                        {getOrderedPlatformSections()}
+                        {is_landing_company_loaded ? <TabsOrTitle /> : <ButtonToggleLoader />}
+                        <GetOrderedPlatformSections />
                     </MobileWrapper>
                     <ModalManager />
                     {scrolled && <TourGuide />}

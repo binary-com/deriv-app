@@ -1,55 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { StoreProvider, mockStore, ExchangeRatesProvider } from '@deriv/stores';
-import { APIProvider } from '@deriv/api';
 import MainTitleBar from '..';
 
 jest.mock('Components/wallets-banner', () => jest.fn(() => 'WalletsBanner'));
-
-jest.mock('@deriv/api', () => ({
-    ...jest.requireActual('@deriv/api'),
-    useFetch: jest.fn((name: string) => {
-        if (name === 'authorize') {
-            return {
-                data: {
-                    authorize: {
-                        account_list: [
-                            {
-                                account_category: 'wallet',
-                                currency: 'USD',
-                                is_virtual: 0,
-                            },
-                        ],
-                    },
-                },
-            };
-        } else if (name === 'balance') {
-            return {
-                data: {
-                    balance: {
-                        accounts: {
-                            CRW909900: {
-                                balance: 1000,
-                            },
-                        },
-                    },
-                },
-            };
-        } else if (name === 'website_status') {
-            return {
-                data: {
-                    website_status: {
-                        currencies_config: {
-                            USD: { type: 'fiat' },
-                        },
-                    },
-                },
-            };
-        }
-
-        return undefined;
-    }),
-}));
 
 describe('MainTitleBar', () => {
     const mock_store = mockStore({
@@ -67,11 +21,9 @@ describe('MainTitleBar', () => {
 
     const render_container = (mock_store_override?: ReturnType<typeof mockStore>) => {
         const wrapper = ({ children }: React.PropsWithChildren) => (
-            <APIProvider>
-                <StoreProvider store={mock_store_override ?? mock_store}>
-                    <ExchangeRatesProvider>{children}</ExchangeRatesProvider>
-                </StoreProvider>
-            </APIProvider>
+            <StoreProvider store={mock_store_override ?? mock_store}>
+                <ExchangeRatesProvider>{children}</ExchangeRatesProvider>
+            </StoreProvider>
         );
 
         return render(<MainTitleBar />, {

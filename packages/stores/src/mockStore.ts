@@ -300,6 +300,9 @@ const mock = (): TStores & { is_mock: boolean } => {
             real_account_signup_form_step: 0,
             setRealAccountSignupFormData: jest.fn(),
             setRealAccountSignupFormStep: jest.fn(),
+            wallet_migration_state: 'ineligible',
+            startWalletMigration: jest.fn(),
+            resetWalletMigration: jest.fn(),
         },
         common: {
             error: common_store_error,
@@ -465,6 +468,7 @@ const mock = (): TStores & { is_mock: boolean } => {
             toggleKycInformationSubmittedModal: jest.fn(),
             setAccountSwitcherDisabledMessage: jest.fn(),
             toggleUrlUnavailableModal: jest.fn(),
+            is_set_currency_modal_visible: false,
         },
         traders_hub: {
             getAccount: jest.fn(),
@@ -542,6 +546,7 @@ const mock = (): TStores & { is_mock: boolean } => {
             has_any_real_account: false,
             startTrade: jest.fn(),
             showTopUpModal: jest.fn(),
+            handleTabItemClick: jest.fn(),
         },
         notifications: {
             addNotificationMessage: jest.fn(),
