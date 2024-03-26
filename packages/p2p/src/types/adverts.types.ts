@@ -41,8 +41,10 @@ export type TAdvertProps = {
     min_order_amount_display: string;
     min_order_amount_limit: number;
     min_order_amount_limit_display: string;
+    order_expiry_period: number;
     payment_info: string;
     payment_method: null | string;
+    payment_method_details: object;
     payment_method_names: string[];
     price: number;
     price_display: string;

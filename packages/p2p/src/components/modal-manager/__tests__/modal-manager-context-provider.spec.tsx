@@ -8,7 +8,7 @@ import { useStores } from 'Stores/index';
 import {
     MockBuySellModal,
     MockMyAdsDeleteModal,
-    MockEditAdCancelModal,
+    MockAdCancelModal,
     MockPage,
 } from '../__mocks__/mock-modal-manager-context-provider';
 
@@ -34,7 +34,7 @@ jest.mock('Constants/modals', () => ({
     Modals: {
         BuySellModal: (props: any) => <MockBuySellModal {...props} />,
         MyAdsDeleteModal: (props: any) => <MockMyAdsDeleteModal {...props} />,
-        EditAdCancelModal: (props: any) => <MockEditAdCancelModal {...props} />,
+        AdCancelModal: (props: any) => <MockAdCancelModal {...props} />,
     },
 }));
 
@@ -323,10 +323,10 @@ describe('<ModalManagerContextProvider />', () => {
             </React.Fragment>
         );
 
-        const edit_ad_cancel_modal_btn = screen.getByRole('button', {
-            name: /Show EditAdCancelModal/,
+        const ad_cancel_modal_btn = screen.getByRole('button', {
+            name: /Show AdCancelModal/,
         });
-        userEvent.click(edit_ad_cancel_modal_btn);
+        userEvent.click(ad_cancel_modal_btn);
 
         const buy_sell_modal_btn = screen.getByRole('button', {
             name: /Go to BuySellModal/,
@@ -346,10 +346,10 @@ describe('<ModalManagerContextProvider />', () => {
             </React.Fragment>
         );
 
-        const edit_ad_cancel_modal_btn = screen.getByRole('button', {
-            name: /Show EditAdCancelModal/,
+        const ad_cancel_modal_btn = screen.getByRole('button', {
+            name: /AdCancelModal/,
         });
-        userEvent.click(edit_ad_cancel_modal_btn);
+        userEvent.click(ad_cancel_modal_btn);
 
         const submit_btn = screen.getByRole('button', {
             name: /Submit/,

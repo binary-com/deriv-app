@@ -38,7 +38,7 @@ const AdCreateEditErrorModal = ({ ad_type = ads.CREATE }: TAdCreateEditErrorModa
                 <Button
                     has_effect
                     text={is_api_error ? localize('Update ad') : localize('Ok')}
-                    onClick={hideModal}
+                    onClick={is_api_error ? hideModal : () => hideModal({ should_hide_all_modals: true })}
                     primary
                     large
                 />

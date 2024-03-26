@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
 import { useStores } from 'Stores';
-import EditAdCancelModal from '../edit-ad-cancel-modal';
+import AdCancelModal from '../ad-cancel-modal';
 
 const mock_store: DeepPartial<ReturnType<typeof useStores>> = {
     my_ads_store: {
@@ -28,7 +28,7 @@ const mocked_useModalManagerContext = useModalManagerContext as jest.MockedFunct
 
 mocked_useModalManagerContext.mockImplementation(() => mock_modal_manager);
 
-describe('<EditAdCancelModal/>', () => {
+describe('<AdCancelModal/>', () => {
     let modal_root_el: HTMLElement;
     beforeAll(() => {
         modal_root_el = document.createElement('div');
@@ -39,17 +39,33 @@ describe('<EditAdCancelModal/>', () => {
     afterAll(() => {
         document.body.removeChild(modal_root_el);
     });
-    it('should render the EditAdCancelModal', () => {
-        render(<EditAdCancelModal />);
+    it('should render the AdCancelModal', () => {
+        render(
+            <AdCancelModal
+                confirm_label='Go back'
+                message="If you choose to cancel, the details you've entered will be lost."
+                title='Cancel ad creation?'
+            />
+        );
 
-        expect(screen.getByText('Cancel your edits?')).toBeInTheDocument();
+        const confirm_button = screen.getByRole('button', { name: 'Go back' });
+        expect(confirm_button).toBeInTheDocument();
+        expect(screen.getByText('Cancel ad creation?')).toBeInTheDocument();
+        expect(
+            screen.getByText("If you choose to cancel, the details you've entered will be lost.")
+        ).toBeInTheDocument();
     });
     it('should close modal on clicking cancel button', () => {
-        render(<EditAdCancelModal />);
+        render(
+            <AdCancelModal
+                confirm_label="Don't cancel"
+                message='If you choose to cancel, the edited details will be lost.'
+                title='Cancel your edits?'
+            />
+        );
 
-        const cancel_button = screen.getByText('Cancel');
+        const cancel_button = screen.getByRole('button', { name: 'Cancel' });
         userEvent.click(cancel_button);
         expect(mock_modal_manager.hideModal).toBeCalledTimes(1);
-        expect(mock_store.my_ads_store.setShowEditAdForm).toBeCalledTimes(1);
     });
 });

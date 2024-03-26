@@ -1,19 +1,23 @@
 import React from 'react';
 import { Button, Modal, Text } from '@deriv/components';
-import { localize, Localize } from 'Components/i18next';
+import { localize } from 'Components/i18next';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
-import { useStores } from 'Stores';
 
-const EditAdCancelModal = () => {
-    const { my_ads_store } = useStores();
+type TAdCancelModalProps = {
+    confirm_label: string;
+    message: string;
+    onConfirm?: () => void;
+    title: string;
+};
+
+const AdCancelModal = ({ confirm_label, message, onConfirm, title }: TAdCancelModalProps) => {
     const { hideModal, is_modal_open } = useModalManagerContext();
-    const { setShowEditAdForm } = my_ads_store;
 
     return (
-        <Modal has_close_icon={false} is_open={is_modal_open} small title={localize('Cancel your edits?')}>
+        <Modal has_close_icon={false} is_open={is_modal_open} small title={title}>
             <Modal.Body>
                 <Text as='p' size='xs' color='prominent'>
-                    <Localize i18n_default_text='If you choose to cancel, the edited details will be lost.' />
+                    {message}
                 </Text>
             </Modal.Body>
             <Modal.Footer>
@@ -21,16 +25,16 @@ const EditAdCancelModal = () => {
                     has_effect
                     text={localize('Cancel')}
                     onClick={() => {
-                        hideModal();
-                        setShowEditAdForm(false);
+                        hideModal({ should_hide_all_modals: true });
+                        onConfirm?.();
                     }}
                     secondary
                     large
                 />
-                <Button has_effect text={localize("Don't cancel")} onClick={hideModal} primary large />
+                <Button has_effect text={confirm_label} onClick={hideModal} primary large />
             </Modal.Footer>
         </Modal>
     );
 };
 
-export default EditAdCancelModal;
+export default AdCancelModal;

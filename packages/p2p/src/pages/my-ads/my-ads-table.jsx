@@ -5,7 +5,6 @@ import { isDesktop, isMobile } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { localize } from 'Components/i18next';
 import ToggleAds from 'Pages/my-ads/toggle-ads.jsx';
-import TableError from 'Components/section-error';
 import { useStores } from 'Stores';
 import MyAdsRowRenderer from './my-ads-row-renderer.jsx';
 import NoAds from 'Pages/buy-sell/no-ads';
@@ -41,10 +40,6 @@ const MyAdsTable = () => {
 
     if (my_ads_store.is_table_loading) {
         return <Loading is_fullscreen={false} />;
-    }
-
-    if (my_ads_store.api_error_message) {
-        return <TableError message={my_ads_store.api_error_message} className='section-error__table' size='xs' />;
     }
 
     if (my_ads_store.adverts.length) {

@@ -10,7 +10,18 @@ type TFormikContext = {
     values: FormikValues;
 };
 
-const OrderTimeSelection = ({ ...field }: FormikValues) => {
+type TOrderTimeSelectionProps = {
+    classNameDisplay?: string;
+    classNameIcon?: string;
+    is_label_hidden?: boolean;
+};
+
+const OrderTimeSelection = ({
+    classNameDisplay,
+    classNameIcon,
+    is_label_hidden = false,
+    ...field
+}: TOrderTimeSelectionProps) => {
     const { values, handleChange }: TFormikContext = useFormikContext<TFormikContext>();
     const { showModal } = useModalManagerContext();
     const { ui } = useStore();
@@ -37,27 +48,32 @@ const OrderTimeSelection = ({ ...field }: FormikValues) => {
 
     return (
         <div className='order-time-selection'>
-            <div className='order-time-selection__title'>
-                <Text color='prominent' size='xs' line_height='xl'>
-                    <Localize i18n_default_text='Orders must be completed in' />
-                </Text>
-                <Popover
-                    alignment='top'
-                    classNameBubble='order-time-selection__popover'
-                    message={<Localize i18n_default_text={order_time_info_message} />}
-                >
-                    <Icon
-                        data_testid='dt_order_time_selection_info_icon'
-                        icon='IcInfoOutline'
-                        onClick={() =>
-                            is_mobile && showModal({ key: 'OrderTimeTooltipModal', props: { order_time_info_message } })
-                        }
-                    />
-                </Popover>
-            </div>
+            {!is_label_hidden && (
+                <div className='order-time-selection__title'>
+                    <Text color='prominent' size='xs' line_height='xl'>
+                        <Localize i18n_default_text='Orders must be completed in' />
+                    </Text>
+                    <Popover
+                        alignment='top'
+                        classNameBubble='order-time-selection__popover'
+                        message={<Localize i18n_default_text={order_time_info_message} />}
+                    >
+                        <Icon
+                            data_testid='dt_order_time_selection_info_icon'
+                            icon='IcInfoOutline'
+                            onClick={() =>
+                                is_mobile &&
+                                showModal({ key: 'OrderTimeTooltipModal', props: { order_time_info_message } })
+                            }
+                        />
+                    </Popover>
+                </div>
+            )}
             <Dropdown
                 {...field}
                 className='order-time-selection__time-dropdown'
+                classNameDisplay={classNameDisplay}
+                classNameIcon={classNameIcon}
                 is_align_text_left
                 list={order_completion_time_list}
                 onChange={handleChange}

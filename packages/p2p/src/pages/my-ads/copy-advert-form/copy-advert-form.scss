@@ -1,0 +1,110 @@
+.copy-advert-form {
+    @include mobile {
+        margin: 1.6rem;
+    }
+
+    &__container {
+        display: flex;
+        column-gap: 0.8rem;
+        justify-content: end;
+
+        @include mobile {
+            border-top: 2px solid var(--general-section-1);
+            padding: 1.6rem 1.6rem 0;
+            margin: 0 -1.6rem;
+        }
+    }
+
+    &__field {
+        margin-bottom: 1.5rem;
+
+        > div {
+            border: 0;
+            padding: 0;
+            height: auto;
+        }
+    }
+
+    &__dropdown {
+        &-display {
+            border: 0;
+            height: auto;
+            pointer-events: none;
+        }
+
+        &-icon {
+            display: none;
+        }
+    }
+
+    &__floating-rate {
+        margin: 0.4rem 0 1.5rem;
+
+        @include mobile {
+            height: 3.8rem;
+        }
+
+        .floating-rate {
+            &__field {
+                display: block;
+
+                @include mobile {
+                    margin-top: 0;
+                }
+
+                &--prefix {
+                    display: flex;
+                    justify-content: center;
+                    margin-bottom: 2rem;
+                }
+            }
+
+            &__hint {
+                padding-left: 1rem;
+            }
+
+            &__mkt-rate {
+                flex-direction: row;
+                align-items: center;
+
+                &--msg {
+                    height: auto;
+                }
+            }
+
+            &__percent {
+                right: 0;
+            }
+        }
+
+        .dc-input {
+            @include mobile {
+                &-field {
+                    margin-top: 0;
+                }
+            }
+
+            &-suffix {
+                flex: 1;
+
+                .input {
+                    width: 50%;
+                    text-align: right;
+                }
+            }
+        }
+    }
+
+    .inline-message {
+        margin-bottom: 2rem;
+    }
+
+    .order-time-selection {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+
+        .dc-dropdown__display-text {
+            padding-left: 0;
+        }
+    }
+}

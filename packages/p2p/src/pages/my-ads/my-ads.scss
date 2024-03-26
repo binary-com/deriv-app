@@ -21,14 +21,6 @@
             padding: 1.6rem;
         }
 
-        .dc-list {
-            margin-left: 1vw;
-            width: 88vw;
-
-            &__item {
-                padding-top: 0.4rem;
-            }
-        }
         .dc-mobile-full-page-modal {
             opacity: 1 !important;
         }
@@ -73,6 +65,7 @@
     }
 
     &__data-list {
+        height: 100% !important;
         flex: 1;
 
         &__data-list-body {
@@ -81,6 +74,14 @@
 
         .data-list__body-wrapper {
             flex: 1;
+        }
+
+        .dc-themed-scrollbars {
+            height: 100% !important;
+        }
+
+        .ReactVirtualized__Grid__innerScrollContainer {
+            overflow: visible !important;
         }
     }
 

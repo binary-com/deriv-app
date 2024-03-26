@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { HorizontalSwipe, Icon, Popover, ProgressIndicator, Table, Text } from '@deriv/components';
+import { Dropdown, Icon, Popover, ProgressIndicator, Table, Text } from '@deriv/components';
 import { isMobile, formatMoney } from '@deriv/shared';
-import { observer } from '@deriv/stores';
+import { observer, useStore } from '@deriv/stores';
 import { useP2PExchangeRate } from '@deriv/hooks';
 import { Localize, localize } from 'Components/i18next';
 import { buy_sell } from 'Constants/buy-sell';
@@ -15,7 +15,47 @@ import { api_error_codes } from 'Constants/api-error-codes';
 import { generateEffectiveRate } from 'Utils/format-value';
 import AdType from './ad-type.jsx';
 
+const MyAdsRowDropdown = ({ is_advert_active, is_disabled, onSelectMore }) => {
+    return (
+        <Dropdown
+            className='my-ads-table__status-more'
+            classNameDisplay='my-ads-table__status-more--display'
+            disabled={is_disabled}
+            is_align_text_left
+            list={[
+                {
+                    text: localize('Edit'),
+                    value: 'edit',
+                },
+                {
+                    text: localize('Copy'),
+                    value: 'copy',
+                },
+                {
+                    text: localize('Share'),
+                    value: 'share',
+                },
+                {
+                    text: is_advert_active ? localize('Deactivate') : localize('Activate'),
+                    value: is_advert_active ? 'deactivate' : 'activate',
+                },
+
+                {
+                    text: localize('Delete'),
+                    value: 'delete',
+                },
+            ]}
+            no_border
+            onChange={onSelectMore}
+            suffix_icon='IcCashierVerticalEllipsis'
+        />
+    );
+};
+
 const MyAdsRowRenderer = observer(({ row: advert }) => {
+    const {
+        ui: { is_desktop },
+    } = useStore();
     const { floating_rate_store, general_store, my_ads_store, my_profile_store } = useStores();
     const { showModal } = useModalManagerContext();
 
@@ -41,7 +81,6 @@ const MyAdsRowRenderer = observer(({ row: advert }) => {
 
     // Use separate is_advert_active state to ensure value is updated
     const [is_advert_active, setIsAdvertActive] = React.useState(is_active);
-    const [is_popover_actions_visible, setIsPopoverActionsVisible] = React.useState(false);
     const [show_warning_icon, setShowWarningIcon] = React.useState(false);
     const amount_dealt = amount - remaining_amount;
     const enable_action_point = floating_rate_store.change_ad_alert && floating_rate_store.rate_type !== rate_type;
@@ -83,14 +122,15 @@ const MyAdsRowRenderer = observer(({ row: advert }) => {
     const onClickShare = () => {
         if (!general_store.is_barred) showModal({ key: 'ShareMyAdsModal', props: { advert } });
     };
+    const onClickCopy = () => {
+        my_ads_store.onClickCopy(id, is_desktop);
+    };
     const onClickSwitchAd = () => {
         if (!general_store.is_barred) {
             general_store.showModal({ key: 'MyAdsFloatingRateSwitchModal', props: {} });
             my_ads_store.onToggleSwitchModal(id);
         }
     };
-    const onMouseEnter = () => setIsPopoverActionsVisible(true);
-    const onMouseLeave = () => setIsPopoverActionsVisible(false);
 
     const handleOnEdit = () =>
         enable_action_point && floating_rate_store.rate_type !== rate_type ? onClickSwitchAd() : onClickEdit();
@@ -133,139 +173,125 @@ const MyAdsRowRenderer = observer(({ row: advert }) => {
         });
     };
 
+    const onSelectMore = event => {
+        switch (event.target.value) {
+            case 'edit':
+                handleOnEdit();
+                break;
+            case 'copy':
+                onClickCopy();
+                break;
+            case 'share':
+                onClickShare();
+                break;
+            case 'activate':
+            case 'deactivate':
+                onClickActivateDeactivate();
+                break;
+            case 'delete':
+                onClickDelete();
+                break;
+            default:
+        }
+    };
+
     if (isMobile()) {
         return (
-            <HorizontalSwipe
-                is_left_swipe
-                right_hidden_component={
-                    <React.Fragment>
-                        <div className='my-ads-table__popovers-edit' onClick={handleOnEdit}>
-                            <Icon custom_color='var(--general-main-1)' icon='IcEdit' />
-                        </div>
-                        <div
-                            onClick={onClickActivateDeactivate}
-                            className={classNames(
-                                `my-ads-table__popovers--${is_advert_active ? 'activate' : 'deactivate'}`,
-                                {
-                                    'my-ads-table__popovers--disable':
-                                        general_store.is_barred || is_activate_ad_disabled,
-                                }
-                            )}
-                        >
+            <Table.Row
+                className={classNames('my-ads-table__row', {
+                    'my-ads-table__row-disabled': !is_advert_active,
+                })}
+            >
+                <Text color='less-prominent' size='xxs'>
+                    <Localize i18n_default_text='Ad ID {{advert_id}} ' values={{ advert_id: id }} />
+                </Text>
+                <div className='my-ads-table__row__type-and-status'>
+                    <Text color={ad_pause_color} weight='bold'>
+                        {advert_type} {account_currency}
+                    </Text>
+                    {show_warning_icon ? (
+                        <div className='my-ads-table__status-warning'>
+                            <div style={{ marginRight: '0.8rem' }}>
+                                <AdStatus is_active={!!is_advert_active && !general_store.is_barred} />
+                            </div>
                             <Icon
-                                icon={`${is_advert_active && !general_store.is_barred ? 'IcArchive' : 'IcUnarchive'}`}
-                                custom_color='var(--general-main-1)'
+                                icon='IcAlertWarning'
+                                onClick={onClickTooltipIcon}
+                                className={!!is_advert_active && 'my-ads-table__status-warning__icon'}
+                                data_testid='dt_visibility_alert_icon'
                             />
                         </div>
-                        <div className='my-ads-table__popovers-delete'>
-                            <Icon icon='IcDelete' custom_color='var(--general-main-1)' onClick={onClickDelete} />
-                        </div>
-                        <div className='my-ads-table__popovers-share'>
-                            <Icon icon='IcShare' custom_color='var(--general-main-1)' onClick={onClickShare} />
-                        </div>
-                    </React.Fragment>
-                }
-                right_hidden_component_width='18rem'
-                visible_component={
-                    <Table.Row
-                        className={classNames('my-ads-table__row', {
-                            'my-ads-table__row-disabled': !is_advert_active,
-                        })}
-                    >
-                        <Text color='less-prominent' size='xxs'>
-                            <Localize i18n_default_text='Ad ID {{advert_id}} ' values={{ advert_id: id }} />
-                        </Text>
-                        <div className='my-ads-table__row__type-and-status'>
-                            <Text color={ad_pause_color} weight='bold'>
-                                {advert_type} {account_currency}
-                            </Text>
-                            {show_warning_icon ? (
-                                <div className='my-ads-table__status-warning'>
-                                    <div style={{ marginRight: '0.8rem' }}>
-                                        <AdStatus is_active={!!is_advert_active && !general_store.is_barred} />
-                                    </div>
-                                    <Icon
-                                        icon='IcAlertWarning'
-                                        onClick={onClickTooltipIcon}
-                                        className={!!is_advert_active && 'my-ads-table__status-warning__icon'}
-                                        data_testid='dt_visibility_alert_icon'
-                                    />
-                                </div>
-                            ) : (
-                                <AdStatus is_active={!!is_advert_active && !general_store.is_barred} />
+                    ) : (
+                        <AdStatus is_active={!!is_advert_active && !general_store.is_barred} />
+                    )}
+                    <MyAdsRowDropdown
+                        is_advert_active={is_advert_active}
+                        is_disabled={general_store.is_barred}
+                        onSelectMore={onSelectMore}
+                    />
+                </div>
+                <div className='my-ads-table__row-details'>
+                    <Text color={is_advert_listed ? 'profit-success' : 'less-prominent'} size='xxs'>
+                        {`${formatMoney(account_currency, amount_dealt, true)}`} {account_currency}&nbsp;
+                        {is_buy_advert ? localize('Bought') : localize('Sold')}
+                    </Text>
+                    <Text color='less-prominent' size='xxs'>
+                        {amount_display} {account_currency}
+                    </Text>
+                </div>
+                <ProgressIndicator className={'my-ads-table__available-progress'} value={amount_dealt} total={amount} />
+                <div className='my-ads-table__row-details'>
+                    <Text color='less-prominent' size='xxs'>
+                        <Localize i18n_default_text='Limits' />
+                    </Text>
+                    <Text color='less-prominent' size='xxs'>
+                        <Localize i18n_default_text='Rate (1 {{account_currency}})' values={{ account_currency }} />
+                    </Text>
+                </div>
+                <div className='my-ads-table__row-details'>
+                    <Text color={ad_pause_color} size='xxs'>
+                        {min_order_amount_display} - {max_order_amount_display} {account_currency}
+                    </Text>
+                    <Text color={is_advert_listed ? 'profit-success' : 'disabled'} size='xs' weight='bold'>
+                        <div className='display-layout'>
+                            {display_effective_rate} {local_currency}
+                            {rate_type === ad_type.FLOAT && (
+                                <AdType ad_pause_color={ad_pause_color} float_rate={rate_display} />
                             )}
                         </div>
-                        <div className='my-ads-table__row-details'>
-                            <Text color={is_advert_listed ? 'profit-success' : 'less-prominent'} size='xxs'>
-                                {`${formatMoney(account_currency, amount_dealt, true)}`} {account_currency}&nbsp;
-                                {is_buy_advert ? localize('Bought') : localize('Sold')}
-                            </Text>
-                            <Text color='less-prominent' size='xxs'>
-                                {amount_display} {account_currency}
-                            </Text>
-                        </div>
-                        <ProgressIndicator
-                            className={'my-ads-table__available-progress'}
-                            value={amount_dealt}
-                            total={amount}
-                        />
-                        <div className='my-ads-table__row-details'>
-                            <Text color='less-prominent' size='xxs'>
-                                <Localize i18n_default_text='Limits' />
-                            </Text>
-                            <Text color='less-prominent' size='xxs'>
-                                <Localize
-                                    i18n_default_text='Rate (1 {{account_currency}})'
-                                    values={{ account_currency }}
-                                />
-                            </Text>
-                        </div>
-                        <div className='my-ads-table__row-details'>
-                            <Text color={ad_pause_color} size='xxs'>
-                                {min_order_amount_display} - {max_order_amount_display} {account_currency}
-                            </Text>
-                            <Text color={is_advert_listed ? 'profit-success' : 'disabled'} size='xs' weight='bold'>
-                                <div className='display-layout'>
-                                    {display_effective_rate} {local_currency}
-                                    {rate_type === ad_type.FLOAT && (
-                                        <AdType ad_pause_color={ad_pause_color} float_rate={rate_display} />
-                                    )}
-                                </div>
-                            </Text>
-                        </div>
-                        <div className='my-ads-table__row-methods'>
-                            {payment_method_names ? (
-                                payment_method_names.map((payment_method, key) => {
-                                    return (
-                                        <div className='my-ads-table__payment-method--label' key={key}>
-                                            <Text color={ad_pause_color} size='xxxs' line_height='l'>
-                                                {payment_method}
-                                            </Text>
-                                        </div>
-                                    );
-                                })
-                            ) : (
-                                <div
-                                    className={classNames('my-ads-table__add', {
-                                        'my-ads-table__add--disabled': !general_store.is_listed,
-                                    })}
-                                    onClick={() => onClickAdd()}
-                                >
-                                    <Icon color={icon_disabled_color} icon='IcAdd' />
-                                    <Text color={ad_pause_color} size='xxs' weight='bold'>
-                                        <Localize i18n_default_text='Add' />
+                    </Text>
+                </div>
+                <div className='my-ads-table__row-methods'>
+                    {payment_method_names ? (
+                        payment_method_names.map((payment_method, key) => {
+                            return (
+                                <div className='my-ads-table__payment-method--label' key={key}>
+                                    <Text color={ad_pause_color} size='xxxs' line_height='l'>
+                                        {payment_method}
                                     </Text>
                                 </div>
-                            )}
+                            );
+                        })
+                    ) : (
+                        <div
+                            className={classNames('my-ads-table__add', {
+                                'my-ads-table__add--disabled': !general_store.is_listed,
+                            })}
+                            onClick={() => onClickAdd()}
+                        >
+                            <Icon color={icon_disabled_color} icon='IcAdd' />
+                            <Text color={ad_pause_color} size='xxs' weight='bold'>
+                                <Localize i18n_default_text='Add' />
+                            </Text>
                         </div>
-                    </Table.Row>
-                }
-            />
+                    )}
+                </div>
+            </Table.Row>
         );
     }
 
     return (
-        <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <div>
             <Table.Row
                 className={classNames('my-ads-table__row', {
                     'my-ads-table__row-disabled': !is_advert_active,
@@ -339,75 +365,14 @@ const MyAdsRowRenderer = observer(({ row: advert }) => {
                             <AdStatus is_active={!!is_advert_active && !general_store.is_barred} />
                         </div>
                     )}
+                    <Popover alignment='top' message={localize('Manage ad')}>
+                        <MyAdsRowDropdown
+                            is_advert_active={is_advert_active}
+                            is_disabled={general_store.is_barred}
+                            onSelectMore={onSelectMore}
+                        />
+                    </Popover>
                 </Table.Cell>
-                {is_popover_actions_visible && (
-                    <div className='my-ads-table__popovers'>
-                        <div onClick={onClickActivateDeactivate}>
-                            <Popover
-                                alignment='bottom'
-                                className={classNames(
-                                    `my-ads-table__popovers--${is_advert_active ? 'activate' : 'deactivate'}`,
-                                    {
-                                        'my-ads-table__popovers--disable':
-                                            general_store.is_barred || is_activate_ad_disabled,
-                                    }
-                                )}
-                                message={is_advert_active ? localize('Deactivate') : localize('Activate')}
-                            >
-                                <Icon
-                                    icon={`${
-                                        is_advert_active && !general_store.is_barred ? 'IcArchive' : 'IcUnarchive'
-                                    }`}
-                                    color={(general_store.is_barred || is_activate_ad_disabled) && 'disabled'}
-                                />
-                            </Popover>
-                        </div>
-                        <div onClick={handleOnEdit}>
-                            <Popover
-                                alignment='bottom'
-                                className={classNames('my-ads-table__popovers--deactivate', {
-                                    'my-ads-table__popovers--disable':
-                                        general_store.is_barred || is_activate_ad_disabled,
-                                })}
-                                message={localize('Edit')}
-                            >
-                                <Icon icon='IcEdit' color={general_store.is_barred && 'disabled'} />
-                            </Popover>
-                        </div>
-                        <div onClick={onClickDelete}>
-                            <Popover
-                                alignment='bottom'
-                                className={classNames('my-ads-table__popovers-delete', {
-                                    'my-ads-table__popovers--disable':
-                                        general_store.is_barred || is_activate_ad_disabled,
-                                })}
-                                message={localize('Delete')}
-                            >
-                                <Icon
-                                    icon='IcDelete'
-                                    color={
-                                        (general_store.is_barred ||
-                                            (id === my_ads_store.selected_ad_id &&
-                                                my_ads_store.delete_error_message)) &&
-                                        'disabled'
-                                    }
-                                />
-                            </Popover>
-                        </div>
-                        <div onClick={onClickShare}>
-                            <Popover
-                                alignment='bottom'
-                                className={classNames('my-ads-table__popovers-share', {
-                                    'my-ads-table__popovers--disable':
-                                        general_store.is_barred || is_activate_ad_disabled,
-                                })}
-                                message={localize('Share')}
-                            >
-                                <Icon icon='IcShare' color={general_store.is_barred && 'disabled'} />
-                            </Popover>
-                        </div>
-                    </div>
-                )}
             </Table.Row>
         </div>
     );

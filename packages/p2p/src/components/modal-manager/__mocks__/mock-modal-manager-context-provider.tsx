@@ -54,7 +54,7 @@ export function MockMyAdsDeleteModal({ title }: TMockMyAdsDeleteModalProps) {
     );
 }
 
-export function MockEditAdCancelModal() {
+export function MockAdCancelModal() {
     const { hideModal, showModal, useRegisterModalProps } = useModalManagerContext();
 
     const showBuySellModal = () =>
@@ -103,10 +103,14 @@ export function MockPage() {
         });
     };
 
-    const showEditAdCancelModal = () => {
+    const showAdCancelModal = () => {
         showModal({
-            key: 'EditAdCancelModal',
-            props: {},
+            key: 'AdCancelModal',
+            props: {
+                confirm_label: "Don't cancel",
+                message: 'If you choose to cancel, the edited details will be lost.',
+                title: 'Cancel your edits?',
+            },
         });
     };
 
@@ -119,7 +123,7 @@ export function MockPage() {
             {isCurrentModal('MyAdsDeleteModal') && <h1>Delete Ads</h1>}
             <button onClick={showBuySellModal}>Show BuySellModal</button>
             <button onClick={showMyAdsDeleteModal}>Show MyAdsDeleteModal</button>
-            <button onClick={showEditAdCancelModal}>Show EditAdCancelModal</button>
+            <button onClick={showAdCancelModal}>Show AdCancelModal</button>
             <button onClick={() => hideModal()}>Hide Modal</button>
             <button onClick={hideModals}>Hide All Modals</button>
         </div>

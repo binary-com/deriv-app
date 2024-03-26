@@ -1,16 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import { Formik, Field, Form } from 'formik';
-import {
-    Button,
-    Checkbox,
-    Div100vhContainer,
-    Input,
-    Modal,
-    RadioGroup,
-    Text,
-    ThemedScrollbars,
-} from '@deriv/components';
+import { Button, Div100vhContainer, Input, RadioGroup, Text, ThemedScrollbars } from '@deriv/components';
 import { formatMoney, isDesktop, isMobile } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { useP2PExchangeRate } from '@deriv/hooks';
@@ -23,7 +14,6 @@ import { useStores } from 'Stores';
 import CreateAdSummary from './create-ad-summary.jsx';
 import CreateAdFormPaymentMethods from './create-ad-form-payment-methods.jsx';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
-import { api_error_codes } from 'Constants/api-error-codes';
 import OrderTimeSelection from './order-time-selection';
 import './create-ad-form.scss';
 
@@ -41,7 +31,6 @@ const CreateAdForm = () => {
 
     const { buy_sell_store, floating_rate_store, general_store, my_ads_store, my_profile_store } = useStores();
 
-    const should_not_show_auto_archive_message_again = React.useRef(false);
     const [selected_methods, setSelectedMethods] = React.useState([]);
     const { useRegisterModalProps } = useModalManagerContext();
     const local_currency = local_currency_config.currency;
@@ -50,30 +39,6 @@ const CreateAdForm = () => {
     // eslint-disable-next-line no-shadow
     const handleSelectPaymentMethods = selected_methods => {
         setSelectedMethods(selected_methods);
-    };
-
-    const onCheckboxChange = () =>
-        (should_not_show_auto_archive_message_again.current = !should_not_show_auto_archive_message_again.current);
-
-    const onClickOkCreatedAd = () => {
-        localStorage.setItem(
-            'should_not_show_auto_archive_message',
-            JSON.stringify(should_not_show_auto_archive_message_again.current)
-        );
-        my_ads_store.setIsAdCreatedModalVisible(false);
-        if (my_ads_store.advert_details?.visibility_status?.includes(api_error_codes.AD_EXCEEDS_BALANCE)) {
-            general_store.showModal({
-                key: 'AdVisibilityErrorModal',
-                props: { error_code: api_error_codes.AD_EXCEEDS_BALANCE },
-            });
-        } else if (my_ads_store.advert_details?.visibility_status?.includes(api_error_codes.AD_EXCEEDS_DAILY_LIMIT)) {
-            general_store.showModal({
-                key: 'AdVisibilityErrorModal',
-                props: { error_code: api_error_codes.AD_EXCEEDS_DAILY_LIMIT },
-            });
-        }
-
-        my_ads_store.setShowAdForm(false);
     };
 
     // when adding payment methods in creating an ad, once user declines to save their payment method, flow is to close all add payment method modals
@@ -416,7 +381,12 @@ const CreateAdForm = () => {
                                                 )}
                                             </Field>
                                             <Field name='order_completion_time'>
-                                                {({ field }) => <OrderTimeSelection {...field} />}
+                                                {({ field }) => (
+                                                    <OrderTimeSelection
+                                                        classNameDisplay='create-ad-form__dropdown-display'
+                                                        {...field}
+                                                    />
+                                                )}
                                             </Field>
                                             <div className='create-ad-form__payment-methods--text'>
                                                 <Text color='prominent'>
@@ -466,31 +436,6 @@ const CreateAdForm = () => {
                     );
                 }}
             </Formik>
-            <Modal
-                className='my-ads__ad-created'
-                has_close_icon={false}
-                is_open={my_ads_store.is_ad_created_modal_visible}
-                small
-                title={localize("You've created an ad")}
-            >
-                <Modal.Body>
-                    <Text as='p' size='xs' color='prominent'>
-                        <Localize
-                            i18n_default_text="If the ad doesn't receive an order for {{adverts_archive_period}} days, it will be deactivated."
-                            values={{ adverts_archive_period: my_ads_store.adverts_archive_period }}
-                        />
-                    </Text>
-                    <br />
-                    <Checkbox
-                        label={localize('Don’t show this message again.')}
-                        onChange={onCheckboxChange}
-                        value={should_not_show_auto_archive_message_again.current}
-                    />
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button has_effect text={localize('Ok')} onClick={onClickOkCreatedAd} primary large />
-                </Modal.Footer>
-            </Modal>
         </React.Fragment>
     );
 };
