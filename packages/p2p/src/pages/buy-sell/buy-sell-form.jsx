@@ -16,7 +16,6 @@ import { floatingPointValidator } from 'Utils/validations';
 import { countDecimalPlaces } from 'Utils/string';
 import { formatTime } from 'Utils/orders';
 import { generateEffectiveRate, setDecimalPlaces, roundOffDecimal, removeTrailingZeros } from 'Utils/format-value';
-import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
 import PaymentMethodIcon from 'Components/payment-method-icon';
 import { getInlineTextSize } from 'Utils/responsive';
 import './buy-sell-form.scss';
@@ -24,14 +23,13 @@ import './buy-sell-form.scss';
 const BuySellForm = props => {
     const { advertiser_page_store, buy_sell_store, general_store, my_profile_store } = useStores();
     const [selected_methods, setSelectedMethods] = React.useState([]);
-    const { showModal } = useModalManagerContext();
     const { data: p2p_advertiser_payment_methods } = useP2PAdvertiserPaymentMethods();
 
     React.useEffect(() => {
         buy_sell_store.setFormProps(props);
     }, [props, buy_sell_store]);
 
-    const { advert, setPageFooterParent } = props;
+    const { advert, has_rate_changed, setHasRateChanged, setPageFooterParent } = props;
     const {
         advertiser_details,
         description,
@@ -49,9 +47,17 @@ const BuySellForm = props => {
 
     const exchange_rate = useP2PExchangeRate(local_currency);
     const order_completion_time = order_expiry_period / 60;
-
-    const [previous_rate, setPreviousRate] = React.useState(exchange_rate);
     const [input_amount, setInputAmount] = React.useState(min_order_amount_limit);
+    const [current_effective_rate, setCurrentEffectiveRate] = React.useState(0);
+
+    const { effective_rate, display_effective_rate } = generateEffectiveRate({
+        price,
+        rate_type,
+        rate,
+        local_currency,
+        exchange_rate,
+        market_rate,
+    });
 
     const { advertiser_buy_limit, advertiser_sell_limit, balance } = general_store;
 
@@ -64,15 +70,6 @@ const BuySellForm = props => {
         cursor: should_disable_field ? 'not-allowed' : 'pointer',
     };
 
-    const { effective_rate, display_effective_rate } = generateEffectiveRate({
-        price,
-        rate_type,
-        rate,
-        local_currency,
-        exchange_rate,
-        market_rate,
-    });
-
     const calculated_rate = removeTrailingZeros(roundOffDecimal(effective_rate, setDecimalPlaces(effective_rate, 6)));
 
     React.useEffect(
@@ -81,6 +78,7 @@ const BuySellForm = props => {
             my_profile_store.setSelectedPaymentMethod('');
             my_profile_store.setSelectedPaymentMethodDisplayName('');
             buy_sell_store.setHasPaymentMethods(!!payment_method_names);
+            setCurrentEffectiveRate(effective_rate);
 
             const disposeReceiveAmountReaction = reaction(
                 () => buy_sell_store.receive_amount,
@@ -110,19 +108,14 @@ const BuySellForm = props => {
         const receive_amount = input_amount * calculated_rate;
         buy_sell_store.setReceiveAmount(receive_amount);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [input_amount, effective_rate]);
+    }, [input_amount, calculated_rate]);
 
     React.useEffect(() => {
-        if (exchange_rate !== previous_rate && rate_type === ad_type.FLOAT) {
-            setPreviousRate(exchange_rate);
-            showModal({
-                key: 'RateChangeModal',
-                props: {
-                    currency: buy_sell_store.local_currency,
-                },
-            });
+        if (isMobile() && has_rate_changed) {
+            setCurrentEffectiveRate(effective_rate);
+            setHasRateChanged(false);
         }
-    }, [buy_sell_store.local_currency, exchange_rate, previous_rate, rate_type, showModal]);
+    }, [effective_rate, has_rate_changed, setHasRateChanged]);
 
     const onClickPaymentMethodCard = payment_method => {
         if (!should_disable_field) {
@@ -149,7 +142,7 @@ const BuySellForm = props => {
                 amount: min_order_amount_limit,
                 contact_info: general_store.contact_info,
                 payment_info: general_store.payment_info,
-                rate: rate_type === ad_type.FLOAT ? effective_rate : null,
+                rate: rate_type === ad_type.FLOAT ? current_effective_rate : null,
             },
             initialErrors: buy_sell_store.is_sell_advert ? { contact_info: true } : {},
             onSubmit: (...args) => buy_sell_store.handleSubmit(...args),
@@ -179,8 +172,8 @@ const BuySellForm = props => {
     ]);
 
     React.useEffect(() => {
-        buy_sell_store.form_props.setSubmitForm(submitForm);
-    }, [submitForm, buy_sell_store.form_props]);
+        buy_sell_store.setSubmitForm(submitForm);
+    }, [submitForm]);
 
     return (
         <React.Fragment>
@@ -195,7 +188,6 @@ const BuySellForm = props => {
                     />
                 </div>
             )}
-
             <form noValidate onSubmit={submitForm}>
                 <div className='buy-sell-form__content'>
                     <div className='buy-sell-form__field-wrapper'>
@@ -481,8 +473,8 @@ BuySellForm.propTypes = {
     advert: PropTypes.object,
     contact_info: PropTypes.string,
     form_props: PropTypes.object,
+    has_rate_changed: PropTypes.bool,
     setIsSubmitDisabled: PropTypes.func,
-    setSubmitForm: PropTypes.func,
     setPageFooterParent: PropTypes.func,
     has_payment_info: PropTypes.bool,
     is_buy_advert: PropTypes.bool,
@@ -490,6 +482,7 @@ BuySellForm.propTypes = {
     payment_info: PropTypes.string,
     receive_amount: PropTypes.number,
     setFormProps: PropTypes.func,
+    setHasRateChanged: PropTypes.func,
     setInitialReceiveAmount: PropTypes.func,
     setReceiveAmount: PropTypes.func,
     validatePopup: PropTypes.func,

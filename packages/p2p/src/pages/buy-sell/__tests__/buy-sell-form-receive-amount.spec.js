@@ -29,41 +29,25 @@ jest.mock('@sendbird/chat/message', () => ({
 }));
 
 describe('<BuySellFormReceiveAmount/>', () => {
-    it('should show the proper description', () => {
-        const { rerender } = render(<BuySellFormReceiveAmount />);
-
+    it('should show the proper formatted amount and currency', () => {
+        render(<BuySellFormReceiveAmount />);
         expect(screen.getByText("You'll receive")).toBeInTheDocument();
+        expect(screen.getByText('100.00 USD')).toBeInTheDocument();
+    });
 
+    it('should show the proper description', () => {
         useStores.mockReturnValue({
             buy_sell_store: {
                 advert: {
                     local_currency: 'USD',
                 },
                 is_sell_advert: false,
-                receive_amount: 100,
+                receive_amount: 205.55,
             },
         });
+        render(<BuySellFormReceiveAmount />);
 
-        rerender(<BuySellFormReceiveAmount />);
         expect(screen.getByText("You'll send")).toBeInTheDocument();
-    });
-
-    it('should show the proper formatted amount and currency', () => {
-        const { rerender } = render(<BuySellFormReceiveAmount />);
-
-        expect(screen.getByText('100.00 USD')).toBeInTheDocument();
-
-        useStores.mockReturnValue({
-            buy_sell_store: {
-                advert: {
-                    local_currency: 'USD',
-                },
-                is_sell_advert: true,
-                receive_amount: 200.552,
-            },
-        });
-
-        rerender(<BuySellFormReceiveAmount />);
-        expect(screen.getByText('200.55 USD')).toBeInTheDocument();
+        expect(screen.getByText('205.55 USD')).toBeInTheDocument();
     });
 });

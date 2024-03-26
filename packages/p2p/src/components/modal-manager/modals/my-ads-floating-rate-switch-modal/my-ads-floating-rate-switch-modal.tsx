@@ -9,8 +9,9 @@ import { useStores } from 'Stores';
 const MyAdsFloatingRateSwitchModal = () => {
     const { floating_rate_store, my_ads_store } = useStores();
     const { hideModal, is_modal_open } = useModalManagerContext();
-    const { rate_type, reached_target_date } = floating_rate_store;
+    const { fixed_rate_adverts_end_date, rate_type, reached_target_date } = floating_rate_store;
     const { selected_ad_type, toggleMyAdsRateSwitchModal } = my_ads_store;
+    const has_reached_target_date = reached_target_date && fixed_rate_adverts_end_date !== null;
 
     return (
         <Modal is_open={is_modal_open} toggleModal={hideModal} small className='my-ads-floating-rate-switch-modal'>
@@ -26,10 +27,10 @@ const MyAdsFloatingRateSwitchModal = () => {
                     <Button
                         secondary
                         type='button'
-                        onClick={() => toggleMyAdsRateSwitchModal(selected_ad_type, !reached_target_date)}
+                        onClick={() => toggleMyAdsRateSwitchModal(selected_ad_type, has_reached_target_date)}
                         large
                     >
-                        {reached_target_date ? (
+                        {has_reached_target_date ? (
                             <Localize i18n_default_text='Cancel' />
                         ) : (
                             <Localize i18n_default_text="I'll do this later" />

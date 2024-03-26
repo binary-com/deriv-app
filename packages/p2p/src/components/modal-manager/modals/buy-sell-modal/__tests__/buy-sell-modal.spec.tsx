@@ -53,6 +53,7 @@ describe('<BuySellModal />', () => {
                         name: 'test',
                     },
                     rate: 1,
+                    rate_type: 'fixed',
                 },
                 selected_ad_state: {
                     account_currency: 'USD',

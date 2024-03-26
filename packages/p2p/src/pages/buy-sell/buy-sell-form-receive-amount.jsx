@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text } from '@deriv/components';
 import { getFormattedText } from '@deriv/shared';
+import { observer } from '@deriv/stores';
 import { Localize } from 'Components/i18next';
 import { roundOffDecimal } from 'Utils/format-value';
 import { useStores } from 'Stores';
@@ -28,4 +29,4 @@ const BuySellFormReceiveAmount = () => {
     );
 };
 
-export default BuySellFormReceiveAmount;
+export default observer(BuySellFormReceiveAmount);

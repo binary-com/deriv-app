@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { reaction } from 'mobx';
 import { useHistory, useLocation } from 'react-router-dom';
+import { useInvalidateQuery } from '@deriv/api';
 import { DesktopWrapper, MobileFullPageModal, MobileWrapper, Modal, ThemedScrollbars } from '@deriv/components';
 import { routes } from '@deriv/shared';
 import { observer } from '@deriv/stores';
@@ -18,22 +19,21 @@ import BuySellModalError from './buy-sell-modal-error';
 const BuySellModal = () => {
     const { hideModal, is_modal_open, showModal } = useModalManagerContext();
     const { buy_sell_store, general_store, my_profile_store, order_store } = useStores();
-    const { is_buy_advert, selected_ad_state } = buy_sell_store;
+    const { is_buy_advert, selected_ad_state, submitForm } = buy_sell_store;
     const { account_currency } = selected_ad_state;
     const { balance } = general_store;
     const { should_show_add_payment_method_form } = my_profile_store;
 
+    const invalidate = useInvalidateQuery();
     const history = useHistory();
     const location = useLocation();
     const scroll_ref = React.useRef<HTMLDivElement & SVGSVGElement>(null);
     const [error_message, setErrorMessage] = React.useState('');
     const [is_submit_disabled, setIsSubmitDisabled] = React.useState(false);
     const [is_account_balance_low, setIsAccountBalanceLow] = React.useState(false);
-    const submitForm = React.useRef<(() => void) | null>(null);
+    const [has_rate_changed, setHasRateChanged] = React.useState(false);
 
     const show_low_balance_message = !is_buy_advert && is_account_balance_low;
-
-    const setSubmitForm = (submitFormFn: () => void) => (submitForm.current = submitFormFn);
 
     const onCancel = () => {
         if (should_show_add_payment_method_form) {
@@ -118,7 +118,9 @@ const BuySellModal = () => {
                 const is_the_same_advert = previous_advert?.id === new_advert.id;
                 if (rate_has_changed && is_the_same_advert) {
                     showModal({ key: 'MarketRateChangeErrorModal', props: {} });
+                    setHasRateChanged(true);
                     buy_sell_store.setFormErrorCode('');
+                    invalidate('p2p_advert_list');
                 }
             },
             { fireImmediately: true }
@@ -154,17 +156,18 @@ const BuySellModal = () => {
                             <React.Fragment>
                                 <BuySellForm
                                     advert={selected_ad_state}
+                                    has_rate_changed={has_rate_changed}
                                     handleClose={onCancel}
                                     handleConfirm={onConfirmClick}
                                     setIsSubmitDisabled={setIsSubmitDisabled}
                                     setErrorMessage={setErrorMessage}
-                                    setSubmitForm={setSubmitForm}
+                                    setHasRateChanged={setHasRateChanged}
                                 />
                                 <BuySellFormReceiveAmount />
                                 <BuySellModalFooter
                                     is_submit_disabled={!!is_submit_disabled}
                                     onCancel={onCancel}
-                                    onSubmit={submitForm.current}
+                                    onSubmit={submitForm}
                                 />
                             </React.Fragment>
                         )}
@@ -200,11 +203,12 @@ const BuySellModal = () => {
                             ) : (
                                 <BuySellForm
                                     advert={selected_ad_state}
+                                    has_rate_changed={has_rate_changed}
                                     handleClose={onCancel}
                                     handleConfirm={onConfirmClick}
                                     setIsSubmitDisabled={setIsSubmitDisabled}
                                     setErrorMessage={setErrorMessage}
-                                    setSubmitForm={setSubmitForm}
+                                    setHasRateChanged={setHasRateChanged}
                                 />
                             )}
                         </Modal.Body>
@@ -214,7 +218,7 @@ const BuySellModal = () => {
                             <BuySellModalFooter
                                 is_submit_disabled={!!is_submit_disabled}
                                 onCancel={onCancel}
-                                onSubmit={submitForm.current}
+                                onSubmit={submitForm}
                             />
                         </Modal.Footer>
                     )}
