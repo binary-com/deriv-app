@@ -423,10 +423,9 @@ export const isAllRequiredBlocksEnabled = workspace => {
 
 export const scrollWorkspace = (workspace, scroll_amount, is_horizontal, is_chronological) => {
     const ws_metrics = workspace.getMetrics();
-
     let scroll_x = ws_metrics.viewLeft - ws_metrics.contentLeft;
-    let scroll_y = ws_metrics.viewTop - ws_metrics.contentTop;
-
+    const delta_y = ws_metrics.viewTop - ws_metrics.contentTop;
+    let scroll_y = delta_y;
     if (is_horizontal) {
         scroll_x += is_chronological ? scroll_amount : -scroll_amount;
         scroll_y += -20;
@@ -434,7 +433,17 @@ export const scrollWorkspace = (workspace, scroll_amount, is_horizontal, is_chro
         scroll_x += -20;
         scroll_y += is_chronological ? scroll_amount : -scroll_amount;
     }
-
+    const is_RTL = Blockly.derivWorkspace.RTL;
+    if (is_RTL) {
+        // For RTL scroll we need to adjust the scroll amount
+        scroll_x = scroll_amount;
+        // Adjust scroll_y to prevent scrolling vertically on every render
+        const toolbox_top = document.getElementById('gtm-toolbox')?.getBoundingClientRect()?.top;
+        const block_canvas_rect_top = workspace.svgBlockCanvas_?.getBoundingClientRect()?.top;
+        if (block_canvas_rect_top > toolbox_top) {
+            scroll_y = delta_y;
+        }
+    }
     workspace.scrollbar.set(scroll_x, scroll_y);
 };
 

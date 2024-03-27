@@ -89,19 +89,20 @@ export default class ToolboxStore {
         workspace.options.hasCategories = hasCategories;
         workspace.options.languageTree = languageTree;
     }
-
     // eslint-disable-next-line class-methods-use-this
     adjustWorkspace() {
-        const workspace = Blockly.derivWorkspace;
-        const toolbox_width = document.getElementById('gtm-toolbox')?.getBoundingClientRect().width || 0;
-        const block_canvas_rect = workspace.svgBlockCanvas_?.getBoundingClientRect(); // eslint-disable-line
+        setTimeout(() => {
+            const workspace = Blockly.derivWorkspace;
+            const toolbox_width = document.getElementById('gtm-toolbox')?.getBoundingClientRect().width || 0;
+            const block_canvas_rect = workspace.svgBlockCanvas_?.getBoundingClientRect(); // eslint-disable-line
 
-        if (Math.round(block_canvas_rect?.left) <= toolbox_width) {
-            const scroll_distance = this.core.ui.is_mobile
-                ? toolbox_width - block_canvas_rect.left + 20
-                : toolbox_width - block_canvas_rect.left + 36;
-            scrollWorkspace(workspace, scroll_distance, true, false);
-        }
+            if (Math.round(block_canvas_rect?.left) <= toolbox_width) {
+                const scroll_distance = this.core.ui.is_mobile
+                    ? toolbox_width - block_canvas_rect.left + 20
+                    : toolbox_width - block_canvas_rect.left + 36;
+                scrollWorkspace(workspace, scroll_distance, true, false);
+            }
+        }, 100);
     }
 
     toggleDrawer() {
