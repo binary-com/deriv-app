@@ -17,6 +17,9 @@ type TLocalStorageAccountsList = {
 /**
  * Gets the current user `accounts` list from the `localStorage`.
  */
+/**
+ * @deprecated Please use 'LocalStorageUtils.getValue' from '@deriv-com/utils' instead of this.
+ */
 export const getAccountsFromLocalStorage = () => {
     const data = localStorage.getItem('client.accounts');
 

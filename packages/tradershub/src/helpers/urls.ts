@@ -21,8 +21,14 @@ export const derivUrls = Object.freeze({
     SMARTTRADER_STAGING: `https://staging-smarttrader.${domainUrl}`,
 });
 
+/**
+ * @deprecated Please use 'URLUtils.normalizePath' from '@deriv-com/utils' instead of this.
+ */
 export const normalizePath = (path: string) => (path ? path.replace(/(^\/|\/$|[^a-zA-Z0-9-_./()#])/g, '') : '');
 
+/**
+ * @deprecated Please use 'URLUtils.getQueryParameter' from '@deriv-com/utils' instead of this.
+ */
 export const getlangFromUrl = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -30,6 +36,9 @@ export const getlangFromUrl = () => {
     return lang;
 };
 
+/**
+ * @deprecated Please use 'URLUtils.getQueryParameter' from '@deriv-com/utils' instead of this.
+ */
 export const getActionFromUrl = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);

@@ -74,6 +74,9 @@ export const getFormattedText = (number: number, currency: string) => {
     return `${addComma(number, getDecimalPlaces(currency), isCryptocurrency(currency))} ${currency}`;
 };
 
+/**
+ * @deprecated Please use 'FormatUtils.formatMoney' from '@deriv-com/utils' instead of this.
+ */
 export const formatMoney = (
     currency_value: string,
     amount: number | string,

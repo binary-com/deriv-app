@@ -62,7 +62,9 @@ export const CURRENCY_TYPE = {
  * console.log(formattedAmount); // "$1,234.57"
  * ```
  */
-
+/**
+ * @deprecated Please use 'FormatUtils.formatMoney' from '@deriv-com/utils' instead of this.
+ */
 export const formatMoney = (
     currencyValue: string,
     amount: number | string,

@@ -128,6 +128,9 @@ const queryClient = getSharedQueryClientContext();
  * @param {string | null | undefined} loginid - The login ID (can be a string, null, or undefined).
  * @returns {string} Returns the WS environment: 'custom', 'real', or 'demo'.
  */
+/**
+ * @deprecated Please use 'WebSocketUtils.getEnvironmentFromLoginid' from '@deriv-com/utils' instead of this.
+ */
 const getEnvironment = (loginid: string | null | undefined) => {
     const customServerURL = window.localStorage.getItem('config.server_url');
     if (customServerURL) return 'custom';

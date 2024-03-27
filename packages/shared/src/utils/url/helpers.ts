@@ -1,5 +1,8 @@
 import { deriv_urls } from './constants';
 
+/**
+ * @deprecated Please use 'URLUtils.getQueryParameter' from '@deriv-com/utils' instead of this.
+ */
 export const getlangFromUrl = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -7,6 +10,9 @@ export const getlangFromUrl = () => {
     return lang;
 };
 
+/**
+ * @deprecated Please use 'URLUtils.getQueryParameter' from '@deriv-com/utils' instead of this.
+ */
 export const getActionFromUrl = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);

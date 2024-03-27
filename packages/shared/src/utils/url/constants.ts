@@ -20,5 +20,7 @@ export const deriv_urls = Object.freeze({
     BINARYBOT_PRODUCTION: `https://bot.${domain_url}`,
     BINARYBOT_STAGING: `https://staging-bot.${domain_url}`,
 });
-
+/**
+ * @deprecated Please use 'URLConstants.whatsApp' from '@deriv-com/utils' instead of this.
+ */
 export const whatsapp_url = 'https://wa.me/35699578341';

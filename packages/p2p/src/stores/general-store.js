@@ -294,6 +294,9 @@ export default class GeneralStore extends BaseStore {
         });
     }
 
+    /**
+     * @deprecated Please use 'LocalStorageUtils.getValue' from '@deriv-com/utils' instead of this.
+     */
     getLocalStorageSettings = () => {
         return JSON.parse(localStorage.getItem('p2p_settings') || '{}');
     };

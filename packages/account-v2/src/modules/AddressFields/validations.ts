@@ -9,8 +9,14 @@ const regexChecks = {
     nonJerseyPostcode: /^(?!\s*je.*)[a-z0-9\s-]*/i,
 };
 
+/**
+ * @deprecated Please use 'ValidationConstants.messagesHints.addressPermittedSpecialCharacters' from '@deriv-com/utils' instead of this.
+ */
 export const addressPermittedSpecialCharactersMessage = ". , ' : ; ( ) ° @ # / -";
 
+/**
+ * @deprecated Please use 'ValidationConstants.patterns' from '@deriv-com/utils' instead of this.
+ */
 export const addressDetailValidations = (countryCode: string, isSvg: boolean) => ({
     addressCity: Yup.string()
         .required('City is required')

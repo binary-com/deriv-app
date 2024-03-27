@@ -45,6 +45,9 @@ export const isTestLink = () => {
 
 export const isLocal = () => /localhost(:\d+)?$/i.test(window.location.hostname);
 
+/**
+ * @deprecated Please use 'WebSocketUtils.getAppId' from '@deriv-com/utils' instead of this.
+ */
 export const getAppId = () => {
     let app_id = null;
     const user_app_id = ''; // you can insert Application ID of your registered application here

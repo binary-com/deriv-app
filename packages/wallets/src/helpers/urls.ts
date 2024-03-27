@@ -21,12 +21,21 @@ export const derivUrls = Object.freeze({
     SMARTTRADER_STAGING: `https://staging-smarttrader.${domainUrl}`,
 });
 
+/**
+ * @deprecated Please use 'URLConstants.whatsApp' from '@deriv-com/utils' instead of this.
+ */
 export const whatsappUrl = 'https://wa.me/35699578341';
 
 let defaultLanguage: string;
 
+/**
+ * @deprecated Please use 'URLUtils.normalizePath' from '@deriv-com/utils' instead of this.
+ */
 export const normalizePath = (path: string) => (path ? path.replace(/(^\/|\/$|[^a-zA-Z0-9-_./()#])/g, '') : '');
 
+/**
+ * @deprecated Please use 'URLUtils.getQueryParameter' from '@deriv-com/utils' instead of this.
+ */
 export const getlangFromUrl = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -34,6 +43,9 @@ export const getlangFromUrl = () => {
     return lang;
 };
 
+/**
+ * @deprecated Please use 'URLUtils.getQueryParameter' from '@deriv-com/utils' instead of this.
+ */
 export const getActionFromUrl = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -87,6 +99,9 @@ export const isStaging = (domain = window.location.hostname) => {
     return isStagingDerivApp;
 };
 
+/**
+ * @deprecated Please use 'URLUtils.getDerivStaticURL' from '@deriv-com/utils' instead of this.
+ */
 export const getStaticUrl = (path = '', isDocument = false, isEuUrl = false) => {
     const host = isEuUrl ? derivUrls.DERIV_COM_PRODUCTION_EU : derivUrls.DERIV_COM_PRODUCTION;
     let lang = defaultLanguage?.toLowerCase();
