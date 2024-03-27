@@ -40,7 +40,7 @@ const CFDSuccess: React.FC<TSuccessProps> = ({
         marketType === 'all' &&
         (platform === PlatformDetails.dxtrade.platform || platform === PlatformDetails.ctrader.platform);
 
-    let marketTypeTitle = 'Deriv Apps';
+    let marketTypeTitle = 'Options';
 
     if (marketType && platform) {
         const isPlatformValid = Object.keys(PlatformDetails).includes(platform);

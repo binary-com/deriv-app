@@ -57,7 +57,7 @@ export const AccountSwitcherWalletMobile = observer(({ is_visible, toggle, login
             onClose={closeAccountsDialog}
             has_close_icon
             has_full_height
-            title={<Localize i18n_default_text='Deriv Apps accounts' />}
+            title={<Localize i18n_default_text='Options accounts' />}
         >
             <div className='account-switcher-wallet-mobile'>
                 <AccountSwitcherWalletList wallets={dtrade_account_wallets} closeAccountsDialog={closeAccountsDialog} />

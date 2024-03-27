@@ -70,7 +70,7 @@ export const AccountSwitcherWalletItem = observer(
                 </div>
                 <div className='acc-switcher-wallet-item__content'>
                     <Text size='xxxs'>
-                        <Localize i18n_default_text='Deriv Apps' />
+                        <Localize i18n_default_text='Options' />
                     </Text>
                     <Text size='xxxs'>
                         {is_virtual ? (

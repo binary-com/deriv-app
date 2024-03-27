@@ -60,7 +60,7 @@ describe('AccountSwitcherWalletMobile', () => {
             },
         });
         render(<AccountSwitcherWalletMobile {...props} />, { wrapper: wrapper(store) });
-        expect(screen.getByText('Deriv Apps accounts')).toBeInTheDocument();
+        expect(screen.getByText('Options accounts')).toBeInTheDocument();
         expect(screen.getByText('AccountSwitcherWalletList')).toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'Manage funds' })).toBeInTheDocument();
         expect(screen.getByText('Looking for CFDs? Go to Trader’s hub')).toBeInTheDocument();

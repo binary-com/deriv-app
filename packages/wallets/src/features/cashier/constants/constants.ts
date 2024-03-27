@@ -193,6 +193,6 @@ export const PlatformDetails = {
             light: 'IcWalletOptionsLight',
         },
         name: 'standard',
-        title: 'Deriv Apps',
+        title: 'Options',
     },
 } as const;

@@ -25,7 +25,7 @@ const AccountsList = ({ isWalletSettled }: TProps) => {
     if (isMobile) {
         return (
             <WalletsPrimaryTabs className='wallets-accounts-list'>
-                <WalletsPrimaryTabList list={[t('CFDs'), t('Options & multipliers')]} />
+                <WalletsPrimaryTabList list={[t('CFDs'), t('Options')]} />
                 <WalletsPrimaryTabPanels>
                     <WalletsPrimaryTabPanel>
                         <CFDPlatformsList onMT5PlatformListLoaded={setIsMT5PlatformListLoaded} />

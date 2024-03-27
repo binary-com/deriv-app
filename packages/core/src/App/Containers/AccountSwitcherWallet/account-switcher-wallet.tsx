@@ -47,7 +47,7 @@ export const AccountSwitcherWallet = observer(({ is_visible, toggle }: TAccountS
         <div className='account-switcher-wallet' ref={wrapper_ref}>
             <div className='account-switcher-wallet__header'>
                 <Text as='h4' weight='bold' size='xs'>
-                    <Localize i18n_default_text='Deriv Apps accounts' />
+                    <Localize i18n_default_text='Options accounts' />
                 </Text>
             </div>
             <ThemedScrollbars height={450}>

@@ -42,7 +42,7 @@ describe('AccountSwitcherWalletComponent', () => {
         });
 
         render(<AccountSwitcherWallet {...props} />, { wrapper: wrapper(mock) });
-        expect(screen.getByText('Deriv Apps accounts')).toBeInTheDocument();
+        expect(screen.getByText('Options accounts')).toBeInTheDocument();
         expect(screen.getByText('AccountSwitcherWalletList')).toBeInTheDocument();
         expect(screen.getByText('Looking for CFDs? Go to Trader’s hub')).toBeInTheDocument();
     });

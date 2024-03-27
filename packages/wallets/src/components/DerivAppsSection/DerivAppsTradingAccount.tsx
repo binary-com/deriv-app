@@ -20,7 +20,7 @@ const DerivAppsTradingAccount: React.FC = () => {
             </div>
             <div className='wallets-deriv-apps-section__details'>
                 <div className='wallets-deriv-apps-section__title-and-badge'>
-                    <WalletText size='sm'>Deriv Apps</WalletText>
+                    <WalletText size='sm'>Options</WalletText>
                     <WalletListCardBadge isDemo={activeWallet?.is_virtual} label={activeWallet?.landing_company_name} />
                 </div>
                 {isLoading ? (

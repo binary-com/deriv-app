@@ -51,12 +51,12 @@ describe('AccountsList', () => {
         expect(screen.getByTestId('dt_tab_list')).toBeInTheDocument();
         expect(screen.getByTestId('dt_tab_panels')).toBeInTheDocument();
         expect(screen.getByText('CFDs')).toBeInTheDocument();
-        expect(screen.getByText('Options & multipliers')).toBeInTheDocument();
+        expect(screen.getByText('Options')).toBeInTheDocument();
         expect(screen.getByText('Deriv MT5')).toBeInTheDocument();
         expect(screen.getByText('Compare accounts')).toBeInTheDocument();
     });
 
-    it('should show Options & Multipliers tab in mobile view when the tab active', () => {
+    it('should show Options tab in mobile view when the tab active', () => {
         mockUseDevice.mockReturnValue({
             isDesktop: false,
             isMobile: true,
@@ -65,10 +65,10 @@ describe('AccountsList', () => {
         render(<AccountsList isWalletSettled={true} />, { wrapper });
         expect(screen.getByTestId('dt_tab_panels')).toBeInTheDocument();
         expect(screen.getByText('CFDs')).toBeInTheDocument();
-        expect(screen.getByText('Options & multipliers')).toBeInTheDocument();
+        expect(screen.getAllByText('Options')[0]).toBeInTheDocument();
 
-        screen.getByText('Options & multipliers').click();
-        expect(screen.getByText('Deriv Apps')).toBeInTheDocument();
+        screen.getAllByText('Options')[0].click();
+        expect(screen.getAllByText('Options')[0]).toBeInTheDocument();
         expect(screen.getByText('Deriv Trader')).toBeInTheDocument();
         expect(screen.getByText('Deriv Bot')).toBeInTheDocument();
         expect(screen.getByText('SmartTrader')).toBeInTheDocument();
@@ -86,7 +86,7 @@ describe('AccountsList', () => {
 
         expect(screen.getByTestId('dt_desktop_accounts_list')).toBeInTheDocument();
         expect(screen.getByText('CFDs')).toBeInTheDocument();
-        expect(screen.getByText('Options & Multipliers')).toBeInTheDocument();
+        expect(screen.getAllByText('Options')[0]).toBeInTheDocument();
     });
 
     it('should render wallet tour guide in mobile view with isWalletSettled set to false', () => {

@@ -102,23 +102,17 @@ const OptionsAndMultipliersListing: React.FC<TOptionsAndMultipliersListingProps>
                 <div className='wallets-options-and-multipliers-listing__header-title'>
                     {!isMobile && (
                         <WalletText align='center' size='xl' weight='bold'>
-                            <Trans defaults='Options & Multipliers' />
+                            <Trans defaults='Options' />
                         </WalletText>
                     )}
-                    <div>
-                        <WalletText size={isMobile ? 'sm' : 'md'}>
-                            <Trans
-                                components={[
-                                    <WalletLink
-                                        key={0}
-                                        staticUrl='/trade-types/options/digital-options/up-and-down/'
-                                    />,
-                                    <WalletLink key={1} staticUrl='/trade-types/multiplier/' />,
-                                ]}
-                                defaults='Earn a range of payouts by correctly predicting market price movements with <0>options</0>, or get the upside of CFDs without risking more than your initial stake with <1>multipliers</1>.'
-                            />
-                        </WalletText>
-                    </div>
+                    <WalletText size={isMobile ? 'sm' : 'md'}>
+                        <Trans
+                            components={[
+                                <WalletLink key={0} staticUrl='/trade-types/options/digital-options/up-and-down/' />,
+                            ]}
+                            defaults='Buy and sell at a specific time for a specific price. <0>Learn more</0>'
+                        />
+                    </WalletText>
                 </div>
                 <DerivAppsSection />
             </section>
