@@ -13,7 +13,6 @@ import {
     isAccumulatorContract,
     isAsiansContract,
     isEndedBeforeCancellationExpired,
-    isMobile,
     isMultiplierContract,
     isSmartTraderContract,
     isLookBacksContract,
@@ -31,6 +30,7 @@ import { Analytics } from '@deriv-com/analytics';
 import { getBarrierLabel, getBarrierValue, isDigitType } from 'App/Components/Elements/PositionsDrawer/helpers';
 import ContractAuditItem from './contract-audit-item';
 import { isCancellationExpired } from 'Stores/Modules/Trading/Helpers/logic';
+import { useDevice } from '@deriv/hooks';
 
 type TContractDetails = {
     contract_end_time?: number;
@@ -72,6 +72,7 @@ const ContractDetails = ({
         reset_time,
         underlying,
     } = contract_info;
+    const { isMobile } = useDevice();
 
     const is_profit = Number(profit) >= 0;
     const cancellation_price = getCancellationPrice(contract_info);
@@ -149,7 +150,7 @@ const ContractDetails = ({
     }, []);
 
     return (
-        <ThemedScrollbars is_bypassed={isMobile()}>
+        <ThemedScrollbars is_bypassed={isMobile}>
             <div className='contract-audit__tabs-content'>
                 <ContractAuditItem
                     id='dt_id_label'

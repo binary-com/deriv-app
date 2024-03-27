@@ -1,9 +1,10 @@
 import React from 'react';
-import { isDesktop, isMobile, CONTRACT_TYPES } from '@deriv/shared';
+import { CONTRACT_TYPES } from '@deriv/shared';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { StoreProvider, mockStore } from '@deriv/stores';
 import PurchaseButton from '../purchase-button';
+import { useDevice } from '@deriv/hooks';
 
 const default_mocked_props: React.ComponentProps<typeof PurchaseButton> = {
     basis: '',
@@ -46,10 +47,9 @@ const default_mocked_props: React.ComponentProps<typeof PurchaseButton> = {
     type: CONTRACT_TYPES.VANILLA.CALL,
 };
 
-jest.mock('@deriv/shared', () => ({
-    ...jest.requireActual('@deriv/shared'),
-    isMobile: jest.fn(() => false),
-    isDesktop: jest.fn(() => true),
+jest.mock('@deriv/hooks', () => ({
+    ...jest.requireActual('@deriv/hooks'),
+    useDevice: jest.fn(() => ({ isMobile: false })),
 }));
 jest.mock('@deriv/components', () => ({
     ...jest.requireActual('@deriv/components'),
@@ -121,8 +121,7 @@ describe('<PurchaseButton />', () => {
     });
 
     it('should render ContractInfo for mobile if contract type is not accumulators, turbos or vanillas', () => {
-        (isMobile as jest.Mock).mockReturnValueOnce(true);
-        (isDesktop as jest.Mock).mockReturnValueOnce(false);
+        (useDevice as jest.Mock).mockReturnValueOnce({ isMobile: true });
         renderComponent(<PurchaseButton {...default_mocked_props} is_multiplier type={CONTRACT_TYPES.MULTIPLIER.UP} />);
 
         expect(screen.getByText(/ContractInfo/i)).toBeInTheDocument();

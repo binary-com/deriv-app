@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { useDevice } from '@deriv/hooks';
 import { mockStore } from '@deriv/stores';
-import { isMobile, isDesktop, TRADE_TYPES } from '@deriv/shared';
+import { TRADE_TYPES } from '@deriv/shared';
 import TraderProviders from '../../../../../../trader-providers';
 import Strike from '../strike';
 import userEvent from '@testing-library/user-event';
@@ -26,10 +27,11 @@ const strike_price = 'Strike price';
 const strike_prices = 'Strike Prices';
 const spot = 'Spot';
 
-jest.mock('@deriv/shared', () => ({
-    ...jest.requireActual('@deriv/shared'),
-    isMobile: jest.fn().mockReturnValue(false),
-    isDesktop: jest.fn().mockReturnValue(true),
+jest.mock('@deriv/hooks', () => ({
+    ...jest.requireActual('@deriv/hooks'),
+    useDevice: jest.fn(() => ({
+        isMobile: false,
+    })),
 }));
 jest.mock('Modules/Trading/Containers/strike-param-modal', () => jest.fn(() => <div>{mocked_strike_param_modal}</div>));
 
@@ -103,8 +105,7 @@ describe('<Strike />', () => {
 
     it('should render a proper children components if it is mobile', () => {
         mocked_trade.duration_unit = 'm';
-        (isDesktop as jest.Mock).mockReturnValueOnce(false);
-        (isMobile as jest.Mock).mockReturnValueOnce(true);
+        (useDevice as jest.Mock).mockReturnValueOnce({ isMobile: true });
 
         render(mockStrike(mocked_store));
 
@@ -115,8 +116,7 @@ describe('<Strike />', () => {
 
     it('should not render Spot components if it duration_unit is equal to "d" in mobile', () => {
         mocked_trade.duration_unit = 'd';
-        (isDesktop as jest.Mock).mockReturnValueOnce(false);
-        (isMobile as jest.Mock).mockReturnValueOnce(true);
+        (useDevice as jest.Mock).mockReturnValueOnce({ isMobile: true });
 
         render(mockStrike(mocked_store));
 

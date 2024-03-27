@@ -1,8 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
-import { DesktopWrapper, Div100vhContainer, MobileWrapper, SwipeableWrapper } from '@deriv/components';
+import { Div100vhContainer, SwipeableWrapper } from '@deriv/components';
 import { TickSpotData } from '@deriv/api-types';
-import { isDesktop, TRADE_TYPES } from '@deriv/shared';
+import { TRADE_TYPES } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { useTraderStore } from 'Stores/useTraderStores';
 import ChartLoader from 'App/Components/Elements/chart-loader';
@@ -11,6 +11,7 @@ import MarketIsClosedOverlay from 'App/Components/Elements/market-is-closed-over
 import { ChartTopWidgets, DigitsWidget } from './chart-widgets';
 import FormLayout from '../Components/Form/form-layout';
 import TradeChart from './trade-chart';
+import { useDevice } from '@deriv/hooks';
 
 export type TBottomWidgetsParams = {
     digits: number[];
@@ -64,11 +65,11 @@ const Trade = observer(() => {
     const {
         has_only_forward_starting_contracts: is_market_unavailable_visible,
         is_dark_mode_on: is_dark_theme,
-        is_mobile,
         notification_messages_ui: NotificationMessages,
     } = ui;
     const { is_eu } = client;
     const { network_status } = common;
+    const { isDesktop, isMobile } = useDevice();
 
     const [digits, setDigits] = React.useState<number[]>([]);
     const [tick, setTick] = React.useState<null | TickSpotData>(null);
@@ -110,7 +111,7 @@ const Trade = observer(() => {
     }, [onMount, onUnmount, getFirstOpenMarket, is_synthetics_available]);
 
     React.useEffect(() => {
-        if (is_mobile) {
+        if (isMobile) {
             setDigits([]);
         }
         setTrySyntheticIndices(false);
@@ -143,7 +144,7 @@ const Trade = observer(() => {
         [open_market, try_synthetic_indices, try_open_markets]
     );
 
-    const form_wrapper_class = is_mobile ? 'mobile-wrapper' : 'sidebar__container desktop-only';
+    const form_wrapper_class = isMobile ? 'mobile-wrapper' : 'sidebar__container';
     const chart_height_offset = React.useMemo(() => {
         if (is_accumulator) return '295px';
         if (is_turbos) return '300px';
@@ -159,9 +160,7 @@ const Trade = observer(() => {
             })}
             id='trade_container'
         >
-            <DesktopWrapper>
-                <PositionsDrawer />
-            </DesktopWrapper>
+            {isDesktop && <PositionsDrawer />}
             {/* Div100vhContainer is workaround for browsers on devices
                     with toolbars covering screen height,
                     using css vh is not returning correct screen height */}
@@ -169,13 +168,13 @@ const Trade = observer(() => {
                 className='chart-container'
                 height_offset={chart_height_offset}
                 id='chart_container'
-                is_disabled={isDesktop()}
+                is_disabled={!isMobile}
             >
-                <NotificationMessages show_trade_notifications={is_mobile} />
+                <NotificationMessages show_trade_notifications={isMobile} />
                 <React.Suspense
                     fallback={<ChartLoader is_dark={is_dark_theme} is_visible={!symbol || !!is_chart_loading} />}
                 >
-                    <DesktopWrapper>
+                    {!isMobile && (
                         <div
                             className={classNames('chart-container__wrapper', {
                                 'vanilla-trade-chart': is_vanilla,
@@ -184,31 +183,33 @@ const Trade = observer(() => {
                             <ChartLoader is_visible={is_chart_loading || should_show_active_symbols_loading} />
                             <TradeChart topWidgets={topWidgets} is_accumulator={is_accumulator} />
                         </div>
-                    </DesktopWrapper>
-                    <MobileWrapper>
-                        <ChartLoader is_visible={is_chart_loading || should_show_active_symbols_loading} />
-                        <SwipeableWrapper
-                            className={classNames({ 'vanilla-trade-chart': is_vanilla })}
-                            is_disabled={
-                                !show_digits_stats ||
-                                !is_trade_enabled ||
-                                !form_components.length ||
-                                is_chart_loading ||
-                                should_show_active_symbols_loading
-                            }
-                            is_swipe_disabled={swipe_index === 1}
-                            onChange={onChangeSwipeableIndex}
-                            should_elevate_navigation={should_elevate_navigation}
-                        >
-                            {show_digits_stats && <DigitsWidget digits={digits} tick={tick} />}
-                            <TradeChart
-                                bottomWidgets={show_digits_stats ? bottomWidgets : undefined}
-                                has_barrier={has_barrier}
-                                is_accumulator={is_accumulator}
-                                topWidgets={topWidgets}
-                            />
-                        </SwipeableWrapper>
-                    </MobileWrapper>
+                    )}
+                    {isMobile && (
+                        <React.Fragment>
+                            <ChartLoader is_visible={is_chart_loading || should_show_active_symbols_loading} />
+                            <SwipeableWrapper
+                                className={classNames({ 'vanilla-trade-chart': is_vanilla })}
+                                is_disabled={
+                                    !show_digits_stats ||
+                                    !is_trade_enabled ||
+                                    !form_components.length ||
+                                    is_chart_loading ||
+                                    should_show_active_symbols_loading
+                                }
+                                is_swipe_disabled={swipe_index === 1}
+                                onChange={onChangeSwipeableIndex}
+                                should_elevate_navigation={should_elevate_navigation}
+                            >
+                                {show_digits_stats && <DigitsWidget digits={digits} tick={tick} />}
+                                <TradeChart
+                                    bottomWidgets={show_digits_stats ? bottomWidgets : undefined}
+                                    has_barrier={has_barrier}
+                                    is_accumulator={is_accumulator}
+                                    topWidgets={topWidgets}
+                                />
+                            </SwipeableWrapper>
+                        </React.Fragment>
+                    )}
                 </React.Suspense>
             </Div100vhContainer>
             <div className={form_wrapper_class}>

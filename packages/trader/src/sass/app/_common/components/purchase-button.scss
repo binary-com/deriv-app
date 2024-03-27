@@ -19,7 +19,7 @@
     outline: 0;
     font-size: 1rem;
 
-    @include mobile {
+    @include mobile-screen {
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
@@ -82,7 +82,7 @@
         .color2-fill {
             fill: var(--text-colored-background);
         }
-        @include mobile {
+        @include mobile-screen {
             margin-right: 0.5rem;
         }
     }
@@ -207,7 +207,7 @@
             }
         }
 
-        @include mobile {
+        @include mobile-screen {
             background: var(--purchase-section-1);
             background: linear-gradient(
                 0deg,
@@ -219,7 +219,7 @@
         }
 
         &__vanilla-opts {
-            @include mobile {
+            @include mobile-screen {
                 background: var(--purchase-section-1);
                 background: linear-gradient(
                     0deg,
@@ -256,7 +256,7 @@
         }
 
         &__vanilla-opts {
-            @include mobile {
+            @include mobile-screen {
                 background: var(--purchase-section-1);
                 background: linear-gradient(
                     0deg,
@@ -344,11 +344,11 @@
             }
         }
         .trade-container__price-info {
-            @include mobile {
+            @include mobile-screen {
                 justify-content: center;
             }
         }
-        @include mobile {
+        @include mobile-screen {
             &-deal-cancel {
                 height: 64px;
             }
@@ -383,7 +383,7 @@
                 }
             }
         }
-        @include mobile {
+        @include mobile-screen {
             background: var(--purchase-section-1);
             background: linear-gradient(
                 0deg,
@@ -414,7 +414,7 @@
                     left: 12rem;
                 }
             }
-            @include mobile {
+            @include mobile-screen {
                 &__top {
                     align-items: center;
                     width: auto;

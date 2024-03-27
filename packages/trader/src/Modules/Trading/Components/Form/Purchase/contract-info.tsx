@@ -1,12 +1,13 @@
 import classNames from 'classnames';
 import React from 'react';
-import { DesktopWrapper, MobileWrapper, Money, Popover, Text } from '@deriv/components';
+import { Money, Popover, Text } from '@deriv/components';
 import { Localize } from '@deriv/translations';
 import { getCurrencyDisplayCode, getLocalizedBasis, getGrowthRatePercentage } from '@deriv/shared';
 import { useTraderStore } from 'Stores/useTraderStores';
 import CancelDealInfo from './cancel-deal-info';
 import ValueMovement from './value-movement';
 import { TProposalTypeInfo } from 'Types';
+import { useDevice } from '@deriv/hooks';
 
 type TContractInfo = Pick<
     ReturnType<typeof useTraderStore>,
@@ -33,6 +34,8 @@ const ContractInfo = ({
     should_fade,
     type,
 }: TContractInfo) => {
+    const { isMobile } = useDevice();
+
     const localized_basis = getLocalizedBasis();
     const vanilla_payout_text = is_vanilla_fx ? localized_basis.payout_per_pip : localized_basis.payout_per_point;
     const turbos_payout_message = (
@@ -101,12 +104,8 @@ const ContractInfo = ({
             >
                 {is_multiplier || is_accumulator ? (
                     <React.Fragment>
-                        {!is_accumulator && (
-                            <DesktopWrapper>
-                                <CancelDealInfo proposal_info={proposal_info} />
-                            </DesktopWrapper>
-                        )}
-                        <MobileWrapper>
+                        {!is_accumulator && !isMobile && <CancelDealInfo proposal_info={proposal_info} />}
+                        {isMobile && (
                             <div className='trade-container__price-info-wrapper'>
                                 <div className='btn-purchase__text_wrapper'>
                                     <Text size='xs' weight='bold' color='colored-background'>
@@ -118,7 +117,7 @@ const ContractInfo = ({
                                     </Text>
                                 </div>
                             </div>
-                        </MobileWrapper>
+                        )}
                     </React.Fragment>
                 ) : (
                     !is_multiplier &&
@@ -126,16 +125,7 @@ const ContractInfo = ({
                     obj_contract_basis && (
                         <React.Fragment>
                             <div className='trade-container__price-info-basis'>{basis_text}</div>
-                            <DesktopWrapper>
-                                <ValueMovement
-                                    has_error_or_not_loaded={has_error_or_not_loaded}
-                                    proposal_info={proposal_info}
-                                    currency={getCurrencyDisplayCode(currency)}
-                                    is_turbos={is_turbos}
-                                    is_vanilla={is_vanilla}
-                                />
-                            </DesktopWrapper>
-                            <MobileWrapper>
+                            {isMobile ? (
                                 <div className='trade-container__price-info-wrapper'>
                                     <ValueMovement
                                         has_error_or_not_loaded={has_error_or_not_loaded}
@@ -145,23 +135,29 @@ const ContractInfo = ({
                                         is_vanilla={is_vanilla}
                                     />
                                 </div>
-                            </MobileWrapper>
+                            ) : (
+                                <ValueMovement
+                                    has_error_or_not_loaded={has_error_or_not_loaded}
+                                    proposal_info={proposal_info}
+                                    currency={getCurrencyDisplayCode(currency)}
+                                    is_turbos={is_turbos}
+                                    is_vanilla={is_vanilla}
+                                />
+                            )}
                         </React.Fragment>
                     )
                 )}
             </div>
-            {!is_multiplier && !is_accumulator && (
-                <DesktopWrapper>
-                    <Popover
-                        alignment='left'
-                        icon='info'
-                        id={`dt_purchase_${type.toLowerCase()}_info`}
-                        is_bubble_hover_enabled
-                        margin={216}
-                        message={has_error_or_not_loaded ? '' : setHintMessage()}
-                        relative_render
-                    />
-                </DesktopWrapper>
+            {!is_multiplier && !is_accumulator && !isMobile && (
+                <Popover
+                    alignment='left'
+                    icon='info'
+                    id={`dt_purchase_${type.toLowerCase()}_info`}
+                    is_bubble_hover_enabled
+                    margin={216}
+                    message={has_error_or_not_loaded ? '' : setHintMessage()}
+                    relative_render
+                />
             )}
         </div>
     );

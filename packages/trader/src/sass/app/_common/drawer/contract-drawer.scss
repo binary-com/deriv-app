@@ -65,7 +65,7 @@ $header-height: 4em;
         display: flex;
         flex-direction: column;
 
-        @include desktop {
+        @include tablet-or-desktop-screen {
             height: 100%;
         }
     }

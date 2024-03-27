@@ -6,6 +6,7 @@ import TopWidgets from '../../SmartChart/Components/top-widgets';
 import { symbolChange } from '../../SmartChart/Helpers/symbol';
 import { useTraderStore } from 'Stores/useTraderStores';
 import { observer, useStore } from '@deriv/stores';
+import { useDevice } from '@deriv/hooks';
 
 type TDigits = React.ComponentProps<typeof Digits>;
 
@@ -54,14 +55,15 @@ export const DigitsWidget = observer(({ digits, tick }: { digits: TDigits['digit
 export const ChartTopWidgets = observer(({ open_market, open }: TChartTopWidgets) => {
     const { ui } = useStore();
     const { is_digits_widget_active, onChange: onSymbolChange } = useTraderStore();
-    const { is_dark_mode_on, is_mobile } = ui;
+    const { is_dark_mode_on } = ui;
     const theme = is_dark_mode_on ? 'dark' : 'light';
+    const { isMobile } = useDevice();
 
     return (
         <TopWidgets
             open_market={open_market}
             open={open}
-            is_mobile={is_mobile}
+            is_mobile={isMobile}
             is_digits_widget_active={is_digits_widget_active}
             onSymbolChange={symbolChange(onSymbolChange) as ReturnType<typeof useTraderStore>['onChange']}
             theme={theme}

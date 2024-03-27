@@ -2,10 +2,9 @@ import classNames from 'classnames';
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { CSSTransition } from 'react-transition-group';
-import { DesktopWrapper, MobileWrapper, Div100vhContainer } from '@deriv/components';
+import { Div100vhContainer } from '@deriv/components';
 import {
     isUserSold,
-    isMobile,
     isEmptyObject,
     getDurationPeriod,
     getDurationTime,
@@ -20,6 +19,7 @@ import { PositionsCardLoader } from 'App/Components/Elements/ContentLoader';
 import ContractDrawerCard from './contract-drawer-card';
 import { SwipeableContractAudit } from './swipeable-components';
 import { observer, useStore } from '@deriv/stores';
+import { useDevice } from '@deriv/hooks';
 
 type TContractDrawerCardProps = React.ComponentProps<typeof ContractDrawerCard>;
 type TContractDrawerProps = RouteComponentProps & {
@@ -60,13 +60,13 @@ const ContractDrawer = observer(
         onClickSell,
         toggleHistoryTab,
     }: TContractDrawerProps) => {
-        const { common, ui } = useStore();
+        const { common } = useStore();
         const { server_time } = common;
-        const { is_mobile } = ui;
         const { currency, exit_tick_display_value } = contract_info;
         const contract_drawer_ref = React.useRef<HTMLDivElement>(null);
         const contract_drawer_card_ref = React.useRef<HTMLDivElement>(null);
         const [should_show_contract_audit, setShouldShowContractAudit] = React.useState(false);
+        const { isMobile } = useDevice();
 
         const exit_spot =
             isUserSold(contract_info) && !is_accumulator && !is_multiplier && !is_turbos
@@ -103,7 +103,7 @@ const ContractDrawer = observer(
                     contract_update={contract_update}
                     currency={currency}
                     is_accumulator={is_accumulator}
-                    is_mobile={is_mobile}
+                    is_mobile={isMobile}
                     is_market_closed={is_market_closed}
                     is_multiplier={is_multiplier}
                     is_turbos={is_turbos}
@@ -118,7 +118,7 @@ const ContractDrawer = observer(
                     server_time={server_time}
                     toggleContractAuditDrawer={() => setShouldShowContractAudit(!should_show_contract_audit)}
                 />
-                <DesktopWrapper>{contract_audit}</DesktopWrapper>
+                {!isMobile && contract_audit}
             </React.Fragment>
         ) : (
             <div className='contract-card'>
@@ -131,9 +131,9 @@ const ContractDrawer = observer(
                 <div
                     id='dt_contract_drawer'
                     className={classNames('contract-drawer', {
-                        'contract-drawer--with-collapsible-btn': !!getEndTime(contract_info) || is_mobile,
-                        'contract-drawer--is-multiplier': is_multiplier && isMobile(),
-                        'contract-drawer--is-multiplier-sold': is_multiplier && isMobile() && getEndTime(contract_info),
+                        'contract-drawer--with-collapsible-btn': !!getEndTime(contract_info) || isMobile,
+                        'contract-drawer--is-multiplier': is_multiplier && isMobile,
+                        'contract-drawer--is-multiplier-sold': is_multiplier && isMobile && getEndTime(contract_info),
                     })}
                     style={{
                         transform: (should_show_contract_audit &&
@@ -146,35 +146,32 @@ const ContractDrawer = observer(
                     <div className='contract-drawer__body' ref={contract_drawer_card_ref}>
                         {body_content}
                     </div>
-                    {should_show_contract_audit && (
-                        <MobileWrapper>
-                            <div id='dt_contract_drawer_audit'>
-                                <SwipeableContractAudit is_multiplier={is_multiplier}>
-                                    {contract_audit}
-                                </SwipeableContractAudit>
-                            </div>
-                        </MobileWrapper>
+                    {should_show_contract_audit && isMobile && (
+                        <div id='dt_contract_drawer_audit'>
+                            <SwipeableContractAudit is_multiplier={is_multiplier}>
+                                {contract_audit}
+                            </SwipeableContractAudit>
+                        </div>
                     )}
                 </div>
             </CSSTransition>
         );
 
-        return (
-            <React.Fragment>
-                <DesktopWrapper>{contract_drawer}</DesktopWrapper>
-                <MobileWrapper>
-                    <div
-                        style={{
-                            height: contract_drawer_card_ref.current?.clientHeight,
-                        }}
-                    >
-                        <Div100vhContainer height_offset='40px' is_bypassed={!contract_drawer_card_ref.current}>
-                            {contract_drawer}
-                        </Div100vhContainer>
-                    </div>
-                </MobileWrapper>
-            </React.Fragment>
-        );
+        if (isMobile) {
+            return (
+                <div
+                    style={{
+                        height: contract_drawer_card_ref.current?.clientHeight,
+                    }}
+                >
+                    <Div100vhContainer height_offset='40px' is_bypassed={!contract_drawer_card_ref.current}>
+                        {contract_drawer}
+                    </Div100vhContainer>
+                </div>
+            );
+        }
+
+        return contract_drawer;
     }
 );
 

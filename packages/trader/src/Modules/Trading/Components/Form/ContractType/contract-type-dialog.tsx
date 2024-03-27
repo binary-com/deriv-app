@@ -1,5 +1,6 @@
 import React from 'react';
-import { DesktopWrapper, MobileDialog, MobileWrapper } from '@deriv/components';
+import { MobileDialog } from '@deriv/components';
+import { useDevice } from '@deriv/hooks';
 import { Header } from './ContractTypeInfo';
 import { localize } from '@deriv/translations';
 import ContractTypeMenu from './ContractTypeMenu';
@@ -45,6 +46,7 @@ const ContractTypeDialog = ({
     learn_more_banner,
     hide_back_button,
 }: React.PropsWithChildren<TContractTypeDialogProps>) => {
+    const { isMobile } = useDevice();
     const current_mobile_title = is_info_dialog_open ? (
         <Header
             title={title || item?.text || ''}
@@ -56,9 +58,9 @@ const ContractTypeDialog = ({
         localize('Trade types')
     );
 
-    return (
-        <React.Fragment>
-            <MobileWrapper>
+    if (isMobile) {
+        return (
+            <React.Fragment>
                 <span className='contract-type-widget__select-arrow' />
                 <MobileDialog
                     info_banner={is_info_dialog_open ? '' : info_banner}
@@ -73,29 +75,30 @@ const ContractTypeDialog = ({
                 >
                     {children}
                 </MobileDialog>
-            </MobileWrapper>
-            <DesktopWrapper>
-                <ContractTypeMenu
-                    info_banner={info_banner}
-                    is_info_dialog_open={is_info_dialog_open}
-                    is_open={is_open}
-                    item={item}
-                    selected={selected}
-                    categories={categories}
-                    onSearchBlur={onSearchBlur}
-                    onClose={onClose}
-                    onBackButtonClick={onBackButtonClick}
-                    onChangeInput={onChangeInput}
-                    onCategoryClick={onCategoryClick}
-                    show_loading={show_loading}
-                    learn_more_banner={learn_more_banner}
-                    hide_back_button={hide_back_button}
-                    title={title}
-                >
-                    {children}
-                </ContractTypeMenu>
-            </DesktopWrapper>
-        </React.Fragment>
+            </React.Fragment>
+        );
+    }
+
+    return (
+        <ContractTypeMenu
+            info_banner={info_banner}
+            is_info_dialog_open={is_info_dialog_open}
+            is_open={is_open}
+            item={item}
+            selected={selected}
+            categories={categories}
+            onSearchBlur={onSearchBlur}
+            onClose={onClose}
+            onBackButtonClick={onBackButtonClick}
+            onChangeInput={onChangeInput}
+            onCategoryClick={onCategoryClick}
+            show_loading={show_loading}
+            learn_more_banner={learn_more_banner}
+            hide_back_button={hide_back_button}
+            title={title}
+        >
+            {children}
+        </ContractTypeMenu>
     );
 };
 

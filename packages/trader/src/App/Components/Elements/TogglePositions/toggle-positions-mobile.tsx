@@ -8,6 +8,7 @@ import EmptyPortfolioMessage from '../EmptyPortfolioMessage';
 import PositionsModalCard from 'App/Components/Elements/PositionsDrawer/positions-modal-card';
 import TogglePositions from './toggle-positions';
 import { observer, useStore } from '@deriv/stores';
+import { useDevice } from '@deriv/hooks';
 
 type TTogglePositionsMobile = Pick<
     ReturnType<typeof useStore>['portfolio'],
@@ -32,6 +33,8 @@ const TogglePositionsMobile = observer(
     }: TTogglePositionsMobile) => {
         const { togglePositionsDrawer, is_positions_drawer_on } = useStore().ui;
         const [hidden_positions_ids, setHiddenPositionsIds] = React.useState<THiddenPositionsId[]>([]);
+        const { isMobile } = useDevice();
+
         const displayed_positions = filtered_positions
             .filter(p =>
                 hidden_positions_ids.every(hidden_position_id => hidden_position_id !== p.contract_info.contract_id)
@@ -90,7 +93,8 @@ const TogglePositionsMobile = observer(
                     id='dt_mobile_positions'
                     is_vertical_top
                     has_close_icon
-                    width='calc(100vw - 32px)'
+                    width={isMobile ? 'calc(100vw - 32px)' : undefined}
+                    className='toggle-positions'
                 >
                     <Div100vhContainer className='positions-modal' height_offset='48px'>
                         <div className='positions-modal__header'>

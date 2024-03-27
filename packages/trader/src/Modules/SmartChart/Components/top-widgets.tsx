@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { DesktopWrapper, MobileWrapper } from '@deriv/components';
 import { ChartTitle } from 'Modules/SmartChart';
 import { useTraderStore } from 'Stores/useTraderStores';
 import RecentTradeInfo from './recent-trade-info';
@@ -55,8 +54,7 @@ const TopWidgets = ({
     return (
         <React.Fragment>
             {InfoBox}
-            <MobileWrapper>{portal}</MobileWrapper>
-            <DesktopWrapper>{ChartTitleLocal}</DesktopWrapper>
+            {is_mobile ? portal : ChartTitleLocal}
         </React.Fragment>
     );
 };

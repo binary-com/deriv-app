@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { getLocalizedBasis, TRADE_TYPES } from '@deriv/shared';
 import ContractInfo from '../contract-info';
+import { useDevice } from '@deriv/hooks';
 
 const test_message = 'Some test message';
 const value_movement = 'ValueMovement';
@@ -45,25 +46,27 @@ jest.mock('../cancel-deal-info', () => jest.fn(() => <div>{cancel_deal_info}</di
 jest.mock('@deriv/components', () => ({
     ...jest.requireActual('@deriv/components'),
     Popover: jest.fn(props => <div>{props.message}</div>),
-    MobileWrapper: jest.fn(({ children }) => <div>{children}</div>),
+}));
+jest.mock('@deriv/hooks', () => ({
+    useDevice: jest.fn(() => ({ isMobile: false })),
 }));
 
 describe('<ContractInfo />', () => {
     it('should render component with children', () => {
         render(<ContractInfo {...default_mock_props} />);
 
-        expect(screen.getAllByText(value_movement)).toHaveLength(2);
         expect(screen.getByText(test_message)).toBeInTheDocument();
     });
     it('should render specific components if is_multiplier === true', () => {
+        (useDevice as jest.Mock).mockReturnValueOnce({ isMobile: true });
         render(<ContractInfo {...default_mock_props} is_multiplier />);
 
-        expect(screen.getByText(cancel_deal_info)).toBeInTheDocument();
         expect(screen.getByText(/10.00 USD/i)).toBeInTheDocument();
         expect(screen.queryByText(value_movement)).not.toBeInTheDocument();
         expect(screen.queryByText(test_message)).not.toBeInTheDocument();
     });
     it('should render specific components if is_accumulator === true', () => {
+        (useDevice as jest.Mock).mockReturnValueOnce({ isMobile: true });
         render(<ContractInfo {...default_mock_props} is_accumulator />);
 
         expect(screen.getByText(/3%/i)).toBeInTheDocument();

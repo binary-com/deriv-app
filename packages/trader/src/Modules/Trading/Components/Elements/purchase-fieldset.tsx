@@ -1,11 +1,12 @@
 import classNames from 'classnames';
 import React from 'react';
-import { DesktopWrapper, MobileWrapper, Popover } from '@deriv/components';
+import { Popover } from '@deriv/components';
 import Fieldset from 'App/Components/Form/fieldset';
 import ContractInfo from 'Modules/Trading/Components/Form/Purchase/contract-info';
 import PurchaseButton from 'Modules/Trading/Components/Elements/purchase-button';
 import CancelDealInfo from '../Form/Purchase/cancel-deal-info';
 import { TProposalTypeInfo, TTradeStore } from 'Types';
+import { useDevice } from '@deriv/hooks';
 
 type TPurchaseFieldset = {
     basis: string;
@@ -26,7 +27,7 @@ type TPurchaseFieldset = {
     is_vanilla_fx?: boolean;
     is_vanilla: boolean;
     is_turbos: boolean;
-    onClickPurchase: (proposal_id: string, price: string | number, type: string) => void;
+    onClickPurchase: (proposal_id: string, price: string | number, type: string, isMobile: boolean) => void;
     onHoverPurchase: (is_over: boolean, contract_type: string) => void;
     purchased_states_arr: boolean[];
     setPurchaseState: (index: number) => void;
@@ -59,6 +60,7 @@ const PurchaseFieldset = ({
     type,
 }: TPurchaseFieldset) => {
     const [should_fade, setShouldFade] = React.useState(false);
+    const { isMobile } = useDevice();
 
     React.useEffect(() => {
         setShouldFade(true);
@@ -66,11 +68,7 @@ const PurchaseFieldset = ({
 
     const purchase_button = (
         <React.Fragment>
-            {is_multiplier && has_cancellation && (
-                <MobileWrapper>
-                    <CancelDealInfo proposal_info={info} />
-                </MobileWrapper>
-            )}
+            {is_multiplier && has_cancellation && isMobile && <CancelDealInfo proposal_info={info} />}
             <PurchaseButton
                 buy_info={buy_info}
                 currency={currency}
@@ -104,7 +102,7 @@ const PurchaseFieldset = ({
                 'purchase-container__option--turbos': is_turbos,
             })}
         >
-            <DesktopWrapper>
+            {!isMobile && (
                 <div
                     className={classNames('trade-container__fieldset-wrapper', {
                         'trade-container__fieldset-wrapper--disabled': is_proposal_error || is_disabled,
@@ -177,11 +175,13 @@ const PurchaseFieldset = ({
                         )}
                     </div>
                 </div>
-            </DesktopWrapper>
-            <MobileWrapper>
-                {is_proposal_error && <div className='btn-purchase__error'>{info.message}</div>}
-                {purchase_button}
-            </MobileWrapper>
+            )}
+            {isMobile && (
+                <React.Fragment>
+                    {is_proposal_error && <div className='btn-purchase__error'>{info.message}</div>}
+                    {purchase_button}
+                </React.Fragment>
+            )}
         </Fieldset>
     );
 };

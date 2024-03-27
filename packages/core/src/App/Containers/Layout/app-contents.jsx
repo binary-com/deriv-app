@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useLocation, withRouter } from 'react-router';
 import { Analytics } from '@deriv-com/analytics';
-import { DesktopWrapper, MobileWrapper, ThemedScrollbars } from '@deriv/components';
-import { CookieStorage, isMobile, TRACKING_STATUS_KEY, PlatformContext, platforms, routes, WS } from '@deriv/shared';
+import { ThemedScrollbars } from '@deriv/components';
+import { CookieStorage, TRACKING_STATUS_KEY, PlatformContext, platforms, routes, WS } from '@deriv/shared';
 import { useStore, observer } from '@deriv/stores';
 import CookieBanner from '../../Components/Elements/CookieBanner/cookie-banner.jsx';
+import { useDevice } from '@deriv/hooks';
 
 const tracking_status_cookie = new CookieStorage(TRACKING_STATUS_KEY);
 
@@ -20,6 +21,7 @@ const AppContents = observer(({ children }) => {
         gtm: { pushDataLayer },
         ui,
     } = useStore();
+    const { isDesktop, isMobile } = useDevice();
 
     const { is_eu_country, is_logged_in, is_logging_in } = client;
     const {
@@ -105,7 +107,7 @@ const AppContents = observer(({ children }) => {
             className={classNames('app-contents', {
                 'app-contents--show-positions-drawer': is_positions_drawer_on,
                 'app-contents--is-disabled': is_app_disabled,
-                'app-contents--is-mobile': isMobile(),
+                'app-contents--is-mobile': isMobile,
                 'app-contents--is-route-modal': is_route_modal_on,
                 'app-contents--is-scrollable': is_cfd_page || is_cashier_visible,
                 'app-contents--is-dashboard': is_appstore,
@@ -114,19 +116,22 @@ const AppContents = observer(({ children }) => {
             })}
             ref={scroll_ref}
         >
-            <MobileWrapper>{children}</MobileWrapper>
-            <DesktopWrapper>
-                {/* Calculate height of user screen and offset height of header and footer */}
-                {window.location.pathname === routes.onboarding ? (
+            {isMobile && children}
+            {!isMobile &&
+                /* Calculate height of user screen and offset height of header and footer */
+                (window.location.pathname === routes.onboarding ? (
                     <ThemedScrollbars style={{ maxHeight: '', height: '100%' }} refSetter={child_ref}>
                         {children}
                     </ThemedScrollbars>
                 ) : (
-                    <ThemedScrollbars height='calc(100vh - 84px)' has_horizontal refSetter={child_ref}>
+                    <ThemedScrollbars
+                        height={isDesktop ? 'calc(100vh - 84px)' : undefined}
+                        has_horizontal
+                        refSetter={child_ref}
+                    >
                         {children}
                     </ThemedScrollbars>
-                )}
-            </DesktopWrapper>
+                ))}
             {show_cookie_banner && (
                 <CookieBanner
                     onAccept={onAccept}

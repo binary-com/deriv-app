@@ -2,6 +2,12 @@ import React from 'react';
 import { StoreProvider, mockStore } from '@deriv/stores';
 import { render, screen } from '@testing-library/react';
 import DTraderHeader from '../dtrader-header';
+import { useDevice } from '@deriv/hooks';
+
+jest.mock('@deriv/hooks', () => ({
+    ...jest.requireActual('@deriv/hooks'),
+    useDevice: jest.fn(() => ({ isDesktop: true })),
+}));
 
 jest.mock('App/Components/Layout/Header', () => ({
     MenuLinks: jest.fn(() => <div>Mocked Menu Links</div>),
@@ -15,7 +21,7 @@ jest.mock('../header-account-actions', () => jest.fn(() => <div>Mocked Header Ac
 jest.mock('../traders-hub-home-button', () => jest.fn(() => <div>Mocked Traders Home Button</div>));
 
 describe('DTraderHeader', () => {
-    const mock_store = mockStore({ ui: { is_desktop: true, is_real_acc_signup_on: true } });
+    const mock_store = mockStore({ ui: { is_real_acc_signup_on: true } });
     const renderComponent = (modified_store = mock_store) =>
         render(
             <StoreProvider store={modified_store}>
@@ -36,9 +42,10 @@ describe('DTraderHeader', () => {
     });
 
     it('should render Toggle Menu Drawer, Menu Links, Header Account Action and Real Account SignUp components, in Mobile view', () => {
+        (useDevice as jest.Mock).mockImplementationOnce(() => ({ isDesktop: false }));
         renderComponent(
             mockStore({
-                ui: { is_desktop: false, is_mobile: true, is_real_acc_signup_on: true },
+                ui: { is_desktop: false, is_real_acc_signup_on: true },
                 modules: { cashier: { payment_agent: 'MOCK_PAYMENT_AGENT' } },
             })
         );

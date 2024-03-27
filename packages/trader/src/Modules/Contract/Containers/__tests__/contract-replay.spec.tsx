@@ -1,15 +1,16 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { useDevice } from '@deriv/hooks';
 import ContractReplay from '../contract-replay';
 import { Router } from 'react-router-dom';
 import { mockStore } from '@deriv/stores';
 import TraderProviders from '../../../../trader-providers';
 import { createMemoryHistory } from 'history';
-import { isDesktop, isMobile } from '@deriv/shared';
 
 jest.mock('@deriv/hooks', () => ({
     ...jest.requireActual('@deriv/hooks'),
     useFeatureFlags: jest.fn(() => ({ is_next_wallet_enabled: false })),
+    useDevice: jest.fn(() => ({ isMobile: false })),
 }));
 
 jest.mock('@deriv/components', () => ({
@@ -35,8 +36,6 @@ jest.mock('../replay-chart', () => jest.fn(() => <div>ReplayChart</div>));
 
 jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
-    isMobile: jest.fn(() => false),
-    isDesktop: jest.fn(() => true),
 }));
 
 const MockContractReplay = ({ store }: { store?: any }) => {
@@ -74,8 +73,6 @@ describe('<ContractReplay>', () => {
     });
 
     it('renders the ContractReplay component with basic structure', () => {
-        (isMobile as jest.Mock).mockReturnValue(false);
-        (isDesktop as jest.Mock).mockReturnValue(true);
         render(<MockContractReplay store={mocked_store} />);
 
         expect(screen.getByText('Contract details')).toBeInTheDocument();
@@ -92,8 +89,7 @@ describe('<ContractReplay>', () => {
     });
 
     it('renders DigitsWidget and SwipeableWrapper on Mobile for Digits contracts', () => {
-        (isMobile as jest.Mock).mockReturnValue(true);
-        (isDesktop as jest.Mock).mockReturnValue(false);
+        (useDevice as jest.Mock).mockReturnValue({ isMobile: true });
 
         mocked_store.contract_replay.contract_store.contract_info.contract_type = 'DIGITODD';
         mocked_store.contract_replay.contract_store.is_digit_contract = true;

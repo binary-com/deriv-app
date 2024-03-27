@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Div100vhContainer, Icon, useOnClickOutside, Text } from '@deriv/components';
-import { routes, isDesktop, isMobile, getActivePlatform } from '@deriv/shared';
+import { routes, getActivePlatform } from '@deriv/shared';
 import { BinaryLink } from 'App/Components/Routes';
 import 'Sass/app/_common/components/platform-dropdown.scss';
 import { Localize } from '@deriv/translations';
 import { useHistory } from 'react-router';
+import { useDevice } from '@deriv/hooks';
 
 const PlatformBox = ({ platform: { icon, description } }) => (
     <React.Fragment>
@@ -45,13 +46,14 @@ const PlatformDropdownContent = ({ platform, app_routing_history }) => {
 
 const PlatformDropdown = ({ app_routing_history, closeDrawer, platform_config, setTogglePlatformType }) => {
     const history = useHistory();
+    const { isDesktop } = useDevice();
 
     const TradersHubRedirect = () => {
         return (
             <div className='platform-dropdown__cta'>
                 <BinaryLink
                     onClick={() => {
-                        if (isMobile()) {
+                        if (!isDesktop) {
                             history.push(routes.traders_hub);
                             setTogglePlatformType('cfd');
                         }
@@ -81,11 +83,11 @@ const PlatformDropdown = ({ app_routing_history, closeDrawer, platform_config, s
         }
     };
 
-    useOnClickOutside(ref, handleClickOutside, () => isDesktop());
+    useOnClickOutside(ref, handleClickOutside, () => isDesktop);
 
     const platform_dropdown = (
         <div className='platform-dropdown'>
-            <Div100vhContainer className='platform-dropdown__list' height_offset='15rem' is_disabled={isDesktop()}>
+            <Div100vhContainer className='platform-dropdown__list' height_offset='15rem' is_disabled={isDesktop}>
                 {platform_config.map(platform => {
                     return (
                         <div key={platform.name} onClick={closeDrawer} ref={ref}>
@@ -98,11 +100,11 @@ const PlatformDropdown = ({ app_routing_history, closeDrawer, platform_config, s
         </div>
     );
 
-    if (isMobile()) {
-        return ReactDOM.createPortal(platform_dropdown, document.getElementById('mobile_platform_switcher'));
+    if (isDesktop) {
+        return ReactDOM.createPortal(platform_dropdown, document.getElementById('deriv_app'));
     }
 
-    return ReactDOM.createPortal(platform_dropdown, document.getElementById('deriv_app'));
+    return ReactDOM.createPortal(platform_dropdown, document.getElementById('mobile_platform_switcher'));
 };
 
 export { PlatformDropdown, PlatformBox };

@@ -29,6 +29,19 @@ const App = ({ passthrough }: Apptypes) => {
         return () => root_store.ui.setPromptHandler(false);
     }, [root_store]);
 
+    React.useEffect(() => {
+        const landscapeBlockerElement = document.querySelector('.landscape-blocker');
+        if (landscapeBlockerElement) {
+            landscapeBlockerElement.classList.add('landscape-blocker--hidden');
+        }
+
+        return () => {
+            if (landscapeBlockerElement) {
+                landscapeBlockerElement.classList.remove('landscape-blocker--hidden');
+            }
+        };
+    }, []);
+
     return (
         <TraderProviders store={root_store}>
             <Routes />

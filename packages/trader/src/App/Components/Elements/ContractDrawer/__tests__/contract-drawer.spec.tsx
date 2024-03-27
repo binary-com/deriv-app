@@ -1,9 +1,10 @@
 import React from 'react';
 import { createBrowserHistory } from 'history';
 import { render, screen } from '@testing-library/react';
+import { useDevice } from '@deriv/hooks';
 import { mockStore } from '@deriv/stores';
 import { Router } from 'react-router';
-import { isMobile, isDesktop, toMoment } from '@deriv/shared';
+import { toMoment } from '@deriv/shared';
 import ContractDrawer from '../contract-drawer';
 import TraderProviders from '../../../../../trader-providers';
 import userEvent from '@testing-library/user-event';
@@ -49,9 +50,13 @@ jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
     getEndTime: jest.fn(() => true),
     isUserSold: jest.fn(() => true),
-    isDesktop: jest.fn(() => true),
-    isMobile: jest.fn(() => false),
 }));
+
+jest.mock('@deriv/hooks', () => ({
+    ...jest.requireActual('@deriv/hooks'),
+    useDevice: jest.fn(() => ({ isMobile: false })),
+}));
+
 jest.mock('react-transition-group', () => ({
     ...jest.requireActual('@deriv/shared'),
     CSSTransition: jest.fn(({ children }) => <div>{children}</div>),
@@ -107,8 +112,7 @@ describe('<ContractDrawer />', () => {
         expect(screen.getByText(contract_audit)).toBeInTheDocument();
     });
     it('should render only Contract Drawer card by default on mobile', () => {
-        (isMobile as jest.Mock).mockReturnValue(true);
-        (isDesktop as jest.Mock).mockReturnValue(false);
+        (useDevice as jest.Mock).mockReturnValue({ isMobile: true });
         mocked_props.is_multiplier = true;
         render(mockContractDrawer(mocked_props));
 
@@ -116,8 +120,7 @@ describe('<ContractDrawer />', () => {
         expect(screen.queryByText(contract_audit)).not.toBeInTheDocument();
     });
     it('should render contract_audit if user click on Contract Drawer card on mobile', () => {
-        (isMobile as jest.Mock).mockReturnValue(true);
-        (isDesktop as jest.Mock).mockReturnValue(false);
+        (useDevice as jest.Mock).mockReturnValue({ isMobile: true });
         const { rerender } = render(mockContractDrawer(mocked_props));
         expect(screen.queryByText(contract_audit)).not.toBeInTheDocument();
 
@@ -127,8 +130,7 @@ describe('<ContractDrawer />', () => {
         expect(screen.getByText(contract_audit)).toBeInTheDocument();
     });
     it('contract_audit appeared and then be hidden if user swiped up and then swiped down on mobile', () => {
-        (isMobile as jest.Mock).mockReturnValue(true);
-        (isDesktop as jest.Mock).mockReturnValue(false);
+        (useDevice as jest.Mock).mockReturnValue({ isMobile: true });
         const { rerender } = render(mockContractDrawer(mocked_props));
         expect(screen.queryByText(contract_audit)).not.toBeInTheDocument();
 

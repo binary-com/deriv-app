@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import { DesktopWrapper, MobileWrapper, Collapsible, ContractCard, useHover } from '@deriv/components';
+import { Collapsible, ContractCard, useHover } from '@deriv/components';
 import {
     getEndTime,
     getSymbolDisplayName,
@@ -15,6 +15,7 @@ import { SwipeableContractDrawer } from './swipeable-components';
 import MarketClosedContractOverlay from './market-closed-contract-overlay';
 import { useTraderStore } from 'Stores/useTraderStores';
 import { observer, useStore } from '@deriv/stores';
+import { useDevice } from '@deriv/hooks';
 
 type TContractCardBodyProps = React.ComponentProps<typeof ContractCard.Body>;
 type TContractCardFooterProps = React.ComponentProps<typeof ContractCard.Footer>;
@@ -75,6 +76,7 @@ const ContractDrawerCard = observer(
         } = ui;
         const { getContractById } = contract_trade;
         const [hover_ref, should_hide_closed_overlay] = useHover<HTMLDivElement>();
+        const { isMobile } = useDevice();
 
         const { profit, validation_error } = contract_info;
         const is_sold = !!getEndTime(contract_info);
@@ -177,17 +179,16 @@ const ContractDrawerCard = observer(
             </ContractCard>
         );
 
-        return (
-            <React.Fragment>
-                <DesktopWrapper>{contract_card}</DesktopWrapper>
-                <MobileWrapper>
-                    <SwipeableContractDrawer onSwipedUp={onSwipedUp} onSwipedDown={onSwipedDown}>
-                        <Collapsible.ArrowButton onClick={toggleContractAuditDrawer} is_collapsed={is_collapsed} />
-                        {contract_card}
-                    </SwipeableContractDrawer>
-                </MobileWrapper>
-            </React.Fragment>
-        );
+        if (isMobile) {
+            return (
+                <SwipeableContractDrawer onSwipedUp={onSwipedUp} onSwipedDown={onSwipedDown}>
+                    <Collapsible.ArrowButton onClick={toggleContractAuditDrawer} is_collapsed={is_collapsed} />
+                    {contract_card}
+                </SwipeableContractDrawer>
+            );
+        }
+
+        return contract_card;
     }
 );
 

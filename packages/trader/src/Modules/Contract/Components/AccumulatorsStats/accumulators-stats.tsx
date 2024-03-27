@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-import { DesktopWrapper, Icon, MobileDialog, MobileWrapper, Text } from '@deriv/components';
-import { isDesktop, isMobile } from '@deriv/shared';
+import { Icon, MobileDialog, Text } from '@deriv/components';
+import { useDevice } from '@deriv/hooks';
 import { localize } from '@deriv/translations';
 import ExpandedTicksHistory from './expanded-ticks-history';
 import TicksHistoryCounter from './ticks-history-counter';
@@ -24,17 +24,18 @@ const AccumulatorsStats = observer(({ is_expandable = true }: TAccumulatorStats)
     const { ui } = useStore();
     const { ticks_history_stats = {} } = useTraderStore();
     const { is_dark_mode_on: is_dark_theme } = ui;
+    const { isDesktop, isMobile } = useDevice();
 
     const [is_collapsed, setIsCollapsed] = React.useState(true);
     const [is_manual_open, setIsManualOpen] = React.useState(false);
     const widget_title = localize('Stats');
     const ticks_history = ticks_history_stats?.ticks_stayed_in ?? [];
-    const history_text_size = isDesktop() || !is_collapsed ? 'xxs' : 'xxxs';
+    const history_text_size = isDesktop || !is_collapsed ? 'xxs' : 'xxxs';
 
     const rows = ticks_history.reduce((acc: number[][], _el, index) => {
         const desktop_row_size = is_collapsed ? ROW_SIZES.DESKTOP_COLLAPSED : ROW_SIZES.DESKTOP_EXPANDED;
         const mobile_row_size = is_collapsed ? ROW_SIZES.MOBILE_COLLAPSED : ROW_SIZES.MOBILE_EXPANDED;
-        const row_size = isDesktop() ? desktop_row_size : mobile_row_size;
+        const row_size = isDesktop ? desktop_row_size : mobile_row_size;
         if (index % row_size === 0) {
             acc.push(ticks_history.slice(index, index + row_size));
         }
@@ -54,7 +55,7 @@ const AccumulatorsStats = observer(({ is_expandable = true }: TAccumulatorStats)
                         title={widget_title}
                         toggleManual={() => setIsManualOpen(!is_manual_open)}
                     />
-                    <Text weight='bold' size={isMobile() ? 'xxxs' : 'xxs'} className='accumulators-stats__title-text'>
+                    <Text weight='bold' size={isMobile ? 'xxxs' : 'xxs'} className='accumulators-stats__title-text'>
                         {widget_title}
                     </Text>
                 </div>
@@ -73,24 +74,21 @@ const AccumulatorsStats = observer(({ is_expandable = true }: TAccumulatorStats)
                     )}
                 </Text>
             </div>
-            {is_expandable && !is_collapsed && (
-                <React.Fragment>
-                    <DesktopWrapper>
+            {is_expandable &&
+                !is_collapsed &&
+                (!isDesktop ? (
+                    <MobileDialog
+                        onClose={() => setIsCollapsed(!is_collapsed)}
+                        portal_element_id='modal_root'
+                        title={widget_title}
+                        visible={!is_collapsed}
+                        wrapper_classname='accumulators-stats'
+                    >
                         <ExpandedTicksHistory history_text_size={history_text_size} rows={rows} />
-                    </DesktopWrapper>
-                    <MobileWrapper>
-                        <MobileDialog
-                            onClose={() => setIsCollapsed(!is_collapsed)}
-                            portal_element_id='modal_root'
-                            title={widget_title}
-                            visible={!is_collapsed}
-                            wrapper_classname='accumulators-stats'
-                        >
-                            <ExpandedTicksHistory history_text_size={history_text_size} rows={rows} />
-                        </MobileDialog>
-                    </MobileWrapper>
-                </React.Fragment>
-            )}
+                    </MobileDialog>
+                ) : (
+                    <ExpandedTicksHistory history_text_size={history_text_size} rows={rows} />
+                ))}
             {is_expandable && (
                 <Icon
                     icon={is_collapsed ? 'IcArrowUp' : 'IcArrowDown'}

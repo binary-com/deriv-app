@@ -1,9 +1,10 @@
 import classNames from 'classnames';
 import React from 'react';
-import { Icon, DesktopWrapper, MobileWrapper } from '@deriv/components';
+import { Icon } from '@deriv/components';
 import IconTradeCategory from 'Assets/Trading/Categories/icon-trade-categories';
 import { findContractCategory } from '../../../Helpers/contract-type';
 import { TContractCategory, TContractType, TList } from './types';
+import { useDevice } from '@deriv/hooks';
 
 type TDisplay = {
     is_open: boolean;
@@ -14,6 +15,7 @@ type TDisplay = {
 };
 
 const Display = ({ is_open, name, list, onClick, value }: TDisplay) => {
+    const { isMobile } = useDevice();
     const getDisplayText = () =>
         findContractCategory(list as unknown as TList[], { value })?.contract_types?.find((item: TContractType) =>
             item.value.includes(value)
@@ -31,7 +33,9 @@ const Display = ({ is_open, name, list, onClick, value }: TDisplay) => {
             <span data-name={name} data-value={value}>
                 {getDisplayText()}
             </span>
-            <DesktopWrapper>
+            {isMobile ? (
+                <Icon icon='IcChevronRight' size={20} className='contract-type-widget__select-arrow--right' />
+            ) : (
                 <Icon
                     icon='IcChevronDown'
                     className={classNames(
@@ -39,10 +43,7 @@ const Display = ({ is_open, name, list, onClick, value }: TDisplay) => {
                         'contract-type-widget__select-arrow--left'
                     )}
                 />
-            </DesktopWrapper>
-            <MobileWrapper>
-                <Icon icon='IcChevronRight' size={20} className='contract-type-widget__select-arrow--right' />
-            </MobileWrapper>
+            )}
         </div>
     );
 };

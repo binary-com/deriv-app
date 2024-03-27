@@ -113,3 +113,10 @@
         }
     }
 }
+
+@include tablet-screen {
+    .dc-modal__container_toggle-positions {
+        right: 20%;
+        left: 20%;
+    }
+}

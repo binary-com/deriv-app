@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { useDevice } from '@deriv/hooks';
 import { mockStore } from '@deriv/stores';
-import { isMobile, isDesktop, CONTRACT_TYPES } from '@deriv/shared';
+import { CONTRACT_TYPES } from '@deriv/shared';
 import TraderProviders from '../../../../../../trader-providers';
 import Strike from '../strike';
 
@@ -23,10 +24,11 @@ const mocked_strike_param_modal = 'Mocked Strike Param Modal Component';
 const strike_price = 'Strike price';
 const spot = 'Spot';
 
-jest.mock('@deriv/shared', () => ({
-    ...jest.requireActual('@deriv/shared'),
-    isMobile: jest.fn().mockReturnValue(true),
-    isDesktop: jest.fn().mockReturnValue(false),
+jest.mock('@deriv/hooks', () => ({
+    ...jest.requireActual('@deriv/hooks'),
+    useDevice: jest.fn(() => ({
+        isMobile: true,
+    })),
 }));
 jest.mock('Modules/Trading/Containers/strike-param-modal', () => jest.fn(() => <div>{mocked_strike_param_modal}</div>));
 
@@ -69,8 +71,7 @@ describe('<Strike />', () => {
         expect(screen.getByText(mocked_strike_param_modal)).toBeInTheDocument();
     });
     it('should render a proper fieldset if it is desktop', () => {
-        isDesktop.mockReturnValueOnce(true);
-        isMobile.mockReturnValueOnce(false);
+        useDevice.mockReturnValue({ isMobile: false });
         const mock_root_store = mockStore(default_mock_store);
         render(mockStrike(mock_root_store));
 

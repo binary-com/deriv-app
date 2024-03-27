@@ -1,9 +1,7 @@
 import React from 'react';
-
-import { isDesktop, isMobile } from '@deriv/shared';
 import { render, screen } from '@testing-library/react';
+import { useDevice } from '@deriv/hooks';
 import userEvent from '@testing-library/user-event';
-
 import PurchaseFieldset from '../purchase-fieldset';
 
 const default_mocked_props: React.ComponentProps<typeof PurchaseFieldset> = {
@@ -49,10 +47,9 @@ const default_mocked_props: React.ComponentProps<typeof PurchaseFieldset> = {
     type: '',
 };
 
-jest.mock('@deriv/shared', () => ({
-    ...jest.requireActual('@deriv/shared'),
-    isMobile: jest.fn(() => false),
-    isDesktop: jest.fn(() => true),
+jest.mock('@deriv/hooks', () => ({
+    ...jest.requireActual('@deriv/hooks'),
+    useDevice: jest.fn(() => ({ isMobile: false })),
 }));
 jest.mock('Modules/Trading/Components/Form/Purchase/contract-info', () => jest.fn(() => <div>ContractInfo</div>));
 jest.mock('Modules/Trading/Components/Elements/purchase-button', () => jest.fn(() => <div>PurchaseButton</div>));
@@ -94,8 +91,7 @@ describe('<PurchaseFieldset />', () => {
     });
 
     it('should render CancelDealInfo for mobile if is_multiplier === true, has_cancellation === true', () => {
-        (isMobile as jest.Mock).mockReturnValue(true);
-        (isDesktop as jest.Mock).mockReturnValue(false);
+        (useDevice as jest.Mock).mockImplementation(() => ({ isMobile: true }));
         render(<PurchaseFieldset {...default_mocked_props} is_multiplier has_cancellation />);
 
         expect(screen.getByText(/CancelDealInfo/i)).toBeInTheDocument();

@@ -9,6 +9,12 @@
     .bottom-widgets {
         left: -3.5em;
     }
+
+    @include tablet-screen {
+        .bottom-widgets {
+            left: 0;
+        }
+    }
 }
 
 /** @define digits; weak */

@@ -1,13 +1,12 @@
 import React from 'react';
-import { addDays, daysFromTodayTo, toMoment, convertDateFormat, getPosition, isMobile } from '@deriv/shared';
+import { addDays, daysFromTodayTo, toMoment, convertDateFormat, getPosition } from '@deriv/shared';
 import Input from './date-picker-input';
 import Calendar from './date-picker-calendar';
 import Native from './date-picker-native';
-import MobileWrapper from '../mobile-wrapper';
-import DesktopWrapper from '../desktop-wrapper';
 import { useOnClickOutside } from '../../hooks/use-onclickoutside';
 import moment, { MomentInput } from 'moment';
 import { TDatePickerOnChangeEvent } from '../types';
+import { useDevice } from '@deriv/hooks';
 
 type TDatePicker = Omit<
     React.ComponentProps<typeof Native> & React.ComponentProps<typeof Input> & React.ComponentProps<typeof Calendar>,
@@ -72,6 +71,7 @@ const DatePicker = React.memo((props: TDatePicker) => {
     const [duration, setDuration] = React.useState<number | null | string>(daysFromTodayTo(value));
     const [is_datepicker_visible, setIsDatepickerVisible] = React.useState(false);
     const [is_placeholder_visible, setIsPlaceholderVisible] = React.useState(!!placeholder && !value);
+    const { isMobile } = useDevice();
 
     useOnClickOutside(
         datepicker_ref,
@@ -197,7 +197,7 @@ const DatePicker = React.memo((props: TDatePicker) => {
     const getInputValue = (): string | number => (mode === 'duration' ? duration || 0 : date);
 
     const getCalendarValue = (new_date: string | null): string | null => {
-        if (!new_date) return isMobile() ? null : toMoment(start_date || max_date).format(date_format);
+        if (!new_date) return isMobile ? null : toMoment(start_date || max_date).format(date_format);
         return convertDateFormat(new_date, display_format, date_format);
     };
 
@@ -216,60 +216,58 @@ const DatePicker = React.memo((props: TDatePicker) => {
         ...other_props,
     };
 
+    if (isMobile) {
+        return (
+            <Native
+                id={id}
+                name={name}
+                onBlur={onBlur}
+                onFocus={onFocus}
+                onSelect={onSelectCalendarNative}
+                value={getCalendarValue(date)} // native picker accepts date format yyyy-mm-dd
+                disabled={disabled}
+                data_testid={data_testid}
+                {...common_props}
+            />
+        );
+    }
+
     return (
-        <React.Fragment>
-            <MobileWrapper>
-                <Native
-                    id={id}
-                    name={name}
-                    onBlur={onBlur}
-                    onFocus={onFocus}
-                    onSelect={onSelectCalendarNative}
-                    value={getCalendarValue(date)} // native picker accepts date format yyyy-mm-dd
+        <div id={id} className='dc-datepicker' data-value={getInputValue()}>
+            <div ref={datepicker_ref}>
+                <Input
+                    {...common_props}
                     disabled={disabled}
-                    data_testid={data_testid}
+                    name={name}
+                    onClick={handleVisibility}
+                    onChangeInput={onChangeInput}
+                    is_placeholder_visible={is_placeholder_visible}
+                    onBlur={onBlur}
+                    required={required}
+                    type={type}
+                    value={getInputValue()}
+                    data-testid={data_testid}
+                />
+                <Calendar
+                    ref={calendar_ref}
+                    calendar_el_ref={calendar_el_ref}
+                    parent_ref={datepicker_ref}
+                    keep_open={keep_open}
+                    alignment={alignment}
+                    is_datepicker_visible={is_datepicker_visible}
+                    onHover={has_range_selection ? onHover : undefined}
+                    onSelect={onSelectCalendar}
+                    onChangeCalendarMonth={onChangeCalendarMonth}
+                    has_today_btn={has_today_btn}
+                    placement={placement}
+                    style={style}
+                    value={getCalendarValue(date) || ''} // Calendar accepts date format yyyy-mm-dd
+                    start_date=''
+                    has_range_selection={has_range_selection}
                     {...common_props}
                 />
-            </MobileWrapper>
-            <DesktopWrapper>
-                <div id={id} className='dc-datepicker' data-value={getInputValue()}>
-                    <div ref={datepicker_ref}>
-                        <Input
-                            {...common_props}
-                            disabled={disabled}
-                            name={name}
-                            onClick={handleVisibility}
-                            onChangeInput={onChangeInput}
-                            // onClickClear={this.onClickClear}
-                            is_placeholder_visible={is_placeholder_visible}
-                            onBlur={onBlur}
-                            required={required}
-                            type={type}
-                            value={getInputValue()}
-                            data-testid={data_testid}
-                        />
-                        <Calendar
-                            ref={calendar_ref}
-                            calendar_el_ref={calendar_el_ref}
-                            parent_ref={datepicker_ref}
-                            keep_open={keep_open}
-                            alignment={alignment}
-                            is_datepicker_visible={is_datepicker_visible}
-                            onHover={has_range_selection ? onHover : undefined}
-                            onSelect={onSelectCalendar}
-                            onChangeCalendarMonth={onChangeCalendarMonth}
-                            has_today_btn={has_today_btn}
-                            placement={placement}
-                            style={style}
-                            value={getCalendarValue(date) || ''} // Calendar accepts date format yyyy-mm-dd
-                            start_date=''
-                            has_range_selection={has_range_selection}
-                            {...common_props}
-                        />
-                    </div>
-                </div>
-            </DesktopWrapper>
-        </React.Fragment>
+            </div>
+        </div>
     );
 });
 

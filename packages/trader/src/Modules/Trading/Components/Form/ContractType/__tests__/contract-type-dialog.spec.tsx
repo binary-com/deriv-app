@@ -1,12 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import ContractTypeDialog from '../contract-type-dialog';
-import { isMobile, isDesktop } from '@deriv/shared';
+import { useDevice } from '@deriv/hooks';
 
-jest.mock('@deriv/shared/src/utils/screen/responsive', () => ({
-    ...jest.requireActual('@deriv/shared/src/utils/screen/responsive'),
-    isMobile: jest.fn(),
-    isDesktop: jest.fn(() => true),
+jest.mock('@deriv/hooks', () => ({
+    useDevice: jest.fn(() => ({ isMobile: false })),
 }));
 
 const MockContractTypeDialog = () => (
@@ -48,8 +46,7 @@ describe('ContractTypeDialog Component', () => {
     });
 
     it('should render "MobileDialog" component in the mobile view', () => {
-        (isMobile as jest.Mock).mockReturnValue(true);
-        (isDesktop as jest.Mock).mockReturnValue(false);
+        (useDevice as jest.Mock).mockReturnValueOnce({ isMobile: true });
         render(<MockContractTypeDialog />);
         expect(screen.getByTestId('dt_mobile_dialog')).toBeInTheDocument();
     });

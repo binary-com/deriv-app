@@ -2,7 +2,7 @@ import React from 'react';
 import Loadable from 'react-loadable';
 
 import { mockStore } from '@deriv/stores';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 
 import TraderProviders from '../../../../../trader-providers';
 import FormLayout from '../form-layout';
@@ -22,10 +22,11 @@ const mock_store = {
 
 const store = mockStore(mock_store);
 
-jest.mock('@deriv/shared', () => ({
-    ...jest.requireActual('@deriv/shared'),
-    isMobile: jest.fn(() => false),
+jest.mock('@deriv/hooks', () => ({
+    ...jest.requireActual('@deriv/hooks'),
+    useDevice: jest.fn(() => ({ isMobile: false })),
 }));
+
 jest.mock('../screen-large', () => jest.fn(() => 'ScreenLarge'));
 
 describe('FormLayout', () => {
@@ -36,8 +37,10 @@ describe('FormLayout', () => {
             </TraderProviders>
         );
     };
-    it('should render the component', () => {
+    it('should render the component', async () => {
         render(mockedFormLayout(mock_props));
-        expect(screen.queryByText('ScreenLarge')).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getByText('ScreenLarge')).toBeInTheDocument();
+        });
     });
 });

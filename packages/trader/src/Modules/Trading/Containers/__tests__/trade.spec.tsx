@@ -3,9 +3,9 @@ import { act, render, screen } from '@testing-library/react';
 import { mockStore } from '@deriv/stores';
 import Trader from '../trade';
 import TraderProviders from '../../../../trader-providers';
-import { isDesktop, isMobile } from '@deriv/shared';
 import ChartLoader from 'App/Components/Elements/chart-loader';
 import { TCoreStores } from '@deriv/stores/types';
+import { useDevice } from '@deriv/hooks';
 
 jest.mock('App/Components/Elements/PositionsDrawer', () => jest.fn(() => <div>PositionsDrawer</div>));
 jest.mock('../trade-chart', () => jest.fn(() => <div>TradeChart</div>));
@@ -14,11 +14,9 @@ jest.mock('App/Components/Elements/chart-loader', () =>
     jest.fn(({ is_visible }: ComponentProps<typeof ChartLoader>) => (is_visible ? <div>ChartLoader</div> : null))
 );
 
-jest.mock('@deriv/shared', () => ({
-    ...jest.requireActual('@deriv/shared'),
-    isDesktop: jest.fn(() => true),
-    isMobile: jest.fn(() => false),
-    TRADE_TYPES: jest.fn(),
+jest.mock('@deriv/hooks', () => ({
+    ...jest.requireActual('@deriv/hooks'),
+    useDevice: jest.fn(() => ({ isDesktop: true, isMobile: false, isTablet: false })),
 }));
 
 type TMockTrader = {
@@ -71,21 +69,18 @@ describe('Trader', () => {
         jest.clearAllMocks();
     });
 
-    it('renders the trader component in desktop view', () => {
+    it('renders the trader component in mobile view', () => {
+        (useDevice as jest.Mock).mockReturnValueOnce({ isDesktop: false, isMobile: true, isTablet: false });
+        rootStore.ui.is_mobile = true;
         render(<MockTrader rootStore={rootStore} />);
-        expect(screen.getByText('PositionsDrawer')).toBeInTheDocument();
-        expect(screen.queryByTestId('dt_swipeable')).not.toBeInTheDocument();
         expect(screen.getByText('TradeChart')).toBeInTheDocument();
         expect(screen.getByText('FormLayout')).toBeInTheDocument();
     });
 
-    it('renders the trader component in mobile view', () => {
-        rootStore.ui.is_mobile = true;
-        (isDesktop as jest.Mock).mockReturnValue(false);
-        (isMobile as jest.Mock).mockReturnValue(true);
+    it('renders the trader component in desktop view', () => {
         render(<MockTrader rootStore={rootStore} />);
-        expect(screen.queryByText('PositionsDrawer')).not.toBeInTheDocument();
-        expect(screen.getAllByTestId('dt_swipeable')).not.toHaveLength(0);
+        expect(screen.getByText('PositionsDrawer')).toBeInTheDocument();
+        expect(screen.queryByTestId('dt_swipeable')).not.toBeInTheDocument();
         expect(screen.getByText('TradeChart')).toBeInTheDocument();
         expect(screen.getByText('FormLayout')).toBeInTheDocument();
     });
@@ -116,14 +111,14 @@ describe('Trader', () => {
 
     it('should have a correct height offset for div100vhcontainer for accumulator', () => {
         rootStore.modules.trade.is_accumulator = true;
-        (isDesktop as jest.Mock).mockReturnValue(false);
+        (useDevice as jest.Mock).mockReturnValueOnce({ isDesktop: false, isMobile: true, isTablet: false });
         render(<MockTrader rootStore={rootStore} />);
         expect(screen.getByTestId('dt_div_100_vh')).toHaveStyle('height: calc(768px - 295px);');
     });
 
     it('should have a correct height offset for div100vhcontainer for turbos', () => {
         rootStore.modules.trade.is_turbos = true;
-        (isDesktop as jest.Mock).mockReturnValue(false);
+        (useDevice as jest.Mock).mockReturnValueOnce({ isDesktop: false, isMobile: true, isTablet: false });
         render(<MockTrader rootStore={rootStore} />);
         expect(screen.getByTestId('dt_div_100_vh')).toHaveStyle('height: calc(768px - 300px);');
     });

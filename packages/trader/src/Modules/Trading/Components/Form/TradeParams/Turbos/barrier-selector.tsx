@@ -1,15 +1,17 @@
 import React from 'react';
 import BarriersList from '../barriers-list';
-import { DesktopWrapper, Icon, MobileDialog, MobileWrapper, Text, Popover } from '@deriv/components';
+import { Icon, MobileDialog, Text, Popover } from '@deriv/components';
 import Fieldset from 'App/Components/Form/fieldset';
 import { Localize, localize } from '@deriv/translations';
 import { observer } from '@deriv/stores';
 import { useTraderStore } from 'Stores/useTraderStores';
+import { useDevice } from '@deriv/hooks';
 
 const BarrierSelector = observer(() => {
     const { barrier_1, onChange, setHoveredBarrier, barrier_choices } = useTraderStore();
     const [is_barriers_table_expanded, setIsBarriersTableExpanded] = React.useState(false);
     const [selected_barrier, setSelectedBarrier] = React.useState(barrier_1);
+    const { isMobile } = useDevice();
 
     const toggleBarriersTable = () => {
         setIsBarriersTableExpanded(!is_barriers_table_expanded);
@@ -44,9 +46,9 @@ const BarrierSelector = observer(() => {
         </div>
     );
 
-    return (
-        <React.Fragment>
-            <MobileWrapper>
+    if (isMobile) {
+        return (
+            <React.Fragment>
                 <div className='mobile-widget' onClick={toggleBarriersTable}>
                     <Text size='xs' color='prominent' align='center'>
                         {localize('Spot')}
@@ -78,37 +80,40 @@ const BarrierSelector = observer(() => {
                         onHover={setHoveredBarrier}
                     />
                 </MobileDialog>
-            </MobileWrapper>
-            <DesktopWrapper>
-                <Fieldset
-                    className='trade-container__fieldset trade-container__barriers'
-                    header={localize('Barrier')}
-                    header_tooltip={header_tooltip_text}
-                >
-                    <div onClick={toggleBarriersTable} className='trade-container__barriers__wrapper'>
-                        <Text size='xs' className='trade-container__barriers-spot'>
-                            {localize('Spot')}
-                        </Text>
-                        <Text size='xs' className='trade-container__barriers-value' data-testid='current_barrier'>
-                            {barrier_1}
-                            <Icon icon='IcChevronLeft' className='trade-container__barriers-value--arrow-right' />
-                        </Text>
-                    </div>
-                </Fieldset>
-                {is_barriers_table_expanded && (
-                    <BarriersList
-                        className='trade-container__barriers-table'
-                        header={localize('Barriers')}
-                        barriers_list={barrier_choices}
-                        selected_item={selected_barrier}
-                        show_table={is_barriers_table_expanded}
-                        subheader={localize('Distance to current spot')}
-                        onClick={onBarrierClick}
-                        onClickCross={toggleBarriersTable}
-                        onHover={setHoveredBarrier}
-                    />
-                )}
-            </DesktopWrapper>
+            </React.Fragment>
+        );
+    }
+
+    return (
+        <React.Fragment>
+            <Fieldset
+                className='trade-container__fieldset trade-container__barriers'
+                header={localize('Barrier')}
+                header_tooltip={header_tooltip_text}
+            >
+                <div onClick={toggleBarriersTable} className='trade-container__barriers__wrapper'>
+                    <Text size='xs' className='trade-container__barriers-spot'>
+                        {localize('Spot')}
+                    </Text>
+                    <Text size='xs' className='trade-container__barriers-value' data-testid='current_barrier'>
+                        {barrier_1}
+                        <Icon icon='IcChevronLeft' className='trade-container__barriers-value--arrow-right' />
+                    </Text>
+                </div>
+            </Fieldset>
+            {is_barriers_table_expanded && (
+                <BarriersList
+                    className='trade-container__barriers-table'
+                    header={localize('Barriers')}
+                    barriers_list={barrier_choices}
+                    selected_item={selected_barrier}
+                    show_table={is_barriers_table_expanded}
+                    subheader={localize('Distance to current spot')}
+                    onClick={onBarrierClick}
+                    onClickCross={toggleBarriersTable}
+                    onHover={setHoveredBarrier}
+                />
+            )}
         </React.Fragment>
     );
 });

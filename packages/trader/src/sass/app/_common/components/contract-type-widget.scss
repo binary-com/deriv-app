@@ -16,7 +16,7 @@
         flex-direction: row;
         padding: 1.6rem 1.2rem;
 
-        @include mobile {
+        @include mobile-screen {
             padding: 0.8rem;
             flex: 1;
         }
@@ -72,7 +72,7 @@
         justify-content: center;
         padding-left: 1.2em;
 
-        @include mobile {
+        @include mobile-screen {
             padding-left: 0;
         }
         /* postcss-bem-linter: ignore */
@@ -107,7 +107,7 @@
         border-radius: 4px;
         border-color: var(--border-active);
     }
-    @include mobile {
+    @include mobile-screen {
         margin-bottom: 0.8rem;
         height: 4rem;
 
@@ -134,7 +134,7 @@
     padding: 0;
     cursor: pointer;
 
-    @include mobile {
+    @include mobile-screen {
         position: absolute;
         top: 1.5rem;
         background-color: transparent;

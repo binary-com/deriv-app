@@ -54,7 +54,7 @@
             }
         }
     }
-    @include mobile {
+    @include mobile-screen {
         margin-top: 0;
         padding: 0.8rem;
         border-radius: $BORDER_RADIUS;

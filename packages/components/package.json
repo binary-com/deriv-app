@@ -73,6 +73,7 @@
     },
     "dependencies": {
         "@contentpass/zxcvbn": "^4.4.3",
+        "@deriv/hooks": "^1.0.0",
         "@deriv/shared": "^1.0.0",
         "@deriv/stores": "^1.0.0",
         "@deriv/translations": "^1.0.0",
