@@ -4,7 +4,6 @@ export { default as useAuthorize } from './useAuthorize';
 export { default as useAvailableWallets } from './useAvailableWallets';
 export { default as useCFDAccounts } from './useCFDAccounts';
 export { default as useCFDAllAccounts } from './useCFDAllAccounts';
-export { default as useCFDCanGetMoreMT5Accounts } from './useCFDCanGetMoreMT5Accounts';
 export { default as useCFDDemoAccounts } from './useCFDDemoAccounts';
 export { default as useCFDRealAccounts } from './useCFDRealAccounts';
 export { default as useCashierLocked } from './useCashierLocked';
