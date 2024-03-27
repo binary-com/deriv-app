@@ -30,7 +30,6 @@ export { default as useHasMaltaInvestAccount } from './useHasMaltaInvestAccount'
 export { default as useHasP2PSupportedCurrencies } from './useHasP2PSupportedCurrencies';
 export { default as useHasSetCurrency } from './useHasSetCurrency';
 export { default as useHasSvgAccount } from './useHasSvgAccount';
-export { default as useHasSwapFreeAccount } from './useHasSwapFreeAccount';
 export { default as useHasUSDCurrency } from './useHasUSDCurrency';
 export { default as useInputATMFormatter } from './useInputATMFormatter';
 export { default as useInputDecimalFormatter } from './useInputDecimalFormatter';
