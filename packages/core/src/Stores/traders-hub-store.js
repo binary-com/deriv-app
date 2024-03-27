@@ -20,7 +20,6 @@ export default class TradersHubStore extends BaseStore {
     is_regulators_compare_modal_visible = false;
     is_mt5_notification_modal_visible = false;
     is_tour_open = false;
-    is_account_type_modal_visible = false;
     account_type_card = '';
     selected_platform_type = 'options';
     mt5_existing_account = {};
@@ -48,7 +47,6 @@ export default class TradersHubStore extends BaseStore {
             available_platforms: observable,
             combined_cfd_mt5_accounts: observable,
             is_account_transfer_modal_open: observable,
-            is_account_type_modal_visible: observable,
             is_regulators_compare_modal_visible: observable,
             is_mt5_notification_modal_visible: observable,
             is_failed_verification_modal_visible: observable,
@@ -101,7 +99,6 @@ export default class TradersHubStore extends BaseStore {
             startTrade: action.bound,
             toggleAccountTransferModal: action.bound,
             closeAccountTransferModal: action.bound,
-            toggleAccountTypeModalVisibility: action.bound,
             setIsOnboardingVisited: action.bound,
             setIsFirstTimeVisit: action.bound,
             setMT5NotificationModal: action.bound,
@@ -333,10 +330,6 @@ export default class TradersHubStore extends BaseStore {
             return;
         }
         this.available_platforms = appstore_platforms;
-    }
-
-    toggleAccountTypeModalVisibility() {
-        this.is_account_type_modal_visible = !this.is_account_type_modal_visible;
     }
 
     setIsOnboardingVisited(is_visited) {

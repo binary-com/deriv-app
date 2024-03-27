@@ -4,7 +4,6 @@ export { default as useAuthorize } from './useAuthorize';
 export { default as useAvailableWallets } from './useAvailableWallets';
 export { default as useCFDAccounts } from './useCFDAccounts';
 export { default as useCFDAllAccounts } from './useCFDAllAccounts';
-export { default as useCFDCanGetMoreMT5Accounts } from './useCFDCanGetMoreMT5Accounts';
 export { default as useCFDDemoAccounts } from './useCFDDemoAccounts';
 export { default as useCFDRealAccounts } from './useCFDRealAccounts';
 export { default as useCashierLocked } from './useCashierLocked';
@@ -31,7 +30,6 @@ export { default as useHasMaltaInvestAccount } from './useHasMaltaInvestAccount'
 export { default as useHasP2PSupportedCurrencies } from './useHasP2PSupportedCurrencies';
 export { default as useHasSetCurrency } from './useHasSetCurrency';
 export { default as useHasSvgAccount } from './useHasSvgAccount';
-export { default as useHasSwapFreeAccount } from './useHasSwapFreeAccount';
 export { default as useHasUSDCurrency } from './useHasUSDCurrency';
 export { default as useInputATMFormatter } from './useInputATMFormatter';
 export { default as useInputDecimalFormatter } from './useInputDecimalFormatter';
