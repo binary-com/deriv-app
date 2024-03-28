@@ -29,8 +29,10 @@ export type TAdvertProps = {
     description: string;
     effective_rate: number;
     effective_rate_display: string;
+    eligibility_status: string[];
     id: string;
     is_active: number;
+    is_eligible: number;
     is_visible: number;
     local_currency: string;
     max_order_amount: number;

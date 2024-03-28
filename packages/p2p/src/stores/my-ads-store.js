@@ -20,6 +20,8 @@ export default class MyAdsStore extends BaseStore {
     edit_ad_form_error = '';
     error_message = '';
     has_more_items_to_load = false;
+    min_join_days = 0;
+    min_completion_rate = 0;
     is_ad_created_modal_visible = false;
     is_edit_ad_error_modal_visible = false;
     is_form_loading = false;
@@ -32,9 +34,9 @@ export default class MyAdsStore extends BaseStore {
     show_edit_ad_form = false;
     required_ad_type;
     error_code = '';
-
     payment_method_ids = [];
     payment_method_names = [];
+    preferred_countries = [];
 
     constructor(root_store) {
         // TODO: [mobx-undecorate] verify the constructor arguments and the arguments of this automatically generated super call
@@ -92,7 +94,10 @@ export default class MyAdsStore extends BaseStore {
             setIsFormLoading: action.bound,
             setIsLoading: action.bound,
             setIsTableLoading: action.bound,
+            setMinJoinDays: action.bound,
+            setMinCompletionRate: action.bound,
             setP2pAdvertInformation: action.bound,
+            setPreferredCountries: action.bound,
             setSelectedAdId: action.bound,
             setShouldShowAddPaymentMethod: action.bound,
             setShowAdForm: action.bound,
@@ -170,6 +175,8 @@ export default class MyAdsStore extends BaseStore {
             order_expiry_period: values.order_completion_time,
             rate_type: values.rate_type_string,
             rate: Number(values.rate_type),
+            min_completion_rate: Number(this.min_completion_rate),
+            min_join_days: Number(this.min_join_days),
             ...(this.payment_method_names.length > 0 && !is_sell_ad
                 ? { payment_method_names: this.payment_method_names }
                 : {}),
@@ -303,6 +310,8 @@ export default class MyAdsStore extends BaseStore {
             order_expiry_period: values.order_completion_time,
             rate_type: this.required_ad_type,
             rate: Number(values.rate_type),
+            min_completion_rate: Number(this.min_completion_rate),
+            min_join_days: Number(this.min_join_days),
             ...(this.payment_method_names.length > 0 && !is_sell_ad
                 ? { payment_method_names: this.payment_method_names }
                 : {}),
@@ -484,8 +493,20 @@ export default class MyAdsStore extends BaseStore {
         this.is_table_loading = is_table_loading;
     }
 
+    setMinJoinDays(min_join_days) {
+        this.min_join_days = min_join_days;
+    }
+
+    setMinCompletionRate(min_completion_rate) {
+        this.min_completion_rate = min_completion_rate;
+    }
+
     setP2pAdvertInformation(p2p_advert_information) {
         this.p2p_advert_information = p2p_advert_information;
+    }
+
+    setPreferredCountries(preferred_countries) {
+        this.preferred_countries = preferred_countries;
     }
 
     setSelectedAdId(selected_ad_id) {

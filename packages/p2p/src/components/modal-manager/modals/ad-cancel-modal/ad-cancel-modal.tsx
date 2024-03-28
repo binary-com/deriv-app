@@ -2,18 +2,21 @@ import React from 'react';
 import { Button, Modal, Text } from '@deriv/components';
 import { localize, Localize } from 'Components/i18next';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
-import { useStores } from 'Stores';
 
-const EditAdCancelModal = () => {
-    const { my_ads_store } = useStores();
+type TAdCancelModalProps = {
+    message: string;
+    onConfirm?: () => void;
+    title: string;
+};
+
+const AdCancelModal = ({ message, onConfirm, title }: TAdCancelModalProps) => {
     const { hideModal, is_modal_open } = useModalManagerContext();
-    const { setShowEditAdForm } = my_ads_store;
 
     return (
-        <Modal has_close_icon={false} is_open={is_modal_open} small title={localize('Cancel your edits?')}>
+        <Modal has_close_icon={false} is_open={is_modal_open} small title={localize(title)}>
             <Modal.Body>
                 <Text as='p' size='xs' color='prominent'>
-                    <Localize i18n_default_text='If you choose to cancel, the edited details will be lost.' />
+                    <Localize i18n_default_text={message} />
                 </Text>
             </Modal.Body>
             <Modal.Footer>
@@ -22,7 +25,7 @@ const EditAdCancelModal = () => {
                     text={localize('Cancel')}
                     onClick={() => {
                         hideModal();
-                        setShowEditAdForm(false);
+                        onConfirm?.();
                     }}
                     secondary
                     large
@@ -33,4 +36,4 @@ const EditAdCancelModal = () => {
     );
 };
 
-export default EditAdCancelModal;
+export default AdCancelModal;

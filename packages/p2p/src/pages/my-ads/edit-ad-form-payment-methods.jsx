@@ -28,15 +28,6 @@ const EditAdFormPaymentMethods = ({ is_sell_advert, selected_methods, setSelecte
         touched(true);
     };
 
-    React.useEffect(() => {
-        return () => {
-            my_ads_store.payment_method_ids = [];
-            my_ads_store.payment_method_names = [];
-        };
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     if (is_sell_advert) {
         if (p2p_advertiser_payment_methods?.length) {
             return (

@@ -3,18 +3,19 @@ import { useHistory } from 'react-router-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import { Button, Icon, Table, Text } from '@deriv/components';
+import { Icon, Table, Text } from '@deriv/components';
 import { isMobile, routes } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { useP2PExchangeRate } from '@deriv/hooks';
 
-import { Localize, localize } from 'Components/i18next';
+import { Localize } from 'Components/i18next';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
 import { OnlineStatusAvatar } from 'Components/online-status';
 import StarRating from 'Components/star-rating';
 import TradeBadge from 'Components/trade-badge';
 import { document_status_codes, identity_status_codes } from 'Constants/account-status-codes';
 import { buy_sell } from 'Constants/buy-sell';
+import BuySellRowAction from 'Pages/buy-sell/buy-sell-row-action';
 import { useStores } from 'Stores';
 import { generateEffectiveRate } from 'Utils/format-value';
 
@@ -26,6 +27,8 @@ const BuySellRow = ({ row: advert }) => {
         advertiser_details,
         counterparty_type,
         effective_rate,
+        eligibility_status,
+        is_eligible,
         local_currency,
         max_order_amount_limit_display,
         min_order_amount_limit_display,
@@ -187,19 +190,14 @@ const BuySellRow = ({ row: advert }) => {
                         )}
                     </div>
                     {!is_my_advert && (
-                        <Button
+                        <BuySellRowAction
+                            account_currency={account_currency}
                             className='buy-sell-row__button'
-                            is_disabled={general_store.is_barred}
-                            large
+                            eligibility_status={eligibility_status}
+                            is_buy_advert={is_buy_advert}
+                            is_eligible={is_eligible}
                             onClick={onClickBuySell}
-                            primary
-                        >
-                            {is_buy_advert ? (
-                                <Localize i18n_default_text='Buy {{account_currency}}' values={{ account_currency }} />
-                            ) : (
-                                <Localize i18n_default_text='Sell {{account_currency}}' values={{ account_currency }} />
-                            )}
-                        </Button>
+                        />
                     )}
                 </div>
             </div>
@@ -293,11 +291,13 @@ const BuySellRow = ({ row: advert }) => {
                 <Table.Cell />
             ) : (
                 <Table.Cell className='buy-sell__button'>
-                    <Button is_disabled={general_store.is_barred} onClick={onClickBuySell} primary small>
-                        {is_buy_advert
-                            ? localize('Buy {{account_currency}}', { account_currency })
-                            : localize('Sell {{account_currency}}', { account_currency })}
-                    </Button>
+                    <BuySellRowAction
+                        account_currency={account_currency}
+                        eligibility_status={eligibility_status}
+                        is_buy_advert={is_buy_advert}
+                        is_eligible={is_eligible}
+                        onClick={onClickBuySell}
+                    />
                 </Table.Cell>
             )}
         </Table.Row>
