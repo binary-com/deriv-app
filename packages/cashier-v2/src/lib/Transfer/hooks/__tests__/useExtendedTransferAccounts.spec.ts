@@ -7,51 +7,49 @@ jest.mock('@deriv/api-v2', () => ({
     ...jest.requireActual('@deriv/api-v2'),
     useActiveAccount: jest.fn(),
     useCurrencyConfig: jest.fn(),
+    displayMoney: jest.fn((balance, currency, options) => `${balance}-${currency}-${options.fractional_digits}`),
 }));
 
-const mockUseActiveAccount = useActiveAccount as jest.MockedFunction<typeof useActiveAccount>;
-const mockUseCurrencyConfig = useCurrencyConfig as jest.MockedFunction<typeof useCurrencyConfig>;
-
 const mockUnorderedTransferAccounts = [
-    { account_type: 'dxtrade', currency: 'USD', loginid: 'CR3' },
-    { account_type: 'binary', currency: 'ETH', loginid: 'CR6' },
-    { account_type: 'mt5', currency: 'USD', loginid: 'CR1' },
-    { account_type: 'binary', currency: 'USD', loginid: 'CR4' },
-    { account_type: 'ctrader', currency: 'USD', loginid: 'CR2' },
-    { account_type: 'binary', currency: 'BTC', loginid: 'CR5' },
+    { account_type: 'dxtrade', balance: '300', currency: 'USD', loginid: 'CR3' },
+    { account_type: 'binary', balance: '600', currency: 'ETH', loginid: 'CR6' },
+    { account_type: 'mt5', balance: '100', currency: 'USD', loginid: 'CR1' },
+    { account_type: 'binary', balance: '400', currency: 'USD', loginid: 'CR4' },
+    { account_type: 'ctrader', balance: '200', currency: 'USD', loginid: 'CR2' },
+    { account_type: 'binary', balance: '500', currency: 'BTC', loginid: 'CR5' },
 ] as THooks.TransferAccounts;
 
-const getCurrencyType = (currency: string) => {
+const getCurrencyConfig = (currency: string) => {
     let is_fiat = false,
-        is_crypto = false;
+        is_crypto = false,
+        fractional_digits = 2;
     switch (currency) {
         case 'USD':
             is_fiat = true;
             break;
         case 'BTC':
             is_crypto = true;
+            fractional_digits = 8;
             break;
         case 'ETH':
             is_crypto = true;
+            fractional_digits = 7;
             break;
     }
-    return { is_crypto, is_fiat };
+    return { is_crypto, is_fiat, fractional_digits };
 };
 
 describe('useExtendedTransferBetweenAccounts', () => {
     beforeEach(() => {
-        mockUseActiveAccount.mockReturnValue({
-            // @ts-expect-error - since this is a mock, we only need partial properties of the hook
-            data: { account_type: 'binary', currency: 'USD', loginid: 'CR4' },
+        (useActiveAccount as jest.Mock).mockReturnValue({
+            data: {
+                loginid: 'CR4',
+            },
             isLoading: false,
         });
 
-        mockUseCurrencyConfig.mockReturnValue({
-            // @ts-expect-error - since this is a mock, we only need partial properties of the hook
-            getConfig: jest.fn(currency => ({
-                config: `currencyConfig-${currency}`,
-                ...getCurrencyType(currency),
-            })),
+        (useCurrencyConfig as jest.Mock).mockReturnValue({
+            getConfig: (currency: string) => getCurrencyConfig(currency),
             isLoading: false,
         });
     });
@@ -73,63 +71,75 @@ describe('useExtendedTransferBetweenAccounts', () => {
         const mockExpectedTransferAccounts = [
             {
                 account_type: 'mt5',
+                balance: '100',
                 currency: 'USD',
                 loginid: 'CR1',
                 currencyConfig: {
-                    config: `currencyConfig-USD`,
+                    fractional_digits: 2,
                     is_fiat: true,
                     is_crypto: false,
                 },
+                displayBalance: '100-USD-2',
             },
             {
                 account_type: 'ctrader',
+                balance: '200',
                 currency: 'USD',
                 loginid: 'CR2',
                 currencyConfig: {
-                    config: `currencyConfig-USD`,
+                    fractional_digits: 2,
                     is_fiat: true,
                     is_crypto: false,
                 },
+                displayBalance: '200-USD-2',
             },
             {
                 account_type: 'dxtrade',
+                balance: '300',
                 currency: 'USD',
                 loginid: 'CR3',
                 currencyConfig: {
-                    config: `currencyConfig-USD`,
+                    fractional_digits: 2,
                     is_fiat: true,
                     is_crypto: false,
                 },
+                displayBalance: '300-USD-2',
             },
             {
                 account_type: 'binary',
+                balance: '400',
                 currency: 'USD',
                 loginid: 'CR4',
                 currencyConfig: {
-                    config: `currencyConfig-USD`,
+                    fractional_digits: 2,
                     is_fiat: true,
                     is_crypto: false,
                 },
+                displayBalance: '400-USD-2',
             },
             {
                 account_type: 'binary',
+                balance: '500',
                 currency: 'BTC',
                 loginid: 'CR5',
                 currencyConfig: {
-                    config: `currencyConfig-BTC`,
+                    fractional_digits: 8,
                     is_fiat: false,
                     is_crypto: true,
                 },
+                displayBalance: '500-BTC-8',
             },
             {
                 account_type: 'binary',
+                balance: '600',
                 currency: 'ETH',
                 loginid: 'CR6',
                 currencyConfig: {
-                    config: `currencyConfig-ETH`,
+                    fractional_digits: 7,
                     is_fiat: false,
                     is_crypto: true,
                 },
+                displayBalance: '600-ETH-7',
             },
         ];
         expect(result.current.accounts).toEqual(mockExpectedTransferAccounts);

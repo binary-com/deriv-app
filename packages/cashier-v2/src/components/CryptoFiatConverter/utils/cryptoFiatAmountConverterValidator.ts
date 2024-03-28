@@ -11,6 +11,7 @@ export type TGetCryptoFiatConverterValidationSchema = {
     fromAccount: {
         balance: number;
         currency: TCurrency;
+        displayBalance?: string;
         fractionalDigits?: number;
         limits: {
             max: number;

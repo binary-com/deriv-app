@@ -10,6 +10,7 @@ const TransferCryptoFiatAmountConverter = () => {
     const modifiedFromAccount = {
         balance: parseFloat(values.fromAccount.balance),
         currency: values.fromAccount.currency as TCurrency,
+        displayBalance: values.fromAccount.displayBalance,
         fractionalDigits: values.fromAccount.currencyConfig?.fractional_digits,
         limits: {
             max: 100,

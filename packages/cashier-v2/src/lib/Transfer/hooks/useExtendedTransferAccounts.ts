@@ -1,55 +1,43 @@
 import { useMemo } from 'react';
 import { useActiveAccount, useCurrencyConfig } from '@deriv/api-v2';
+import { displayMoney } from '@deriv/api-v2/src/utils';
 import { THooks } from '../../../hooks/types';
 
-type TGetCurrencyConfig = ReturnType<typeof useCurrencyConfig>['getConfig'];
+type TModifiedAccounts = ReturnType<typeof getModifiedAccounts>;
 
-const sortedMT5Accounts = (accounts: THooks.TransferAccounts, getConfig: TGetCurrencyConfig) => {
-    return accounts
-        .filter(account => account.account_type === 'mt5')
-        .map(account => ({
+const getModifiedAccounts = (
+    accounts: THooks.TransferAccounts,
+    getConfig: ReturnType<typeof useCurrencyConfig>['getConfig']
+) => {
+    return accounts.map(account => {
+        const currencyConfig = account?.currency ? getConfig(account.currency) : undefined;
+        return {
             ...account,
-            currencyConfig: account?.currency ? getConfig(account.currency) : undefined,
-        }));
+            currencyConfig,
+            displayBalance: displayMoney(Number(account.balance), account.currency ?? '', {
+                fractional_digits: currencyConfig?.fractional_digits,
+            }),
+        };
+    });
 };
 
-const derivCTrader = (accounts: THooks.TransferAccounts, getConfig: TGetCurrencyConfig) => {
-    return accounts
-        .filter(account => account.account_type === 'ctrader')
-        .map(account => ({
-            ...account,
-            currencyConfig: account?.currency ? getConfig(account.currency) : undefined,
-        }));
+const sortedMT5Accounts = (accounts: TModifiedAccounts) => {
+    return accounts.filter(account => account.account_type === 'mt5');
 };
 
-const derivXAccount = (accounts: THooks.TransferAccounts, getConfig: TGetCurrencyConfig) =>
-    accounts
-        .filter(account => account.account_type === 'dxtrade')
-        .map(account => ({
-            ...account,
-            currencyConfig: account?.currency ? getConfig(account.currency) : undefined,
-        }));
-
-const fiatDerivAccounts = (accounts: THooks.TransferAccounts, getConfig: TGetCurrencyConfig) => {
-    return accounts
-        .filter(
-            account => account.account_type === 'binary' && account.currency && getConfig(account.currency)?.is_fiat
-        )
-        .map(account => ({
-            ...account,
-            currencyConfig: account?.currency ? getConfig(account.currency) : undefined,
-        }));
+const derivCTrader = (accounts: TModifiedAccounts) => {
+    return accounts.filter(account => account.account_type === 'ctrader');
 };
 
-const sortedCryptoDerivAccounts = (accounts: THooks.TransferAccounts, getConfig: TGetCurrencyConfig) => {
+const derivXAccount = (accounts: TModifiedAccounts) => accounts.filter(account => account.account_type === 'dxtrade');
+
+const fiatDerivAccounts = (accounts: TModifiedAccounts) => {
+    return accounts.filter(account => account.account_type === 'binary' && account.currencyConfig?.is_fiat);
+};
+
+const sortedCryptoDerivAccounts = (accounts: TModifiedAccounts) => {
     return accounts
-        .filter(
-            account => account.account_type === 'binary' && account.currency && getConfig(account.currency)?.is_crypto
-        )
-        .map(account => ({
-            ...account,
-            currencyConfig: account?.currency ? getConfig(account.currency) : undefined,
-        }))
+        .filter(account => account.account_type === 'binary' && account.currencyConfig?.is_crypto)
         .sort((prev, next) => {
             return prev.currency && next.currency ? prev.currency.localeCompare(next.currency) : 0;
         });
@@ -67,26 +55,28 @@ const useExtendedTransferAccounts = (accounts: THooks.TransferAccounts) => {
 
     const isLoading = !accounts || isActiveAccountLoading || isCurrencyConfigLoading;
 
-    const extendedTransferableAccounts = useMemo(() => {
-        if (isLoading) return [];
+    const modifiedAccounts = getModifiedAccounts(accounts, getConfig);
 
+    const extendedTransferableAccounts = useMemo(() => {
         return [
-            ...sortedMT5Accounts(accounts, getConfig),
-            ...derivCTrader(accounts, getConfig),
-            ...derivXAccount(accounts, getConfig),
-            ...fiatDerivAccounts(accounts, getConfig),
-            ...sortedCryptoDerivAccounts(accounts, getConfig),
+            ...sortedMT5Accounts(modifiedAccounts),
+            ...derivCTrader(modifiedAccounts),
+            ...derivXAccount(modifiedAccounts),
+            ...fiatDerivAccounts(modifiedAccounts),
+            ...sortedCryptoDerivAccounts(modifiedAccounts),
         ];
-    }, [accounts, isLoading, getConfig]);
+    }, [modifiedAccounts]);
 
     const transferableActiveAccount = useMemo(() => {
+        if (!extendedTransferableAccounts) return undefined;
+
         return extendedTransferableAccounts.find(account => account.loginid === activeAccount?.loginid);
     }, [activeAccount, extendedTransferableAccounts]);
 
     return {
         accounts: extendedTransferableAccounts,
         activeAccount: transferableActiveAccount,
-        isLoading: isLoading || !extendedTransferableAccounts.length || !transferableActiveAccount,
+        isLoading: isLoading || !extendedTransferableAccounts || !transferableActiveAccount,
     };
 };
 
