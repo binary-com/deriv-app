@@ -7,7 +7,7 @@ export const Card = ({ children, className, ...props }: PropsWithChildren<TCardP
     return (
         <div
             className={twMerge(
-                'p-16 rounded-xs border-solid-grey-5 flex flex-col justify-between h-auto m-16 border-1 border-solid w-full',
+                'p-16 rounded-xs border-solid-grey-5 flex flex-col justify-between h-auto border-1 border-solid w-full',
                 className
             )}
             {...props}

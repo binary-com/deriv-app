@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Formik } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 import { useHistory } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
-import { useOnfido } from '@deriv/api-v2';
+import { InferType } from 'yup';
+import { useOnfido, useSettings } from '@deriv/api-v2';
+import { TSocketError } from '@deriv/api-v2/types';
 import { Button, Loader, Text } from '@deriv-com/ui';
 import IcAccountMissingDetails from '../../assets/proof-of-identity/ic-account-missing-details.svg';
 import { ErrorMessage } from '../../components/ErrorMessage';
 import { IconWithMessage } from '../../components/IconWithMessage';
 import { TManualDocumentTypes } from '../../constants/manualFormConstants';
 import { OnfidoView, PersonalDetailsFormWithExample } from '../../containers';
-import { getNameDOBValidationSchema } from '../../utils';
+import {
+    generateNameDOBFormData,
+    generateNameDOBPayloadData,
+    getNameDOBValidationSchema,
+    setErrorMessage,
+} from '../../utils';
 
 // TODO: Remove optional and default props when POI is ready
 type TOnfidoContainer = {
@@ -30,6 +37,14 @@ export const OnfidoContainer = ({
     const history = useHistory();
 
     const validationSchema = getNameDOBValidationSchema();
+
+    type TNameDOBFormData = InferType<typeof validationSchema>;
+    type TErrorData = TSocketError<'set_settings'>;
+
+    const {
+        data: personalInfo,
+        mutation: { mutateAsync: updateAsync },
+    } = useSettings();
 
     const {
         data: { hasSubmitted, onfidoContainerId, onfidoRef },
@@ -59,9 +74,32 @@ export const OnfidoContainer = ({
     }, [isOnfidoEnabled]);
 
     const hasPersonalDetailsValidationError = ['MissingPersonalDetails', 'InvalidPostalCode'].includes(
-        serviceTokenError?.error.code ?? ''
+        serviceTokenError?.error?.code ?? ''
     );
     const showErrorMessage = onfidoInitializationError?.message ?? serviceTokenError?.error?.message;
+
+    const initialValues = {
+        ...validationSchema.getDefault(),
+        ...generateNameDOBFormData(personalInfo),
+    };
+
+    const handlePersonalDetailsUpdate = async (
+        values: TNameDOBFormData,
+        { setStatus, setSubmitting }: FormikHelpers<TNameDOBFormData>
+    ) => {
+        setStatus({ error: '' });
+        setSubmitting(true);
+        const personalDetailsPayload = generateNameDOBPayloadData(values);
+        try {
+            await updateAsync({ payload: personalDetailsPayload });
+            setSubmitting(false);
+            setIsOnfidoEnabled(true);
+        } catch (error) {
+            const responseError = setErrorMessage((error as TErrorData)?.error);
+            setStatus({ error: responseError });
+            setSubmitting(false);
+        }
+    };
 
     if (isServiceTokenLoading) {
         return <Loader />;
@@ -111,11 +149,9 @@ export const OnfidoContainer = ({
                     )}
                 >
                     <Formik
-                        initialValues={validationSchema.getDefault()}
-                        onSubmit={() => {
-                            // [TODO]: Add onSubmit logic
-                            setIsOnfidoEnabled(true);
-                        }}
+                        initialStatus={{ error: '' }}
+                        initialValues={initialValues as TNameDOBFormData}
+                        onSubmit={handlePersonalDetailsUpdate}
                         validateOnMount
                         validationSchema={validationSchema}
                     >

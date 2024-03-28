@@ -21,12 +21,12 @@ export const ManualFormInputs = ({ isExpiryDateRequired, selectedDocument }: TMa
         <Fragment>
             <Text>{getTitleForFormInputs(selectedDocument)}</Text>
             <div className='gap-24 flex flex-col lg:grid lg:grid-cols-2'>
-                <FormInputField isFullWidth label={`${fieldsConfig.documentNumber.label}*`} name='documentNumber' />
+                <FormInputField isFullWidth label={`${fieldsConfig?.documentNumber?.label}*`} name='documentNumber' />
                 {isExpiryDateRequired && (
                     <Field name='documentExpiry'>
                         {({ field, form, meta }: FieldProps) => {
                             const hasError = meta.touched && !!meta.error;
-                            const fieldLabel = `${fieldsConfig.documentExpiry.label}*`;
+                            const fieldLabel = `${fieldsConfig?.documentExpiry?.label}*`;
                             return (
                                 <DatePicker
                                     {...field}

@@ -1,6 +1,8 @@
+import { unix } from 'dayjs';
 import * as Yup from 'yup';
 import { GetSettings, ResidenceList, StatesList } from '@deriv/api-types';
 import { ValidationConstants } from '@deriv-com/utils';
+import { TGetSettingsResponse } from '../types';
 
 type TInitialValues = {
     addressCity?: string;
@@ -116,7 +118,7 @@ export const getPersonalDetailsBaseValidationSchema = () => {
             .matches(regexPattern.postalCode, 'Only letters, numbers, space, and hyphen are allowed.'),
         citizenship: Yup.string().required('Citizenship is required.'),
         countryOfResidence: Yup.string().required('Country of residence is required.'),
-        dateOfBirth: Yup.date().typeError('Please enter a valid date.').required('Date of birth is required.'),
+        dateOfBirth: Yup.string().required('Date of birth is required.'),
         employmentStatus: Yup.string().required('Employment status is required.'),
         firstName: Yup.string()
             .required('First name is required.')
@@ -192,3 +194,15 @@ export const getPersonalDetailsValidationSchema = (isEu: boolean) => {
 export const isFieldDisabled = (accountSettings: GetSettings, fieldName: string) => {
     return accountSettings?.immutable_fields?.includes(fieldName);
 };
+
+export const generateNameDOBPayloadData = (values: Yup.InferType<ReturnType<typeof getNameDOBValidationSchema>>) => ({
+    date_of_birth: values.dateOfBirth.toString(),
+    first_name: values.firstName.trim(),
+    last_name: values.lastName.trim(),
+});
+
+export const generateNameDOBFormData = (values: TGetSettingsResponse) => ({
+    dateOfBirth: values.date_of_birth ? unix(values.date_of_birth as number).format('YYYY-MM-DD') : '',
+    firstName: values.first_name,
+    lastName: values.last_name,
+});

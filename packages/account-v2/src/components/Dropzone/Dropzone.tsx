@@ -54,7 +54,7 @@ const Dropzone: React.FC<TProps> = ({
     icon,
     maxSize,
     onFileChange,
-    title = false,
+    title = '',
     titleType = 'normal',
 }) => {
     const [file, setFile] = useState<TFile | null>(
@@ -112,11 +112,11 @@ const Dropzone: React.FC<TProps> = ({
                     { 'account-dropzone--active': file }
                 )}
             >
-                <div className='flex flex-col items-center justify-center w-full h-full gap-400'>
+                <div className='flex flex-col items-center justify-center w-full h-full'>
                     {showHoverMessage && <Text size='sm'>{hoverMessage}</Text>}
-                    {!file && (
-                        <div className='flex flex-col items-center gap-700'>
-                            <div className='flex-shrink-0'>{icon}</div>
+                    {!file ? (
+                        <div className='flex flex-col items-center'>
+                            <div className='flex-shrink-0 mb-24'>{icon}</div>
                             {title && (
                                 <Text align='center' color='primary' size='xs' weight={titleType}>
                                     {title}
@@ -126,8 +126,8 @@ const Dropzone: React.FC<TProps> = ({
                                 {description}
                             </Text>
                             {buttonText && (
-                                <div className='flex flex-col items-center gap-1600'>
-                                    <Button onClick={open} type='button' variant='outlined'>
+                                <div className='flex flex-col items-center gap-1600 mt-32'>
+                                    <Button color='black' onClick={open} type='button' variant='outlined'>
                                         {buttonText}
                                     </Button>
                                 </div>
@@ -138,8 +138,7 @@ const Dropzone: React.FC<TProps> = ({
                                 </Text>
                             )}
                         </div>
-                    )}
-                    {file && (
+                    ) : (
                         <React.Fragment key={file.name}>
                             <div
                                 className={classNames('account-dropzone__thumb', {

@@ -6,11 +6,12 @@ import { Dropdown } from '@deriv-com/ui';
 type TCountrySelector = {
     disabled?: boolean;
     errorMessage?: React.ReactNode;
+    handleSelect?: (value: string) => void;
     label: string;
     name: string;
 };
 
-export const CountrySelector = ({ disabled, errorMessage, label, name, ...field }: TCountrySelector) => {
+export const CountrySelector = ({ disabled, errorMessage, handleSelect, label, name, ...field }: TCountrySelector) => {
     const { data: residenceList } = useResidenceList();
 
     return (
@@ -23,8 +24,7 @@ export const CountrySelector = ({ disabled, errorMessage, label, name, ...field 
             label={label}
             list={residenceList}
             name={name}
-            /*eslint-disable @typescript-eslint/no-empty-function */
-            onSelect={() => {}}
+            onSelect={value => handleSelect?.(value as string)}
             variant='prompt'
         />
     );

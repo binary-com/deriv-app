@@ -9,14 +9,14 @@ type TIconWithMessage = {
 };
 
 export const IconWithMessage = ({ actionButton, children, icon, title }: TIconWithMessage) => (
-    <div className='grid justify-center w-full justify-items-center mt-80 gap-20'>
+    <div className='flex flex-col w-full'>
         {icon}
-        <div className='grid justify-center gap-10'>
+        <div className='grid justify-center gap-16 mt-24 mb-32'>
             <Text align='center' size='md' weight='bold'>
                 {title}
             </Text>
-            {children && <div className='grid gap-4'>{children}</div>}
+            {children}
         </div>
-        {actionButton && <div className='mt-10'>{actionButton}</div>}
+        {actionButton && <div className='flex justify-center'>{actionButton}</div>}
     </div>
 );

@@ -17,6 +17,7 @@
         "@deriv/quill-icons": "^1.19.5",
         "@deriv/api-types": "^1.0.172",
         "class-variance-authority": "^0.7.0",
+        "dayjs": "^1.11.10",
         "formik": "^2.1.4",
         "i18n-iso-countries": "^6.8.0",
         "i18next": "^22.4.6",

@@ -140,14 +140,7 @@ export const AccountClosureForm = ({ handleOnBack }: { handleOnBack: () => void 
                             >
                                 Back
                             </Button>
-                            <Button
-                                color='primary'
-                                disabled={!dirty || isReasonNotSelected}
-                                rounded='sm'
-                                size='md'
-                                type='submit'
-                                variant='contained'
-                            >
+                            <Button disabled={!dirty || isReasonNotSelected} rounded='sm' size='md' type='submit'>
                                 Continue
                             </Button>
                         </section>

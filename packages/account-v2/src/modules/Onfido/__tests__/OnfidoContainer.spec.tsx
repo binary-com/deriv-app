@@ -23,6 +23,10 @@ jest.mock('@deriv/api-v2', () => ({
         isOnfidoInitialized: true,
         isServiceTokenLoading: false,
     })),
+    useSettings: jest.fn(() => ({
+        data: {},
+        mutation: { mutateAsync: jest.fn() },
+    })),
 }));
 
 beforeEach(() => {

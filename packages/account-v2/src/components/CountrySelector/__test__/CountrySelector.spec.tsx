@@ -15,7 +15,7 @@ const renderComponents = () => {
     render(
         <APIProvider>
             <AuthProvider>
-                <CountrySelector label='Country' name='country' />
+                <CountrySelector handleSelect={jest.fn()} label='Country' name='country' />
             </AuthProvider>
         </APIProvider>
     );

@@ -20,10 +20,17 @@ jest.mock('../../../hooks', () => ({
 
 jest.mock('@deriv/api-v2', () => ({
     ...jest.requireActual('@deriv/api-v2'),
+    useDocumentUpload: jest.fn(() => ({
+        upload: jest.fn(),
+    })),
     useOnfido: jest.fn(() => ({
         data: {},
         isOnfidoInitialized: true,
         isServiceTokenLoading: false,
+    })),
+    useSettings: jest.fn(() => ({
+        data: {},
+        mutation: { mutateAsync: jest.fn() },
     })),
 }));
 
@@ -37,20 +44,20 @@ describe('ManualUpload', () => {
     });
 
     it('should render DocumentSelection when no document is selected', () => {
-        render(<ManualUpload countryCode='in' />);
+        render(<ManualUpload countryCode='in' handleComplete={jest.fn()} onCancel={jest.fn()} />);
 
         expect(screen.getByText('Please upload one of the following documents:')).toBeInTheDocument();
         expect(screen.getAllByTestId('dt_manual_document_types')).toHaveLength(3);
     });
 
     it('should render 4 documents for Nigeria', () => {
-        render(<ManualUpload countryCode='ng' />);
+        render(<ManualUpload countryCode='ng' handleComplete={jest.fn()} onCancel={jest.fn()} />);
 
         expect(screen.getAllByTestId('dt_manual_document_types')).toHaveLength(4);
     });
 
     it('should render ManualUploadContainer when a document is selected', () => {
-        render(<ManualUpload countryCode='in' />);
+        render(<ManualUpload countryCode='in' handleComplete={jest.fn()} onCancel={jest.fn()} />);
 
         const elDocumentType = screen.getAllByTestId('dt_manual_document_types')[0];
         userEvent.click(elDocumentType);
@@ -59,14 +66,16 @@ describe('ManualUpload', () => {
         expect(screen.getAllByRole('textbox')).toHaveLength(2);
     });
 
-    it('should disable Next button when form is not filled', () => {
-        render(<ManualUpload countryCode='in' />);
+    it('should disable Next button when form is not filled', async () => {
+        render(<ManualUpload countryCode='in' handleComplete={jest.fn()} onCancel={jest.fn()} />);
 
         const elDocumentType = screen.getAllByTestId('dt_manual_document_types')[1];
         userEvent.click(elDocumentType);
 
-        const elNextButton = screen.getByRole('button', { name: /Next/ });
-        expect(elNextButton).toBeDisabled();
+        await waitFor(() => {
+            const elNextButton = screen.getByRole('button', { name: /Next/ });
+            expect(elNextButton).toBeDisabled();
+        });
     });
 
     it('should enable Next button when form is filled', async () => {
@@ -75,7 +84,7 @@ describe('ManualUpload', () => {
             isLoading: false,
             poiService: 'manual',
         });
-        render(<ManualUpload countryCode='ng' />);
+        render(<ManualUpload countryCode='ng' handleComplete={jest.fn()} onCancel={jest.fn()} />);
 
         const elDocumentType = screen.getAllByTestId('dt_manual_document_types')[0];
         userEvent.click(elDocumentType);
@@ -99,7 +108,7 @@ describe('ManualUpload', () => {
             isLoading: false,
             poiService: 'manual',
         });
-        render(<ManualUpload countryCode='ng' />);
+        render(<ManualUpload countryCode='ng' handleComplete={jest.fn()} onCancel={jest.fn()} />);
 
         const elDocumentType = screen.getAllByTestId('dt_manual_document_types')[0];
         userEvent.click(elDocumentType);
@@ -122,7 +131,7 @@ describe('ManualUpload', () => {
     });
 
     it('should render DocumentSelection when back button is clicked', () => {
-        render(<ManualUpload countryCode='in' />);
+        render(<ManualUpload countryCode='in' handleComplete={jest.fn()} onCancel={jest.fn()} />);
 
         const elDocumentType = screen.getAllByTestId('dt_manual_document_types')[0];
         userEvent.click(elDocumentType);
@@ -141,7 +150,7 @@ describe('ManualUpload', () => {
             isLoading: false,
             poiService: 'onfido',
         });
-        render(<ManualUpload countryCode='ng' />);
+        render(<ManualUpload countryCode='ng' handleComplete={jest.fn()} onCancel={jest.fn()} />);
 
         const elDocumentType = screen.getAllByTestId('dt_manual_document_types')[3];
         userEvent.click(elDocumentType);
