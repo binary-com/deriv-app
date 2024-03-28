@@ -22,14 +22,12 @@ type TPersonalDetailsConfig = {
     };
     residence: string;
     account_status: GetAccountStatus;
-    is_high_risk_client_for_mt5?: boolean;
 };
 
 export const personal_details_config = ({
     residence_list,
     account_settings,
     real_account_signup_target,
-    is_high_risk_client_for_mt5,
 }: TPersonalDetailsConfig) => {
     if (!residence_list || !account_settings) {
         return {};
@@ -210,9 +208,7 @@ export const personal_details_config = ({
         },
     };
 
-    // Need to check if client is high risk (only have SVG i.e. China & Russia)
-    // No need to get additinal details when client is high risk
-    if (!is_high_risk_client_for_mt5 && real_account_signup_target !== 'maltainvest') {
+    if (real_account_signup_target !== 'maltainvest') {
         const properties_to_update: (keyof typeof config)[] = [
             'place_of_birth',
             'tax_residence',
@@ -240,7 +236,6 @@ const personalDetailsConfig = <T>(
         account_settings,
         account_status,
         residence,
-        is_high_risk_client_for_mt5,
     }: TPersonalDetailsConfig,
     PersonalDetails: T,
     is_appstore = false
@@ -251,7 +246,6 @@ const personalDetailsConfig = <T>(
         real_account_signup_target,
         residence,
         account_status,
-        is_high_risk_client_for_mt5,
     });
     const disabled_items = account_settings.immutable_fields;
     return {
