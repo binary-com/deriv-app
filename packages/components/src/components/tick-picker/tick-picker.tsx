@@ -32,31 +32,45 @@ const TickPicker = ({
     onValueChange,
 }: TTickPicker) => {
     const normalizedTick = (tick: number) => `${tick}`.padStart(2, '0');
-    const [tick_value, setTickValue] = React.useState(default_value);
+    const tick_value_ref = React.useRef(default_value);
+    const is_mounted_ref = React.useRef(false);
 
     const handleDecrease = () => {
-        if (tick_value - 1 >= min_value) {
-            setTickValue(tick_value - 1);
+        if (tick_value_ref.current - 1 >= min_value) {
+            tick_value_ref.current -= 1;
+            updateTickValue();
         }
     };
+
     const handleIncrease = () => {
-        if (tick_value + 1 <= max_value) {
-            setTickValue(tick_value + 1);
+        if (tick_value_ref.current + 1 <= max_value) {
+            tick_value_ref.current += 1;
+            updateTickValue();
         }
     };
+
+    const updateTickValue = () => {
+        if (onValueChange) {
+            onValueChange(tick_value_ref.current);
+        }
+    };
+
     const handleClick = () => {
         onSubmit({
             target: {
-                value: tick_value,
+                value: tick_value_ref.current,
                 name: 'submit',
             },
         });
     };
 
     React.useEffect(() => {
-        if (onValueChange) onValueChange(tick_value);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [tick_value]);
+        if (is_mounted_ref.current) {
+            updateTickValue();
+        } else {
+            is_mounted_ref.current = true;
+        }
+    }, [tick_value_ref.current]);
 
     const throttledSwipeHandler = throttle(
         ({ dir }: { dir: string }) => {
@@ -83,10 +97,10 @@ const TickPicker = ({
                 </Button>
                 <div className='dc-tick-picker__holder' {...swipe_handlers}>
                     <Text styles={{ fontSize: '96px', lineHeight: 1, color: 'inherit' }}>
-                        {normalizedTick(tick_value)}
+                        {normalizedTick(tick_value_ref.current)}
                     </Text>
                     <Text size='s' weight='bold' align='center' styles={{ color: 'inherit' }}>
-                        {tick_value === 1 ? singular_label : plural_label}
+                        {tick_value_ref.current === 1 ? singular_label : plural_label}
                     </Text>
                 </div>
                 <Button rounded className='operator' onClick={handleIncrease}>
