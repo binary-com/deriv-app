@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import { DesktopWrapper, MobileWrapper, StaticUrl } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { routes, platforms } from '@deriv/shared';
@@ -13,10 +14,7 @@ import NewVersionNotification from 'App/Containers/new-version-notification.jsx'
 import ToggleMenuDrawer from 'App/Components/Layout/Header/toggle-menu-drawer.jsx';
 import AccountsInfoLoaderWallets from 'App/Components/Layout/Header/wallets/accounts-info-loader-wallets';
 import DerivBrandLogo from 'Assets/SvgComponents/header/deriv-logo-short.svg';
-import WalletsLogo from 'Assets/SvgComponents/header/wallets-logo.svg';
-import { useHistory } from 'react-router';
-
-const Divider = () => <div className='header__menu--dtrader--separator' />;
+import TradersHubHomeButton from './traders-hub-home-button';
 
 const MenuLeft = observer(() => {
     const { client, common, ui, traders_hub } = useStore();
@@ -52,13 +50,13 @@ const MenuLeft = observer(() => {
                         <DerivBrandLogo />
                     </StaticUrl>
                 </div>
-                <WalletsLogo className='header__menu-left-logo' onClick={() => history.push(routes.wallets)} />
                 <PlatformSwitcher
                     app_routing_history={app_routing_history}
                     platform_config={filterPlatformsForClients(platform_config)}
                     setTogglePlatformType={setTogglePlatformType}
                     current_language={current_language}
                 />
+                <TradersHubHomeButton />
             </DesktopWrapper>
             <MobileWrapper>
                 <ToggleMenuDrawer platform_config={filterPlatformsForClients(platform_config)} />

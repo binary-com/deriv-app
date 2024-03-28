@@ -29,6 +29,7 @@ import './appstore/ic-appstore-skeleton-card-border.svg';
 import './appstore/ic-appstore-success.svg';
 import './appstore/ic-appstore-tick-white.svg';
 import './appstore/ic-appstore-tick.svg';
+import './appstore/ic-appstore-traders-hub-home-updated.svg';
 import './appstore/ic-appstore-traders-hub-home.svg';
 import './appstore/ic-appstore-trading-hub-beta.svg';
 import './appstore/ic-appstore-trading-hub-onboarding-dark.svg';

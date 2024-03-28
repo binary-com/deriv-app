@@ -10,9 +10,7 @@ import { MenuLinks } from 'App/Components/Layout/Header';
 import platform_config from 'App/Constants/platform-config';
 import ToggleMenuDrawer from 'App/Components/Layout/Header/toggle-menu-drawer.jsx';
 import { BinaryLink } from 'App/Components/Routes';
-import DerivBrandLogo from 'Assets/SvgComponents/header/deriv-rebranding-logo.svg';
 import DerivBrandShortLogo from 'Assets/SvgComponents/header/deriv-logo-short.svg';
-import WalletsLogo from 'Assets/SvgComponents/header/wallets-logo.svg';
 import RealAccountSignup from 'App/Containers/RealAccountSignup';
 import AccountInfo from 'App/Components/Layout/Header/account-info';
 import SetAccountCurrencyModal from 'App/Containers/SetAccountCurrencyModal';
@@ -20,6 +18,7 @@ import CurrencySelectionModal from '../../CurrencySelectionModal';
 import DefaultMobileLinks from './default-mobile-links';
 import ShowNotifications from './show-notifications';
 import TradersHubOnboarding from './traders-hub-onboarding';
+import TradersHubHomeButton from './traders-hub-home-button';
 
 type TPlatformConfig = typeof platform_config;
 type TPlatforms = typeof platforms;
@@ -95,9 +94,11 @@ const TradersHubHeaderWallets = observer(() => {
                             'traders-hub-header__logo-wrapper--cashier': cashier_routes,
                         })}
                     >
-                        <StaticUrl href='/'>
-                            <DerivBrandLogo className='traders-hub-header__logo' />
-                        </StaticUrl>
+                        <div className='traders-hub-header-wallets__logo'>
+                            <StaticUrl href='/'>
+                                <DerivBrandShortLogo />
+                            </StaticUrl>
+                        </div>
                     </div>
                 </MobileWrapper>
                 <DesktopWrapper>
@@ -106,10 +107,8 @@ const TradersHubHeaderWallets = observer(() => {
                             <DerivBrandShortLogo />
                         </StaticUrl>
                     </div>
-                    <WalletsLogo
-                        className='traders-hub-header-wallets__logo'
-                        onClick={() => history.push(routes.wallets)}
-                    />
+                    <div className='traders-hub-header__divider' />
+                    <TradersHubHomeButton />
                 </DesktopWrapper>
                 <MenuLinks {...{ is_traders_hub_routes: true }} />
             </div>

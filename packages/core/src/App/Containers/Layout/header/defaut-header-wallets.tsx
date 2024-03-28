@@ -11,8 +11,7 @@ import RealAccountSignup from 'App/Containers/RealAccountSignup';
 import SetAccountCurrencyModal from 'App/Containers/SetAccountCurrencyModal';
 import ToggleMenuDrawer from 'App/Components/Layout/Header/toggle-menu-drawer.jsx';
 import platform_config from 'App/Constants/platform-config';
-import DerivBrandLogo from 'Assets/SvgComponents/header/deriv-logo-short.svg';
-import WalletsLogo from 'Assets/SvgComponents/header/wallets-logo.svg';
+import DerivBrandShortLogo from 'Assets/SvgComponents/header/deriv-logo-short.svg';
 
 const DefaultHeaderWallets = () => {
     const { client, common, ui, notifications, traders_hub } = useStore();
@@ -101,10 +100,9 @@ const DefaultHeaderWallets = () => {
                     <DesktopWrapper>
                         <div className='header__menu-left-logo'>
                             <StaticUrl href='/'>
-                                <DerivBrandLogo />
+                                <DerivBrandShortLogo />
                             </StaticUrl>
                         </div>
-                        <WalletsLogo className='header__menu-left-logo' onClick={() => history.push(routes.wallets)} />
                         <PlatformSwitcher
                             app_routing_history={app_routing_history}
                             is_landing_company_loaded={is_landing_company_loaded}
