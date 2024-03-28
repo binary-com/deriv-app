@@ -39,6 +39,7 @@ type TValidatePersonalDetailsParams = {
     residence_list: ResidenceList;
     account_opening_reason: TAccountOpeningReasonList;
     is_tin_mandatory: boolean;
+    tin_manually_approved: boolean;
 };
 
 type TFindDefaultValuesInResidenceList = (params: {
@@ -80,7 +81,8 @@ type TSubmitForm = (
     idx: number,
     onSubmitFn: TOnSubmit,
     is_dirty: boolean,
-    residence_list: ResidenceList
+    residence_list: ResidenceList,
+    tin_manually_approved: boolean
 ) => void;
 
 type TAccountOpeningReasonList = {
@@ -129,6 +131,7 @@ const validatePersonalDetails = ({
     residence_list,
     account_opening_reason,
     is_tin_mandatory,
+    tin_manually_approved,
 }: TValidatePersonalDetailsParams) => {
     const tin_format = residence_list.find(res => res.text === values.tax_residence)?.tin_format;
 
@@ -136,7 +139,6 @@ const validatePersonalDetails = ({
 
     const validations: { [key: string]: ((v: string) => boolean | RegExpMatchArray | null)[] } = {
         citizen: [(v: string) => !!v, (v: string) => residence_list.map(i => i.text).includes(v)],
-        tax_residence: [(v: string) => !!v, (v: string) => residence_list.map(i => i.text).includes(v)],
         account_opening_reason: [
             (v: string) => !!v,
             (v: string) => account_opening_reason.map(i => i.value).includes(v),
@@ -144,14 +146,18 @@ const validatePersonalDetails = ({
         place_of_birth: [(v: string) => !!v, (v: string) => residence_list.map(i => i.text).includes(v)],
     };
 
-    if (is_tin_mandatory) {
-        validations.tax_identification_number = [
-            (v: string) => !!v,
-            (v: string) => (tin_regex ? tin_regex?.some(regex => v.match(regex)) : true),
-            () => !!values.tax_residence,
-        ];
-        validations.crs_confirmation = [(v: string) => !!v];
+    if (!tin_manually_approved) {
+        validations.tax_residence = [(v: string) => !!v, (v: string) => residence_list.map(i => i.text).includes(v)];
+        if (is_tin_mandatory) {
+            validations.tax_identification_number = [
+                (v: string) => !!v,
+                (v: string) => (tin_regex ? tin_regex?.some(regex => v.match(regex)) : true),
+                () => !!values.tax_residence,
+            ];
+            validations.crs_confirmation = [(v: string) => !!v];
+        }
     }
+
     const mappedKey: { [key: string]: string } = {
         citizen: localize('Citizenship'),
         tax_residence: localize('Tax residence'),
@@ -201,7 +207,7 @@ const findDefaultValuesInResidenceList: TFindDefaultValuesInResidenceList = ({
     return { citizen, place_of_birth, tax_residence };
 };
 
-const submitForm: TSubmitForm = (values, actions, idx, onSubmit, is_dirty, residence_list) => {
+const submitForm: TSubmitForm = (values, actions, idx, onSubmit, is_dirty, residence_list, tin_manually_approved) => {
     const { citizen, place_of_birth, tax_residence } = findDefaultValuesInResidenceList({
         residence_list,
         citizen_text: values.citizen,
@@ -213,12 +219,20 @@ const submitForm: TSubmitForm = (values, actions, idx, onSubmit, is_dirty, resid
         delete values.crs_confirmation;
     }
 
-    const payload = {
+    const payload: TFormValues = {
         ...values,
+        tax_identification_number: values.tax_identification_number || '',
         citizen: citizen?.value || '',
         place_of_birth: place_of_birth?.value || '',
         tax_residence: tax_residence?.value || '',
     };
+
+    // If TIN is manually approved, we don't show the TIN Section in the form therefore we don't need to send the TIN details
+    if (tin_manually_approved) {
+        delete payload.tax_identification_number;
+        delete payload.tax_residence;
+    }
+
     onSubmit(idx, payload, actions.setSubmitting, is_dirty);
 };
 
@@ -234,8 +248,10 @@ const CFDPersonalDetailsForm = ({
     const account_opening_reason = getAccountOpeningReasonList();
     const { jurisdiction_selected_shortcode } = useCfdStore();
     const {
-        client: { account_settings },
+        client: { account_settings, account_status },
     } = useStore();
+
+    const tin_manually_approved = account_status?.status?.includes('tin_manually_approved') ?? false;
 
     const residence = residence_list?.find(item => item.text === account_settings?.residence);
     const { data, isLoading: is_landing_company_details_loading } = useLandingCompanyDetails({
@@ -248,7 +264,15 @@ const CFDPersonalDetailsForm = ({
     const is_tin_mandatory = data?.tin_not_mandatory === 0;
 
     const onSubmitForm = (values: TFormValues, actions: FormikActions<TFormValues>) =>
-        submitForm(values, actions, index, onSubmit, !isDeepEqual(initial_values, values), residence_list);
+        submitForm(
+            values,
+            actions,
+            index,
+            onSubmit,
+            !isDeepEqual(initial_values, values),
+            residence_list,
+            tin_manually_approved
+        );
 
     const isFieldDisabled = (field: string) => !!initial_values[field] && !changeable_fields?.includes(field);
 
@@ -271,6 +295,7 @@ const CFDPersonalDetailsForm = ({
                     residence_list,
                     account_opening_reason,
                     is_tin_mandatory,
+                    tin_manually_approved,
                 })
             }
             onSubmit={onSubmitForm}
@@ -406,45 +431,46 @@ const CFDPersonalDetailsForm = ({
                                                     />
                                                 </MobileWrapper>
                                             </fieldset>
-                                            <fieldset className='account-form__fieldset'>
-                                                <DesktopWrapper>
-                                                    <Field name='tax_residence'>
-                                                        {({ field }: FieldProps<string, TFormValues>) => (
-                                                            <Autocomplete
-                                                                id='real_mt5_tax_residence'
-                                                                data-lpignore='true'
-                                                                type='text'
-                                                                autoComplete='off'
-                                                                label={localize('Tax residence*')}
-                                                                error={tax_residence_error}
-                                                                disabled={isFieldDisabled('tax_residence')}
-                                                                list_items={residence_list}
-                                                                onItemSelection={(item: ResidenceList[0]) =>
-                                                                    handleItemSelection(item, 'tax_residence')
-                                                                }
-                                                                list_portal_id='modal_root'
-                                                                {...field}
-                                                            />
-                                                        )}
-                                                    </Field>
-                                                </DesktopWrapper>
-                                                <MobileWrapper>
-                                                    <SelectNative
-                                                        placeholder={localize('Please select')}
-                                                        label={localize('Tax residence*')}
-                                                        value={values.tax_residence}
-                                                        error={tax_residence_error}
-                                                        disabled={isFieldDisabled('tax_residence')}
-                                                        list_items={residence_list}
-                                                        use_text={true}
-                                                        onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                                                            setFieldValue('tax_residence', e.target.value, true)
-                                                        }
-                                                        required
-                                                    />
-                                                </MobileWrapper>
-                                            </fieldset>
-                                            {is_tin_mandatory && (
+                                            {!tin_manually_approved && (
+                                                <fieldset className='account-form__fieldset'>
+                                                    <DesktopWrapper>
+                                                        <Field name='tax_residence'>
+                                                            {({ field }: FieldProps<string, TFormValues>) => (
+                                                                <Autocomplete
+                                                                    id='real_mt5_tax_residence'
+                                                                    data-lpignore='true'
+                                                                    type='text'
+                                                                    autoComplete='off'
+                                                                    label={localize('Tax residence*')}
+                                                                    error={tax_residence_error}
+                                                                    disabled={isFieldDisabled('tax_residence')}
+                                                                    list_items={residence_list}
+                                                                    onItemSelection={(item: ResidenceList[0]) =>
+                                                                        handleItemSelection(item, 'tax_residence')
+                                                                    }
+                                                                    list_portal_id='modal_root'
+                                                                    {...field}
+                                                                />
+                                                            )}
+                                                        </Field>
+                                                    </DesktopWrapper>
+                                                    <MobileWrapper>
+                                                        <SelectNative
+                                                            placeholder={localize('Please select')}
+                                                            label={localize('Tax residence*')}
+                                                            value={values.tax_residence}
+                                                            error={tax_residence_error}
+                                                            disabled={isFieldDisabled('tax_residence')}
+                                                            list_items={residence_list}
+                                                            use_text={true}
+                                                            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                                                                setFieldValue('tax_residence', e.target.value, true)
+                                                            }
+                                                        />
+                                                    </MobileWrapper>
+                                                </fieldset>
+                                            )}
+                                            {is_tin_mandatory && !tin_manually_approved && (
                                                 <fieldset className='account-form__fieldset'>
                                                     <InputField
                                                         id='real_mt5_tax_identification_number'

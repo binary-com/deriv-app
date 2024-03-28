@@ -339,4 +339,12 @@ describe('<CFDPersonalDetailsForm />', () => {
             expect(props.onSubmit).toHaveBeenCalledTimes(1);
         });
     });
+
+    it('Should not show TIN field if tin_manually_approved is true in account_status', () => {
+        mock_store.client.account_status.status = ['tin_manually_approved'];
+        render(<CFDPersonalDetailsForm {...props} />, { wrapper });
+
+        expect(screen.queryByRole('textbox', { name: /tax identification number/i })).not.toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /next/i })).toBeEnabled();
+    });
 });
