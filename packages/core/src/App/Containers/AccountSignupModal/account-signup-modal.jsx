@@ -18,7 +18,6 @@ import ResidenceForm from '../SetResidenceModal/set-residence-form.jsx';
 import validateSignupFields from './validate-signup-fields.jsx';
 
 import 'Sass/app/modules/account-signup.scss';
-import { useGrowthbookFeatureFlag } from '@deriv/hooks';
 
 const AccountSignup = ({
     enableApp,
@@ -41,12 +40,6 @@ const AccountSignup = ({
     const [ab_questionnaire, setABQuestionnaire] = React.useState();
     const [modded_state, setModdedState] = React.useState({});
     const language = getLanguage();
-
-    // Growthbook ab/test experiment with onboarding flow
-    const growthbook_ab_test_skip_onboarding_flow = useGrowthbookFeatureFlag({
-        featureFlag: 'skip-onboarding-flow',
-        defaultValue: false,
-    });
 
     const checkResidenceIsBrazil = selected_country =>
         selected_country && residence_list[indexOfSelection(selected_country)]?.value?.toLowerCase() === 'br';
@@ -133,13 +126,6 @@ const AccountSignup = ({
                 error_message: error,
             });
         } else {
-            // ======== Growthbook ab/test experiment with onboarding flow ========
-            const searchParams = new URLSearchParams(window.location.search);
-            searchParams.set('skip-onboarding-flow', growthbook_ab_test_skip_onboarding_flow);
-
-            window.history.pushState(null, '', `${window.location.pathname}?${searchParams.toString()}`);
-            // ====================================================================
-
             isModalVisible(false);
             setIsFromSignupAccount(true);
             SessionStore.remove('signup_query_param');
