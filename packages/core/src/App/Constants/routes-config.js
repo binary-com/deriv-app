@@ -418,7 +418,7 @@ const getModules = () => {
             ],
         },
         {
-            path: routes.root,
+            path: routes.trade,
             component: Trader,
             getTitle: () => localize('Trader'),
             routes: [
@@ -430,6 +430,14 @@ const getModules = () => {
                 },
                 { path: routes.error404, component: Trader, getTitle: () => localize('Error 404') },
             ],
+        },
+        {
+            path: routes.root,
+            component: ({ history }) => {
+                history.push('/dtrader');
+                return null;
+            },
+            getTitle: () => localize('Deriv'),
         },
     ];
 
