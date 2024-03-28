@@ -26,7 +26,7 @@ export const AccountSwitcherWalletMobile = observer(({ is_visible, toggle, login
 
     const handleTradersHubRedirect = () => {
         closeAccountsDialog();
-        history.push(routes.traders_hub);
+        history.push(routes.wallets);
     };
 
     const handleManageFundsRedirect = () => {
@@ -35,18 +35,12 @@ export const AccountSwitcherWalletMobile = observer(({ is_visible, toggle, login
     };
 
     const footer = (
-        <div
-            className='account-switcher-wallet-mobile__footer'
-            onClick={handleTradersHubRedirect}
-            // SonarLint offers to add handler for onKeyDown event and a role if we have onClick event handler
-            role='button'
-            onKeyDown={handleTradersHubRedirect}
-        >
+        <button className='account-switcher-wallet-mobile__footer' onClick={handleTradersHubRedirect} type='button'>
             <Text weight='normal' size='xs'>
-                <Localize i18n_default_text='Looking for CFDs? Go to Trader’s hub' />
+                <Localize i18n_default_text='Looking for CFDs? Go to Trader’s Hub' />
             </Text>
             <Icon icon='IcChevronRightBold' />
-        </div>
+        </button>
     );
 
     return (

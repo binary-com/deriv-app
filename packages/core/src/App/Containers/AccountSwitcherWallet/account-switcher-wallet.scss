@@ -9,14 +9,21 @@
 
     &__list {
         padding: 0.4rem 0.8rem;
-        border-bottom: 1px solid var(--general-hover);
     }
 
     &__looking-for-cfds {
+        border-top: 1px solid var(--general-hover);
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 1.6rem;
+        border: none;
+        background: none;
+
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
     }
 
     &__arrow {

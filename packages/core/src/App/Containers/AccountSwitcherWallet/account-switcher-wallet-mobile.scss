@@ -13,8 +13,11 @@
         align-items: center;
         justify-content: space-between;
         height: 5.6rem;
+        border: none;
         border-top: 1px solid var(--general-hover);
         padding: 0 1.6rem;
         cursor: pointer;
+        background: none;
+        width: 100%;
     }
 }
