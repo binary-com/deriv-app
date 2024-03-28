@@ -48,7 +48,7 @@ const AppContent: React.FC<{ passthrough: unknown }> = observer(({ passthrough }
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data.marketing_growthbook]);
+    }, [data.marketing_growthbook, tracking_rudderstack]);
 
     React.useEffect(() => {
         initDatadog(tracking_datadog);
