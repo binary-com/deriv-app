@@ -46,7 +46,13 @@ describe('<DMT5TradeModal/>', () => {
             status: 'migrated_with_position',
             sub_account_category: '',
             sub_account_type: 'financial',
-            webtrader_url: 'https://mt5-dev-real-web.regentmarkets.com/terminal',
+            white_label_links: {
+                webtrader_url: 'https://mt5-real01-web.deriv.com/terminal',
+                android:
+                    'https://download.mql5.com/cdn/mobile/mt5/android?server=DerivSVG-Demo,DerivSVG-Server,DerivSVG-Server-02,DerivSVG-Server-03',
+                ios: 'https://download.mql5.com/cdn/mobile/mt5/ios?server=DerivSVG-Demo,DerivSVG-Server,DerivSVG-Server-02,DerivSVG-Server-03',
+                windows: 'https://download.mql5.com/cdn/web/22698/mt5/derivsvg5setup.exe',
+            },
             display_login: 40021028,
             icon: 'Derived',
             sub_title: 'Derived',

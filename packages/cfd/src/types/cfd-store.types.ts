@@ -1,8 +1,6 @@
 import { FormikHelpers } from 'formik';
-
 import { DetailsOfEachMT5Loginid, Mt5NewAccount, VerifyEmailResponse } from '@deriv/api-types';
-
-import { TTradingPlatformAvailableAccount } from 'Components/props.types';
+import { TDetailsOfEachMT5Loginid, TTradingPlatformAvailableAccount } from 'Components/props.types';
 import { TCFDPasswordFormValues } from 'Containers/cfd-password-modal';
 import { TDxCompanies, TMtCompanies } from 'Stores/Modules/CFD/Helpers/cfd-config';
 
@@ -20,7 +18,9 @@ export type TCFDStore = {
         real: string;
     };
     mt5_trade_account: Required<
-        DetailsOfEachMT5Loginid & { market_type?: TTradingPlatformAvailableAccount['market_type'] | 'synthetic' }
+        TDetailsOfEachMT5Loginid & {
+            market_type?: TTradingPlatformAvailableAccount['market_type'] | 'synthetic';
+        }
     >;
     real_synthetic_accounts_existing_data: DetailsOfEachMT5Loginid & DetailsOfEachMT5Loginid[];
     real_swapfree_accounts_existing_data: DetailsOfEachMT5Loginid & DetailsOfEachMT5Loginid[];
@@ -42,7 +42,6 @@ export type TCFDStore = {
     platform: string;
     topUpVirtual: (platform: string) => void;
     current_account?: DetailsOfEachMT5Loginid & {
-        display_login: string;
         category: string;
         type: string;
     };

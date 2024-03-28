@@ -2,7 +2,7 @@ import React from 'react';
 
 import { DetailsOfEachMT5Loginid } from '@deriv/api-types';
 import { Icon, Money, Text } from '@deriv/components';
-import { getCFDAccountKey, isMobile, mobileOSDetect } from '@deriv/shared';
+import { getCFDAccountKey, isMobile } from '@deriv/shared';
 import { TCFDDashboardContainer, TCFDsPlatformType, TTradingPlatformAccounts } from 'Components/props.types';
 import { localize, Localize } from '@deriv/translations';
 import { CFD_PLATFORMS } from '../Helpers/cfd-config';

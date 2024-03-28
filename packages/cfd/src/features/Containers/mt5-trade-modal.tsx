@@ -11,7 +11,7 @@ import {
     isMobile,
 } from '@deriv/shared';
 import { Localize, localize } from '@deriv/translations';
-import { getPlatformMt5DownloadLink } from '../../Helpers/constants';
+import { WEBTRADER_URL, getPlatformMt5DownloadLink } from '../../Helpers/constants';
 import SpecBox from '../../Components/specbox';
 import PasswordBox from '../../Components/passwordbox';
 import TradingPlatformIcon from '../../Assets/svgs/trading-platform';
@@ -22,7 +22,13 @@ import { CATEGORY, CFD_PLATFORMS, MARKET_TYPE, JURISDICTION } from '../../Helper
 
 type TMT5TradeModalProps = {
     mt5_trade_account: DetailsOfEachMT5Loginid & {
-        webtrader_url?: string;
+        display_login?: string;
+        white_label_links: {
+            webtrader_url: string;
+            android: string;
+            ios: string;
+            windows: string;
+        };
     };
     show_eu_related_content: boolean;
     onPasswordManager: (
@@ -155,7 +161,7 @@ const DMT5TradeModal = ({
                     <a
                         className='dc-btn cfd-trade-modal__download-center-app--option-link'
                         type='button'
-                        href={mt5_trade_account.webtrader_url}
+                        href={WEBTRADER_URL({ mt5_trade_account })}
                         target='_blank'
                         rel='noopener noreferrer'
                     >
