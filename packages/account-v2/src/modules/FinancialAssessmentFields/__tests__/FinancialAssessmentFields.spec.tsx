@@ -35,18 +35,21 @@ const initialValues = {
     sourceOfWealth: '',
 };
 
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+    <APIProvider>
+        <AuthProvider>{children}</AuthProvider>
+    </APIProvider>
+);
+
 describe('FinancialAssessmentFields', () => {
     it('renders all form fields', () => {
         render(
-            <APIProvider>
-                <AuthProvider>
-                    <Formik initialValues={initialValues} onSubmit={jest.fn()}>
-                        <Form>
-                            <FinancialAssessmentFields />;
-                        </Form>
-                    </Formik>
-                </AuthProvider>
-            </APIProvider>
+            <Formik initialValues={initialValues} onSubmit={jest.fn()}>
+                <Form>
+                    <FinancialAssessmentFields />;
+                </Form>
+            </Formik>,
+            { wrapper }
         );
 
         expect(screen.getByRole('combobox', { name: 'Source of income' })).toBeInTheDocument();
@@ -63,15 +66,9 @@ describe('FinancialAssessmentFields', () => {
     it('throw error if not wrapped with Formik ', () => {
         jest.spyOn(console, 'error').mockImplementation(() => jest.fn());
         jest.spyOn(console, 'warn').mockImplementation(() => jest.fn());
-        expect(() =>
-            render(
-                <APIProvider>
-                    <AuthProvider>
-                        <FinancialAssessmentFields />
-                    </AuthProvider>
-                </APIProvider>
-            )
-        ).toThrow('FinancialAssessmentFields must be used within a Formik component');
+        expect(() => render(<FinancialAssessmentFields />, { wrapper })).toThrow(
+            'FinancialAssessmentFields must be used within a Formik component'
+        );
     });
 
     it('should not render employment status if landing company is maltainvest', () => {
@@ -82,15 +79,12 @@ describe('FinancialAssessmentFields', () => {
         });
 
         render(
-            <APIProvider>
-                <AuthProvider>
-                    <Formik initialValues={initialValues} onSubmit={jest.fn()}>
-                        <Form>
-                            <FinancialAssessmentFields />;
-                        </Form>
-                    </Formik>
-                </AuthProvider>
-            </APIProvider>
+            <Formik initialValues={initialValues} onSubmit={jest.fn()}>
+                <Form>
+                    <FinancialAssessmentFields />;
+                </Form>
+            </Formik>,
+            { wrapper }
         );
 
         expect(screen.queryByRole('combobox', { name: 'Employment Status' })).not.toBeInTheDocument();
@@ -103,15 +97,12 @@ describe('FinancialAssessmentFields', () => {
             },
         });
         render(
-            <APIProvider>
-                <AuthProvider>
-                    <Formik initialValues={initialValues} onSubmit={jest.fn()}>
-                        <Form>
-                            <FinancialAssessmentFields />;
-                        </Form>
-                    </Formik>
-                </AuthProvider>
-            </APIProvider>
+            <Formik initialValues={initialValues} onSubmit={jest.fn()}>
+                <Form>
+                    <FinancialAssessmentFields />;
+                </Form>
+            </Formik>,
+            { wrapper }
         );
 
         expect(screen.getByRole('combobox', { name: 'Occupation' })).toBeInTheDocument();

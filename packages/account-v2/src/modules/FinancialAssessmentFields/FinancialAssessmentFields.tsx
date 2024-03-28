@@ -29,9 +29,9 @@ export const FinancialAssessmentFields = () => {
     const { setFieldValue, values } = formik;
     const { employmentStatus, occupation } = values;
 
-    const hideOccupation = shouldHideOccupation(employmentStatus || '');
+    const hideOccupation = shouldHideOccupation(employmentStatus);
 
-    const filteredOccupationList = useMemo(() => filterOccupationList(employmentStatus || ''), [employmentStatus]);
+    const filteredOccupationList = useMemo(() => filterOccupationList(employmentStatus), [employmentStatus]);
 
     useEffect(() => {
         if (employmentStatus === EMPLOYMENT_VALUES.employed && occupation === EMPLOYMENT_VALUES.unemployed) {

@@ -2,25 +2,9 @@ import { tradingExperienceValidations } from '../validations';
 
 describe('Trading Experience Validations', () => {
     it('should throw error if financial assessment fields empty', async () => {
-        const {
-            binaryOptionsTradingExperience,
-            binaryOptionsTradingFrequency,
-            cfdTradingExperience,
-            cfdTradingFrequency,
-            forexTradingExperience,
-            forexTradingFrequency,
-            otherTradingInstrumentsExperience,
-            otherTradingInstrumentsFrequency,
-        } = tradingExperienceValidations;
-
-        await expect(binaryOptionsTradingExperience.validate('')).rejects.toThrowError();
-        await expect(binaryOptionsTradingFrequency.validate('')).rejects.toThrowError();
-        await expect(cfdTradingExperience.validate('')).rejects.toThrowError();
-        await expect(cfdTradingFrequency.validate('')).rejects.toThrowError();
-        await expect(forexTradingExperience.validate('')).rejects.toThrowError();
-        await expect(forexTradingFrequency.validate('')).rejects.toThrowError();
-        await expect(otherTradingInstrumentsExperience.validate('')).rejects.toThrowError();
-        await expect(otherTradingInstrumentsFrequency.validate('')).rejects.toThrowError();
+        Object.values(tradingExperienceValidations).forEach(validation => {
+            expect(validation.validate('')).rejects.toThrowError();
+        });
     });
 
     it('should resolve if fields has values', async () => {

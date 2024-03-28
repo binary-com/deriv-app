@@ -1,28 +1,10 @@
 import { financialAssessmentValidations } from '../validations';
 
 describe('Financial Assessment Validations', () => {
-    it('should throw error if financial assessment fields empty', async () => {
-        const {
-            accountTurnover,
-            educationLevel,
-            employmentIndustry,
-            employmentStatus,
-            estimatedWorth,
-            incomeSource,
-            netIncome,
-            occupation,
-            sourceOfWealth,
-        } = financialAssessmentValidations;
-
-        await expect(accountTurnover.validate('')).rejects.toThrowError();
-        await expect(educationLevel.validate('')).rejects.toThrowError();
-        await expect(employmentIndustry.validate('')).rejects.toThrowError();
-        await expect(employmentStatus.validate('')).rejects.toThrowError();
-        await expect(estimatedWorth.validate('')).rejects.toThrowError();
-        await expect(incomeSource.validate('')).rejects.toThrowError();
-        await expect(netIncome.validate('')).rejects.toThrowError();
-        await expect(occupation.validate('')).rejects.toThrowError();
-        await expect(sourceOfWealth.validate('')).rejects.toThrowError();
+    it('should throw error if financial assessment fields empty', () => {
+        Object.values(financialAssessmentValidations).forEach(validation => {
+            expect(validation.validate('')).rejects.toThrowError();
+        });
     });
 
     it('should resolve if fields has values', async () => {

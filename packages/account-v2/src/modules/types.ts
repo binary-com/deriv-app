@@ -1,10 +1,6 @@
-import { useMutation } from '@deriv/api-v2';
+import { useFinancialAssessment } from '@deriv/api-v2';
 
-export type TFinancialAssessmentPayload = NonNullable<
-    NonNullable<
-        NonNullable<Parameters<ReturnType<typeof useMutation<'set_financial_assessment'>>['mutate']>>[0]
-    >['payload']
->;
+type TFinancialAssessmentPayload = ReturnType<typeof useFinancialAssessment>['data'];
 
 export type TFinancialAssessmentDetailsValues = Pick<
     TFinancialAssessmentPayload,

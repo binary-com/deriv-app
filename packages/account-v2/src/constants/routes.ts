@@ -1,5 +1,8 @@
 export const P2P_ROUTE = '/cashier/p2p';
 
+export const P2P_URL = 'https://app.deriv.com/cashier/p2p';
+export const DERIV_GO_URL = 'https://app.deriv.com/redirect/derivgo';
+
 export const ACCOUNT_V2_DEFAULT_ROUTE = '/account-v2';
 
 export const ACCOUNT_V2_ROUTES = {
