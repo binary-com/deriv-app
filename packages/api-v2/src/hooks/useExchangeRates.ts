@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { TSocketRequestPayload, TSocketResponseData } from '../../types';
-import { hashObject } from '../utils';
+import { ObjectUtils } from '@deriv-com/utils';
 import { useAPIContext } from '../APIProvider';
 
 type TCurrencyPayload = Exclude<
@@ -43,7 +43,7 @@ const useExchangeRates = <T extends TCurrencyPayload>() => {
 
     const unsubscribe = async (payload: TCurrencyExchangeSubscribeFunction<T>) => {
         if (payload) {
-            const id = await hashObject({ name: 'exchange_rates', payload });
+            const id = await ObjectUtils.hashObject({ name: 'exchange_rates', payload });
             exchangeRatesSubscriptions.current = exchangeRatesSubscriptions.current.filter(s => s !== id);
             _unsubscribe(id);
             setData(prev => {
