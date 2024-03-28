@@ -47,7 +47,6 @@ const TradeTypeSelect: React.FC = () => {
                 const has_selected = trade_types?.some(trade_type => trade_type.value === selected);
                 if (!has_selected && trade_types?.[0]?.value !== selected) {
                     await setFieldValue?.('tradetype', trade_types?.[0].value || '');
-                    await validateForm();
                     setValue('tradetype', trade_types?.[0].value);
                 }
             };

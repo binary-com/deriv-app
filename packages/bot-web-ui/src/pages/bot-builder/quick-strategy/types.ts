@@ -11,7 +11,7 @@ export type TFormData = {
     [key: string]: string | number | boolean;
 };
 
-export type TValidationType = 'min' | 'max' | 'required' | 'number' | 'ceil' | 'floor' | 'integer';
+export type TValidationType = 'min' | 'max' | 'required' | 'number' | 'ceil' | 'floor' | 'integer' | 'character_limit';
 
 export interface ValidationObject {
     getMessage: (min: number | string) => string;
@@ -44,6 +44,7 @@ export type TConfigItem = Partial<{
         multiple?: Array<string>;
     }[];
     hide_without_should_have: boolean;
+    has_currency_unit: boolean;
 }>;
 
 export type TDescriptionItem = Partial<{

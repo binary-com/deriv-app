@@ -23,13 +23,13 @@ const FormWrapper: React.FC<TDesktopFormWrapper> = observer(({ children, onClick
     const [activeTab, setActiveTab] = React.useState('TRADE_PARAMETERS');
     const { submitForm, isValid, setFieldValue, validateForm } = useFormikContext<TFormValues>();
     const { quick_strategy } = useDBotStore();
-    const { selected_strategy, setSelectedStrategy } = quick_strategy;
+    const { selected_strategy, setSelectedStrategy, onSubmit } = quick_strategy;
     const strategy = STRATEGIES[selected_strategy as keyof typeof STRATEGIES];
     const { handleSubmit } = useQsSubmitHandler();
 
     React.useEffect(() => {
         validateForm();
-    }, [selected_strategy, validateForm]);
+    }, [selected_strategy]);
 
     const onChangeStrategy = (strategy: string) => {
         setSelectedStrategy(strategy);
@@ -42,7 +42,12 @@ const FormWrapper: React.FC<TDesktopFormWrapper> = observer(({ children, onClick
 
     const onEdit = async () => {
         await setFieldValue('action', 'EDIT');
-        submitForm();
+        validateForm();
+        submitForm().then(form_data => {
+            if (isValid) {
+                onSubmit(form_data); // true to load and run the bot
+            }
+        });
     };
 
     const onRun = () => {

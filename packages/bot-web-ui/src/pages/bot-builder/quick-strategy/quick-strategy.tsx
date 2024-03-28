@@ -38,14 +38,8 @@ const getErrorMessage = (dir: 'MIN' | 'MAX', value: number, type = 'DEFAULT') =>
 
 const FormikWrapper: React.FC<TFormikWrapper> = observer(({ children }) => {
     const { quick_strategy } = useDBotStore();
-    const {
-        selected_strategy,
-        form_data,
-        onSubmit,
-        setValue,
-        current_duration_min_max,
-        initializeLossThresholdWarningData,
-    } = quick_strategy;
+    const { selected_strategy, form_data, setValue, current_duration_min_max, initializeLossThresholdWarningData } =
+        quick_strategy;
     const config: TConfigItem[][] = STRATEGIES[selected_strategy]?.fields;
     const [dynamic_schema, setDynamicSchema] = useState(Yup.object().shape({}));
 
@@ -54,8 +48,8 @@ const FormikWrapper: React.FC<TFormikWrapper> = observer(({ children }) => {
         tradetype: '',
         durationtype: qs_config.QUICK_STRATEGY.DEFAULT.durationtype,
         stake: '1',
-        loss: '0',
-        profit: '0',
+        loss: '',
+        profit: '',
         size: String(qs_config.QUICK_STRATEGY.DEFAULT.size),
         duration: '1',
         unit: String(qs_config.QUICK_STRATEGY.DEFAULT.unit),
@@ -149,6 +143,14 @@ const FormikWrapper: React.FC<TFormikWrapper> = observer(({ children }) => {
                                 }
                             });
                         }
+                        if (should_validate && field.validation.includes('character_limit')) {
+                            const character_limit = 12;
+                            schema = Yup.string().max(
+                                character_limit,
+                                localize('Please enter a maximum of 12 characters')
+                            );
+                            sub_schema[field.name] = schema;
+                        }
                         sub_schema[field.name] = schema;
                     }
                 }
@@ -158,8 +160,9 @@ const FormikWrapper: React.FC<TFormikWrapper> = observer(({ children }) => {
     };
 
     const handleSubmit = (form_data: TFormData) => {
-        onSubmit(form_data); // true to load and run the bot
+        getErrors(form_data);
         localStorage?.setItem('qs-fields', JSON.stringify(form_data));
+        return form_data;
     };
 
     return (
@@ -168,9 +171,7 @@ const FormikWrapper: React.FC<TFormikWrapper> = observer(({ children }) => {
             validationSchema={dynamic_schema}
             onSubmit={handleSubmit}
             validate={values => getErrors(values)}
-            validateOnBlur
-            validateOnChange
-            validateOnMount
+            validateOnChange={false}
         >
             {children}
         </Formik>

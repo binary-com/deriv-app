@@ -27,7 +27,7 @@ const MobileFormWrapper: React.FC<TMobileFormWrapper> = observer(({ children, ac
 
     React.useEffect(() => {
         validateForm();
-    }, [selected_strategy, validateForm]);
+    }, [selected_strategy]);
 
     const onChangeStrategy = (strategy: string) => {
         setSelectedStrategy(strategy);

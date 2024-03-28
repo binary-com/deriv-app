@@ -72,7 +72,8 @@ const LABEL_STAKE: TConfigItem = {
 const STAKE: TConfigItem = {
     type: 'number',
     name: 'stake',
-    validation: ['number', 'required', 'ceil', NUMBER_DEFAULT_VALIDATION],
+    validation: ['number', 'required', 'ceil', NUMBER_DEFAULT_VALIDATION, 'character_limit'],
+    has_currency_unit: true,
 };
 
 const LABEL_DURATION: TConfigItem = {
@@ -104,7 +105,8 @@ const LABEL_PROFIT: TConfigItem = {
 const PROFIT: TConfigItem = {
     type: 'number',
     name: 'profit',
-    validation: ['number', 'required', 'ceil', NUMBER_DEFAULT_VALIDATION],
+    validation: ['number', 'required', 'ceil', NUMBER_DEFAULT_VALIDATION, 'character_limit'],
+    has_currency_unit: true,
 };
 
 const LABEL_LOSS: TConfigItem = {
@@ -116,7 +118,8 @@ const LABEL_LOSS: TConfigItem = {
 const LOSS: TConfigItem = {
     type: 'number',
     name: 'loss',
-    validation: ['number', 'required', 'ceil', NUMBER_DEFAULT_VALIDATION],
+    validation: ['number', 'required', 'ceil', NUMBER_DEFAULT_VALIDATION, 'character_limit'],
+    has_currency_unit: true,
 };
 
 const LABEL_MARTINGALE_SIZE: TConfigItem = {
@@ -180,9 +183,11 @@ const CHECKBOX_MAX_STAKE: TConfigItem = {
 const MAX_STAKE: TConfigItem = {
     type: 'number',
     name: 'max_stake',
-    validation: ['number', 'required', 'ceil', 'min'],
+    validation: ['number', 'required', 'ceil', 'min', 'character_limit'],
     should_have: [{ key: 'boolean_max_stake', value: true }],
+    hide_without_should_have: true,
     attached: true,
+    has_currency_unit: true,
 };
 
 const LABEL_LAST_DIGIT_PREDICTION: TConfigItem = {

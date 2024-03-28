@@ -8,7 +8,7 @@ import TradeTypeSelect from './selects/trade-type';
 import ContractTypeSelect from './selects/contract-type';
 import DurationTypeSelect from './selects/duration-type';
 import QSInput from './inputs/qs-input';
-import QSCheckbox from './inputs/qs-checkbox';
+import QSCheckbox from './inputs/qs-toggle-switch';
 import QSInputLabel from './inputs/qs-input-label';
 import { STRATEGIES } from './config';
 import { TConfigItem, TFormData, TShouldHave } from './types';
@@ -33,7 +33,7 @@ const QuickStrategyForm = observer(() => {
     const onChange = async (key: string, value: string | number | boolean) => {
         setValue(key, value);
         await setFieldTouched(key, true, true);
-        await setFieldValue(key, value);
+        await setFieldValue(key, value, true);
     };
 
     const handleEnter = (event: KeyboardEvent) => {
@@ -69,7 +69,11 @@ const QuickStrategyForm = observer(() => {
                             // Generic or common fields
                             case 'number': {
                                 if (!field.name) return null;
-                                const { should_have = [], hide_without_should_have = false } = field;
+                                const {
+                                    should_have = [],
+                                    hide_without_should_have = false,
+                                    has_currency_unit = false,
+                                } = field;
                                 const should_enable = shouldEnable(should_have);
                                 const initial_stake = 1;
                                 let min = 1;
@@ -110,6 +114,7 @@ const QuickStrategyForm = observer(() => {
                                             onChange={onChange}
                                             min={min}
                                             max={max}
+                                            has_currency_unit={has_currency_unit}
                                         />
                                     );
                                 }
@@ -121,6 +126,7 @@ const QuickStrategyForm = observer(() => {
                                         name={field.name as string}
                                         min={min}
                                         max={max}
+                                        has_currency_unit={has_currency_unit}
                                     />
                                 );
                             }

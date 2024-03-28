@@ -1,24 +1,24 @@
 import React from 'react';
 import classNames from 'classnames';
 import { Field, FieldProps, useFormikContext } from 'formik';
-import { Checkbox, Popover } from '@deriv/components';
+import { Popover, Text, ToggleSwitch } from '@deriv/components';
 import { TFormData } from '../types';
+import { localize } from '@deriv/translations';
 
-type TQSCheckbox = {
+type TQSToggleSwitch = {
     name: string;
-    children?: React.ReactNode;
     label: string;
     description?: string;
     attached?: boolean;
 };
 
-const QSCheckbox: React.FC<TQSCheckbox> = ({ name, label, description, attached = false }) => {
-    const { values, setFieldValue, validateForm } = useFormikContext<TFormData>();
+const QSToggleSwitch: React.FC<TQSToggleSwitch> = ({ name, label, description, attached = false }) => {
+    const { values, setFieldValue } = useFormikContext<TFormData>();
+    const [isEnabledToggleSwitch, setIsEnabledToggleSwitch] = React.useState(false);
 
     const handleChange = () => {
-        setFieldValue(name, !values?.[name]).finally(() => {
-            validateForm();
-        });
+        setFieldValue(name, !values?.[name]);
+        setIsEnabledToggleSwitch(!isEnabledToggleSwitch);
     };
 
     return (
@@ -32,7 +32,12 @@ const QSCheckbox: React.FC<TQSCheckbox> = ({ name, label, description, attached 
                     >
                         <div className='qs__checkbox'>
                             <div className='qs__checkbox__container'>
-                                <Checkbox {...field} label={label} onChange={handleChange} data-testid='qs-checkbox' />
+                                <label className='dc-checkbox'>
+                                    <Text size='xs' className='dc-checkbox__label'>
+                                        {label}
+                                    </Text>
+                                    <Text size='xxs'>{localize('(optional)')}</Text>
+                                </label>
                                 <span>
                                     <Popover
                                         classNameTargetIcon='qs__checkbox__info'
@@ -42,6 +47,12 @@ const QSCheckbox: React.FC<TQSCheckbox> = ({ name, label, description, attached 
                                         icon='info'
                                     />
                                 </span>
+                                <ToggleSwitch
+                                    id='dt_mobile_drawer_theme_toggler'
+                                    handleToggle={handleChange}
+                                    is_enabled={isEnabledToggleSwitch}
+                                    data-testid='qs-toggle-switch'
+                                />
                             </div>
                         </div>
                     </div>
@@ -51,4 +62,4 @@ const QSCheckbox: React.FC<TQSCheckbox> = ({ name, label, description, attached 
     );
 };
 
-export default QSCheckbox;
+export default QSToggleSwitch;

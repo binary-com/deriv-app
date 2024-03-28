@@ -19,7 +19,7 @@ const ContractTypes: React.FC<TContractTypes> = observer(({ name }) => {
     const [list, setList] = React.useState<TDropdownItems[]>([]);
     const { quick_strategy } = useDBotStore();
     const { setValue } = quick_strategy;
-    const { setFieldValue, validateForm, values } = useFormikContext<TFormData>();
+    const { setFieldValue, values } = useFormikContext<TFormData>();
     const { symbol, tradetype } = values;
     const selected = values?.type;
 
@@ -33,7 +33,6 @@ const ContractTypes: React.FC<TContractTypes> = observer(({ name }) => {
                 if (!has_selected) {
                     setFieldValue?.(name, categories?.[0]?.value);
                     setValue(name, categories?.[0]?.value);
-                    validateForm();
                 }
             };
             getContractTypes();

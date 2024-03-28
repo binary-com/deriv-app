@@ -14,12 +14,23 @@ type TQSInput = {
     disabled?: boolean;
     min?: number;
     max?: number;
+    has_currency_unit?: boolean;
 };
 
 const QSInput: React.FC<TQSInput> = observer(
-    ({ name, onChange, type = 'text', attached = false, disabled = false, min, max }: TQSInput) => {
+    ({
+        name,
+        onChange,
+        type = 'text',
+        attached = false,
+        disabled = false,
+        min,
+        max,
+        has_currency_unit = false,
+    }: TQSInput) => {
         const {
             ui: { is_mobile },
+            client: { currency },
         } = useStore();
         const { quick_strategy } = useDBotStore();
         const { loss_threshold_warning_data } = quick_strategy;
@@ -46,6 +57,7 @@ const QSInput: React.FC<TQSInput> = observer(
                 {({ field, meta }: FieldProps) => {
                     const { error } = meta;
                     const has_error = error;
+                    const is_exclusive_field = has_currency_unit;
                     return (
                         <div
                             className={classNames('qs__form__field qs__form__field__input', {
@@ -112,6 +124,8 @@ const QSInput: React.FC<TQSInput> = observer(
                                         {...field}
                                         disabled={disabled}
                                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleOnChange(e)}
+                                        placeholder={is_exclusive_field ? '0.00' : ''}
+                                        bottom_label={is_exclusive_field ? currency : ''}
                                     />
                                 </Popover>
                             </div>
