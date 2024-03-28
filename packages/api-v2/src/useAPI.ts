@@ -48,6 +48,7 @@ const useAPI = () => {
     return {
         send,
         subscribe,
+        derivAPI,
     };
 };
 

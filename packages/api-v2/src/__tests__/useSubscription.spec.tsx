@@ -5,14 +5,11 @@ import APIProvider from '../APIProvider';
 import AuthProvider from '../AuthProvider';
 import useSubscription from '../useSubscription';
 
-jest.mock('@deriv/shared');
-
-const mockUseWS = useWS as jest.MockedFunction<typeof useWS>;
-
-describe('useSubscription', () => {
-    test('should subscribe to p2p_order_info and get the order updates', async () => {
-        mockUseWS.mockReturnValue({
-            subscribe: jest.fn(() => {
+jest.mock('./../useAPI', () => ({
+    __esModule: true,
+    default() {
+        return {
+            subscribe() {
                 return {
                     subscribe: async (onData: (response: unknown) => void, onError: (response: unknown) => void) => {
                         const delay = (ms: number) => new Promise<never>(resolve => setTimeout(resolve, ms));
@@ -29,9 +26,13 @@ describe('useSubscription', () => {
                         return { unsubscribe: () => Promise.resolve() };
                     },
                 };
-            }),
-        });
+            },
+        };
+    },
+}));
 
+describe('useSubscription', () => {
+    test('should subscribe to p2p_order_info and get the order updates', async () => {
         const wrapper = ({ children }: { children: JSX.Element }) => (
             <APIProvider>
                 <AuthProvider>{children}</AuthProvider>

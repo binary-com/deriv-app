@@ -94,7 +94,7 @@ const AuthProvider = ({ loginIDKey, children, cookieTimeout, selectDefaultAccoun
 
     const { mutateAsync } = useMutation('authorize');
 
-    const { queryClient, setOnReconnected } = useAPIContext();
+    const { queryClient, setOnReconnected, setOnConnected } = useAPIContext();
 
     const [isLoading, setIsLoading] = useState(true);
     const [isSuccess, setIsSuccess] = useState(false);
@@ -124,12 +124,18 @@ const AuthProvider = ({ loginIDKey, children, cookieTimeout, selectDefaultAccoun
     );
 
     useEffect(() => {
+        setOnConnected(() => {
+            initialize();
+        });
+    }, []);
+
+    useEffect(() => {
         setOnReconnected(() => {
             mutateAsync({ payload: { authorize: getToken(loginid || '') ?? '' } });
         });
     }, [loginid]);
 
-    useEffect(() => {
+    function initialize() {
         setIsLoading(true);
         setIsSuccess(false);
 
@@ -168,7 +174,7 @@ const AuthProvider = ({ loginIDKey, children, cookieTimeout, selectDefaultAccoun
             isMounted = false;
             cleanup();
         };
-    }, [cookieTimeout, loginIDKey, mutateAsync, processAuthorizeResponse]);
+    }
 
     const switchAccount = useCallback(
         async (newLoginId: string, forceRefresh?: boolean) => {
@@ -176,6 +182,9 @@ const AuthProvider = ({ loginIDKey, children, cookieTimeout, selectDefaultAccoun
                 return;
             }
             queryClient.cancelQueries();
+
+            queryClient.invalidateQueries();
+            queryClient.clear();
 
             setIsLoading(true);
 
