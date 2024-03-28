@@ -9,6 +9,7 @@ interface IToolbarStore {
     has_undo_stack: boolean;
     has_redo_stack: boolean;
     is_reset_button_clicked: boolean;
+    is_import_button_click: boolean;
     onResetClick: () => void;
     closeResetDialog: () => void;
     onResetOkButtonClick: () => void;
@@ -18,6 +19,7 @@ interface IToolbarStore {
     resetDefaultStrategy: () => void;
     setHasUndoStack: () => void;
     setHasRedoStack: () => void;
+    setImportButtonClick: (is_import_button_click: boolean) => void;
 }
 
 export default class ToolbarStore implements IToolbarStore {
@@ -38,6 +40,7 @@ export default class ToolbarStore implements IToolbarStore {
             resetDefaultStrategy: action.bound,
             setHasUndoStack: action.bound,
             setHasRedoStack: action.bound,
+            setImportButtonClick: action.bound,
         });
 
         this.root_store = root_store;
@@ -49,6 +52,11 @@ export default class ToolbarStore implements IToolbarStore {
     has_undo_stack = false;
     has_redo_stack = false;
     is_reset_button_clicked = false;
+    is_import_button_click = false;
+
+    setImportButtonClick = (is_import_button_click: boolean) => {
+        this.is_import_button_click = is_import_button_click;
+    };
 
     setResetButtonState = (is_reset_button_clicked: boolean): void => {
         this.is_reset_button_clicked = is_reset_button_clicked;
@@ -63,6 +71,7 @@ export default class ToolbarStore implements IToolbarStore {
     };
 
     onResetOkButtonClick = (): void => {
+        this.setResetButtonState(true);
         runGroupedEvents(
             false,
             () => {
@@ -71,11 +80,6 @@ export default class ToolbarStore implements IToolbarStore {
             'reset'
         );
         this.is_dialog_open = false;
-        const { run_panel } = this.root_store;
-        const { is_running } = run_panel;
-        if (is_running) {
-            this.is_reset_button_clicked = true;
-        }
     };
 
     resetDefaultStrategy = async () => {
@@ -91,6 +95,7 @@ export default class ToolbarStore implements IToolbarStore {
             showIncompatibleStrategyDialog: null,
         });
         workspace.strategy_to_load = workspace.cached_xml.main;
+        this.setResetButtonState(false);
     };
 
     onSortClick = () => {

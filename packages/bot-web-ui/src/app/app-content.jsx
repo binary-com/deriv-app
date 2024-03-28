@@ -129,7 +129,7 @@ const AppContent = observer(() => {
                 <BotStopped />
                 <RoutePromptDialog />
                 <TransactionDetailsModal />
-                <ToastContainer />
+                <ToastContainer limit={3} draggable={false} />
             </div>
         </>
     );

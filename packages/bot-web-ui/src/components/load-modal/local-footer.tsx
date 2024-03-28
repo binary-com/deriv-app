@@ -7,9 +7,10 @@ import { useDBotStore } from 'Stores/useDBotStore';
 
 const LocalFooter = observer(() => {
     const { ui } = useStore();
-    const { load_modal, dashboard } = useDBotStore();
+    const { load_modal, dashboard, toolbar } = useDBotStore();
     const { is_open_button_loading, loadFileFromLocal, setLoadedLocalFile, toggleLoadModal } = load_modal;
     const { setOpenSettings, setPreviewOnPopup } = dashboard;
+    const { setImportButtonClick } = toolbar;
 
     const { is_mobile } = ui;
     const Wrapper = is_mobile ? Button.Group : React.Fragment;
@@ -22,6 +23,7 @@ const LocalFooter = observer(() => {
             <Button
                 text={localize('Open')}
                 onClick={() => {
+                    setImportButtonClick(true);
                     loadFileFromLocal();
                     toggleLoadModal();
                     setPreviewOnPopup(false);

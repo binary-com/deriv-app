@@ -65,7 +65,7 @@ describe('ToolbarStore', () => {
     it('should not show dialog onResetOkButtonClick', () => {
         toolbarStore.onResetOkButtonClick();
         expect(toolbarStore.is_dialog_open).toBe(false);
-        expect(toolbarStore.is_reset_button_clicked).toBe(false);
+        expect(toolbarStore.is_reset_button_clicked).toBe(true);
     });
 
     it('should show dialog onResetOkButtonClick while bot is running', () => {

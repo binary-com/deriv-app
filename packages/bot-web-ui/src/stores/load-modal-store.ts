@@ -281,6 +281,9 @@ export default class LoadModalStore implements ILoadModalStore {
             }
         });
         this.is_open_button_loading = false;
+        const { toolbar } = this.root_store;
+        const { setImportButtonClick } = toolbar;
+        setImportButtonClick(false);
     };
 
     loadFileFromLocal = (): void => {
@@ -497,7 +500,7 @@ export default class LoadModalStore implements ILoadModalStore {
     readFile = (is_preview: boolean, drop_event: DragEvent, file: File): void => {
         const file_name = file?.name.replace(/\.[^/.]+$/, '');
         const reader = new FileReader();
-        reader.onload = action(e => {
+        reader.onload = action(async e => {
             const load_options = {
                 block_string: e?.target?.result,
                 drop_event,
@@ -523,7 +526,10 @@ export default class LoadModalStore implements ILoadModalStore {
                 load_options.workspace = window.Blockly.derivWorkspace;
                 load_options.file_name = file_name;
             }
-            load(load_options);
+            await load(load_options);
+            const { toolbar } = this.root_store;
+            const { setImportButtonClick } = toolbar;
+            setImportButtonClick(false);
         });
         reader.readAsText(file);
     };

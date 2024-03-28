@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { useRemoteConfig } from '@deriv/api';
 import { observer, useStore } from '@deriv/stores';
+import { localize } from '@deriv/translations';
 import { botNotification } from 'Components/bot-notification/bot-notification';
 import { notification_message } from 'Components/bot-notification/bot-notification-utils';
 import initDatadogLogs from 'Utils/datadog-logs';
@@ -14,11 +15,13 @@ import WorkspaceWrapper from './workspace-wrapper';
 
 const BotBuilder = observer(() => {
     const { ui } = useStore();
-    const { dashboard, app, run_panel, toolbar, quick_strategy } = useDBotStore();
+    const { dashboard, app, run_panel, toolbar, quick_strategy, blockly_store } = useDBotStore();
     const { active_tab, active_tour, is_preview_on_popup } = dashboard;
     const { is_open } = quick_strategy;
     const { is_running } = run_panel;
+    const { is_loading } = blockly_store;
     const is_blockly_listener_registered = React.useRef(false);
+    const is_blockly_delete_listener_registered = React.useRef(false);
     const { is_mobile } = ui;
     const { onMount, onUnmount } = app;
     const el_ref = React.useRef<HTMLInputElement | null>(null);
@@ -52,12 +55,11 @@ const BotBuilder = observer(() => {
     }, [is_running]);
 
     const handleBlockChangeOnBotRun = (e: Event) => {
-        const { is_reset_button_clicked, setResetButtonState } = toolbar;
+        const { is_reset_button_clicked } = toolbar;
         if (e.type !== 'ui' && !is_reset_button_clicked) {
             botNotification(notification_message.workspace_change);
             removeBlockChangeListener();
         } else if (is_reset_button_clicked) {
-            setResetButtonState(false);
             removeBlockChangeListener();
         }
     };
@@ -65,6 +67,31 @@ const BotBuilder = observer(() => {
     const removeBlockChangeListener = () => {
         is_blockly_listener_registered.current = false;
         window.Blockly?.derivWorkspace?.removeChangeListener(handleBlockChangeOnBotRun);
+    };
+
+    React.useEffect(() => {
+        const workspace = window.Blockly?.derivWorkspace;
+        if (workspace && !is_blockly_delete_listener_registered.current) {
+            is_blockly_delete_listener_registered.current = true;
+            workspace.addChangeListener(handleBlockDelete);
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [is_loading]);
+
+    const handleBlockDelete = (e: Event) => {
+        const url = window.location.hash.substring(1);
+        if (url !== 'bot_builder') return;
+        const { is_reset_button_clicked, is_import_button_click } = toolbar;
+        if (e.type === 'delete' && !is_reset_button_clicked && !is_import_button_click) {
+            botNotification(notification_message.block_delete, {
+                label: localize('Undo'),
+                onClick: closeToast => {
+                    window.Blockly.derivWorkspace.undo();
+                    closeToast?.();
+                },
+            });
+        }
     };
 
     return (
