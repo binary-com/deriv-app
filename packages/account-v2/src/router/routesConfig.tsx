@@ -1,6 +1,7 @@
 import { ACCOUNT_V2_ROUTES } from '../constants/routes';
 import { PersonalDetailsForm } from '../containers/PersonalDetailsForm';
 import { POICountrySelector } from '../containers/POICountrySelector';
+import { TradingAssessmentForm } from '../containers/TradingAssessmentForm';
 import { POAFormContainer } from '../modules/POAForm/POAFormContainer';
 import { AccountClosure, ConnectedApps } from '../pages';
 import { LoginHistory } from '../pages/LoginHistory';
@@ -18,7 +19,7 @@ export const routes = [
         routePath: ACCOUNT_V2_ROUTES.Languages,
     },
     {
-        routeComponent: DummyRoute,
+        routeComponent: TradingAssessmentForm,
         routeName: 'Trading assessment',
         routePath: ACCOUNT_V2_ROUTES.TradingAssessment,
     },

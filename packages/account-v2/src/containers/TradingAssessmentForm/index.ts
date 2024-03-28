@@ -1,0 +1,1 @@
+export { TradingAssessmentForm } from './TradingAssessmentForm';

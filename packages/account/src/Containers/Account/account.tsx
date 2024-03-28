@@ -48,7 +48,7 @@ const Account = observer(({ history, location, routes }: TAccountProps) => {
                 }
 
                 if (route.path === shared_routes.trading_assessment) {
-                    route.is_disabled = is_virtual || landing_company_shortcode !== 'maltainvest';
+                    route.is_disabled = is_virtual; //|| landing_company_shortcode !== 'maltainvest';
                 }
 
                 if (route.path === shared_routes.proof_of_identity || route.path === shared_routes.proof_of_address) {
