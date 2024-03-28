@@ -9,6 +9,7 @@ const useCashierValidation = () => {
         if (!get_account_status_data?.cashier_validation) return;
 
         const cashier_validation = new Set(get_account_status_data?.cashier_validation);
+        //DO NOT MERGE: testing codeowner blockage
 
         return {
             transfer_blocked: cashier_validation.has('transfer_blocked'),
