@@ -6,7 +6,6 @@ import ImageEvenOdd from 'Assets/SvgComponents/trade_explanations/img-even-odd.s
 import ImageHighToClose from 'Assets/SvgComponents/trade_explanations/img-high-to-close.svg';
 import ImageHighToLow from 'Assets/SvgComponents/trade_explanations/img-high-to-low.svg';
 import ImageMatchDiff from 'Assets/SvgComponents/trade_explanations/img-match-diff.svg';
-import ImageMultiplier from 'Assets/SvgComponents/trade_explanations/img-multiplier.svg';
 import ImageOverUnder from 'Assets/SvgComponents/trade_explanations/img-over-under.svg';
 import ImageReset from 'Assets/SvgComponents/trade_explanations/img-reset.svg';
 import ImageRunHighLow from 'Assets/SvgComponents/trade_explanations/img-run-high-low.svg';
@@ -46,7 +45,7 @@ const TradeCategoriesGIF = ({
         case TRADE_TYPES.MATCH_DIFF:
             return <ImageMatchDiff />;
         case TRADE_TYPES.MULTIPLIER:
-            return <ImageMultiplier />;
+            return <ContractTypeDescriptionVideo selected_contract_type={selected_contract_type} />;
         case TRADE_TYPES.OVER_UNDER:
             return <ImageOverUnder />;
         case TRADE_TYPES.RESET:

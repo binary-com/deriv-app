@@ -38,3 +38,9 @@ type TLimitProperty = {
 };
 
 export type TLimitOrder = Partial<Record<'stop_loss' | 'stop_out' | 'take_profit', TLimitProperty>>;
+
+export type TContractOptions = {
+    isHighLow?: boolean;
+    showButtonName?: boolean;
+    showMainTitle?: boolean;
+};

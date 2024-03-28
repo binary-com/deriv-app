@@ -638,7 +638,8 @@
         line-height: 1.5;
         text-align: left;
 
-        &--smarttrader-contract {
+        &--smarttrader-contract,
+        &--multipliers {
             width: 7rem;
             @include mobile {
                 width: 9rem;

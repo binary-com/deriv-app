@@ -43,7 +43,9 @@ const ButtonTextWrapper = ({ should_fade, is_loading, type, is_high_low }: TButt
     return (
         <div className='btn-purchase__text_wrapper'>
             <Text size='xs' weight='bold' color='colored-background'>
-                {!should_fade && is_loading ? '' : getContractTypeDisplay(type, is_high_low, true)}
+                {!should_fade && is_loading
+                    ? ''
+                    : getContractTypeDisplay(type, { isHighLow: is_high_low, showButtonName: true })}
             </Text>
         </div>
     );

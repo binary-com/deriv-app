@@ -16,8 +16,8 @@ const TradeTypeTabs = observer(({ className }: TTradeTypeTabs) => {
     const is_turbos = isTurbosContract(contract_type);
     const is_vanilla = isVanillaContract(contract_type);
     const tab_list = [
-        { text: localize('Long'), value: TRADE_TYPES.TURBOS.LONG, is_displayed: is_turbos },
-        { text: localize('Short'), value: TRADE_TYPES.TURBOS.SHORT, is_displayed: is_turbos },
+        { text: localize('Up'), value: TRADE_TYPES.TURBOS.LONG, is_displayed: is_turbos },
+        { text: localize('Down'), value: TRADE_TYPES.TURBOS.SHORT, is_displayed: is_turbos },
         { text: localize('Call'), value: TRADE_TYPES.VANILLA.CALL, is_displayed: is_vanilla },
         { text: localize('Put'), value: TRADE_TYPES.VANILLA.PUT, is_displayed: is_vanilla },
     ];

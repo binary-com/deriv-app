@@ -1,12 +1,16 @@
 import React from 'react';
 import { getCardLabels, getContractTypeDisplay } from '@deriv/shared';
+import { TContractOptions } from '@deriv/shared/src/utils/contract/contract-types';
 
 export type TGenericObjectType = {
     [key: string]: React.ReactNode;
 };
 export type TGetCardLables = () => ReturnType<typeof getCardLabels>;
 
-export type TGetContractTypeDisplay = (type: string, is_high_low: boolean) => ReturnType<typeof getContractTypeDisplay>;
+export type TGetContractTypeDisplay = (
+    type: string,
+    options: TContractOptions
+) => ReturnType<typeof getContractTypeDisplay>;
 
 export type TItem = {
     id: string;

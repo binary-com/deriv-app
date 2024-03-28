@@ -184,7 +184,7 @@ describe('<PositionsModalCard />', () => {
 
         expect(screen.queryByText(positions_card_loader)).not.toBeInTheDocument();
         expect(screen.getByText(symbol_display_name)).toBeInTheDocument();
-        expect(screen.getByText('Long')).toBeInTheDocument();
+        expect(screen.getByText('Up')).toBeInTheDocument();
         expect(screen.getByText(usd)).toBeInTheDocument();
         expect(screen.getByText(STAKE)).toBeInTheDocument();
         expect(screen.getByText(/10.00/i)).toBeInTheDocument();

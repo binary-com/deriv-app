@@ -20,6 +20,11 @@ export const DESCRIPTION_VIDEO_ID: TDtraderVideoUrl = {
         dark: '4c05445e1bd28f3f9f95b0ab566c4f9b',
     },
 
+    multiplier: {
+        light: 'bca032791da88023e81ebf7341226f83',
+        dark: '3d10e25e2e0eaaf96d1874aae257029f',
+    },
+
     rise_fall: {
         light: '7719c7e5436f58e59ab47510445108ba',
         dark: 'b72ef7ec914afe3dbb2a1601cad3a76f',

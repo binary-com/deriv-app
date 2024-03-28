@@ -316,9 +316,9 @@ export const getContractSubtype = (type = '') =>
 export const getLocalizedTurbosSubtype = (contract_type = '') => {
     if (!isTurbosContract(contract_type)) return '';
     return getContractSubtype(contract_type) === 'Long' ? (
-        <Localize i18n_default_text='Long' />
+        <Localize i18n_default_text='Up' />
     ) : (
-        <Localize i18n_default_text='Short' />
+        <Localize i18n_default_text='Down' />
     );
 };
 

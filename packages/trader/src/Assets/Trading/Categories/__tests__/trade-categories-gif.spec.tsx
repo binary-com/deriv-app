@@ -237,11 +237,11 @@ describe('<TradeCategoriesGIF />', () => {
                 });
         });
     });
-    it('expect ImageMultiplier to be rendered when trade category is TRADE_TYPES.MULTIPLIER', async () => {
+    it('expect VideoMultiplier to be rendered when trade category is TRADE_TYPES.MULTIPLIER', async () => {
         jest.isolateModules(() => {
-            jest.doMock('Assets/SvgComponents/trade_explanations/img-multiplier.svg', () => ({
+            jest.doMock('../contract-type-description-video', () => ({
                 __esModule: true,
-                default: jest.fn(() => 'ImageMultiplier'),
+                default: jest.fn(() => 'VideoMultiplier'),
             }));
 
             import('../trade-categories-gif')
@@ -252,7 +252,7 @@ describe('<TradeCategoriesGIF />', () => {
                             selected_contract_type={TRADE_TYPES.MULTIPLIER}
                         />
                     );
-                    expect(screen.getByText(/imagemultiplier/i)).toBeInTheDocument();
+                    expect(screen.getByText(/videomultiplier/i)).toBeInTheDocument();
                 })
                 .catch(error => {
                     throw new Error(error);
