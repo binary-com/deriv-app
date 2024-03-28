@@ -37,16 +37,29 @@ const AppContent: React.FC<{ passthrough: unknown }> = observer(({ passthrough }
                 rudderstackKey: process.env.RUDDERSTACK_KEY,
             };
             Analytics.initialise(config);
+            const ppc_campaign_cookies =
+                Cookies.getJSON('utm_data') === 'null'
+                    ? {
+                          utm_source: 'no source',
+                          utm_medium: 'mo medium',
+                          utm_campaign: 'no campaign',
+                      }
+                    : Cookies.getJSON('utm_data');
+            const account_type = LocalStore?.get('active_loginid')
+                ?.match(/[a-zA-Z]+/g)
+                ?.join('');
             Analytics.setAttributes({
-                account_type: LocalStore?.get('active_loginid')?.substring(0, 2) ?? 'unlogged',
+                account_type: account_type === 'null' ? 'unlogged' : account_type,
                 app_id: String(getAppId()),
                 device_type: store?.ui?.is_mobile ? 'mobile' : 'desktop',
                 device_language: navigator?.language || 'en-EN',
                 user_language: getLanguage().toLowerCase(),
                 country: Cookies.get('clients_country') || Cookies?.getJSON('website_status'),
+                utm_source: ppc_campaign_cookies?.utm_source,
+                utm_medium: ppc_campaign_cookies?.utm_medium,
+                utm_campaign: ppc_campaign_cookies?.utm_campaign,
             });
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data.marketing_growthbook]);
 

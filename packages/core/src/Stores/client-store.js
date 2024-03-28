@@ -12,6 +12,7 @@ import {
     getUrlSmartTrader,
     isCryptocurrency,
     isDesktopOs,
+    isMobile,
     isEmptyObject,
     isLocal,
     isProduction,
@@ -27,6 +28,7 @@ import {
     State,
     toMoment,
     urlForLanguage,
+    getAppId,
 } from '@deriv/shared';
 import { Analytics } from '@deriv-com/analytics';
 import { getLanguage, localize, getRedirectionLanguage } from '@deriv/translations';
@@ -1769,6 +1771,32 @@ export default class ClientStore extends BaseStore {
         const is_disabled = account.is_disabled;
         const is_virtual = account.is_virtual;
         const account_type = !is_virtual && currency ? currency : this.account_title;
+
+        const ppc_campaign_cookies =
+            Cookies.getJSON('utm_data') === 'null'
+                ? {
+                      utm_source: 'no source',
+                      utm_medium: 'mo medium',
+                      utm_campaign: 'no campaign',
+                  }
+                : Cookies.getJSON('utm_data');
+        const broker = LocalStore?.get('active_loginid')
+            ?.match(/[a-zA-Z]+/g)
+            ?.join('');
+        setTimeout(() => {
+            Analytics.setAttributes({
+                account_type: broker === 'null' ? 'unlogged' : broker,
+                app_id: String(getAppId()),
+                device_type: isMobile() ? 'mobile' : 'desktop',
+                language: getLanguage(),
+                device_language: navigator?.language || 'en-EN',
+                user_language: getLanguage().toLowerCase(),
+                country: Cookies.get('clients_country') || Cookies?.getJSON('website_status'),
+                utm_source: ppc_campaign_cookies?.utm_source,
+                utm_medium: ppc_campaign_cookies?.utm_medium,
+                utm_campaign: ppc_campaign_cookies?.utm_campaign,
+            });
+        }, 4);
 
         return {
             loginid,
