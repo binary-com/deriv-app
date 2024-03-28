@@ -7,3 +7,7 @@ export const MT5_ACCOUNT_STATUS = Object.freeze({
     POA_PENDING: 'poa_pending',
     POA_VERIFIED: 'poa_verified',
 });
+
+export const MT5_ACCOUNT_RIGHTS = Object.freeze({
+    DISABLED: 'disabled',
+});

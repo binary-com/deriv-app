@@ -18,7 +18,8 @@
             border-color: var(--status-warning);
             color: var(--status-warning);
         }
-        &--failed {
+        &--failed,
+        &--disabled {
             border-color: var(--status-danger);
             color: var(--status-danger);
         }

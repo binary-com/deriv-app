@@ -541,6 +541,8 @@ const mock = (): TStores & { is_mock: boolean } => {
             has_any_real_account: false,
             startTrade: jest.fn(),
             showTopUpModal: jest.fn(),
+            is_account_disabled_modal_visible: false,
+            setAccountDisabledModalVisibility: jest.fn(),
         },
         notifications: {
             addNotificationMessage: jest.fn(),

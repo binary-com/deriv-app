@@ -17,6 +17,7 @@ export default class TradersHubStore extends BaseStore {
     is_onboarding_visited = false;
     is_first_time_visit = true;
     is_failed_verification_modal_visible = false;
+    is_account_disabled_modal_visible = false;
     is_regulators_compare_modal_visible = false;
     is_mt5_notification_modal_visible = false;
     is_tour_open = false;
@@ -52,6 +53,7 @@ export default class TradersHubStore extends BaseStore {
             is_regulators_compare_modal_visible: observable,
             is_mt5_notification_modal_visible: observable,
             is_failed_verification_modal_visible: observable,
+            is_account_disabled_modal_visible: observable,
             is_tour_open: observable,
             modal_data: observable,
             is_onboarding_visited: observable,
@@ -106,6 +108,7 @@ export default class TradersHubStore extends BaseStore {
             setIsFirstTimeVisit: action.bound,
             setMT5NotificationModal: action.bound,
             toggleFailedVerificationModalVisibility: action.bound,
+            setAccountDisabledModalVisibility: action.bound,
             setMT5ExistingAccount: action.bound,
             openFailedVerificationModal: action.bound,
             toggleIsTourOpen: action.bound,
@@ -729,6 +732,10 @@ export default class TradersHubStore extends BaseStore {
 
     toggleFailedVerificationModalVisibility() {
         this.is_failed_verification_modal_visible = !this.is_failed_verification_modal_visible;
+    }
+
+    setAccountDisabledModalVisibility(is_visible) {
+        this.is_account_disabled_modal_visible = is_visible;
     }
 
     setMT5ExistingAccount(existing_account) {

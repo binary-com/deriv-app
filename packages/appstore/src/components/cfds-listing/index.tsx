@@ -1,7 +1,14 @@
 import React from 'react';
 import { observer, useStore } from '@deriv/stores';
 import { Text, StaticUrl } from '@deriv/components';
-import { isMobile, formatMoney, getAuthenticationStatusInfo, Jurisdiction, MT5_ACCOUNT_STATUS } from '@deriv/shared';
+import {
+    isMobile,
+    formatMoney,
+    getAuthenticationStatusInfo,
+    Jurisdiction,
+    MT5_ACCOUNT_STATUS,
+    MT5_ACCOUNT_RIGHTS,
+} from '@deriv/shared';
 import { localize, Localize } from '@deriv/translations';
 import ListingContainer from 'Components/containers/listing-container';
 import AddOptionsAccount from 'Components/add-options-account';
@@ -72,6 +79,9 @@ const CFDsListing = observer(() => {
     const getAuthStatus = (status_list: boolean[]) => status_list.some(status => status);
 
     const getMT5AccountAuthStatus = (current_acc_status?: string | null, jurisdiction?: string) => {
+        if (!current_acc_status?.includes('enabled')) {
+            return MT5_ACCOUNT_RIGHTS.DISABLED;
+        }
         if (jurisdiction) {
             switch (jurisdiction) {
                 case Jurisdiction.BVI: {
@@ -189,8 +199,11 @@ const CFDsListing = observer(() => {
                 <React.Fragment>
                     {combined_cfd_mt5_accounts.map((existing_account, index: number) => {
                         const list_size = combined_cfd_mt5_accounts.length;
+                        const account_disabled = !existing_account?.status?.includes('enabled');
                         const has_mt5_account_status =
-                            existing_account?.status || is_idv_revoked
+                            existing_account?.status ||
+                            is_idv_revoked ||
+                            (existing_account.action_type === 'multi-action' && account_disabled)
                                 ? getMT5AccountAuthStatus(
                                       existing_account?.status,
                                       existing_account?.landing_company_short

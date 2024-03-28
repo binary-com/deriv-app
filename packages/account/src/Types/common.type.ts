@@ -12,7 +12,7 @@ import {
     SetFinancialAssessmentRequest,
     IdentityVerificationAddDocumentResponse,
 } from '@deriv/api-types';
-import { AUTH_STATUS_CODES, CFD_PLATFORMS, MT5_ACCOUNT_STATUS, Platforms } from '@deriv/shared';
+import { AUTH_STATUS_CODES, CFD_PLATFORMS, MT5_ACCOUNT_STATUS, MT5_ACCOUNT_RIGHTS, Platforms } from '@deriv/shared';
 
 export type TToken = {
     display_name: string;
@@ -256,7 +256,9 @@ export type TFinancialInformationForm = Omit<SetFinancialAssessmentRequest, 'set
 
 export type TAuthStatusCodes = typeof AUTH_STATUS_CODES[keyof typeof AUTH_STATUS_CODES];
 
-export type TMT5AccountStatus = typeof MT5_ACCOUNT_STATUS[keyof typeof MT5_ACCOUNT_STATUS];
+export type TMT5AccountStatus =
+    | typeof MT5_ACCOUNT_STATUS[keyof typeof MT5_ACCOUNT_STATUS]
+    | typeof MT5_ACCOUNT_RIGHTS[keyof typeof MT5_ACCOUNT_RIGHTS];
 
 export type TFilesDescription = {
     descriptions: { id: string; value: JSX.Element }[];

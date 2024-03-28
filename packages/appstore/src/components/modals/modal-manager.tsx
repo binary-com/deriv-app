@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { ResetTradingPasswordModal } from '@deriv/account';
 import { TTradingPlatformAvailableAccount } from './account-type-modal/types';
 import MT5AccountTypeModal from './account-type-modal';
+import AccountDisabledModal from './account-disabled-modal';
 import RegulatorsCompareModal from './regulators-compare-modal';
 import { useStores } from 'Stores';
 import CFDServerErrorDialog from '@deriv/cfd/src/Containers/cfd-server-error-dialog';
@@ -141,6 +142,7 @@ const ModalManager = () => {
                 verification_code={trading_platform_dxtrade_password_reset || trading_platform_mt5_password_reset}
             />
             <MT5AccountTypeModal />
+            <AccountDisabledModal />
             <MT5MigrationModal />
             <RegulatorsCompareModal />
             <AccountTransferModal

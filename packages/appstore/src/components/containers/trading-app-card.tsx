@@ -21,6 +21,7 @@ import {
     getUrlSmartTrader,
     getUrlBinaryBot,
     MT5_ACCOUNT_STATUS,
+    MT5_ACCOUNT_RIGHTS,
 } from '@deriv/shared';
 import OpenPositionsSVGModal from '../modals/open-positions-svg-modal';
 import './trading-app-card.scss';
@@ -57,7 +58,7 @@ const TradingAppCard = ({
         client,
     } = useStore();
     const { setIsVerificationModalVisible } = ui;
-    const { is_eu_user, is_demo_low_risk, content_flag, is_real } = traders_hub;
+    const { is_eu_user, is_demo_low_risk, content_flag, is_real, setAccountDisabledModalVisibility } = traders_hub;
     const { current_language } = common;
     const { is_account_being_created } = cfd;
     const { account_status: { authentication } = {} } = client;
@@ -86,6 +87,8 @@ const TradingAppCard = ({
 
     const handleStatusBadgeClick = (mt5_acc_auth_status: string) => {
         switch (mt5_acc_auth_status) {
+            case MT5_ACCOUNT_RIGHTS.DISABLED:
+                return setAccountDisabledModalVisibility(true);
             case MT5_ACCOUNT_STATUS.MIGRATED_WITH_POSITION:
             case MT5_ACCOUNT_STATUS.MIGRATED_WITHOUT_POSITION:
                 return setIsOpenPositionSvgModalOpen(!is_open_position_svg_modal_open);
@@ -205,6 +208,7 @@ const TradingAppCard = ({
                     >
                         {app_desc}
                     </Text>
+
                     {mt5_acc_auth_status && (
                         <StatusBadge
                             className='trading-app-card__acc_status_badge'
@@ -214,6 +218,7 @@ const TradingAppCard = ({
                             onClick={() => handleStatusBadgeClick(mt5_acc_auth_status)}
                         />
                     )}
+
                     <OpenPositionsSVGModal
                         market_type={market_type}
                         status={mt5_acc_auth_status ?? ''}
