@@ -36,6 +36,9 @@ export const personal_details_config = ({
     }
 
     const default_residence = (real_account_signup_target === 'maltainvest' && account_settings?.residence) || '';
+    const default_citizen =
+        (account_settings?.citizen && residence_list?.find(item => item.value === account_settings?.citizen)?.text) ??
+        '';
 
     const config = {
         account_opening_reason: {
@@ -89,10 +92,7 @@ export const personal_details_config = ({
         },
         citizen: {
             supported_in: ['iom', 'malta', 'maltainvest'],
-            default_value:
-                (account_settings.citizen &&
-                    residence_list.find(item => item.value === account_settings.citizen)?.text) ||
-                '',
+            default_value: default_citizen,
             rules: [['req', localize('Citizenship is required')]],
         },
         phone: {
