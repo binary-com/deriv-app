@@ -631,17 +631,17 @@ describe('getLastContractMarkerIndex', () => {
 describe('getLocalizedTurbosSubtype', () => {
     it('should return an empty string for non-turbos contracts', () => {
         render(ContractUtils.getLocalizedTurbosSubtype(CONTRACT_TYPES.CALL) as JSX.Element);
-        expect(screen.queryByText('Long')).not.toBeInTheDocument();
-        expect(screen.queryByText('Short')).not.toBeInTheDocument();
+        expect(screen.queryByText('Up')).not.toBeInTheDocument();
+        expect(screen.queryByText('Down')).not.toBeInTheDocument();
         expect(ContractUtils.getLocalizedTurbosSubtype(CONTRACT_TYPES.CALL)).toBe('');
     });
-    it('should render "Long" for CONTRACT_TYPES.TURBOS.LONG contract', () => {
+    it('should render "Up" for CONTRACT_TYPES.TURBOS.LONG contract', () => {
         render(ContractUtils.getLocalizedTurbosSubtype(CONTRACT_TYPES.TURBOS.LONG) as JSX.Element);
-        expect(screen.getByText('Long')).toBeInTheDocument();
+        expect(screen.getByText('Up')).toBeInTheDocument();
     });
-    it('should render "Short" for CONTRACT_TYPES.TURBOS.SHORT contract', () => {
+    it('should render "Down" for CONTRACT_TYPES.TURBOS.SHORT contract', () => {
         render(ContractUtils.getLocalizedTurbosSubtype(CONTRACT_TYPES.TURBOS.SHORT) as JSX.Element);
-        expect(screen.getByText('Short')).toBeInTheDocument();
+        expect(screen.getByText('Down')).toBeInTheDocument();
     });
 });
 

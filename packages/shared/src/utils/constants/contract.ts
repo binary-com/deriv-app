@@ -477,28 +477,34 @@ export const getSupportedContracts = (is_high_low?: boolean) =>
         [CONTRACT_TYPES.MULTIPLIER.UP]: {
             name: localize('Up'),
             position: 'top',
+            main_title: localize('Multipliers'),
         },
         [CONTRACT_TYPES.MULTIPLIER.DOWN]: {
             name: localize('Down'),
             position: 'bottom',
+            main_title: localize('Multipliers'),
         },
         [CONTRACT_TYPES.TURBOS.LONG]: {
             name: localize('Turbos'),
-            button_name: localize('Long'),
+            button_name: localize('Up'),
             position: 'top',
+            main_title: localize('Turbos'),
         },
         [CONTRACT_TYPES.TURBOS.SHORT]: {
             name: localize('Turbos'),
-            button_name: localize('Short'),
+            button_name: localize('Down'),
             position: 'bottom',
+            main_title: localize('Turbos'),
         },
         [CONTRACT_TYPES.VANILLA.CALL]: {
             name: localize('Call'),
             position: 'top',
+            main_title: localize('Vanillas'),
         },
         [CONTRACT_TYPES.VANILLA.PUT]: {
             name: localize('Put'),
             position: 'bottom',
+            main_title: localize('Vanillas'),
         },
         [CONTRACT_TYPES.RUN_HIGH_LOW.HIGH]: {
             name: localize('Only Ups'),

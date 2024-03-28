@@ -30,11 +30,6 @@ export const DESCRIPTION_VIDEO_ID: TDtraderVideoUrl = {
         dark: 'c91f2b9859dc95ce8eecf7df327aaf00',
     },
 
-    turbos: {
-        light: 'd37ccbb8db358970b3628ee5e2b46ec3',
-        dark: 'aa5dfdd1f7d28c03d18a10c1d689389c',
-    },
-
     vanilla: {
         light: '9b8b6ae67d3a720e4aee2665889d17fb',
         dark: '8f04e9d768b8e08a1d87830c95c6b9c8',

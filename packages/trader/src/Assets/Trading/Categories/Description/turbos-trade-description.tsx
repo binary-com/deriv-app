@@ -31,8 +31,16 @@ const TurbosTradeDescription = ({
         {
             text: (
                 <Localize
-                    i18n_default_text='If you select <0>"Long"</0>, you’ll earn a payout if the spot price never drops below the barrier.<1 />If you select <0>"Short"</0>, you’ll earn a payout if the spot price never rises above the barrier.'
-                    components={[<strong key={0} />, <br key={1} />]}
+                    i18n_default_text='If you select <0>"Up"</0>, you’ll earn a payout if the spot price never drops below the barrier.'
+                    components={[<strong key={0} />]}
+                />
+            ),
+        },
+        {
+            text: (
+                <Localize
+                    i18n_default_text='If you select <0>"Down"</0>, you’ll earn a payout if the spot price never rises above the barrier.'
+                    components={[<strong key={0} />]}
                 />
             ),
         },

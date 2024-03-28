@@ -27,11 +27,11 @@ describe('Trade Type Tabs', () => {
             </TraderProviders>
         );
     };
-    it('should render Long & Short tabs when contract_type = TRADE_TYPES.TURBOS.LONG', () => {
+    it('should render Up & Down tabs when contract_type = TRADE_TYPES.TURBOS.LONG', () => {
         render(mockTradeTypeTabs(mock_root_store));
-        const long_tab = screen.getByText('Long');
-        const short_tab = screen.getByText('Short');
-        [long_tab, short_tab].forEach(tab => {
+        const up_tab = screen.getByText('Up');
+        const down_tab = screen.getByText('Down');
+        [up_tab, down_tab].forEach(tab => {
             expect(tab).toBeInTheDocument();
         });
     });
@@ -53,9 +53,9 @@ describe('Trade Type Tabs', () => {
             mock_root_store.modules.trade.contract_type = 'invalid_type';
         }
         render(mockTradeTypeTabs(mock_root_store));
-        const long_tab = screen.queryByText('Long');
-        const short_tab = screen.queryByText('Short');
-        [long_tab, short_tab].forEach(tab => {
+        const up_tab = screen.queryByText('Up');
+        const down_tab = screen.queryByText('Down');
+        [up_tab, down_tab].forEach(tab => {
             expect(tab).not.toBeInTheDocument();
         });
     });
@@ -66,8 +66,8 @@ describe('Trade Type Tabs', () => {
         }
         render(mockTradeTypeTabs(mock_root_store));
 
-        const short_tab = screen.getByText('Short');
-        userEvent.click(short_tab);
+        const down_tab = screen.getByText('Down');
+        userEvent.click(down_tab);
 
         expect(mock_root_store.modules?.trade.contract_type).toBe(TRADE_TYPES.TURBOS.SHORT);
     });

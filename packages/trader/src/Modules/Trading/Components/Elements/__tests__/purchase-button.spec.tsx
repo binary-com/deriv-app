@@ -72,13 +72,22 @@ describe('<PurchaseButton />', () => {
         expect(screen.getByText(/Call/i)).toBeInTheDocument();
     });
 
-    it('should apply a specific classNames if is_loading === true', () => {
+    it('should apply specific classNames if is_loading === true', () => {
         renderComponent(<PurchaseButton {...default_mocked_props} is_vanilla is_loading index={0} />);
 
-        const purchase_button = screen.getByRole('button');
+        expect(screen.getByRole('button')).toHaveClass('btn-purchase--animated--slide');
+    });
 
-        expect(purchase_button).toHaveClass('btn-purchase--animated--slide');
-        expect(purchase_button).toHaveClass('btn-purchase--1__vanilla-opts');
+    it('should apply specific classNames if it is vanillas, turbos or accumulators contract type', () => {
+        renderComponent(<PurchaseButton {...default_mocked_props} is_vanilla />);
+
+        expect(screen.getByRole('button')).toHaveClass('btn-purchase--has-bottom-gradient-2');
+    });
+
+    it('should not apply any specific classNames if it is not vanillas, turbos or accumulators contract type', () => {
+        renderComponent(<PurchaseButton {...default_mocked_props} />);
+
+        expect(screen.getByRole('button')).not.toHaveClass('btn-purchase--has-bottom-gradient-2');
     });
 
     it('should call function setPurchaseState and onClickPurchase if purchase button was clicked', () => {
