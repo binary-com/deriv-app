@@ -488,7 +488,6 @@ export default class OrderStore {
                 verification_code,
                 dry_run: 1,
             }).then(response => {
-                general_store.hideModal();
                 this.setIsVerifyingEmail(true);
                 if (response) {
                     if (!response.error) {

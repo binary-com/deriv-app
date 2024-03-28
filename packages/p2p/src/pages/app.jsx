@@ -264,7 +264,6 @@ const App = () => {
             order_store.setVerificationCode(code_param);
         }
         if (action_param && code_param) {
-            general_store.showModal({ key: 'LoadingModal', props: {} });
             order_store.verifyEmailVerificationCode(action_param, code_param);
         }
 
