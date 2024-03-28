@@ -11,25 +11,6 @@ type TProps = {
     transferConfirm: TPaymentAgentTransfer['transferConfirm'];
 };
 
-const warningMessages = [
-    {
-        key: 0,
-        text: (
-            <>
-                Please ensure <strong>all details</strong> are <strong>correct</strong> before making your transfer.
-            </>
-        ),
-    },
-    {
-        key: 1,
-        text: (
-            <>
-                We <strong>do not</strong> guarantee a refund if you make a wrong transfer.
-            </>
-        ),
-    },
-];
-
 const PaymentAgentTransferConfirm: React.FC<TProps> = ({
     activeAccount,
     isTransferRequestSubmitting,
@@ -68,7 +49,6 @@ const PaymentAgentTransferConfirm: React.FC<TProps> = ({
             onClickBack={() => setIsTryTransferSuccessful(false)}
             onClickConfirm={onConfirmHandler}
             title='Check transfer information'
-            warningMessages={warningMessages}
         />
     );
 };

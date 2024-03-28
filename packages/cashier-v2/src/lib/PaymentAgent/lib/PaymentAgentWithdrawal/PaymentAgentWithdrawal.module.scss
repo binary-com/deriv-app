@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    margin: 0 auto;
+}
+
+.unlisted-withdrawal-link {
+    &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}

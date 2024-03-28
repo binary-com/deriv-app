@@ -18,7 +18,7 @@ const PaymentAgentReceiptDetail: React.FC<TProps> = ({ action, children, icon: I
             <div className={styles['icon-wrapper']}>
                 <Icon data-testid='dt_detail_icon' iconSize='sm' />
             </div>
-            <div>
+            <div className={styles['details-wrapper']}>
                 {Children.toArray(children).map((child, id, array) => {
                     const href = action ? `${action}:${child}` : `${child}`;
                     return (

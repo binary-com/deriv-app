@@ -4,7 +4,11 @@ import { useSettings, useVerifyEmail } from '@deriv/api-v2';
 import { WithdrawalVerificationRequest } from './WithdrawalVerificationRequest';
 import { WithdrawalVerificationSent } from './WithdrawalVerificationSent';
 
-const WithdrawalVerification = () => {
+type TProps = {
+    withdrawalType: 'payment_withdraw' | 'paymentagent_withdraw';
+};
+
+const WithdrawalVerification: React.FC<TProps> = ({ withdrawalType }) => {
     const [emailSent, setEmailSent] = useState(false);
     const { data } = useSettings();
     const { mutate } = useVerifyEmail();
@@ -16,7 +20,7 @@ const WithdrawalVerification = () => {
     const handleSendEmail = async () => {
         if (data.email) {
             await mutate({
-                type: 'payment_withdraw',
+                type: withdrawalType,
                 verify_email: data.email,
             });
             setEmailSent(true);

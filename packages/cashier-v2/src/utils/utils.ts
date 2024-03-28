@@ -20,3 +20,17 @@ export const shuffleArray = <T>(array: T[] = []): T[] => {
     }
     return copiedArray;
 };
+
+export const clickAndKeyEventHandler = (
+    callback?: () => void,
+    e?: React.KeyboardEvent<HTMLElement> | React.MouseEvent<HTMLElement>
+) => {
+    if (e) {
+        e.preventDefault();
+        if (e.type !== 'keydown' || (e.type === 'keydown' && (e as React.KeyboardEvent).key === 'Enter')) {
+            callback?.();
+        }
+    } else {
+        callback?.();
+    }
+};

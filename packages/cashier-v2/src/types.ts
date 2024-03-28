@@ -1,5 +1,5 @@
 import { IconTypes } from '@deriv/quill-icons';
-import { FormatUtils } from '@deriv-com/utils';
+import { CurrencyConstants } from '@deriv-com/utils';
 import { cashierPathRoutes } from './routes/Router';
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -39,7 +39,7 @@ declare module 'react-router-dom' {
     export function useRouteMatch(path: TRouteTypes.TRoutes): boolean;
 }
 
-export type TCurrency = NonNullable<NonNullable<Parameters<typeof FormatUtils['formatMoney']>['1']>['currency']>;
+export type TCurrency = CurrencyConstants.Currency;
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace TIconTypes {

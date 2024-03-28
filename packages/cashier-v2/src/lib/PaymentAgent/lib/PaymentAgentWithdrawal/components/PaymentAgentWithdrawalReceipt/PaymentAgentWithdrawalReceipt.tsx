@@ -1,24 +1,15 @@
 import React from 'react';
+import clsx from 'clsx';
+import { useHistory } from 'react-router-dom';
 import { StandalonePhoneRegularIcon } from '@deriv/quill-icons';
 import { Button, Text } from '@deriv-com/ui';
 import { FormatUtils } from '@deriv-com/utils';
 import EmailIcon from '../../../../../../assets/images/ic-email-outline-new.svg';
 import WebsiteIcon from '../../../../../../assets/images/ic-website.svg';
 import type { THooks } from '../../../../../../hooks/types';
-import { TCurrency } from '../../../../../../types';
+import { usePaymentAgentWithdrawalContext } from '../../provider';
 import { PaymentAgentReceiptDetail } from './PaymentAgentReceiptDetail';
 import styles from './PaymentAgentWithdrawalReceipt.module.scss';
-
-type TPaymentAgentWithdrawalReceiptProps = {
-    receipt: {
-        amount: string;
-        currency: TCurrency;
-        paymentAgentEmail: THooks.PaymentAgentList[number]['email'];
-        paymentAgentName: THooks.PaymentAgentList[number]['name'];
-        paymentAgentPhoneNumbers: THooks.PaymentAgentList[number]['phone_numbers'];
-        paymentAgentUrls: THooks.PaymentAgentList[number]['urls'];
-    };
-};
 
 type TPaymentAgentPhoneDetailsProps = {
     phoneNumbers: THooks.PaymentAgentList[number]['phone_numbers'];
@@ -56,19 +47,31 @@ const PaymentAgentUrlDetails: React.FC<TPaymentAgentUrlDetailsProps> = ({ urls }
     );
 };
 
-const PaymentAgentWithdrawalReceipt: React.FC<TPaymentAgentWithdrawalReceiptProps> = ({ receipt }) => {
+const PaymentAgentWithdrawalReceipt = () => {
+    const { resetPaymentAgentWithdrawal, withdrawalReceipt } = usePaymentAgentWithdrawalContext();
     const { amount, currency, paymentAgentEmail, paymentAgentName, paymentAgentPhoneNumbers, paymentAgentUrls } =
-        receipt;
+        withdrawalReceipt;
+
+    const history = useHistory();
+
+    const onViewTransactionsHandler = () => {
+        history.push('/reports/statement');
+        resetPaymentAgentWithdrawal();
+    };
 
     //TODO: implement platform check in cashier-v2
     const isFromDerivgo = false;
 
     return (
         <div className={styles.container}>
-            <Text align='center' as='p' size='lg' weight='bold'>
+            <Text align='center' as='p' className={styles.title} size='lg' weight='bold'>
                 You’ve transferred {FormatUtils.formatMoney(Number(amount), { currency })} {currency}
             </Text>
-            <div>
+            <div
+                className={clsx(styles.description, {
+                    [styles['description--extra-bottom-margin']]: !paymentAgentName,
+                })}
+            >
                 <Text align='center' as='p' size='sm' weight='bold'>
                     Important notice to receive your funds
                 </Text>
@@ -84,7 +87,7 @@ const PaymentAgentWithdrawalReceipt: React.FC<TPaymentAgentWithdrawalReceiptProp
                 </div>
             </div>
             {paymentAgentName && (
-                <>
+                <div className={styles['details-wrapper']}>
                     <Text align='center' as='p' size='xs' weight='bold'>{`${paymentAgentName}'s contact details`}</Text>
                     <div className={styles.details}>
                         {paymentAgentPhoneNumbers.length > 0 && (
@@ -93,15 +96,21 @@ const PaymentAgentWithdrawalReceipt: React.FC<TPaymentAgentWithdrawalReceiptProp
                         {paymentAgentEmail && <PaymentAgentEmailDetails email={paymentAgentEmail} />}
                         {paymentAgentUrls.length > 0 && <PaymentAgentUrlDetails urls={paymentAgentUrls} />}
                     </div>
-                </>
+                </div>
             )}
             <div className={styles['buttons-container']}>
                 {!isFromDerivgo && (
-                    <Button color='black' size='lg' textSize='sm' variant='outlined'>
+                    <Button
+                        color='black'
+                        onClick={onViewTransactionsHandler}
+                        size='lg'
+                        textSize='sm'
+                        variant='outlined'
+                    >
                         View transactions
                     </Button>
                 )}
-                <Button size='lg' textSize='sm'>
+                <Button onClick={resetPaymentAgentWithdrawal} size='lg' textSize='sm'>
                     Make a new withdrawal
                 </Button>
             </div>

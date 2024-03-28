@@ -6,12 +6,6 @@ export type TPaymentAgentTransfer = ReturnType<typeof usePaymentAgentTransfer>;
 export type TPaymentAgentDetails = NonNullable<ReturnType<typeof usePaymentAgentDetails>['data']>;
 export type TActiveAccount = NonNullable<ReturnType<typeof useActiveAccount>['data']>;
 
-export type TInitialTransferFormValues = {
-    amount: string;
-    description: string;
-    loginid: string;
-};
-
 export type TReceipt = {
     amount: string;
     clientID: string;

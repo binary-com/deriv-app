@@ -17,7 +17,6 @@ type TTransferConfirmProps = {
     onClickBack: VoidFunction;
     onClickConfirm: VoidFunction;
     title: string;
-    warningMessages: { key: number | string; text: JSX.Element | string }[];
 };
 
 const Row: React.FC<TRowProps> = ({ itemKey, label, value }) => (
@@ -63,7 +62,6 @@ const TransferConfirm: React.FC<TTransferConfirmProps> = ({
     onClickBack,
     onClickConfirm,
     title,
-    warningMessages,
 }) => {
     const [isTransferConsentChecked, setIsTransferConsentChecked] = useState(false);
 
@@ -79,13 +77,12 @@ const TransferConfirm: React.FC<TTransferConfirmProps> = ({
                 ))}
             </div>
             <ul className={styles['warnings-container']}>
-                {warningMessages.map(({ key, text }) => {
-                    return (
-                        <Text as='li' color='red' key={key} size='xs'>
-                            {text}
-                        </Text>
-                    );
-                })}
+                <Text as='li' color='red' size='xs'>
+                    Please ensure <strong>all details</strong> are <strong>correct</strong> before making your transfer.
+                </Text>
+                <Text as='li' color='red' size='xs'>
+                    We <strong>do not</strong> guarantee a refund if you make a wrong transfer.
+                </Text>
             </ul>
             <Checkbox
                 checked={isTransferConsentChecked}

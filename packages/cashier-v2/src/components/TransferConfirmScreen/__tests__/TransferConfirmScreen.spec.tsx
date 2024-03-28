@@ -13,7 +13,6 @@ describe('<TransferConfirmScreenScreen />', () => {
             onClickBack: jest.fn(),
             onClickConfirm: jest.fn(),
             title: 'Transfer confirm title',
-            warningMessages: [],
         };
     });
 
@@ -61,18 +60,6 @@ describe('<TransferConfirmScreenScreen />', () => {
         expect(screen.getByText('10.00 USD')).toBeInTheDocument();
         expect(screen.getByText('Description')).toBeInTheDocument();
         expect(screen.getByText('Lorem ipsum')).toBeInTheDocument();
-    });
-
-    it('should render proper warning messages', () => {
-        mockedProps.warningMessages = [
-            { key: 'Message 1', text: 'Warning message 1' },
-            { key: 'Message 2', text: 'Warning message 2' },
-        ];
-
-        render(<TransferConfirmScreen {...mockedProps} />);
-
-        expect(screen.getByText('Warning message 1')).toBeInTheDocument();
-        expect(screen.getByText('Warning message 2')).toBeInTheDocument();
     });
 
     it('should render proper checkbox label', () => {

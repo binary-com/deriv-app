@@ -9,6 +9,36 @@
     }
 }
 
+.title {
+    margin-bottom: 4.8rem;
+
+    @include mobile-cashier-v2 {
+        margin-bottom: 1.6rem;
+    }
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 2.4rem;
+
+    &--extra-bottom-margin {
+        margin-bottom: 2.4rem;
+    }
+}
+
+.details-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 3.2rem;
+
+    @include mobile-cashier-v2 {
+        margin-bottom: 2.4rem;
+    }
+}
+
 .details {
     display: flex;
     max-width: 47.6rem;

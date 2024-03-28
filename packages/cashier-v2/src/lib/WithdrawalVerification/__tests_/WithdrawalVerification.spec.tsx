@@ -12,7 +12,7 @@ jest.mock('@deriv/api-v2', () => ({
 
 describe('WithdrawalVerification', () => {
     it('should render WithdrawalVerificationRequest initially', () => {
-        render(<WithdrawalVerification />);
+        render(<WithdrawalVerification withdrawalType='payment_withdraw' />);
         expect(screen.getByText('Please help us verify your withdrawal request.')).toBeInTheDocument();
     });
 
@@ -23,7 +23,7 @@ describe('WithdrawalVerification', () => {
             mutate: mockMutate,
         }));
 
-        render(<WithdrawalVerification />);
+        render(<WithdrawalVerification withdrawalType='payment_withdraw' />);
 
         fireEvent.click(screen.getByRole('button', { name: 'Send email' }));
 
@@ -42,7 +42,7 @@ describe('WithdrawalVerification', () => {
             mutate: mockMutate,
         }));
 
-        render(<WithdrawalVerification />);
+        render(<WithdrawalVerification withdrawalType='payment_withdraw' />);
 
         fireEvent.click(screen.getByRole('button', { name: 'Send email' }));
 

@@ -1,23 +1,10 @@
 import * as Yup from 'yup';
 import { AnyObject } from 'yup/lib/object';
-import { FormatUtils } from '@deriv-com/utils';
+import { FormatUtils, ValidationConstants } from '@deriv-com/utils';
 import type { TCurrency } from '../../types';
 
 export const numberValidator = (value: string, context: Yup.TestContext<AnyObject>) => {
-    const splitValues = value?.toString().split('.');
-    const numberOfDecimalsPoints = splitValues.length - 1;
-    const integerPart = splitValues[0];
-    const fractionalPart = splitValues[1];
-
-    const isIntegerPartNumberRegex = new RegExp(/^\d+$/);
-    const isFractionalPartNumberRegex = new RegExp(/^\d+$/);
-
-    if (
-        (integerPart && !isIntegerPartNumberRegex.exec(integerPart)) ||
-        numberOfDecimalsPoints > 1 ||
-        (numberOfDecimalsPoints === 1 && !fractionalPart) ||
-        (fractionalPart && !isFractionalPartNumberRegex.exec(fractionalPart))
-    ) {
+    if (!ValidationConstants.patterns.decimal.test(value)) {
         return context.createError({ message: 'Should be a valid number.' });
     }
     return true;

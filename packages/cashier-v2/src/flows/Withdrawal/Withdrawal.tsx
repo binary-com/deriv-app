@@ -48,7 +48,7 @@ const Withdrawal = () => {
     }
     return (
         <PageContainer>
-            <WithdrawalVerificationModule />
+            <WithdrawalVerificationModule withdrawalType='payment_withdraw' />
         </PageContainer>
     );
 };

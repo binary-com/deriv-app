@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, FieldProps, Form, Formik } from 'formik';
 import { Button, Input, Text, TextArea, useDevice } from '@deriv-com/ui';
-import type { TActiveAccount, TInitialTransferFormValues, TPaymentAgentTransfer } from '../../types';
+import type { TActiveAccount, TPaymentAgentTransfer } from '../../types';
 import styles from './PaymentAgentTransferForm.module.scss';
 
 type TProps = {
@@ -18,7 +18,8 @@ const PaymentAgentTransferForm: React.FC<TProps> = ({
     validationSchema,
 }) => {
     const { isMobile } = useDevice();
-    const initialTransferValues: TInitialTransferFormValues = {
+
+    const initialTransferValues = {
         amount: transferConfirm.amount,
         description: transferConfirm.description,
         loginid: transferConfirm.clientID,

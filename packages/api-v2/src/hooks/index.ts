@@ -53,6 +53,7 @@ export { default as useOnfidoNotificationEvent } from './useOnfidoNotificationEv
 export { default as useOnfidoServiceToken } from './useOnfidoServiceToken';
 export { default as useOtherCFDPlatformsDeposit } from './useOtherCFDPlatformsDeposit';
 export { default as usePaymentAgentList } from './usePaymentAgentList';
+export { default as usePaymentAgentWithdrawal } from './usePaymentAgentWithdrawal';
 export { default as usePOA } from './usePOA';
 export { default as usePOI } from './usePOI';
 export { default as useResidenceList } from './useResidenceList';

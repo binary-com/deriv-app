@@ -1,18 +1,41 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Field, FieldProps, Form, Formik } from 'formik';
 import { useActiveAccount } from '@deriv/api-v2';
 import { LabelPairedCircleXmarkMdFillIcon, StandaloneArrowLeftBoldIcon } from '@deriv/quill-icons';
 import { Button, Input, Text } from '@deriv-com/ui';
+import { usePaymentAgentWithdrawalContext } from '../../provider';
 import styles from './PaymentAgentUnlistedWithdrawalForm.module.scss';
 
 const PaymentAgentUnlistedWithdrawalForm = () => {
     const { data: activeAccount } = useActiveAccount();
-    const onSubmitHandler = () => undefined;
+
+    const { getPaymentAgentWithdrawalValidationSchema, requestTryPaymentAgentWithdrawal, setIsUnlistedWithdrawal } =
+        usePaymentAgentWithdrawalContext();
+
+    const onSubmitHandler = useCallback(
+        ({ accountNumber, amount }: { accountNumber: string; amount: string }) => {
+            requestTryPaymentAgentWithdrawal({
+                amount: Number(amount),
+                paymentagent_loginid: accountNumber,
+            });
+        },
+        [requestTryPaymentAgentWithdrawal]
+    );
+
+    const getAccountNumberInputMessage = useCallback((isTouched?: boolean, errorMessage?: string) => {
+        if (isTouched && errorMessage) return errorMessage;
+        return 'Example: CR123456789';
+    }, []);
 
     return (
         <div className={styles.container}>
             <div className={styles['back-section']}>
-                <StandaloneArrowLeftBoldIcon data-testid='dt-back-arrow-icon' iconSize='md' />
+                <StandaloneArrowLeftBoldIcon
+                    className={styles['back-arrow-icon']}
+                    data-testid='dt-back-arrow-icon'
+                    iconSize='md'
+                    onClick={() => setIsUnlistedWithdrawal(false)}
+                />
                 <Text size='sm' weight='bold'>
                     Back to list
                 </Text>
@@ -23,13 +46,14 @@ const PaymentAgentUnlistedWithdrawalForm = () => {
                     amount: '',
                 }}
                 onSubmit={onSubmitHandler}
+                validationSchema={getPaymentAgentWithdrawalValidationSchema()}
             >
                 {({ errors, isSubmitting, isValid, setFieldValue, touched, values }) => {
                     const isFormEmpty = !Object.values(values).some(Boolean);
 
                     return (
                         <Form className={styles.form}>
-                            <Field name='account_number'>
+                            <Field name='accountNumber'>
                                 {({ field }: FieldProps) => (
                                     <Input
                                         {...field}
@@ -38,10 +62,13 @@ const PaymentAgentUnlistedWithdrawalForm = () => {
                                         isFullWidth
                                         label='Enter the payment agent account number'
                                         maxLength={30}
-                                        message='Example: CR123456789'
+                                        message={getAccountNumberInputMessage(
+                                            touched.accountNumber,
+                                            errors.accountNumber
+                                        )}
                                         required
                                         rightPlaceholder={
-                                            errors.accountNumber ? (
+                                            field.value ?? errors.accountNumber ? (
                                                 <LabelPairedCircleXmarkMdFillIcon
                                                     onClick={() => setFieldValue('accountNumber', '')}
                                                 />
@@ -61,6 +88,7 @@ const PaymentAgentUnlistedWithdrawalForm = () => {
                                             isFullWidth
                                             label='Enter amount'
                                             maxLength={30}
+                                            message={touched.amount && errors.amount}
                                             required
                                             rightPlaceholder={
                                                 <Text as='span' size='sm'>
@@ -73,6 +101,7 @@ const PaymentAgentUnlistedWithdrawalForm = () => {
                                 </Field>
                                 <Button
                                     disabled={!isValid || isSubmitting || isFormEmpty}
+                                    isLoading={isSubmitting}
                                     size='lg'
                                     textSize='sm'
                                     type='submit'

@@ -54,16 +54,24 @@ export const usePaymentAgentTransfer = () => {
                 dry_run: 1,
                 transfer_to: transferTo,
             },
-        }).then(({ client_to_full_name: clientName = '', client_to_loginid: clientID = '' }) => {
-            setTransferConfirm({
-                amount: String(amount),
-                clientID,
-                clientName,
-                currency,
-                description: description ?? '',
-            });
-            setIsTryTransferSuccessful(true);
-        });
+        }).then(
+            ({
+                client_to_full_name: clientName = '',
+                client_to_loginid: clientID = '',
+                paymentagent_transfer: paymentAgentTransfer,
+            }) => {
+                if (paymentAgentTransfer === 2) {
+                    setTransferConfirm({
+                        amount: String(amount),
+                        clientID,
+                        clientName,
+                        currency,
+                        description: description ?? '',
+                    });
+                    setIsTryTransferSuccessful(true);
+                }
+            }
+        );
     };
 
     const requestPaymentAgentTransfer = ({
@@ -76,18 +84,27 @@ export const usePaymentAgentTransfer = () => {
                 amount,
                 currency,
                 description,
+                dry_run: 0,
                 transfer_to: transferTo,
             },
-        }).then(({ client_to_full_name: clientName = '', client_to_loginid: clientID = '' }) => {
-            setTransferReceipt({
-                amount: String(amount),
-                clientID,
-                clientName,
-                currency,
-            });
-            setIsTryTransferSuccessful(false);
-            setIsTransferSuccessful(true);
-        });
+        }).then(
+            ({
+                client_to_full_name: clientName = '',
+                client_to_loginid: clientID = '',
+                paymentagent_transfer: paymentAgentTransfer,
+            }) => {
+                if (paymentAgentTransfer === 1) {
+                    setTransferReceipt({
+                        amount: String(amount),
+                        clientID,
+                        clientName,
+                        currency,
+                    });
+                    setIsTryTransferSuccessful(false);
+                    setIsTransferSuccessful(true);
+                }
+            }
+        );
     };
 
     const resetPaymentAgentTransfer = () => {
