@@ -2,7 +2,7 @@ import React, { ComponentProps } from 'react';
 import { Formik } from 'formik';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import * as utils from '../../../utils/idvFormUtils';
+import * as utils from '../../../../utils/idvFormUtils';
 import { IDVForm } from '../IDVForm';
 
 jest.mock('@deriv-com/ui', () => ({

@@ -3,7 +3,7 @@ import { Form, Formik } from 'formik';
 import { Checkbox, Text } from '@deriv-com/ui';
 import { FormSubHeader } from '../../components/FormSubHeader';
 import { usePersonalDetails } from '../../hooks/usePersonalDetails';
-import { AddressFields } from '../../modules/AddressFields';
+import { AddressFields } from '../../modules/src/AddressFields';
 import { getPersonalDetailsValidationSchema } from '../../utils';
 import { PersonalDetails } from './PersonalDetails';
 import { SupportProfessionalClient } from './SupportProfessionalClient';

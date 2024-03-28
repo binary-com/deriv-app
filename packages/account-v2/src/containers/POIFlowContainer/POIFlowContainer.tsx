@@ -3,7 +3,7 @@ import { useKycAuthStatus } from '@deriv/api-v2';
 import { Loader } from '@deriv-com/ui';
 import { POI_SERVICE } from '../../constants/constants';
 import { usePOIInfo } from '../../hooks';
-import { IDVService, ManualUpload, OnfidoContainer } from '../../modules';
+import { IDVService, ManualUpload, OnfidoContainer } from '../../modules/src';
 
 type TPOIFlowContainerProps = {
     countryCode: string;

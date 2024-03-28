@@ -4,12 +4,12 @@ import { useHistory } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 import { useOnfido } from '@deriv/api-v2';
 import { Button, Loader, Text } from '@deriv-com/ui';
-import IcAccountMissingDetails from '../../assets/proof-of-identity/ic-account-missing-details.svg';
-import { ErrorMessage } from '../../components/ErrorMessage';
-import { IconWithMessage } from '../../components/IconWithMessage';
-import { TManualDocumentTypes } from '../../constants/manualFormConstants';
-import { OnfidoView, PersonalDetailsFormWithExample } from '../../containers';
-import { getNameDOBValidationSchema } from '../../utils';
+import IcAccountMissingDetails from '../../../assets/proof-of-identity/ic-account-missing-details.svg';
+import { ErrorMessage } from '../../../components/ErrorMessage';
+import { IconWithMessage } from '../../../components/IconWithMessage';
+import { TManualDocumentTypes } from '../../../constants/manualFormConstants';
+import { OnfidoView, PersonalDetailsFormWithExample } from '../../../containers';
+import { getNameDOBValidationSchema } from '../../../utils';
 
 // TODO: Remove optional and default props when POI is ready
 type TOnfidoContainer = {

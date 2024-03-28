@@ -3,18 +3,18 @@ import * as routerDOM from 'react-router-dom';
 import { useActiveTradingAccount, useAuthorize } from '@deriv/api-v2';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ACCOUNT_V2_ROUTES, P2P_ROUTE } from '../../../constants/routes';
-import { usePOAInfo } from '../../../hooks/usePOAInfo';
-import { isNavigationFromDerivGO, isNavigationFromP2P } from '../../../utils/platform';
+import { ACCOUNT_V2_ROUTES, P2P_ROUTE } from '../../../../constants/routes';
+import { usePOAInfo } from '../../../../hooks/usePOAInfo';
+import { isNavigationFromDerivGO, isNavigationFromP2P } from '../../../../utils/platform';
 import { POAFormContainer } from '../POAFormContainer';
 
 jest.mock('@deriv/quill-design', () => ({
     useBreakpoint: jest.fn(() => ({ isMobile: false })),
 }));
 
-jest.mock('../../../utils/platform');
+jest.mock('../../../../utils/platform');
 
-jest.mock('../../../containers/POAForm/AddressDetailsForm', () => ({
+jest.mock('../../../../containers/POAForm/AddressDetailsForm', () => ({
     AddressDetailsForm: ({ resubmitting }: { resubmitting: boolean }) => (
         <div>Address Details Form {resubmitting && 'resubmitting'}</div>
     ),
@@ -27,7 +27,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 jest.mock('@deriv/api-v2');
-jest.mock('../../../hooks/usePOAInfo');
+jest.mock('../../../../hooks/usePOAInfo');
 
 beforeEach(() => {
     (useAuthorize as jest.Mock).mockReturnValue({ data: {} });

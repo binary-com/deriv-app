@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import { Formik } from 'formik';
 import { Button, Divider, Text } from '@deriv-com/ui';
-import { PersonalDetailsFormWithExample } from '../../containers';
-import { TSupportedDocuments } from '../../types';
-import { getIDVFormValidationSchema } from '../../utils/idvFormUtils';
-import { getNameDOBValidationSchema } from '../../utils';
+import { PersonalDetailsFormWithExample } from '../../../containers';
+import { TSupportedDocuments } from '../../../types';
+import { getNameDOBValidationSchema } from '../../../utils';
+import { getIDVFormValidationSchema } from '../../../utils/idvFormUtils';
 import { IDVForm } from '../IDVForm';
 
 type TIDVServiceProps = {

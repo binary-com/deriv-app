@@ -25,6 +25,13 @@ jest.mock('@deriv/api-v2', () => ({
     })),
 }));
 
+jest.mock('../../../../assets/proof-of-identity/personal-details-example.svg', () => {
+    return {
+        __esModule: true,
+        default: jest.fn(() => <div>MockedLazyComponent</div>),
+    };
+});
+
 beforeEach(() => {
     jest.clearAllMocks();
 });

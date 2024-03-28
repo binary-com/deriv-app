@@ -1,7 +1,7 @@
 import { ACCOUNT_V2_ROUTES } from '../constants/routes';
 import { PersonalDetailsForm } from '../containers/PersonalDetailsForm';
 import { POICountrySelector } from '../containers/POICountrySelector';
-import { POAFormContainer } from '../modules/POAForm/POAFormContainer';
+import { POAFormContainer } from '../modules/src/POAForm/POAFormContainer';
 import { AccountClosure, ConnectedApps } from '../pages';
 import { LoginHistory } from '../pages/LoginHistory';
 import { DummyRoute } from './components/DummyRoute';

@@ -5,3 +5,4 @@ export {
     type TAccountClosureFormActions,
 } from './accountClosureReasons';
 export * from './constants';
+export * from './routes';

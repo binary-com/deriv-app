@@ -21,6 +21,7 @@ packages/components/src/components/icon/icons-manifest.js
 packages/p2p/lib/
 packages/appstore/lib/
 packages/appstore/.out
+packages/account-v2/src/modules/scripts/webpack-entries.json
 packages/wallets/src/translations/messages.json
 .env
 nx-cloud.env

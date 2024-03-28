@@ -1,16 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useFormikContext } from 'formik';
 import { InferType } from 'yup';
-import { FormDropDownField, FormInputField } from '../../components/FormFields';
-import { TSupportedDocuments } from '../../types';
-import { getIDVNotApplicableOption } from '../../utils/defaultOptions';
+import { FormDropDownField, FormInputField } from '../../../components/FormFields';
+import { TSupportedDocuments } from '../../../types';
+import { getIDVNotApplicableOption } from '../../../utils/defaultOptions';
 import {
     generatePlaceholderText,
     getExampleFormat,
     getIDVFormValidationSchema,
     getSelectedDocumentConfigData,
     TDocument,
-} from '../../utils/idvFormUtils';
+} from '../../../utils/idvFormUtils';
 
 type TIDVFormProps = {
     allowDefaultValue?: boolean;

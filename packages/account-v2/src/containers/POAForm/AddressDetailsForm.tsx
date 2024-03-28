@@ -2,11 +2,11 @@ import React, { Fragment } from 'react';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { useHistory } from 'react-router-dom';
 import { useDocumentUpload, useInvalidateQuery, useSettings } from '@deriv/api-v2';
-import { StandaloneXmarkBoldIcon, DerivLightIcPoaLockIcon } from '@deriv/quill-icons';
+import { DerivLightIcPoaLockIcon, StandaloneXmarkBoldIcon } from '@deriv/quill-icons';
 import { Button, InlineMessage, Text, useDevice } from '@deriv-com/ui';
 import { IconWithMessage } from '../../components/IconWithMessage';
 import { ACCOUNT_V2_DEFAULT_ROUTE } from '../../constants/routes';
-import { AddressFields } from '../../modules/AddressFields';
+import { AddressFields } from '../../modules/src/AddressFields';
 import { DocumentSubmission } from './DocumentSubmission';
 
 type TAddressDetails = {

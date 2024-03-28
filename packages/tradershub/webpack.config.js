@@ -186,6 +186,7 @@ module.exports = function (env) {
             alias: {
                 '@': path.resolve(__dirname, 'src'),
                 '@cfd': path.resolve(__dirname, 'src/features/cfd'),
+                '@deriv-lib/account-v2-lib': path.resolve(__dirname, '../account-v2/src/modules'),
             },
             extensions: ['.js', '.jsx', '.ts', '.tsx'],
         },
