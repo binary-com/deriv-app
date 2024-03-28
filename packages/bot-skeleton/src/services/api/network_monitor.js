@@ -10,7 +10,6 @@ export default class NetworkMonitor {
             window.addEventListener('online', () => this.setStatus());
             window.addEventListener('offline', () => this.setStatus());
         } else {
-            navigator.onLine = true;
             setInterval(() => this.setStatus(), 10000);
         }
         this.setStatus();

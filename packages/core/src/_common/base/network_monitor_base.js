@@ -35,9 +35,6 @@ const NetworkMonitorBase = (() => {
                 BinarySocket.close();
                 setNetworkStatus('offline');
             });
-        } else {
-            // default to always online and fallback to WS checks
-            navigator.onLine = true;
         }
 
         if (isOnline()) {
