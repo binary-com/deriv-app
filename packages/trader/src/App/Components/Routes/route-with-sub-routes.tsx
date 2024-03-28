@@ -1,14 +1,6 @@
 import React from 'react';
 import { Redirect, Route, RouteComponentProps } from 'react-router-dom';
-import {
-    alternateLinkTagChange,
-    canonicalLinkTagChange,
-    redirectToLogin,
-    removeBranchName,
-    routes,
-    isEmptyObject,
-    default_title,
-} from '@deriv/shared';
+import { redirectToLogin, removeBranchName, routes, isEmptyObject, default_title } from '@deriv/shared';
 import { getLanguage } from '@deriv/translations';
 import Page404 from 'Modules/Page404';
 import { TBinaryRoutesProps, TRouteConfig } from 'Types';
@@ -56,9 +48,6 @@ const RouteWithSubRoutes = (route: TRouteWithSubRoutesProps) => {
 
         const title = route.getTitle?.() ?? '';
         document.title = `${title} | ${default_title}`;
-
-        alternateLinkTagChange();
-        canonicalLinkTagChange();
 
         return result;
     };

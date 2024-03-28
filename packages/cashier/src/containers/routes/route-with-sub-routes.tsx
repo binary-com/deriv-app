@@ -1,14 +1,7 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
-import {
-    alternateLinkTagChange,
-    canonicalLinkTagChange,
-    redirectToLogin,
-    routes,
-    removeBranchName,
-    default_title,
-} from '@deriv/shared';
+import { redirectToLogin, routes, removeBranchName, default_title } from '@deriv/shared';
 import { getLanguage } from '@deriv/translations';
 import { TRootStore, TRouteConfig, TRoute } from '../../types';
 
@@ -46,9 +39,6 @@ const RouteWithSubRoutes = (route: TRouteWithSubRoutesProps) => {
 
         const title = route.getTitle?.() || '';
         document.title = `${title} | ${default_title}`;
-
-        alternateLinkTagChange();
-        canonicalLinkTagChange();
 
         return result;
     };
