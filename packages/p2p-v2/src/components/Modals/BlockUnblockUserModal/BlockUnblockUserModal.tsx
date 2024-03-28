@@ -59,7 +59,14 @@ const BlockUnblockUserModal = ({
                 {getModalContent()}
             </Text>
             <div className='p2p-v2-block-unblock-user-modal__footer'>
-                <Button onClick={onRequestClose} size='lg' textSize='sm' variant='outlined'>
+                <Button
+                    className='border-2'
+                    color='black'
+                    onClick={onRequestClose}
+                    size='lg'
+                    textSize='sm'
+                    variant='outlined'
+                >
                     Cancel
                 </Button>
                 <Button onClick={onClickBlockUnblock} size='lg' textSize='sm'>

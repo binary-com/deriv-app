@@ -13,6 +13,7 @@ type TMyAdsDisplayWrapperProps = {
 const MyAdsDisplayWrapper = ({ children, isPaused, onClickToggle }: PropsWithChildren<TMyAdsDisplayWrapperProps>) => {
     const { isMobile } = useDevice();
     const history = useHistory();
+
     if (isMobile) {
         return (
             <FullPageMobileWrapper

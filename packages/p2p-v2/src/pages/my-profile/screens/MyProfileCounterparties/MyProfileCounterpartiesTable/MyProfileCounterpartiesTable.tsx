@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-import { Table } from '@/components';
 import { p2p } from '@deriv/api-v2';
-import { Loader, Text } from '@deriv-com/ui';
+import { Loader, Table, Text } from '@deriv-com/ui';
 import { MyProfileCounterpartiesEmpty } from '../MyProfileCounterpartiesEmpty';
 import { MyProfileCounterpartiesTableRow } from '../MyProfileCounterpartiesTableRow';
 import './MyProfileCounterpartiesTable.scss';
@@ -20,10 +19,10 @@ type TMyProfileCounterpartiesTableRowRendererProps = {
 
 const MyProfileCounterpartiesTableRowRenderer = ({
     id,
-    is_blocked,
+    is_blocked: isBlocked,
     name,
 }: TMyProfileCounterpartiesTableRowRendererProps) => (
-    <MyProfileCounterpartiesTableRow id={id!} isBlocked={is_blocked} nickname={name!} />
+    <MyProfileCounterpartiesTableRow id={id!} isBlocked={isBlocked} nickname={name!} />
 );
 
 //TODO: rewrite the implementation in accordance with @deriv-com/ui table component
@@ -38,9 +37,9 @@ const MyProfileCounterpartiesTable = ({
         isLoading,
         loadMoreAdvertisers,
     } = p2p.advertiser.useGetList({
-        trade_partners: 1,
-        is_blocked: dropdownValue === 'blocked' ? 1 : 0,
         advertiser_name: searchValue,
+        is_blocked: dropdownValue === 'blocked' ? 1 : 0,
+        trade_partners: 1,
     });
 
     useEffect(() => {

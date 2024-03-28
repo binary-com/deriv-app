@@ -3,7 +3,6 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 2.4rem;
-    width: 67vw;
 
     &__header {
         font-size: 1.6rem;
@@ -11,11 +10,16 @@
     }
 
     @include mobile {
-        width: 100vw;
         padding: 2rem;
     }
 
     &__border {
         border-top: 2px solid #f2f3f4;
+    }
+
+    &__mobile-wrapper {
+        position: absolute;
+        top: 4rem;
+        height: calc(100vh - 8rem);
     }
 }

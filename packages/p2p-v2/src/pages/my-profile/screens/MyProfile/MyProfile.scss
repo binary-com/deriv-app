@@ -1,7 +1,7 @@
 .p2p-v2-my-profile {
     display: flex;
     flex-direction: column;
-    padding: 2.4rem 0;
+    padding-top: 2.4rem;
 
     @include mobile {
         overflow-y: scroll;
@@ -10,16 +10,17 @@
     }
 
     &__tabs {
-        & .derivs-primary-tabs {
-            width: 70rem;
-            margin: 2.4rem 0;
-            border-radius: 0.6rem;
-            padding: 0.5rem;
-        }
+        margin: 2.4rem 0;
+        border-radius: 0.6rem;
+        padding: 0.5rem;
+        width: 74rem;
 
-        & .derivs-primary-tabs__btn--active {
+        &-tab {
             border-radius: 0.4rem;
-            padding: 0.8rem 0.6rem;
+
+            & > span {
+                font-size: 1.4rem;
+            }
         }
     }
 }

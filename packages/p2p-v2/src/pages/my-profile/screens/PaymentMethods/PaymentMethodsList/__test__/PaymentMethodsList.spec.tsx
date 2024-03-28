@@ -1,26 +1,29 @@
 import React from 'react';
-import { useDevice, useQueryString } from '@/hooks';
+import { useQueryString } from '@/hooks';
+import { useDevice } from '@deriv-com/ui';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import PaymentMethodsList from '../PaymentMethodsList';
 
-jest.mock('../PaymentMethodsListContent', () => jest.fn().mockReturnValue(<div>PaymentMethodsListContent</div>));
+jest.mock('../PaymentMethodsListContent/PaymentMethodsListContent', () =>
+    jest.fn().mockReturnValue(<div>PaymentMethodsListContent</div>)
+);
 
 jest.mock('@/hooks', () => ({
     ...jest.requireActual('@/hooks'),
-    useDevice: jest.fn().mockReturnValue({
-        isDesktop: false,
-        isMobile: false,
-        isTablet: false,
-    }),
     useQueryString: jest.fn().mockReturnValue({ setQueryString: jest.fn() }),
+}));
+
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn().mockReturnValue({ isDesktop: true, isMobile: false, isTablet: false }),
 }));
 
 const mockUseDevice = useDevice as jest.MockedFunction<typeof useDevice>;
 const mockUseQueryString = useQueryString as jest.MockedFunction<typeof useQueryString>;
 
 describe('PaymentMethodsList', () => {
-    it('should render the component when an empty list of payment methods is provided and ismobile is true', () => {
+    it('should render the component when an empty list of payment methods is provided and isMobile is true', () => {
         mockUseDevice.mockReturnValueOnce({
             isDesktop: false,
             isMobile: true,
@@ -38,7 +41,7 @@ describe('PaymentMethodsList', () => {
         );
         expect(screen.queryByText('PaymentMethodsListContent')).not.toBeInTheDocument();
     });
-    it('should render the component when an empty list of payment methods is provided and ismobile is false', () => {
+    it('should render the component when an empty list of payment methods is provided and isMobile is false', () => {
         mockUseDevice.mockReturnValueOnce({
             isDesktop: false,
             isMobile: false,
@@ -56,7 +59,7 @@ describe('PaymentMethodsList', () => {
         );
         expect(screen.queryByText('PaymentMethodsListContent')).not.toBeInTheDocument();
     });
-    it('should render the component when a list of payment methods is provided and ismobile is true', () => {
+    it('should render the component when a list of payment methods is provided and isMobile is true', () => {
         mockUseDevice.mockReturnValueOnce({
             isDesktop: false,
             isMobile: true,
@@ -85,7 +88,7 @@ describe('PaymentMethodsList', () => {
         );
         expect(screen.queryByText('PaymentMethodsListContent')).toBeInTheDocument();
     });
-    it('should render the component when a list of payment methods is provided and ismobile is false', () => {
+    it('should render the component when a list of payment methods is provided and isMobile is false', () => {
         mockUseDevice.mockReturnValueOnce({
             isDesktop: false,
             isMobile: false,

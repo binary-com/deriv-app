@@ -54,9 +54,10 @@ const getShareButtons = (advertUrl: string) => [
     },
 ];
 const ShareMyAdsSocials = ({ advertUrl, customMessage }: TShareMyAdsSocialsProps) => (
-    <div className='flex flex-row justify-around p2p-v2-share-ads-socials'>
+    <div className='p2p-v2-share-ads-socials'>
         {getShareButtons(advertUrl).map(({ ShareButton, href, icon, messagePropName, rel, target, text }) => (
             <ShareButton
+                className='flex flex-col items-center'
                 key={text}
                 url={text === 'Facebook' ? advertUrl : ' '}
                 {...(messagePropName && { [messagePropName]: customMessage })}
@@ -64,7 +65,7 @@ const ShareMyAdsSocials = ({ advertUrl, customMessage }: TShareMyAdsSocialsProps
                 {...(target && { target: '_blank' })}
                 {...(rel && { rel: 'noreferrer' })}
             >
-                <div className='flex justify-center items-center p2p-v2-share-ads-socials__circle'>{icon}</div>
+                <div className='p2p-v2-share-ads-socials__circle'>{icon}</div>
                 <Text size='2xs'>{text}</Text>
             </ShareButton>
         ))}

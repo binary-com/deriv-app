@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAdvertiserStats, usePoiPoaStatus } from '@/hooks';
-import { useDevice } from '@deriv-com/ui';
 import { APIProvider, AuthProvider } from '@deriv/api-v2';
+import { useDevice } from '@deriv-com/ui';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import MyProfile from '../MyProfile';
@@ -63,9 +63,6 @@ jest.mock('@/hooks', () => ({
         },
         failureReason: undefined,
         isLoading: false,
-    }),
-    useDevice: jest.fn().mockReturnValue({
-        isMobile: false,
     }),
     usePoiPoaStatus: jest.fn().mockReturnValue({
         data: {

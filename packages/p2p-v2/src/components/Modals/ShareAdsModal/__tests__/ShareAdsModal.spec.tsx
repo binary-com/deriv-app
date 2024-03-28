@@ -1,6 +1,5 @@
 import React from 'react';
 import html2canvas from 'html2canvas';
-import Modal from 'react-modal';
 import { useDevice } from '@deriv-com/ui';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -48,6 +47,7 @@ jest.mock('html2canvas', () => ({
 jest.mock('@deriv-com/ui', () => ({
     ...jest.requireActual('@deriv-com/ui'),
     useDevice: jest.fn().mockReturnValue({
+        isDesktop: true,
         isMobile: false,
     }),
 }));
@@ -65,7 +65,6 @@ describe('ShareAdsModal', () => {
         element = document.createElement('div');
         element.setAttribute('id', 'v2_modal_root');
         document.body.appendChild(element);
-        Modal.setAppElement('#v2_modal_root');
     });
     afterAll(() => {
         document.body.removeChild(element);
@@ -77,6 +76,7 @@ describe('ShareAdsModal', () => {
     });
     it('should handle onclick when clicking on Share link', () => {
         mockUseDevice.mockReturnValue({
+            isDesktop: false,
             isMobile: true,
         });
         const mockShare = jest.fn().mockResolvedValue(true);

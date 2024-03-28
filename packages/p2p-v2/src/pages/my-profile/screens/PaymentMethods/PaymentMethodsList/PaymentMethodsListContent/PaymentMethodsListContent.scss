@@ -1,0 +1,25 @@
+.p2p-v2-payment-methods-list-content {
+    width: 100%;
+
+    @include mobile {
+        max-width: 67.2rem;
+        min-width: 36rem;
+        padding: 1rem 2rem;
+    }
+
+    &__group {
+        &:not(:first-child) {
+            margin-top: 2.4rem;
+        }
+
+        &-body {
+            display: flex;
+            flex-wrap: wrap;
+
+            @include mobile {
+                justify-content: flex-start;
+                gap: 1.6rem;
+            }
+        }
+    }
+}

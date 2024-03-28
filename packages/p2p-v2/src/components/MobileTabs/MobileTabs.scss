@@ -2,12 +2,13 @@
     display: flex;
     flex-direction: column;
 
-    .derivs-button {
-        padding: 2.3rem 1.6rem;
+    &__tab {
+        padding: 3rem 1.6rem;
         display: flex;
         justify-content: space-between;
-        border-bottom: 0.1rem solid #e6e9e9;
+        border-bottom: 0.1rem solid #f2f3f4;
         flex-direction: row-reverse;
+        border-radius: unset;
 
         &:last-child {
             border-bottom: none;

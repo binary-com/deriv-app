@@ -1,10 +1,13 @@
 .p2p-v2-my-profile-counterparties-table {
-    max-height: 16rem;
+    & .deriv-table__content {
+        max-height: 24.8rem;
 
-    @include mobile {
-        height: 100%;
-        max-height: 100%;
+        @include mobile {
+            height: calc(100vh - 30rem);
+            max-height: 100%;
+        }
     }
+
     &__row {
         &:last-child {
             position: relative;

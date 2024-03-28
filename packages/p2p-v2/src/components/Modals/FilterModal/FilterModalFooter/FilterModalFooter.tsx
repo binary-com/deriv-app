@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Text, useDevice } from '@deriv-com/ui';
+import { Button, useDevice } from '@deriv-com/ui';
 import './FilterModalFooter.scss';
 
 type TFilterModalFooterProps = {
@@ -30,21 +30,19 @@ const FilterModalFooter = ({
                 isFullWidth={isMobile}
                 onClick={onResetClear}
                 size='lg'
+                textSize={isMobile ? 'md' : 'sm'}
                 variant='outlined'
             >
-                <Text lineHeight='6xl' size='sm' weight='bold'>
-                    {showPaymentMethods ? 'Clear' : 'Reset'}
-                </Text>
+                {showPaymentMethods ? 'Clear' : 'Reset'}
             </Button>
             <Button
                 disabled={(showPaymentMethods && hasSamePaymentMethods) || (!showPaymentMethods && hasSameFilters)}
                 isFullWidth={isMobile}
                 onClick={onApplyConfirm}
                 size='lg'
+                textSize={isMobile ? 'md' : 'sm'}
             >
-                <Text lineHeight='6xl' size='sm' weight='bold'>
-                    {showPaymentMethods ? 'Confirm' : 'Apply'}
-                </Text>
+                {showPaymentMethods ? 'Confirm' : 'Apply'}
             </Button>
         </div>
     );

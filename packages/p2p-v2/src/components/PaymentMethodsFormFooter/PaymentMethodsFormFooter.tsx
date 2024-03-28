@@ -1,6 +1,6 @@
 import React from 'react';
 import { TFormState } from '@/reducers/types';
-import { Button } from '@deriv-com/ui';
+import { Button, useDevice } from '@deriv-com/ui';
 import './PaymentMethodsFormFooter.scss';
 
 type TPaymentMethodsFormFooterProps = {
@@ -21,33 +21,39 @@ type TPaymentMethodsFormFooterProps = {
  * @returns {JSX.Element}
  * @example <PaymentMethodsFormFooter actionType={actionType} handleGoBack={handleGoBack} isDirty={isDirty} isSubmitting={isSubmitting} isValid={isValid} />
  * **/
-
 const PaymentMethodsFormFooter = ({
     actionType,
     handleGoBack,
     isDirty,
     isSubmitting,
     isValid,
-}: TPaymentMethodsFormFooterProps) => (
-    <div className='p2p-v2-payment-method-form__buttons' role='payment-methods-form-footer'>
-        <Button
-            className='p2p-v2-payment-method-form__buttons--cancel'
-            onClick={e => {
-                e.preventDefault();
-                e.stopPropagation();
+}: TPaymentMethodsFormFooterProps) => {
+    const { isMobile } = useDevice();
+    const textSize = isMobile ? 'lg' : 'sm';
 
-                handleGoBack();
-            }}
-            size='lg'
-            variant='outlined'
-        >
-            Cancel
-        </Button>
-        {/* TODO: Remember to translate these */}
-        <Button disabled={isSubmitting || !isValid || !isDirty} size='lg'>
-            {actionType === 'ADD' ? 'Add' : 'Save changes'}
-        </Button>
-    </div>
-);
+    return (
+        <div className='p2p-v2-payment-methods-form-footer' role='payment-methods-form-footer'>
+            <Button
+                className='border-2'
+                color='black'
+                onClick={e => {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    handleGoBack();
+                }}
+                size='lg'
+                textSize={textSize}
+                variant='outlined'
+            >
+                Cancel
+            </Button>
+            {/* TODO: Remember to translate these */}
+            <Button disabled={isSubmitting || !isValid || !isDirty} size='lg' textSize={textSize}>
+                {actionType === 'ADD' ? 'Add' : 'Save changes'}
+            </Button>
+        </div>
+    );
+};
 
 export default PaymentMethodsFormFooter;

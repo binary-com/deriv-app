@@ -8,6 +8,10 @@
             @include mobile {
                 width: calc(100vw / 4);
             }
+
+            & > span {
+                font-size: 1.4rem;
+            }
         }
     }
     &__wrapper {

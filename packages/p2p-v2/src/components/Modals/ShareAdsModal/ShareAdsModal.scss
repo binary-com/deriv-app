@@ -1,10 +1,18 @@
 .p2p-v2-share-ads-modal {
+    padding: 2.4rem;
+    display: flex;
+    flex-direction: column;
+    height: auto;
     width: 72rem;
+    border-radius: 8px;
+
     @include mobile {
+        padding: 1.6rem;
         width: 32.8rem;
     }
 
     &__container {
+        display: flex;
         margin-top: 2.4rem;
 
         @include mobile {
@@ -14,6 +22,8 @@
         }
 
         &__card {
+            display: flex;
+            flex-direction: column;
             width: 48%;
 
             @include mobile {
@@ -23,6 +33,12 @@
             }
 
             &__button {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                border-width: 1px;
+                width: 100%;
+
                 & .deriv-text {
                     display: flex;
                     align-items: center;
@@ -33,12 +49,17 @@
     }
 
     &__copy {
+        display: flex;
+        align-items: center;
         border-radius: 0.3rem;
         border: 0.1em solid var(--general-active);
         margin-top: 2.5rem;
         padding: 0.8rem;
 
         &-clipboard {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             background: var(--general-section-5);
             border-radius: 0.3rem;
             margin-left: 1rem;

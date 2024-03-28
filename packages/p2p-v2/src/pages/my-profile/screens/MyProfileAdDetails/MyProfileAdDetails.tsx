@@ -68,6 +68,7 @@ const MyProfileAdDetails = () => {
     if (isMobile) {
         return (
             <FullPageMobileWrapper
+                className='p2p-v2-my-profile-ad-details__mobile-wrapper'
                 onBack={() =>
                     setQueryString({
                         tab: 'default',
@@ -98,7 +99,7 @@ const MyProfileAdDetails = () => {
                 setContactInfo={setContactInfo}
             />
             <div className='p2p-v2-my-profile-ad-details__border' />
-            <Button disabled={!hasUpdated} onClick={submitAdDetails} size='lg'>
+            <Button disabled={!hasUpdated} onClick={submitAdDetails} size='lg' textSize='sm'>
                 Save
             </Button>
         </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import { TGenericSizes } from '@/utils';
 import { LabelPairedArrowLeftLgBoldIcon } from '@deriv/quill-icons';
 import { Text } from '@deriv-com/ui';
 import './PageReturn.scss';
@@ -11,6 +12,7 @@ type TPageReturnProps = {
     pageTitle: string;
     rightPlaceHolder?: JSX.Element;
     shouldHideBackButton?: boolean;
+    size?: TGenericSizes;
     weight?: string;
 };
 
@@ -21,6 +23,7 @@ const PageReturn = ({
     pageTitle,
     rightPlaceHolder,
     shouldHideBackButton = false,
+    size = 'md',
     weight = 'normal',
 }: TPageReturnProps) => {
     return (
@@ -31,7 +34,9 @@ const PageReturn = ({
                     data-testid='dt_p2p_v2_page_return_btn'
                     onClick={onClick}
                 />
-                <Text weight={weight}>{pageTitle}</Text>
+                <Text size={size} weight={weight}>
+                    {pageTitle}
+                </Text>
             </div>
             {rightPlaceHolder}
         </div>

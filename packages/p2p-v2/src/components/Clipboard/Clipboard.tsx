@@ -33,7 +33,7 @@ const Clipboard = ({ textCopy }: TClipboardProps) => {
     }, []);
 
     return (
-        <Tooltip message={isCopied ? 'Copied!' : 'Copy'} position='right'>
+        <Tooltip message={isCopied ? 'Copied!' : 'Copy'} position='top'>
             <button className='p2p-v2-clipboard' onClick={onClick}>
                 {isCopied ? <CheckmarkCircle /> : <CopyIcon />}
             </button>

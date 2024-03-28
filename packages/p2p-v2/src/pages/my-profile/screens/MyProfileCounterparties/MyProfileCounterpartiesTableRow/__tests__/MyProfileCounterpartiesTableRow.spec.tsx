@@ -5,9 +5,14 @@ import MyProfileCounterpartiesTableRow from '../MyProfileCounterpartiesTableRow'
 
 const mockProps = {
     id: 'id1',
+    is_blocked: false,
     nickname: 'nickname',
-    isBlocked: false,
 };
+
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: () => ({ isMobile: false }),
+}));
 
 jest.mock('@/components/UserAvatar', () => ({
     UserAvatar: () => <div>UserAvatar</div>,
@@ -26,15 +31,15 @@ jest.mock('@deriv/api-v2', () => ({
     },
 }));
 
-const el_modal = document.createElement('div');
+const elModal = document.createElement('div');
 describe('MyProfileCounterpartiesTableRow', () => {
     beforeAll(() => {
-        el_modal.setAttribute('id', 'v2_modal_root');
-        document.body.appendChild(el_modal);
+        elModal.setAttribute('id', 'v2_modal_root');
+        document.body.appendChild(elModal);
     });
 
     afterAll(() => {
-        document.body.removeChild(el_modal);
+        document.body.removeChild(elModal);
     });
     it('should render the component as expected', () => {
         render(<MyProfileCounterpartiesTableRow {...mockProps} />);
@@ -49,7 +54,7 @@ describe('MyProfileCounterpartiesTableRow', () => {
             expect(screen.getByText('Block nickname?')).toBeInTheDocument();
         });
     });
-    it('should close modal for onrequest close of modal', async () => {
+    it('should close modal for onRequest close of modal', async () => {
         render(<MyProfileCounterpartiesTableRow {...mockProps} />);
         userEvent.click(screen.getByText('Block'));
         await waitFor(() => {

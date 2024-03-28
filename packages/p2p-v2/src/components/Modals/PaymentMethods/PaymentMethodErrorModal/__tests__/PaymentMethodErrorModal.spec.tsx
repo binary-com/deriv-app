@@ -4,6 +4,11 @@ import PaymentMethodErrorModal from '../PaymentMethodErrorModal';
 
 const wrapper = ({ children }: PropsWithChildren<unknown>) => <div id='v2_modal_root'>{children}</div>;
 
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isMobile: false })),
+}));
+
 describe('PaymentMethodErrorModal', () => {
     it('should render the modal correctly', () => {
         const props = {

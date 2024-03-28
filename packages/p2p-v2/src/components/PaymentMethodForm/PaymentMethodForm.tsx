@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { TSelectedPaymentMethod } from 'types';
-import { Dropdown, PaymentMethodField, PaymentMethodsFormFooter, PaymentMethodsHeader } from '@/components';
-import { PaymentMethodErrorModal, PaymentMethodModal } from '@/components/Modals';
+import { PageReturn, PaymentMethodField, PaymentMethodsFormFooter } from '@/components';
 import { TFormState } from '@/reducers/types';
 import { p2p } from '@deriv/api-v2';
-import { Button, Input, Text } from '@deriv-com/ui';
-import CloseCircle from '../../public/ic-close-circle.svg';
+import { useDevice } from '@deriv-com/ui';
+import { PaymentMethodFormInput } from './PaymentMethodFormInput';
+import { PaymentMethodFormModalRenderer } from './PaymentMethodFormModalRenderer';
 import './PaymentMethodForm.scss';
 
 type TPaymentMethodFormProps = {
@@ -33,6 +33,8 @@ const PaymentMethodForm = ({ onAdd, onResetFormState, ...rest }: TPaymentMethodF
     const { data: availablePaymentMethods } = p2p.paymentMethods.useGet();
     const { create, error: createError, isSuccess: isCreateSuccessful } = p2p.advertiserPaymentMethods.useCreate();
     const { error: updateError, isSuccess: isUpdateSuccessful, update } = p2p.advertiserPaymentMethods.useUpdate();
+
+    const { isMobile } = useDevice();
 
     useEffect(() => {
         if (isCreateSuccessful) {
@@ -63,7 +65,14 @@ const PaymentMethodForm = ({ onAdd, onResetFormState, ...rest }: TPaymentMethodF
 
     return (
         <div className='p2p-v2-payment-method-form'>
-            <PaymentMethodsHeader onGoBack={handleGoBack} title={title} />
+            <PageReturn
+                className='border-2 py-[1.4rem] mb-0'
+                hasBorder={isMobile}
+                onClick={handleGoBack}
+                pageTitle={title}
+                size={isMobile ? 'lg' : 'md'}
+                weight='bold'
+            />
             <form
                 className='p2p-v2-payment-method-form__form'
                 onSubmit={handleSubmit(data => {
@@ -78,137 +87,51 @@ const PaymentMethodForm = ({ onAdd, onResetFormState, ...rest }: TPaymentMethodF
                     }
                 })}
             >
-                <div className='p2p-v2-payment-method-form__field-wrapper'>
-                    {selectedPaymentMethod ? (
-                        // TODO: Remember to translate this
-                        <Input
-                            defaultValue={selectedPaymentMethod?.display_name}
-                            disabled
-                            label='Choose your payment method'
-                            rightPlaceholder={
-                                actionType === 'EDIT' ? null : (
-                                    <CloseCircle
-                                        className='p2p-v2-payment-method-form__icon--close'
-                                        data-testid='dt_p2p_v2_payment_methods_form_close_icon'
-                                        fill='#999999'
-                                        height={15.7}
-                                        onClick={() => {
-                                            onAdd();
-                                            reset();
-                                        }}
-                                        width={15.7}
-                                    />
-                                )
-                            }
+                <div className='p2p-v2-payment-method-form__fields'>
+                    <div className='p2p-v2-payment-method-form__field-wrapper'>
+                        <PaymentMethodFormInput
+                            actionType={actionType}
+                            availablePaymentMethods={availablePaymentMethods}
+                            availablePaymentMethodsList={availablePaymentMethodsList}
+                            onAdd={onAdd}
+                            reset={reset}
+                            selectedPaymentMethod={selectedPaymentMethod}
                         />
-                    ) : (
-                        <>
-                            <Dropdown
-                                label='Payment method'
-                                list={availablePaymentMethodsList}
-                                name='Payment method'
-                                onSelect={(value: string) => {
-                                    const selectedPaymentMethod = availablePaymentMethods?.find(p => p.id === value);
-                                    if (selectedPaymentMethod) {
-                                        onAdd({
-                                            displayName: selectedPaymentMethod?.display_name,
-                                            fields: selectedPaymentMethod?.fields,
-                                            method: value,
-                                        });
-                                    }
-                                }}
-                                // TODO: Remember to translate this
-                                value={selectedPaymentMethod?.display_name ?? ''}
-                                variant='comboBox'
+                    </div>
+                    {Object.keys(selectedPaymentMethod?.fields || {})?.map(field => {
+                        const paymentMethodField = selectedPaymentMethod?.fields?.[field];
+                        return (
+                            <PaymentMethodField
+                                control={control}
+                                defaultValue={paymentMethodField?.value ?? ''}
+                                displayName={paymentMethodField?.display_name ?? ''}
+                                field={field}
+                                key={field}
+                                required={!!paymentMethodField?.required}
                             />
-                            {/* TODO: Remember to translate these */}
-                            <Text color='less-prominent' size='xs'>
-                                Don’t see your payment method?
-                            </Text>
-                            <Button
-                                className='p2p-v2-payment-method-form__button'
-                                color='primary'
-                                onClick={e => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    const paymentMethod = availablePaymentMethods?.find(p => p.id === 'other');
-                                    if (paymentMethod) {
-                                        onAdd({
-                                            displayName: paymentMethod?.display_name,
-                                            fields: paymentMethod?.fields,
-                                            method: 'other',
-                                        });
-                                    }
-                                }}
-                                size='xs'
-                                textSize='xs'
-                                variant='ghost'
-                            >
-                                Add new.
-                            </Button>
-                        </>
-                    )}
+                        );
+                    })}
                 </div>
-                {Object.keys(selectedPaymentMethod?.fields || {})?.map(field => {
-                    const paymentMethodField = selectedPaymentMethod?.fields?.[field];
-                    return (
-                        <PaymentMethodField
-                            control={control}
-                            defaultValue={paymentMethodField?.value ?? ''}
-                            displayName={paymentMethodField?.display_name ?? ''}
-                            field={field}
-                            key={field}
-                            required={!!paymentMethodField?.required}
-                        />
-                    );
-                })}
-                <PaymentMethodsFormFooter
-                    actionType={actionType}
-                    handleGoBack={handleGoBack}
-                    isDirty={isDirty}
-                    isSubmitting={isSubmitting}
-                    isValid={isValid}
-                />
+                {(isMobile || !!selectedPaymentMethod) && (
+                    <PaymentMethodsFormFooter
+                        actionType={actionType}
+                        handleGoBack={handleGoBack}
+                        isDirty={isDirty}
+                        isSubmitting={isSubmitting}
+                        isValid={isValid}
+                    />
+                )}
             </form>
-            {actionType === 'EDIT' && (!isUpdateSuccessful || !updateError) && isModalOpen && (
-                // TODO: Remember to translate these strings
-                <PaymentMethodModal
-                    description='If you choose to cancel, the edited details will be lost.'
-                    isModalOpen={isModalOpen}
-                    onConfirm={onResetFormState}
-                    onReject={() => {
-                        setIsModalOpen(false);
-                    }}
-                    primaryButtonLabel="Don't cancel"
-                    secondaryButtonLabel='Cancel'
-                    title='Cancel your edits?'
-                />
-            )}
-            {actionType === 'ADD' && (!isCreateSuccessful || !createError) && isModalOpen && (
-                // TODO: Remember to translate these strings
-                <PaymentMethodModal
-                    description='If you choose to cancel, the details you’ve entered will be lost.'
-                    isModalOpen={isModalOpen}
-                    onConfirm={onResetFormState}
-                    onReject={() => {
-                        setIsModalOpen(false);
-                    }}
-                    primaryButtonLabel='Go back'
-                    secondaryButtonLabel='Cancel'
-                    title='Cancel adding this payment method?'
-                />
-            )}
-            {/* TODO: Remember to translate these strings */}
-            {(createError || updateError) && (
-                <PaymentMethodErrorModal
-                    errorMessage={String(createError?.error?.message || updateError?.error?.message)}
-                    isModalOpen={true}
-                    onConfirm={() => {
-                        onResetFormState();
-                    }}
-                    title='Something’s not right'
-                />
-            )}
+            <PaymentMethodFormModalRenderer
+                actionType={actionType}
+                createError={createError}
+                isCreateSuccessful={isCreateSuccessful}
+                isModalOpen={isModalOpen}
+                isUpdateSuccessful={isUpdateSuccessful}
+                onResetFormState={onResetFormState}
+                setIsModalOpen={setIsModalOpen}
+                updateError={updateError}
+            />
         </div>
     );
 };

@@ -60,7 +60,7 @@ const PaymentMethodCardHeader = ({
             {isEditable && (
                 <FlyoutMenu
                     listItems={flyoutMenuItems}
-                    renderIcon={() => <LabelPairedEllipsisVerticalXlRegularIcon />}
+                    renderIcon={() => <LabelPairedEllipsisVerticalXlRegularIcon className='cursor-pointer' />}
                 />
             )}
             {isSelectable && (

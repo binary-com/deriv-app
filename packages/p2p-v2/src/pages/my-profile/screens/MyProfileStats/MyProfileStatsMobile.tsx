@@ -8,6 +8,7 @@ const MyProfileStatsMobile = () => {
     const { setQueryString } = useQueryString();
     return (
         <FullPageMobileWrapper
+            className='absolute top-16'
             onBack={() =>
                 setQueryString({
                     tab: 'default',

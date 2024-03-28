@@ -33,10 +33,16 @@ const mockUseActiveAccount = {
     isLoading: false,
 };
 
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: () => ({ isMobile: false }),
+}));
+
 jest.mock('@/hooks', () => ({
     ...jest.requireActual('@/hooks'),
     useAdvertiserStats: jest.fn(() => mockUseAdvertiserStats),
 }));
+
 jest.mock('@deriv/api-v2', () => ({
     ...jest.requireActual('@deriv/api-v2'),
     useActiveAccount: jest.fn(() => mockUseActiveAccount),

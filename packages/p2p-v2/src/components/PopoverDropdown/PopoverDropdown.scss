@@ -19,14 +19,22 @@
         background: #fff;
         right: 0;
 
-        .derivs-button__color--primary:hover:not(:disabled) {
-            background-color: var(--general-hover);
-        }
-
         &-item {
             padding: 1rem 1.6rem;
-            background-color: inherit;
             height: inherit;
+            justify-content: start;
+            border-radius: unset;
+
+            // TODO: remove this once hover styles can be removed from the button component
+            &:hover {
+                // stylelint-disable-next-line declaration-no-important
+                background-color: #e6e9e9 !important;
+
+                & span {
+                    // stylelint-disable-next-line declaration-no-important
+                    color: #333 !important;
+                }
+            }
         }
     }
 }

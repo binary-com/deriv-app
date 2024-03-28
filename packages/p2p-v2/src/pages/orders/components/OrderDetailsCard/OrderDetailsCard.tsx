@@ -1,5 +1,6 @@
 import React from 'react';
-import { Divider, useDevice } from '@deriv-com/ui';
+import { LightDivider } from '@/components';
+import { useDevice } from '@deriv-com/ui';
 import { OrderDetailsCardFooter } from './OrderDetailsCardFooter';
 import { OrderDetailsCardHeader } from './OrderDetailsCardHeader';
 import { OrderDetailsCardInfo } from './OrderDetailsCardInfo';
@@ -12,9 +13,9 @@ const OrderDetailsCard = () => {
     return (
         <div className='p2p-v2-order-details-card'>
             <OrderDetailsCardHeader />
-            <Divider color='#f2f3f4' />
+            <LightDivider />
             <OrderDetailsCardInfo />
-            <Divider color='#f2f3f4' />
+            <LightDivider />
             <OrderDetailsCardReview />
             {isDesktop && <OrderDetailsCardFooter />}
         </div>

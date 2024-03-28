@@ -55,6 +55,11 @@ const mockPaymentMethods = [
     },
 ] as const;
 
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: () => ({ isMobile: false }),
+}));
+
 jest.mock('@deriv/api-v2', () => {
     return {
         ...jest.requireActual('@deriv/api-v2'),
@@ -167,7 +172,7 @@ describe('PaymentMethodForm', () => {
         );
         const inputField = screen.getByDisplayValue('00112233445566778899');
         expect(inputField).toBeInTheDocument();
-        const backArrow = screen.getByTestId('dt_p2p_v2_payment_methods_header_left_arrow_icon');
+        const backArrow = screen.getByTestId('dt_p2p_v2_page_return_btn');
         userEvent.click(backArrow);
         expect(onResetFormState).toHaveBeenCalled();
     });
@@ -435,7 +440,7 @@ describe('PaymentMethodForm', () => {
             await userEvent.type(inputField, 'Account 2');
             await userEvent.tab();
         });
-        const backArrow = screen.getByTestId('dt_p2p_v2_payment_methods_header_left_arrow_icon');
+        const backArrow = screen.getByTestId('dt_p2p_v2_page_return_btn');
         expect(backArrow).toBeInTheDocument();
         userEvent.click(backArrow);
         expect(screen.getByText('Cancel adding this payment method?')).toBeInTheDocument();
@@ -465,7 +470,7 @@ describe('PaymentMethodForm', () => {
             await userEvent.type(inputField, 'Account 2');
             await userEvent.tab();
         });
-        const backArrow = screen.getByTestId('dt_p2p_v2_payment_methods_header_left_arrow_icon');
+        const backArrow = screen.getByTestId('dt_p2p_v2_page_return_btn');
         expect(backArrow).toBeInTheDocument();
         userEvent.click(backArrow);
         expect(screen.getByText('Cancel your edits?')).toBeInTheDocument();

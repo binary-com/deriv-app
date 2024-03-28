@@ -1,9 +1,7 @@
-import React, { memo, useEffect } from 'react';
-import Modal from 'react-modal';
+import React, { memo } from 'react';
 import { useDevice } from '@/hooks';
 import { p2p } from '@deriv/api-v2';
-import { Button, Text } from '@deriv-com/ui';
-import { customStyles } from '../helpers';
+import { Button, Modal, Text } from '@deriv-com/ui';
 import './MyAdsDeleteModal.scss';
 
 type TMyAdsDeleteModalProps = {
@@ -21,10 +19,6 @@ const MyAdsDeleteModal = ({ error, id, isModalOpen, onClickDelete, onRequestClos
 
     const hasActiveOrders = advertInfo?.active_orders && advertInfo?.active_orders > 0;
 
-    useEffect(() => {
-        Modal.setAppElement('#v2_modal_root');
-    }, []);
-
     const getModalText = () => {
         if (hasActiveOrders && !error) {
             return 'You have open orders for this ad. Complete all open orders before deleting this ad.';
@@ -37,17 +31,22 @@ const MyAdsDeleteModal = ({ error, id, isModalOpen, onClickDelete, onRequestClos
     const getModalFooter = () => {
         if (hasActiveOrders || error) {
             return (
-                <div className='flex justify-end'>
-                    <Button onClick={onRequestClose} size='lg' textSize={textSize}>
-                        Ok
-                    </Button>
-                </div>
+                <Button onClick={onRequestClose} size='lg' textSize={textSize}>
+                    Ok
+                </Button>
             );
         }
 
         return (
-            <div className='flex justify-end gap-[1rem] pt-[1.6rem]'>
-                <Button onClick={onRequestClose} size='lg' textSize={textSize} variant='outlined'>
+            <div className='flex gap-[0.8rem]'>
+                <Button
+                    className='border-2'
+                    color='black'
+                    onClick={onRequestClose}
+                    size='lg'
+                    textSize={textSize}
+                    variant='outlined'
+                >
                     Cancel
                 </Button>
                 <Button onClick={onClickDelete} size='lg' textSize={textSize}>
@@ -60,20 +59,29 @@ const MyAdsDeleteModal = ({ error, id, isModalOpen, onClickDelete, onRequestClos
         <>
             {!isLoadingInfo && (
                 <Modal
-                    className='p-[1.6rem] p2p-v2-my-ads-delete-modal'
+                    ariaHideApp={false}
+                    className='p2p-v2-my-ads-delete-modal'
                     isOpen={isModalOpen}
                     onRequestClose={onRequestClose}
                     shouldCloseOnOverlayClick={false}
-                    style={customStyles}
                     testId='dt_p2p_v2_ads_delete_modal'
                 >
-                    <Text as='div' className='p2p-v2-my-ads-delete-modal__header' color='general' weight='bold'>
-                        Do you want to delete this ad?
-                    </Text>
-                    <Text as='div' className='p2p-v2-my-ads-delete-modal__body' color='prominent' size='sm'>
-                        {getModalText()}
-                    </Text>
-                    {getModalFooter()}
+                    <Modal.Header
+                        className='p2p-v2-my-ads-delete-modal__header'
+                        hideBorder
+                        hideCloseIcon
+                        onRequestClose={onRequestClose}
+                    >
+                        <Text weight='bold'>Do you want to delete this ad?</Text>
+                    </Modal.Header>
+                    <Modal.Body className='p2p-v2-my-ads-delete-modal__body'>
+                        <Text color='prominent' size='sm'>
+                            {getModalText()}
+                        </Text>
+                    </Modal.Body>
+                    <Modal.Footer className='p2p-v2-my-ads-delete-modal__footer' hideBorder>
+                        {getModalFooter()}
+                    </Modal.Footer>
                 </Modal>
             )}
         </>

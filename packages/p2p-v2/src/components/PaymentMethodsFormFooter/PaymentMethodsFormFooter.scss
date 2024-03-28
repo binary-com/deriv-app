@@ -1,16 +1,16 @@
-.p2p-v2-payment-method-form {
-    &__buttons {
-        display: flex;
-        justify-content: end;
-        gap: 1.6rem;
+.p2p-v2-payment-methods-form-footer {
+    display: flex;
+    justify-content: end;
+    gap: 0.8rem;
+    background: #fff;
+    margin-top: 2rem;
 
-        &--cancel {
-            background: transparent;
-            border: 2px solid #999999;
-
-            &:active:not([disabled]) {
-                border: 1px solid #999999;
-            }
-        }
+    @include mobile {
+        margin-top: 0;
+        width: 100%;
+        padding: 1.6rem 2.4rem;
+        border-top: 2px solid #f2f3f4;
+        position: absolute;
+        bottom: 2.2rem;
     }
 }

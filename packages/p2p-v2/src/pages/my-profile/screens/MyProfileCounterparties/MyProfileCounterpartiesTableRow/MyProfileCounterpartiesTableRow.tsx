@@ -23,7 +23,12 @@ const MyProfileCounterpartiesTableRow = ({ id, isBlocked, nickname }: TMyProfile
                     <Text size={isMobile ? 'md' : 'sm'}>{nickname}</Text>
                 </div>
                 {/* TODO: variant to be replaced after available in @deriv-com/ui */}
-                <Button onClick={() => setIsModalOpen(true)} variant={isBlocked ? 'outlined' : 'ghost'}>
+                <Button
+                    className='w-36 border-[1px]'
+                    color={isBlocked ? 'black' : 'primary'}
+                    onClick={() => setIsModalOpen(true)}
+                    variant='outlined'
+                >
                     {isBlocked ? 'Unblock' : 'Block'}
                 </Button>
             </div>

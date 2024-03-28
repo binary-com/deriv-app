@@ -8,7 +8,7 @@ import './Table.scss';
 type TProps<T> = {
     columns?: ColumnDef<T>[];
     data: T[];
-    emptyDataMessage: string;
+    emptyDataMessage?: string;
     groupBy?: GroupingState;
     isFetching: boolean;
     loadMoreFunction: () => void;

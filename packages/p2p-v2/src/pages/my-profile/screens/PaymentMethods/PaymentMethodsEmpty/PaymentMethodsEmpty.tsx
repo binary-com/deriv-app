@@ -1,8 +1,8 @@
 import React from 'react';
-import { FullPageMobileWrapper, PaymentMethodsHeader } from '@/components';
-import { useDevice, useQueryString } from '@/hooks';
+import { FullPageMobileWrapper } from '@/components';
+import { useQueryString } from '@/hooks';
 import { DerivLightIcPaymentMethodsWalletIcon } from '@deriv/quill-icons';
-import { Button, Text } from '@deriv-com/ui';
+import { Button, Text, useDevice } from '@deriv-com/ui';
 import './PaymentMethodsEmpty.scss';
 
 type TPaymentMethodsEmptyProps = {
@@ -22,12 +22,17 @@ const PaymentMethodsEmpty = ({ onAddPaymentMethod }: TPaymentMethodsEmptyProps) 
     if (isMobile) {
         return (
             <FullPageMobileWrapper
+                className='absolute top-16'
                 onBack={() => {
                     setQueryString({
                         tab: 'default',
                     });
                 }}
-                renderHeader={() => <PaymentMethodsHeader title='Payment methods' />}
+                renderHeader={() => (
+                    <Text size='lg' weight='bold'>
+                        Payment Methods
+                    </Text>
+                )}
             >
                 <div className='p2p-v2-payment-methods-empty'>
                     <DerivLightIcPaymentMethodsWalletIcon height='16rem' />

@@ -1,4 +1,6 @@
 .p2p-v2-share-ads-socials {
+    display: flex;
+    justify-content: space-around;
     margin: 2.5rem 0;
 
     @include mobile {
@@ -13,6 +15,9 @@
     }
 
     &__circle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         height: 4.8rem;
         width: 4.8rem;
         background-color: #f2f3f4;

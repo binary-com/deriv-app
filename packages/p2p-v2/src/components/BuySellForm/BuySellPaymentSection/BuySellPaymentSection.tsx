@@ -1,7 +1,8 @@
 import React from 'react';
 import { TPaymentMethod } from 'types';
+import { LightDivider } from '@/components';
 import { sortPaymentMethodsWithAvailability } from '@/utils';
-import { Divider, Text, useDevice } from '@deriv-com/ui';
+import { Text, useDevice } from '@deriv-com/ui';
 import { PaymentMethodCard } from '../../PaymentMethodCard';
 
 type TBuySellPaymentSectionProps = {
@@ -70,7 +71,7 @@ const BuySellPaymentSection = ({
                     ))}
                 </div>
             </div>
-            <Divider />
+            <LightDivider />
         </>
     );
 };

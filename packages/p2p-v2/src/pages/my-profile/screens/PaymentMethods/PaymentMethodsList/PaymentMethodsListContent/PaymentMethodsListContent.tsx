@@ -7,7 +7,8 @@ import { TFormState } from '@/reducers/types';
 import { sortPaymentMethods } from '@/utils';
 import { p2p } from '@deriv/api-v2';
 import { Text } from '@deriv-com/ui';
-import AddNewButton from './AddNewButton';
+import AddNewButton from '../AddNewButton';
+import './PaymentMethodsListContent.scss';
 
 type TPaymentMethodsGroup = Record<
     string,
@@ -82,15 +83,15 @@ const PaymentMethodsListContent = ({
     }, [isDeleteSuccessful, onResetFormState]);
 
     return (
-        <div className='p2p-v2-payment-methods-list'>
+        <div className='p2p-v2-payment-methods-list-content'>
             {!isMobile && <AddNewButton isMobile={isMobile} onAdd={onAdd} />}
             {Object.keys(groupedPaymentMethods)?.map(key => {
                 return (
-                    <div className='p2p-v2-payment-methods-list__group' key={key}>
-                        <Text color='black' weight='bold'>
+                    <div className='p2p-v2-payment-methods-list-content__group' key={key}>
+                        <Text size='sm' weight='bold'>
                             {groupedPaymentMethods[key].title}
                         </Text>
-                        <div className='p2p-v2-payment-methods-list__group-body'>
+                        <div className='p2p-v2-payment-methods-list-content__group-body'>
                             {groupedPaymentMethods[key].paymentMethods?.map(advertiserPaymentMethod => {
                                 return (
                                     <PaymentMethodCard

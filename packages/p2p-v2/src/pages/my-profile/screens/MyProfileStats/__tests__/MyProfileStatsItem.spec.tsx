@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { render, screen } from '@testing-library/react';
-import MyProfileStatsItem from '../MyProfileStatsItem';
 import userEvent from '@testing-library/user-event';
+import MyProfileStatsItem from '../MyProfileStatsItem';
+
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: () => ({ isMobile: false }),
+}));
 
 const MockApp = () => {
     const [shouldShowLifetime, setShouldShowLifetime] = useState(false);
