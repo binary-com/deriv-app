@@ -46,6 +46,7 @@ const Redirect = observer(() => {
                     action: 'email_confirmed',
                     form_name: is_mobile ? 'virtual_signup_web_mobile_default' : 'virtual_signup_web_desktop_default',
                     email: url_params.get('email'),
+                    signup_provider: 'email',
                 });
             }
             SessionStore.set('signup_query_param', url_query_string);
