@@ -1,0 +1,23 @@
+@include mobile {
+    .mobile-real-wallets-upgrade {
+        .dc-swipeable {
+            overflow-x: hidden;
+
+            &__nav {
+                display: none;
+            }
+
+            &__item {
+                padding-inline: 1.6rem;
+            }
+        }
+
+        &__footer-progress-bar-container {
+            height: 4rem;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}

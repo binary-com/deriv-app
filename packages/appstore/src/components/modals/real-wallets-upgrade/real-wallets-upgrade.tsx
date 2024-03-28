@@ -2,7 +2,6 @@ import React from 'react';
 import { useWalletMigration } from '@deriv/hooks';
 import { observer, useStore } from '@deriv/stores';
 import { DesktopRealWalletsUpgrade, MobileRealWalletsUpgrade } from './components/modal-elements';
-import './real-wallets-upgrade.scss';
 
 const RealWalletsUpgrade = observer(() => {
     const { traders_hub, ui } = useStore();
@@ -25,10 +24,10 @@ const RealWalletsUpgrade = observer(() => {
 
     const handleClose = () => toggleWalletsUpgrade(false);
 
-    const { start_migration } = useWalletMigration();
+    const { startMigration } = useWalletMigration();
 
     const upgradeToWallets = () => {
-        start_migration();
+        startMigration();
         toggleWalletsUpgrade(false);
     };
 

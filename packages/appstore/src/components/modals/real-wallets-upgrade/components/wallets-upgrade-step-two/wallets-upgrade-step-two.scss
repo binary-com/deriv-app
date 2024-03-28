@@ -1,0 +1,70 @@
+.wallets-upgrade-step-two {
+    &__content {
+        max-width: 77.6rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 5rem auto 0;
+        text-align: center;
+
+        @include mobile {
+            margin: 2rem auto 8rem;
+        }
+    }
+
+    &__footer {
+        position: sticky;
+        bottom: 0;
+        background-color: inherit;
+
+        @include mobile {
+            background: var(--fill-normal);
+
+            &-button {
+                width: 100%;
+            }
+        }
+    }
+
+    // this is for slightly better aligning the SVG with the "why wallets" one
+    &__image {
+        position: relative;
+        right: 0.3rem;
+        @include mobile {
+            right: 0.2rem;
+        }
+    }
+
+    &__text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.8rem;
+
+        margin-top: 2.4rem;
+    }
+
+    &__info-section {
+        display: grid;
+        grid-template-columns: 1.6rem 1fr;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 1.6rem;
+        margin-top: 2.4rem;
+        background-color: var(--transparent-info);
+        border-radius: 0.8rem;
+
+        @include mobile {
+            align-items: start;
+            padding: 0.8rem;
+            margin-top: 1.6rem;
+        }
+    }
+
+    &__checkbox {
+        margin-top: 2.4rem;
+        display: flex;
+        justify-content: center;
+    }
+}

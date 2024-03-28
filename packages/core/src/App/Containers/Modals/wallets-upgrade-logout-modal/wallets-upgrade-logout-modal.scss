@@ -1,0 +1,75 @@
+.wallets-upgrade-logout-modal {
+    .dc-dialog__dialog {
+        width: 100%;
+        max-width: 60rem;
+        overflow: hidden;
+
+        @include mobile {
+            width: 32.8rem;
+            padding: 1.6rem;
+        }
+    }
+
+    .dc-dialog__content {
+        margin-bottom: 1.6rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        @include mobile {
+            align-items: center;
+        }
+    }
+
+    &__content {
+        width: 36.3rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+
+        @include mobile {
+            width: 100%;
+            align-items: center;
+        }
+    }
+
+    .dc-dialog__footer {
+        display: flex;
+        justify-content: flex-start;
+
+        @include mobile {
+            justify-content: center;
+        }
+    }
+
+    .dc-dialog__button {
+        margin: 0;
+
+        @include mobile {
+            height: 3rem;
+        }
+    }
+
+    .dc-btn__text {
+        @include mobile {
+            font-size: var(--text-size-xxs);
+        }
+    }
+
+    &__pic {
+        @include desktop {
+            position: absolute;
+            right: -3rem;
+            bottom: 1rem;
+            height: 12.8rem;
+            width: 23.5rem;
+        }
+
+        @include mobile {
+            position: relative;
+            width: 100%;
+            height: 8.2rem;
+            margin-bottom: 1.6rem;
+        }
+    }
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { ResetTradingPasswordModal } from '@deriv/account';
+import { useWalletMigration } from '@deriv/hooks';
 import { TTradingPlatformAvailableAccount } from './account-type-modal/types';
 import MT5AccountTypeModal from './account-type-modal';
 import RegulatorsCompareModal from './regulators-compare-modal';
@@ -28,6 +29,7 @@ type TCurrentList = DetailsOfEachMT5Loginid & {
 
 const ModalManager = () => {
     const store = useStores();
+    const { is_in_progress } = useWalletMigration();
     const { common, client, modules, traders_hub, ui } = store;
     const { is_logged_in, is_eu, is_eu_country, is_populating_mt5_account_list, verification_code } = client;
     const { platform } = common;
@@ -148,7 +150,7 @@ const ModalManager = () => {
                 toggleModal={toggleAccountTransferModal}
             />
             <FailedVerificationModal />
-            {is_real_wallets_upgrade_on && <RealWalletsUpgrade />}
+            {(is_real_wallets_upgrade_on || is_in_progress) && <RealWalletsUpgrade />}
             <WalletsMigrationFailed />
             <WalletsUpgradeModal />
         </React.Fragment>

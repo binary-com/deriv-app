@@ -1,12 +1,13 @@
 import React from 'react';
-import { Text, Button, Modal } from '@deriv/components';
-import { useStore } from '@deriv/stores';
-import { localize, Localize } from '@deriv/translations';
-import WalletsImage from 'Assets/svgs/wallets';
-import './wallets-upgrade-modal.scss';
 import { useWalletMigration } from '@deriv/hooks';
+import { Button, Icon, Text, Modal } from '@deriv/components';
+import { observer, useStore } from '@deriv/stores';
+import { localize, Localize } from '@deriv/translations';
+import './wallets-upgrade-modal.scss';
 
-const WalletsUpgradeModal = () => {
+const MODAL_TRANSITION_TIMEOUT_MS = 250; // matching the default one
+
+const WalletsUpgradeModal = observer(() => {
     const { traders_hub, ui } = useStore();
     const { toggleWalletsUpgrade } = traders_hub;
     const { is_mobile, is_desktop } = ui;
@@ -26,16 +27,24 @@ const WalletsUpgradeModal = () => {
             width='60rem'
             title=' '
             toggleModal={closeModal}
+            transition_timeout={MODAL_TRANSITION_TIMEOUT_MS}
         >
             <Modal.Body>
                 <div className='wallets-upgrade-modal__content'>
+                    <Icon
+                        icon={`IcAppstoreWalletsUpgradeCoins${is_mobile ? 'Horizontal' : ''}`}
+                        width={is_mobile ? 190 : 300}
+                        height={is_mobile ? 80 : 300}
+                        className='wallets-upgrade-modal__image'
+                        data_testid={`dt_wallets_upgrade_coins${is_mobile ? '_horizontal' : ''}`}
+                    />
                     <div className='wallets-upgrade-modal__description'>
-                        <Text size={is_mobile ? 's' : 'm'} weight='bold'>
+                        <Text align={is_mobile ? 'center' : 'left'} size={is_mobile ? 's' : 'm'} weight='bold'>
                             <Localize i18n_default_text='Introducing Wallets' />
                         </Text>
-                        <Text size={is_mobile ? 'xs' : 'sm'}>
+                        <Text align={is_mobile ? 'center' : 'left'} size={is_mobile ? 'xs' : 's'}>
                             <Localize
-                                i18n_default_text='Enjoy smoother and more secure transactions in multiple currencies with Wallets – <0></0>our new and improved Cashier.'
+                                i18n_default_text='Enjoy seamless transactions across multiple currencies and an intuitive user interface with funds segregation.'
                                 components={[<br key={0} />]}
                             />
                         </Text>
@@ -43,18 +52,17 @@ const WalletsUpgradeModal = () => {
                     <Button
                         large={is_desktop}
                         onClick={() => {
-                            // TODO: Uncomment this when wallet migration modal ready
-                            // toggleWalletsUpgrade(true);
                             closeModal();
+                            // let this modal close before opening the next one
+                            setTimeout(() => toggleWalletsUpgrade(true), MODAL_TRANSITION_TIMEOUT_MS);
                         }}
                         primary
-                        text={localize('Upgrade now')}
+                        text={localize('Enable now')}
                     />
                 </div>
-                <WalletsImage image='upgrade_modal' className='wallets-upgrade-modal__image' />
             </Modal.Body>
         </Modal>
     );
-};
+});
 
 export default WalletsUpgradeModal;

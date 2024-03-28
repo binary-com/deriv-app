@@ -9,29 +9,30 @@
         padding: 2.4rem;
 
         @include mobile {
+            align-items: center;
             padding: 1.6rem;
         }
     }
 
     &__description {
-        width: 75%;
+        width: 35.2rem;
         display: flex;
         flex-direction: column;
         gap: 0.8rem;
 
         @include mobile {
-            width: 65%;
+            width: 100%;
         }
     }
 
     &__image {
         position: absolute;
         right: -8rem;
-        bottom: -6rem;
+        top: 0;
 
         @include mobile {
-            right: -9rem;
-            bottom: -9.5em;
+            position: relative;
+            right: 0;
         }
     }
 }

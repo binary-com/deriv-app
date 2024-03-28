@@ -1,17 +1,17 @@
 import React from 'react';
-import { APIProvider, useFetch, useRequest } from '@deriv/api';
+import { APIProvider, useQuery, useMutation } from '@deriv/api';
 import { renderHook } from '@testing-library/react-hooks';
 import { StoreProvider, mockStore } from '@deriv/stores';
 import useWalletMigration from '../useWalletMigration';
 
 jest.mock('@deriv/api', () => ({
     ...jest.requireActual('@deriv/api'),
-    useFetch: jest.fn(),
-    useRequest: jest.fn(() => ({ mutate: jest.fn() })),
+    useQuery: jest.fn(),
+    useMutation: jest.fn(() => ({ mutate: jest.fn() })),
 }));
 
-const mockUseFetch = useFetch as jest.MockedFunction<typeof useFetch<'wallet_migration'>>;
-const mockUseRequest = useRequest as jest.MockedFunction<typeof useRequest<'wallet_migration'>>;
+const mockUseFetch = useQuery as jest.MockedFunction<typeof useQuery<'wallet_migration'>>;
+const mockUseRequest = useMutation as jest.MockedFunction<typeof useMutation<'wallet_migration'>>;
 
 describe('useWalletMigration', () => {
     const mock = mockStore({});
@@ -41,7 +41,7 @@ describe('useWalletMigration', () => {
 
         const { result } = renderHook(() => useWalletMigration(), { wrapper: wrapper(mock) });
 
-        result.current.start_migration();
+        result.current.startMigration();
 
         expect(mockUseRequest('wallet_migration').mutate).toBeCalledWith({ payload: { wallet_migration: 'start' } });
     });
@@ -52,7 +52,7 @@ describe('useWalletMigration', () => {
 
         const { result } = renderHook(() => useWalletMigration(), { wrapper: wrapper(mock) });
 
-        result.current.reset_migration();
+        result.current.resetMigration();
 
         expect(mockUseRequest('wallet_migration').mutate).toBeCalledWith({ payload: { wallet_migration: 'reset' } });
     });

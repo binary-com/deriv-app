@@ -71,7 +71,6 @@ export { default as useInfiniteTransactions } from './useInfiniteTransactions';
 export { default as useTransferBetweenAccounts } from './useTransferBetweenAccounts';
 export { default as useVerifyEmail } from './useVerifyEmail';
 export { default as useWalletAccountsList } from './useWalletAccountsList';
-export { default as useWalletMigration } from './useWalletMigration';
 export { default as useTradingPlatformPasswordReset } from './useTradingPlatformPasswordReset';
 export { default as useResetVirtualBalance } from './useResetVirtualBalance';
 export { default as useExchangeRates } from './useExchangeRates';
