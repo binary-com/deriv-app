@@ -179,6 +179,7 @@ type TBarriersData = Record<string, never> | { barrier: string; barrier_choices:
 
 const store_name = 'trade_store';
 const g_subscribers_map: Partial<Record<string, ReturnType<typeof WS.subscribeTicksHistory>>> = {}; // blame amin.m
+const ANALYTICS_DURATIONS = ['ticks', 'seconds', 'minutes', 'hours', 'days'];
 
 export default class TradeStore extends BaseStore {
     // Control values
@@ -1020,14 +1021,13 @@ export default class TradeStore extends BaseStore {
                                 const durationMode =
                                     this.root_store.ui.is_advanced_duration && this.expiry_type
                                         ? this.expiry_type
-                                        : this.duration_units_list.find(({ value }) => value === this.duration_unit)
-                                              ?.text ?? '';
+                                        : ANALYTICS_DURATIONS.find(value => value.startsWith(this.duration_unit)) ?? '';
                                 this.sendTradeParamsAnalytics({
                                     action: 'run_contract',
-                                    ...(this.duration_units_list.length > 1
-                                        ? { switcher_duration_mode_name: durationMode.toLowerCase() }
+                                    ...(this.duration_units_list.length > 1 && durationMode
+                                        ? { switcher_duration_mode_name: durationMode }
                                         : {}),
-                                    ...(this.basis_list.length > 1
+                                    ...(this.basis_list.length > 1 && this.basis
                                         ? { switcher_stakepayout_mode_name: this.basis }
                                         : {}),
                                 });
@@ -1063,11 +1063,20 @@ export default class TradeStore extends BaseStore {
         })();
     };
 
-    sendTradeParamsAnalytics = (options: Partial<TEvents['ce_contracts_set_up_form']>, isDebounced?: boolean) => {
+    sendTradeParamsAnalytics = (
+        options: Partial<TEvents['ce_contracts_set_up_form']> & { durationUnit?: string },
+        isDebounced?: boolean
+    ) => {
+        const { durationUnit, ...passThrough } = options;
         const payload = {
+            ...passThrough,
             form_name: 'default',
             trade_type_name: getContractTypesConfig()[this.contract_type]?.title,
-            ...options,
+            ...(durationUnit
+                ? {
+                      duration_type: ANALYTICS_DURATIONS.find(value => value.startsWith(durationUnit ?? '')) ?? '',
+                  }
+                : {}),
         } as TEvents['ce_contracts_set_up_form'];
         if (isDebounced) {
             this.debouncedSendTradeParamsAnalytics(payload);

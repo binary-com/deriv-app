@@ -257,12 +257,12 @@ beforeAll(async () => {
 describe('TradeStore', () => {
     describe('sendTradeParamsAnalytics', () => {
         const action = 'change_parameter_value';
-        const payload = {
+        const passThrough = {
             action,
-            parameter_type: 'duration_type',
             parameter_field_type: 'dropdown',
-            duration_type: 'minutes',
+            parameter_type: 'duration_type',
         } as Partial<TEvents['ce_contracts_set_up_form']>;
+        const payload = { ...passThrough, durationUnit: 'm' };
 
         it('should send form_name, trade type & provided payload with ce_contracts_set_up_form event', async () => {
             const spyTrackEvent = jest.spyOn(Analytics, 'trackEvent');
@@ -271,9 +271,10 @@ describe('TradeStore', () => {
             mockedTradeStore.sendTradeParamsAnalytics(payload);
             await waitFor(() => {
                 expect(spyTrackEvent).toHaveBeenCalledWith('ce_contracts_set_up_form', {
+                    ...passThrough,
                     form_name: 'default',
                     trade_type_name: 'Rise/Fall',
-                    ...payload,
+                    duration_type: 'minutes',
                 });
                 expect(spyDebouncedFunction).not.toHaveBeenCalled();
             });
@@ -285,9 +286,10 @@ describe('TradeStore', () => {
             mockedTradeStore.sendTradeParamsAnalytics(payload, true);
             await waitFor(() => {
                 expect(spyTrackEvent).toHaveBeenCalledWith('ce_contracts_set_up_form', {
+                    ...passThrough,
                     form_name: 'default',
                     trade_type_name: 'Rise/Fall',
-                    ...payload,
+                    duration_type: 'minutes',
                 });
                 expect(spyDebouncedFunction).toHaveBeenCalled();
             });

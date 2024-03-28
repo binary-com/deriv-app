@@ -51,13 +51,14 @@ const SimpleDuration = observer(
             return filtered_arr;
         };
         const has_label = !duration_units_list.some(du => du.value === 't');
+        const filteredMinutesAndTicksList = filterMinutesAndTicks(duration_units_list);
 
         return (
             <>
-                {duration_units_list.length > 1 && (
+                {filteredMinutesAndTicksList.length > 1 && (
                     <ButtonToggle
                         id='dt_simple_duration_toggle'
-                        buttons_arr={filterMinutesAndTicks(duration_units_list)}
+                        buttons_arr={filteredMinutesAndTicksList}
                         is_animated={true}
                         name='simple_duration_unit'
                         onChange={changeDurationUnit}
