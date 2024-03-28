@@ -545,26 +545,22 @@ export default class ClientStore extends BaseStore {
     }
 
     get has_fiat() {
-        const values = Object.values(this.accounts).reduce((acc, item) => {
-            if (!item.is_virtual && item.landing_company_shortcode === this.landing_company_shortcode) {
-                acc.push(item.currency);
-            }
-            return acc;
-        }, []);
-        return !!this.upgradeable_currencies.filter(acc => values.includes(acc.value) && acc.type === 'fiat').length;
+        return Object.values(this.accounts).some(
+            item =>
+                item.currency_type === 'fiat' &&
+                !item.is_virtual &&
+                item.landing_company_shortcode === this.landing_company_shortcode
+        );
     }
 
     get current_fiat_currency() {
-        const values = Object.values(this.accounts).reduce((acc, item) => {
-            if (!item.is_virtual) {
-                acc.push(item.currency);
-            }
-            return acc;
-        }, []);
-
-        return this.has_fiat
-            ? this.upgradeable_currencies.filter(acc => values.includes(acc.value) && acc.type === 'fiat')[0].value
-            : undefined;
+        const account = Object.values(this.accounts).find(
+            item =>
+                item.currency_type === 'fiat' &&
+                !item.is_virtual &&
+                item.landing_company_shortcode === this.landing_company_shortcode
+        );
+        return account?.currency;
     }
 
     // return the landing company object that belongs to the current client by matching shortcode
