@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { StoreProvider, mockStore, ExchangeRatesProvider } from '@deriv/stores';
 import MainTitleBar from '..';
 
-jest.mock('Components/wallets-banner', () => jest.fn(() => 'WalletsBanner'));
+jest.mock('src/components/banners/wallets-banner', () => jest.fn(() => 'WalletsBanner'));
 
 describe('MainTitleBar', () => {
     const mock_store = mockStore({

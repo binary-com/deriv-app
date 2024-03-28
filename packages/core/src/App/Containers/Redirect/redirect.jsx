@@ -48,6 +48,9 @@ const Redirect = observer(() => {
                     email: url_params.get('email'),
                 });
             }
+            if (url_params?.get('utm_content')) {
+                SessionStore.set('show_book', url_params?.get('utm_content'));
+            }
             SessionStore.set('signup_query_param', url_query_string);
             history.push({
                 pathname: routes.onboarding,
