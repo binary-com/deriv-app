@@ -139,8 +139,9 @@ export type TIDVFormValues = {
 export type TPlatforms = typeof Platforms[keyof typeof Platforms];
 
 export type TServerError = {
-    code: string;
+    code?: string;
     message: string;
+    name?: string;
     details?: { [key: string]: string };
     fields?: string[];
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { ContentFlag, moduleLoader, routes, SessionStore } from '@deriv/shared';
+import { useShowEffortlessLoginModal } from '@deriv/hooks';
 
 import DerivRealAccountRequiredModal from 'App/Components/Elements/Modals/deriv-real-account-required-modal.jsx';
 import MT5AccountNeededModal from 'App/Components/Elements/Modals/mt5-account-needed-modal.jsx';
@@ -15,6 +16,7 @@ import MT5Notification from './mt5-notification';
 import NeedRealAccountForCashierModal from './need-real-account-for-cashier-modal';
 import ReadyToDepositModal from './ready-to-deposit-modal';
 import RiskAcceptTestWarningModal from './risk-accept-test-warning-modal';
+import EffortlessLoginModal from '../EffortlessLoginModal';
 
 const TradingAssessmentExistingUser = React.lazy(() =>
     moduleLoader(() =>
@@ -90,7 +92,7 @@ const AppModals = observer(() => {
         is_trading_experience_incomplete,
         mt5_login_list,
     } = client;
-    const { content_flag } = traders_hub;
+    const { content_flag, is_tour_open } = traders_hub;
     const {
         is_account_needed_modal_on,
         is_closing_create_real_account_modal,
@@ -115,6 +117,8 @@ const AppModals = observer(() => {
     const temp_session_signup_params = SessionStore.get('signup_query_param');
     const url_params = new URLSearchParams(useLocation().search || temp_session_signup_params);
     const url_action_param = url_params.get('action');
+
+    const show_effortless_login_modal = useShowEffortlessLoginModal();
 
     const is_eu_user = [ContentFlag.LOW_RISK_CR_EU, ContentFlag.EU_REAL, ContentFlag.EU_DEMO].includes(content_flag);
 
@@ -192,6 +196,11 @@ const AppModals = observer(() => {
     } else if (isUrlUnavailableModalVisible) {
         ComponentToLoad = <UrlUnavailableModal />;
     }
+
+    if (show_effortless_login_modal && !is_tour_open) {
+        ComponentToLoad = <EffortlessLoginModal />;
+    }
+
     if (is_ready_to_deposit_modal_visible) {
         ComponentToLoad = <ReadyToDepositModal />;
     }

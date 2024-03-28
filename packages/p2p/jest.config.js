@@ -32,5 +32,5 @@ module.exports = {
         '<rootDir>/coverage/lcov-report',
         '<rootDir>/dist',
     ],
-    transformIgnorePatterns: ['/node_modules/(?!@sendbird/chat).+\\.js$'],
+    transformIgnorePatterns: ['/node_modules/(?!(@sendbird/chat|@simplewebauthn/browser)).+\\.js$'],
 };

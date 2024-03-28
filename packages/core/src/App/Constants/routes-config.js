@@ -232,6 +232,16 @@ const getModules = () => {
                             getTitle: () => localize('Email and passwords'),
                         },
                         {
+                            path: routes.passkeys,
+                            component: Account,
+                            getTitle: () => (
+                                <>
+                                    {localize('Passkeys')}
+                                    <span className='dc-vertical-tab__header--new'>{localize('NEW')}!</span>
+                                </>
+                            ),
+                        },
+                        {
                             path: routes.self_exclusion,
                             component: Account,
                             getTitle: () => localize('Self exclusion'),
@@ -443,7 +453,7 @@ const lazyLoadComplaintsPolicy = makeLazyLoader(
 
 // Order matters
 // TODO: search tag: test-route-parent-info -> Enable test for getting route parent info when there are nested routes
-const initRoutesConfig = ({ is_appstore, is_eu_country }) => [
+const initRoutesConfig = ({ is_eu_country }) => [
     { path: routes.index, component: RouterRedirect, getTitle: () => '', to: routes.root },
     { path: routes.endpoint, component: Endpoint, getTitle: () => 'Endpoint' }, // doesn't need localization as it's for internal use
     { path: routes.redirect, component: Redirect, getTitle: () => localize('Redirect') },
@@ -454,7 +464,7 @@ const initRoutesConfig = ({ is_appstore, is_eu_country }) => [
         icon_component: 'IcComplaintsPolicy',
         is_authenticated: true,
     },
-    ...getModules({ is_appstore, is_eu_country }),
+    ...getModules({ is_eu_country }),
 ];
 
 let routesConfig;
@@ -463,9 +473,9 @@ let routesConfig;
 const route_default = { component: Page404, getTitle: () => localize('Error 404') };
 
 // is_deriv_crypto = true as default to prevent route ui blinking
-const getRoutesConfig = ({ is_appstore = true, is_eu_country }) => {
+const getRoutesConfig = ({ is_eu_country }) => {
     if (!routesConfig) {
-        routesConfig = initRoutesConfig({ is_appstore, is_eu_country });
+        routesConfig = initRoutesConfig({ is_eu_country });
         routesConfig.push(route_default);
     }
     return routesConfig;

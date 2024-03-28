@@ -1,0 +1,93 @@
+.effortless-login-modal {
+    background: var(--general-main-1);
+    height: 100%;
+    width: 100%;
+
+    &__header {
+        padding: 1.2rem 2.4rem;
+        border-bottom: 1px solid var(--border-disabled);
+    }
+
+    &__back-button {
+        margin: 1.6rem;
+    }
+
+    &__wrapper {
+        display: block;
+        margin-top: 1.6rem;
+
+        .dc-icon {
+            display: block;
+            margin-inline: auto;
+        }
+
+        .effortless-login-modal {
+            &__title {
+                margin: 2.4rem auto 1.6rem;
+            }
+
+            &__overlay-tip {
+                padding-block: 1.6rem;
+
+                &:not(:last-child) {
+                    display: flex;
+                    border-bottom: 1px solid var(--border-disabled);
+                    gap: 0.8rem;
+                }
+
+                .dc-icon {
+                    margin-inline: unset;
+                }
+            }
+
+            .dc-icon {
+                display: block;
+                margin-inline: auto;
+            }
+
+            &__description {
+                &-container {
+                    display: flex;
+                    flex-direction: column;
+
+                    .effortless-login-modal__description-card {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.8rem;
+                        border-bottom: 1px solid var(--general-hover);
+                        padding: 1.6rem 0;
+                    }
+                }
+
+                &-tips {
+                    &-wrapper {
+                        display: flex;
+                        padding: 1.6rem;
+                        margin-top: 1.6rem;
+                        border-radius: 2 * $BORDER_RADIUS;
+                        border: 1px solid var(--border-normal);
+                        gap: 0.8rem;
+
+                        svg {
+                            flex-shrink: 0;
+                        }
+
+                        .dc-icon {
+                            margin: initial;
+                        }
+                    }
+
+                    &-container {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+
+                        li::marker {
+                            color: var(--text-general);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -151,6 +151,8 @@
         "react-tiny-popover": "^7.0.1",
         "react-transition-group": "4.4.2",
         "react-window": "^1.8.5",
+        "@simplewebauthn/browser": "^8.3.4",
+        "@simplewebauthn/typescript-types": "^8.3.4",
         "usehooks-ts": "^2.7.0"
     }
 }

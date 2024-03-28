@@ -4,6 +4,7 @@ import { localize } from '@deriv/translations';
 import {
     AccountLimits,
     Passwords,
+    Passkeys,
     PersonalDetails,
     TradingAssessment,
     FinancialAssessment,
@@ -111,11 +112,17 @@ const initRoutesConfig = () => [
             {
                 getTitle: () => localize('Security and safety'),
                 icon: 'IcSecurity',
+                id: 'security_routes',
                 subroutes: [
                     {
                         path: routes.passwords,
                         component: Passwords,
                         getTitle: () => localize('Email and passwords'),
+                    },
+                    {
+                        path: routes.passkeys,
+                        component: Passkeys,
+                        getTitle: () => localize('Passkeys'),
                     },
                     {
                         path: routes.self_exclusion,

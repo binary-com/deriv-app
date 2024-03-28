@@ -119,3 +119,25 @@ export const deepFreeze = (obj: any) => {
     });
     return Object.freeze(obj);
 };
+
+export const deepCopy = (value: any) => {
+    if (Array.isArray(value)) {
+        const count = value.length;
+        const arr = new Array(count);
+        for (let i = 0; i < count; i++) {
+            arr[i] = deepCopy(value[i]);
+        }
+
+        return arr;
+    } else if (typeof value === 'object') {
+        const obj: { [key: string]: any } = {};
+        for (let prop in value) {
+            obj[prop] = deepCopy(value[prop]);
+        }
+
+        return obj;
+    } else {
+        // Primitive value
+        return value;
+    }
+};

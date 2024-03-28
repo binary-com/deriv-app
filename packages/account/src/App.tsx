@@ -1,6 +1,7 @@
 import React from 'react';
 import Routes from './Containers/routes';
 import ResetTradingPassword from './Containers/reset-trading-password';
+import { NetworkStatusToastErrorPopup } from './Containers/toast-popup';
 import { APIProvider } from '@deriv/api';
 import { StoreProvider } from '@deriv/stores';
 import { TCoreStores } from '@deriv/stores/types';
@@ -21,6 +22,7 @@ const App = ({ passthrough }: TAppProps) => {
 
     return (
         <StoreProvider store={root_store}>
+            <NetworkStatusToastErrorPopup />
             <APIProvider>
                 <POIProvider>
                     {Notifications && <Notifications />}

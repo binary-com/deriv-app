@@ -1,3 +1,4 @@
+import Passkeys from 'Sections/Security/Passkeys';
 import Passwords from 'Sections/Security/Passwords';
 import AccountLimits from 'Sections/Security/AccountLimits';
 import PersonalDetails from 'Sections/Profile/PersonalDetails';
@@ -20,6 +21,7 @@ import LanguageSettings from 'Sections/Profile/LanguageSettings';
 
 export {
     AccountLimits,
+    Passkeys,
     Passwords,
     PersonalDetails,
     TradingAssessment,

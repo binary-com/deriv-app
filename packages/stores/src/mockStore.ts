@@ -301,6 +301,8 @@ const mock = (): TStores & { is_mock: boolean } => {
             real_account_signup_form_step: 0,
             setRealAccountSignupFormData: jest.fn(),
             setRealAccountSignupFormStep: jest.fn(),
+            is_passkey_supported: false,
+            setIsPasskeySupported: jest.fn(),
         },
         common: {
             error: common_store_error,

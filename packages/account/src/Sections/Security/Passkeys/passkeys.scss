@@ -1,0 +1,136 @@
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.passkeys {
+    width: 100%;
+    margin-inline: auto;
+
+    &-status {
+        &__wrapper {
+            height: 100%;
+            @include flex-column;
+            justify-content: center;
+            align-items: center;
+            margin-block: 1.6rem;
+
+            &--expanded {
+                display: block;
+
+                .dc-icon {
+                    display: block;
+                    margin-inline: auto;
+                }
+
+                .passkeys-status__title {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        &__title {
+            margin: 2.4rem auto 0.8rem;
+        }
+
+        &__description {
+            &-back-button {
+                margin: 2.4rem 0 0 2.4rem;
+            }
+
+            &-card {
+                @include flex-column;
+                gap: 0.8rem;
+                border-bottom: 1px solid var(--general-hover);
+                padding: 1.6rem 0;
+            }
+
+            &-container {
+                @include flex-column;
+            }
+
+            &-tips {
+                &-wrapper {
+                    display: flex;
+                    padding: 1.6rem;
+                    margin-top: 1.6rem;
+                    border-radius: 2 * $BORDER_RADIUS;
+                    border: 1px solid var(--border-normal);
+                    gap: 0.8rem;
+
+                    svg {
+                        flex-shrink: 0;
+                    }
+
+                    .dc-icon {
+                        margin: initial;
+                    }
+                }
+
+                &-container {
+                    @include flex-column;
+                    align-items: flex-start;
+                }
+            }
+        }
+
+        &__footer {
+            flex-direction: row;
+            gap: 0.8rem;
+            padding: 1.6rem;
+
+            .dc-btn {
+                flex: 1;
+            }
+        }
+    }
+
+    .dc-btn {
+        height: 4rem;
+    }
+
+    &-card {
+        &__wrapper {
+            display: flex;
+            gap: 0.8rem;
+            margin-block: 1.6rem;
+            padding-bottom: 1.6rem;
+            border-bottom: 1px solid var(--general-hover);
+
+            & > .dc-icon:first-child {
+                margin-top: 0.4rem;
+            }
+
+            & > .dc-icon:last-child {
+                margin-left: auto;
+            }
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+
+        &__passkey-type-icon {
+            margin-top: 0.4rem;
+        }
+    }
+}
+
+.dc-modal__container_passkeys-modal {
+    min-width: 32.8rem;
+
+    .dc-modal-header {
+        &__close,
+        &__section {
+            margin: 1.6rem 1.6rem 0;
+            padding: 0;
+            width: initial;
+            height: initial;
+            line-height: initial;
+        }
+    }
+
+    .dc-modal-body {
+        padding: 1.6rem 1.6rem 0;
+    }
+}

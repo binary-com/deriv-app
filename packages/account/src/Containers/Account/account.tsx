@@ -1,12 +1,18 @@
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { FadeWrapper, Loading } from '@deriv/components';
-import { matchRoute, routes as shared_routes } from '@deriv/shared';
+import {
+    deepCopy,
+    flatten,
+    matchRoute,
+    removeExactRouteFromRoutes,
+    routes as shared_routes,
+    TRoute as TSharedRoute,
+} from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import PageOverlayWrapper from './page-overlay-wrapper';
 import { TRoute } from '../../Types';
 import 'Styles/account.scss';
-import { flatten } from 'Helpers/utils';
 
 type TAccountProps = RouteComponentProps & {
     routes: Array<TRoute>;
@@ -30,17 +36,31 @@ const Account = observer(({ history, location, routes }: TAccountProps) => {
         landing_company_shortcode,
         should_allow_authentication,
         should_allow_poinc_authentication,
+        is_passkey_supported,
     } = client;
-    const { toggleAccountSettings, is_account_settings_visible } = ui;
+    const { toggleAccountSettings, is_account_settings_visible, is_mobile, is_desktop } = ui;
+
+    const [available_routes, setAvailableRoutes] = React.useState(routes);
+
+    React.useEffect(() => {
+        const should_remove_passkeys_route = is_desktop || (is_mobile && !is_passkey_supported);
+        if (should_remove_passkeys_route) {
+            const desktop_routes = removeExactRouteFromRoutes(deepCopy(routes) as TSharedRoute[], 'passkeys');
+            setAvailableRoutes(desktop_routes as TRoute[]);
+        } else {
+            setAvailableRoutes(routes);
+        }
+    }, [routes, is_desktop, is_mobile, is_passkey_supported]);
+
     // subroutes of a route is structured as an array of arrays
-    const subroutes = flatten(routes.map(i => i.subroutes));
+    const subroutes = flatten(available_routes.map(i => i.subroutes));
     const selected_content = subroutes.find(r => matchRoute(r, location.pathname));
 
     React.useEffect(() => {
         toggleAccountSettings(true);
     }, [toggleAccountSettings]);
 
-    routes.forEach(menu_item => {
+    available_routes.forEach(menu_item => {
         if (menu_item?.subroutes?.length) {
             menu_item.subroutes.forEach(route => {
                 if (route.path === shared_routes.financial_assessment) {
@@ -81,7 +101,7 @@ const Account = observer(({ history, location, routes }: TAccountProps) => {
             keyname='account-page-wrapper'
         >
             <div className='account'>
-                <PageOverlayWrapper routes={routes} subroutes={subroutes} />
+                <PageOverlayWrapper routes={available_routes} subroutes={subroutes} />
             </div>
         </FadeWrapper>
     );

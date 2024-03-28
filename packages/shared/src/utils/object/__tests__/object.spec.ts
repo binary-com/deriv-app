@@ -215,4 +215,46 @@ describe('Utility', () => {
             });
         });
     });
+    describe('deepCopy', () => {
+        it('should create a deep copy of an array', () => {
+            const originalArray = [1, 2, [3, 4], { a: 5 }];
+            const copiedArray = Utility.deepCopy(originalArray);
+
+            // Check if the values are equal
+            expect(copiedArray).toEqual(originalArray);
+
+            // Check if the reference is different
+            expect(copiedArray).not.toBe(originalArray);
+
+            // Check if nested arrays/objects are also deep-copied
+            expect(copiedArray[2]).not.toBe(originalArray[2]);
+            expect(copiedArray[3]).not.toBe(originalArray[3]);
+        });
+
+        it('should create a deep copy of an object', () => {
+            const originalObject = { a: 1, b: { c: 2 }, d: [3, 4] };
+            const copiedObject = Utility.deepCopy(originalObject);
+
+            // Check if the values are equal
+            expect(copiedObject).toEqual(originalObject);
+
+            // Check if the reference is different
+            expect(copiedObject).not.toBe(originalObject);
+
+            // Check if nested arrays/objects are also deep-copied
+            expect(copiedObject.b).not.toBe(originalObject.b);
+            expect(copiedObject.d).not.toBe(originalObject.d);
+        });
+
+        it('should return primitive values unchanged', () => {
+            const primitiveValue = 42;
+            const copiedValue = Utility.deepCopy(primitiveValue);
+
+            // Check if the values are equal
+            expect(copiedValue).toEqual(primitiveValue);
+
+            // Check if the reference is the same for primitive values
+            expect(copiedValue).toBe(primitiveValue);
+        });
+    });
 });

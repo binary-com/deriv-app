@@ -1,17 +1,18 @@
-import classNames from 'classnames';
 import React from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import classNames from 'classnames';
+import { useRemoteConfig } from '@deriv/api';
 import { Div100vhContainer, Icon, MobileDrawer, ToggleSwitch } from '@deriv/components';
 import {
-    useOnrampVisible,
     useAccountTransferVisible,
-    useIsP2PEnabled,
-    usePaymentAgentTransferVisible,
-    useFeatureFlags,
-    useP2PSettings,
     useAuthorize,
+    useFeatureFlags,
+    useIsP2PEnabled,
+    useOnrampVisible,
+    usePaymentAgentTransferVisible,
+    useP2PSettings,
 } from '@deriv/hooks';
-import { routes, PlatformContext, getStaticUrl, whatsapp_url } from '@deriv/shared';
+import { deepCopy, getStaticUrl, removeExactRouteFromRoutes, routes, whatsapp_url } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { localize } from '@deriv/translations';
 import NetworkStatus from 'App/Components/Layout/Footer';
@@ -19,10 +20,9 @@ import ServerTime from 'App/Containers/server-time.jsx';
 import getRoutesConfig from 'App/Constants/routes-config';
 import LiveChat from 'App/Components/Elements/LiveChat';
 import useLiveChat from 'App/Components/Elements/LiveChat/use-livechat.ts';
-import PlatformSwitcher from './platform-switcher';
+import { MenuTitle, MobileLanguageMenu } from './Components/ToggleMenu';
 import MenuLink from './menu-link';
-import { MobileLanguageMenu, MenuTitle } from './Components/ToggleMenu';
-import { useRemoteConfig } from '@deriv/api';
+import PlatformSwitcher from './platform-switcher';
 
 const ToggleMenuDrawer = observer(({ platform_config }) => {
     const { common, ui, client, traders_hub, modules } = useStore();
@@ -30,6 +30,7 @@ const ToggleMenuDrawer = observer(({ platform_config }) => {
     const {
         disableApp,
         enableApp,
+        is_mobile,
         is_mobile_language_menu_open,
         is_dark_mode_on: is_dark_mode,
         setDarkMode: toggleTheme,
@@ -48,6 +49,7 @@ const ToggleMenuDrawer = observer(({ platform_config }) => {
         is_landing_company_loaded,
         is_proof_of_ownership_enabled,
         is_eu,
+        is_passkey_supported,
     } = client;
     const { cashier } = modules;
     const { payment_agent } = cashier;
@@ -59,13 +61,20 @@ const ToggleMenuDrawer = observer(({ platform_config }) => {
     const { data: is_payment_agent_transfer_visible } = usePaymentAgentTransferVisible();
     const { is_p2p_enabled } = useIsP2PEnabled();
 
+    const { pathname: route } = useLocation();
+
+    const is_trading_hub_category =
+        route.startsWith(routes.traders_hub) || route.startsWith(routes.cashier) || route.startsWith(routes.account);
+
+    const { data } = useRemoteConfig();
+    const { cs_chat_livechat, cs_chat_whatsapp } = data;
+
     const liveChat = useLiveChat(false, loginid);
     const [is_open, setIsOpen] = React.useState(false);
     const [transitionExit, setTransitionExit] = React.useState(false);
     const [primary_routes_config, setPrimaryRoutesConfig] = React.useState([]);
     const [is_submenu_expanded, expandSubMenu] = React.useState(false);
 
-    const { is_appstore } = React.useContext(PlatformContext);
     const timeout = React.useRef();
     const history = useHistory();
     const { is_next_wallet_enabled } = useFeatureFlags();
@@ -83,21 +92,17 @@ const ToggleMenuDrawer = observer(({ platform_config }) => {
 
     React.useEffect(() => {
         const processRoutes = () => {
-            const routes_config = getRoutesConfig({ is_appstore });
+            let routes_config = getRoutesConfig({});
+
+            const should_remove_passkeys_route = !is_mobile || !is_passkey_supported;
+            if (should_remove_passkeys_route) {
+                routes_config = removeExactRouteFromRoutes(deepCopy(routes_config), 'passkeys');
+            }
             let primary_routes = [];
 
             const location = window.location.pathname;
 
-            if (is_appstore) {
-                primary_routes = [
-                    routes.my_apps,
-                    routes.explore,
-                    routes.wallets,
-                    routes.platforms,
-                    routes.trade_types,
-                    routes.markets,
-                ];
-            } else if (location === routes.traders_hub || is_trading_hub_category) {
+            if (location === routes.traders_hub || is_trading_hub_category) {
                 primary_routes = [routes.account, routes.cashier];
             } else if (location === routes.wallets || is_next_wallet_enabled) {
                 primary_routes = [routes.reports, routes.account];
@@ -113,11 +118,12 @@ const ToggleMenuDrawer = observer(({ platform_config }) => {
 
         return () => clearTimeout(timeout.current);
     }, [
-        is_appstore,
         account_status,
         should_allow_authentication,
         is_trading_hub_category,
         is_next_wallet_enabled,
+        is_mobile,
+        is_passkey_supported,
         is_p2p_enabled,
     ]);
 
@@ -254,24 +260,13 @@ const ToggleMenuDrawer = observer(({ platform_config }) => {
         );
     };
 
-    const { pathname: route } = useLocation();
-    const { data } = useRemoteConfig();
-    const { cs_chat_livechat, cs_chat_whatsapp } = data;
-    const is_trading_hub_category =
-        route.startsWith(routes.traders_hub) || route.startsWith(routes.cashier) || route.startsWith(routes.account);
-
     return (
         <React.Fragment>
             <a id='dt_mobile_drawer_toggle' onClick={toggleDrawer} className='header__mobile-drawer-toggle'>
-                <Icon
-                    icon={is_appstore && !is_logged_in ? 'IcHamburgerWhite' : 'IcHamburger'}
-                    width='16px'
-                    height='16px'
-                    className='header__mobile-drawer-icon'
-                />
+                <Icon icon='IcHamburger' width='16px' height='16px' className='header__mobile-drawer-icon' />
             </a>
             <MobileDrawer
-                alignment={is_appstore ? 'right' : 'left'}
+                alignment='left'
                 icon_class='header__menu-toggle'
                 is_open={is_open}
                 transitionExit={transitionExit}
@@ -286,13 +281,6 @@ const ToggleMenuDrawer = observer(({ platform_config }) => {
             >
                 <Div100vhContainer height_offset='40px'>
                     <div className='header__menu-mobile-body-wrapper'>
-                        {is_appstore && (
-                            <MobileDrawer.Body>
-                                {primary_routes_config.map((route_config, idx) =>
-                                    getRoutesWithSubMenu(route_config, idx)
-                                )}
-                            </MobileDrawer.Body>
-                        )}
                         <React.Fragment>
                             {!is_trading_hub_category && (
                                 <MobileDrawer.SubHeader

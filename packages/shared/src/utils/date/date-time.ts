@@ -1,4 +1,4 @@
-import { localize } from '@deriv/translations';
+import { getLanguage, localize } from '@deriv/translations';
 import moment from 'moment';
 
 type TExtendedMoment = typeof moment & {
@@ -51,6 +51,12 @@ export const toMoment = (value?: moment.MomentInput): moment.Moment => {
 };
 
 export const toLocalFormat = (time: moment.MomentInput) => moment.utc(time).local().format('YYYY-MM-DD HH:mm:ss Z');
+export const getLongDate = (time: number): string => {
+    moment.locale(getLanguage().toLowerCase());
+    //need to divide to 1000 as timestamp coming from BE is in ms
+    return moment.unix(time / 1000).format('MMMM Do, YYYY');
+};
+
 /**
  * Set specified time on moment object
  * @param  {moment} moment_obj  the moment to set the time on
