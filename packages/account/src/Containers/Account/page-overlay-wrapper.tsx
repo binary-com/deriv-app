@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { PageOverlay, VerticalTab } from '@deriv/components';
+import { useFeatureFlags } from '@deriv/hooks';
 import { getSelectedRoute, getStaticUrl, routes as shared_routes } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
@@ -25,6 +26,7 @@ const PageOverlayWrapper = observer(({ routes, subroutes }: PageOverlayWrapperPr
     const { is_mobile } = ui;
     const { logout } = client;
     const { is_from_derivgo } = common;
+    const { is_next_wallet_enabled } = useFeatureFlags();
 
     const list_groups = routes.map(route_group => ({
         icon: route_group.icon,
@@ -32,7 +34,10 @@ const PageOverlayWrapper = observer(({ routes, subroutes }: PageOverlayWrapperPr
         subitems: route_group?.subroutes?.length ? route_group.subroutes.map(sub => subroutes.indexOf(sub)) : [],
     }));
 
-    const onClickClose = React.useCallback(() => history.push(shared_routes.traders_hub), [history]);
+    const onClickClose = React.useCallback(
+        () => (is_next_wallet_enabled ? history.push(shared_routes.wallets) : history.push(shared_routes.traders_hub)),
+        [history, is_next_wallet_enabled]
+    );
 
     const selected_route = getSelectedRoute({ routes: subroutes as Array<TRoute>, pathname: location.pathname });
 
