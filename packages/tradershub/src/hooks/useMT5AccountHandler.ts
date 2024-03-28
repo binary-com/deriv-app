@@ -39,23 +39,21 @@ const useMT5AccountHandler = () => {
 
     // in order to create account, we need to set a password through trading_platform_password_change endpoint first
     // then only mt5_create_account can be called, otherwise it will response an error for password required
-    const handleSubmit = (password: string) => {
+    const handleSubmit = async (password: string) => {
         if (isMT5PasswordNotSet) {
-            tradingPasswordChange({
+            await tradingPasswordChange({
                 new_password: password,
                 platform: CFDPlatforms.MT5,
             });
         }
 
-        createPassword(password);
+        await createPassword(password);
     };
 
     const createPassword = (password: string) =>
         createMT5Account({
             payload: {
                 account_type: categoryAccountType,
-                address: settings?.address_line_1 ?? '',
-                city: settings?.address_city ?? '',
                 company: selectedJurisdiction,
                 country: settings?.country_code ?? '',
                 email: settings?.email ?? '',
@@ -75,9 +73,6 @@ const useMT5AccountHandler = () => {
                           })),
                 ...(marketType === MarketType.ALL && { sub_account_category: 'swap_free' }),
                 name: settings?.first_name ?? '',
-                phone: settings?.phone ?? '',
-                state: settings?.address_state ?? '',
-                zipCode: settings?.address_postcode ?? '',
             },
         });
 

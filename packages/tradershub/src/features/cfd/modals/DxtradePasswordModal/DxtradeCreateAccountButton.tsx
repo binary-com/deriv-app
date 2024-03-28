@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useQueryParams } from '@/hooks';
 import { Button } from '@deriv-com/ui';
 import useDxtradeAccountHandler from '../../../../hooks/useDxtradeAccountHandler';
-import { validPassword } from '../../../../utils/password';
 
 type TCreateAccountButtonProps = {
     buttonText: string;
@@ -9,17 +9,21 @@ type TCreateAccountButtonProps = {
 };
 
 const DxtradeCreateAccountButton = ({ buttonText, password }: TCreateAccountButtonProps) => {
-    const { createDxtradeAccountLoading: isLoading, handleSubmit } = useDxtradeAccountHandler();
-    const isDisabled = !password || isLoading || !validPassword(password);
+    const { createDxtradeAccountLoading, createOtherCFDAccountSuccess, status, handleSubmit } =
+        useDxtradeAccountHandler();
+
+    const { openModal } = useQueryParams();
+
+    const isDisabled = !password || createDxtradeAccountLoading;
+
+    useEffect(() => {
+        if (status === 'success' || createOtherCFDAccountSuccess) {
+            openModal('DxtradeSuccessModal');
+        }
+    }, [openModal, status, createOtherCFDAccountSuccess]);
 
     return (
-        <Button
-            disabled={isDisabled}
-            isFullWidth
-            isLoading={isLoading}
-            onClick={() => handleSubmit(password)}
-            size='lg'
-        >
+        <Button disabled={isDisabled} isLoading={createDxtradeAccountLoading} onClick={() => handleSubmit(password)}>
             {buttonText}
         </Button>
     );

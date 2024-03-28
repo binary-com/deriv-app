@@ -8,6 +8,7 @@ type ModalId =
     | 'CTraderSuccessModal'
     | 'DummyComponentModal'
     | 'DxtradePasswordModal'
+    | 'DxtradeSuccessModal'
     | 'GetADerivAccountDialog'
     | 'JurisdictionModal'
     | 'MT5AccountTypeModal'

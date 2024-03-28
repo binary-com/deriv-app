@@ -4,6 +4,7 @@ import { useCFDContext } from '@/providers';
 import { Category, CFDPlatforms, MarketType, MarketTypeDetails, PlatformDetails } from '@cfd/constants';
 import { useActiveTradingAccount } from '@deriv/api-v2';
 import { Modal, PasswordInput, Text } from '@deriv-com/ui';
+import DxtradePasswordFooter from '../../modals/DxtradePasswordModal/DxtradePasswordFooter';
 import MT5PasswordFooter from '../../modals/MT5PasswordModal/MT5PasswordFooter';
 
 type TEnterPasswordProps = {
@@ -53,7 +54,11 @@ const EnterPassword = ({ onPasswordChange, password }: TEnterPasswordProps) => {
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <MT5PasswordFooter password={password} />
+                {platform === CFDPlatforms.MT5 ? (
+                    <MT5PasswordFooter password={password} />
+                ) : (
+                    <DxtradePasswordFooter password={password} />
+                )}
             </Modal.Footer>
         </Fragment>
     );

@@ -20,7 +20,8 @@ const MT5ChangePassword = () => {
             new_password: newPassword,
             old_password: currentPassword,
             platform: CFDPlatforms.MT5,
-        }).then(() => createMT5Account(newPassword));
+        });
+        createMT5Account(newPassword);
     };
 
     useEffect(() => {
@@ -57,7 +58,7 @@ const MT5ChangePassword = () => {
                 </ol>
             </Modal.Body>
             <Modal.Footer>
-                <Button color='black' isLoading={tradingPlatformPasswordChangeLoading} variant='outlined'>
+                <Button color='black' disabled={tradingPlatformPasswordChangeLoading} variant='outlined'>
                     Forgot password
                 </Button>
                 <Button

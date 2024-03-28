@@ -4,7 +4,7 @@ import { Category, PlatformDetails } from '../../constants';
 import { CFDSuccess } from '../../screens';
 import SuccessButtonGroup from '../ButtonGroups/SuccessButtonGroup';
 
-const DxtradeSuccessModal = () => {
+const DxtradeSuccess = () => {
     const { data: activeTrading } = useActiveTradingAccount();
     const isDemo = activeTrading?.is_virtual;
 
@@ -21,4 +21,4 @@ const DxtradeSuccessModal = () => {
     );
 };
 
-export default DxtradeSuccessModal;
+export default DxtradeSuccess;

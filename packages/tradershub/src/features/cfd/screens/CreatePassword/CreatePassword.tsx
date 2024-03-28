@@ -1,9 +1,10 @@
-import React, { ChangeEvent, Fragment } from 'react';
+import React, { ChangeEvent } from 'react';
+import DxtradePasswordIcon from '@/assets/svgs/ic-derivx-password-updated.svg';
 import MT5PasswordIcon from '@/assets/svgs/ic-mt5-password.svg';
 import { useCFDContext } from '@/providers';
-import { Category, CFDPlatforms, PlatformDetails } from '@cfd/constants';
-import { useActiveTradingAccount } from '@deriv/api-v2';
+import { CFDPlatforms, PlatformDetails } from '@cfd/constants';
 import { Modal, PasswordInput, Text } from '@deriv-com/ui';
+import DxtradePasswordFooter from '../../modals/DxtradePasswordModal/DxtradePasswordFooter';
 import MT5PasswordFooter from '../../modals/MT5PasswordModal/MT5PasswordFooter';
 
 type TCreatePasswordProps = {
@@ -17,34 +18,32 @@ type TCreatePasswordProps = {
  * @param password
  */
 const CreatePassword = ({ onPasswordChange, password }: TCreatePasswordProps) => {
-    const { data: activeTrading } = useActiveTradingAccount();
     const { cfdState } = useCFDContext();
 
-    const isDemo = activeTrading?.is_virtual;
     const { platform = CFDPlatforms.MT5 } = cfdState;
     const { title } = PlatformDetails[platform];
 
     return (
-        <Fragment>
-            <Modal.Header>
-                <Text weight='bold'>{`Create a ${isDemo ? Category.DEMO : Category.REAL} ${
-                    PlatformDetails.mt5.title
-                } account`}</Text>
-            </Modal.Header>
-            <Modal.Body>
-                <div className='hidden lg:block'>
-                    <MT5PasswordIcon />
+        <React.Fragment>
+            <Modal.Body className='lg:pt-24 lg:px-24 lg:space-y-16'>
+                <div className='justify-center w-full lg:flex d-none lg:gap-8'>
+                    {platform === CFDPlatforms.MT5 ? <MT5PasswordIcon /> : <DxtradePasswordIcon />}
                 </div>
+
                 <div className='flex flex-col items-center justify-center text-center lg:gap-8'>
                     <Text weight='bold'>Create a {title} password</Text>
                     <Text size='sm'>You can use this password for all your {title} accounts.</Text>
                 </div>
                 <PasswordInput isFullWidth label={`${title} password`} onChange={onPasswordChange} value={password} />
             </Modal.Body>
-            <Modal.Footer>
-                <MT5PasswordFooter password={password} />
+            <Modal.Footer className='flex justify-center' hideBorder>
+                {platform === CFDPlatforms.DXTRADE ? (
+                    <DxtradePasswordFooter password={password} />
+                ) : (
+                    <MT5PasswordFooter password={password} />
+                )}
             </Modal.Footer>
-        </Fragment>
+        </React.Fragment>
     );
 };
 

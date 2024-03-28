@@ -37,16 +37,21 @@ const JurisdictionModal = () => {
         setCfdState({ selectedJurisdiction });
     }, [selectedJurisdiction, setCfdState]);
 
+    const closeHandler = () => {
+        closeModal();
+        setCfdState({ selectedJurisdiction: '' });
+    };
+
     return (
         <DynamicLeverageContext.Provider value={value}>
             <Modal
                 ariaHideApp={false}
                 className='w-screen h-screen lg:w-auto lg:h-auto bg-system-light-primary-background '
                 isOpen={isModalOpen('JurisdictionModal')}
-                onRequestClose={closeModal}
+                onRequestClose={closeHandler}
             >
                 {!isDynamicLeverageVisible ? (
-                    <Modal.Header onRequestClose={closeModal}>
+                    <Modal.Header onRequestClose={closeHandler}>
                         <Text weight='bold'>{jurisdictionTitle}</Text>
                     </Modal.Header>
                 ) : (

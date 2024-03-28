@@ -39,10 +39,10 @@ const AvailableDxtradeAccountsList = () => {
     const title = getCfdsAccountTitle(PlatformDetails.dxtrade.title, activeTradingAccount?.is_virtual);
 
     const trailingButtonClick = () => {
-        setCfdState({ platform: PlatformDetails.dxtrade.platform });
         if (!hasActiveDerivAccount) {
             setIsDerivedAccountModalOpen(true);
         } else {
+            setCfdState({ platform: PlatformDetails.dxtrade.platform });
             openModal('DxtradePasswordModal');
         }
     };
