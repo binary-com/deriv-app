@@ -436,7 +436,7 @@ export default class ClientStore extends BaseStore {
     }
 
     get account_open_date() {
-        if (isEmptyObject(this.accounts)) return undefined;
+        if (isEmptyObject(this.accounts) || !this.accounts[this.loginid]) return undefined;
         return Object.keys(this.accounts[this.loginid]).includes('created_at')
             ? this.accounts[this.loginid].created_at
             : undefined;
