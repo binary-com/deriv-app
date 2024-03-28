@@ -81,3 +81,4 @@ export { default as useExchangeRates } from './useExchangeRates';
 export { default as useIsDIELEnabled } from './useIsDIELEnabled';
 export { default as useKycAuthStatus } from './useKycAuthStatus';
 export { default as useClientCountry } from './useClientCountry';
+export { default as useLoginHistory } from './useLoginHistory';
