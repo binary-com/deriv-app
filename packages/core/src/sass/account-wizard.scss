@@ -793,6 +793,20 @@
         &__fieldset {
             width: 100%;
             max-width: unset !important;
+
+            &--tax-info-description {
+                margin-bottom: 2.4rem;
+
+                @include mobile {
+                    margin-bottom: 1.6rem;
+                }
+
+                &--link {
+                    background: transparent;
+                    padding: 0;
+                    border: none;
+                }
+            }
         }
     }
     .details-form__elements {

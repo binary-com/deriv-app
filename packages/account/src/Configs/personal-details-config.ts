@@ -30,11 +30,13 @@ export const personal_details_config = ({
     account_settings,
     real_account_signup_target,
     is_high_risk_client_for_mt5,
+    account_status,
 }: TPersonalDetailsConfig) => {
     if (!residence_list || !account_settings) {
         return {};
     }
 
+    const tin_manually_approved = account_status?.status?.includes('tin_manually_approved');
     const default_residence = (real_account_signup_target === 'maltainvest' && account_settings?.residence) || '';
 
     const config = {
@@ -227,6 +229,13 @@ export const personal_details_config = ({
                 config[key].rules = config[key].rules.filter(rule => rule[0] !== 'req');
             }
         });
+    }
+
+    // if tin_manually_approved is true and the client is signing up for maltainvest, remove the required rule for tax_residence and tax_identification_number
+    if (real_account_signup_target === 'maltainvest' && tin_manually_approved) {
+        (['tax_residence', 'tax_identification_number'] as const).forEach(
+            key => (config[key].rules = config[key].rules.filter(rule => rule[0] !== 'req'))
+        );
     }
 
     return config;

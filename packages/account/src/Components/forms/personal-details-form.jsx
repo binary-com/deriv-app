@@ -46,6 +46,7 @@ const PersonalDetailsForm = props => {
         side_note,
         no_confirmation_needed,
         mismatch_status,
+        tin_manually_approved,
     } = props;
     const autocomplete_value = 'none';
     // need to put this check related to DIEL clients
@@ -425,25 +426,49 @@ const PersonalDetailsForm = props => {
                         {!is_svg_only && ('tax_residence' in values || 'tax_identification_number' in values) && (
                             <React.Fragment>
                                 <FormSubHeader title={localize('Tax information')} />
-                                {'tax_residence' in values && (
-                                    <TaxResidenceField
-                                        setFieldValue={setFieldValue}
-                                        disabled={isFieldImmutable('tax_residence', editable_fields)}
-                                        residence_list={residence_list}
-                                        required
-                                        setIsTaxResidencePopoverOpen={setIsTaxResidencePopoverOpen}
-                                        setIsTinPopoverOpen={setIsTinPopoverOpen}
-                                        is_tax_residence_popover_open={is_tax_residence_popover_open}
+                                <Text
+                                    as='p'
+                                    size={isMobile() ? 'xxs' : 'xs'}
+                                    className='account-form__fieldset--tax-info-description'
+                                >
+                                    <Localize
+                                        i18n_default_text='Need help with tax info? Let us know via <0>live chat</0>.'
+                                        components={[
+                                            <button
+                                                key={0}
+                                                className='link link--orange account-form__fieldset--tax-info-description--link'
+                                                onClick={() => window.LC_API.open_chat_window()}
+                                                type='button'
+                                            />,
+                                        ]}
                                     />
-                                )}
-                                {'tax_identification_number' in values && (
-                                    <TaxIdentificationNumberField
-                                        is_tin_popover_open={is_tin_popover_open}
-                                        setIsTinPopoverOpen={setIsTinPopoverOpen}
-                                        setIsTaxResidencePopoverOpen={setIsTaxResidencePopoverOpen}
-                                        disabled={isFieldImmutable('tax_identification_number', editable_fields)}
-                                        required
-                                    />
+                                </Text>
+                                {!tin_manually_approved && (
+                                    <React.Fragment>
+                                        {'tax_residence' in values && (
+                                            <TaxResidenceField
+                                                setFieldValue={setFieldValue}
+                                                disabled={isFieldImmutable('tax_residence', editable_fields)}
+                                                residence_list={residence_list}
+                                                required
+                                                setIsTaxResidencePopoverOpen={setIsTaxResidencePopoverOpen}
+                                                setIsTinPopoverOpen={setIsTinPopoverOpen}
+                                                is_tax_residence_popover_open={is_tax_residence_popover_open}
+                                            />
+                                        )}
+                                        {'tax_identification_number' in values && (
+                                            <TaxIdentificationNumberField
+                                                is_tin_popover_open={is_tin_popover_open}
+                                                setIsTinPopoverOpen={setIsTinPopoverOpen}
+                                                setIsTaxResidencePopoverOpen={setIsTaxResidencePopoverOpen}
+                                                disabled={isFieldImmutable(
+                                                    'tax_identification_number',
+                                                    editable_fields
+                                                )}
+                                                required
+                                            />
+                                        )}
+                                    </React.Fragment>
                                 )}
                                 {'employment_status' in values && (
                                     <fieldset className={classNames('account-form__fieldset', 'emp-status')}>

@@ -70,4 +70,18 @@ describe('PersonalDetailsForm', () => {
             screen.queryByLabelText(/i confirm that my tax information is accurate and complete/i)
         ).toBeInTheDocument();
     });
+
+    it('should hide tax residence and tin field if tin_manually_approved is true', () => {
+        render(
+            <Formik
+                initialValues={{ tax_residence: '', tax_identification_number: '', crs_confirmation: false }}
+                onSubmit={jest.fn()}
+            >
+                <PersonalDetailsForm tin_manually_approved />
+            </Formik>
+        );
+
+        expect(screen.queryByTestId('tax_residence')).not.toBeInTheDocument();
+        expect(screen.queryByTestId('tax_identification_number')).not.toBeInTheDocument();
+    });
 });

@@ -62,6 +62,7 @@ const PersonalDetails = observer(
             onCancel(current_step, goToPreviousStep);
         };
         const citizen = residence || account_settings?.citizen;
+        const tin_manually_approved = account_status?.status?.includes('tin_manually_approved');
 
         const trackEvent = React.useCallback(
             payload => {
@@ -259,6 +260,7 @@ const PersonalDetails = observer(
                                                     />
                                                 }
                                                 no_confirmation_needed={no_confirmation_needed}
+                                                tin_manually_approved={tin_manually_approved}
                                             />
                                         </div>
                                     </ThemedScrollbars>
