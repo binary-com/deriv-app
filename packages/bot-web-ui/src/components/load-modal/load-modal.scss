@@ -87,7 +87,7 @@
                 &-text {
                     height: unset;
                     flex-direction: column;
-                    text-align: left;
+                    text-align: start;
                     padding-right: 0.8rem;
                 }
 
@@ -110,7 +110,7 @@
                 }
 
                 &-saved {
-                    margin-left: 1rem;
+                    margin-inline-start: 1rem;
                     font-size: var(--text-size-xs);
                     line-height: 1.43;
                     word-break: break-word;

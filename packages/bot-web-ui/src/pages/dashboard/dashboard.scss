@@ -22,6 +22,9 @@
         position: sticky;
         // TODO: need to set global variables for translation
         transform: translateX(calc(367px));
+        @include is-RTL {
+            transform: translateX(calc(-367px));
+        }
         transition: all 0.4s;
         margin-top: 1rem;
 
@@ -34,6 +37,14 @@
         }
     }
 
+    .dc-drawer {
+        .dc-drawer__toggle-icon--right {
+            @include is-RTL {
+                transform: rotate(calc(0deg)) !important;
+            }
+        }
+    }
+
     .dc-drawer--open {
         @include desktop {
             transform: translateX(calc(0px)) !important;
@@ -41,6 +52,12 @@
 
         @include mobile {
             transform: translateY(calc(-100% + 3.6rem));
+        }
+
+        .dc-drawer__toggle-icon {
+            @include is-RTL {
+                transform: rotate(calc(180deg)) !important;
+            }
         }
     }
 }
@@ -128,7 +145,7 @@
                 margin-top: 1.6rem;
                 &__has-list {
                     margin-top: 0;
-                    text-align: left;
+                    text-align: start;
                     @include mobile {
                         width: 85%;
                     }
@@ -253,7 +270,7 @@
             &__retrigger {
                 position: absolute;
                 top: 0;
-                right: 0;
+                inset-inline-end: 0;
                 padding: 2rem;
 
                 button {
@@ -290,7 +307,7 @@
             position: relative;
             background-color: var(--general-main-1);
             padding: 2.4rem;
-            margin-left: 1.6rem;
+            margin-inline-start: 1.6rem;
             display: none;
             height: calc(100vh - 16.7rem);
             overflow-y: auto;
@@ -340,7 +357,7 @@
             &__block {
                 @include flex-center;
                 flex-direction: column;
-                padding-right: 2.4rem;
+                padding-inline-end: 2.4rem;
 
                 @include mobile {
                     padding: 1rem;
@@ -369,7 +386,7 @@
                     }
                 }
                 &:nth-last-child(2) {
-                    padding-right: 0;
+                    padding-inline: 0;
                 }
             }
 
@@ -393,7 +410,7 @@
 
 .user-guide {
     position: absolute;
-    right: 1.6rem;
+    inset-inline-end: 1.6rem;
     top: 1.8rem;
     z-index: 1;
     &__button {
@@ -424,6 +441,6 @@
         }
     }
     &__label {
-        margin-left: 0.4rem;
+        margin-inline-start: 0.4rem;
     }
 }

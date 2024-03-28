@@ -42,6 +42,7 @@
     &__close-btn {
         position: absolute;
         top: 2px;
+        /*rtl:ignore*/
         right: 8px;
         cursor: pointer;
         visibility: visible;

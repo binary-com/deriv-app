@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import classNames from 'classnames';
 import ContentLoader from 'react-content-loader';
 import { getContractTypeName } from '@deriv/bot-skeleton';
+import { isDbotRTL } from '@deriv/bot-skeleton/src/utils/workspace';
 import { Icon, IconTradeTypes, Popover } from '@deriv/components';
 import { convertDateFormat } from '@deriv/shared';
 import { localize } from '@deriv/translations';
@@ -60,7 +61,7 @@ const CardColumn = ({
 const IconContainer = ({ message, icon }: { message: string; icon: ReactElement }) => (
     <div className={classNames(`${PARENT_CLASS}__table-cell`, `${PARENT_CLASS}__table-cell__icon-wrapper`)}>
         {message && (
-            <Popover alignment='right' message={message} zIndex={'7'}>
+            <Popover alignment={isDbotRTL() ? 'left' : 'right'} message={message} zIndex='7'>
                 {icon}
             </Popover>
         )}

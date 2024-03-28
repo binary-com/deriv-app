@@ -1,7 +1,7 @@
 .asset-summary {
     display: flex;
     flex-direction: column;
-    margin-left: auto;
+    margin-inline-start: auto;
 
     @include mobile {
         align-items: center;
@@ -10,7 +10,11 @@
     &__container.content-loader {
         width: 12rem;
         cursor: not-allowed;
-        margin-left: auto;
+        margin-inline-start: auto;
+
+        @include rtl {
+            width: unset;
+        }
 
         @include mobile {
             width: 23rem;

@@ -20,8 +20,8 @@ $MIN_HEIGHT_FLOATING: calc(
         }
 
         &__header--active {
-            border-left: 4px solid var(--brand-red-coral);
-            padding-left: 4.4rem;
+            border-inline-start: 4px solid var(--brand-red-coral);
+            padding-inline-start: 4.4rem;
             background-color: var(--general-main-1);
         }
 
@@ -37,7 +37,7 @@ $MIN_HEIGHT_FLOATING: calc(
                 cursor: pointer;
 
                 &--icon {
-                    margin-right: 0.8rem;
+                    margin-inline-end: 0.8rem;
                 }
             }
         }
@@ -48,14 +48,14 @@ $MIN_HEIGHT_FLOATING: calc(
 
         .dc-vertical-tab__header {
             font-size: 1.2rem;
-            padding-left: 3.9rem;
+            padding-inline-start: 3.9rem;
 
             &__link {
-                margin-left: unset;
+                margin-inline-start: unset;
             }
 
             &--highlight {
-                border-left: unset;
+                border-inline-start: unset;
             }
 
             &-group__icon {
@@ -69,14 +69,14 @@ $MIN_HEIGHT_FLOATING: calc(
             &__financial-assessment {
                 .account__scrollbars_container {
                     width: 68.5rem;
-                    margin-left: 6rem;
+                    margin-inline-start: 6rem;
                     padding-top: 0;
                 }
             }
 
             &__password-wrapper {
                 width: 68.5rem;
-                margin-left: 6rem;
+                margin-inline-start: 6rem;
             }
         }
 
@@ -100,7 +100,7 @@ $MIN_HEIGHT_FLOATING: calc(
                     line-height: 1.5;
                     width: calc(100% - 2rem);
                     float: left;
-                    padding-left: 2rem;
+                    padding-inline-start: 2rem;
                 }
 
                 &-close {
@@ -1582,6 +1582,12 @@ $MIN_HEIGHT_FLOATING: calc(
             @include mobile {
                 padding-left: 5%;
             }
+
+            @include rtl {
+                & > li {
+                    width: fit-content;
+                }
+            }
         }
     }
 
@@ -1610,12 +1616,12 @@ $MIN_HEIGHT_FLOATING: calc(
     &__button {
         &--cancel {
             margin-top: 2.4rem;
-            margin-right: 10px;
+            margin-inline-end: 10px;
             float: right;
 
             @include mobile {
                 margin-top: -8px;
-                margin-right: 10px;
+                margin-inline-end: 10px;
                 float: right;
             }
         }

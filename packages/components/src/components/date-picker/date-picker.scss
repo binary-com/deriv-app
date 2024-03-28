@@ -102,15 +102,18 @@
         &--left {
             &-enter,
             &-exit {
+                /*rtl:ignore*/
                 transform: translate3d(-275px, 0, 0);
                 opacity: 0;
             }
             &-enter-done {
+                /*rtl:ignore*/
                 transform: translate3d(-295px, 0, 0);
                 opacity: 1;
             }
             &-enter-done,
             &-exit {
+                /*rtl:ignore*/
                 transition: transform 0.25s ease, opacity 0.25s linear;
             }
         }

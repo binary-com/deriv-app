@@ -1,6 +1,7 @@
 import React from 'react';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
 import { config, getSavedWorkspaces, load, removeExistingWorkspace, save_types, setColors } from '@deriv/bot-skeleton';
+import { isDbotRTL } from '@deriv/bot-skeleton/src/utils/workspace';
 import { TStores } from '@deriv/stores/types';
 import { localize } from '@deriv/translations';
 import { clearInjectionDiv, tabs_title } from 'Constants/load-modal';
@@ -240,6 +241,10 @@ export default class LoadModalStore implements ILoadModalStore {
     };
 
     refreshStrategiesTheme = async () => {
+        if (this.recent_workspace) {
+            (this.recent_workspace as any).RTL = isDbotRTL();
+        }
+
         await load({
             block_string: this.selected_strategy?.xml,
             drop_event: {},
@@ -519,6 +524,9 @@ export default class LoadModalStore implements ILoadModalStore {
                     scrollbars: true,
                 });
                 load_options.workspace = this.local_workspace;
+                if (load_options.workspace) {
+                    (load_options.workspace as any).RTL = isDbotRTL();
+                }
             } else {
                 load_options.workspace = window.Blockly.derivWorkspace;
                 load_options.file_name = file_name;

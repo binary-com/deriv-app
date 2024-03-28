@@ -28,7 +28,7 @@
 
     @include desktop {
         position: absolute;
-        left: 5rem;
+        inset-inline-start: 5rem;
     }
 
     @include mobile {

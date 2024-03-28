@@ -106,7 +106,7 @@ $side-padding: 1.2em;
         }
     }
     .dc-vertical-tab__content--floating {
-        margin-right: 0;
+        margin-inline-end: 0;
     }
     .table__head {
         height: auto;
@@ -1077,7 +1077,7 @@ $side-padding: 1.2em;
 .empty-trade-history {
     position: absolute;
     top: 20%;
-    left: 10%;
+    inset-inline-start: 10%;
     width: 50%;
     display: flex;
     flex-flow: column nowrap;

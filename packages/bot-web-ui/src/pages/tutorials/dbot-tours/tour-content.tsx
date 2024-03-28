@@ -1,5 +1,6 @@
 import { getImageLocation } from '../../../public-path';
 import React from 'react';
+import { isDbotRTL } from '@deriv/bot-skeleton/src/utils/workspace';
 import { Icon, Text } from '@deriv/components';
 import { getUrlBase } from '@deriv/shared';
 import { Localize, localize } from '@deriv/translations';
@@ -8,7 +9,9 @@ import TourSteps from './common/tour-steps';
 type TJoyrideConfig = Record<
     'showProgress' | 'spotlightClicks' | 'disableBeacon' | 'disableOverlay' | 'disableCloseOnEsc',
     boolean
->;
+> & {
+    placement?: 'bottom' | 'top' | 'left' | 'right';
+};
 
 const joyride_props: TJoyrideConfig = {
     showProgress: false,
@@ -74,7 +77,7 @@ export const DBOT_ONBOARDING = [
                 step_index={4}
             />
         ),
-        placement: 'right',
+        placement: isDbotRTL() ? 'left' : 'right',
         ...joyride_props,
         disableOverlay: false,
     },
@@ -88,7 +91,7 @@ export const DBOT_ONBOARDING = [
                 step_index={5}
             />
         ),
-        placement: 'left',
+        placement: isDbotRTL() ? 'right' : 'left',
         ...joyride_props,
         disableOverlay: false,
     },
@@ -368,37 +371,42 @@ export const BOT_BUILDER_TOUR = [
     {
         target: '.animation__wrapper',
         content: <Step1 show_label />,
-        placement: 'right',
+        placement: isDbotRTL() ? 'bottom' : 'right',
         ...joyride_props,
     },
     {
         target: '.animation__wrapper',
         content: <Step1A />,
-        placement: 'bottom',
+        placement: isDbotRTL() ? 'bottom' : 'right',
+
         ...joyride_props,
     },
     {
         target: '.animation__wrapper',
         content: <Step2 show_label />,
-        placement: 'right',
+        placement: isDbotRTL() ? 'bottom' : 'right',
+
         ...joyride_props,
     },
     {
         target: '.animation__wrapper',
         content: <Step3 show_label />,
-        placement: 'right',
+        placement: isDbotRTL() ? 'bottom' : 'right',
+
         ...joyride_props,
     },
     {
         target: '.animation__wrapper',
         content: <Step4 show_label />,
-        placement: 'right',
+        placement: isDbotRTL() ? 'bottom' : 'right',
+
         ...joyride_props,
     },
     {
         target: '.animation__wrapper',
         content: <Step5 show_label />,
-        placement: 'right',
+        placement: isDbotRTL() ? 'bottom' : 'right',
+
         ...joyride_props,
     },
     {

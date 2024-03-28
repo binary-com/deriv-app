@@ -14,7 +14,7 @@
         }
 
         &--prefix {
-            margin-right: 2rem;
+            margin-inline-end: 2rem;
         }
     }
     &__input {
@@ -89,7 +89,7 @@
         &--msg {
             position: static;
             height: 18px;
-            left: 8px;
+            inset-inline-start: 8px;
             top: 18px;
             flex: none;
             order: 2;
@@ -99,19 +99,19 @@
     }
 
     &__hint {
-        padding-left: 4rem;
+        padding-inline-start: 4rem;
         text-transform: none;
         margin-top: 0.3rem;
         @include mobile {
-            padding-left: 1rem;
+            padding-inline-start: 1rem;
         }
     }
 
     &__error-message {
-        padding-left: 4rem;
+        padding-inline-start: 4rem;
         text-transform: none;
         @include mobile {
-            padding-left: 1rem;
+            padding-inline-start: 1rem;
         }
     }
 
@@ -128,7 +128,7 @@
         .dc-input-wrapper__button {
             top: unset;
             &--increment {
-                right: unset;
+                inset-inline-end: unset;
                 order: 4;
             }
 

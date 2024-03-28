@@ -14,7 +14,7 @@
             padding: 0px 16px;
         }
         &__header-title {
-            text-align: left;
+            text-align: start;
         }
     }
 
@@ -79,7 +79,7 @@
         line-height: 24px;
     }
     &__right-align {
-        text-align: right;
+        text-align: end;
     }
     &__divider {
         padding: 8px 16px;

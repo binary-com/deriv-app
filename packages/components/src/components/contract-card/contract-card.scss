@@ -232,6 +232,7 @@
         }
     }
     &__symbol {
+        /*rtl:ignore*/
         margin-left: 0.4rem;
         &--smarttrader-contract {
             width: 7rem;
@@ -501,6 +502,7 @@
             grid-template-columns: 1fr 1fr;
 
             .dc-btn--cancel {
+                /*rtl:ignore*/
                 margin-left: 0.8rem;
                 max-width: 10.5rem;
             }
@@ -636,6 +638,7 @@
     &__type-label {
         width: 3.8em;
         line-height: 1.5;
+        /*rtl:ignore*/
         text-align: left;
 
         &--smarttrader-contract {

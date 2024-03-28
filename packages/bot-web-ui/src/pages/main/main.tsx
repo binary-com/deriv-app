@@ -4,6 +4,7 @@ import { updateWorkspaceName } from '@deriv/bot-skeleton';
 import dbot from '@deriv/bot-skeleton/src/scratch/dbot';
 import { initTrashCan } from '@deriv/bot-skeleton/src/scratch/hooks/trashcan';
 import { api_base } from '@deriv/bot-skeleton/src/services/api/api-base';
+import { isDbotRTL } from '@deriv/bot-skeleton/src/utils/workspace';
 import { DesktopWrapper, Dialog, MobileWrapper, Tabs } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
@@ -87,9 +88,9 @@ const AppWrapper = observer(() => {
     React.useEffect(() => {
         if (active_tab === BOT_BUILDER) {
             if (is_drawer_open) {
-                initTrashCan(400, -748);
+                isDbotRTL() ? initTrashCan(140, -260) : initTrashCan(400, -748);
             } else {
-                initTrashCan(20);
+                initTrashCan(isDbotRTL() ? -200 : 20);
             }
             setTimeout(() => {
                 window.dispatchEvent(new Event('resize')); // make the trash can work again after resize

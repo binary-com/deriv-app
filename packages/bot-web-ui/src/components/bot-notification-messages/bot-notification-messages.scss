@@ -11,11 +11,19 @@
     &__dashboard {
         .notification-messages {
             transform: translate3d(calc(-42.7rem), 0, 0);
+
+            @include rtl {
+                transform: translate3d(calc(42.7rem), 0, 0);
+            }
         }
     }
     &--panel-open {
         .notification-messages {
             transform: translate3d(calc(-36.5rem), 0, 0);
+
+            @include rtl {
+                transform: translate3d(calc(38rem), 0, 0);
+            }
         }
     }
 }

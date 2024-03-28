@@ -13,7 +13,7 @@
     $button-padding: 5px 20px;
 
     position: absolute;
-    left: 250px;
+    inset-inline-start: 250px;
     top: 0;
     background-color: var(--general-main-2);
     height: calc(100vh - 232px);
@@ -21,7 +21,7 @@
     z-index: 11;
     border-radius: $BORDER_RADIUS;
     font-size: 2em;
-    margin-left: $default-margin;
+    margin-inline-start: $default-margin;
     margin-top: 20px;
     box-shadow: 0 2px 8px 0 var(--shadow-box);
     min-width: 400px;
@@ -105,7 +105,7 @@
         }
         &-next,
         &-previous {
-            margin-left: 1em;
+            margin-inline-start: 1em;
             color: $COLOR_LIGHT_BLACK_1;
             background-color: var(--general-section-1);
             display: flex;
@@ -124,7 +124,7 @@
             margin-bottom: 10px;
         }
         &-buttons {
-            margin-left: auto;
+            margin-inline-start: auto;
             align-self: center;
         }
         &-info {

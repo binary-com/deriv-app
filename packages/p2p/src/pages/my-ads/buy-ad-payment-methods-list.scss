@@ -6,16 +6,16 @@
     &__input {
         padding-bottom: 2rem;
         & .dc-input__field {
-            padding-left: 1.8rem;
+            padding-inline-start: 1.8rem;
         }
 
         & .dc-input__leading-icon {
             top: auto;
-            margin-left: 1.1rem;
+            margin-inline-start: 1.1rem;
         }
 
         &::placeholder {
-            padding-left: 3rem;
+            padding-inline-start: 3rem;
         }
     }
 

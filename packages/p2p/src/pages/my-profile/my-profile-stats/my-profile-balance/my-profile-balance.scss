@@ -1,6 +1,6 @@
 .my-profile-balance {
     &__amount {
-        margin-right: 0.8rem;
+        margin-inline-end: 0.8rem;
     }
 
     &__column {
@@ -9,7 +9,7 @@
 
     &__icon {
         cursor: pointer;
-        margin-left: 0.5rem;
+        margin-inline-start: 0.5rem;
     }
 
     &__row {

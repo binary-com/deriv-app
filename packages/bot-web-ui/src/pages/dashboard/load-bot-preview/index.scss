@@ -66,14 +66,15 @@
         @include mobile {
             height: 100%;
             overflow: hidden;
-            padding-left: 0.5rem;
+            padding-inline-start: 0.5rem;
         }
     }
 
     &__title {
         font-size: var(--text-size-s);
         font-weight: 700;
-        margin: 1.6rem 1.6rem 1.6rem 0;
+        margin: 1.6rem 0;
+        margin-inline-end: 1.6rem;
         color: var(--text-general);
 
         &--listed {
@@ -84,7 +85,7 @@
     &__button-group {
         display: flex;
         justify-content: flex-end;
-        margin-right: 1.6rem;
+        margin-inline-end: 1.6rem;
 
         &--clear {
             height: 3.4rem;
@@ -97,7 +98,7 @@
             font-weight: 700;
             font-size: 1.4rem;
             cursor: pointer;
-            margin-right: 1.6rem;
+            margin-inline-end: 1.6rem;
         }
 
         &--open {
@@ -120,14 +121,15 @@
         height: calc(100vh - 30.4rem);
         position: relative;
         overflow: hidden;
-        margin: 0 1.6rem 1.6rem 0;
+        margin-inline-end: 1.6rem;
+        margin-bottom: 1.6rem;
 
         &-controls {
             padding: 0.7rem 0.5rem;
             display: flex;
             flex-direction: column;
             position: absolute;
-            right: 1.6rem;
+            inset-inline-end: 1.6rem;
             bottom: 1.6rem;
             border-radius: 3rem;
             background-color: $color-grey-2;
@@ -200,7 +202,7 @@
                 position: absolute;
                 padding: 2.5rem;
                 border-bottom-left-radius: 50%;
-                right: 0;
+                inset-inline-end: 0;
                 top: 0;
                 z-index: 99;
                 cursor: pointer;
@@ -331,7 +333,7 @@
                             }
 
                             &-controls {
-                                right: 3.6rem;
+                                inset-inline-end: 3.6rem;
                             }
                         }
 
@@ -381,7 +383,7 @@
             width: 35%;
             @include mobile {
                 width: 40%;
-                padding-left: 0;
+                padding-inline-start: 0;
             }
         }
         &__time-stamp {
@@ -389,7 +391,7 @@
             padding: 0.8rem;
             @include mobile {
                 width: 25%;
-                padding-right: 0;
+                padding-inline-end: 0;
             }
         }
         &__load-type {
@@ -422,7 +424,7 @@
 
             @include mobile {
                 width: 40%;
-                padding-left: 0;
+                padding-inline-start: 0;
             }
         }
 
@@ -440,7 +442,7 @@
             padding: 0.8rem;
 
             .dc-icon {
-                margin-right: 0.8rem;
+                margin-inline-end: 0.8rem;
             }
         }
 
@@ -450,9 +452,9 @@
             padding: 0.8rem;
             justify-content: flex-end;
             &__action-item {
-                margin-right: 1.6rem;
+                margin-inline-end: 1.6rem;
                 &:last-child {
-                    margin-right: 0;
+                    margin-inline: 0;
                 }
             }
 
@@ -474,7 +476,7 @@
             display: none;
             min-width: 15rem;
             position: absolute;
-            right: 3rem;
+            inset-inline-end: 3rem;
             top: 4rem;
             z-index: 100;
             &--active {
@@ -487,7 +489,7 @@
                 height: 4rem;
                 padding: 0.8rem 1.1rem;
                 .dc-icon {
-                    margin-right: 0.8rem;
+                    margin-inline-end: 0.8rem;
                 }
 
                 &:last-child {
@@ -501,7 +503,7 @@
                 top: -15rem;
                 &--min {
                     top: 1rem;
-                    right: 6rem;
+                    inset-inline-end: 6rem;
                 }
             }
         }

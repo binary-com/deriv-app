@@ -77,7 +77,7 @@
         .cq-menu-dropdown {
             position: fixed;
             height: 46rem;
-            left: unset;
+            inset-inline-start: unset;
 
             .sc-dialog {
                 height: 100% !important;

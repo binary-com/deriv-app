@@ -1,4 +1,5 @@
 import React, { KeyboardEvent } from 'react';
+import { isDbotRTL } from '@deriv/bot-skeleton/src/utils/workspace';
 import { Icon, Text } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
@@ -72,7 +73,7 @@ const QuickStrategyGuidesDetail = observer(
                                 </div>
                                 <Icon
                                     className='tutorials-quick-strategy__placeholder__icon'
-                                    icon='IcChevronRightBold'
+                                    icon={isDbotRTL() ? 'IcChevronLeftBold' : 'IcChevronRightBold'}
                                 />
                             </div>
                         ))}

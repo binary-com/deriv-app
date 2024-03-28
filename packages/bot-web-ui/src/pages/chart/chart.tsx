@@ -45,6 +45,7 @@ const Chart = observer(({ show_digits_stats }: { show_digits_stats: boolean }) =
                 'dashboard__chart-wrapper--expanded': is_drawer_open && !is_mobile,
                 'dashboard__chart-wrapper--modal': is_chart_modal_visible && !is_mobile,
             })}
+            dir='ltr'
         >
             <SmartChart
                 id='dbot'

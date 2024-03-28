@@ -28,7 +28,7 @@
             &--end {
                 position: absolute;
                 top: 0;
-                right: 1rem;
+                inset-inline-end: 1rem;
                 z-index: 90;
             }
         }
@@ -70,12 +70,12 @@
             display: flex;
             text-align: center;
             flex-direction: column;
-            margin-right: 2.4rem;
+            margin-inline-end: 2.4rem;
             @include mobile {
                 flex-direction: row;
                 width: auto;
                 span {
-                    text-align: left;
+                    text-align: start;
                     width: 100%;
                 }
             }
@@ -93,14 +93,14 @@
         @include flex-center;
         background: var(--checkbox-disabled-grey);
         margin-bottom: 0.8rem;
-        margin-right: 2.4rem;
+        margin-inline-end: 2.4rem;
         height: 16rem;
         width: 28rem;
         background-size: 100% 100%;
         &__description {
             width: 28rem;
             @include mobile {
-                text-align: left;
+                text-align: start;
                 width: calc(100% - 14.8rem);
             }
         }
@@ -108,13 +108,13 @@
             height: 8.7rem;
             width: 14.8rem;
             margin: 0;
-            margin-right: 0.8rem;
+            margin-inline-end: 0.8rem;
         }
         &__tours {
             height: 13.5rem;
             background-size: contain;
             margin-bottom: 0.8rem;
-            margin-right: 0.8rem;
+            margin-inline-end: 0.8rem;
             width: 21.5rem;
             cursor: pointer;
             @include mobile {
@@ -214,12 +214,12 @@
 
     .dc-dialog__content {
         &__header {
-            text-align: left;
+            text-align: start;
             margin-bottom: 2.4rem;
         }
 
         &__description {
-            text-align: left;
+            text-align: start;
 
             &__text {
                 margin-bottom: 1.6rem;
@@ -237,7 +237,7 @@
             button {
                 &:first-child {
                     margin-bottom: unset;
-                    margin-right: 0.8rem;
+                    margin-inline-end: 0.8rem;
                 }
             }
         }
@@ -261,13 +261,13 @@
                 .search-icon {
                     cursor: pointer;
                     position: absolute;
-                    left: 1.8rem;
+                    inset-inline-start: 1.8rem;
                     z-index: 1;
                 }
                 .close-icon {
                     cursor: pointer;
                     position: absolute;
-                    right: 1.5rem;
+                    inset-inline-end: 1.5rem;
                     z-index: 1;
                 }
 
@@ -292,10 +292,10 @@
 
                     @include mobile {
                         width: 100%;
-                        margin-left: 17px;
+                        margin-inline-start: 17px;
                         height: 4rem;
-                        padding-left: 13px;
-                        margin-right: 0;
+                        padding-inline-start: 13px;
+                        margin-inline-end: 0;
                     }
                 }
             }
@@ -350,7 +350,7 @@
 
                         li {
                             white-space: unset;
-                            text-align: left;
+                            text-align: start;
                             line-height: normal;
                         }
 
@@ -408,7 +408,7 @@
         @include mobile {
             .dc-select-native {
                 position: relative;
-                margin-right: 17px;
+                margin-inline-end: 17px;
                 transition: all 0.3s;
             }
             &--show-search {
@@ -427,7 +427,7 @@
                     display: block;
                     cursor: pointer;
                     position: absolute;
-                    right: 2.5rem;
+                    inset-inline-end: 2.5rem;
                     z-index: 1;
                 }
                 .dc-select-native__display,

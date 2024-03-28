@@ -10,6 +10,7 @@
         "@deriv/stores": "^1.0.0",
         "@deriv/utils": "^1.0.0",
         "@deriv/shared": "^1.0.0",
+        "react-i18next": "^11.11.0",
         "react": "^17.0.2"
     },
     "devDependencies": {

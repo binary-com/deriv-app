@@ -17,14 +17,14 @@
     }
 
     &--icon {
-        padding-left: 0.5rem;
+        padding-inline-start: 0.5rem;
         cursor: pointer;
     }
 
     &__switch {
         display: inline-flex;
         padding: 0.4rem;
-        margin-left: 0.8rem;
+        margin-inline-start: 0.8rem;
         border-radius: 6px;
         background-color: var(--icon-grey-background);
 

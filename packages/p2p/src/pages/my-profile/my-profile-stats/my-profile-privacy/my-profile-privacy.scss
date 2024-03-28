@@ -9,8 +9,8 @@
     }
 
     &__toggle {
-        margin-left: 0.8rem;
-        padding-left: 0.3rem;
+        margin-inline-start: 0.8rem;
+        padding-inline-start: 0.3rem;
 
         &-container {
             align-items: center;
@@ -38,4 +38,8 @@
 
 .dc-toggle-switch:checked + .dc-toggle-switch__label .my-profile-privacy__toggle-button {
     transform: translateX(1.35rem);
+
+    @include rtl {
+        transform: translateX(-1.35rem);
+    }
 }

@@ -180,3 +180,55 @@ Blockly.BlockSvg.prototype.computeOutputPadding_ = function (input_rows) {
 
     row.paddingEnd += Blockly.BlockSvg.SHAPE_IN_SHAPE_PADDING[shape][otherShape];
 };
+
+/**
+ * Render a list of fields starting at the specified location.
+ * @param {!Array.<!Blockly.Field>} fieldList List of fields.
+ * @param {number} cursorX X-coordinate to start the fields.
+ * @param {number} cursorY Y-coordinate to start the fields.
+ * @return {number} X-coordinate of the end of the field row (plus a gap).
+ * @private
+ */
+Blockly.BlockSvg.prototype.renderFields_ = function (fieldList, cursorX, cursorY) {
+    let updatedCursorX = cursorX;
+    let px = 0;
+    this.RTL && (updatedCursorX = -updatedCursorX);
+    for (let i = 0, field; fieldList[i]; i++) {
+        field = fieldList[i];
+        const root = field.getSvgRoot();
+        if (root) {
+            !this.previousConnection ||
+                field instanceof Blockly.FieldLabel ||
+                field instanceof Blockly.FieldImage ||
+                (updatedCursorX = this.RTL
+                    ? Math.min(updatedCursorX, -Blockly.BlockSvg.INPUT_AND_FIELD_MIN_X)
+                    : Math.max(updatedCursorX, Blockly.BlockSvg.INPUT_AND_FIELD_MIN_X));
+            let py = -field.getSize().height / 2;
+            this.isScratchExtension &&
+                field === this.inputList[0].fieldRow[0] &&
+                field instanceof Blockly.FieldImage &&
+                this.previousConnection &&
+                (py += Blockly.BlockSvg.GRID_UNIT);
+            this.isScratchExtension &&
+                !this.previousConnection &&
+                this.nextConnection &&
+                field instanceof Blockly.FieldVerticalSeparator &&
+                field.setLineHeight(Blockly.BlockSvg.ICON_SEPARATOR_HEIGHT - Blockly.BlockSvg.GRID_UNIT);
+            let scale = '';
+            if (this.RTL) {
+                px = updatedCursorX -= field.renderSep + field.renderWidth;
+                py = cursorY + py;
+                field.renderWidth && (updatedCursorX -= Blockly.BlockSvg.SEP_SPACE_X);
+            } else {
+                px = updatedCursorX + field.renderSep;
+                py = cursorY + py;
+                field.renderWidth &&
+                    (updatedCursorX += field.renderSep + field.renderWidth + Blockly.BlockSvg.SEP_SPACE_X);
+            }
+            this.RTL && field instanceof Blockly.FieldImage && ((scale = 'scale(-1 1)'), (px += field.renderWidth));
+            root.setAttribute('transform', `translate(${px}, ${py}) ${scale}`);
+            this.isInsertionMarker() && root.setAttribute('display', 'none');
+        }
+    }
+    return this.RTL ? -updatedCursorX : updatedCursorX;
+};

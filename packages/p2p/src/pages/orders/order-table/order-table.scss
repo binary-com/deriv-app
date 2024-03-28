@@ -65,10 +65,13 @@
     &-grid {
         // Sizes are different for inactive due to timeout being full time string.
         grid-template-columns: 2fr 1fr 1.5fr 2fr 3fr 1.5fr 1.5fr 2fr;
+        @include rtl {
+            direction: rtl;
+        }
 
         &--active {
             grid-template-columns: 1fr 1.5fr 2fr 3fr 1.5fr 1.5fr 1.5fr;
-            margin-right: 0.5rem;
+            margin-inline-start: 0.5rem;
         }
     }
     &-status {

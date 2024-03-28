@@ -168,8 +168,12 @@
         padding: 1.6rem;
         grid-template-columns: repeat(3, 1.6fr) 1.9fr 3fr 1.9fr;
 
+        @include rtl {
+            direction: rtl;
+        }
+
         .dc-table__head:nth-last-child(2) {
-            margin-left: 2rem;
+            margin-inline-start: 2rem;
         }
 
         .dc-table__cell:last-child {
@@ -222,7 +226,7 @@
 
     &__status {
         width: 100%;
-        margin-left: 1.9rem;
+        margin-inline-start: 1.9rem;
 
         &-warning {
             align-items: center;

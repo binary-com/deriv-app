@@ -5,6 +5,7 @@ import ApiHelpers from '../services/api/api-helpers';
 import Interpreter from '../services/tradeEngine/utils/interpreter';
 import { compareXml, observer as globalObserver } from '../utils';
 import { getSavedWorkspaces, saveWorkspaceToRecent } from '../utils/local-storage';
+import { isDbotRTL } from '../utils/workspace';
 
 import main_xml from './xml/main.xml';
 import DBotStore from './dbot-store';
@@ -119,6 +120,8 @@ class DBot {
                     scrollbars: true,
                 });
 
+                this.workspace.RTL = isDbotRTL();
+
                 this.workspace.cached_xml = { main: main_xml };
 
                 this.workspace.addChangeListener(this.valueInputLimitationsListener.bind(this));
@@ -144,6 +147,7 @@ class DBot {
                 this.workspace.current_strategy_id = Blockly.utils.genUid();
                 Blockly.derivWorkspace.strategy_to_load = main_xml;
                 Blockly.mainWorkspace.strategy_to_load = main_xml;
+                Blockly.mainWorkspace.RTL = isDbotRTL();
                 let file_name = config.default_file_name;
                 if (recent_files && recent_files.length) {
                     const latest_file = recent_files[0];

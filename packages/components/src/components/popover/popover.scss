@@ -6,6 +6,7 @@
     }
     &__container {
         position: absolute;
+        /*rtl:ignore*/
         left: 0;
         top: 0;
         width: 280px;
@@ -59,6 +60,7 @@
         }
         &__text {
             flex-grow: 2;
+            direction: ltr;
         }
         &--error {
             background-color: var(--status-danger);

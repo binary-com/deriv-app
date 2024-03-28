@@ -8,6 +8,7 @@ const LANGUAGE_KEY = 'i18n_language';
 const DEFAULT_LANGUAGE = 'EN';
 const ALL_LANGUAGES = Object.freeze({
     ACH: 'Translations',
+    AR: 'العربية',
     EN: 'English',
     ES: 'Español',
     DE: 'Deutsch',
@@ -28,6 +29,7 @@ const ALL_LANGUAGES = Object.freeze({
 export const getAllowedLanguages = () => {
     const allowed_languages = {
         EN: 'English',
+        AR: 'العربية',
         ES: 'Español',
         DE: 'Deutsch',
         KO: '한국어',

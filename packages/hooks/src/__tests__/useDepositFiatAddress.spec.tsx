@@ -30,7 +30,7 @@ describe('useDepositFiatAddress', () => {
 
         result.current.resend();
 
-        expect(result.current.data).toBe('https://example.com&DarkMode=on');
+        expect(result.current.data).toBe('https://example.com/?DarkMode=on');
     });
 
     it('should get the iframe url for light mode', () => {
@@ -42,6 +42,6 @@ describe('useDepositFiatAddress', () => {
 
         result.current.resend();
 
-        expect(result.current.data).toBe('https://example.com&DarkMode=off');
+        expect(result.current.data).toBe('https://example.com/?DarkMode=off');
     });
 });

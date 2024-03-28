@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dialog, Text } from '@deriv/components';
-import { localize } from '@deriv/translations';
+import { Localize, localize } from '@deriv/translations';
 
 export type TStopBotModalContent = {
     is_running: boolean;
@@ -45,31 +45,29 @@ const StopBotModalContent = ({
                 {is_running && is_multiplier ? (
                     <>
                         <Text as='p' line_height='s' size='xs' styles={{ paddingBottom: '2rem', paddingTop: '1rem' }}>
-                            {localize(
-                                'Close your contract now or keep it running. If you decide to keep it running, you can check and close it later on the '
-                            )}
-                            <Text as='span' line_height='s' size='xs'>
-                                <strong>{localize('Reports')}</strong>
+                            <Localize i18n_default_text='Close your contract now or keep it running. If you decide to keep it running, you can check and close it later on the ' />
+                            <Text weight='bold' as='span' line_height='s' size='xs'>
+                                <Localize i18n_default_text='Reports' />
                             </Text>
-                            {localize(' page.')}
+                            <Localize i18n_default_text='page.' />
                         </Text>
                         <Text as='p' line_height='s' size='xs'>
-                            {localize('The Quick Strategy you just created will be loaded to the workspace.')}
+                            <Localize i18n_default_text='The Quick Strategy you just created will be loaded to the workspace.' />
                         </Text>
                     </>
                 ) : (
                     <>
                         <Text as='p' line_height='s' size='xs' styles={{ paddingBottom: '2rem', paddingTop: '1rem' }}>
-                            {localize(
-                                'Stopping the current bot will load the Quick Strategy you just created to the workspace.'
-                            )}
+                            <Localize i18n_default_text='Stopping the current bot will load the Quick Strategy you just created to the workspace.' />
                         </Text>
                         <Text as='p' line_height='s' size='xs'>
-                            {localize(' Any open contracts can be viewed on the ')}
-                            <Text as='span' line_height='s' size='xs'>
-                                <strong>{localize('Reports')}</strong>
+                            <Localize i18n_default_text='Any open contracts can be viewed on the ' />
+                            <Text weight='bold' as='span' line_height='s' size='xs'>
+                                <Localize i18n_default_text='Reports' />
                             </Text>
-                            {localize(' page.')}
+                            <Text as='span' line_height='s' size='xs' styles={{ paddingInlineStart: '0.4rem' }}>
+                                <Localize i18n_default_text='page.' />
+                            </Text>
                         </Text>
                     </>
                 )}

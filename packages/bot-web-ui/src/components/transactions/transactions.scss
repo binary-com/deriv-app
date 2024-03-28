@@ -7,7 +7,7 @@
 
     .download__container {
         &__view-detail-button {
-            margin-left: 12px;
+            margin-inline-start: 12px;
         }
     }
 
@@ -104,6 +104,9 @@
         grid-template-rows: auto auto;
         grid-template-areas: ('trade-type entry-spot stake' 'trade-type exit-spot  profit');
         padding: 0.8rem 0;
+        @include rtl {
+            direction: rtl;
+        }
 
         &-wrapper {
             height: 5.2rem;

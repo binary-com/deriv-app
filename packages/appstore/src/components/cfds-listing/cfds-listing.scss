@@ -1360,7 +1360,7 @@
                 margin: 0;
             }
             &:first-child {
-                margin-left: 0;
+                margin-inline-start: 0;
             }
         }
         @include mobile {

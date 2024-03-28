@@ -2,6 +2,14 @@
  *  # Constants
  *------------------------------------*/
 
+/*RTL Language Mixin*/
+
+@mixin rtl {
+    [dir='rtl'] & {
+        @content;
+    }
+}
+
 /* stylelint-disable color-no-hex */
 
 /* COLOR PALETTE */

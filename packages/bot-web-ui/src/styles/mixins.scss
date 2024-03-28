@@ -4,3 +4,14 @@
     justify-content: $justify-content;
     @content;
 }
+
+/*
+ * Check if the page is in RTL mode
+ * Usage example:
+   @include is-RTL { left: 0 };
+ */
+@mixin is-RTL() {
+    html[dir='rtl'] & {
+        @content;
+    }
+}

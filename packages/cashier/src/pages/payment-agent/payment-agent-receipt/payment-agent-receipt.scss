@@ -51,9 +51,9 @@
         .payment-agent-detail {
             align-items: center;
             &__icon-wrapper {
-                margin-right: 0.5rem;
+                margin-inline-end: 0.5rem;
                 @include mobile {
-                    margin-right: 0.9rem;
+                    margin-inline-end: 0.9rem;
                 }
             }
             &__desc-wrapper {

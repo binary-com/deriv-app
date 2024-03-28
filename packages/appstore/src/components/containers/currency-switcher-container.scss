@@ -1,12 +1,12 @@
 .currency-switcher {
     &__currency {
         &--icon {
-            margin-right: 1rem;
+            margin-inline-end: 1rem;
         }
     }
     &__button {
         @include desktop {
-            margin-right: 1rem;
+            margin-inline-end: 1rem;
         }
     }
 
@@ -18,7 +18,7 @@
         border: 1px solid var(--general-hover);
         border-radius: 8px;
         padding: 2rem 1.6rem;
-        margin-left: auto;
+        margin-inline-start: auto;
         gap: 1.6rem;
         flex-shrink: 0;
         cursor: pointer;
@@ -47,11 +47,11 @@
 
         &__arrow {
             @include mobile {
-                margin-left: 1.5rem;
+                margin-inline-start: 1.5rem;
             }
 
             &--onboarding {
-                padding-left: 1rem;
+                padding-inline-start: 1rem;
             }
         }
         &--left {

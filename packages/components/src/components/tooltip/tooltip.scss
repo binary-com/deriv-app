@@ -1,3 +1,4 @@
+/*rtl:begin:ignore*/
 .dc-tooltip {
     text-decoration: none;
     font-size: inherit;
@@ -90,6 +91,7 @@
                 transform: translate(1em, -50%);
             }
             &:before {
+                /*rtl:ignore*/
                 margin-right: 1em;
             }
             &:hover:after,
@@ -153,3 +155,5 @@
         }
     }
 }
+
+/*rtl:end:ignore*/

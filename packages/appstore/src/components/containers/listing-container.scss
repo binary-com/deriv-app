@@ -18,12 +18,18 @@
             display: block;
             width: 100%;
         }
+
+        @include rtl {
+            > svg {
+                transform: scaleX(-1);
+            }
+        }
     }
 
     &__title {
         display: flex;
         flex-direction: column;
-        margin-right: 4.8rem;
+        margin-inline-end: 4.8rem;
         .cfd-accounts__title {
             display: flex;
             justify-content: flex-start;
@@ -33,7 +39,7 @@
         @include mobile {
             display: flex;
             flex-direction: row;
-            margin-right: 0;
+            margin-inline-end: 0;
             padding-bottom: 2rem;
         }
     }
@@ -48,6 +54,12 @@
         @include mobile {
             display: flex;
             flex-direction: column;
+        }
+
+        @include rtl {
+            > svg {
+                transform: scaleX(-1);
+            }
         }
     }
 }

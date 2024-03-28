@@ -54,6 +54,7 @@
 /** @define trade-container; weak */
 .trade-container {
     background: var(--general-main-1);
+    direction: ltr;
 
     &__fieldset {
         border-radius: $BORDER_RADIUS;
@@ -123,7 +124,7 @@
                     }
 
                     .btn-purchase__effect-detail--arrow {
-                        left: 12rem;
+                        inset-inline-start: 12rem;
                     }
                 }
             }
@@ -145,6 +146,9 @@
                 justify-content: space-between;
                 align-items: center;
                 gap: 0.8rem;
+                @include rtl {
+                    direction: rtl;
+                }
                 .dc-popover__target {
                     height: 1.8rem;
                     border-bottom: 1px dotted var(--text-general);
@@ -583,9 +587,11 @@
                 top: 1px;
 
                 &--increment {
+                    /*rtl:ignore*/
                     right: 1px;
                 }
                 &--decrement {
+                    /*rtl:ignore*/
                     left: 1px;
                 }
             }
@@ -894,6 +900,9 @@
 
 .expiry-text-container,
 .range-text-container {
+    @include rtl {
+        direction: rtl;
+    }
     margin-top: 0.5rem;
 
     @include mobile {

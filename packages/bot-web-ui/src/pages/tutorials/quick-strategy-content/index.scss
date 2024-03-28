@@ -13,7 +13,7 @@
         }
 
         gap: 2.4rem;
-        margin-right: 12rem;
+        margin-inline-end: 12rem;
     }
 
     &__placeholder {
@@ -36,7 +36,7 @@
 
             ul {
                 list-style: disc;
-                margin-left: 1.6rem;
+                margin-inline-start: 1.6rem;
                 color: var(--text-general);
             }
 
@@ -47,13 +47,13 @@
             &__text {
                 position: relative;
                 top: 0.15rem;
-                margin-left: 0.3rem;
+                margin-inline-start: 0.3rem;
                 color: var(--text-general);
             }
         }
 
         &__icon {
-            margin-left: 2rem;
+            margin-inline-start: 2rem;
         }
     }
 
@@ -63,7 +63,7 @@
 
         &__clickable {
             cursor: pointer;
-            margin-right: 0.5rem;
+            margin-inline-end: 0.5rem;
         }
     }
 

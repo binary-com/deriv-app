@@ -31,7 +31,7 @@
 
     &__header {
         width: 90%;
-        text-align: left;
+        text-align: start;
         padding-left: 1rem;
 
         @include mobile {
@@ -79,7 +79,7 @@
         }
 
         &__header {
-            text-align: left;
+            text-align: start;
 
             &--cursive {
                 font-style: italic;

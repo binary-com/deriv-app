@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactJoyride, { CallBackProps, Step, Styles } from 'react-joyride';
-
 import { localize } from '@deriv/translations';
 
 const common_tour_button_properties = {
@@ -35,13 +34,17 @@ const ReactJoyrideWrapper: React.FC<IReactJoyrideWrapperProps> = ({ steps, style
                 },
                 buttonBack: {
                     border: '0.2rem solid var(--text-less-prominent)',
-                    marginRight: '1rem',
+                    marginInlineEnd: '1rem',
                     borderRadius: '0.4rem',
                     color: 'var(--text-general)',
                     ...common_tour_button_properties,
                 },
                 buttonNext: {
                     ...common_tour_button_properties,
+                },
+                buttonClose: {
+                    insetInlineEnd: '0px',
+                    right: 'unset',
                 },
                 overlay: {
                     height: '100%',

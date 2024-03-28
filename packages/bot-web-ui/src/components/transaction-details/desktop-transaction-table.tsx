@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import classNames from 'classnames';
 import ContentLoader from 'react-content-loader';
 import { getContractTypeName } from '@deriv/bot-skeleton';
+import { isDbotRTL } from '@deriv/bot-skeleton/src/utils/workspace';
 import { Icon, IconTradeTypes, Popover } from '@deriv/components';
 import { convertDateFormat } from '@deriv/shared';
 import { transaction_elements } from 'Constants/transactions';
@@ -32,7 +33,7 @@ const TableHeader = ({ columns }: { columns: TColumn[] }) => (
 
 const IconWrapper = ({ message, icon }: { message: string; icon: ReactElement }) => (
     <div className={`${PARENT_CLASS}__icon-wrapper`}>
-        <Popover alignment='left' message={message} zIndex={'9999'}>
+        <Popover alignment={isDbotRTL() ? 'right' : 'left'} message={message} zIndex='9999'>
             {icon}
         </Popover>
     </div>
