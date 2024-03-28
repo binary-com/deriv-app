@@ -40,6 +40,8 @@ runs:
         echo "CA_CRT=${{ inputs.CA_CRT }}" >> "$GITHUB_ENV"
         echo "APP_NAME=deriv-app" >> "$GITHUB_ENV"
         echo "APP_VERSION=${{ inputs.APP_VERSION }}" >> "$GITHUB_ENV"
+        echo "DOCKERHUB_USERNAME=${{ inputs.DOCKERHUB_USERNAME }}" >> "$GITHUB_ENV"
+        echo "DOCKERHUB_PASSWORD=${{ inputs.DOCKERHUB_PASSWORD }}" >> "$GITHUB_ENV"
       shell: bash
     - name: Build docker image 🐳
       run: docker build -t ${DOCKERHUB_ORGANISATION}/${APP_NAME}:${APP_VERSION} -t ${DOCKERHUB_ORGANISATION}/${APP_NAME}:${{ github.ref_name }} .
@@ -52,7 +54,7 @@ runs:
       shell: bash
     - name: Pushing Image to docker hub 🐳
       run: |
-        echo ${{ inputs.DOCKERHUB_PASSWORD }}| docker login -u ${{ inputs.DOCKERHUB_USERNAME }} --password-stdin
+        echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
         docker push ${DOCKERHUB_ORGANISATION}/${APP_NAME}:${APP_VERSION}
         docker push ${DOCKERHUB_ORGANISATION}/${APP_NAME}:${{ github.ref_name }}
       shell: bash

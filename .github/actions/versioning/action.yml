@@ -13,9 +13,11 @@ runs:
   steps:
     - name: Set Version
       id: set_version
+      env:
+        RELEASE_TYPE: ${{ inputs.RELEASE_TYPE }}
       run: |
         current_date=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-        version="${{ inputs.RELEASE_TYPE }}-GH_Run#:${{ github.run_number }}-Date:$current_date"
+        version="${RELEASE_TYPE}-GH_Run#:${{ github.run_number }}-Date:$current_date"
         echo "Setting version to: $version"
         echo "version=$version" >> $GITHUB_ENV
         echo $version > packages/core/dist/version.txt

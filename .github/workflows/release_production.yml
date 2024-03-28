@@ -47,7 +47,7 @@ jobs:
     - name: Versioning
       uses: "./.github/actions/versioning"
       with:
-        RELEASE_TYPE: ${{ env.RELEASE_TYPE }}
+        RELEASE_TYPE: $RELEASE_TYPE
     - name: Extract version
       id: extract_version
       run: echo "RELEASE_VERSION=${version}" >> $GITHUB_OUTPUT
@@ -77,13 +77,13 @@ jobs:
       - name: Create Slack Message
         id: create_slack_message
         run: |
-          if [ "${{ env.WORKFLOW_CONCLUSION }}" == "success" ]; then
-            echo "MESSAGE=${{ env.RELEASE_TYPE }} Release succeeded for app.deriv.com with version ${{ needs.build_test_and_publish.outputs.RELEASE_VERSION }}" >> $GITHUB_OUTPUT
+          if [ $WORKFLOW_CONCLUSION == "success" ]; then
+            echo "MESSAGE=$RELEASE_TYPE Release succeeded for app.deriv.com with version ${{ needs.build_test_and_publish.outputs.RELEASE_VERSION }}" >> $GITHUB_OUTPUT
           else
-            echo "MESSAGE=${{ env.RELEASE_TYPE }} Release failed for app.deriv.com with version ${{ needs.build_test_and_publish.outputs.RELEASE_VERSION }}" >> $GITHUB_OUTPUT
+            echo "MESSAGE=$RELEASE_TYPE Release failed for app.deriv.com with version ${{ needs.build_test_and_publish.outputs.RELEASE_VERSION }}" >> $GITHUB_OUTPUT
           fi
       - name: Send Slack Notification
-        uses: "./.github/actions/send_slack_notifications"
+        uses: "deriv-com/shared-actions/.github/actions/send_slack_notification@master"
         with:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           MESSAGE: ${{ steps.create_slack_message.outputs.MESSAGE }}
@@ -115,7 +115,7 @@ jobs:
           APP_VERSION: latest
       - name: Send Slack Notification on Docker Publish and Kubernetes Deployment Failure
         if: ${{ steps.build_and_push_docker_image.outcome != 'success' }}
-        uses: "./.github/actions/send_slack_notifications"
+        uses: "deriv-com/shared-actions/.github/actions/send_slack_notification@master"
         with:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          MESSAGE: "${{ env.RELEASE_TYPE }} Docker Publish and Kubernetes Deployment for app.deriv.com with version ${{ needs.build_test_and_publish.outputs.RELEASE_VERSION }} has Failed"
+          MESSAGE: "$RELEASE_TYPE Docker Publish and Kubernetes Deployment for app.deriv.com with version ${{ needs.build_test_and_publish.outputs.RELEASE_VERSION }} has Failed"
