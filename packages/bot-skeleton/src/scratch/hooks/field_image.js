@@ -11,7 +11,7 @@
  * @extends {Blockly.Field}
  * @constructor
  */
-Blockly.FieldImage = function (src, width, height, optAlt, optOnClick, optFlipRtl) {
+Blockly.FieldImage = function (src, width, height, optAlt, optOnClick, optFlipRtl, should_collapse) {
     this.sourceBlock_ = null;
 
     // Ensure height and width are numbers.  Strings are bad at math.
@@ -19,6 +19,7 @@ Blockly.FieldImage = function (src, width, height, optAlt, optOnClick, optFlipRt
     this.width_ = Number(width);
     this.size_ = new goog.math.Size(this.width_, this.height_);
     this.flipRtl_ = optFlipRtl;
+    this.should_collapse_ = should_collapse;
     this.tooltip_ = '';
     this.setValue(src);
     this.setText(optAlt);
@@ -75,6 +76,9 @@ Blockly.FieldImage.prototype.init = function () {
         },
         this.fieldGroup_
     );
+    if (this.should_collapse_) {
+        this.imageElement_.style.transform = 'rotate(180deg) translate(-16px, -16px)';
+    }
     this.setValue(this.src_);
     this.setText(this.text_);
     this.sourceBlock_.getSvgRoot().appendChild(this.fieldGroup_);
