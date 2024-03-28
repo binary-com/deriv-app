@@ -25,6 +25,8 @@ const AppContent: React.FC = () => {
 
     useEffect(() => {
         defineViewportHeight();
+        screen.orientation.addEventListener('change', defineViewportHeight);
+        return () => screen.orientation.removeEventListener('change', defineViewportHeight);
     }, []);
 
     return (
