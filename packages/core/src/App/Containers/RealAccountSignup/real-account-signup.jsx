@@ -227,7 +227,18 @@ const RealAccountSignup = observer(({ history, state_index, is_trading_experienc
                     onConfirm={() => onErrorConfirm(local_props.state_value.error_code)}
                 />
             ),
-            title: () => localize('Add a real account'),
+            title: local_props => {
+                if (local_props?.real_account_signup_target === 'add_crypto') {
+                    return localize('Create a cryptocurrency account');
+                } else if (local_props?.real_account_signup_target === 'add_fiat') {
+                    return localize('Add a Deriv real account');
+                } else if (local_props?.real_account_signup_target === 'add_currency') {
+                    return localize('Create a new account');
+                } else if (local_props?.has_fiat && local_props?.available_crypto_currencies?.length === 0) {
+                    return localize('Manage account');
+                }
+                return localize('Add or manage account');
+            },
         },
         {
             body: () => <ChooseCurrency className='account-wizard__body' onError={showErrorModal} />,
@@ -467,9 +478,11 @@ const RealAccountSignup = observer(({ history, state_index, is_trading_experienc
     };
 
     const onErrorConfirm = err_code => {
+        const addOrManageAccountErrorType = ['CurrencyTypeNotAllowed', 'DuplicateCurrency'];
+        setLoading(true);
         setParams({
             active_modal_index:
-                current_action === 'multi' || err_code === 'CurrencyTypeNotAllowed'
+                current_action === 'multi' || addOrManageAccountErrorType.includes(err_code)
                     ? modal_pages_indices.add_or_manage_account
                     : modal_pages_indices.account_wizard,
         });
