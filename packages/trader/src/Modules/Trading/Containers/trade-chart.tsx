@@ -31,6 +31,7 @@ const TradeChart = observer((props: TTradeChartProps) => {
         updateChartType,
         updateGranularity,
     } = contract_trade;
+    const ref = React.useRef<{ hasPredictionIndicators(): void; triggerPopup(arg: () => void): void }>(null);
     const { all_positions } = portfolio;
     const { is_chart_countdown_visible, is_chart_layout_default, is_dark_mode_on, is_mobile, is_positions_drawer_on } =
         ui;
@@ -48,6 +49,8 @@ const TradeChart = observer((props: TTradeChartProps) => {
         setChartStatus,
         show_digits_stats,
         symbol,
+        onChange,
+        prev_contract_type,
         wsForget,
         wsForgetStream,
         wsSendRequest,
@@ -73,6 +76,13 @@ const TradeChart = observer((props: TTradeChartProps) => {
         [is_accumulator]
     );
 
+    React.useEffect(() => {
+        if ((is_accumulator || show_digits_stats) && ref.current?.hasPredictionIndicators()) {
+            const cancelCallback = () => onChange({ target: { name: 'contract_type', value: prev_contract_type } });
+            ref.current?.triggerPopup(cancelCallback);
+        }
+    }, [is_accumulator, onChange, prev_contract_type, show_digits_stats]);
+
     const getMarketsOrder = (active_symbols: ActiveSymbols): string[] => {
         const synthetic_index = 'synthetic_index';
         const has_synthetic_index = active_symbols.some(s => s.market === synthetic_index);
@@ -97,6 +107,7 @@ const TradeChart = observer((props: TTradeChartProps) => {
     if (!symbol || !active_symbols.length) return null;
     return (
         <SmartChart
+            ref={ref}
             barriers={barriers}
             contracts_array={markers_array}
             bottomWidgets={(is_accumulator || show_digits_stats) && isDesktop() ? bottomWidgets : props.bottomWidgets}
