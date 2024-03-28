@@ -1,6 +1,7 @@
 .account-transfer-form {
     max-width: 36rem;
     width: 100%;
+    margin: 0 auto;
 
     @include mobile {
         width: 100%;

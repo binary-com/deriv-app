@@ -8,7 +8,7 @@ import { useCfdStore } from '../Stores/Modules/CFD/Helpers/useCfdStores';
 
 import DMT5TradeModal from './dmt5-trade-modal';
 import { TCFDPasswordReset } from './props.types';
-import TradeModal from './trade-modal';
+import CTraderDerivXTradeModal from './ctrader-derivx-trade-modal';
 
 type TMT5TradeModalProps = {
     is_eu_user: boolean;
@@ -46,8 +46,8 @@ const MT5TradeModal = observer(
                 );
             }
             return (
-                <TradeModal
-                    mt5_trade_account={mt5_trade_account}
+                <CTraderDerivXTradeModal
+                    ctrader_derivx_trade_account={mt5_trade_account}
                     is_eu_user={is_eu_user}
                     onPasswordManager={onPasswordManager}
                     toggleModal={toggleModal}

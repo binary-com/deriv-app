@@ -90,6 +90,8 @@ export type TTradingPlatformAvailableAccount = {
     sub_account_type: string;
     account_type?: 'real' | 'demo';
     landing_company_short?: TShortcode;
+    max_count?: number;
+    available_count?: number;
 };
 
 export type TModifiedTradingPlatformAvailableAccount = Omit<TTradingPlatformAvailableAccount, 'market_type'> & {

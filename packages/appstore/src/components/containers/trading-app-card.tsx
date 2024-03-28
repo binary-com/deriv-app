@@ -131,6 +131,9 @@ const TradingAppCard = ({
     const is_disabled = !!(mt5_acc_auth_status && !migration_status) && !is_eu_user;
     const platform_name = is_account_being_created ? name : sub_title ?? name;
 
+    const is_existing_real_ctrader_account =
+        platform === CFD_PLATFORMS.CTRADER && is_real && action_type === 'multi-action';
+
     return (
         <div className='trading-app-card' key={`trading-app-card__${current_language}`}>
             <div
@@ -203,7 +206,7 @@ const TradingAppCard = ({
                             action_type === 'get' || is_deriv_platform ? 'dt_platform-description' : 'dt_account-id'
                         }
                     >
-                        {app_desc}
+                        {is_existing_real_ctrader_account ? '' : app_desc}
                     </Text>
                     {mt5_acc_auth_status && (
                         <StatusBadge

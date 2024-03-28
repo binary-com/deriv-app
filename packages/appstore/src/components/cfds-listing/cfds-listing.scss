@@ -412,11 +412,63 @@
     margin: 1.2rem 2.4rem;
     align-items: center;
     gap: 0.8rem;
+
+    &__balance {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__list-of-accounts {
+        display: flex;
+        justify-content: space-between;
+        &:first-child {
+            border-top: 0.2rem solid var(--general-section-1);
+            padding-top: 1rem;
+        }
+        margin: 0.8rem 0;
+    }
+
     &__acc_status {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
     }
+
+    &__expansion-panel {
+        background-color: var(--general-section-5);
+        padding: 1.6rem 2.4rem;
+        border-radius: $BORDER_RADIUS;
+
+        &--content {
+            padding: 0.8rem 0;
+        }
+
+        &--divider {
+            width: 100%;
+            border-bottom: 0.2rem solid var(--general-hover);
+            margin-bottom: 1rem;
+            margin-top: 0.4rem;
+        }
+    }
+
+    &__get-more-accounts {
+        cursor: pointer;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        border: 2px dashed var(--general-hover);
+        padding: 1rem 1.8rem;
+        margin: 1.6rem 0;
+
+        &--icon {
+            margin-right: 1.5rem;
+        }
+
+        &--details {
+            margin-top: 0.2rem;
+        }
+    }
+
     &--paragraph {
         @include typeface(--paragraph-left-normal-black, none);
         color: var(--text-less-prominent);
@@ -441,6 +493,10 @@
         display: flex;
         flex-direction: column;
         flex-grow: 1;
+
+        &-balance {
+            margin-left: 1.5rem;
+        }
     }
     &__password {
         &-box {
@@ -524,10 +580,6 @@
         display: flex;
         flex-direction: column;
         gap: 0.1rem;
-        :first-child {
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-        }
         &-item {
             display: flex;
             padding: 0.5rem 0.8rem;
@@ -707,6 +759,29 @@
         }
         &-wrapper {
             overflow: scroll;
+        }
+    }
+}
+
+.ctrader-transfer-modal {
+    &__accounts-list {
+        width: 95%;
+        display: flex;
+        margin: 1rem;
+        padding: 1rem;
+        justify-content: space-between;
+        border: none;
+        background: none;
+
+        &--balance {
+            display: flex;
+            align-items: center;
+        }
+
+        &:hover {
+            cursor: pointer;
+            border-radius: $BORDER_RADIUS;
+            background-color: var(--general-hover);
         }
     }
 }

@@ -85,6 +85,8 @@ export type TTradingPlatformAvailableAccount = {
     };
     shortcode: 'bvi' | 'labuan' | 'svg' | 'vanuatu' | 'maltainvest';
     sub_account_type: string;
+    max_count?: number;
+    available_count?: number;
 };
 
 export type TCFDAccountsProps = {

@@ -243,6 +243,8 @@ type TTradingPlatformAvailableAccount = {
     };
     shortcode?: DetailsOfEachMT5Loginid['landing_company_short'];
     sub_account_type: string;
+    max_count?: number;
+    available_count?: number;
 };
 
 type TAvailableCFDAccounts = {

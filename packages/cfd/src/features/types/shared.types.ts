@@ -36,4 +36,6 @@ export type TTradingPlatformAvailableAccount = {
     };
     shortcode: DetailsOfEachMT5Loginid['landing_company_short'];
     landing_company_short?: DetailsOfEachMT5Loginid['landing_company_short'];
+    max_count?: number;
+    available_count?: number;
 };

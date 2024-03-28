@@ -514,19 +514,23 @@ export default class AccountTransferStore {
         const accounts = this.accounts_list;
         const selected_from = accounts.find(account => account.value === target.value);
 
+        const platforms = ['is_mt', 'is_ctrader', 'is_dxtrade'] as const;
+
+        const isBetweenCFDsTransfer = platforms.some(from_platform => {
+            return platforms.some(to_platform => selected_from?.[from_platform] && this.selected_to?.[to_platform]);
+        });
+
         // if new value of selected_from is the same as the current selected_to
         // switch the value of selected_from and selected_to
         if (selected_from?.value === this.selected_to.value) {
             this.onChangeTransferTo({ target: { value: this.selected_from.value } });
-        } else if (
-            (selected_from?.is_mt && this.selected_to.is_mt) ||
-            (selected_from?.is_dxtrade && this.selected_to.is_dxtrade) ||
-            (selected_from?.is_dxtrade && this.selected_to.is_mt) ||
-            (selected_from?.is_mt && this.selected_to.is_dxtrade)
-        ) {
-            // not allowed to transfer from MT to MT
+        } else if (isBetweenCFDsTransfer) {
+            // not allowed to transfer from MT5 to MT5
             // not allowed to transfer from Dxtrade to Dxtrade
-            // not allowed to transfer between MT and Dxtrade
+            // not allowed to transfer from cTrader to cTrader
+            // not allowed to transfer between MT and Dxtrade and visa versa
+            // not allowed to transfer between Dxtrade and cTrader and visa versa
+            // not allowed to transfer between MT and cTrader and visa versa
             // if new value of selected_from is different from selected_to
             // switch the value of selected_to to current client loginid
             this.onChangeTransferTo({ target: { value: this.root_store.client.loginid } });

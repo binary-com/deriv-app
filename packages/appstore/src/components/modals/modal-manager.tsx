@@ -14,6 +14,7 @@ import CFDTopUpDemoModal from '@deriv/cfd/src/Containers/cfd-top-up-demo-modal';
 import MT5TradeModal from '@deriv/cfd/src/Containers/mt5-trade-modal';
 import CFDPasswordManagerModal from '@deriv/cfd/src/Containers/cfd-password-manager-modal';
 import MT5MigrationModal from '@deriv/cfd/src/Containers/mt5-migration-modal';
+import CTraderTransferModal from '@deriv/cfd/src/Containers/ctrader-transfer-modal';
 import { TOpenAccountTransferMeta } from 'Types';
 import { DetailsOfEachMT5Loginid } from '@deriv/api-types';
 import FailedVerificationModal from './failed-veriification-modal';
@@ -113,6 +114,7 @@ const ModalManager = () => {
             <CFDDbviOnBoarding />
             <CFDResetPasswordModal platform={platform} />
             <CFDServerErrorDialog />
+            <CTraderTransferModal />
             <CFDTopUpDemoModal platform={platform} />
             <MT5TradeModal
                 is_open={is_mt5_trade_modal_visible}

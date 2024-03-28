@@ -12,11 +12,12 @@ import BaseStore from '../../base-store';
 import { getDxCompanies, getMtCompanies } from './Helpers/cfd-config';
 
 export default class CFDStore extends BaseStore {
-    is_compare_accounts_visible = false;
     is_cfd_personal_details_modal_visible = false;
+    is_ctrader_transfer_modal_visible = false;
     is_jurisdiction_modal_visible = false;
-    is_mt5_trade_modal_visible = false;
     jurisdiction_selected_shortcode = '';
+    is_compare_accounts_visible = false;
+    is_mt5_trade_modal_visible = false;
 
     account_type = {
         category: '',
@@ -66,6 +67,7 @@ export default class CFDStore extends BaseStore {
             is_cfd_personal_details_modal_visible: observable,
             is_jurisdiction_modal_visible: observable,
             is_mt5_trade_modal_visible: observable,
+            is_ctrader_transfer_modal_visible: observable,
             jurisdiction_selected_shortcode: observable,
             account_type: observable,
             mt5_trade_account: observable,
@@ -124,6 +126,7 @@ export default class CFDStore extends BaseStore {
             createCFDPassword: action.bound,
             submitCFDPassword: action.bound,
             toggleCompareAccountsModal: action.bound,
+            toggleCTraderTransferModal: action.bound,
             getRealSyntheticAccountsExistingData: action.bound,
             getRealFinancialAccountsExistingData: action.bound,
             getRealSwapfreeAccountsExistingData: action.bound,
@@ -314,6 +317,7 @@ export default class CFDStore extends BaseStore {
                 this.root_store.client.responseTradingPlatformAccountsList(trading_platform_accounts_list_response);
                 WS.transferBetweenAccounts();
                 this.setIsAccountBeingCreated(false);
+                WS.tradingPlatformAvailableAccounts(CFD_PLATFORMS.CTRADER);
             } else {
                 this.setError(true, response.error);
                 this.setIsAccountBeingCreated(false);
@@ -667,6 +671,10 @@ export default class CFDStore extends BaseStore {
 
     toggleCompareAccountsModal() {
         this.is_compare_accounts_visible = !this.is_compare_accounts_visible;
+    }
+
+    toggleCTraderTransferModal() {
+        this.is_ctrader_transfer_modal_visible = !this.is_ctrader_transfer_modal_visible;
     }
 
     getRealSyntheticAccountsExistingData(real_synthetic_accounts_existing_data) {

@@ -14,6 +14,9 @@
         &-active &-chevron-icon {
             transform: rotate(180deg);
         }
+        &-active {
+            margin-bottom: 1.6rem;
+        }
     }
     &__content {
         &-array {
