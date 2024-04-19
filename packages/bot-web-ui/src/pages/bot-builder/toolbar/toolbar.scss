@@ -10,17 +10,20 @@
     background-color: var(--general-main-1);
 
     @include mobile {
-        inset-inline-start: 0;
+        height: fit-content;
+        position: absolute;
+        overflow-y: auto;
+        inset-inline-start: 4rem;
         overflow-x: auto;
-        overflow-y: hidden;
-        width: 100%;
-        padding: 0.8rem;
+        width: fit-content;
+        padding: 0;
         &::-webkit-scrollbar {
             display: none;
         }
 
         -ms-overflow-style: none;
         scrollbar-width: none;
+        z-index: 0;
     }
     z-index: 1;
     &__btn {
@@ -33,9 +36,6 @@
             @include desktop {
                 width: 22rem;
                 margin-bottom: 1rem;
-            }
-            @include mobile {
-                margin-bottom: 2rem;
             }
 
             & .dc-btn__icon {
@@ -53,7 +53,13 @@
         display: flex;
 
         @include mobile {
-            margin-top: 2rem;
+            flex-direction: row-reverse;
+            height: 100%;
+            column-gap: 1.6rem !important;
+            padding-top: 1.6rem;
+            padding-inline-start: 1.6rem;
+            padding-bottom: 0.8rem;
+            padding-inline-end: 0.8rem;
         }
 
         > * {
@@ -69,6 +75,10 @@
         height: 1.6rem;
         width: 1.6rem;
         fill: var(--text-prominent);
+
+        @include mobile {
+            margin: 1.2rem;
+        }
     }
     &__group {
         display: flex;
@@ -80,6 +90,9 @@
             height: 4rem;
             @include mobile {
                 padding: 0;
+                height: fit-content;
+                flex-direction: column;
+                border: none;
                 .dc-popover {
                     &__target {
                         width: 4rem;
@@ -99,6 +112,17 @@
             margin-top: 2.4rem;
         }
     }
+    &__wrapper {
+        @include mobile {
+            background-color: var(--general-main-1);
+            position: absolute;
+            top: 0;
+            overflow-y: auto;
+            scrollbar-width: none;
+            height: calc(100% - 5rem);
+            box-shadow: 0 1.2rem 1.6rem rgba(14, 14, 14, 0.08), 0 0.4rem 0.6rem rgba(14, 14, 14, 0.03);
+        }
+    }
 }
 
 @keyframes spin {
@@ -115,4 +139,9 @@
     height: 1.7rem;
     margin: 0.8rem;
     background-color: var(--border-normal);
+
+    @include mobile {
+        transform: rotate(90deg);
+        margin: 0;
+    }
 }

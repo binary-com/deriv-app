@@ -21,6 +21,7 @@ export type TDbotStore = {
         event: React.MouseEvent<Element, MouseEvent> | React.FormEvent<HTMLFormElement> | DragEvent,
         is_body?: boolean
     ) => boolean;
+    is_mobile: boolean;
 };
 
 export type TApiHelpersStore = {

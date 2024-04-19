@@ -32,9 +32,10 @@ const Toolbar = observer(() => {
                             button_text={localize('Quick strategy')}
                         />
                     )}
-                    <WorkspaceGroup />
+                    {!is_mobile && <WorkspaceGroup />}
                 </div>
             </div>
+            {is_mobile && <WorkspaceGroup />}
             <Dialog
                 portal_element_id='modal_root'
                 title={localize('Are you sure?')}

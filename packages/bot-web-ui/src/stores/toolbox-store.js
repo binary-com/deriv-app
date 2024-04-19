@@ -98,7 +98,7 @@ export default class ToolboxStore {
 
             if (Math.round(block_canvas_rect?.left) <= toolbox_width) {
                 const scroll_distance = this.core.ui.is_mobile
-                    ? toolbox_width - block_canvas_rect.left + 20
+                    ? toolbox_width - block_canvas_rect.left + 50
                     : toolbox_width - block_canvas_rect.left + 36;
                 scrollWorkspace(workspace, scroll_distance, true, false);
             }
