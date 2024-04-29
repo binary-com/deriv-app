@@ -10,7 +10,7 @@ import {
     TSocketResponseData,
     TSocketSubscribableEndpointNames,
 } from '../types';
-import { hashObject } from './utils';
+import { ObjectUtils } from '@deriv-com/utils';
 
 type TSendFunction = <T extends TSocketEndpointNames>(
     name: T,
@@ -138,7 +138,7 @@ const APIProvider = ({ children }: PropsWithChildren<TAPIProviderProps>) => {
     };
 
     const subscribe: TSubscribeFunction = async (name, payload) => {
-        const id = await hashObject({ name, payload });
+        const id = await ObjectUtils.hashObject({ name, payload });
         const matchingSubscription = subscriptionsRef.current?.[id];
         if (matchingSubscription) return { id, subscription: matchingSubscription };
 
