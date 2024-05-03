@@ -1,6 +1,8 @@
-import React, { Fragment, useReducer, useRef } from 'react';
+import React, { Fragment, useEffect, useReducer, useRef } from 'react';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { useCloseDerivAccount } from '@deriv/api-v2';
 import { Button, Checkbox, Text, TextArea } from '@deriv-com/ui';
+import { TAccountClosureError } from 'src/types';
 import {
     accountClosureReasons,
     CHARACTER_LIMIT_FOR_CLOSING_ACCOUNT,
@@ -8,14 +10,27 @@ import {
     TAccountClosureFormActions,
 } from '../../constants';
 import {
+    getAccountClosureReasons,
     getAccountClosureValidationSchema,
     TAccountClosureReasonsFormValues,
     validateAccountClosure,
-} from '../../utils/accountClosureUtils';
+} from '../../utils';
 import { AccountClosureConfirmModal } from './AccountClosureConfirmModal';
 import { AccountClosureSuccessModal } from './AccountClosureSuccessModal';
+import { AccountClosureWarningModal } from './AccountClosureWarningModal';
 
 export const AccountClosureForm = ({ handleOnBack }: { handleOnBack: () => void }) => {
+    const { error, isError, isSuccess, mutate } = useCloseDerivAccount();
+
+    useEffect(() => {
+        if (isError) {
+            dispatch({ payload: isError, type: 'displayWarningModal' });
+        }
+        if (isSuccess) {
+            dispatch({ payload: isSuccess, type: 'displaySuccessModal' });
+        }
+    }, [isError, isSuccess]);
+
     const reasons = accountClosureReasons();
     const validationSchema = getAccountClosureValidationSchema();
 
@@ -30,6 +45,7 @@ export const AccountClosureForm = ({ handleOnBack }: { handleOnBack: () => void 
         disableCheckbox: false,
         displayConfirmModal: false,
         displaySuccessModal: false,
+        displayWarningModal: false,
         remainingCharacters: CHARACTER_LIMIT_FOR_CLOSING_ACCOUNT,
     };
 
@@ -53,6 +69,10 @@ export const AccountClosureForm = ({ handleOnBack }: { handleOnBack: () => void 
             }
             case 'displaySuccessModal': {
                 return { ...state, displaySuccessModal: !state.displaySuccessModal };
+            }
+            case 'displayWarningModal': {
+                console.log('Setting state');
+                return { ...state, displayWarningModal: !state.displayWarningModal };
             }
             default:
                 return state;
@@ -153,14 +173,25 @@ export const AccountClosureForm = ({ handleOnBack }: { handleOnBack: () => void 
             <AccountClosureConfirmModal
                 handleCancel={() => dispatch({ payload: false, type: 'displayConfirmModal' })}
                 handleSubmit={() => {
+                    mutate({
+                        payload: {
+                            reason: getAccountClosureReasons(
+                                formRef?.current?.values as TAccountClosureReasonsFormValues
+                            ),
+                        },
+                    });
                     dispatch({ payload: false, type: 'displayConfirmModal' });
-                    dispatch({ payload: true, type: 'displaySuccessModal' });
                 }}
                 isModalOpen={state.displayConfirmModal}
             />
             <AccountClosureSuccessModal
                 handleClose={() => dispatch({ payload: false, type: 'displaySuccessModal' })}
                 isModalOpen={state.displaySuccessModal}
+            />
+            <AccountClosureWarningModal
+                error={error?.error as TAccountClosureError}
+                handleClose={() => dispatch({ payload: false, type: 'displayWarningModal' })}
+                isModalOpen={state.displayWarningModal}
             />
         </Fragment>
     );

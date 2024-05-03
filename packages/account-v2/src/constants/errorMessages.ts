@@ -14,6 +14,14 @@ export const API_ERROR_CODES = {
         message: 'Sorry, an internal error occurred. Hit the above checkbox to try again.',
     },
     invalidOTP: { code: 'InvalidOTP', message: "That's not the right code. Please try again." },
+    isInaccessibleMT5: {
+        code: 'MT5AccountInaccessible',
+        message: 'Inaccessible MT5 account(s)',
+    },
+    pendingCondition: {
+        code: 'AccountHasPendingConditions',
+        message: 'Action required',
+    },
 } as const;
 
 const documentRejectedMessage = 'We were unable to verify the identity document with the details provided.';

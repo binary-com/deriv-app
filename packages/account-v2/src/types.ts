@@ -1,4 +1,10 @@
-import { useGetAccountStatus, useKycAuthStatus, useSettings } from '@deriv/api-v2';
+import {
+    useAllAccountsList,
+    useCloseDerivAccount,
+    useGetAccountStatus,
+    useKycAuthStatus,
+    useSettings,
+} from '@deriv/api-v2';
 import { CurrencyConstants } from '@deriv-com/utils';
 import {
     AUTH_STATUS_CODES,
@@ -77,3 +83,13 @@ export type TAccountLimitValues = {
 export type TCurrency = CurrencyConstants.Currency;
 
 export type TProofOfOwnershipErrors = Record<TPaymentMethod, { files?: string[]; paymentMethodIdentifier?: string }[]>;
+
+export type TAccountClosureError = NonNullable<ReturnType<typeof useCloseDerivAccount>['error']>['error'] & {
+    details: {
+        [key: string]: unknown;
+    };
+};
+
+export type TAccountList = Exclude<ReturnType<typeof useAllAccountsList>['data'], undefined>;
+
+export type TDTraderAccountDetails = TAccountList['dtrade'];

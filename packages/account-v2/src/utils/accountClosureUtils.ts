@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { TDTraderAccountDetails } from 'src/types';
 import { accountClosureReasons } from '../constants';
 
 export const getAccountClosureValidationSchema = () => {
@@ -76,4 +77,17 @@ export const getAccountClosureReasons = (values: TAccountClosureReasonsFormValue
         })
         .join(',')
         .replace(/(\r\n|\n|\r)/gm, ' ');
+};
+
+export const getDTraderPendingAccountDetails = (accountDetails: TDTraderAccountDetails) => {
+    if (!accountDetails?.length) {
+        return [];
+    }
+    return accountDetails
+        .filter(account => account.broker !== 'VRTC')
+        .map(account => ({
+            balance: account.display_balance,
+            currency: account.currency,
+            loginId: account.loginid,
+        }));
 };

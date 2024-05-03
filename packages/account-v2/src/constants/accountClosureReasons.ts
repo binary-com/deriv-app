@@ -58,5 +58,6 @@ export const CHARACTER_LIMIT_FOR_CLOSING_ACCOUNT = 110;
 export type TAccountClosureFormActions =
     | { payload: boolean; type: 'displayConfirmModal' }
     | { payload: boolean; type: 'displaySuccessModal' }
+    | { payload: boolean; type: 'displayWarningModal' }
     | { payload: TAccountClosureReasonsFormValues; type: 'disableCheckbox' }
     | { payload: TAccountClosureReasonsFormValues; type: 'remainingCharacters' };
