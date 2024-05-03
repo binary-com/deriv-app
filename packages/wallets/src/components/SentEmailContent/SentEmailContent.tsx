@@ -40,7 +40,7 @@ const SentEmailContent: FC<SentEmailContentProps> = ({ description, isInvestorPa
     const { data: activeWallet } = useActiveWalletAccount();
 
     const mt5ResetType = isInvestorPassword
-        ? 'trading_platform_investor_password_reset'
+        ? 'trading_platform_investor_password_resetx'
         : 'trading_platform_mt5_password_reset';
 
     return (
