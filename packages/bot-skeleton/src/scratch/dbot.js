@@ -247,28 +247,34 @@ class DBot {
      * JavaScript code that's fed to the interpreter.
      */
     runBot() {
-        if (api_base.is_stopping) return;
+        if (api_base.is_stopping) return Promise.reject();
 
-        try {
-            api_base.is_stopping = false;
-            const code = this.generateCode();
+        return new Promise((resolve, reject) => {
+            try {
+                api_base.is_stopping = false;
+                const code = this.generateCode();
 
-            if (!this.interpreter.bot.tradeEngine.checkTicksPromiseExists()) this.interpreter = Interpreter();
+                if (!this.interpreter.bot.tradeEngine.checkTicksPromiseExists()) this.interpreter = Interpreter();
 
-            this.is_bot_running = true;
+                this.is_bot_running = true;
 
-            api_base.setIsRunning(true);
-            this.interpreter.run(code).catch(error => {
+                api_base.setIsRunning(true);
+                // Here is should say the bot is started since the all the pre checks and all the other checks are done
+
+                this.interpreter.run(code).catch(error => {
+                    globalObserver.emit('Error', error);
+                    this.stopBot();
+                });
+                resolve();
+            } catch (error) {
                 globalObserver.emit('Error', error);
-                this.stopBot();
-            });
-        } catch (error) {
-            globalObserver.emit('Error', error);
 
-            if (this.interpreter) {
-                this.stopBot();
+                if (this.interpreter) {
+                    this.stopBot();
+                }
+                reject(error);
             }
-        }
+        });
     }
 
     /**

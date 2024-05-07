@@ -52,7 +52,7 @@ const TradeAnimation = observer(({ className, should_show_overlay }: TTradeAnima
 
     let progress_status = contract_stage - (is_purchase_sent || is_purchase_received ? 2 : 3);
 
-    if (progress_status >= 0) {
+    if (progress_status >= 1) {
         if (progress_status < status_classes.length) {
             status_classes[progress_status] = 'active';
         }
@@ -61,7 +61,7 @@ const TradeAnimation = observer(({ className, should_show_overlay }: TTradeAnima
             progress_status += 1;
         }
 
-        for (let i = 0; i < progress_status; i++) {
+        for (let i = 0; i < progress_status - 1; i++) {
             status_classes[i] = 'completed';
         }
     }
@@ -97,7 +97,7 @@ const TradeAnimation = observer(({ className, should_show_overlay }: TTradeAnima
             />
             <div
                 className={classNames('animation__container', className, {
-                    'animation--running': contract_stage > 0,
+                    'animation--running': contract_stage > 1,
                     'animation--completed': show_overlay,
                 })}
             >

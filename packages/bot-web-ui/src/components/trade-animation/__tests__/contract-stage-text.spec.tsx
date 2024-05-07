@@ -6,6 +6,7 @@ import ContractStageText from '../contract-stage-text';
 const stageTextMapping = Object.freeze({
     NOT_RUNNING: 'Bot is not running',
     STARTING: 'Bot is starting',
+    STARTED: 'Seeking for contract',
     PURCHASE_SENT: 'Buying contract',
     PURCHASE_RECEIVED: 'Contract bought',
     IS_STOPPING: 'Bot is stopping',
