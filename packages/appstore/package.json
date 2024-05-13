@@ -9,7 +9,7 @@
     },
     "scripts": {
         "analyze": "webpack-bundle-analyzer --no-open -m static -r analyzed.html stats.json ./dist && webpack-bundle-analyzer -m json stats.json ./dist",
-        "build": "rimraf dist && NODE_OPTIONS='-r ts-node/register' webpack --progress --profile --json > stats.json ",
+        "build": "rimraf dist && NODE_OPTIONS='-r ts-node/register' webpack --progress",
         "build:travis": "rimraf dist && webpack",
         "serve": "rimraf dist && concurrently \"cross-env BUILD_MODE='serve' NODE_OPTIONS='-r ts-node/register' webpack --progress --watch\" \"tsc -w --noEmit --preserveWatchOutput\"",
         "start": "rimraf dist && npm run test && npm run serve",

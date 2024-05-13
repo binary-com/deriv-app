@@ -138,6 +138,7 @@ module.exports = function (env) {
                         },
                     ],
                 },
+
                 {
                     test: /\.svg$/,
                     exclude: [/node_modules/, path.resolve('../', 'wallets')],
@@ -146,6 +147,14 @@ module.exports = function (env) {
                     generator: {
                         filename: 'appstore/public/[name].[contenthash][ext]',
                     },
+                },
+                {
+                    test: /\.(png|jpe?g|gif)$/i,
+                    use: [
+                        {
+                            loader: 'file-loader',
+                        },
+                    ],
                 },
                 {
                     test: /\.svg$/,

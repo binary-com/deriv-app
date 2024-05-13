@@ -4,7 +4,7 @@ import IcDocumentNameMismatch from '../Assets/ic-document-name-mismatch.svg';
 import IcDocumentAddressMismatch from '../Assets/ic-document-address-mismatch.svg';
 import Ic6MonthsIssuedDocument from '../Assets/ic-6-month-issued-document.svg';
 import Ic12MonthsIssuedDocument from '../Assets/ic-12-months-expiry.svg';
-import IcBlurryDocument from '../Assets/ic-blurry-document.svg';
+import IcBlurryDocument from '../Assets/ic-blurry-document.png';
 import IcCroppedDocument from '../Assets/ic-cropped-document.svg';
 import IcEnvelope from '../Assets/ic-envelop.svg';
 

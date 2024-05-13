@@ -139,6 +139,14 @@ module.exports = function (env) {
                     include: /public\//,
                     use: svg_loaders,
                 },
+                {
+                    test: /\.(png|jpe?g|gif)$/i,
+                    use: [
+                        {
+                            loader: 'file-loader',
+                        },
+                    ],
+                },
             ],
         },
         optimization: {

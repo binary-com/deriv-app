@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { DatePicker, Divider, Dropzone, FlowTextField, useFlow, WalletText } from '../../../../../../components';
 import DrivingLicenseCardBack from '../../../../../../public/images/accounts/document-back.svg';
-import DrivingLicenseCardFront from '../../../../../../public/images/accounts/driving-license-front.svg';
+import DrivingLicenseCardFront from '../../../../../../public/images/accounts/driving-license-front.png';
 import { documentRequiredValidator, expiryDateValidator } from '../../../../validations';
 import { DocumentRuleHints } from '../DocumentRuleHints';
 import './DrivingLicenseDocumentUpload.scss';

@@ -4,6 +4,7 @@ module.exports = {
     ...baseConfigForPackages,
     moduleNameMapper: {
         '\\.s(c|a)ss$': '<rootDir>/../../__mocks__/styleMock.js',
+        '\\.(jpg|jpeg|png)$': '<rootDir>/../../__mocks__/fileMock.js',
         '^.+\\.svg$': '<rootDir>/../../__mocks__/styleMock.js',
         '^Assets/(.*)$': '<rootDir>/src/Assets/$1',
         '^Components/(.*)$': '<rootDir>/src/Components/$1',

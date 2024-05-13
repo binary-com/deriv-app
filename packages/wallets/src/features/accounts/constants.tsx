@@ -1,5 +1,5 @@
 import Ic12MonthsIssuedDocument from '../../public/images/accounts/ic-12-months-expiry.svg';
-import IcBlurryDocument from '../../public/images/accounts/ic-blurry-document.svg';
+import IcBlurryDocument from '../../public/images/accounts/ic-blurry-document.png';
 import IcCroppedDocument from '../../public/images/accounts/ic-cropped-document.svg';
 import IcDocumentAddressMismatch from '../../public/images/accounts/ic-document-address-mismatch.svg';
 import IcDocumentNameMismatch from '../../public/images/accounts/ic-document-name-mismatch.svg';

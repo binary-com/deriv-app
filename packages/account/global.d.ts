@@ -1,3 +1,5 @@
+declare module '*.png';
+
 declare module '@binary-com/binary-document-uploader' {
     import { DocumentUploadRequest } from '@deriv/api-types';
 
