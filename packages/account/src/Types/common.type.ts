@@ -287,3 +287,73 @@ export type TQuestion = {
     answer_options: { text: string; value: string }[];
     field_type?: string;
 };
+
+export type KycAuthStatus = {
+    /**
+     * POA authentication status details.
+     */
+    address: {
+        /**
+         * Current POA status.
+         */
+        status?: 'none' | 'pending' | 'rejected' | 'verified' | 'expired';
+    };
+    /**
+     * POI authentication status details.
+     */
+    identity: {
+        /**
+         * Available services for the next POI attempt.
+         */
+        available_services?: string[];
+        /**
+         * Details on the rejected POI attempt.
+         */
+        last_rejected?: {
+            /**
+             * Document type of the rejected POI attempt (IDV only).
+             */
+            document_type?: null | string;
+            /**
+             * Reason(s) for the rejected POI attempt.
+             */
+            rejected_reasons?: string[];
+            /**
+             * Indicate if the verification report was returned by the provider (IDV only).
+             */
+            report_available?: 0 | 1;
+        };
+        /**
+         * Service used for the current POI status.
+         */
+        service?: 'none' | 'idv' | 'onfido' | 'manual';
+        /**
+         * Current POI status.
+         */
+        status?: 'none' | 'pending' | 'rejected' | 'verified' | 'expired' | 'suspected';
+        /**
+         * Supported documents per service.
+         */
+        supported_documents?: {
+            idv?: {
+                [k: string]: {
+                    additional?: {
+                        display_name?: string;
+                        format?: string;
+                        [k: string]: unknown;
+                    };
+                    display_name?: string;
+                    format?: string;
+                    [k: string]: unknown;
+                };
+            };
+            onfido?: {
+                [k: string]: {
+                    display_name?: string;
+                    [k: string]: unknown;
+                };
+            };
+            [k: string]: unknown;
+        };
+    };
+};

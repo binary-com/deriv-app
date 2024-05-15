@@ -73,7 +73,7 @@
     "dependencies": {
         "@datadog/browser-logs": "^5.11.0",
         "@deriv/api": "^1.0.0",
-        "@deriv/api-types": "^1.0.172",
+        "@deriv/api-types": "^1.0.478",
         "@deriv/bot-skeleton": "^1.0.0",
         "@deriv/components": "^1.0.0",
         "@deriv/deriv-charts": "^2.1.15",

@@ -225,81 +225,10 @@ import type {
     VerifyEmailCellxpertResponse,
     VerifyEmailRequest,
     VerifyEmailResponse,
+    KYCAuthenticationStatusRequest,
+    KYCAuthenticationStatusResponse,
 } from '@deriv/api-types';
 import type { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
-
-/**
- * Proof of Identity (POI) and Proof of Address (POA) authentication status details.
- */
-type KycAuthStatus = {
-    /**
-     * POA authentication status details.
-     */
-    address: {
-        /**
-         * Current POA status.
-         */
-        status?: 'none' | 'pending' | 'rejected' | 'verified' | 'expired';
-    };
-    /**
-     * POI authentication status details.
-     */
-    identity: {
-        /**
-         * Available services for the next POI attempt.
-         */
-        available_services?: string[];
-        /**
-         * Details on the rejected POI attempt.
-         */
-        last_rejected?: {
-            /**
-             * Document type of the rejected POI attempt (IDV only).
-             */
-            document_type?: null | string;
-            /**
-             * Reason(s) for the rejected POI attempt.
-             */
-            rejected_reasons?: string[];
-            /**
-             * Indicate if the verification report was returned by the provider (IDV only).
-             */
-            report_available?: 0 | 1;
-        };
-        /**
-         * Service used for the current POI status.
-         */
-        service?: 'none' | 'idv' | 'onfido' | 'manual';
-        /**
-         * Current POI status.
-         */
-        status?: 'none' | 'pending' | 'rejected' | 'verified' | 'expired' | 'suspected';
-        /**
-         * Supported documents per service.
-         */
-        supported_documents?: {
-            idv?: {
-                [k: string]: {
-                    additional?: {
-                        display_name?: string;
-                        format?: string;
-                        [k: string]: unknown;
-                    };
-                    display_name?: string;
-                    format?: string;
-                    [k: string]: unknown;
-                };
-            };
-            onfido?: {
-                [k: string]: {
-                    display_name?: string;
-                    [k: string]: unknown;
-                };
-            };
-            [k: string]: unknown;
-        };
-    };
-};
 
 type TPrivateSocketEndpoints = {
     available_accounts: {
@@ -2086,66 +2015,6 @@ type TPrivateSocketEndpoints = {
         req_id?: number;
         [k: string]: unknown;
     };
-    kyc_auth_status: {
-        request: {
-            /**
-             * Must be `1`
-             */
-            kyc_auth_status: 1;
-            /**
-             * The country for which service availability is being verified, 2-letter country code
-             */
-            country?: string;
-            /**
-             * Indicates which landing companies to get the KYC authentication status for.
-             */
-            landing_companies?: (
-                | 'iom'
-                | 'malta'
-                | 'maltainvest'
-                | 'svg'
-                | 'virtual'
-                | 'vanuatu'
-                | 'labuan'
-                | 'samoa'
-                | 'samoa-virtual'
-                | 'bvi'
-                | 'dsl'
-            )[];
-            /**
-             * [Optional] The login id of the user. If left unspecified, it defaults to the initial authorized token's login id.
-             */
-            loginid?: string;
-            /**
-             * [Optional] Used to pass data through the websocket, which may be retrieved via the `echo_req` output field.
-             */
-            passthrough?: {
-                [k: string]: unknown;
-            };
-            /**
-             * [Optional] Used to map request to response.
-             */
-            req_id?: number;
-        };
-        response: {
-            kyc_auth_status?: KycAuthStatus;
-            /**
-             * Echo of the request made.
-             */
-            echo_req: {
-                [k: string]: unknown;
-            };
-            /**
-             * Action name of the request made.
-             */
-            msg_type: 'kyc_auth_status';
-            /**
-             * Optional field sent in request to map to response, present only when request contains `req_id`.
-             */
-            req_id?: number;
-            [k: string]: unknown;
-        };
-    };
 };
 
 // TODO: remove these mock passkeys types after implementing them inside api-types
@@ -2377,6 +2246,10 @@ type TSocketEndpoints = {
     identity_verification_document_add: {
         request: IdentityVerificationAddDocumentRequest;
         response: IdentityVerificationAddDocumentResponse;
+    };
+    kyc_auth_status: {
+        request: KYCAuthenticationStatusRequest;
+        response: KYCAuthenticationStatusResponse;
     };
     landing_company_details: {
         request: LandingCompanyDetailsRequest;
