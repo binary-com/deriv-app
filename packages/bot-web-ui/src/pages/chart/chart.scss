@@ -23,7 +23,7 @@
                 &.ciq-disabled {
                     display: none;
                 }
-                @include mobile {
+                @include mobile-tablet-mix {
                     min-width: 17rem;
                     max-width: 26rem;
                     width: auto;
@@ -61,7 +61,7 @@
         .sc-toolbar-widget {
             transition: transform 0.25s ease;
 
-            @include mobile {
+            @include mobile-tablet-mix {
                 background: transparent;
                 border-width: 0;
                 bottom: 20.8vh;

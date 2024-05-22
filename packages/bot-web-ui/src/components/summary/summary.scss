@@ -3,6 +3,7 @@
     align-items: center;
     flex-direction: column;
     background-color: var(--general-section-2);
+    width: 100%;
     @include desktop {
         height: inherit;
     }

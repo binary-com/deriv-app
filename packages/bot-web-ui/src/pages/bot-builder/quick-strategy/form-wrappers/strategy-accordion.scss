@@ -12,7 +12,7 @@
 
         padding-left: 0;
 
-        @include mobile {
+        @include mobile-tablet-mix {
             padding: 0.6rem 1rem;
         }
 
@@ -23,7 +23,7 @@
             border-bottom: none;
             padding: 0.6rem 0;
 
-            @include mobile {
+            @include mobile-tablet-mix {
                 padding: 0.6rem 0 0.6rem 1rem;
             }
         }
@@ -34,7 +34,7 @@
         text-align: start;
         padding-left: 1rem;
 
-        @include mobile {
+        @include mobile-tablet-mix {
             width: 100%;
             padding-left: 0;
         }
@@ -61,7 +61,7 @@
             opacity: 1;
             max-height: fit-content;
 
-            @include mobile {
+            @include mobile-tablet-mix {
                 padding-left: 1rem;
             }
         }

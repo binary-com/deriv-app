@@ -9,7 +9,7 @@
     opacity: 0;
     transition: opacity 0.25s ease;
 
-    @include mobile {
+    @include mobile-tablet-mix {
         position: absolute;
 
         .platform-dropdown__list {
@@ -52,7 +52,7 @@
             color: var(--text-loss-danger);
         }
 
-        @include mobile {
+        @include mobile-tablet-mix {
             position: relative;
             padding: 1rem 0 0 1.3rem;
             text-align: center;
@@ -110,7 +110,7 @@
             &:not(.active):hover {
                 background: var(--state-hover);
             }
-            @include mobile {
+            @include mobile-tablet-mix {
                 width: 302px;
             }
         }

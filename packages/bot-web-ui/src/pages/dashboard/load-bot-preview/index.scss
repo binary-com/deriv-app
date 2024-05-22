@@ -11,7 +11,7 @@
         width: 100%;
 
         .dc-mobile-full-page-modal {
-            @include mobile {
+            @include mobile-tablet-mix {
                 width: 100%;
             }
 
@@ -24,7 +24,7 @@
         }
 
         & .dc-tabs {
-            @include mobile {
+            @include mobile-tablet-mix {
                 height: 100%;
                 display: unset;
                 flex: 1;
@@ -63,7 +63,7 @@
             }
         }
 
-        @include mobile {
+        @include mobile-tablet-mix {
             height: 100%;
             overflow: hidden;
             padding-inline-start: 0.5rem;
@@ -149,7 +149,7 @@
                 padding-top: 1.6rem;
             }
 
-            @include mobile {
+            @include mobile-tablet-mix {
                 height: 100%;
                 padding: 1.6rem;
             }
@@ -183,7 +183,7 @@
             flex-direction: column;
             position: relative;
 
-            @include mobile {
+            @include mobile-tablet-mix {
                 padding: 1.6rem;
                 height: calc(100% - 7.4rem); // - footer height
                 &--active {
@@ -192,7 +192,7 @@
             }
 
             &--listed {
-                @include mobile {
+                @include mobile-tablet-mix {
                     padding: 0;
                 }
             }
@@ -221,7 +221,7 @@
         @include flex-center;
         flex-direction: column;
 
-        @include mobile {
+        @include mobile-tablet-mix {
             border: dashed 0.2rem var(--border-normal);
             border-radius: $BORDER_RADIUS;
             margin: 1.6rem;
@@ -269,7 +269,7 @@
         padding: 1%;
     }
 
-    @include mobile {
+    @include mobile-tablet-mix {
         height: 100%;
         width: 100%;
         top: 0;
@@ -283,7 +283,7 @@
 }
 
 .dc-dialog {
-    @include mobile {
+    @include mobile-tablet-mix {
         &__wrapper--preview {
             top: 6.5rem;
 
@@ -374,14 +374,14 @@
         padding: 0 0.8rem;
         border-bottom: 1px solid var(--border-divider);
 
-        @include mobile {
+        @include mobile-tablet-mix {
             padding: 0;
         }
 
         &__label {
             padding: 0.8rem;
             width: 35%;
-            @include mobile {
+            @include mobile-tablet-mix {
                 width: 40%;
                 padding-inline-start: 0;
             }
@@ -389,7 +389,7 @@
         &__time-stamp {
             width: 20%;
             padding: 0.8rem;
-            @include mobile {
+            @include mobile-tablet-mix {
                 width: 25%;
                 padding-inline-end: 0;
             }
@@ -422,7 +422,7 @@
                 word-break: break-all;
             }
 
-            @include mobile {
+            @include mobile-tablet-mix {
                 width: 40%;
                 padding-inline-start: 0;
             }
@@ -431,7 +431,7 @@
         &__time-stamp {
             width: 20%;
             padding: 0.8rem;
-            @include mobile {
+            @include mobile-tablet-mix {
                 width: 25%;
             }
         }
@@ -458,7 +458,7 @@
                 }
             }
 
-            @include mobile {
+            @include mobile-tablet-mix {
                 width: 10%;
             }
 

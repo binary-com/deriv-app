@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import Icon from '../icon';
-import { isTabletDrawer } from '@deriv/shared';
+import { useStore } from '@deriv/stores';
 
 type TDrawer = {
     anchor?: string;
@@ -38,6 +38,8 @@ const Drawer = ({
     ...props
 }: React.PropsWithChildren<TDrawer>) => {
     const [is_open, setIsOpen] = React.useState(props.is_open);
+    const { ui } = useStore();
+    const { is_mobile } = ui;
 
     React.useEffect(() => {
         setIsOpen(props.is_open);
@@ -49,10 +51,6 @@ const Drawer = ({
             props.toggleDrawer(!is_open);
         }
     };
-
-    // Note: Cannot use isMobile from @deriv/shared due to dimension change error
-    // TODO: Maybe we can fix isMobile in @deriv/shared
-    const is_mobile = isTabletDrawer();
 
     return (
         <div

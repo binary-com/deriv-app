@@ -4,7 +4,7 @@
     height: var(--bot-content-height);
     top: 0;
 
-    @include mobile {
+    @include mobile-tablet-mix {
         width: 100%;
     }
 }

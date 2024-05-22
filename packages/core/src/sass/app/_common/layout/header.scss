@@ -184,7 +184,7 @@
         &--hidden {
             display: none;
         }
-        @include mobile {
+        @include mobile-tablet-mix {
             .acc-info__separator {
                 display: none;
             }
@@ -373,7 +373,7 @@
         margin-right: 0.8rem;
         vertical-align: middle;
     }
-    @include mobile {
+    @include mobile-tablet-mix {
         height: $MOBILE_HEADER_HEIGHT;
 
         .header__menu-left,

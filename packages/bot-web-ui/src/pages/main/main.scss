@@ -13,7 +13,7 @@
     width: 100%;
     height: calc(100vh - 9rem);
     padding: 1.6rem;
-    @include mobile {
+    @include mobile-tablet-mix {
         height: calc(100vh - 6rem);
         padding: 0;
     }
@@ -53,7 +53,7 @@
                 background: var(--general-section-1);
                 justify-content: start;
 
-                @include mobile {
+                @include mobile-tablet-mix {
                     overflow-x: auto;
                     overflow-y: hidden;
 
@@ -68,7 +68,7 @@
                 &--header {
                     &--main {
                         &__tabs {
-                            @include mobile {
+                            @include mobile-tablet-mix {
                                 width: 100%;
                                 overflow-x: auto;
                                 padding: 0.8rem 1.6rem 0;
@@ -78,14 +78,14 @@
                 }
 
                 &--border-bottom {
-                    @include mobile {
+                    @include mobile-tablet-mix {
                         border-bottom: 0;
                     }
                 }
             }
 
             &__content {
-                @include mobile {
+                @include mobile-tablet-mix {
                     width: 100%;
                     overflow-x: auto;
 
@@ -114,7 +114,7 @@
                         display: flex;
                         justify-content: space-between;
 
-                        @include mobile {
+                        @include mobile-tablet-mix {
                             flex-direction: column;
                             background-color: var(--general-section-1);
                         }
@@ -136,12 +136,18 @@
                     padding-inline-end: 0;
                     margin-inline-end: 0.8rem;
 
-                    @include mobile {
+                    @include mobile-tablet-mix {
                         margin-inline-end: 0.2rem;
                         // gave this -ve margin becaues we cannot
                         // overwrite the default core padding which
                         // will make the icon bigger
                         margin-top: -0.5rem;
+                    }
+                }
+
+                &__icon {
+                    @include mobile-tablet-mix {
+                        padding-top: 0.5rem;
                     }
                 }
             }
@@ -181,7 +187,7 @@
 }
 
 .bot-stopped-dialog {
-    @include mobile {
+    @include mobile-tablet-mix {
         padding: 2rem;
     }
 
@@ -204,7 +210,7 @@
             }
         }
 
-        @include mobile {
+        @include mobile-tablet-mix {
             &__footer {
                 flex-wrap: unset;
 
@@ -230,7 +236,7 @@
         width: 100%;
         transition: all 0.4s;
 
-        @include mobile {
+        @include mobile-tablet-mix {
             height: var(--tab-content-height-mobile);
             background: var(--general-main-1);
 
@@ -349,7 +355,7 @@
         .blocklyTrash {
             transition: all 0.4s;
 
-            @include mobile {
+            @include mobile-tablet-mix {
                 display: none;
             }
         }
@@ -369,7 +375,7 @@
         display: none;
     }
 
-    @include mobile {
+    @include mobile-tablet-mix {
         top: 5.6rem;
         inset-inline-start: 0;
         width: 100vw;
@@ -497,7 +503,7 @@
         &__left {
             margin: 0.3rem 0 0 1.2rem;
 
-            @include mobile {
+            @include mobile-tablet-mix {
                 margin: 0;
 
                 svg {

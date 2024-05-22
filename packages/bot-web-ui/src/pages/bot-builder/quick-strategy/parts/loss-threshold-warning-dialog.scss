@@ -14,19 +14,19 @@
             }
         }
         &__footer {
-            @include mobile {
+            @include mobile-tablet-mix {
                 display: flex;
                 width: 100%;
                 flex-wrap: unset;
             }
         }
         &__button:not(:last-child) {
-            @include mobile {
+            @include mobile-tablet-mix {
                 margin-right: 6px;
             }
         }
         &__button {
-            @include mobile {
+            @include mobile-tablet-mix {
                 margin-left: 6px;
             }
         }

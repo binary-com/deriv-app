@@ -47,7 +47,7 @@
         width: 35rem;
         background-color: var(--general-section-2);
 
-        @include mobile {
+        @include mobile-tablet-mix {
             margin: 0;
             position: fixed;
         }
@@ -132,7 +132,7 @@
         }
     }
     &__clear-button {
-        @include mobile {
+        @include mobile-tablet-mix {
             position: absolute !important;
             top: 0.5rem;
             right: 1.6rem;
@@ -223,7 +223,7 @@
         bottom: 0px;
         padding: 1.4rem;
         border-top: 2px solid var(--general-section-2);
-        @include mobile {
+        @include mobile-tablet-mix {
             position: absolute;
             width: 100%;
             bottom: 40px;
@@ -263,7 +263,7 @@
 }
 
 .limits__wrapper {
-    @include mobile {
+    @include mobile-tablet-mix {
         position: fixed;
         z-index: 5;
         width: 100%;
@@ -331,7 +331,7 @@
 }
 
 .dc-modal__container_statistics__modal {
-    @include mobile {
+    @include mobile-tablet-mix {
         width: 31.2rem !important;
     }
 
@@ -342,7 +342,7 @@
 
 .dc-dialog {
     &__button {
-        @include mobile {
+        @include mobile-tablet-mix {
             flex-basis: 100%;
             margin-left: unset;
         }

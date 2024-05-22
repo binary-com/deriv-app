@@ -3,7 +3,7 @@
 .dc-dialog__delete-strategy--delete {
     .dc-dialog {
         &__footer {
-            @include mobile {
+            @include mobile-tablet-mix {
                 flex-wrap: unset;
                 @include flex-center(flex-end, flex-start);
                 width: 100%;
