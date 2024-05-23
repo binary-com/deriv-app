@@ -100,10 +100,6 @@ const copyConfig = base => {
             to: 'tradershub',
         },
         {
-            from: path.resolve(__dirname, '../node_modules/@deriv/account-v2/dist/account-v2'),
-            to: 'account-v2',
-        },
-        {
             from: path.resolve(__dirname, '../node_modules/@deriv/cashier-v2/dist/cashier-v2'),
             to: 'cashier-v2',
         },

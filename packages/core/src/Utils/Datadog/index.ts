@@ -45,17 +45,7 @@ const getConfigValues = (environment: string) => {
  * @returns {void}
  * **/
 const initDatadog = (is_datadog_enabled: boolean) => {
-    if (is_datadog_enabled) {
-        if (window.DD_RUM) {
-            datadogRum.setTrackingConsent('granted');
-            return;
-        }
-    } else {
-        if (window.DD_RUM) {
-            datadogRum.setTrackingConsent('not-granted');
-        }
-        return;
-    }
+    if (!is_datadog_enabled) return;
     const DATADOG_APP_ID = process.env.DATADOG_APPLICATION_ID ?? '';
     const DATADOG_CLIENT_TOKEN = process.env.DATADOG_CLIENT_TOKEN ?? '';
     const isProduction = process.env.NODE_ENV === 'production';

@@ -127,7 +127,7 @@ const address_details_config: ({
 };
 
 const addressDetailsConfig = (
-    { states_list, upgrade_info, real_account_signup_target, residence, account_settings }: TAddressDetailsConfigProps,
+    { states_list, upgrade_info, real_account_signup_target, account_settings }: TAddressDetailsConfigProps,
     AddressDetails: React.Component
 ) => {
     const is_svg = upgrade_info?.can_upgrade_to === 'svg';

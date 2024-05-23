@@ -3,6 +3,7 @@ import { Modal } from '@deriv/components';
 import { useStore, observer } from '@deriv/stores';
 import { TRealWalletsUpgradeSteps } from 'Types';
 import WalletSteps from '../wallet_steps';
+import './desktop-real-wallets-upgrade.scss';
 
 const DesktopRealWalletsUpgrade = observer(({ wallet_upgrade_steps }: TRealWalletsUpgradeSteps) => {
     const { traders_hub } = useStore();
@@ -13,10 +14,10 @@ const DesktopRealWalletsUpgrade = observer(({ wallet_upgrade_steps }: TRealWalle
 
     return (
         <Modal
+            className='desktop-real-wallets-upgrade'
             is_open={is_real_wallets_upgrade_on}
             toggleModal={handleClose}
             height='734px'
-            width='1200px'
             should_header_stick_body={false}
             has_close_icon
             title=' '

@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Table, Text } from '@deriv/components';
+import { Table, Text } from '@deriv/components';
 import { isMobile } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { useP2PExchangeRate } from '@deriv/hooks';
 import { useStores } from 'Stores';
 import { buy_sell } from 'Constants/buy-sell';
-import { localize, Localize } from 'Components/i18next';
+import { Localize } from 'Components/i18next';
+import BuySellRowAction from 'Pages/buy-sell/buy-sell-row-action';
 import { generateEffectiveRate } from 'Utils/format-value';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
 import './advertiser-page-row.scss';
@@ -22,6 +23,8 @@ const AdvertiserPageRow = ({ row: advert }) => {
     } = useStore();
     const {
         effective_rate,
+        eligibility_status,
+        is_eligible,
         local_currency,
         max_order_amount_limit_display,
         min_order_amount_limit_display,
@@ -112,9 +115,13 @@ const AdvertiserPageRow = ({ row: advert }) => {
                     <Table.Cell />
                 ) : (
                     <Table.Cell className='advertiser-page-adverts__button'>
-                        <Button primary large onClick={onBuySellButtonClick} is_disabled={general_store.is_barred}>
-                            {is_buy_advert ? localize('Buy') : localize('Sell')} {currency}
-                        </Button>
+                        <BuySellRowAction
+                            account_currency={currency}
+                            eligibility_status={eligibility_status}
+                            is_buy_advert={is_buy_advert}
+                            is_eligible={is_eligible}
+                            onClick={onBuySellButtonClick}
+                        />
                     </Table.Cell>
                 )}
             </Table.Row>
@@ -148,9 +155,13 @@ const AdvertiserPageRow = ({ row: advert }) => {
                 <Table.Cell />
             ) : (
                 <Table.Cell className='advertiser-page-adverts__button'>
-                    <Button is_disabled={general_store.is_barred} onClick={onBuySellButtonClick} primary small>
-                        {is_buy_advert ? localize('Buy') : localize('Sell')} {currency}
-                    </Button>
+                    <BuySellRowAction
+                        account_currency={currency}
+                        eligibility_status={eligibility_status}
+                        is_buy_advert={is_buy_advert}
+                        is_eligible={is_eligible}
+                        onClick={onBuySellButtonClick}
+                    />
                 </Table.Cell>
             )}
         </Table.Row>

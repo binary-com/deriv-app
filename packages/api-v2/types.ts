@@ -1516,54 +1516,56 @@ type TPrivateSocketEndpoints = {
             req_id?: number;
         };
         response: {
-            /**
-             * ID of Trading account.
-             */
-            account_id?: string;
-            /**
-             * Account type.
-             */
-            account_type?: 'demo' | 'real' | 'all';
-            /**
-             * Agent Details.
-             */
-            agent?: null | string;
-            /**
-             * Balance of the Trading account.
-             */
-            balance?: number;
-            /**
-             * Currency of the Trading account.
-             */
-            currency?: string;
-            /**
-             * Account balance, formatted to appropriate decimal places.
-             */
-            display_balance?: string;
-            /**
-             * Account enabled status
-             */
-            enabled?: number;
-            /**
-             * Landing company shortcode of the Trading account.
-             */
-            landing_company_short?: 'bvi' | 'labuan' | 'malta' | 'maltainvest' | 'svg' | 'vanuatu' | 'seychelles';
-            /**
-             * Login name used to log in into Trading platform.
-             */
-            login?: string;
-            /**
-             * Market type.
-             */
-            market_type?: 'financial' | 'synthetic' | 'all';
-            /**
-             * Name of trading platform.
-             */
-            platform?: 'dxtrade' | 'ctrader';
-            /**
-             * Sub account type.
-             */
-            sub_account_type?: 'financial' | 'financial_stp' | 'swap_free';
+            trading_platform_new_account: {
+                /**
+                 * ID of Trading account.
+                 */
+                account_id?: string;
+                /**
+                 * Account type.
+                 */
+                account_type?: 'demo' | 'real' | 'all';
+                /**
+                 * Agent Details.
+                 */
+                agent?: null | string;
+                /**
+                 * Balance of the Trading account.
+                 */
+                balance?: number;
+                /**
+                 * Currency of the Trading account.
+                 */
+                currency?: string;
+                /**
+                 * Account balance, formatted to appropriate decimal places.
+                 */
+                display_balance?: string;
+                /**
+                 * Account enabled status
+                 */
+                enabled?: number;
+                /**
+                 * Landing company shortcode of the Trading account.
+                 */
+                landing_company_short?: 'bvi' | 'labuan' | 'malta' | 'maltainvest' | 'svg' | 'vanuatu' | 'seychelles';
+                /**
+                 * Login name used to log in into Trading platform.
+                 */
+                login?: string;
+                /**
+                 * Market type.
+                 */
+                market_type?: 'financial' | 'synthetic' | 'all';
+                /**
+                 * Name of trading platform.
+                 */
+                platform?: 'dxtrade' | 'ctrader';
+                /**
+                 * Sub account type.
+                 */
+                sub_account_type?: 'financial' | 'financial_stp' | 'swap_free';
+            };
         };
         /**
          * Echo of the request made.

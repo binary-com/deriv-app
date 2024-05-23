@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { localize, Localize } from '@deriv/translations';
 import { Text, Dialog } from '@deriv/components';
 import { isMobile, getAuthenticationStatusInfo, routes, Jurisdiction } from '@deriv/shared';
+import './failed-verification-modal.scss';
 
 type TFailedVerificationModal = {
     should_resubmit_poi: boolean;

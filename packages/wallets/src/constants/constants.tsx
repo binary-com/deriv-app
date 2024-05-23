@@ -11,21 +11,21 @@ import i18n from '../translations/i18n';
 
 export const optionsAndMultipliersContent = [
     {
-        description: i18n.t('Options and multipliers trading platform.'),
+        description: i18n.t('The options and multipliers trading platform.'),
         icon: <DerivProductDerivTraderBrandLightLogoHorizontalIcon height='48' width='48' />,
         redirect: '/',
         smallIcon: <DerivProductDerivTraderBrandLightLogoHorizontalIcon height='32' width='32' />,
         title: i18n.t('Deriv Trader'),
     },
     {
-        description: i18n.t('Automate your trading, no coding needed.'),
+        description: i18n.t('The ultimate bot trading platform.'),
         icon: <DerivProductDerivBotBrandLightLogoHorizontalIcon height='48' width='48' />,
         redirect: '/bot',
         smallIcon: <DerivProductDerivBotBrandLightLogoHorizontalIcon height='32' width='32' />,
         title: i18n.t('Deriv Bot'),
     },
     {
-        description: i18n.t('Our legacy options trading platform.'),
+        description: i18n.t('The legacy options trading platform.'),
         icon: <PartnersProductSmarttraderBrandLightLogoIcon height='48' width='48' />,
         isExternal: true,
         redirect: getUrlSmartTrader(),
@@ -33,7 +33,7 @@ export const optionsAndMultipliersContent = [
         title: i18n.t('SmartTrader'),
     },
     {
-        description: i18n.t('Our legacy automated trading platform.'),
+        description: i18n.t('The legacy bot trading platform.'),
         icon: <PartnersProductBinaryBotBrandLightLogoHorizontalIcon height='48' width='48' />,
         isExternal: true,
         redirect: getUrlBinaryBot(),
@@ -41,7 +41,7 @@ export const optionsAndMultipliersContent = [
         title: i18n.t('Binary Bot'),
     },
     {
-        description: i18n.t('Trade on the go with our mobile app.'),
+        description: i18n.t('The mobile trading app for multipliers.'),
         icon: <DerivProductDerivGoBrandLightLogoHorizontalIcon height='48' width='48' />,
         isExternal: true,
         redirect: getStaticUrl('/deriv-go'),

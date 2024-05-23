@@ -39,6 +39,11 @@ const MT5AccountAdded: FC<TProps> = ({ account, marketType, platform }) => {
 
     const isDemo = activeWallet?.is_virtual;
 
+    const displayBalance = useMemo(() => {
+        const account = mt5Accounts?.find(account => account.market_type === marketType);
+        return account?.display_balance;
+    }, [mt5Accounts, marketType]);
+
     const renderAccountSuccessButton = useCallback(
         (isTransferAllowed = false) => {
             if (isTransferAllowed) {
@@ -70,14 +75,14 @@ const MT5AccountAdded: FC<TProps> = ({ account, marketType, platform }) => {
         [hide, history, addedAccount?.loginid, isMobile]
     );
 
-    const renderMainContent = useMemo(() => {
-        const renderSuccessDescription = () => {
-            if (isDemo) {
-                return `Let's practise trading with ${activeWallet?.display_balance} virtual funds.`;
-            }
-            return `Transfer funds from your ${activeWallet?.wallet_currency_type} Wallet to your ${marketTypeTitle} ${landingCompanyName} account to start trading.`;
-        };
+    const renderSuccessDescription = useMemo(() => {
+        if (isDemo) {
+            return `Let's practise trading with ${displayBalance} virtual funds.`;
+        }
+        return `Transfer funds from your ${activeWallet?.wallet_currency_type} Wallet to your ${marketTypeTitle} ${landingCompanyName} account to start trading.`;
+    }, [activeWallet?.wallet_currency_type, displayBalance, isDemo, landingCompanyName, marketTypeTitle]);
 
+    const renderMainContent = useMemo(() => {
         if (!isSuccess) return null;
 
         if (!verificationStatus.is_not_applicable && !isPOIVerified && !isPOAVerified) {
@@ -87,9 +92,7 @@ const MT5AccountAdded: FC<TProps> = ({ account, marketType, platform }) => {
                         description={`We need a few minutes to review your documents before you can start trading with your ${marketTypeTitle} ${
                             isDemo ? ' demo' : landingCompanyName
                         } account. You’ll get an in-app notification as soon as this is done.`}
-                        displayBalance={
-                            mt5Accounts?.find(account => account.market_type === marketType)?.display_balance ?? '0.00'
-                        }
+                        displayBalance={displayBalance}
                         landingCompany={selectedJurisdiction}
                         marketType={marketType}
                         platform={platform}
@@ -105,9 +108,7 @@ const MT5AccountAdded: FC<TProps> = ({ account, marketType, platform }) => {
                         description={`We need 1-3 days to review your documents before you can start trading with your ${marketTypeTitle} ${
                             isDemo ? ' demo' : landingCompanyName
                         } account. You’ll get an email as soon as this is done.`}
-                        displayBalance={
-                            mt5Accounts?.find(account => account.market_type === marketType)?.display_balance ?? '0.00'
-                        }
+                        displayBalance={displayBalance}
                         landingCompany={selectedJurisdiction}
                         marketType={marketType}
                         platform={platform}
@@ -120,10 +121,8 @@ const MT5AccountAdded: FC<TProps> = ({ account, marketType, platform }) => {
 
         return (
             <CFDSuccess
-                description={renderSuccessDescription()}
-                displayBalance={
-                    mt5Accounts?.find(account => account.market_type === marketType)?.display_balance ?? '0.00'
-                }
+                description={renderSuccessDescription}
+                displayBalance={displayBalance}
                 landingCompany={selectedJurisdiction}
                 marketType={marketType}
                 platform={platform}
@@ -132,8 +131,7 @@ const MT5AccountAdded: FC<TProps> = ({ account, marketType, platform }) => {
             />
         );
     }, [
-        activeWallet?.display_balance,
-        activeWallet?.wallet_currency_type,
+        displayBalance,
         isDemo,
         isPOAVerified,
         isPOIVerified,
@@ -141,10 +139,10 @@ const MT5AccountAdded: FC<TProps> = ({ account, marketType, platform }) => {
         landingCompanyName,
         marketType,
         marketTypeTitle,
-        mt5Accounts,
         platform,
         poiService,
         renderAccountSuccessButton,
+        renderSuccessDescription,
         selectedJurisdiction,
         verificationStatus.is_not_applicable,
     ]);

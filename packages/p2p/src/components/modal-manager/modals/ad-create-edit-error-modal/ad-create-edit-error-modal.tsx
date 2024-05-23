@@ -10,9 +10,10 @@ import { generateErrorDialogBody, generateErrorDialogTitle } from 'Utils/adverts
 
 type TAdCreateEditErrorModalProps = {
     ad_type?: string;
+    onUpdateAd?: () => void;
 };
 
-const AdCreateEditErrorModal = ({ ad_type = ads.CREATE }: TAdCreateEditErrorModalProps) => {
+const AdCreateEditErrorModal = ({ ad_type = ads.CREATE, onUpdateAd }: TAdCreateEditErrorModalProps) => {
     const { my_ads_store } = useStores();
     const { hideModal, is_modal_open } = useModalManagerContext();
     const { api_error_message, edit_ad_form_error, error_code } = my_ads_store;
@@ -37,8 +38,15 @@ const AdCreateEditErrorModal = ({ ad_type = ads.CREATE }: TAdCreateEditErrorModa
             <Modal.Footer>
                 <Button
                     has_effect
-                    text={is_api_error ? localize('Update ad') : localize('Ok')}
-                    onClick={is_api_error ? hideModal : () => hideModal({ should_hide_all_modals: true })}
+                    text={is_api_error ? localize('Update ad') : localize('OK')}
+                    onClick={() => {
+                        if (is_api_error) {
+                            onUpdateAd?.();
+                            hideModal();
+                        } else {
+                            hideModal({ should_hide_all_modals: true });
+                        }
+                    }}
                     primary
                     large
                 />

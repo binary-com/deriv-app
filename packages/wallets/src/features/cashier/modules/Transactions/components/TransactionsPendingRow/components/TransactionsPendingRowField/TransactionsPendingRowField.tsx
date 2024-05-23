@@ -10,9 +10,9 @@ import './TransactionsPendingRowField.scss';
 type TProps = {
     className?: classNames.ArgumentArray[number];
     hint?: {
-        link: string;
+        link?: string;
         text: string;
-        tooltipAlignment: React.ComponentProps<typeof Tooltip>['alignment'];
+        tooltipAlignment?: React.ComponentProps<typeof Tooltip>['alignment'];
     };
     name: string;
     value: string;
@@ -28,13 +28,17 @@ const TransactionsPendingRowField: React.FC<TProps> = ({ className, hint, name, 
     const onValueClick = useCallback(() => {
         show(
             <WalletActionModal
-                actionButtonsOptions={[
-                    {
-                        isPrimary: true,
-                        onClick: () => window.open(hint?.link),
-                        text: 'View',
-                    },
-                ]}
+                actionButtonsOptions={
+                    hint?.link
+                        ? [
+                              {
+                                  isPrimary: true,
+                                  onClick: () => window.open(hint?.link),
+                                  text: 'View',
+                              },
+                          ]
+                        : []
+                }
                 description={hint?.text}
                 title='Transaction details'
             />,

@@ -33,7 +33,6 @@ const AccountSwitcher = observer(({ history, is_mobile, is_visible }) => {
         accounts,
         account_type,
         account_list,
-        country_standpoint,
         currency,
         is_eu,
         is_landing_company_loaded,
@@ -222,7 +221,6 @@ const AccountSwitcher = observer(({ history, is_mobile, is_visible }) => {
                                     balance={accounts[account.loginid].balance}
                                     currency={accounts[account.loginid].currency}
                                     currency_icon={`IcCurrency-${account.icon}`}
-                                    country_standpoint={country_standpoint}
                                     display_type={'currency'}
                                     has_balance={'balance' in accounts[account.loginid]}
                                     has_reset_balance={canResetBalance(accounts[account_loginid])}
@@ -269,7 +267,6 @@ const AccountSwitcher = observer(({ history, is_mobile, is_visible }) => {
                                                 balance={accounts[account.loginid].balance}
                                                 currency={accounts[account.loginid].currency}
                                                 currency_icon={`IcCurrency-${account.icon}`}
-                                                country_standpoint={country_standpoint}
                                                 display_type={'currency'}
                                                 has_balance={'balance' in accounts[account.loginid]}
                                                 is_disabled={account.is_disabled}
@@ -341,7 +338,6 @@ const AccountSwitcher = observer(({ history, is_mobile, is_visible }) => {
                                             balance={accounts[account.loginid].balance}
                                             currency={accounts[account.loginid].currency}
                                             currency_icon={`IcCurrency-${account.icon}`}
-                                            country_standpoint={country_standpoint}
                                             display_type={'currency'}
                                             has_balance={'balance' in accounts[account.loginid]}
                                             is_disabled={account.is_disabled}

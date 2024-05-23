@@ -12,7 +12,10 @@ import './WalletsAddMoreCarousel.scss';
 const WalletsAddMoreCarousel: React.FC = () => {
     const { isDesktop, isMobile } = useDevice();
     const { data: wallets, isLoading } = useAllWalletAccounts();
-    const { isLoading: isAuthorizeLoading } = useAuthorize();
+    const { isInitializing } = useAuthorize();
+
+    const showLoader = isInitializing || isLoading;
+
     const [walletsAddMoreEmblaRef, walletsAddMoreEmblaAPI] = useEmblaCarousel({
         align: 0,
         containScroll: 'trimSnaps',
@@ -53,11 +56,11 @@ const WalletsAddMoreCarousel: React.FC = () => {
             </div>
             <div className='wallets-add-more__carousel' data-testid='dt-wallets-add-more' ref={walletsAddMoreEmblaRef}>
                 <div className='wallets-add-more__carousel-wrapper' id='wallets_add_more_carousel_wrapper'>
-                    {(isLoading || isAuthorizeLoading) &&
+                    {showLoader &&
                         Array.from({ length: 8 }).map((_, idx) => (
                             <WalletsAddMoreLoader key={`wallets-add-more-loader-${idx}`} />
                         ))}
-                    {!(isLoading || isAuthorizeLoading) &&
+                    {!showLoader &&
                         wallets?.map(wallet => (
                             <WalletsAddMoreCard
                                 currency={wallet.currency}

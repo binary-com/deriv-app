@@ -1,13 +1,10 @@
 import React from 'react';
 import { Switch } from 'react-router-dom';
-import { PlatformContext } from '@deriv/shared';
 import { Localize } from '@deriv/translations';
 import getRoutesConfig from '../../Constants/routes-config';
 import RouteWithSubRoutes from './route-with-sub-routes.jsx';
 
 const BinaryRoutes = props => {
-    const { is_dashboard } = React.useContext(PlatformContext);
-
     return (
         <React.Suspense
             fallback={() => {
@@ -19,7 +16,7 @@ const BinaryRoutes = props => {
             }}
         >
             <Switch>
-                {getRoutesConfig({ is_dashboard }).map(route => (
+                {getRoutesConfig().map(route => (
                     <RouteWithSubRoutes key={route.path} {...route} {...props} />
                 ))}
             </Switch>

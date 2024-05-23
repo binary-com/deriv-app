@@ -8,51 +8,57 @@ jest.mock('@deriv/api-v2', () => ({
     useCashierFiatAddress: jest.fn(),
 }));
 
-describe('DepositFiat', () => {
-    beforeEach(() => {
-        (useAuthorize as jest.Mock).mockReturnValue({ isSuccess: true });
-    });
+jest.mock('../../../screens', () => ({
+    DepositErrorScreen: jest.fn(({ error }) => <div>MockedDepositErrorScreen - {error.message}</div>),
+}));
 
+describe('DepositFiat', () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
 
-    it('should render error screen if isError and depositError is a server error', () => {
-        const serverError = { code: '500', message: 'Server Error' };
-
-        (useCashierFiatAddress as jest.Mock).mockReturnValueOnce({
-            data: null,
-            error: { error: serverError },
-            isError: true,
+    it('should render loader while data is loading', () => {
+        (useAuthorize as jest.Mock).mockReturnValue({ isSuccess: false });
+        (useCashierFiatAddress as jest.Mock).mockReturnValue({
+            isLoading: true,
             mutate: jest.fn(),
         });
 
         render(<DepositFiat />);
-        expect(screen.getByText('Server Error')).toBeInTheDocument();
+
+        expect(screen.getByTestId('dt_wallets_loader')).toBeInTheDocument();
     });
 
-    it('should render loader initially', () => {
-        (useAuthorize as jest.Mock).mockReturnValueOnce({ isSuccess: false });
-        (useCashierFiatAddress as jest.Mock).mockReturnValueOnce({
-            data: null,
-            error: null,
-            isError: false,
+    it('should render error screen for fiat deposit error', () => {
+        (useAuthorize as jest.Mock).mockReturnValue({ isSuccess: true });
+        (useCashierFiatAddress as jest.Mock).mockReturnValue({
+            error: { error: { code: 'CashierForwardError', message: 'Fiat Error' } },
             mutate: jest.fn(),
         });
 
         render(<DepositFiat />);
+
+        expect(screen.getByText(/MockedDepositErrorScreen - Fiat Error/)).toBeInTheDocument();
+    });
+
+    it('should render loader if iframe is not yet loaded', () => {
+        (useAuthorize as jest.Mock).mockReturnValue({ isSuccess: true });
+        (useCashierFiatAddress as jest.Mock).mockReturnValue({
+            mutate: jest.fn(),
+        });
+        render(<DepositFiat />);
+
         expect(screen.getByTestId('dt_wallets_loader')).toBeInTheDocument();
         expect(screen.queryByTestId('dt_deposit-fiat-iframe')).not.toBeInTheDocument();
     });
 
     it('should display iframe correctly after onLoad event', () => {
+        (useAuthorize as jest.Mock).mockReturnValue({ isSuccess: true });
         (useCashierFiatAddress as jest.Mock).mockReturnValue({
             data: 'https://iframe_url',
-            error: null,
-            isError: false,
+            isLoading: false,
             mutate: jest.fn(),
         });
-
         render(<DepositFiat />);
 
         const iframe = screen.getByTestId('dt_deposit-fiat-iframe');

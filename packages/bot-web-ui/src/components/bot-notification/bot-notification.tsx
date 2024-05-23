@@ -3,6 +3,20 @@ import { toast } from 'react-toastify';
 import { notification_style, TAction, TNotificationContent, TNotificationStyle } from './bot-notification-utils';
 
 export const NotificationContent: React.FC<TNotificationContent> = ({ message, primary_action, closeToast }) => {
+    React.useEffect(() => {
+        const handleToastVisibility = () => {
+            if (document.visibilityState === 'hidden') {
+                toast.dismiss();
+            }
+        };
+
+        document.addEventListener('visibilitychange', handleToastVisibility);
+
+        return () => {
+            document.removeEventListener('visibilitychange', handleToastVisibility);
+        };
+    }, []);
+
     return (
         <div className='notification-content'>
             <div>{message}</div>

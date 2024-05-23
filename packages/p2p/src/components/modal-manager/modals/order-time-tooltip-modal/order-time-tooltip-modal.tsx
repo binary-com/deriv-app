@@ -19,7 +19,7 @@ const OrderTimeTooltipModal = ({ order_time_info_message }: TOrderTimeTooltipMod
             </Modal.Body>
             <Modal.Footer>
                 <Button primary large onClick={hideModal}>
-                    <Localize i18n_default_text='Ok' />
+                    <Localize i18n_default_text='OK' />
                 </Button>
             </Modal.Footer>
         </Modal>

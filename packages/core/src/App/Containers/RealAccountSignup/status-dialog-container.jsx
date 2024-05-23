@@ -23,7 +23,6 @@ const CloseIcon = ({ closeModal }) => (
 const StatusDialogContainer = observer(({ closeModal, currency, history, icon_size }) => {
     const { client } = useStore();
     const { landing_company_shortcode, is_fully_authenticated } = client;
-    const is_belgium_residence = client.residence === 'be'; // TODO: [deriv-eu] refactor this once more residence checks are required
     const closeModalAndOpenCashier = () => {
         closeModal();
         history.push(routes.cashier_deposit);
@@ -48,7 +47,6 @@ const StatusDialogContainer = observer(({ closeModal, currency, history, icon_si
     const getStatus = () =>
         getExperianResult({
             landing_company_shortcode,
-            is_belgium_residence,
         });
 
     return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Trans } from 'react-i18next';
 import { useActiveWalletAccount } from '@deriv/api-v2';
 import { WalletText } from '../Base';
@@ -8,12 +8,20 @@ import WalletListCardDropdown from '../WalletListCardDropdown/WalletListCardDrop
 import './WalletListCardDetails.scss';
 
 const WalletListCardDetails: React.FC = () => {
-    const { data: activeWallet, isLoading } = useActiveWalletAccount();
-    const isDemo = activeWallet?.is_virtual;
+    const { data: activeWallet } = useActiveWalletAccount();
+    const [isDemo, setIsDemo] = useState<boolean>(activeWallet?.is_virtual ?? false);
+
+    useEffect(() => {
+        // update isDemo only when receiving a new defined is_virtual value
+        // ignore intermediate undefined state when fetching / loading
+        if (typeof activeWallet?.is_virtual === 'boolean') {
+            setIsDemo(activeWallet.is_virtual);
+        }
+    }, [activeWallet?.is_virtual]);
 
     return (
         <div className='wallets-list-details__container'>
-            {isDemo && !isLoading ? (
+            {isDemo ? (
                 <WalletText>
                     <Trans defaults='USD Demo Wallet' />
                 </WalletText>

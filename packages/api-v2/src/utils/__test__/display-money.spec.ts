@@ -8,23 +8,23 @@ describe('displayMoney', () => {
         expect(display_money).toBe('1,234.56 USD');
     });
 
-    it('should work for en-US, USD; round decimals up', async () => {
+    it('should work for en-US, USD; add up zero decimals', async () => {
         const preferred_language = 'en-US';
-        const display_money = displayMoney(1234.56789, 'USD', { preferred_language });
+        const display_money = displayMoney(1234.5, 'USD', { preferred_language });
 
-        expect(display_money).toBe('1,234.57 USD');
+        expect(display_money).toBe('1,234.50 USD');
     });
 
     it('should work for de-GE, USD', async () => {
         const preferred_language = 'de-GE';
-        const display_money = displayMoney(1234.56123, 'USD', { preferred_language });
+        const display_money = displayMoney(1234.56, 'USD', { preferred_language });
 
         expect(display_money).toBe('1.234,56 USD');
     });
 
     it('should work for en-IN, USD', async () => {
         const preferred_language = 'en-IN';
-        const display_money = displayMoney(123456.781, 'USD', { preferred_language });
+        const display_money = displayMoney(123456.78, 'USD', { preferred_language });
 
         expect(display_money).toBe('1,23,456.78 USD');
     });
@@ -50,5 +50,12 @@ describe('displayMoney', () => {
         const display_money = displayMoney(1234, 'USD', { preferred_language });
 
         expect(display_money).toBe('1234 USD');
+    });
+
+    it('should work for en-US, USDt', async () => {
+        const preferred_language = 'en-US';
+        const display_money = displayMoney(1234.56789, 'USDt', { preferred_language });
+
+        expect(display_money).toBe('1,234.57 USDt');
     });
 });

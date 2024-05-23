@@ -2,21 +2,30 @@ import { THooks } from '../../../../../../types';
 import { validateCryptoAddress, validateCryptoInput, validateFiatInput } from '../withdrawalCryptoValidators';
 
 describe('withdrawalCryptoValidator', () => {
-    let mockValue = '2.5';
-    let mockIsClientVerified = true;
-    let mockCryptoAddress = 'jds93e9f8wefun9w8efrn98wefn09inf0';
+    let mockValue: string,
+        mockIsClientVerified: boolean,
+        mockCryptoAddress: string,
+        mockActiveWallet: THooks.ActiveWalletAccount,
+        mockFractionalDigits: { crypto: number; fiat: number },
+        mockRemainder: number,
+        mockMinimumWithdrawal: number;
 
-    const mockActiveWallet = {
-        balance: 10,
-        currency: 'BTC',
-    } as THooks.ActiveWalletAccount;
-
-    const mockFractionalDigits = {
-        crypto: 7,
-        fiat: 2,
-    };
-    const mockRemainder = 9;
-    const mockMinimumWithdrawal = 1;
+    beforeEach(() => {
+        mockValue = '2.5';
+        mockIsClientVerified = true;
+        mockCryptoAddress = 'jds93e9f8wefun9w8efrn98wefn09inf0';
+        //@ts-expect-error since this is a mock, we only need partial properties of data
+        mockActiveWallet = {
+            balance: 10,
+            currency: 'BTC',
+        };
+        mockFractionalDigits = {
+            crypto: 7,
+            fiat: 2,
+        };
+        mockRemainder = 9;
+        mockMinimumWithdrawal = 1;
+    });
 
     it('should check if no errors are returned when valid inputs are provided for crypto address', () => {
         const cryptoAddressMessages = validateCryptoAddress(mockCryptoAddress);
@@ -155,6 +164,30 @@ describe('withdrawalCryptoValidator', () => {
         );
 
         expect(cryptoAmountMessages).toEqual('Insufficient funds');
+    });
+
+    it('should return `balanceLessThanMinWithdrawalLimit` error', () => {
+        //@ts-expect-error since this is a mock, we only need partial properties of data
+        mockActiveWallet = {
+            balance: 0.3,
+            currency: 'BTC',
+            display_balance: '0.3000000 BTC',
+        };
+        mockValue = '0.2000000';
+        mockMinimumWithdrawal = 0.5;
+
+        const cryptoAmountMessages = validateCryptoInput(
+            mockActiveWallet,
+            mockFractionalDigits,
+            mockIsClientVerified,
+            mockRemainder,
+            mockValue,
+            mockMinimumWithdrawal
+        );
+
+        expect(cryptoAmountMessages).toEqual(
+            'Your balance (0.3000000 BTC) is less than the current minimum withdrawal allowed (0.5000000 BTC). Please top up your wallet to continue with your withdrawal.'
+        );
     });
 
     it('should return limit error if amount < min withdrawal limit but is still less than the balance for verified user', () => {

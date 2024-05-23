@@ -12,6 +12,10 @@
         }
     }
 
+    &__description {
+        max-width: 63.8rem;
+    }
+
     &__footer {
         position: sticky;
         bottom: 0;

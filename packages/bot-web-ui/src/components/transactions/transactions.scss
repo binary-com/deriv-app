@@ -77,7 +77,7 @@
                     text-align: start;
                 }
                 @if $item == 'profit' {
-                    text-align: end;
+                    text-align: start;
                 }
             }
         }

@@ -1,9 +1,15 @@
 import React from 'react';
+import { WalletText } from '../../Base';
 import './WalletsCarouselLoader.scss';
 
 const WalletsCarouselLoader = () => {
     return (
         <div className='wallets-carousel-loader'>
+            <div className='wallets-carousel-loader__title'>
+                <WalletText size='xl' weight='bold'>
+                    Trader&apos;s Hub
+                </WalletText>
+            </div>
             <div className='wallets-carousel-loader__card-container'>
                 {Array.from({ length: 3 }).map((_, idx) => (
                     <div

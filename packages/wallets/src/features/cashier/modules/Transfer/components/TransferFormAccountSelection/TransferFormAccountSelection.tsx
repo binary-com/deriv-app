@@ -18,7 +18,12 @@ type TProps = {
     toAccount?: TAccount;
 };
 
-const TitleLine = () => <div className='wallets-transfer-form-account-selection__title-line' />;
+const TitleLine = () => (
+    <div
+        className='wallets-transfer-form-account-selection__title-line'
+        data-testid='dt_wallets_transfer_form_account_selection_title_line'
+    />
+);
 
 const TransferFormAccountSelection: React.FC<TProps> = ({
     accountsList,
@@ -53,7 +58,11 @@ const TransferFormAccountSelection: React.FC<TProps> = ({
                         {label}
                     </WalletText>
                 </div>
-                <button className='wallets-transfer-form-account-selection__close-button' onClick={() => modal.hide()}>
+                <button
+                    className='wallets-transfer-form-account-selection__close-button'
+                    data-testid='dt_wallets_transfer_form_account_selection_close_button'
+                    onClick={() => modal.hide()}
+                >
                     <LegacyClose2pxIcon iconSize='xs' />
                 </button>
             </div>
@@ -73,6 +82,7 @@ const TransferFormAccountSelection: React.FC<TProps> = ({
                             className={classNames('wallets-transfer-form-account-selection__accounts-group', {
                                 'wallets-transfer-form-account-selection__accounts-group--divider': shouldShowDivider,
                             })}
+                            data-testid='dt_wallets_transfer_form_account_selection_accounts_group'
                             key={accountsGroupName}
                         >
                             <div className='wallets-transfer-form-account-selection__accounts-group-title'>
@@ -88,6 +98,7 @@ const TransferFormAccountSelection: React.FC<TProps> = ({
                                             'wallets-transfer-form-account-selection__account--selected':
                                                 account?.loginid === selectedAccount?.loginid,
                                         })}
+                                        data-testid='dt_wallets_transfer_form_account_selection_account'
                                         key={`account-selection-${account?.loginid}`}
                                         onClick={() => {
                                             onSelect(account);

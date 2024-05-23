@@ -44,7 +44,6 @@ describe('useStoreLinkedWalletsAccounts', () => {
             ctrader: [],
             derivez: [{ loginid: 'CR777', platform: 'derivez' }],
             dtrade: [{ loginid: 'CR456', platform: 'dtrade' }],
-            dwallet: [],
             dxtrade: [],
             mt5: [{ loginid: 'CR123', platform: 'mt5' }],
         });

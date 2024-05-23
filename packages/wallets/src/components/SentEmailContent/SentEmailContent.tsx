@@ -1,7 +1,6 @@
 import React, { FC, Fragment, useEffect, useState } from 'react';
 import { Trans } from 'react-i18next';
 import { useCountdown } from 'usehooks-ts';
-import { useActiveWalletAccount, useSettings, useVerifyEmail } from '@deriv/api-v2';
 import {
     DerivLightIcEmailSentIcon,
     DerivLightIcEmailSentPasskeyIcon,
@@ -12,9 +11,10 @@ import {
 } from '@deriv/quill-icons';
 import { PlatformDetails } from '../../features/cfd/constants';
 import useDevice from '../../hooks/useDevice';
+import useSendPasswordResetEmail from '../../hooks/useSendPasswordResetEmail';
 import { TPlatforms } from '../../types';
-import { platformPasswordResetRedirectLink } from '../../utils/cfd';
 import { WalletButton, WalletText } from '../Base';
+import { WalletError } from '../WalletError';
 import { WalletsActionScreen } from '../WalletsActionScreen';
 import './SentEmailContent.scss';
 
@@ -22,6 +22,7 @@ type SentEmailContentProps = {
     description?: string;
     isChangePassword?: boolean; // NOTE: This prop is ONLY used for rendering different email icons between either Change Password/Forgot password email modal
     isInvestorPassword?: boolean;
+    onErrorButtonClick?: () => void;
     platform?: TPlatforms.All;
 };
 
@@ -57,12 +58,12 @@ const SentEmailContent: FC<SentEmailContentProps> = ({
     description,
     isChangePassword = false,
     isInvestorPassword = false,
+    onErrorButtonClick,
     platform,
 }) => {
     const [shouldShowResendEmailReasons, setShouldShowResendEmailReasons] = useState(false);
     const [hasCountdownStarted, setHasCountdownStarted] = useState(false);
-    const { data } = useSettings();
-    const { mutate: verifyEmail } = useVerifyEmail();
+    const { error: resetPasswordError, sendEmail } = useSendPasswordResetEmail();
     const { isMobile } = useDevice();
     const mt5Platform = PlatformDetails.mt5.platform;
     const { title } = PlatformDetails[platform ?? mt5Platform];
@@ -80,29 +81,25 @@ const SentEmailContent: FC<SentEmailContentProps> = ({
         isChangePassword || isInvestorPassword ? DerivLightIcEmailSentIcon : DerivLightIcEmailSentPasskeyIcon;
 
     const resendEmail = () => {
-        if (data?.email) {
-            verifyEmail({
-                type: platform === mt5Platform ? mt5ResetType : 'trading_platform_dxtrade_password_reset',
-                url_parameters: {
-                    redirect_to: platformPasswordResetRedirectLink(platform ?? mt5Platform, activeWallet?.is_virtual),
-                },
-                verify_email: data?.email,
-            });
-            resetCountdown();
-            startCountdown();
-            setHasCountdownStarted(true);
-        }
+        sendEmail({ isInvestorPassword, platform });
+        resetCountdown();
+        startCountdown();
+        setHasCountdownStarted(true);
     };
 
     useEffect(() => {
         if (count === 0) setHasCountdownStarted(false);
     }, [count]);
 
-    const { data: activeWallet } = useActiveWalletAccount();
-
-    const mt5ResetType = isInvestorPassword
-        ? 'trading_platform_investor_password_reset'
-        : 'trading_platform_mt5_password_reset';
+    if (resetPasswordError) {
+        return (
+            <WalletError
+                errorMessage={resetPasswordError?.error.message}
+                onClick={onErrorButtonClick}
+                title={resetPasswordError?.error?.code}
+            />
+        );
+    }
 
     return (
         <div className='wallets-sent-email-content'>

@@ -15,20 +15,34 @@ type TMT5TradeLinkProps = {
 };
 
 const MT5TradeLink: FC<TMT5TradeLinkProps> = ({ app = 'linux', isDemo = false, platform, webtraderUrl = '' }) => {
-    const { data: ctraderToken } = useCtraderServiceToken();
+    const { mutateAsync: requestToken } = useCtraderServiceToken();
     const { t } = useTranslation();
     const { icon, link, text, title } = AppToContentMapper[app];
 
-    const onClickWebTerminal = () => {
+    const getCtraderToken = () => {
+        const cTraderTokenResponse = requestToken({
+            payload: { server: isDemo ? 'demo' : 'real', service: CFD_PLATFORMS.CTRADER },
+        });
+        return cTraderTokenResponse;
+    };
+
+    const onClickWebTerminal = async () => {
         const { isStaging, isTestLink } = getPlatformFromUrl();
-        let url;
+        let url, ctraderToken, ctraderURL;
         switch (platform) {
             case CFD_PLATFORMS.DXTRADE:
                 url = isDemo ? 'https://dx-demo.deriv.com' : 'https://dx.deriv.com';
                 break;
             case CFD_PLATFORMS.CTRADER:
-                url = isTestLink || isStaging ? 'https://ct-uat.deriv.com' : 'https://ct.deriv.com';
-                if (ctraderToken) url += `?token=${ctraderToken}`;
+                await getCtraderToken().then(res => {
+                    ctraderToken = res?.service_token?.ctrader?.token;
+                });
+                ctraderURL = isTestLink || isStaging ? 'https://ct-uat.deriv.com' : 'https://ct.deriv.com';
+                if (ctraderToken) {
+                    url = `${ctraderURL}/?token=${ctraderToken}`;
+                } else {
+                    url = ctraderURL;
+                }
                 break;
             default:
                 url = '';

@@ -30,14 +30,10 @@ describe('<CurrencySelector/>', () => {
         set_currency: false,
     };
 
-    const msg = 'Please note that you can only have 1 fiat account.';
-
-    const runCommonTests = (msg: string) => {
-        expect(screen.getByRole('heading', { name: /fiat currencies/i })).toBeInTheDocument();
+    const runCommonTests = () => {
         expect(screen.getByRole('radio', { name: /us dollar \(usd\)/i })).toBeInTheDocument();
         expect(screen.getByRole('radio', { name: /euro \(eur\)/i })).toBeInTheDocument();
 
-        expect(screen.getByRole('heading', { name: /cryptocurrencies/i })).toBeInTheDocument();
         expect(screen.getByRole('radio', { name: /tether erc20 \(eusdt\)/i })).toBeInTheDocument();
         expect(screen.getByRole('radio', { name: /usd coin \(usdc\)/i })).toBeInTheDocument();
 
@@ -49,7 +45,6 @@ describe('<CurrencySelector/>', () => {
         fireEvent.click(usd);
         expect(usd.checked).toEqual(true);
 
-        expect(screen.getByText(msg)).toBeInTheDocument();
         expect(screen.getByRole('button', { name: /next/i })).toBeEnabled();
     };
     const store = mockStore({
@@ -240,7 +235,7 @@ describe('<CurrencySelector/>', () => {
     it('should render Fiat currencies and submit the form', async () => {
         renderComponent({});
 
-        runCommonTests(msg);
+        runCommonTests();
         fireEvent.click(screen.getByRole('button', { name: /next/i }));
         await waitFor(() => {
             expect(mock_props.onSubmit).toHaveBeenCalled();
@@ -300,7 +295,7 @@ describe('<CurrencySelector/>', () => {
             },
         };
         renderComponent({ store_config: new_store });
-        runCommonTests(msg);
+        runCommonTests();
     });
 
     it('should render Fiat currencies when is_dxtrade_allowed,is_eu and is_mt5_allowed are true', () => {
@@ -316,7 +311,7 @@ describe('<CurrencySelector/>', () => {
             },
         };
         renderComponent({ store_config: new_store });
-        runCommonTests(msg);
+        runCommonTests();
     });
 
     it('should render Fiat currencies when is_mt5_allowed and is_eu are true', () => {
@@ -331,7 +326,7 @@ describe('<CurrencySelector/>', () => {
             },
         };
         renderComponent({ store_config: new_store });
-        runCommonTests(msg);
+        runCommonTests();
     });
 
     it('should render Fiat currencies when is_mt5_allowed is true', () => {
@@ -343,7 +338,7 @@ describe('<CurrencySelector/>', () => {
             },
         };
         renderComponent({ store_config: new_store });
-        runCommonTests(msg);
+        runCommonTests();
     });
 
     it('should render Cryptocurrencies and submit the form ', async () => {
@@ -352,7 +347,6 @@ describe('<CurrencySelector/>', () => {
             set_currency: true,
         };
         renderComponent({ props: new_props });
-        expect(screen.getByRole('heading', { name: /cryptocurrencies/i })).toBeInTheDocument();
         expect(screen.getByRole('radio', { name: /tether erc20 \(eusdt\)/i })).toBeInTheDocument();
         expect(screen.getByRole('radio', { name: /usd coin \(usdc\)/i })).toBeInTheDocument();
 
@@ -382,7 +376,7 @@ describe('<CurrencySelector/>', () => {
 
     it('should submit the form when getCurrentStep is not passed ', async () => {
         renderComponent({});
-        runCommonTests(msg);
+        runCommonTests();
         fireEvent.click(screen.getByRole('button', { name: /next/i }));
         await waitFor(() => {
             expect(mock_props.onSubmit).toHaveBeenCalled();

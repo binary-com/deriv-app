@@ -2,13 +2,15 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { WalletButton, WalletButtonGroup } from '../../../../../components';
 import useDevice from '../../../../../hooks/useDevice';
+import { THooks } from '../../../../../types';
 
 type TCTraderSuccessModalButtons = {
+    createdAccount?: THooks.CreateOtherCFDAccount;
     hide: () => void;
     isDemo: boolean;
 };
 
-const CTraderSuccessModalButtons = ({ hide, isDemo }: TCTraderSuccessModalButtons) => {
+const CTraderSuccessModalButtons = ({ createdAccount, hide, isDemo }: TCTraderSuccessModalButtons) => {
     const history = useHistory();
     const { isMobile } = useDevice();
 
@@ -30,7 +32,7 @@ const CTraderSuccessModalButtons = ({ hide, isDemo }: TCTraderSuccessModalButton
             <WalletButton
                 onClick={() => {
                     hide();
-                    history.push('/wallets/cashier/transfer');
+                    history.push('/wallets/cashier/transfer', { toAccountLoginId: createdAccount?.account_id });
                 }}
                 size={isMobile ? 'lg' : 'md'}
             >

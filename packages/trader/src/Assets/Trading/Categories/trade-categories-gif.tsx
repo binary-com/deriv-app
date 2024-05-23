@@ -2,7 +2,6 @@ import React from 'react';
 import ImageAsianUpDown from 'Assets/SvgComponents/trade_explanations/img-asian.svg';
 import ImageCloseToLow from 'Assets/SvgComponents/trade_explanations/img-close-to-low.svg';
 import ImageEndsInOut from 'Assets/SvgComponents/trade_explanations/img-ends-in-out.svg';
-import ImageEvenOdd from 'Assets/SvgComponents/trade_explanations/img-even-odd.svg';
 import ImageHighToClose from 'Assets/SvgComponents/trade_explanations/img-high-to-close.svg';
 import ImageHighToLow from 'Assets/SvgComponents/trade_explanations/img-high-to-low.svg';
 import ImageReset from 'Assets/SvgComponents/trade_explanations/img-reset.svg';
@@ -29,7 +28,7 @@ const TradeCategoriesGIF = ({
         case TRADE_TYPES.END:
             return <ImageEndsInOut />;
         case TRADE_TYPES.EVEN_ODD:
-            return <ImageEvenOdd />;
+            return <ContractTypeDescriptionVideo selected_contract_type={selected_contract_type} />;
         case TRADE_TYPES.HIGH_LOW:
             return <ContractTypeDescriptionVideo selected_contract_type={selected_contract_type} />;
         case TRADE_TYPES.LB_CALL:

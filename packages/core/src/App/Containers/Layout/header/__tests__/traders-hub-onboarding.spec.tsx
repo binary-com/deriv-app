@@ -8,13 +8,6 @@ import TradersHubOnboarding from '../traders-hub-onboarding';
 import { routes } from '@deriv/shared';
 import { TCoreStores } from '@deriv/stores/types';
 
-jest.mock('@deriv/hooks', () => ({
-    ...jest.requireActual('@deriv/hooks'),
-    useFeatureFlags: jest.fn(() => ({
-        is_next_wallet_enabled: false,
-    })),
-}));
-
 describe('TradersHubOnboarding', () => {
     const onboarding_icon_testid = 'dt_traders_hub_onboarding_icon';
     const popover_wrapper_testid = 'dt_popover_wrapper';

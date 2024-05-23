@@ -25,17 +25,8 @@ type TPlatforms = typeof platforms;
 
 const TradersHubHeaderWallets = observer(() => {
     const { client, common, traders_hub, ui } = useStore();
-    const {
-        account_type,
-        balance,
-        country_standpoint,
-        currency,
-        has_any_real_account,
-        is_eu,
-        is_logged_in,
-        is_mt5_allowed,
-        is_virtual,
-    } = client;
+    const { account_type, balance, currency, has_any_real_account, is_eu, is_logged_in, is_mt5_allowed, is_virtual } =
+        client;
     const { platform } = common;
     const { modal_data } = traders_hub;
     const {
@@ -139,7 +130,6 @@ const TradersHubHeaderWallets = observer(() => {
                                     acc_switcher_disabled_message={account_switcher_disabled_message}
                                     account_type={account_type}
                                     balance={account_balance}
-                                    country_standpoint={country_standpoint}
                                     currency={currency}
                                     is_dialog_on={is_accounts_switcher_on}
                                     is_disabled={false}
@@ -166,7 +156,6 @@ const TradersHubHeaderWallets = observer(() => {
                                         acc_switcher_disabled_message={account_switcher_disabled_message}
                                         account_type={account_type}
                                         balance={account_balance}
-                                        country_standpoint={country_standpoint}
                                         currency={currency}
                                         is_dialog_on={is_accounts_switcher_on}
                                         is_disabled={false}

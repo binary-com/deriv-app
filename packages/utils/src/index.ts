@@ -1,4 +1,5 @@
 export { default as getAccountsFromLocalStorage } from './getAccountsFromLocalStorage';
+export { default as getAccountListWithAuthToken } from './getAccountListWithAuthToken';
 export { default as getActiveAuthTokenIDFromLocalStorage } from './getActiveAuthTokenIDFromLocalStorage';
 export { default as getActiveLoginIDFromLocalStorage } from './getActiveLoginIDFromLocalStorage';
 export { getLocalStorage } from './getLocalStorage';

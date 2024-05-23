@@ -20,20 +20,19 @@
 
         & > svg {
             transition: rotate 0.2s ease;
-            rotate: 180deg;
 
             @include mobile {
-                rotate: -90deg;
+                rotate: 90deg;
                 margin-bottom: 2.2rem;
             }
         }
 
         &--rtl {
             & > svg {
-                rotate: 0deg;
+                rotate: 180deg;
 
                 @include mobile {
-                    rotate: 90deg;
+                    rotate: -90deg;
                 }
             }
         }

@@ -4,9 +4,11 @@ import WalletsAppLinkedWithWalletIcon from '../WalletsAppLinkedWithWalletIcon';
 
 describe('<WalletsAppLinkedWithWalletIcon/>', () => {
     it('renders', () => {
-        render(<WalletsAppLinkedWithWalletIcon appIcon='IcWalletOptionsLight' currency='LTC' size='large' />);
+        render(
+            <WalletsAppLinkedWithWalletIcon appIcon='IcWalletOptionsLight' currency='USD' isDemo size={undefined} />
+        );
 
-        const divElement = screen.getByTestId('wallets-app-linked-with-wallet-icon');
+        const divElement = screen.getByTestId('dt_wallets_app_linked_with_wallet_icon');
 
         expect(divElement).toBeInTheDocument();
     });
@@ -25,7 +27,7 @@ describe('<WalletsAppLinkedWithWalletIcon/>', () => {
     it('applies correct size', () => {
         render(<WalletsAppLinkedWithWalletIcon appIcon='IcWalletOptionsLight' currency='LTC' size='large' />);
 
-        const divElement = screen.getByTestId('wallets-app-linked-with-wallet-icon');
+        const divElement = screen.getByTestId('dt_wallets_app_linked_with_wallet_icon');
 
         expect(divElement).toHaveClass('wallets-app-linked-with-wallet-icon--large');
     });

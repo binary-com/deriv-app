@@ -1,0 +1,67 @@
+.preferred-countries-modal {
+    &__search-field {
+        margin-bottom: 0;
+
+        &--icon {
+            margin-left: 1.8rem !important;
+        }
+
+        input {
+            margin-left: 3.3rem;
+        }
+
+        .dc-input__container {
+            border-radius: 0;
+        }
+    }
+
+    &__checkbox {
+        padding: 1.6rem 1rem;
+
+        &--inactive {
+            .dc-checkbox__box {
+                background-color: var(--brand-red-coral);
+                border-color: var(--brand-red-coral);
+            }
+
+            input[name='all'] + span:after {
+                content: '';
+                border: 1px solid var(--brand-white);
+                border-radius: 0.1rem;
+                width: 0.8rem;
+                margin: auto;
+            }
+        }
+    }
+
+    &__no-results {
+        height: 48rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        word-wrap: break-word;
+        margin: 0 2rem;
+    }
+
+    &__body {
+        padding: 0;
+
+        @include mobile {
+            flex-direction: column;
+        }
+    }
+
+    &__footer {
+        @include desktop {
+            padding-right: 2.4rem;
+        }
+
+        @include mobile {
+            column-gap: 0.8rem;
+        }
+
+        > button {
+            flex: 1;
+        }
+    }
+}

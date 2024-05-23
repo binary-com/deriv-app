@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { WalletText } from '../../../../../../components/Base';
 import { THooks } from '../../../../../../types';
 import { TransactionsCompletedRowAccountDetails } from './components/TransactionsCompletedRowAccountDetails';
@@ -12,23 +12,6 @@ type TProps = {
 };
 
 const TransactionsCompletedRow: React.FC<TProps> = ({ accounts, transaction, wallet }) => {
-    // TODO: remove this once backend adds `to` and `from` for Deriv X and CTrader transfers
-    const dxtradeOrCtraderToFrom = useMemo(() => {
-        if (transaction?.action_type !== 'transfer' || !transaction.longcode) return null;
-        const longcodeMessageTokens = transaction.longcode.split(' ');
-        const direction = longcodeMessageTokens[4] === 'cTrader' ? 'to' : longcodeMessageTokens[1];
-        const dxtradeOrCtraderLoginid = longcodeMessageTokens.find(
-            token => token.startsWith('DX') || token.startsWith('CT')
-        );
-        return dxtradeOrCtraderLoginid
-            ? {
-                  from: { loginid: wallet.loginid },
-                  to: { loginid: wallet.loginid },
-                  ...(direction && { [direction]: { loginid: dxtradeOrCtraderLoginid } }),
-              }
-            : null;
-    }, [transaction?.action_type, transaction.longcode, wallet.loginid]);
-
     if (!transaction.action_type || !transaction.amount) return null;
 
     const displayCurrency = wallet?.currency_config?.display_code || 'USD';
@@ -52,14 +35,11 @@ const TransactionsCompletedRow: React.FC<TProps> = ({ accounts, transaction, wal
             ) : (
                 <TransactionsCompletedRowTransferAccountDetails
                     accounts={accounts}
-                    direction={
-                        (transaction.from ?? dxtradeOrCtraderToFrom?.from)?.loginid === wallet?.loginid ? 'to' : 'from'
-                    }
+                    direction={transaction.from?.loginid === wallet?.loginid ? 'to' : 'from'}
                     loginid={
-                        [
-                            transaction.from?.loginid ?? dxtradeOrCtraderToFrom?.from.loginid,
-                            transaction.to?.loginid ?? dxtradeOrCtraderToFrom?.to.loginid,
-                        ].find(loginid => loginid !== wallet?.loginid) ?? ''
+                        [transaction.from?.loginid, transaction.to?.loginid].find(
+                            loginid => loginid !== wallet?.loginid
+                        ) ?? ''
                     }
                 />
             )}

@@ -26,10 +26,8 @@
     }
 
     &__arrow-icon {
-        rotate: 180deg;
-
         @include mobile {
-            rotate: -90deg;
+            rotate: 90deg;
         }
     }
 

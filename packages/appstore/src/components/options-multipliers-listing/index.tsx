@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Text, StaticUrl } from '@deriv/components';
-import { ContentFlag } from '@deriv/shared';
+import { ContentFlag, setPerformanceValue } from '@deriv/shared';
 import { useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
 import ListingContainer from 'Components/containers/listing-container';
@@ -40,7 +40,7 @@ const OptionsAndMultipliersListing = observer(() => {
         if (low_risk_cr_non_eu || high_risk_cr || cr_demo) {
             return (
                 <Text size='sm' weight='bold'>
-                    <Localize i18n_default_text='Options & Multipliers' />
+                    <Localize i18n_default_text='Options' />
                 </Text>
             );
         } else if (low_risk_cr_eu || is_eu) {
@@ -53,6 +53,12 @@ const OptionsAndMultipliersListing = observer(() => {
         return null;
     };
 
+    useEffect(() => {
+        if (is_landing_company_loaded) {
+            setPerformanceValue('option_multiplier_section_loading_time');
+        }
+    }, [is_landing_company_loaded]);
+
     return (
         <ListingContainer
             title={<OptionsTitle />}
@@ -60,22 +66,20 @@ const OptionsAndMultipliersListing = observer(() => {
                 low_risk_cr_non_eu || high_risk_cr || cr_demo ? (
                     <Text size='xs' line_height='s'>
                         <Localize
-                            i18n_default_text='Earn a range of payouts by correctly predicting market movements with <0>options</0>, or get the
-                    upside of CFDs without risking more than your initial stake with <1>multipliers</1>.'
+                            i18n_default_text='Buy or sell at a specific time for a specific price. <0>Learn more</0>'
                             components={[
                                 <StaticUrl
                                     key={0}
                                     className='options'
                                     href='trade-types/options/digital-options/up-and-down/'
                                 />,
-                                <StaticUrl key={1} className='options' href='trade-types/multiplier/' />,
                             ]}
                         />
                     </Text>
                 ) : (
                     <Text size='xs' line_height='s'>
                         <Localize
-                            i18n_default_text='Get the upside of CFDs without risking more than your initial stake with <0>Multipliers</0>.'
+                            i18n_default_text='Multipliers let you trade with leverage and limit your risk to your stake. <0>Learn more</0>'
                             components={[<StaticUrl key={0} className='options' href='trade-types/multiplier/' />]}
                         />
                     </Text>
@@ -90,7 +94,11 @@ const OptionsAndMultipliersListing = observer(() => {
                         availability='All'
                         clickable_icon
                         name={localize('Deriv account')}
-                        description={localize('Get a real Deriv account, start trading and manage your funds.')}
+                        description={
+                            is_eu_user
+                                ? localize('To trade multipliers, get a Deriv Apps account first.')
+                                : localize('To trade options and multipliers, get a Deriv Apps account first.')
+                        }
                         icon='Options'
                         onAction={() => {
                             if (no_MF_account) {
@@ -124,9 +132,7 @@ const OptionsAndMultipliersListing = observer(() => {
                                 action: 'account_open',
                                 form_name: 'traders_hub_default',
                                 account_mode: selected_account_type,
-                                account_name: is_demo
-                                    ? `${available_platform.name} ${localize('Demo')}`
-                                    : available_platform.name,
+                                account_name: is_demo ? `${available_platform.name} Demo` : available_platform.name,
                             });
                         }}
                         has_divider={(!is_eu_user || is_demo) && getHasDivider(index, available_platforms.length, 3)}

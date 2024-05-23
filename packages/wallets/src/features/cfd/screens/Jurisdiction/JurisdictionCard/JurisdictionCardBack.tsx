@@ -1,5 +1,5 @@
 import React, { Dispatch, FC, SetStateAction } from 'react';
-import { LegacyArrowRight2pxIcon } from '@deriv/quill-icons';
+import { LegacyArrowLeft2pxIcon } from '@deriv/quill-icons';
 import { WalletText } from '../../../../../components/Base/WalletText';
 import IdCardIcon from '../../../../../public/images/ic-id-card.svg';
 import DocumentIcon from '../../../../../public/images/ic-id-number.svg';
@@ -40,7 +40,7 @@ const JurisdictionCardBack: FC<TJurisdictionCardBackProps> = ({ setIsFlipped, ve
     if (verificationDocs)
         return (
             <div className='wallets-jurisdiction-card-back'>
-                <LegacyArrowRight2pxIcon
+                <LegacyArrowLeft2pxIcon
                     className='wallets-jurisdiction-card-back__icon'
                     iconSize='xs'
                     onClick={e => {

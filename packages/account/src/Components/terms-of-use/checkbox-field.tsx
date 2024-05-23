@@ -18,7 +18,7 @@ type TCheckboxFieldProps = {
  * @param {object} props - Other props
  * @returns {React.ReactNode} - React node
  */
-const CheckboxField = ({ field: { name, value, onChange }, id, label, className, ...props }: TCheckboxFieldProps) => {
+const CheckboxField = ({ field: { name, value, onChange }, label, className, ...props }: TCheckboxFieldProps) => {
     return (
         <div className={className}>
             <Checkbox value={value} name={name} label={label} onChange={onChange} {...props} />

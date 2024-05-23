@@ -1,0 +1,50 @@
+.ad-wizard {
+    @include desktop {
+        width: 67.2rem;
+    }
+
+    > div:first-child {
+        @include mobile {
+            display: flex;
+            align-items: center;
+            column-gap: 1rem;
+            padding: 0.8rem 2rem;
+            background-color: var(--general-section-1);
+
+            > div {
+                flex: 1;
+            }
+
+            svg:last-child {
+                align-self: flex-start;
+                margin-top: 1.5rem;
+                width: 4rem;
+            }
+        }
+    }
+
+    .wizard__main-step {
+        @include mobile {
+            padding: 1.6rem;
+        }
+    }
+
+    .dc-form-progress {
+        background-color: var(--general-section-1);
+        margin-top: 2rem;
+        border-radius: 0.4rem;
+
+        &__step {
+            width: 24rem;
+        }
+
+        &__steps {
+            margin-top: 0;
+            margin-bottom: 1.6rem;
+        }
+
+        &__header {
+            margin-bottom: 2rem;
+        }
+    }
+}

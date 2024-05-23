@@ -17,7 +17,7 @@ const NotificationListWrapperForwardRef = React.forwardRef(
         const { is_mobile } = ui;
 
         const traders_hub = window.location.pathname === routes.traders_hub;
-        const wallets_path = window.location.pathname === routes.wallets;
+        const wallets_path = window.location.pathname.startsWith(routes.wallets);
 
         return (
             <div

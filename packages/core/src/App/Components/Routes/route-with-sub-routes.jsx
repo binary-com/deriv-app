@@ -9,7 +9,7 @@ import { useFeatureFlags } from '@deriv/hooks';
 const RouteWithSubRoutes = observer(route => {
     const { common } = useStore();
 
-    const { is_next_account_enabled, is_next_cashier_enabled, is_next_tradershub_enabled } = useFeatureFlags();
+    const { is_next_cashier_enabled, is_next_tradershub_enabled } = useFeatureFlags();
     const { checkAppId } = common;
     const validateRoute = pathname => {
         if (pathname.startsWith('/cashier') && !pathname.includes('p2p') && !!route.routes) {
@@ -21,9 +21,7 @@ const RouteWithSubRoutes = observer(route => {
                     ? routes.p2p_buy_sell
                     : cashier_subroutes?.routes.find(({ path }) => pathname === path);
 
-            return route.path === pathname || !!p2p_subroutes;
-        } else if (pathname.includes(routes.account_v2) && !is_next_account_enabled) {
-            return false;
+            return route.path === pathname || !!p2p_subroutes
         } else if (pathname.includes(routes.cashier_v2) && !is_next_cashier_enabled) {
             return false;
         } else if (

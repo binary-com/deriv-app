@@ -93,7 +93,7 @@ const CTraderDerivXTradeModal = ({
     } = useStore();
 
     const { ctrader_accounts_list, ctrader_trading_platform_available_accounts, ctrader_total_balance } = client;
-    const { setAccountType, toggleMT5TradeModal, is_account_being_created } = cfd;
+    const { setAccountType, toggleMT5TradeModal, is_account_being_created, loadCTraderTokens } = cfd;
     const { setAppstorePlatform } = common;
     const { openDerivRealAccountNeededModal } = ui;
     const { selected_account_type, no_CR_account, is_real, has_any_real_account, getAccount } = traders_hub;
@@ -193,6 +193,7 @@ const CTraderDerivXTradeModal = ({
                     is_demo={is_demo}
                     dxtrade_tokens={dxtrade_tokens}
                     ctrader_tokens={ctrader_tokens}
+                    ctraderTokenCall={loadCTraderTokens}
                 />
             </div>
         );

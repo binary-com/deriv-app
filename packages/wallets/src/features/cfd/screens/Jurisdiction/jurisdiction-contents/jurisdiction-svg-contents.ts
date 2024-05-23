@@ -4,7 +4,7 @@ export const getJurisdictionSvgContents = (): TJurisdictionCardItems => ({
     contents: {
         all: [
             {
-                description: 'Synthetics, Forex, Stocks, Stock Indices, Cryptocurrencies, and ETFs',
+                description: 'Forex, stocks, stock indices, commodities, cryptocurrencies, ETFs and synthetic indices',
                 key: 'assets',
                 title: 'Assets',
                 titleIndicators: {

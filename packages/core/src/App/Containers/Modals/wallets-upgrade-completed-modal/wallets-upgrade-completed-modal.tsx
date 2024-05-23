@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import { Button, Icon, MobileDialog, Modal, Text } from '@deriv/components';
+import { routes } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
 import './wallets-upgrade-completed-modal.scss';
 
 const WalletsUpgradeCompletedModal = observer(() => {
+    const history = useHistory();
     const { ui } = useStore();
     const { is_mobile } = ui;
     const [isOpen, setIsOpen] = useState(true);
 
     const handleClose = () => {
         setIsOpen(false);
-        localStorage.removeItem('should_show_wallets_upgrade_completed_modal');
+        Cookies.remove('recent_wallets_migration');
+        history.push(routes.wallets);
     };
 
     const Wrapper = ({ children, footer }: React.PropsWithChildren & { footer: React.ReactNode }) =>

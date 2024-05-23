@@ -64,11 +64,11 @@ describe('<TradeCategoriesGIF />', () => {
                 });
         });
     });
-    it('expect ImageEvenOdd to be rendered when trade category is TRADE_TYPES.EVEN_ODD', async () => {
+    it('expect Even/Odd video to be rendered when trade category is TRADE_TYPES.EVEN_ODD', async () => {
         jest.isolateModules(() => {
-            jest.doMock('Assets/SvgComponents/trade_explanations/img-even-odd.svg', () => ({
+            jest.doMock('../contract-type-description-video', () => ({
                 __esModule: true,
-                default: jest.fn(() => 'ImageEvenOdd'),
+                default: jest.fn(() => 'Even/Odd video'),
             }));
 
             import('../trade-categories-gif')
@@ -79,7 +79,7 @@ describe('<TradeCategoriesGIF />', () => {
                             selected_contract_type={TRADE_TYPES.EVEN_ODD}
                         />
                     );
-                    expect(screen.getByText(/imageevenodd/i)).toBeInTheDocument();
+                    expect(screen.getByText(/even\/odd video/i)).toBeInTheDocument();
                 })
                 .catch(error => {
                     throw new Error(error);

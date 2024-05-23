@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Localize, localize } from '@deriv/translations';
 import AccountArticle from 'Components/article';
 

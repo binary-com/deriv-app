@@ -47,7 +47,7 @@ describe('<AdCreateEditErrorModal />', () => {
     it('should display the ok button when there is no api error', () => {
         render(<AdCreateEditErrorModal />);
 
-        const ok_button = screen.getByRole('button', { name: 'Ok' });
+        const ok_button = screen.getByRole('button', { name: 'OK' });
         expect(ok_button).toBeInTheDocument();
     });
     it('should display the update ad button and "You already have an ad with this range" when there is api error', () => {
@@ -67,7 +67,7 @@ describe('<AdCreateEditErrorModal />', () => {
     it('should close the modal on clicking update ad/ok button', () => {
         render(<AdCreateEditErrorModal />);
 
-        const ok_button = screen.getByRole('button', { name: 'Ok' });
+        const ok_button = screen.getByRole('button', { name: 'OK' });
         expect(ok_button).toBeInTheDocument();
         userEvent.click(ok_button);
         expect(mock_modal_manager.hideModal).toHaveBeenCalledTimes(1);

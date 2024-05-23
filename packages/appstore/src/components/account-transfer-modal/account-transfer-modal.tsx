@@ -5,6 +5,7 @@ import { routes } from '@deriv/shared';
 import { useStore, observer } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
 import AccountTransfer from '@deriv/cashier/src/pages/account-transfer';
+import './account-transfer-modal.scss';
 
 type TAccountTransferModal = {
     is_modal_open: boolean;

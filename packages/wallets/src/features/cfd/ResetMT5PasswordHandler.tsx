@@ -30,7 +30,8 @@ const ResetMT5PasswordHandler = () => {
                         }
                         platform={platformKey}
                         verificationCode={verificationCode}
-                    />
+                    />,
+                    { defaultRootId: 'wallets_modal_root' }
                 );
             }
         }

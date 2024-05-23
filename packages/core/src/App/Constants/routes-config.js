@@ -88,13 +88,6 @@ const P2P_V2 = React.lazy(() =>
     })
 );
 
-const Account_V2 = React.lazy(() =>
-    moduleLoader(() => {
-        // eslint-disable-next-line import/no-unresolved
-        return import(/* webpackChunkName: "account-v2" */ '@deriv/account-v2');
-    })
-);
-
 const Cashier_V2 = React.lazy(() =>
     moduleLoader(() => {
         // eslint-disable-next-line import/no-unresolved
@@ -308,12 +301,6 @@ const getModules = () => {
             getTitle: () => localize('Trader’s Hub V2'),
         },
         {
-            path: routes.account_v2,
-            component: Account_V2,
-            is_authenticated: true,
-            getTitle: () => localize('Account V2'),
-        },
-        {
             path: routes.cashier_v2,
             component: Cashier_V2,
             is_authenticated: true,
@@ -456,7 +443,7 @@ const lazyLoadComplaintsPolicy = makeLazyLoader(
 
 // Order matters
 // TODO: search tag: test-route-parent-info -> Enable test for getting route parent info when there are nested routes
-const initRoutesConfig = ({ is_eu_country }) => [
+const initRoutesConfig = () => [
     { path: routes.index, component: RouterRedirect, getTitle: () => '', to: routes.root },
     { path: routes.endpoint, component: Endpoint, getTitle: () => 'Endpoint' }, // doesn't need localization as it's for internal use
     { path: routes.redirect, component: Redirect, getTitle: () => localize('Redirect') },
@@ -467,7 +454,7 @@ const initRoutesConfig = ({ is_eu_country }) => [
         icon_component: 'IcComplaintsPolicy',
         is_authenticated: true,
     },
-    ...getModules({ is_eu_country }),
+    ...getModules(),
 ];
 
 let routesConfig;
@@ -475,10 +462,9 @@ let routesConfig;
 // For default page route if page/path is not found, must be kept at the end of routes_config array
 const route_default = { component: Page404, getTitle: () => localize('Error 404') };
 
-// is_deriv_crypto = true as default to prevent route ui blinking
-const getRoutesConfig = ({ is_eu_country }) => {
+const getRoutesConfig = () => {
     if (!routesConfig) {
-        routesConfig = initRoutesConfig({ is_eu_country });
+        routesConfig = initRoutesConfig();
         routesConfig.push(route_default);
     }
     return routesConfig;

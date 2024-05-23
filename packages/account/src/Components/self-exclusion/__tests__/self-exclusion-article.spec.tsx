@@ -1,5 +1,4 @@
 import React from 'react';
-import { PlatformContext } from '@deriv/shared';
 import { fireEvent, render, screen } from '@testing-library/react';
 import SelfExclusionArticle from '../self-exclusion-article';
 import { selfExclusionArticleItems } from 'Components/self-exclusion/self-exclusion-article-content';
@@ -12,14 +11,9 @@ jest.mock('Components/self-exclusion/self-exclusion-article-content', () => ({
 }));
 
 describe('<SelfExclusionArticle />', () => {
-    let mock_platform_context = {
-        is_appstore: false,
-        is_deriv_crypto: false,
-    };
     let mock_self_exclusion_context = {
         is_app_settings: false,
         is_eu: false,
-        is_uk: false,
         currency: '',
         overlay_ref: document.createElement('div'),
         toggleArticle: jest.fn(),
@@ -32,14 +26,9 @@ describe('<SelfExclusionArticle />', () => {
         /these self-exclusion limits help you control the amount of money and time you spend trading on deriv trader, deriv bot, smarttrader and binary bot on deriv. the limits you set here will help you exercise/i;
 
     beforeEach(() => {
-        mock_platform_context = {
-            is_appstore: false,
-            is_deriv_crypto: false,
-        };
         mock_self_exclusion_context = {
             is_app_settings: false,
             is_eu: false,
-            is_uk: false,
             currency: '',
             overlay_ref: document.createElement('div'),
             toggleArticle: jest.fn(),
@@ -59,11 +48,9 @@ describe('<SelfExclusionArticle />', () => {
 
         render(
             <StoreProvider store={new_store}>
-                <PlatformContext.Provider value={mock_platform_context}>
-                    <SelfExclusionContext.Provider value={mock_self_exclusion_context}>
-                        <SelfExclusionArticle />
-                    </SelfExclusionContext.Provider>
-                </PlatformContext.Provider>
+                <SelfExclusionContext.Provider value={mock_self_exclusion_context}>
+                    <SelfExclusionArticle />
+                </SelfExclusionContext.Provider>
             </StoreProvider>
         );
 
@@ -83,11 +70,9 @@ describe('<SelfExclusionArticle />', () => {
 
         render(
             <StoreProvider store={new_store}>
-                <PlatformContext.Provider value={mock_platform_context}>
-                    <SelfExclusionContext.Provider value={mock_self_exclusion_context}>
-                        <SelfExclusionArticle />
-                    </SelfExclusionContext.Provider>
-                </PlatformContext.Provider>
+                <SelfExclusionContext.Provider value={mock_self_exclusion_context}>
+                    <SelfExclusionArticle />
+                </SelfExclusionContext.Provider>
             </StoreProvider>
         );
 
@@ -106,11 +91,9 @@ describe('<SelfExclusionArticle />', () => {
 
         render(
             <StoreProvider store={new_store}>
-                <PlatformContext.Provider value={mock_platform_context}>
-                    <SelfExclusionContext.Provider value={mock_self_exclusion_context}>
-                        <SelfExclusionArticle />
-                    </SelfExclusionContext.Provider>
-                </PlatformContext.Provider>
+                <SelfExclusionContext.Provider value={mock_self_exclusion_context}>
+                    <SelfExclusionArticle />
+                </SelfExclusionContext.Provider>
             </StoreProvider>
         );
 
@@ -130,11 +113,9 @@ describe('<SelfExclusionArticle />', () => {
 
         render(
             <StoreProvider store={new_store}>
-                <PlatformContext.Provider value={mock_platform_context}>
-                    <SelfExclusionContext.Provider value={mock_self_exclusion_context}>
-                        <SelfExclusionArticle />
-                    </SelfExclusionContext.Provider>
-                </PlatformContext.Provider>
+                <SelfExclusionContext.Provider value={mock_self_exclusion_context}>
+                    <SelfExclusionArticle />
+                </SelfExclusionContext.Provider>
             </StoreProvider>
         );
 

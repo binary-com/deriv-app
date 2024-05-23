@@ -14,9 +14,10 @@
         "node": "18.x"
     },
     "scripts": {
-        "analyze": "webpack-bundle-analyzer --no-open -m static -r analyzed.html stats.json ./dist && webpack-bundle-analyzer -m json stats.json ./dist",
+        "analyze:stats": "NODE_OPTIONS='-r ts-node/register' webpack --progress --profile --json=stats.json",
+        "analyze:build": "webpack-bundle-analyzer --no-open -m static -r analyzed.html stats.json ./dist && webpack-bundle-analyzer -m json stats.json ./dist",
         "test:eslint": "eslint \"./src/**/*.?(js|ts|jsx|tsx)\"",
-        "build": "rimraf lib && NODE_OPTIONS='-r ts-node/register' webpack --progress --profile --json > stats.json",
+        "build": "rimraf lib && NODE_OPTIONS='-r ts-node/register' webpack --progress",
         "build:publish": "deriv-publisher prepublish && lerna exec --scope=@deriv/shared --scope=@deriv/components -- npm run build:travis -- && rimraf lib && cross-env NODE_ENV=production NPM_PUBLISHING_MODE=1 webpack --progress; deriv-publisher postpublish",
         "build:travis": "rimraf lib && webpack",
         "serve": "rimraf lib && cross-env BUILD_MODE='serve' NODE_OPTIONS='-r ts-node/register' webpack --progress --watch",

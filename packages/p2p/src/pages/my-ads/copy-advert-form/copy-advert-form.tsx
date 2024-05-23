@@ -2,23 +2,26 @@ import React from 'react';
 import { Formik, Field, FieldProps, Form } from 'formik';
 import { Button, InlineMessage, Input, Text, ThemedScrollbars } from '@deriv/components';
 import { useP2PSettings } from '@deriv/hooks';
-import { useStore } from '@deriv/stores';
+import { observer, useStore } from '@deriv/stores';
 import FloatingRate from 'Components/floating-rate';
 import { Localize, localize } from 'Components/i18next';
+import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
 import { buy_sell } from 'Constants/buy-sell';
 import { ad_type } from 'Constants/floating-rate';
 import OrderTimeSelection from 'Pages/my-ads/order-time-selection';
 import { useStores } from 'Stores';
-import { TAdvertProps } from 'Types';
+import { TAdvertProps, TCountryListProps } from 'Types';
 import { getInlineTextSize } from 'Utils/responsive';
 import CopyAdvertFormTrailingIcon from './copy-advert-from-trailing-icon';
 
 type TCopyAdvertFormProps = {
     advert: TAdvertProps;
+    country_list: TCountryListProps;
     onCancel: () => void;
 };
 
-const CopyAdvertForm = ({ advert, onCancel }: TCopyAdvertFormProps) => {
+const CopyAdvertForm = ({ advert, country_list, onCancel }: TCopyAdvertFormProps) => {
+    const { showModal } = useModalManagerContext();
     const {
         client: { currency, local_currency_config },
         ui: { is_desktop },
@@ -29,6 +32,9 @@ const CopyAdvertForm = ({ advert, onCancel }: TCopyAdvertFormProps) => {
         contact_info,
         description,
         amount_display,
+        eligible_countries,
+        min_completion_rate,
+        min_join_days,
         order_expiry_period,
         payment_method_details,
         payment_method_names,
@@ -68,6 +74,18 @@ const CopyAdvertForm = ({ advert, onCancel }: TCopyAdvertFormProps) => {
         return rate_display;
     };
 
+    const getEligibleCountriesDisplay = () => {
+        if (eligible_countries?.length === 1) {
+            return country_list[eligible_countries[0]]?.country_name;
+        } else if (eligible_countries?.length === Object.keys(country_list)?.length) {
+            return localize('All');
+        }
+
+        return eligible_countries?.length;
+    };
+
+    const has_counterparty_conditions = min_join_days > 0 || min_completion_rate > 0 || eligible_countries?.length > 0;
+
     React.useEffect(() => {
         if (type === buy_sell.SELL) {
             if (payment_method_details) {
@@ -81,11 +99,30 @@ const CopyAdvertForm = ({ advert, onCancel }: TCopyAdvertFormProps) => {
             });
         }
 
+        my_ads_store.setMinJoinDays(min_join_days);
+        my_ads_store.setMinCompletionRate(min_completion_rate);
+
         return () => {
             my_ads_store.payment_method_names = [];
             my_ads_store.payment_method_ids = [];
+            my_ads_store.setMinJoinDays(0);
+            my_ads_store.setMinCompletionRate(0);
+            my_ads_store.setP2pAdvertInformation({});
         };
     }, []);
+
+    React.useEffect(() => {
+        if (my_ads_store.error_code) {
+            showModal({
+                key: 'AdCreateEditErrorModal',
+                props: {
+                    onUpdateAd: () => {
+                        my_ads_store.setApiErrorCode(null);
+                    },
+                },
+            });
+        }
+    }, [my_ads_store.error_code]);
 
     return (
         <div className='copy-advert-form'>
@@ -95,8 +132,11 @@ const CopyAdvertForm = ({ advert, onCancel }: TCopyAdvertFormProps) => {
                         contact_info,
                         default_advert_description: description,
                         float_rate_offset_limit: float_rate_offset_limit_string,
+                        eligible_countries,
                         max_transaction: '',
                         min_transaction: '',
+                        min_completion_rate,
+                        min_join_days,
                         offer_amount: amount_display,
                         order_completion_time: order_expiry_period > 3600 ? '3600' : order_expiry_period.toString(),
                         payment_method_names,
@@ -260,6 +300,44 @@ const CopyAdvertForm = ({ advert, onCancel }: TCopyAdvertFormProps) => {
                                 <Text as='div' color='prominent' className='copy-advert-form__field' size='xs'>
                                     {payment_method_names.join(', ')}
                                 </Text>
+                                {has_counterparty_conditions && (
+                                    <>
+                                        <Text color='less-prominent' size='xxs'>
+                                            <Localize i18n_default_text='Counterparty conditions' />
+                                        </Text>
+                                        <Text as='ul' className='copy-advert-form__list' color='prominent' size='xs'>
+                                            {min_join_days > 0 && (
+                                                <li>
+                                                    <Localize
+                                                        i18n_default_text='Joined more than <0>{{min_join_days}} days</0>'
+                                                        components={[<strong key={0} />]}
+                                                        values={{ min_join_days }}
+                                                    />
+                                                </li>
+                                            )}
+                                            {min_completion_rate > 0 && (
+                                                <li>
+                                                    <Localize
+                                                        i18n_default_text='Completion rate of more than <0>{{min_completion_rate}}%</0>'
+                                                        components={[<strong key={0} />]}
+                                                        values={{ min_completion_rate }}
+                                                    />
+                                                </li>
+                                            )}
+                                            {eligible_countries?.length > 0 && (
+                                                <li>
+                                                    <Localize
+                                                        i18n_default_text='Preferred countries <0>({{eligible_countries_display}})</0>'
+                                                        components={[<strong key={0} />]}
+                                                        values={{
+                                                            eligible_countries_display: getEligibleCountriesDisplay(),
+                                                        }}
+                                                    />
+                                                </li>
+                                            )}
+                                        </Text>
+                                    </>
+                                )}
                             </ThemedScrollbars>
                             <div className='copy-advert-form__container'>
                                 <Button type='button' has_effect onClick={() => onClickCancel(values)} secondary large>
@@ -277,4 +355,4 @@ const CopyAdvertForm = ({ advert, onCancel }: TCopyAdvertFormProps) => {
     );
 };
 
-export default CopyAdvertForm;
+export default observer(CopyAdvertForm);

@@ -45,9 +45,9 @@ const TransactionsCompleted: React.FC<TProps> = ({ filter }) => {
     );
 
     useEffect(() => {
-        if (fetchMoreOnBottomReached) setOnCashierScroll(() => fetchMoreOnBottomReached);
+        if (Number(transactions?.length) > 0) setOnCashierScroll(() => fetchMoreOnBottomReached);
         return () => setOnCashierScroll(null);
-    }, [fetchMoreOnBottomReached, setOnCashierScroll]);
+    }, [fetchMoreOnBottomReached, setOnCashierScroll, transactions?.length]);
 
     useEffect(() => {
         setFilter(filter);

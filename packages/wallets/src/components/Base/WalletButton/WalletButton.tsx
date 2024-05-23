@@ -7,9 +7,11 @@ import './WalletButton.scss';
 
 type TVariant = 'contained' | 'ghost' | 'outlined';
 type TColor = 'black' | 'primary-light' | 'primary' | 'white';
+type TBorderWidth = Extract<TGenericSizes, 'md' | 'sm'> | 'none';
 
 interface WalletButtonProps {
     ariaLabel?: ComponentProps<'button'>['aria-label'];
+    borderWidth?: TBorderWidth;
     color?: TColor;
     disabled?: ComponentProps<'button'>['disabled'];
     icon?: ReactElement;
@@ -25,6 +27,7 @@ interface WalletButtonProps {
 
 const WalletButton: FC<PropsWithChildren<WalletButtonProps>> = ({
     ariaLabel,
+    borderWidth = 'sm',
     children,
     color = 'primary',
     disabled = false,
@@ -45,6 +48,7 @@ const WalletButton: FC<PropsWithChildren<WalletButtonProps>> = ({
         `wallets-button__size--${size}`,
         `wallets-button__variant--${variant}`,
         `wallets-button__rounded--${rounded}`,
+        `wallets-button__border--${borderWidth}`,
         isContained && `wallets-button__color--${color}`,
         isFullWidth && 'wallets-button__full-width'
     );

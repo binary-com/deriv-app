@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
-import { PlatformContext } from '@deriv/shared';
 import { MissingPersonalDetails } from '../missing-personal-details';
 
 jest.mock('@deriv/components', () => {
@@ -13,12 +12,7 @@ jest.mock('@deriv/components', () => {
 });
 
 describe('<MissingPersonalDetails />', () => {
-    const renderWithRouter = component =>
-        render(
-            <PlatformContext.Provider value={{ is_appstore: true, is_deriv_crypto: false, is_pre_appstore: false }}>
-                <BrowserRouter>{component}</BrowserRouter>
-            </PlatformContext.Provider>
-        );
+    const renderWithRouter = component => render(<BrowserRouter>{component}</BrowserRouter>);
 
     it('should render the MissingPersonalDetails component', () => {
         renderWithRouter(<MissingPersonalDetails />);
@@ -45,14 +39,14 @@ describe('<MissingPersonalDetails />', () => {
         expect(btn.hasAttribute('/account/personal-details?from=proof_of_identity#address_postcode'));
     });
 
-    it('should show missing msg with proper icon if has_invalid_postal_code is false and is_appstore is true', () => {
+    it('should show missing msg with proper icon if has_invalid_postal_code is false', () => {
         renderWithRouter(<MissingPersonalDetails from='proof_of_identity' />);
 
         expect(screen.getByText(/your personal details are missing/i)).toBeInTheDocument();
         expect(
             screen.getByText(/please complete your personal details before you verify your identity\./i)
         ).toBeInTheDocument();
-        expect(screen.getByText('IcAccountMissingDetailsDashboard')).toBeInTheDocument();
+        expect(screen.getByText('IcAccountMissingDetails')).toBeInTheDocument();
 
         const btn = screen.getByRole('link', { name: /go to personal details/i });
         expect(btn).toBeInTheDocument();
@@ -60,13 +54,11 @@ describe('<MissingPersonalDetails />', () => {
         expect(btn.hasAttribute('/account/personal-details?from=proof_of_identity'));
     });
 
-    it('should show missing msg with proper icon if has_invalid_postal_code is false and is_appstore is false', () => {
+    it('should show missing msg with proper icon if has_invalid_postal_code is false', () => {
         render(
-            <PlatformContext.Provider value={{ is_appstore: false, is_deriv_crypto: false, is_pre_appstore: false }}>
-                <BrowserRouter>
-                    <MissingPersonalDetails />
-                </BrowserRouter>
-            </PlatformContext.Provider>
+            <BrowserRouter>
+                <MissingPersonalDetails />
+            </BrowserRouter>
         );
 
         expect(screen.getByText(/your personal details are missing/i)).toBeInTheDocument();

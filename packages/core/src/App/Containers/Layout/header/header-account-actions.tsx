@@ -8,7 +8,7 @@ type THeaderAccountActions = {
 
 const HeaderAccountActions = observer(({ onClickDeposit }: THeaderAccountActions) => {
     const { client, ui, notifications } = useStore();
-    const { account_type, balance, currency, country_standpoint, is_eu, is_logged_in, is_virtual } = client;
+    const { account_type, balance, currency, is_eu, is_logged_in, is_virtual } = client;
     const {
         account_switcher_disabled_message,
         disableApp,
@@ -27,7 +27,6 @@ const HeaderAccountActions = observer(({ onClickDeposit }: THeaderAccountActions
                 account_type={account_type}
                 balance={balance}
                 currency={currency}
-                country_standpoint={country_standpoint}
                 disableApp={disableApp}
                 enableApp={enableApp}
                 is_acc_switcher_on={is_accounts_switcher_on}

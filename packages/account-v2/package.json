@@ -6,8 +6,9 @@
         "node": "18.x"
     },
     "scripts": {
-        "analyze": "webpack-bundle-analyzer --no-open -m static -r analyzed.html stats.json ./dist && webpack-bundle-analyzer -m json stats.json ./dist",
-        "build": "rimraf dist && NODE_OPTIONS='-r ts-node/register' webpack --progress --config \"./webpack.config.ts\" --profile --json > stats.json",
+        "analyze:stats": "NODE_OPTIONS='-r ts-node/register' webpack --progress --config \"./webpack.config.ts\" --profile --json=stats.json",
+        "analyze:build": "webpack-bundle-analyzer --no-open -m static -r analyzed.html stats.json ./dist && webpack-bundle-analyzer -m json stats.json ./dist",
+        "build": "rimraf dist && NODE_OPTIONS='-r ts-node/register' webpack --progress --config \"./webpack.config.ts\"",
         "serve": "rimraf dist && concurrently \"cross-env BUILD_MODE='serve' NODE_OPTIONS='-r ts-node/register' webpack --progress --watch --config ./webpack.config.ts\" \"tsc -w --noEmit --preserveWatchOutput\"",
         "start": "rimraf dist && npm run test && npm run serve"
     },
@@ -16,7 +17,7 @@
         "@deriv-com/utils": "^0.0.20",
         "@deriv/api-types": "^1.0.172",
         "@deriv/api-v2": "^1.0.0",
-        "@deriv/quill-icons": "^1.22.4",
+        "@deriv/quill-icons": "^1.22.7",
         "class-variance-authority": "^0.7.0",
         "dayjs": "^1.11.10",
         "formik": "^2.1.4",

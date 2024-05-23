@@ -39,7 +39,11 @@ const WalletClipboard = ({
     return (
         <Tooltip alignment='right' isVisible={isHovered && !isMobile} message={isCopied ? 'Copied!' : 'Copy'}>
             <button className='wallets-clipboard' onClick={onClick} ref={hoverRef}>
-                {isCopied ? <LegacyWonIcon iconSize='xs' /> : <LegacyCopy1pxIcon iconSize='xs' />}
+                {isCopied ? (
+                    <LegacyWonIcon data-testid='dt_legacy_won_icon' iconSize='xs' />
+                ) : (
+                    <LegacyCopy1pxIcon data-testid='dt_legacy_copy_icon' iconSize='xs' />
+                )}
             </button>
         </Tooltip>
     );

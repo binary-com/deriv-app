@@ -18,5 +18,5 @@ module.exports = {
     },
     testRegex: '(/__tests__/.*|(\\.)(test|spec))\\.(js|jsx|tsx|ts)?$',
     transformIgnorePatterns: ['/node_modules/(?!(@enykeev/react-virtualized|@simplewebauthn/browser)).+\\.js$'],
-    testPathIgnorePatterns: ['/integration-tests/'],
+    testPathIgnorePatterns: ['/integration-tests/', '/account-v2/'],
 };

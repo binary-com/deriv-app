@@ -1,5 +1,4 @@
 import { DetailsOfEachMT5Loginid } from '@deriv/api-types';
-import { useAvailableWallets, useWalletsList } from '@deriv/hooks';
 import { useStore } from '@deriv/stores';
 
 import { PlatformIcons } from 'Assets/svgs/trading-platform';
@@ -28,7 +27,7 @@ export type TMarketType = 'financial' | 'synthetic' | 'all';
 export type TVisibilityChecker = (platform: TPlatform) => boolean;
 
 export type TMissingRealAccount = {
-    onClickSignup: () => void;
+    onClickSignup: VoidFunction;
 };
 
 export type TMt5StatusServerType = Record<'all' | 'platform' | 'server_number', number>;
@@ -187,9 +186,6 @@ export type TLinkedTo = {
     currency?: string;
 };
 
-export type TWalletAccount = NonNullable<ReturnType<typeof useWalletsList>['data']>[number];
-export type TWalletInfo = NonNullable<ReturnType<typeof useAvailableWallets>['data']>[number];
-
 export type TTransferAccount = {
     active_wallet_icon: string | undefined;
     account_type?: 'wallet' | 'trading' | 'dxtrade' | 'mt5' | 'binary' | 'ctrader';
@@ -225,15 +221,14 @@ export type TWalletButton = {
     name: Parameters<ReturnType<typeof useStore>['traders_hub']['setWalletModalActiveTab']>[0];
     text: string;
     icon: string;
-    action: () => void;
+    action: VoidFunction;
 };
 
 export type TWalletSteps = {
-    handleBack: () => void;
-    handleClose: () => void;
-    handleNext: () => void;
-    is_disabled: boolean;
-    toggleCheckbox: () => void;
+    handleBack: VoidFunction;
+    handleClose: VoidFunction;
+    handleNext: VoidFunction;
+    is_migrating: boolean;
     upgradeToWallets: (value: boolean) => void;
 };
 

@@ -27,10 +27,11 @@ const IndicativeCell = observer((props: TIndicativeCell) => {
                         'dc-contract-card--profit': Number(profit) > 0,
                         'dc-contract-card--loss': Number(profit) < 0,
                     })}
+                    data-testid='dt_amount_container'
                 >
                     <Money amount={Math.abs(amount)} currency={currency} />
                 </div>
-                <ArrowIndicator value={amount} />
+                <ArrowIndicator value={amount} data-testid='dt_arrow_indicator' />
             </div>
             <DesktopWrapper>
                 {!is_footer && (

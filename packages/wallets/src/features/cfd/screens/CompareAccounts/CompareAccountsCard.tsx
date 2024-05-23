@@ -2,7 +2,6 @@ import React from 'react';
 import { WalletText } from '../../../../components';
 import { THooks, TPlatforms } from '../../../../types';
 import { CFD_PLATFORMS } from '../../constants';
-import CompareAccountsButton from './CompareAccountsButton';
 import CompareAccountsDescription from './CompareAccountsDescription';
 import CompareAccountsPlatformLabel from './CompareAccountsPlatformLabel';
 import CompareAccountsTitleIcon from './CompareAccountsTitleIcon';
@@ -10,7 +9,6 @@ import InstrumentsLabelHighlighted from './InstrumentsLabelHighlighted';
 import './CompareAccountsCard.scss';
 
 type TCompareAccountsCard = {
-    isAccountAdded: boolean;
     isDemo: boolean;
     isEuRegion: boolean;
     isEuUser: boolean;
@@ -20,7 +18,6 @@ type TCompareAccountsCard = {
 };
 
 const CompareAccountsCard = ({
-    isAccountAdded,
     isDemo,
     isEuRegion,
     isEuUser,
@@ -65,12 +62,6 @@ const CompareAccountsCard = ({
                         </WalletText>
                     </div>
                 )}
-                <CompareAccountsButton
-                    isAccountAdded={isAccountAdded}
-                    marketType={marketType}
-                    platform={platform}
-                    shortCode={shortCode}
-                />
             </div>
         </div>
     );

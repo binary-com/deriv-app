@@ -56,7 +56,8 @@ const JurisdictionModal = observer(({ openPasswordModal }: TJurisdictionModalPro
                             is_open={is_jurisdiction_modal_visible}
                             toggleModal={onJurisdictionModalToggle}
                             type='button'
-                            width={account_type.type === MARKET_TYPE.FINANCIAL ? '1200px' : '1040px'}
+                            width={account_type.type === MARKET_TYPE.FINANCIAL ? '120rem' : '104rem'}
+                            height={'82rem'}
                             has_close_icon={!is_dynamic_leverage_visible}
                             title={
                                 <JurisdictionModalTitle

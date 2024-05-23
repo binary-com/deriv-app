@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { LegacyArrowRight2pxIcon } from '@deriv/quill-icons';
+import { LegacyArrowLeft2pxIcon } from '@deriv/quill-icons';
 import { WalletText } from '../../../../components';
 import useDevice from '../../../../hooks/useDevice';
 import { useDynamicLeverageModalState } from '../../components/DynamicLeverageContext';
@@ -12,7 +12,7 @@ export const DynamicLeverageTitle: FC = () => {
 
     return (
         <div className='wallets-dynamic-leverage-screen__title'>
-            <LegacyArrowRight2pxIcon
+            <LegacyArrowLeft2pxIcon
                 className='wallets-dynamic-leverage-screen__title-back'
                 data-testid='back_icon'
                 iconSize='xs'

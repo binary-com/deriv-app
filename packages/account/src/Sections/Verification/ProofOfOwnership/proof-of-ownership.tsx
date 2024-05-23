@@ -17,6 +17,7 @@ export const ProofOfOwnership = observer(() => {
     const { is_dark_mode_on: is_dark_mode } = ui;
     const cards = account_status?.authentication?.ownership?.requests;
     const [status, setStatus] = useState<TAuthStatusCodes>();
+    const [retry, setRetry] = useState(false);
 
     const grouped_payment_method_data = React.useMemo(() => {
         const groups: Partial<Record<TPaymentMethod, TPaymentMethodInfo>> = {};
@@ -49,10 +50,10 @@ export const ProofOfOwnership = observer(() => {
     }, [account_status]);
 
     const onTryAgain = () => {
-        setStatus(AUTH_STATUS_CODES.NONE);
+        setRetry(true);
     };
 
-    if (cards?.length && status !== AUTH_STATUS_CODES.REJECTED) {
+    if (cards?.length && (status !== AUTH_STATUS_CODES.REJECTED || retry)) {
         return <ProofOfOwnershipForm grouped_payment_method_data={grouped_payment_method_data.groups} />;
     }
     if (status === AUTH_STATUS_CODES.VERIFIED) return <POOVerified />;

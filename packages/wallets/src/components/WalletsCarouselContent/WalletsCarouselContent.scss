@@ -1,10 +1,23 @@
 .wallets-carousel-content {
     background-color: var(--general-main-1, #ffffff);
     width: 100vw;
-    padding: 0.8rem 3.6rem;
-    overflow: hidden;
 
-    &__container {
+    &__wrapper {
+        width: 100%;
+        height: 100%;
+    }
+
+    &__title {
+        margin-bottom: auto;
+        padding: 0.8rem 1.4rem 0;
+    }
+
+    &__carousel {
+        padding: 0.8rem 3.6rem;
+        overflow: hidden;
+    }
+
+    &__cards {
         height: 17.6rem;
         display: flex;
         align-items: center;

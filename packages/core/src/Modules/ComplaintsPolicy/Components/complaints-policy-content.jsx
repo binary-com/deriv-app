@@ -100,7 +100,7 @@ const getGeneralQueriesText = landing_company_shortcode => {
     );
 };
 
-const getYourDecisionText = (is_uk, landing_company_shortcode) => {
+const getYourDecisionText = landing_company_shortcode => {
     const texts = [];
 
     texts.push(
@@ -137,26 +137,6 @@ const getYourDecisionText = (is_uk, landing_company_shortcode) => {
                 ]}
             />
         );
-
-        if (is_uk) {
-            texts.push(
-                <Localize
-                    key={texts.length}
-                    i18n_default_text='<0/><1/>If you reside in the UK and you are unhappy with our response you may escalate your complaint to the <2>Financial Ombudsman Service</2>.'
-                    components={[
-                        <br key={0} />,
-                        <br key={1} />,
-                        <a
-                            key={2}
-                            className='link link--orange'
-                            rel='noopener noreferrer'
-                            target='_blank'
-                            href='https://www.financial-ombudsman.org.uk/'
-                        />,
-                    ]}
-                />
-            );
-        }
     }
 
     return texts;
@@ -179,7 +159,7 @@ const getSubmissionOfAComplaintText = () => (
 
 const Content = observer(({ landing_company_shortcode }) => {
     const { client } = useStore();
-    const { is_uk, mt5_login_list } = client;
+    const { mt5_login_list } = client;
     const policy_content = [
         {
             id: 'introduction',
@@ -226,7 +206,7 @@ const Content = observer(({ landing_company_shortcode }) => {
                     },
                     {
                         title: localize('3.4. Your decision'),
-                        text: getYourDecisionText(is_uk, landing_company_shortcode),
+                        text: getYourDecisionText(landing_company_shortcode),
                     },
                 ],
             },

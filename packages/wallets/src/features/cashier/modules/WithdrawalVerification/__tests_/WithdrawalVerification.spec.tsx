@@ -2,7 +2,6 @@ import React from 'react';
 import { useSettings, useVerifyEmail } from '@deriv/api-v2';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import WithdrawalVerification from '../WithdrawalVerification';
-import '@testing-library/jest-dom';
 
 jest.mock('@deriv/api-v2', () => ({
     useSettings: jest.fn(() => ({ data: { email: null } })),
@@ -12,7 +11,9 @@ jest.mock('@deriv/api-v2', () => ({
 describe('WithdrawalVerification', () => {
     it('should render WithdrawalVerificationRequest initially', () => {
         render(<WithdrawalVerification />);
-        expect(screen.getByText("Hit the button below, and we'll email you a verification link.")).toBeInTheDocument();
+        expect(
+            screen.getByText("Press the button below, and we'll email you a verification link.")
+        ).toBeInTheDocument();
     });
 
     it('should send withdrawal verification email and render WithdrawalVerificationSent after clicking send email', async () => {
@@ -50,6 +51,20 @@ describe('WithdrawalVerification', () => {
             expect(
                 screen.queryByText('Please check your email for the verification link to complete the process.')
             ).not.toBeInTheDocument();
+        });
+    });
+
+    it('should trigger mutate callback when `resendEmail` is equal to `true`', async () => {
+        const mockMutate = jest.fn();
+        (useSettings as jest.Mock).mockImplementation(() => ({ data: { email: 'test@example.com' } }));
+        (useVerifyEmail as jest.Mock).mockImplementation(() => ({
+            mutate: mockMutate,
+        }));
+
+        render(<WithdrawalVerification resendEmail />);
+
+        await waitFor(() => {
+            expect(mockMutate).toHaveBeenCalledTimes(1);
         });
     });
 });

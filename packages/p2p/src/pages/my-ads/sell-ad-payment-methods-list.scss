@@ -2,6 +2,7 @@
     &__container {
         display: grid;
         grid-template-columns: repeat(4, 0.19fr);
+        column-gap: 2rem;
 
         &--horizontal {
             grid-auto-flow: column;

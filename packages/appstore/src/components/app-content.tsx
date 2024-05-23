@@ -12,12 +12,14 @@ const AppContent: React.FC = observer(() => {
     const { selected_account_type } = traders_hub;
 
     useEffect(() => {
-        Analytics.trackEvent('ce_tradershub_dashboard_form', {
-            action: 'open',
-            form_name: 'traders_hub_default',
-            account_mode: selected_account_type,
-        });
-    }, []);
+        if (selected_account_type) {
+            Analytics.trackEvent('ce_tradershub_dashboard_form', {
+                action: 'open',
+                form_name: 'traders_hub_default',
+                account_mode: selected_account_type,
+            });
+        }
+    }, [selected_account_type]);
 
     return (
         <main

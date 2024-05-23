@@ -50,7 +50,6 @@ describe('<AuthorizationRequiredModal />', () => {
         is_visible: true,
         toggleModal: jest.fn(),
         is_logged_in: true,
-        is_appstore: true,
     };
 
     it('modal title, modal description, log in button, and signup button to be rendered', () => {

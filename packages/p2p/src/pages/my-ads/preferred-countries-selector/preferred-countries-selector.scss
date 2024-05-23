@@ -1,0 +1,14 @@
+.preferred-countries-selector {
+    @include desktop {
+        max-width: 32.8rem !important;
+
+        &__input,
+        &__icon {
+            cursor: pointer;
+        }
+    }
+
+    &__input {
+        text-overflow: ellipsis;
+    }
+}

@@ -123,6 +123,8 @@ import type {
     P2PAdvertUpdateResponse,
     P2PChatCreateRequest,
     P2PChatCreateResponse,
+    P2PCountryListRequest,
+    P2PCountryListResponse,
     P2POrderCancelRequest,
     P2POrderCancelResponse,
     P2POrderConfirmRequest,
@@ -2493,6 +2495,10 @@ type TSocketEndpoints = {
     p2p_chat_create: {
         request: P2PChatCreateRequest;
         response: P2PChatCreateResponse;
+    };
+    p2p_country_list: {
+        request: P2PCountryListRequest;
+        response: P2PCountryListResponse;
     };
     p2p_order_cancel: {
         request: P2POrderCancelRequest;

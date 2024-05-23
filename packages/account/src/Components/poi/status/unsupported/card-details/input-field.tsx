@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field, FormikValues } from 'formik';
 import { DatePicker, Input } from '@deriv/components';
 import { toMoment } from '@deriv/shared';
@@ -44,10 +43,6 @@ const InputField = ({ data }: FormikValues) => {
         default:
             return null;
     }
-};
-
-InputField.propTypes = {
-    data: PropTypes.object,
 };
 
 export default InputField;

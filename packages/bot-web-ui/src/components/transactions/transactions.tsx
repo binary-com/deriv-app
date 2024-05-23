@@ -115,7 +115,6 @@ const Transactions = observer(({ is_drawer_open }: TTransactions) => {
                         toggleTransactionDetailsModal(true);
                     }}
                     secondary
-                    icon={<Icon icon='IcDbotViewDetail' size={18} />}
                 />
             </div>
             <div className='transactions__header'>

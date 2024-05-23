@@ -16,13 +16,8 @@ export const redirectToLogin = (is_logged_in: boolean, language: string, has_par
     }
 };
 
-type TRedirectToSignUp = {
-    is_appstore?: boolean;
-    is_deriv_crypto?: boolean;
-};
-
-export const redirectToSignUp = ({ is_appstore }: TRedirectToSignUp = {}) => {
-    window.open(getStaticUrl('/signup/', { is_appstore }));
+export const redirectToSignUp = () => {
+    window.open(getStaticUrl('/signup/'));
 };
 
 type TLoginUrl = {

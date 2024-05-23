@@ -11,9 +11,6 @@
     }
 
     .dc-input__wrapper {
-        max-width: 67.2rem; // TODO: Kill these fixed widths.
-        margin-top: 2.1rem;
-
         @include mobile {
             max-width: 90vw;
 

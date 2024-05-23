@@ -102,6 +102,14 @@
         justify-content: space-between;
         flex-direction: column;
         overflow: hidden !important;
+
+        .dc-tabs {
+            &__item {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding: 0 0.8rem;
+            }
+        }
     }
     &__buttons {
         display: inline-flex !important;

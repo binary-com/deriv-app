@@ -13,11 +13,11 @@ type TExtendedMoment = typeof moment & {
 
 // Localize moment instance with specific object
 export const initMoment = (lang: string) => {
-    const ignored_language = ['EN', 'AR', 'BN', 'SI'];
-    if (!lang || ignored_language.includes(lang)) return moment;
-    return import(`moment/locale/${lang.toLowerCase().replace('_', '-')}`)
-        .then(() => moment.locale(lang.toLocaleLowerCase().replace('_', '-')))
-        .catch(() => moment);
+    const hasEnMomentLocale = ['EN', 'AR', 'BN', 'SI']; // 'AR', 'BN' & 'SI' langs have non-numeric dates ('২০২৪-০৫-০৭'), our current usage of moment requires us to make all dates numeric
+    if (!lang) return moment;
+    let locale = lang.toLowerCase().replace('_', '-');
+    if (hasEnMomentLocale.includes(lang)) locale = 'en-gb';
+    return import(`moment/locale/${locale}`).then(() => moment.locale(locale)).catch(() => moment);
 };
 
 /**

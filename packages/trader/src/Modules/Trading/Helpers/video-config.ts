@@ -14,6 +14,10 @@ export const DESCRIPTION_VIDEO_ID: TDtraderVideoUrl = {
         light: 'c1d64d5ffaf449e3326d387a70621a4c',
         dark: '9657e4adcfd9274d41a042b7b6c42d60',
     },
+    even_odd: {
+        light: 'a3930b0a535c4f23daea5cf98a718941',
+        dark: 'e311e25dd68761d6ab73e8158ec83ea4',
+    },
     high_low: {
         light: 'f528c662c377601908a741ae2aedaec6',
         dark: '4c05445e1bd28f3f9f95b0ab566c4f9b',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CFDPlatformsList } from '../../features';
 import useDevice from '../../hooks/useDevice';
@@ -9,17 +9,10 @@ import {
     WalletsPrimaryTabPanels,
     WalletsPrimaryTabs,
 } from '../WalletsPrimaryTabs';
-import { WalletMobileTourGuide } from '../WalletTourGuide';
 import './AccountsList.scss';
 
-type TProps = {
-    isWalletSettled?: boolean;
-};
-
-const AccountsList = ({ isWalletSettled }: TProps) => {
+const AccountsList: FC = () => {
     const { isMobile } = useDevice();
-    const [isMT5PlatformListLoaded, setIsMT5PlatformListLoaded] = useState(false);
-    const [isOptionsAndMultipliersLoaded, setIsOptionsAndMultipliersLoaded] = useState(false);
     const { t } = useTranslation();
 
     if (isMobile) {
@@ -28,19 +21,12 @@ const AccountsList = ({ isWalletSettled }: TProps) => {
                 <WalletsPrimaryTabList list={[t('CFDs'), t('Options')]} />
                 <WalletsPrimaryTabPanels>
                     <WalletsPrimaryTabPanel>
-                        <CFDPlatformsList onMT5PlatformListLoaded={setIsMT5PlatformListLoaded} />
+                        <CFDPlatformsList />
                     </WalletsPrimaryTabPanel>
                     <WalletsPrimaryTabPanel>
-                        <OptionsAndMultipliersListing
-                            onOptionsAndMultipliersLoaded={setIsOptionsAndMultipliersLoaded}
-                        />
+                        <OptionsAndMultipliersListing />
                     </WalletsPrimaryTabPanel>
                 </WalletsPrimaryTabPanels>
-                <WalletMobileTourGuide
-                    isMT5PlatformListLoaded={isMT5PlatformListLoaded}
-                    isOptionsAndMultipliersLoaded={isOptionsAndMultipliersLoaded}
-                    isWalletSettled={isWalletSettled}
-                />
             </WalletsPrimaryTabs>
         );
     }

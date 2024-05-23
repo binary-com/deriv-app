@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Popover, Text } from '@deriv/components';
 import { isMobile } from '@deriv/shared';
 

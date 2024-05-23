@@ -1,0 +1,35 @@
+.bottom-nav {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    &-container {
+        display: flex;
+        padding: var(--core-spacing-400);
+        align-items: flex-start;
+        gap: var(--core-spacing-500);
+        width: 100%;
+        border-top: 1px solid var(--core-color-opacity-black-100); // waiting on quill tokens in deriv-app
+    }
+
+    &-selection {
+        flex: 1;
+        overflow: auto;
+    }
+
+    &-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1 0 0;
+
+        &--active {
+            .bottom-nav-item-label {
+                color: var(--core-color-opacity-coral-600);
+            }
+            svg {
+                fill: var(--core-color-opacity-coral-600);
+            }
+        }
+    }
+}

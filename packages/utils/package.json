@@ -4,6 +4,7 @@
     "version": "1.0.0",
     "main": "src/index.ts",
     "dependencies": {
+        "bowser": "^2.9.0",
         "lodash.groupby": "^4.6.0",
         "lodash.pickby": "^4.6.0",
         "moment": "^2.29.2"

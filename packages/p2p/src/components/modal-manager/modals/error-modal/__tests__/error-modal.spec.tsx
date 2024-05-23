@@ -56,7 +56,7 @@ describe('<ErrorModal/>', () => {
         render(<ErrorModal error_message='error message' />, {
             wrapper,
         });
-        const ok_button = screen.getByText('Ok');
+        const ok_button = screen.getByText('OK');
         expect(ok_button).toBeInTheDocument();
         ok_button.click();
         expect(mock_modal_manager_context.hideModal).toHaveBeenCalled();

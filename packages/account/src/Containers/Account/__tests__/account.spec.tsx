@@ -8,11 +8,6 @@ import Account from '../account';
 
 jest.mock('../../Account/page-overlay-wrapper', () => jest.fn(() => <div>MockPageOverlayWrapper</div>));
 
-jest.mock('@deriv/hooks', () => ({
-    ...jest.requireActual('@deriv/hooks'),
-    useStoreWalletAccountsList: jest.fn(() => ({ has_wallet: false })),
-}));
-
 jest.mock('@deriv/components', () => ({
     ...jest.requireActual('@deriv/components'),
     Loading: () => <div>MockLoading</div>,

@@ -8,8 +8,10 @@ import { CFD_PLATFORMS, MarketTypeDetails, PlatformDetails } from '../../constan
 import './EnterPassword.scss';
 
 type TProps = {
+    isForgotPasswordLoading?: boolean;
     isLoading?: boolean;
     marketType: TMarketTypes.CreateOtherCFDAccount;
+    modalTitle?: string;
     onPasswordChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onPrimaryClick?: () => void;
     onSecondaryClick?: () => void;
@@ -20,8 +22,10 @@ type TProps = {
 };
 
 const EnterPassword: React.FC<TProps> = ({
+    isForgotPasswordLoading,
     isLoading,
     marketType,
+    modalTitle,
     onPasswordChange,
     onPrimaryClick,
     onSecondaryClick,
@@ -47,9 +51,11 @@ const EnterPassword: React.FC<TProps> = ({
     return (
         <div className='wallets-enter-password'>
             <div className='wallets-enter-password__container'>
-                <WalletText lineHeight='xl' weight='bold'>
-                    Enter your {title} password
-                </WalletText>
+                {isDesktop && (
+                    <WalletText lineHeight='xl' weight='bold'>
+                        {modalTitle}
+                    </WalletText>
+                )}
                 <div className='wallets-enter-password__content'>
                     <WalletText size='sm'>
                         Enter your {title} password to add a{' '}
@@ -70,7 +76,12 @@ const EnterPassword: React.FC<TProps> = ({
             </div>
             {isDesktop && (
                 <div className='wallets-enter-password__buttons'>
-                    <WalletButton onClick={onSecondaryClick} size='md' variant='outlined'>
+                    <WalletButton
+                        isLoading={isForgotPasswordLoading}
+                        onClick={onSecondaryClick}
+                        size='md'
+                        variant='outlined'
+                    >
                         Forgot password?
                     </WalletButton>
                     <WalletButton

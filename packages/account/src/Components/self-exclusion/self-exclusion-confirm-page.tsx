@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Button, Icon, StaticUrl, Text } from '@deriv/components';
 import { FormikValues, useFormikContext } from 'formik';
 import { formatMoney, toMoment } from '@deriv/shared';

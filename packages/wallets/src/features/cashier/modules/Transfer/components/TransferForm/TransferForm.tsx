@@ -52,10 +52,11 @@ const TransferForm = () => {
                                 />
                             </div>
                         </div>
-                        <div className='wallets-transfer__submit-button'>
+                        <div className='wallets-transfer__submit-button' data-testid='dt_transfer_form_submit_btn'>
                             <WalletButton
                                 disabled={!values.fromAmount || !values.toAmount || values.isError}
                                 size={isMobile ? 'md' : 'lg'}
+                                type='submit'
                             >
                                 Transfer
                             </WalletButton>

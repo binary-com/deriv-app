@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, LinearProgress, Text } from '@deriv/components';
-import { isEmptyObject, PlatformContext } from '@deriv/shared';
+import { isEmptyObject } from '@deriv/shared';
 import CloseButton from './close-button.jsx';
 import NotificationStatusIcons from './notification-status-icons.jsx';
 import NotificationBanner from './notification-banner.jsx';
@@ -13,7 +13,6 @@ import NotificationOrder from './notification-order.jsx';
 
 const Notification = ({ data, removeNotificationMessage }) => {
     const linear_progress_container_ref = React.useRef(null);
-    const { is_appstore } = React.useContext(PlatformContext);
 
     const destroy = is_closed_by_user => {
         removeNotificationMessage(data);
@@ -138,7 +137,7 @@ const Notification = ({ data, removeNotificationMessage }) => {
                                             onClick={() => {
                                                 if (data.timeout)
                                                     linear_progress_container_ref.current.removeTimeoutSession();
-                                                data.action.onClick({ is_appstore });
+                                                data.action.onClick();
                                             }}
                                             text={data.action.text}
                                             secondary

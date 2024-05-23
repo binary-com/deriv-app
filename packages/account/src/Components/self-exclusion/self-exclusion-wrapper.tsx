@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import { isDesktop, isMobile } from '@deriv/shared';
 import { Div100vhContainer, ThemedScrollbars } from '@deriv/components';

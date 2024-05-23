@@ -7,6 +7,10 @@
     width: 100%;
     padding-block: 0.8rem;
 
+    &__title {
+        margin: 0.8rem 1.4rem 0;
+    }
+
     &__actions {
         display: flex;
         padding-left: 2.4rem;
@@ -44,6 +48,7 @@
             gap: 1.6rem;
             overflow: hidden;
             transform: translateX(calc(50% - 14.4rem));
+            height: 18rem;
         }
     }
 

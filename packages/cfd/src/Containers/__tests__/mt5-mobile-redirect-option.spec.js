@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { isSafariBrowser, mobileOSDetect } from '@deriv/shared';
+import { isSafariBrowser, mobileOSDetect, mobileOSDetectAsync } from '@deriv/shared';
 import MT5MobileRedirectOption from '../mt5-mobile-redirect-option';
 import { DEEP_LINK, getMobileAppInstallerURL, getPlatformMt5DownloadLink } from '../../../src/Helpers/constants';
 
@@ -63,10 +63,11 @@ describe('<MT5MobileRedirectOption/>', () => {
             configurable: true,
         });
 
-        expect(mobileOSDetect()).toBe('iOS');
+        const os = await mobileOSDetectAsync();
+        expect(os).toBe('iOS');
         expect(isSafariBrowser()).toBe(true);
 
-        const expectedUrl = getMobileAppInstallerURL({ mt5_trade_account: mock_props.mt5_trade_account });
+        const expectedUrl = await getMobileAppInstallerURL({ mt5_trade_account: mock_props.mt5_trade_account });
         expect(expectedUrl).toBe(mock_props.mt5_trade_account.white_label_links.ios);
     });
 
@@ -75,10 +76,11 @@ describe('<MT5MobileRedirectOption/>', () => {
             value: 'Mozilla/5.0 (Linux; Android 10; SM-A205U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.105 Mobile Safari/537.36',
             configurable: true,
         });
-        expect(mobileOSDetect()).toBe('Android');
+        const os = await mobileOSDetectAsync();
+        expect(os).toBe('Android');
         expect(isSafariBrowser()).toBe(false);
 
-        const expectedUrl = getMobileAppInstallerURL({ mt5_trade_account: mock_props.mt5_trade_account });
+        const expectedUrl = await getMobileAppInstallerURL({ mt5_trade_account: mock_props.mt5_trade_account });
         expect(expectedUrl).toBe(mock_props.mt5_trade_account.white_label_links.android);
     });
 
@@ -87,10 +89,11 @@ describe('<MT5MobileRedirectOption/>', () => {
             value: 'Mozilla/5.0 (Linux; Android 10; ELE-L29) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.105 Mobile Safari/537.36',
             configurable: true,
         });
-        expect(mobileOSDetect()).toBe('huawei');
+        const os = await mobileOSDetectAsync();
+        expect(os).toBe('huawei');
         expect(isSafariBrowser()).toBe(false);
 
-        const expectedUrl = getMobileAppInstallerURL({ mt5_trade_account: mock_props.mt5_trade_account });
+        const expectedUrl = await getMobileAppInstallerURL({ mt5_trade_account: mock_props.mt5_trade_account });
         expect(expectedUrl).toBe(getPlatformMt5DownloadLink('huawei'));
     });
 

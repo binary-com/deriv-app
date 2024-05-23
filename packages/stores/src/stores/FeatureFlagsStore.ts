@@ -2,7 +2,6 @@ import BaseStore from './BaseStore';
 
 const FLAGS = {
     dtrader_v2: false,
-    next_account: false,
     next_cashier: false,
     next_tradershub: false,
     next_wallet: false,

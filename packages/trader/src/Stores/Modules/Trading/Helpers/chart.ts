@@ -55,7 +55,6 @@ export const STATE_TYPES = {
     INDICATORS_CLEAR_ALL: 'INDICATORS_CLEAR_ALL',
     INDICATORS_MODAL_TOGGLE: 'INDICATORS_MODAL_TOGGLE',
     INITIAL: 'INITIAL',
-    MARKET_INFO_REDIRECT: 'MARKET_INFO_REDIRECT',
     MARKET_SEARCH: 'MARKET_SEARCH',
     MARKET_STATE_CHANGE: 'MARKET_STATE_CHANGE',
     MARKETS_LIST_TOGGLE: 'MARKETS_LIST_TOGGLE',
@@ -197,12 +196,6 @@ const getMarketTypeFormAnalyticsData = (state: keyof typeof STATE_TYPES, option:
                 market_type_name,
             };
             break;
-        case STATE_TYPES.MARKET_INFO_REDIRECT:
-            payload.data = {
-                action: ACTION.INFO_REDIRECT,
-                tab_market_name,
-            };
-            break;
         case STATE_TYPES.MARKET_SEARCH:
             payload.data = {
                 action: ACTION.SEARCH,
@@ -245,7 +238,6 @@ export const getChartAnalyticsData = (state: keyof typeof STATE_TYPES, option: T
     ];
     const market_type_form_events: string[] = [
         STATE_TYPES.FAVORITE_MARKETS_TOGGLE,
-        STATE_TYPES.MARKET_INFO_REDIRECT,
         STATE_TYPES.MARKETS_LIST_TOGGLE,
         STATE_TYPES.MARKET_SEARCH,
         STATE_TYPES.SYMBOL_CHANGE,

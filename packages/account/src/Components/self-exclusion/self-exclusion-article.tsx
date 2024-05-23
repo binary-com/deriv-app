@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { StaticUrl } from '@deriv/components';
 import { Localize, localize } from '@deriv/translations';
 import { getBrandWebsiteName, getPlatformSettings } from '@deriv/shared';

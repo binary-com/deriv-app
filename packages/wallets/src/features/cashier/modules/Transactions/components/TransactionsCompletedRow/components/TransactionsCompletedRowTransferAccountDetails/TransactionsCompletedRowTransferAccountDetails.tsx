@@ -16,10 +16,7 @@ const TransactionsCompletedRowTransferAccountDetails: React.FC<TProps> = ({ acco
     const wallet = accounts.wallets?.find(account => account.loginid === loginid);
     const dtradeAccount = accounts.dtrade?.find(account => account.loginid === loginid);
     const dxtradeAccount = accounts.dxtrade?.find(account => account.account_id === loginid);
-    // TODO: remove the `replace` calls once backend resolves `statement` and `mt5_login_list` accounts `loginid` inconsistency
-    const mt5Account = accounts.mt5?.find(
-        account => account.login?.replace(/^\D+/g, '') === loginid.replace(/^\D+/g, '')
-    );
+    const mt5Account = accounts.mt5?.find(account => account.login === loginid);
     const ctraderAccount = accounts.ctrader?.find(account => account.account_id === loginid);
 
     const transferAccount = [wallet, dtradeAccount, dxtradeAccount, mt5Account, ctraderAccount].find(Boolean);

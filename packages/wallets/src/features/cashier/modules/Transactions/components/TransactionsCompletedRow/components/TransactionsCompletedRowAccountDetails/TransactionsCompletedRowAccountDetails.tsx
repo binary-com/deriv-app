@@ -2,11 +2,12 @@ import React from 'react';
 import {
     WalletCurrencyCard,
     WalletListCardBadge,
-    WalletsAppLinkedWithWalletIcon,
+    WalletMarketCurrencyIcon,
     WalletText,
 } from '../../../../../../../../components';
-import { THooks, TWalletLandingCompanyName } from '../../../../../../../../types';
-import { getTradingAppIcon } from '../../../../../../helpers';
+import { THooks, TPlatforms, TWalletLandingCompanyName } from '../../../../../../../../types';
+import { MARKET_TYPE } from '../../../../../../../cfd/constants';
+import { getMarketType } from '../../../../../../helpers';
 import './TransactionsCompletedRowAccountDetails.scss';
 
 type TProps = {
@@ -34,15 +35,23 @@ const TransactionsCompletedRowAccountDetails: React.FC<TProps> = ({
     mt5Group,
     mt5LandingCompanyName,
 }) => {
+    const marketType = getMarketType(mt5Group);
+
     return (
         <div className='wallets-transactions-completed-row-account-details'>
             {actionType !== 'transfer' || isInterWallet ? (
-                <WalletCurrencyCard currency={currency} isDemo={isDemo} size='md' />
-            ) : (
-                <WalletsAppLinkedWithWalletIcon
-                    appIcon={getTradingAppIcon(accountType, landingCompanyName ?? 'svg', mt5Group)}
+                <WalletCurrencyCard
+                    className='wallets-transactions-completed-row-account-details__currency-card'
                     currency={currency}
                     isDemo={isDemo}
+                    size='md'
+                />
+            ) : (
+                <WalletMarketCurrencyIcon
+                    currency={currency}
+                    isDemo={isDemo}
+                    marketType={marketType ?? MARKET_TYPE.ALL}
+                    platform={accountType as TPlatforms.All}
                 />
             )}
             <div className='wallets-transactions-completed-row-account-details__type-and-wallet-name'>

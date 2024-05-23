@@ -5,4 +5,5 @@ export * from './IDVDocumentUpload';
 export * from './ManualDocumentUpload';
 export * from './PersonalDetails';
 export * from './PoaScreen';
+export * from './PoiUploadError';
 export * from './SelfieDocumentUpload';

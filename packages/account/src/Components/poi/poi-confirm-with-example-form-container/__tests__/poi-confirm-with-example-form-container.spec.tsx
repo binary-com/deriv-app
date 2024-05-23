@@ -53,15 +53,11 @@ describe('<PoiConfirmWithExampleFormContainer/>', () => {
         onFormConfirm: jest.fn(),
     };
     const clarification_message = /To avoid delays, enter your/;
-    const checkbox_label =
-        'I confirm that the name and date of birth above match my chosen identity document (see below)';
-
     it('should render PersonalDetailsForm with image and checkbox', async () => {
         render(<PoiConfirmWithExampleFormContainer {...mock_props} />);
 
         expect(await screen.findByText('PoiNameDobExampleImage')).toBeInTheDocument();
         expect(screen.getByText(clarification_message)).toBeInTheDocument();
-        expect(screen.getByText(checkbox_label)).toBeInTheDocument();
         const checkbox_el: HTMLInputElement = screen.getByRole('checkbox');
         expect(checkbox_el.checked).toBeFalsy();
 

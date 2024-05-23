@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { createPortal } from 'react-dom';
 import { useFormikContext } from 'formik';
 import { Button, Text } from '@deriv/components';

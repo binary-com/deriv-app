@@ -690,7 +690,6 @@ const CFDAccountCardComponent = observer(
                                         className='dc-btn cfd-account-card__account-selection cfd-account-card__account-selection--primary'
                                         type='button'
                                         href={getCTraderWebTerminalLink(
-                                            type.category,
                                             ctrader_tokens[type.category as TAccountCategory]
                                         )}
                                         target='_blank'

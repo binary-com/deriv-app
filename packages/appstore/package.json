@@ -8,8 +8,9 @@
         "node": "18.x"
     },
     "scripts": {
-        "analyze": "webpack-bundle-analyzer --no-open -m static -r analyzed.html stats.json ./dist && webpack-bundle-analyzer -m json stats.json ./dist",
-        "build": "rimraf dist && NODE_OPTIONS='-r ts-node/register' webpack --progress --profile --json > stats.json ",
+        "analyze:stats": "NODE_OPTIONS='-r ts-node/register' webpack --progress --profile --json=stats.json",
+        "analyze:build": "webpack-bundle-analyzer --no-open -m static -r analyzed.html stats.json ./dist && webpack-bundle-analyzer -m json stats.json ./dist",
+        "build": "rimraf dist && NODE_OPTIONS='-r ts-node/register' webpack --progress",
         "build:travis": "rimraf dist && webpack",
         "serve": "rimraf dist && concurrently \"cross-env BUILD_MODE='serve' NODE_OPTIONS='-r ts-node/register' webpack --progress --watch\" \"tsc -w --noEmit --preserveWatchOutput\"",
         "start": "rimraf dist && npm run test && npm run serve",
@@ -27,7 +28,6 @@
     "dependencies": {
         "@deriv-com/analytics": "1.4.13",
         "@deriv/account": "^1.0.0",
-        "@deriv/api-types": "^1.0.172",
         "@deriv/cashier": "^1.0.0",
         "@deriv/cfd": "^1.0.0",
         "@deriv/components": "^1.0.0",
@@ -47,6 +47,7 @@
     "devDependencies": {
         "@babel/eslint-parser": "^7.17.0",
         "@babel/preset-react": "^7.16.7",
+        "@deriv/api-types": "^1.0.172",
         "@deriv/publisher": "^0.0.1-beta4",
         "@storybook/addon-docs": "^6.5.10",
         "@storybook/addon-essentials": "^6.5.10",

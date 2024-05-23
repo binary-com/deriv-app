@@ -16,6 +16,7 @@ declare global {
             switch_currency_accounts_time: number;
             switch_from_demo_to_real_time: number;
             switch_from_real_to_demo_time: number;
+            options_multipliers_section_loading_time: number;
         };
     }
 }
@@ -36,6 +37,7 @@ export const startPerformanceEventTimer = (action: keyof typeof global.Window.pr
             switch_currency_accounts_time: 0,
             switch_from_demo_to_real_time: 0,
             switch_from_real_to_demo_time: 0,
+            options_multipliers_section_loading_time: 0,
         };
     }
 

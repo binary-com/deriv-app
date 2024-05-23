@@ -3,7 +3,7 @@ import useStoreWalletAccountsList from './useStoreWalletAccountsList';
 
 type TLinkedAccount = {
     loginid?: string;
-    platform?: 'ctrader' | 'derivez' | 'dtrade' | 'dwallet' | 'dxtrade' | 'mt5';
+    platform?: Exclude<'ctrader' | 'derivez' | 'dtrade' | 'dxtrade' | 'mt5', 'dwallet'>;
 };
 
 type TReturnObjectType = {
@@ -20,13 +20,12 @@ const useStoreLinkedWalletsAccounts = () => {
             ctrader: [],
             derivez: [],
             dtrade: [],
-            dwallet: [],
             dxtrade: [],
             mt5: [],
         };
 
         wallets_list?.forEach(account => {
-            const linked = account.linked_to;
+            const linked = account.linked_to as TLinkedAccount[];
 
             linked?.forEach(linked_to_account => {
                 if (linked_to_account?.platform && linked_to_account?.loginid)

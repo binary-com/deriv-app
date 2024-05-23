@@ -32,6 +32,7 @@ const ContractCardSell = ({ contract_info, getCardLabels, is_sell_requested, onC
                     className={classNames('dc-btn--sell', {
                         'dc-btn--loading': is_sell_requested,
                     })}
+                    data-testid='dt_contract_card_sell'
                     is_disabled={is_sell_requested}
                     text={getCardLabels().SELL}
                     onClick={onClick}

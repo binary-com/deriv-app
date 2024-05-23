@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useActiveWalletAccount } from '@deriv/api-v2';
+import { useActiveWalletAccount, useBalanceSubscription } from '@deriv/api-v2';
+import { displayMoney } from '@deriv/api-v2/src/utils';
 import {
     LegacyClose2pxIcon,
     LegacyDepositIcon,
@@ -63,6 +64,7 @@ const virtualAccountTabs = [
 
 const WalletCashierHeader: React.FC<TProps> = ({ hideWalletDetails }) => {
     const { data: activeWallet } = useActiveWalletAccount();
+    const { data: balanceData, subscribe, unsubscribe } = useBalanceSubscription();
     const { isMobile } = useDevice();
     const activeTabRef = useRef<HTMLButtonElement>(null);
     const history = useHistory();
@@ -76,9 +78,18 @@ const WalletCashierHeader: React.FC<TProps> = ({ hideWalletDetails }) => {
         }
     }, [location.pathname, isMobile]);
 
+    useEffect(() => {
+        subscribe({
+            loginid: activeWallet?.loginid,
+        });
+        return () => {
+            unsubscribe();
+        };
+    }, [activeWallet?.loginid, subscribe, unsubscribe]);
+
     return (
         <WalletGradientBackground
-            currency={activeWallet?.currency_config?.display_code || 'USD'}
+            currency={activeWallet?.currency}
             device={isMobile ? 'mobile' : 'desktop'}
             isDemo={activeWallet?.is_virtual}
             theme='light'
@@ -106,7 +117,9 @@ const WalletCashierHeader: React.FC<TProps> = ({ hideWalletDetails }) => {
                             )}
                         </div>
                         <WalletText color={activeWallet?.is_virtual ? 'white' : 'general'} size='xl' weight='bold'>
-                            {activeWallet?.display_balance}
+                            {displayMoney?.(balanceData?.balance ?? 0, activeWallet?.currency || '', {
+                                fractional_digits: activeWallet?.currency_config?.fractional_digits,
+                            })}
                         </WalletText>
                     </div>
                     <div className='wallets-cashier-header__top-right-info'>

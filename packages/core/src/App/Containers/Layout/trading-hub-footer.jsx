@@ -16,7 +16,6 @@ import NetworkStatus, {
 import LiveChat from 'App/Components/Elements/LiveChat';
 import WhatsApp from 'App/Components/Elements/WhatsApp/index.ts';
 import ServerTime from '../server-time.jsx';
-import { useStoreWalletAccountsList } from '@deriv/hooks';
 import { routes, useIsMounted } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import DarkModeToggleIcon from 'Assets/SvgComponents/footer/ic-footer-light-theme.svg';
@@ -41,7 +40,7 @@ const FooterExtensionRenderer = (footer_extension, idx) => {
 const TradingHubFooter = observer(() => {
     const { client, common, ui, traders_hub } = useStore();
     const { show_eu_related_content } = traders_hub;
-    const { is_logged_in, is_eu, landing_company_shortcode, is_virtual } = client;
+    const { has_wallet, is_logged_in, is_eu, landing_company_shortcode, is_virtual } = client;
     const { current_language } = common;
     const {
         enableApp,
@@ -57,7 +56,6 @@ const TradingHubFooter = observer(() => {
         is_dark_mode_on: is_dark_mode,
         setDarkMode,
     } = ui;
-    const { has_wallet } = useStoreWalletAccountsList();
 
     let footer_extensions_left = [];
     let footer_extensions_right = [];

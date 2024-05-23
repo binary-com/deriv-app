@@ -1,6 +1,8 @@
 import { TWithdrawalCryptoContext } from '../provider';
 
 const helperMessageMapper = {
+    balanceLessThanMinWithdrawalLimit: (balance: string, min: string) =>
+        `Your balance (${balance}) is less than the current minimum withdrawal allowed (${min}). Please top up your wallet to continue with your withdrawal.`,
     decimalPlacesExceeded: (limit: number) => `Up to ${limit} decimal places are allowed.`,
     fieldRequired: 'This field is required.',
     insufficientFunds: 'Insufficient funds',
@@ -70,6 +72,13 @@ const validateCryptoInput = (
     if (amount > activeWallet.balance) return helperMessageMapper.insufficientFunds;
 
     const MIN_WITHDRAWAL_AMOUNT = minimumWithdrawal;
+
+    if (MIN_WITHDRAWAL_AMOUNT && activeWallet.balance < MIN_WITHDRAWAL_AMOUNT) {
+        return helperMessageMapper.balanceLessThanMinWithdrawalLimit(
+            activeWallet.display_balance,
+            `${MIN_WITHDRAWAL_AMOUNT.toFixed(fractionalDigits.crypto)} ${activeWallet.currency}`
+        );
+    }
 
     const MAX_WITHDRAWAL_AMOUNT =
         !isClientVerified && remainder < activeWallet.balance ? remainder : activeWallet.balance;

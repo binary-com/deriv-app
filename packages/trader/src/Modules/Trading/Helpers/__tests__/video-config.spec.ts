@@ -25,6 +25,9 @@ describe('getDescriptionVideoId', () => {
     it('should return an id for Touch/No Touch description video in light theme', () => {
         expect(getDescriptionVideoId('touch', false)).toEqual(DESCRIPTION_VIDEO_ID.touch.light);
     });
+    it('should return an id for Even/Odd description video in dark theme', () => {
+        expect(getDescriptionVideoId('even_odd', true)).toEqual(DESCRIPTION_VIDEO_ID.even_odd.dark);
+    });
     it('should return undefined when called with empty arguments', () => {
         expect(getDescriptionVideoId()).toEqual(undefined);
     });

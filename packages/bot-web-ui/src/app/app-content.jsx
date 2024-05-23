@@ -99,10 +99,12 @@ const AppContent = observer(() => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // use is_landing_company_loaded to know got details of accounts to identify should show an error or not
-    if (client.is_landing_company_loaded) {
-        changeActiveSymbolLoadingState();
-    }
+    React.useEffect(() => {
+        if (client.is_logged_in && client.is_landing_company_loaded) {
+            changeActiveSymbolLoadingState();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [client.is_landing_company_loaded]);
 
     React.useEffect(() => {
         const onDisconnectFromNetwork = () => {

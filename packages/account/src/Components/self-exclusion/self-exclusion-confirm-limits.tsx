@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Button, Icon, Text } from '@deriv/components';
 import { Localize } from '@deriv/translations';
 import { useFormikContext } from 'formik';

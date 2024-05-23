@@ -61,7 +61,7 @@ const MyAdsRowDropdown = ({
     );
 };
 
-const MyAdsRowRenderer = observer(({ row: advert, table_ref }) => {
+const MyAdsRowRenderer = observer(({ country_list, row: advert, table_ref }) => {
     const {
         ui: { is_desktop },
     } = useStore();
@@ -136,14 +136,14 @@ const MyAdsRowRenderer = observer(({ row: advert, table_ref }) => {
     };
     const onClickCopy = () => {
         if (p2p_settings.rate_type === rate_type) {
-            my_ads_store.onClickCopy(id, is_desktop);
+            my_ads_store.onClickCopy(country_list, id, is_desktop);
         } else {
             general_store.showModal({
                 key: 'MyAdsFloatingRateSwitchModal',
                 props: {
                     onSwitch: () => {
                         hideModal();
-                        my_ads_store.onClickCopy(id, is_desktop);
+                        my_ads_store.onClickCopy(country_list, id, is_desktop);
                     },
                 },
             });

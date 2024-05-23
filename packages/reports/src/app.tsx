@@ -1,4 +1,5 @@
 import React from 'react';
+import Loadable from 'react-loadable';
 import Routes from 'Containers/routes';
 import ReportsProviders from './reports-providers';
 import 'Sass/app.scss';
@@ -10,10 +11,16 @@ type TAppProps = {
     };
 };
 
+const TradeModals = Loadable({
+    loader: () => import(/* webpackChunkName: "trade-modals", webpackPrefetch: true */ './Components/Modals'),
+    loading: () => null,
+});
+
 const App = ({ passthrough }: TAppProps) => {
     return (
         <ReportsProviders store={passthrough.root_store}>
             <Routes />
+            <TradeModals />
         </ReportsProviders>
     );
 };

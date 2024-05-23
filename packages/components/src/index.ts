@@ -79,6 +79,7 @@ export { default as Money } from './components/money';
 export { default as MultiStep } from './components/multi-step';
 export { default as NewsTicker } from './components/news-ticker';
 export { default as Numpad } from './components/numpad';
+export { default as OpenLiveChatLink } from './components/open-livechat-link';
 export { default as PageError } from './components/page-error';
 export { default as PageErrorContainer } from './components/page-error-container';
 export { default as PageOverlay } from './components/page-overlay';

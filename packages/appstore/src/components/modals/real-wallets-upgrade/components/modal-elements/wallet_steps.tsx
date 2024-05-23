@@ -3,14 +3,7 @@ import { WalletsUpgradeStepOneContent, WalletsUpgradeStepOneFooter } from '../wa
 import { WalletsUpgradeStepTwoContent, WalletsUpgradeStepTwoFooter } from '../wallets-upgrade-step-two';
 import { TWalletSteps } from 'Types';
 
-const WalletSteps = ({
-    handleBack,
-    handleClose,
-    handleNext,
-    is_disabled,
-    toggleCheckbox,
-    upgradeToWallets,
-}: TWalletSteps) => [
+const WalletSteps = ({ handleBack, handleClose, handleNext, is_migrating, upgradeToWallets }: TWalletSteps) => [
     {
         name: 'wallets_upgrade_step_one',
         content: <WalletsUpgradeStepOneContent />,
@@ -18,11 +11,11 @@ const WalletSteps = ({
     },
     {
         name: 'wallets_upgrade_step_two',
-        content: <WalletsUpgradeStepTwoContent value={is_disabled} toggleCheckbox={toggleCheckbox} />,
+        content: <WalletsUpgradeStepTwoContent />,
         footer: (
             <WalletsUpgradeStepTwoFooter
                 handleBack={handleBack}
-                is_disabled={is_disabled}
+                is_migrating={is_migrating}
                 upgradeToWallets={upgradeToWallets}
             />
         ),

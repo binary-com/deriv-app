@@ -1,14 +1,13 @@
 import React from 'react';
-import { useStoreWalletAccountsList } from '@deriv/hooks';
 import { observer, useStore } from '@deriv/stores';
 import { Icon, Text } from '@deriv/components';
 import { localize, Localize } from '@deriv/translations';
 
 const MenuTitle = observer(() => {
-    const { common, ui } = useStore();
+    const { client, common, ui } = useStore();
+    const { has_wallet } = client;
     const { current_language } = common;
     const { is_mobile_language_menu_open, setMobileLanguageMenuOpen } = ui;
-    const { has_wallet } = useStoreWalletAccountsList();
 
     return (
         <React.Fragment>

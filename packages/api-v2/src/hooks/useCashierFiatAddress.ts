@@ -12,7 +12,7 @@ type TParams = Omit<
 
 /** A custom hook to get the deposit and withdrawal fiat address. */
 const useCashierFiatAddress = () => {
-    const { data, mutate: _mutate, ...rest } = useMutation('cashier');
+    const { data, mutate: _mutate, mutateAsync: _mutateAsync, ...rest } = useMutation('cashier');
     const iframe_url = typeof data?.cashier === 'string' ? `${data?.cashier}&DarkMode=off` : undefined;
 
     const mutate = useCallback(
@@ -20,12 +20,18 @@ const useCashierFiatAddress = () => {
             _mutate({ payload: { cashier, provider: 'doughflow', ...payload } }),
         [_mutate]
     );
+    const mutateAsync = useCallback(
+        (cashier: TCashierParam, payload?: TParams) =>
+            _mutateAsync({ payload: { cashier, provider: 'doughflow', ...payload } }),
+        [_mutateAsync]
+    );
 
     return {
         /** The deposit/withdrawal fiat iframe */
         data: iframe_url,
         /** Function to get deposit/withdrawal fiat address */
         mutate,
+        mutateAsync,
         ...rest,
     };
 };

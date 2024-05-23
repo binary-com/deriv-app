@@ -4,6 +4,7 @@
         "paths": {
             "_common/*": ["src/_common/*"],
             "App/*": ["src/App/*"],
+            "AppV2/*": ["src/AppV2/*"],
             "Assets/*": ["src/Assets/*"],
             "Constants/*": ["src/Constants/*"],
             "Fonts/*": ["src/public/fonts/*"],
@@ -17,6 +18,7 @@
             "Utils/*": ["src/Utils/*"],
             "@deriv/*": ["../*/src"]
         },
+        "useDefineForClassFields": true,
         "outDir": "./dist",
         "baseUrl": "./"
     },

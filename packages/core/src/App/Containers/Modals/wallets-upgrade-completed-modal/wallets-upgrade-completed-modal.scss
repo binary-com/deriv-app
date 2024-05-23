@@ -1,5 +1,6 @@
 .wallets-upgrade-completed-modal {
-    width: 120rem;
+    width: calc(100vw - 2rem);
+    max-width: 120rem;
     height: 79.1rem;
     padding-top: 8rem;
     display: flex;

@@ -1,0 +1,107 @@
+.ad-type-section {
+    &__container {
+        display: flex;
+        height: 8rem;
+        justify-content: space-between;
+        width: 67.2rem;
+
+        .dc-input {
+            margin-bottom: 2.1rem;
+            margin-top: 2.1rem;
+
+            &__container {
+                padding: 0 1rem;
+            }
+            &--hint {
+                margin-bottom: 0;
+            }
+            &__wrapper {
+                margin-top: 0;
+            }
+        }
+
+        @include mobile {
+            flex-direction: column;
+            height: unset;
+            width: unset;
+
+            .dc-input {
+                &__wrapper {
+                    margin-bottom: 5rem;
+                }
+            }
+        }
+    }
+
+    &__field {
+        height: 4rem;
+        margin-bottom: 0;
+        margin-left: 0;
+        width: 32.4rem;
+
+        @include mobile {
+            width: inherit;
+        }
+
+        &--contact-details {
+            margin-bottom: 5.9rem;
+
+            @include mobile {
+                margin-bottom: 3.7rem;
+            }
+        }
+        &--single {
+            width: 18.9rem;
+        }
+        &--textarea {
+            height: 9.6rem;
+            margin: 2rem 0 0;
+            width: 67.2rem;
+
+            @include mobile {
+                height: 9.8rem;
+                width: auto;
+            }
+
+            .dc-input {
+                &__hint {
+                    top: 9.7rem;
+                }
+
+                &___counter {
+                    top: 9.7rem;
+                    right: 0rem;
+
+                    @include mobile {
+                        display: flex;
+                        right: 0;
+                    }
+                }
+
+                &__textarea {
+                    padding-top: 1rem;
+                    padding-left: 0;
+                }
+
+                &__container {
+                    height: 9.6rem;
+                }
+            }
+        }
+    }
+
+    &__radio-group {
+        .dc-radio-group__circle {
+            border: 2px solid var(--border-hover);
+
+            &--selected {
+                border: 4px solid var(--brand-red-coral);
+            }
+        }
+
+        @include mobile {
+            margin-top: 0;
+            padding: 0.5rem 0;
+        }
+    }
+}

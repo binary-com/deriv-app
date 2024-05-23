@@ -28,7 +28,6 @@ describe('<SelfExclusionConfirmPage />', () => {
         is_app_settings: false,
         is_wrapper_bypassed: false,
         toggleArticle: jest.fn(),
-        is_uk: false,
         handleSubmit: jest.fn(),
         validateFields: jest.fn(),
     };
@@ -49,7 +48,6 @@ describe('<SelfExclusionConfirmPage />', () => {
             is_app_settings: false,
             is_wrapper_bypassed: false,
             toggleArticle: jest.fn(),
-            is_uk: false,
             handleSubmit: jest.fn(),
             validateFields: jest.fn(),
         };

@@ -382,3 +382,39 @@
         }
     }
 }
+
+.header-v2 {
+    display: flex;
+    justify-content: center;
+
+    &__acc-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        &--top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--semantic-spacing-gap-sm);
+        }
+
+        &--logo {
+            height: var(--core-size-800);
+            width: var(--core-size-800);
+
+            svg {
+                width: var(--core-size-800);
+                height: var(--core-size-800);
+            }
+        }
+
+        &--bottom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--semantic-spacing-gap-sm);
+        }
+    }
+}

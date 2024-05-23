@@ -114,3 +114,21 @@ export const getLastOnlineLabel = (is_online: 0 | 1, last_online_time?: number) 
     }
     return localize('Online');
 };
+
+/**
+ * Function to get the message to be shown to users when they are not eligible to create an order against an advert.
+ *
+ * @param {string[]} eligibility_statuses - The list of reasons why the user is not eligible.
+ * @returns {string} The eligibility message based on the given eligibility statuses.
+ */
+export const getEligibilityMessage = (eligibility_statuses: string[]) => {
+    if (eligibility_statuses.length === 1) {
+        if (eligibility_statuses.includes('completion_rate')) {
+            return localize('Your completion rate is too low for this ad.');
+        } else if (eligibility_statuses.includes('join_date')) {
+            return localize("You've not used Deriv P2P long enough for this ad.");
+        }
+    }
+
+    return localize("The advertiser has set conditions for this ad that you don't meet.");
+};

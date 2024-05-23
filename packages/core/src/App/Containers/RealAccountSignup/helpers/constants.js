@@ -37,14 +37,13 @@ export const getAccountTitle = landing_company_shortcode => {
 
 /**
  * @param {string} landing_company_shortcode
- * @param {boolean} is_belgium_residence,
  *
  * @return {EXPERIAN.WARN|EXPERIAN.SUCCESS|EXPERIAN.DANGER}
  */
 export const getExperianResult = status => {
-    const { landing_company_shortcode = '', is_belgium_residence = false } = status;
+    const { landing_company_shortcode = '' } = status;
 
-    if (landing_company_shortcode === 'svg' || is_belgium_residence) return EXPERIAN.SUCCESS;
+    if (landing_company_shortcode === 'svg') return EXPERIAN.SUCCESS;
 
     return EXPERIAN.SUCCESS;
 };

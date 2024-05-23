@@ -2,17 +2,10 @@ import React from 'react';
 import classNames from 'classnames';
 import { Field, Formik, FormikHandlers, FormikState } from 'formik';
 import { WebsiteStatus } from '@deriv/api-types';
-import {
-    AutoHeightWrapper,
-    FormSubmitButton,
-    Div100vhContainer,
-    Modal,
-    ThemedScrollbars,
-    Icon,
-} from '@deriv/components';
+import { AutoHeightWrapper, FormSubmitButton, Div100vhContainer, Modal, ThemedScrollbars } from '@deriv/components';
 import { reorderCurrencies, getAddressDetailsFields, CURRENCY_TYPE } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
-import { localize, Localize } from '@deriv/translations';
+import { localize } from '@deriv/translations';
 import RadioButton from './radio-button';
 import RadioButtonGroup from './radio-button-group';
 import { splitValidationResultTypes } from '../real-account-signup/helpers/utils';
@@ -79,7 +72,7 @@ const CurrencySelector = observer(
         has_wallet_account,
         value,
     }: TCurrencySelector) => {
-        const { client, ui, traders_hub } = useStore();
+        const { client, ui } = useStore();
 
         const {
             currency,
@@ -164,13 +157,6 @@ const CurrencySelector = observer(
             return localize('Next');
         };
 
-        const description = (
-            <div className='currency-selector__description--info'>
-                <Icon icon='IcInfoBlue' />
-                <Localize i18n_default_text='Please note that you can only have 1 fiat account.' />
-            </div>
-        );
-
         return (
             <Formik
                 initialValues={value}
@@ -207,10 +193,8 @@ const CurrencySelector = observer(
                                             <React.Fragment>
                                                 <RadioButtonGroup
                                                     className='currency-selector__radio-group currency-selector__radio-group--with-margin'
-                                                    label={localize('Fiat currencies')}
                                                     is_fiat
                                                     item_count={fiat.length}
-                                                    description={description}
                                                 >
                                                     {reorderCurrencies(fiat as keyof typeof reorderCurrencies).map(
                                                         avbl_currency => (
@@ -233,15 +217,14 @@ const CurrencySelector = observer(
                                             ?.length && (
                                             <React.Fragment>
                                                 <RadioButtonGroup
+                                                    is_title_enabled={false}
                                                     className='currency-selector__radio-group currency-selector__radio-group--with-margin'
-                                                    label={localize('Cryptocurrencies')}
                                                     item_count={
                                                         reorderCurrencies(
                                                             crypto as keyof typeof reorderCurrencies,
                                                             'crypto'
                                                         ).length
                                                     }
-                                                    description={description}
                                                 >
                                                     {reorderCurrencies(
                                                         crypto as keyof typeof reorderCurrencies,

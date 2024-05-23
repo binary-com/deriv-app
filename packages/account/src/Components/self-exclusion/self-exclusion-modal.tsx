@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Modal, ThemedScrollbars } from '@deriv/components';
 import SelfExclusionContext from './self-exclusion-context';
 import SelfExclusionArticleContent from './self-exclusion-article-content';

@@ -49,7 +49,6 @@ const mock = {
         standpoint: {
             svg: false,
         },
-        is_uk: false,
         is_virtual: false,
         is_switching: false,
         landing_company_shortcode: '',

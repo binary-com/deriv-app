@@ -2,6 +2,7 @@ import { mockGeneral, mockLoggedIn, setupMocks } from '@deriv/integration';
 import { expect, test } from '@playwright/test';
 import { mockBalance } from './mocks/mockBalance';
 import { mockCryptoConfig } from './mocks/mockCryptoConfig';
+import { mockCryptoWithdraw } from './mocks/mockCryptoWithdraw';
 import { mockGetAccountTypes } from './mocks/mockGetAccountTypes';
 import { mockProposalOpenContract } from './mocks/mockProposalOpenContract';
 import mockWalletsAuthorize, { DEFAULT_WALLET_ACCOUNTS } from './mocks/mockWalletsAuthorize';
@@ -11,6 +12,7 @@ test.describe('Wallets - Crypto withdrawal', () => {
         await setupMocks({
             baseURL,
             mocks: [
+                mockCryptoWithdraw,
                 mockGeneral,
                 mockLoggedIn,
                 mockWalletsAuthorize,

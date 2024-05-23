@@ -18,7 +18,7 @@ type TProps = {
     type?: 'input' | 'modal';
 };
 
-const WalletTransferFormAccountCard: React.FC<TProps> = ({ account, activeWallet, type = 'modal' }) => {
+const TransferFormAccountCard: React.FC<TProps> = ({ account, activeWallet, type = 'modal' }) => {
     const { isMobile } = useDevice();
     const isInput = type === 'input';
     const isModal = type === 'modal';
@@ -74,4 +74,4 @@ const WalletTransferFormAccountCard: React.FC<TProps> = ({ account, activeWallet
     );
 };
 
-export default WalletTransferFormAccountCard;
+export default TransferFormAccountCard;

@@ -14,7 +14,7 @@ const AdCancelModal = ({ confirm_label, message, onConfirm, title }: TAdCancelMo
     const { hideModal, is_modal_open } = useModalManagerContext();
 
     return (
-        <Modal has_close_icon={false} is_open={is_modal_open} small title={title}>
+        <Modal className='ad-cancel-modal' has_close_icon={false} is_open={is_modal_open} small title={title}>
             <Modal.Body>
                 <Text as='p' size='xs' color='prominent'>
                     {message}

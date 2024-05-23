@@ -152,9 +152,10 @@ const OnfidoSdkViewContainer = observer(
                 const script_node = document.createElement('script');
                 const link_node = document.createElement('link');
 
+                // [TODO] - Need to lock version of onfido sdk - Current version in CDN is 13.8.4
                 script_node.id = 'onfido_sdk';
-                script_node.src = 'https://assets.onfido.com/web-sdk-releases/latest/onfido.min.js';
-                link_node.href = 'https://assets.onfido.com/web-sdk-releases/latest/style.css';
+                script_node.src = 'https://assets.onfido.com/web-sdk-releases/13.8.4/onfido.min.js';
+                link_node.href = 'https://assets.onfido.com/web-sdk-releases/13.8.4/style.css';
                 link_node.rel = 'stylesheet';
                 link_node.id = 'onfido_style';
 

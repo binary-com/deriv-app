@@ -103,28 +103,28 @@ export default class ToolboxStore {
     adjustWorkspace() {
         // NOTE: added this load modal open check to prevent scroll when load modal is open
         if (!this.is_workspace_scroll_adjusted && !this.root_store.load_modal.is_load_modal_open) {
-            const workspace = window.Blockly.derivWorkspace;
             this.is_workspace_scroll_adjusted = true;
 
             setTimeout(() => {
+                const workspace = window.Blockly.derivWorkspace;
                 const toolbox_width = document.getElementById('gtm-toolbox')?.getBoundingClientRect().width || 0;
-                const toolbar_width = document.querySelector('.toolbar__group-btn')?.getBoundingClientRect().width || 0;
                 const block_canvas_rect = workspace.svgBlockCanvas_?.getBoundingClientRect(); // eslint-disable-line
 
-                // Need to set the direction right if the workspace is RTL
-                const is_workspace_LTR = !workspace.RTL;
-                let canvas_direction = block_canvas_rect.left;
-                if (!is_workspace_LTR && window.innerWidth < 768) canvas_direction = block_canvas_rect.right;
+                if (workspace.RTL && block_canvas_rect) {
+                    const is_mobile = this.core.ui.is_mobile;
+                    const block_canvas_space = is_mobile ? block_canvas_rect.right : block_canvas_rect.left;
 
-                // Need to set the scroll distance based on the device
-                const scroll_distance_mobile = toolbox_width + toolbar_width - canvas_direction + 20;
-                const scroll_distance_desktop = toolbox_width - canvas_direction + 36;
-                const scroll_distance = this.core.ui.is_mobile ? scroll_distance_mobile : scroll_distance_desktop;
+                    const scroll_distance_mobile = toolbox_width - block_canvas_space + 20;
+                    const scroll_distance_desktop = toolbox_width - block_canvas_space + 36;
+                    const scroll_distance = this.core.ui.is_mobile ? scroll_distance_mobile : scroll_distance_desktop;
 
-                // Scroll the workspace if the toolbox is overlapping the workspace
-                if (Math.round(block_canvas_rect?.left) <= toolbox_width) {
-                    scrollWorkspace(workspace, scroll_distance, true, false);
-                } else if (window.innerWidth < 768 && workspace.RTL) {
+                    if (Math.round(block_canvas_space) <= toolbox_width || is_mobile) {
+                        scrollWorkspace(workspace, scroll_distance, true, false);
+                    }
+                } else if (Math.round(block_canvas_rect?.left) <= toolbox_width) {
+                    const scroll_distance = this.core.ui.is_mobile
+                        ? toolbox_width - block_canvas_rect.left + 50
+                        : toolbox_width - block_canvas_rect.left + 36;
                     scrollWorkspace(workspace, scroll_distance, true, false);
                 }
 

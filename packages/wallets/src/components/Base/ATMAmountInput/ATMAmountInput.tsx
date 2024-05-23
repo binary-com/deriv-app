@@ -37,6 +37,8 @@ const WalletTransferFormInputField: React.FC<TProps> = ({
 
     const {
         onChange: formatOnChange,
+        onKeyDown,
+        onKeyUp,
         onPaste: formatOnPaste,
         value: formattedValue,
     } = useInputATMFormatter(inputRef, value, {
@@ -80,6 +82,8 @@ const WalletTransferFormInputField: React.FC<TProps> = ({
                         onBlur={onBlurHandler}
                         onChange={formatOnChange}
                         onFocus={onFocusHandler}
+                        onKeyDown={onKeyDown}
+                        onKeyUp={onKeyUp}
                         onPaste={formatOnPaste}
                         ref={inputRef}
                         type='tel'

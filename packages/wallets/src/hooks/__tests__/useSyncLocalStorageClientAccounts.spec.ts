@@ -57,12 +57,7 @@ const defaultClientAccountsValue = {
         is_virtual: 0,
         landing_company_name: 'svg',
         landing_company_shortcode: 'svg',
-        linked_to: [
-            {
-                loginid: 'CRW1001',
-                platform: 'dwallet',
-            },
-        ],
+        linked_to: [],
         residence: 'id',
         token: 'a1-testR123',
     },
@@ -144,12 +139,7 @@ describe('useSyncLocalStorageClientAccounts', () => {
                 is_virtual: 0,
                 landing_company_name: 'svg',
                 landing_company_shortcode: 'svg',
-                linked_to: [
-                    {
-                        loginid: 'CRW1002',
-                        platform: 'dwallet',
-                    },
-                ],
+                linked_to: [],
                 residence: 'id',
                 token: 'a1-testTRALALA',
             },

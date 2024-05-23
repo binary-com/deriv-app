@@ -6,6 +6,7 @@ import { localize } from '@deriv/translations';
 import ContractResultOverlay from 'Components/contract-result-overlay';
 import { contract_stages } from 'Constants/contract-stage';
 import { useDBotStore } from 'Stores/useDBotStore';
+import { rudderStackSendRunBotEvent } from '../../pages/bot-builder/quick-strategy/analytics/rudderstack-quick-strategy';
 import CircularWrapper from './circular-wrapper';
 import ContractStageText from './contract-stage-text';
 
@@ -89,6 +90,7 @@ const TradeAnimation = observer(({ className, should_show_overlay }: TTradeAnima
                         return;
                     }
                     onRunButtonClick();
+                    rudderStackSendRunBotEvent();
                 }}
                 has_effect
                 {...(is_stop_button_visible || !is_unavailable_for_payment_agent ? { primary: true } : { green: true })}

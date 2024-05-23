@@ -35,30 +35,27 @@ export const getSystemMaintenanceContent = ({
     isWithdrawalLocked,
 }: TSystemMaintenanceDescProps) => {
     let content = null;
-    const generateContent = (descriptionDefault: string, titleDefault: string) => ({
+    const generateContent = (textDefault: string) => ({
         description: (
             <WalletText align='center'>
                 <Trans
-                    defaults={`Due to system maintenance, ${descriptionDefault} your {{currency}} Wallet are unavailable at the moment. Please try again later.`}
+                    defaults={`Due to system maintenance, ${textDefault} with your {{currency}} Wallet are unavailable at the moment. Please try again later.`}
                     values={{ currency }}
                 />
             </WalletText>
         ),
         title: (
-            <Trans
-                defaults={`{{currency}} Wallet ${titleDefault} are temporarily unavailable.`}
-                values={{ currency }}
-            />
+            <Trans defaults={`{{currency}} Wallet ${textDefault} are temporarily unavailable.`} values={{ currency }} />
         ),
     });
 
     if (isCashierLocked) {
-        content = generateContent('deposits and withdrawals with', 'deposits and withdrawals');
+        content = generateContent('deposits and withdrawals');
     } else if (isCrypto) {
         if (isDepositLocked) {
-            content = generateContent('deposits into', 'deposits');
+            content = generateContent('deposits');
         } else if (isWithdrawalLocked) {
-            content = generateContent('withdrawals from', 'withdrawals');
+            content = generateContent('withdrawals');
         }
     }
 

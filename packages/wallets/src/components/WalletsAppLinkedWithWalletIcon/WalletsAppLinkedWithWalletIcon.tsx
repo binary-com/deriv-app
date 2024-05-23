@@ -15,7 +15,7 @@ const WalletsAppLinkedWithWalletIcon = ({ appIcon, currency, isDemo = false, siz
     return (
         <div
             className={`wallets-app-linked-with-wallet-icon wallets-app-linked-with-wallet-icon--${size}`}
-            data-testid='wallets-app-linked-with-wallet-icon'
+            data-testid='dt_wallets_app_linked_with_wallet_icon'
         >
             {/* Wallet Icon */}
             <div className='wallets-app-linked-with-wallet-icon__wallet-icon'>

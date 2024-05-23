@@ -3,6 +3,7 @@ import { observer, useStore } from '@deriv/stores';
 import { localize } from '@deriv/translations';
 import RegulatorsCompareModalContent from './regulators-compare-modal-content';
 import { Modal, DesktopWrapper, MobileDialog, MobileWrapper, UILoader } from '@deriv/components';
+import './regulators-compare-modal.scss';
 
 const RegulatorsCompareModal = () => {
     const { traders_hub, ui } = useStore();

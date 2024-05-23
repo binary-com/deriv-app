@@ -39,7 +39,6 @@ describe('<RealAccountSignup />', () => {
     const store = mockStore({
         client: {
             available_crypto_currencies: [],
-            country_standpoint: '',
             currency: 'USD',
             fetchAccountSettings: jest.fn(),
             residence: 'gb',

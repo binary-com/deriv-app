@@ -18,7 +18,7 @@ const mockTransactions = [
         amount: 0.0001,
         description: '',
         formatted_address_hash: '',
-        formatted_amount: '',
+        formatted_amount: '0.00010000 BTC',
         formatted_confirmations: '',
         formatted_transaction_hash: '',
         id: '',
@@ -120,7 +120,7 @@ describe('TransactionStatusSuccess', () => {
         );
 
         expect(screen.getByText('Withdrawal')).toBeInTheDocument();
-        expect(screen.getByText('0.0001')).toBeInTheDocument();
+        expect(screen.getByText('0.00010000 BTC')).toBeInTheDocument();
         expect(screen.queryByText('No recent transactions.')).not.toBeInTheDocument();
         expect(screen.queryByText('View more')).not.toBeInTheDocument();
     });
@@ -133,7 +133,7 @@ describe('TransactionStatusSuccess', () => {
                 amount: 0.0001,
                 description: '',
                 formatted_address_hash: '',
-                formatted_amount: '',
+                formatted_amount: '0.00010000 BTC',
                 formatted_confirmations: '',
                 formatted_transaction_hash: '',
                 id: '',
@@ -163,7 +163,7 @@ describe('TransactionStatusSuccess', () => {
         );
 
         expect(screen.getByText('Deposit')).toBeInTheDocument();
-        expect(screen.getByText('0.0001')).toBeInTheDocument();
+        expect(screen.getByText('0.00010000 BTC')).toBeInTheDocument();
         expect(screen.queryByText('No recent transactions.')).not.toBeInTheDocument();
         expect(screen.queryByText('View more')).not.toBeInTheDocument();
     });
@@ -229,7 +229,7 @@ describe('TransactionStatusSuccess', () => {
 
         expect(screen.queryByText('No recent transactions.')).not.toBeInTheDocument();
         expect(screen.getAllByText('Withdrawal')[0]).toBeInTheDocument();
-        expect(screen.getAllByText('0.0001')[0]).toBeInTheDocument();
+        expect(screen.getAllByText('0.00010000 BTC')[0]).toBeInTheDocument();
         expect(screen.getByText('View more')).toBeInTheDocument();
 
         fireEvent.click(screen.getByText('View more'));

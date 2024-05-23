@@ -288,7 +288,6 @@ export type TCompareAccountRowProps = TCompareAccountContentProps & {
     available_accounts_count: number;
     classname_for_demo_and_eu: string | null;
     content_flag: string;
-    is_pre_appstore_setting: boolean;
     pre_appstore_class: string;
     is_high_risk_for_mt5: boolean;
     CFDs_restricted_countries: boolean;
@@ -309,7 +308,6 @@ export type TDMT5CompareModalContentProps = {
     content_flag: string;
     is_demo_tab: boolean;
     is_logged_in: boolean;
-    is_pre_appstore_setting: boolean;
     is_preappstore_cr_demo_account: boolean;
     is_preappstore_restricted_cr_demo_account: boolean;
     is_real_enabled: boolean;

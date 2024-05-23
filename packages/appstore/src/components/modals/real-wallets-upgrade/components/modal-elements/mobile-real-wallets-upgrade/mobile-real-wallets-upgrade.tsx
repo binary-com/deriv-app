@@ -24,7 +24,8 @@ const MobileRealWalletsUpgradeFooter = ({ wallet_steps, current_step }: TMobileR
 );
 
 const MobileRealWalletsUpgrade = observer(({ wallet_upgrade_steps }: TRealWalletsUpgradeSteps) => {
-    const { traders_hub: is_real_wallets_upgrade_on } = useStore();
+    const { traders_hub } = useStore();
+    const { is_real_wallets_upgrade_on } = traders_hub;
 
     const wallet_steps = WalletSteps(wallet_upgrade_steps);
     const { current_step, handleBack, handleNext, handleClose } = wallet_upgrade_steps;
@@ -45,7 +46,9 @@ const MobileRealWalletsUpgrade = observer(({ wallet_upgrade_steps }: TRealWallet
                         if (index < current_step) handleBack();
                     }}
                 >
-                    {wallet_steps.map(slide => slide.content)}
+                    {wallet_steps.map(slide => (
+                        <React.Fragment key={slide.name}>{slide.content}</React.Fragment>
+                    ))}
                 </SwipeableWrapper>
             </div>
         </MobileDialog>

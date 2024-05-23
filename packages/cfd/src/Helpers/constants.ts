@@ -5,7 +5,7 @@ import {
     validLength,
     validPassword,
     validMT5Password,
-    mobileOSDetect,
+    mobileOSDetectAsync,
 } from '@deriv/shared';
 import { localize } from '@deriv/translations';
 import { TCFDsPlatformType, TDetailsOfEachMT5Loginid, TMobilePlatforms } from 'Components/props.types';
@@ -129,7 +129,7 @@ const getDXTradeWebTerminalLink = (category: string, token?: string) => {
     return url;
 };
 
-const getCTraderWebTerminalLink = (category?: string, token?: string) => {
+const getCTraderWebTerminalLink = (token?: string) => {
     return `${CTRADER_URL}${token && `?token=${token}`}`;
 };
 
@@ -151,10 +151,12 @@ const validatePassword = (password: string): string | undefined => {
     }
 };
 
-const getMobileAppInstallerURL = ({ mt5_trade_account }: { mt5_trade_account: TDetailsOfEachMT5Loginid }) => {
-    if (mobileOSDetect() === 'iOS') {
+const getMobileAppInstallerURL = async ({ mt5_trade_account }: { mt5_trade_account: TDetailsOfEachMT5Loginid }) => {
+    const os = await mobileOSDetectAsync();
+
+    if (os === 'iOS') {
         return mt5_trade_account?.white_label_links?.ios;
-    } else if (mobileOSDetect() === 'huawei') {
+    } else if (os === 'huawei') {
         return getPlatformMt5DownloadLink('huawei');
     }
     return mt5_trade_account?.white_label_links?.android;

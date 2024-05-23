@@ -5,7 +5,7 @@
     padding: 2.4rem;
     width: 44rem;
     @include mobile {
-        width: unset;
+        max-width: 35rem;
     }
 
     .dc-form-submit-button {

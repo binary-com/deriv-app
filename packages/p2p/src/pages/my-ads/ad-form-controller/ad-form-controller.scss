@@ -1,0 +1,16 @@
+.ad-form-controller {
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 0.8rem;
+    border-top: 1px solid var(--general-section-1);
+    padding: 2rem 0;
+
+    @include desktop {
+        margin-top: 5rem;
+    }
+
+    @include mobile {
+        margin: 3rem -1.6rem 0;
+        padding-right: 1.6rem;
+    }
+}

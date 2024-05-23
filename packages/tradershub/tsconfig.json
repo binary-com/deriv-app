@@ -6,9 +6,7 @@
         "paths": {
             "@deriv/*": ["../*/src"],
             "@/*": ["src/*"],
-            "@cfd/*": ["src/features/cfd/*"],
-            "@deriv-lib/account-v2-lib": ["../account-v2/src/modules"],
-
+            "@cfd/*": ["src/features/cfd/*"]
         }
     },
     "include": ["src", "./declarations.d.ts", "../../utils.d.ts"],

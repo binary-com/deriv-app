@@ -3,21 +3,14 @@ import { Localize } from '@deriv/translations';
 
 type TDisplayAccountType = {
     account_type: string;
-    country_standpoint: {
-        is_united_kingdom?: boolean;
-        is_belgium?: boolean;
-    };
     is_eu: boolean;
 };
 
-const DisplayAccountType = ({ account_type, country_standpoint, is_eu }: TDisplayAccountType) => {
+const DisplayAccountType = ({ account_type, is_eu }: TDisplayAccountType) => {
     if (account_type === 'financial') {
         return <Localize i18n_default_text='Multipliers' />;
     } else if (account_type === 'gaming') {
-        if (country_standpoint.is_united_kingdom) {
-            return <Localize i18n_default_text='Gaming' />;
-        }
-        if (is_eu || country_standpoint.is_belgium) {
+        if (is_eu) {
             return <Localize i18n_default_text='Options' />;
         }
         return <Localize i18n_default_text='Derived' />;

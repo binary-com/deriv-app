@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { formatMoney } from '@deriv/shared';
 import AccountLimitsTableCell from './account-limits-table-cell';
 import AccountLimitsContext, { TAccountLimitsContext } from './account-limits-context';

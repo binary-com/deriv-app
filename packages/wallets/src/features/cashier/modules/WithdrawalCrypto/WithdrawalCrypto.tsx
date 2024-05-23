@@ -1,20 +1,41 @@
 import React from 'react';
-import { WalletText } from '../../../../components';
+import { Loader, WalletText } from '../../../../components';
+import { isServerError } from '../../../../utils/utils';
+import { WithdrawalErrorScreen } from '../../screens';
 import { TransactionStatus } from '../TransactionStatus';
-import { WithdrawalCryptoProvider, useWithdrawalCryptoContext } from './provider';
 import { WithdrawalCryptoDisclaimer, WithdrawalCryptoForm, WithdrawalCryptoReceipt } from './components';
+import { useWithdrawalCryptoContext, WithdrawalCryptoProvider } from './provider';
 import './WithdrawalCrypto.scss';
 
 type TWithdrawalCryptoProps = {
-    onClose: () => void;
+    setResendEmail: React.Dispatch<React.SetStateAction<boolean>>;
+    setVerificationCode: React.Dispatch<React.SetStateAction<string>>;
     verificationCode: string;
 };
 
-const WithdrawalCrypto: React.FC = () => {
-    const { activeWallet, getCurrencyConfig, isWithdrawalSuccess, onClose, withdrawalReceipt } =
+const WithdrawalCrypto: React.FC<Pick<TWithdrawalCryptoProps, 'setResendEmail' | 'setVerificationCode'>> = ({
+    setResendEmail,
+    setVerificationCode,
+}) => {
+    const { activeWallet, error, getCurrencyConfig, isLoading, isWithdrawalSuccess, setError, withdrawalReceipt } =
         useWithdrawalCryptoContext();
 
-    if (isWithdrawalSuccess) return <WithdrawalCryptoReceipt onClose={onClose} withdrawalReceipt={withdrawalReceipt} />;
+    const onCloseHandler = () => setVerificationCode('');
+
+    const resetError = () => {
+        onCloseHandler();
+        setError(undefined);
+    };
+
+    if (isLoading) return <Loader />;
+
+    if (isServerError(error)) {
+        return <WithdrawalErrorScreen error={error} resetError={resetError} setResendEmail={setResendEmail} />;
+    }
+
+    if (isWithdrawalSuccess) {
+        return <WithdrawalCryptoReceipt onClose={onCloseHandler} withdrawalReceipt={withdrawalReceipt} />;
+    }
 
     return (
         <div className='wallets-withdrawal-crypto'>
@@ -34,10 +55,14 @@ const WithdrawalCrypto: React.FC = () => {
     );
 };
 
-const WithdrawalCryptoModule: React.FC<TWithdrawalCryptoProps> = ({ onClose, verificationCode }) => {
+const WithdrawalCryptoModule: React.FC<TWithdrawalCryptoProps> = ({
+    setResendEmail,
+    setVerificationCode,
+    verificationCode,
+}) => {
     return (
-        <WithdrawalCryptoProvider onClose={onClose} verificationCode={verificationCode}>
-            <WithdrawalCrypto />
+        <WithdrawalCryptoProvider verificationCode={verificationCode}>
+            <WithdrawalCrypto setResendEmail={setResendEmail} setVerificationCode={setVerificationCode} />
         </WithdrawalCryptoProvider>
     );
 };

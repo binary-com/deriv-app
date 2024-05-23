@@ -2,6 +2,7 @@ import React from 'react';
 import debounce from 'lodash.debounce';
 import { observer } from '@deriv/stores';
 import { localize } from '@deriv/translations';
+import { Analytics } from '@deriv-com/analytics';
 import { DEBOUNCE_INTERVAL_TIME } from 'Constants/bot-contents';
 import { useDBotStore } from 'Stores/useDBotStore';
 
@@ -22,6 +23,12 @@ const SearchInput = observer(({ faq_value, setFaqSearchContent, prev_active_tuto
             value => {
                 filterTuotrialTab(value);
                 setActiveTabTutorial(3);
+                Analytics.trackEvent('ce_bot_form', {
+                    action: 'search',
+                    form_name: 'ce_bot_form',
+                    subpage_name: 'tutorials',
+                    search_term: value,
+                });
                 if (value === '') {
                     setActiveTabTutorial(prev_active_tutorials);
                 }

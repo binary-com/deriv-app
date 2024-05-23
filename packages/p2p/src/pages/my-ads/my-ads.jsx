@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Loading } from '@deriv/components';
+import { useP2PCountryList } from '@deriv/hooks';
 import { observer } from 'mobx-react-lite';
 import { localize } from 'Components/i18next';
 import { useStores } from 'Stores';
@@ -18,6 +19,7 @@ const MyAdsState = ({ message }) => (
 );
 
 const MyAds = () => {
+    const { p2p_country_list = {} } = useP2PCountryList();
     const { general_store, my_ads_store, my_profile_store } = useStores();
     const is_poi_poa_verified =
         general_store.poi_status === identity_status_codes.VERIFIED &&
@@ -53,20 +55,20 @@ const MyAds = () => {
         if (my_ads_store.show_ad_form) {
             return (
                 <div className='my-ads'>
-                    <CreateAd />
+                    <CreateAd country_list={p2p_country_list} />
                 </div>
             );
         } else if (my_ads_store.show_edit_ad_form) {
             return (
                 <div className='my-ads'>
-                    <EditAd />
+                    <EditAd country_list={p2p_country_list} />
                 </div>
             );
         }
 
         return (
             <div className='my-ads' ref={table_ref}>
-                <MyAdsTable table_ref={table_ref} />
+                <MyAdsTable country_list={p2p_country_list} table_ref={table_ref} />
             </div>
         );
     }

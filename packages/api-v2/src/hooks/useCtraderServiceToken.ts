@@ -1,12 +1,8 @@
-import useQuery from '../useQuery';
-import useActiveAccount from './useActiveAccount';
+import useMutation from '../useMutation';
 
 /** A custom hook that get Service Token for CTrader Platform. */
 const useCtraderServiceToken = () => {
-    const { data: account } = useActiveAccount();
-    const { data: ctrader_token, ...rest } = useQuery('service_token', {
-        payload: { service: 'ctrader', server: account?.is_virtual ? 'demo' : 'real' },
-    });
+    const { data: ctrader_token, ...rest } = useMutation('service_token');
 
     return {
         /** return the ctrader account token */

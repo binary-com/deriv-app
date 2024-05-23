@@ -2,22 +2,21 @@ import React from 'react';
 import { Modal, Text } from '@deriv/components';
 import { Localize } from '@deriv/translations';
 import { observer, useStore } from '@deriv/stores';
-import { getStaticUrl, PlatformContext } from '@deriv/shared';
+import { getStaticUrl } from '@deriv/shared';
 
 const AccountClosed = observer(() => {
     const { client } = useStore();
     const { logout } = client;
     const [is_modal_open, setModalState] = React.useState(true);
     const [timer, setTimer] = React.useState(10);
-    const { is_appstore } = React.useContext(PlatformContext);
 
     const counter = React.useCallback(() => {
         if (timer > 0) {
             setTimer(timer - 1);
         } else {
-            window.location.href = getStaticUrl('/', { is_appstore });
+            window.location.href = getStaticUrl('/');
         }
-    }, [is_appstore, timer]);
+    }, [timer]);
 
     React.useEffect(() => {
         window.history.pushState(null, '', '/');

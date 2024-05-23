@@ -13,18 +13,29 @@
         min-width: 32.8rem;
         min-height: 50rem;
         margin: auto;
+        @include mobile {
+            height: 100%;
+        }
     }
 
     .account-form__poi-confirm-example_container {
         margin-bottom: 0;
     }
 
-    .onfido-sdk-ui-Modal-inner {
-        border-radius: $BORDER_RADIUS * 2;
+    .onfido-sdk-ui {
+        &-Modal-inner {
+            border-radius: $BORDER_RADIUS * 2;
+        }
+        &-Theme-step {
+            @include mobile {
+                height: auto;
+            }
+        }
     }
 
     @include mobile {
         padding: 1.6rem;
+        height: 100%;
 
         & .onfido-sdk-ui-PageTitle {
             &-titleWrapper {

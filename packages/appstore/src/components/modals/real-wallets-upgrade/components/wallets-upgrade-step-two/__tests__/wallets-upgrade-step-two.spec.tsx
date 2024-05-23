@@ -5,12 +5,11 @@ import { StoreProvider, mockStore } from '@deriv/stores';
 
 describe('WalletsUpgradeStepTwoContent', () => {
     const containerReadyToEnableWallets = (mock: ReturnType<typeof mockStore>) => {
-        const toggleCheckbox = jest.fn();
         const wrapper = ({ children }: { children: JSX.Element }) => (
             <StoreProvider store={mock}>{children}</StoreProvider>
         );
 
-        return render(<WalletsUpgradeStepTwoContent toggleCheckbox={toggleCheckbox} value={false} />, {
+        return render(<WalletsUpgradeStepTwoContent />, {
             wrapper,
         });
     };
@@ -20,13 +19,6 @@ describe('WalletsUpgradeStepTwoContent', () => {
         const { container } = containerReadyToEnableWallets(mock);
 
         expect(container).toBeInTheDocument();
-    });
-
-    it('should render checkbox', () => {
-        const mock = mockStore({});
-        containerReadyToEnableWallets(mock);
-
-        expect(screen.getByRole('checkbox')).toBeInTheDocument();
     });
 
     it('should render the info sections', () => {
@@ -41,9 +33,6 @@ describe('WalletsUpgradeStepTwoContent', () => {
         ).toBeInTheDocument();
         expect(
             screen.getByText('Your open trading positions will not be affected while we are setting up your wallets.')
-        ).toBeInTheDocument();
-        expect(
-            screen.getByText('I acknowledge and confirm that I would like to upgrade to Wallets.')
         ).toBeInTheDocument();
     });
 });

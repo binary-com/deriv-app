@@ -171,6 +171,7 @@ const getJurisdictionDescription = (shortcode?: string) => {
                 regulator: 'Labuan Financial Services Authority',
                 regulator_description: 'Regulator/External dispute resolution',
                 regulator_license: '(License no. MB/18/0024)',
+                spread: '1.4 pips',
             };
         case MARKET_TYPE_SHORTCODE.FINANCIAL_MALTAINVEST:
             return {

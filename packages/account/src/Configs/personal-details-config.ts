@@ -237,8 +237,7 @@ const personalDetailsConfig = <T>(
         account_status,
         residence,
     }: TPersonalDetailsConfig,
-    PersonalDetails: T,
-    is_appstore = false
+    PersonalDetails: T
 ) => {
     const config = personal_details_config({
         residence_list,
@@ -250,8 +249,8 @@ const personalDetailsConfig = <T>(
     const disabled_items = account_settings.immutable_fields;
     return {
         header: {
-            active_title: is_appstore ? localize('A few personal details') : localize('Complete your personal details'),
-            title: is_appstore ? localize('PERSONAL') : localize('Personal details'),
+            active_title: localize('Complete your personal details'),
+            title: localize('Personal details'),
         },
         body: PersonalDetails,
         form_value: getDefaultFields(real_account_signup_target, config),

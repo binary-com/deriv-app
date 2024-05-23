@@ -1692,7 +1692,7 @@ export default class TradeStore extends BaseStore {
                 this.root_store.contract_trade.updateAccumulatorBarriersData(current_spot_data);
             }
         };
-        if (this.is_market_closed) {
+        if (isMarketClosed(this.active_symbols, req.ticks_history)) {
             delete req.subscribe;
             WS.getTicksHistory(req).then(passthrough_callback, passthrough_callback);
         } else if (req.subscribe === 1) {

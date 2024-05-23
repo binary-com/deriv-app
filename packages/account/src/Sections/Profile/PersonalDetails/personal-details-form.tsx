@@ -119,7 +119,7 @@ export const PersonalDetailsForm = observer(({ history }: { history: BrowserHist
         setStatus({ msg: '' });
         const request = makeSettingsRequest({ ...values }, residence_list, states_list, is_virtual);
         setIsBtnLoading(true);
-        const data = await WS.setSettings(request);
+        const data = await WS.authorized.setSettings(request);
 
         if (data.error) {
             setStatus({ msg: data.error.message });
@@ -212,9 +212,9 @@ export const PersonalDetailsForm = observer(({ history }: { history: BrowserHist
         return undefined;
     };
 
-    const PersonalDetailSchema = getPersonalDetailsValidationSchema(is_eu);
+    const PersonalDetailSchema = getPersonalDetailsValidationSchema(is_eu, is_virtual);
 
-    const initialValues = getPersonalDetailsInitialValues(account_settings, residence_list, states_list);
+    const initialValues = getPersonalDetailsInitialValues(account_settings, residence_list, states_list, is_virtual);
 
     return (
         <Formik

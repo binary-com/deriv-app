@@ -62,12 +62,7 @@ export const ACCOUNTS_LIST = [
         is_disabled: 0,
         is_virtual: 0,
         landing_company_name: 'svg',
-        linked_to: [
-            {
-                loginid: 'CRW1003',
-                platform: 'dwallet',
-            },
-        ],
+        linked_to: [],
         loginid: 'CR90000243',
     },
     {
@@ -122,12 +117,7 @@ export const ACCOUNTS_LIST = [
         is_disabled: 0,
         is_virtual: 0,
         landing_company_name: 'svg',
-        linked_to: [
-            {
-                loginid: 'CRW1017',
-                platform: 'dwallet',
-            },
-        ],
+        linked_to: [],
         loginid: 'CR90000256',
     },
     {
@@ -165,12 +155,7 @@ export const ACCOUNTS_LIST = [
         is_disabled: 0,
         is_virtual: 1,
         landing_company_name: 'virtual',
-        linked_to: [
-            {
-                loginid: 'VRW1004',
-                platform: 'dwallet',
-            },
-        ],
+        linked_to: [],
         loginid: 'VRTC90000115',
     },
     {

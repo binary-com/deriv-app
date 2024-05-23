@@ -102,8 +102,8 @@ const BuyAdPaymentMethodsList = ({
                 setShowList(false);
                 setHideList(true);
             } else if (my_ads_store.payment_method_names.length < MAX_PAYMENT_METHOD_SELECTION) {
-                my_ads_store.payment_method_names.push(value);
                 setSelectedMethods([...selected_methods, value]);
+                my_ads_store.payment_method_names.push(value);
                 setPaymentMethodsList(payment_methods_list.filter(payment_method => payment_method.value !== value));
             }
             if (typeof touched === 'function') touched(true);

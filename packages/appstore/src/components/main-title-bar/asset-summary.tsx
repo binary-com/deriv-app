@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, Popover } from '@deriv/components';
 import { localize } from '@deriv/translations';
-import { isMobile, setPerformanceValue } from '@deriv/shared';
+import { isMobile } from '@deriv/shared';
 import BalanceText from 'Components/elements/text/balance-text';
 import { observer, useStore } from '@deriv/stores';
 import './asset-summary.scss';
@@ -61,13 +61,6 @@ const AssetSummary = observer(() => {
             </React.Fragment>
         );
     }
-
-    // measure performance metrics
-    setPerformanceValue('login_time');
-    setPerformanceValue('redirect_from_deriv_com_time');
-    setPerformanceValue('switch_currency_accounts_time');
-    setPerformanceValue('switch_from_demo_to_real_time');
-    setPerformanceValue('switch_from_real_to_demo_time');
 
     return (
         <div className='asset-summary'>

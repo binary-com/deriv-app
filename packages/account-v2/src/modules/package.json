@@ -27,7 +27,7 @@
     ],
     "peerDependencies": {
         "@deriv-com/ui": "~1.14.5",
-        "@deriv/quill-icons": "~1.22.4",
+        "@deriv/quill-icons": "~1.22.7",
         "@deriv/api-v2": "1.0.0",
         "yup": "^0.32.11",
         "formik": "^2.1.4",

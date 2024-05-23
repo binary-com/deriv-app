@@ -6,19 +6,21 @@ import './SelfieDocumentUpload.scss';
 
 const SelfieDocumentUpload = () => {
     const { isDesktop } = useDevice();
-    const { setFormValues } = useFlow();
+    const { formValues, setFormValues } = useFlow();
 
     return (
         <div className='wallets-selfie-document-upload'>
             <WalletText>Upload your selfie</WalletText>
             <Dropzone
                 buttonText='Drop file or click here to upload'
+                defaultFile={formValues.selfie}
                 description='Upload your selfie'
                 descriptionColor={isDesktop ? 'less-prominent' : 'general'}
                 fileFormats='image/*'
                 hasFrame={isDesktop}
                 icon={<SelfieIcon />}
-                onFileChange={(file: File) => setFormValues('selfie', file)}
+                noClick
+                onFileChange={(file?: File) => setFormValues('selfie', file)}
             />
             <WalletText color={isDesktop ? 'less-prominent' : 'general'}>
                 Face forward and remove your glasses if necessary. Make sure your eyes are clearly visible and your face

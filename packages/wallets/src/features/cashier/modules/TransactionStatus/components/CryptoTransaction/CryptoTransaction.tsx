@@ -81,7 +81,7 @@ const CryptoTransaction: React.FC<TCryptoTransaction> = ({ currencyDisplayCode: 
             </div>
             <div className='wallets-crypto-transaction__amount-and-date'>
                 <WalletText color='less-prominent' size='2xs'>
-                    {transaction.amount} {currency}
+                    {transaction.formatted_amount}
                 </WalletText>
                 <WalletText color='less-prominent' size='2xs'>
                     {moment.unix(transaction.submit_date).utc().format('MMM D, YYYY')}

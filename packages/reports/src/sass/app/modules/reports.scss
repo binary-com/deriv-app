@@ -829,6 +829,7 @@ $side-padding: 1.2em;
             .table__cell {
                 font-weight: bold;
                 align-items: flex-start;
+                justify-content: center;
             }
         }
         .table__body {
@@ -839,6 +840,10 @@ $side-padding: 1.2em;
         .table__foot {
             font-weight: bold;
             white-space: normal;
+
+            .table__cell {
+                justify-content: center;
+            }
         }
     }
     &__row {
@@ -913,6 +918,11 @@ $side-padding: 1.2em;
     .color2-fill {
         fill: var(--brand-secondary);
     }
+    &:is(.open-positions .market-symbol-icon) {
+        @include desktop {
+            justify-content: center;
+        }
+    }
     &-name,
     &-category {
         display: flex;
@@ -967,7 +977,7 @@ $side-padding: 1.2em;
                     .dc-btn__text {
                         font-size: 1.2rem;
                     }
-                    &:first-child {
+                    &:first-child:not(:only-child) {
                         margin-bottom: 0.4rem;
                     }
                 }
@@ -982,14 +992,12 @@ $side-padding: 1.2em;
                     white-space: break-spaces;
                 }
             }
-            .limit_order {
+            .limit_order:not(.table__head *) {
                 flex-direction: column;
-                align-items: flex-end;
-                text-align: right;
-                justify-content: flex-start;
+                align-items: center;
+                justify-content: center;
             }
             .action {
-                padding-bottom: 0;
                 justify-content: center;
             }
         }
@@ -1030,13 +1038,6 @@ $side-padding: 1.2em;
             grid-template-columns:
                 minmax(85px, 1fr) minmax(125px, 1fr) minmax(65px, 1fr) minmax(105px, 1fr) minmax(105px, 1fr)
                 minmax(112px, 1fr) minmax(149px, 1fr) minmax(90px, 1fr);
-
-            .limit_order {
-                @include desktop {
-                    justify-content: center;
-                    align-items: center;
-                }
-            }
         }
         & .dc-contract-card-item {
             &:nth-child(3),

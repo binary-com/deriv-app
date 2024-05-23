@@ -7,10 +7,6 @@
     width: 100%;
     padding: 1.6rem 0 0;
 
-    @include mobile {
-        padding: 0.8rem 1.4rem 0;
-    }
-
     &__label {
         display: flex;
         position: absolute;
@@ -33,6 +29,7 @@
         &-input {
             width: 0;
             height: 0;
+            opacity: 0;
         }
 
         &:hover {

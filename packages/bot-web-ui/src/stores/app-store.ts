@@ -23,6 +23,15 @@ export default class AppStore {
         makeObservable(this, {
             onMount: action,
             onUnmount: action,
+            onBeforeUnload: action,
+            registerReloadOnLanguageChange: action,
+            registerCurrencyReaction: action,
+            registerOnAccountSwitch: action,
+            registerLandingCompanyChangeReaction: action,
+            registerResidenceChangeReaction: action,
+            setDBotEngineStores: action,
+            onClickOutsideBlockly: action,
+            showDigitalOptionsMaltainvestError: action,
         });
 
         this.root_store = root_store;

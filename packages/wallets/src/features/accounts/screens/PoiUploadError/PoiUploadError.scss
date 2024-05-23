@@ -1,0 +1,13 @@
+.wallets-poi-upload-error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 99.6rem;
+    height: 60rem;
+
+    @include mobile {
+        width: 100%;
+        height: 100%;
+        padding: auto 1.6rem;
+    }
+}

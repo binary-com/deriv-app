@@ -6,7 +6,7 @@ import { mockProposalOpenContract } from './mocks/mockProposalOpenContract';
 import mockWalletsAuthorize, { DEFAULT_WALLET_ACCOUNTS } from './mocks/mockWalletsAuthorize';
 import mockWalletsLoggedIn from './mocks/mockWalletsLoggedIn';
 
-const CAROUSEL_SELECTOR = '.wallets-carousel-content__container .wallets-card:nth-child(1)';
+const CAROUSEL_SELECTOR = '.wallets-carousel-content__cards .wallets-card:nth-child(1)';
 
 // swipe function
 async function swipeLeft(mobilePage: Page) {
@@ -64,22 +64,22 @@ test.describe('Wallets - Mobile carousel', () => {
 
         const card1text = await mobilePage
             .locator(
-                '.wallets-carousel-content__container .wallets-card:nth-child(1) .wallets-card__details-bottom span:last-child'
+                '.wallets-carousel-content__cards .wallets-card:nth-child(1) .wallets-card__details-bottom span:last-child'
             )
             .innerText();
         const card2text = await mobilePage
             .locator(
-                '.wallets-carousel-content__container .wallets-card:nth-child(2) .wallets-card__details-bottom span:last-child'
+                '.wallets-carousel-content__cards .wallets-card:nth-child(2) .wallets-card__details-bottom span:last-child'
             )
             .innerText();
         const card3text = await mobilePage
             .locator(
-                '.wallets-carousel-content__container .wallets-card:nth-child(3) .wallets-card__details-bottom span:last-child'
+                '.wallets-carousel-content__cards .wallets-card:nth-child(3) .wallets-card__details-bottom span:last-child'
             )
             .innerText();
         const card4text = await mobilePage
             .locator(
-                '.wallets-carousel-content__container .wallets-card:nth-child(4) .wallets-card__details-bottom span:last-child'
+                '.wallets-carousel-content__cards .wallets-card:nth-child(4) .wallets-card__details-bottom span:last-child'
             )
             .innerText();
 

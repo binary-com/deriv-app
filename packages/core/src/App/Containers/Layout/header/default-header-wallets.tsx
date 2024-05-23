@@ -33,7 +33,6 @@ const DefaultHeaderWallets = () => {
         account_type,
         balance,
         currency,
-        country_standpoint,
         is_bot_allowed,
         is_eu,
         is_logged_in,
@@ -144,7 +143,6 @@ const DefaultHeaderWallets = () => {
                             account_type={account_type}
                             balance={balance}
                             currency={currency}
-                            country_standpoint={country_standpoint}
                             disableApp={disableApp}
                             enableApp={enableApp}
                             is_acc_switcher_on={is_acc_switcher_on}

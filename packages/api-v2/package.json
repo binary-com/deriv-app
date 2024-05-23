@@ -4,6 +4,7 @@
     "version": "1.0.0",
     "main": "src/index.ts",
     "dependencies": {
+        "@deriv-com/utils": "^0.0.20",
         "@deriv/deriv-api": "^1.0.15",
         "@deriv/shared": "^1.0.0",
         "@deriv/utils": "^1.0.0",

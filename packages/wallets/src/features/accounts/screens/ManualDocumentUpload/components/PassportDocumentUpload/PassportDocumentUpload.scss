@@ -2,37 +2,19 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 2.4rem;
     padding: 2.4rem;
-    width: fit-content;
+    gap: 2.4rem;
     background: var(--light-8-primary-background, #fff);
 
     @include mobile {
         width: 100%;
+        gap: 1.6rem;
     }
 
-    &__document-section {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+    &__document-upload {
+        width: 100%;
+        display: grid;
         gap: 1.7rem;
-
-        & > .wallets-dropzone__container {
-            height: 25rem;
-            min-width: 72.6rem;
-
-            @include mobile {
-                min-width: 100%;
-            }
-        }
-
-        & > .wallets-dropzone {
-            padding: 2.8rem 15.2rem 3.5rem;
-
-            @include mobile {
-                padding: 2.4rem 2.5rem 0.4rem;
-            }
-        }
 
         @include mobile {
             gap: 1.6rem;
@@ -40,13 +22,13 @@
     }
 
     &__input-group {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 2.4rem;
-        padding-bottom: 2rem;
         width: 100%;
 
         @include mobile {
-            flex-direction: column;
+            grid-template-columns: unset;
             gap: 1.6rem;
         }
     }

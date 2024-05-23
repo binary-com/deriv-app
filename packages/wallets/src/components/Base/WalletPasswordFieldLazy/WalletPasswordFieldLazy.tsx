@@ -6,6 +6,7 @@ export interface WalletPasswordFieldProps extends WalletTextFieldProps {
     mt5Policy?: boolean; // This prop is used to utilize the new password validation for MT5.
     password: string;
     passwordError?: boolean;
+    serverErrorMessage?: string;
     shouldDisablePasswordMeter?: boolean;
 }
 

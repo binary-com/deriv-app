@@ -1,4 +1,5 @@
 import React from 'react';
+import Cookies from 'js-cookie';
 import { Dialog, Icon, Text } from '@deriv/components';
 import { redirectToLogin, routes } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
@@ -15,7 +16,11 @@ const WalletsUpgradeLogoutModal = observer(() => {
             className='wallets-upgrade-logout-modal'
             confirm_button_text={localize('Log out')}
             onConfirm={() => {
-                localStorage.setItem('should_show_wallets_upgrade_completed_modal', 'true');
+                Cookies.set('recent_wallets_migration', 'true', {
+                    path: '/', // not available on other subdomains
+                    expires: 0.5, // 12 hours expiration time
+                    secure: true,
+                });
                 logout().then(() => {
                     window.location.href = routes.wallets;
                     redirectToLogin(false, getLanguage());

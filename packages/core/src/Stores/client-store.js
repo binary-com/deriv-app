@@ -152,6 +152,9 @@ export default class ClientStore extends BaseStore {
     is_p2p_enabled = false;
     real_account_signup_form_data = [];
     real_account_signup_form_step = 0;
+    wallet_migration_state;
+    wallet_migration_interval_id;
+    is_wallet_migration_request_is_in_progress = false;
 
     is_passkey_supported = false;
     should_show_effortless_login_modal = false;
@@ -228,6 +231,8 @@ export default class ClientStore extends BaseStore {
             is_p2p_enabled: observable,
             real_account_signup_form_data: observable,
             real_account_signup_form_step: observable,
+            wallet_migration_state: observable,
+            is_wallet_migration_request_is_in_progress: observable,
             is_passkey_supported: observable,
             should_show_effortless_login_modal: observable,
             balance: computed,
@@ -236,7 +241,6 @@ export default class ClientStore extends BaseStore {
             has_active_real_account: computed,
             has_maltainvest_account: computed,
             has_any_real_account: computed,
-            first_switchable_real_loginid: computed,
             can_change_fiat_currency: computed,
             legal_allowed_currencies: computed,
             upgradeable_currencies: computed,
@@ -248,10 +252,6 @@ export default class ClientStore extends BaseStore {
             account_list: computed,
             has_real_mt5_login: computed,
             has_real_dxtrade_login: computed,
-            has_account_error_in_mt5_real_list: computed,
-            has_account_error_in_mt5_demo_list: computed,
-            has_account_error_in_dxtrade_real_list: computed,
-            has_account_error_in_dxtrade_demo_list: computed,
             active_accounts: computed,
             all_loginids: computed,
             account_title: computed,
@@ -260,7 +260,6 @@ export default class ClientStore extends BaseStore {
             default_currency: computed,
             should_allow_authentication: computed,
             should_allow_poinc_authentication: computed,
-            is_financial_assessment_incomplete: computed,
             is_financial_assessment_needed: computed,
             is_authentication_needed: computed,
             is_identity_verification_needed: computed,
@@ -282,9 +281,7 @@ export default class ClientStore extends BaseStore {
             social_identity_provider: computed,
             is_from_restricted_country: computed,
             is_fully_authenticated: computed,
-            is_pending_authentication: computed,
             is_financial_account: computed,
-            is_age_verified: computed,
             landing_company_shortcode: computed,
             landing_company: computed,
             is_logged_in: computed,
@@ -293,13 +290,10 @@ export default class ClientStore extends BaseStore {
             has_wallet: computed,
             should_restrict_bvi_account_creation: computed,
             should_restrict_vanuatu_account_creation: computed,
-            should_show_eu_content: computed,
             should_show_eu_error: computed,
             is_virtual: computed,
             is_eu: computed,
-            is_uk: computed,
             is_brazil: computed,
-            country_standpoint: computed,
             can_upgrade: computed,
             can_upgrade_to: computed,
             virtual_account_loginid: computed,
@@ -333,7 +327,6 @@ export default class ClientStore extends BaseStore {
             createCryptoAccount: action.bound,
             residence: computed,
             email_address: computed,
-            is_website_status_ready: computed,
             updateAccountList: action.bound,
             switchAccount: action.bound,
             resetVirtualBalance: action.bound,
@@ -400,13 +393,16 @@ export default class ClientStore extends BaseStore {
             is_eu_or_multipliers_only: computed,
             getTwoFAStatus: action.bound,
             updateMT5Status: action.bound,
-            isEuropeCountry: action.bound,
             setPrevRealAccountLoginid: action.bound,
             setPrevAccountType: action.bound,
             setIsAlreadyAttempted: action.bound,
             setIsP2PEnabled: action.bound,
             setRealAccountSignupFormData: action.bound,
             setRealAccountSignupFormStep: action.bound,
+            getWalletMigrationState: action.bound,
+            setWalletMigrationState: action.bound,
+            startWalletMigration: action.bound,
+            resetWalletMigration: action.bound,
             setIsPasskeySupported: action.bound,
             setShouldShowEffortlessLoginModal: action.bound,
             fetchShouldShowEffortlessLoginModal: action.bound,
@@ -457,6 +453,19 @@ export default class ClientStore extends BaseStore {
             () => !this.is_logged_in && this.root_store.ui && this.root_store.ui.is_real_acc_signup_on,
             () => this.root_store.ui.closeRealAccountSignup()
         );
+
+        reaction(
+            () => [this.wallet_migration_state],
+            () => {
+                if (this.wallet_migration_state === 'in_progress') {
+                    this.wallet_migration_interval_id = setInterval(() => {
+                        this.getWalletMigrationState();
+                    }, 2000);
+                } else {
+                    clearInterval(this.wallet_migration_interval_id);
+                }
+            }
+        );
     }
 
     get balance() {
@@ -498,13 +507,6 @@ export default class ClientStore extends BaseStore {
 
     get has_wallet() {
         return Object.values(this.accounts).some(account => account.account_category === 'wallet');
-    }
-
-    get first_switchable_real_loginid() {
-        const result = this.active_accounts.find(
-            acc => acc.is_virtual === 0 && acc.landing_company_shortcode === 'svg'
-        );
-        return result.loginid || undefined;
     }
 
     get can_change_fiat_currency() {
@@ -621,42 +623,6 @@ export default class ClientStore extends BaseStore {
         return this.dxtrade_accounts_list.some(account => account.account_type === 'real');
     }
 
-    get has_real_ctrader_login() {
-        return this.ctrader_accounts_list.some(account => account.account_type === 'real');
-    }
-
-    hasAccountErrorInCFDList = (platform, account_type) => {
-        if (!this.is_logged_in) return false;
-        let list;
-        switch (platform) {
-            case CFD_PLATFORMS.MT5:
-                list = this.mt5_login_list;
-                break;
-            case CFD_PLATFORMS.DXTRADE:
-                list = this.dxtrade_accounts_list;
-                break;
-            default:
-                return false;
-        }
-        return list?.some(account => !!account.has_error && account.account_type === account_type);
-    };
-
-    get has_account_error_in_mt5_real_list() {
-        return this.hasAccountErrorInCFDList(CFD_PLATFORMS.MT5, 'real');
-    }
-
-    get has_account_error_in_mt5_demo_list() {
-        return this.hasAccountErrorInCFDList(CFD_PLATFORMS.MT5, 'demo');
-    }
-
-    get has_account_error_in_dxtrade_real_list() {
-        return this.hasAccountErrorInCFDList(CFD_PLATFORMS.DXTRADE, 'real');
-    }
-
-    get has_account_error_in_dxtrade_demo_list() {
-        return this.hasAccountErrorInCFDList(CFD_PLATFORMS.DXTRADE, 'demo');
-    }
-
     get active_accounts() {
         return this.accounts instanceof Object
             ? Object.values(this.accounts).filter(account => !account.is_disabled)
@@ -706,10 +672,6 @@ export default class ClientStore extends BaseStore {
         return (
             this.is_fully_authenticated && this.account_status?.authentication?.needs_verification?.includes('income')
         );
-    }
-
-    get is_financial_assessment_incomplete() {
-        return this.account_status?.status?.includes('financial_assessment_not_complete');
     }
 
     get is_financial_assessment_needed() {
@@ -788,17 +750,9 @@ export default class ClientStore extends BaseStore {
         return this.account_status?.status?.some(status => status === 'authenticated');
     }
 
-    get is_pending_authentication() {
-        return this.account_status?.status?.some(status => status === 'document_under_review');
-    }
-
     get is_financial_account() {
         if (!this.landing_companies) return false;
         return this.account_type === 'financial';
-    }
-
-    get is_age_verified() {
-        return this.account_status?.status?.some(status => status === 'age_verification');
     }
 
     get landing_company_shortcode() {
@@ -841,11 +795,6 @@ export default class ClientStore extends BaseStore {
         ).length;
     }
 
-    get should_show_eu_content() {
-        const is_current_mf = this.landing_company_shortcode === 'maltainvest';
-        return (!this.is_logged_in && this.is_eu_country) || this.is_eu || is_current_mf;
-    }
-
     get should_show_eu_error() {
         if (!this.is_landing_company_loaded) {
             return false;
@@ -875,30 +824,6 @@ export default class ClientStore extends BaseStore {
 
     get is_brazil() {
         return this.clients_country === 'br';
-    }
-
-    get is_uk() {
-        return this.residence === 'gb';
-    }
-
-    get country_standpoint() {
-        const result = {
-            is_united_kingdom: this.is_uk,
-            is_france: this.residence === 'fr',
-            is_belgium: this.residence === 'be',
-            // Other EU countries: Germany, Spain, Italy, Luxembourg and Greece
-            is_other_eu:
-                this.residence === 'de' ||
-                this.residence === 'es' ||
-                this.residence === 'it' ||
-                this.residence === 'lu' ||
-                this.residence === 'gr',
-        };
-
-        result.is_rest_of_eu =
-            this.is_eu && !result.is_uk && !result.is_france && !result.is_belgium && !result.is_other_eu;
-
-        return result;
     }
 
     get can_upgrade() {
@@ -1045,10 +970,6 @@ export default class ClientStore extends BaseStore {
         const country = this.website_status.clients_country;
         if (country) return isEuCountry(country);
         return false;
-    }
-
-    isEuropeCountry() {
-        return this.is_eu_country || this.is_eu;
     }
 
     get is_options_blocked() {
@@ -1444,15 +1365,6 @@ export default class ClientStore extends BaseStore {
         return '';
     }
 
-    get is_website_status_ready() {
-        return this.website_status && !BinarySocket.getAvailability().is_down;
-    }
-
-    isEuCountrySelected = selected_country => {
-        if (selected_country) return isEuCountry(selected_country);
-        return false;
-    };
-
     isAccountOfType = type => {
         const client_account_type = getClientAccountType(this.loginid);
 
@@ -1462,17 +1374,6 @@ export default class ClientStore extends BaseStore {
                 type === client_account_type) &&
             !this.isDisabled()
         );
-    };
-
-    isAccountOfTypeDisabled = type => {
-        const filtered_list = this.account_list.filter(acc => getClientAccountType(acc.loginid) === type);
-        return filtered_list.length > 0 && filtered_list.every(acc => acc.is_disabled);
-    };
-
-    shouldCompleteTax = () => {
-        if (!this.isAccountOfType('financial')) return false;
-
-        return !/crs_tin_information/.test((this.account_status || {})?.status);
     };
 
     updateAccountList(account_list) {
@@ -1532,7 +1433,7 @@ export default class ClientStore extends BaseStore {
      * We initially fetch things from local storage, and then do everything inside the store.
      */
     async init(login_new_user) {
-        // delete walletsOnbaording key after page refresh
+        // delete walletsOnboarding key after page refresh
         /** will be removed later when header for the wallets is created) */
         localStorage.removeItem('walletsOnboarding');
 
@@ -1655,7 +1556,10 @@ export default class ClientStore extends BaseStore {
         this.selectCurrency('');
 
         this.responsePayoutCurrencies(await WS.authorized.payoutCurrencies());
+
         if (this.is_logged_in) {
+            this.getWalletMigrationState();
+
             await WS.mt5LoginList().then(this.responseMt5LoginList);
             WS.tradingServers(CFD_PLATFORMS.MT5).then(this.responseMT5TradingServers);
 
@@ -1822,6 +1726,7 @@ export default class ClientStore extends BaseStore {
             ?.join('');
         setTimeout(() => {
             Analytics.setAttributes({
+                user_id: this.user_id,
                 account_type: broker === 'null' ? 'unlogged' : broker,
                 app_id: String(getAppId()),
                 device_type: isMobile() ? 'mobile' : 'desktop',
@@ -2198,9 +2103,8 @@ export default class ClientStore extends BaseStore {
             this.setIsLoggingIn(true);
 
             const redirect_url = sessionStorage.getItem('redirect_url');
-            const is_next_wallet_enabled = localStorage.getObject('FeatureFlagsStore')?.data?.next_wallet;
 
-            const target_url = is_next_wallet_enabled ? routes.wallets : routes.traders_hub;
+            const target_url = this.has_wallet ? routes.wallets : routes.traders_hub;
 
             if (
                 (redirect_url?.endsWith('/') ||
@@ -2708,6 +2612,50 @@ export default class ClientStore extends BaseStore {
 
     setRealAccountSignupFormStep(step) {
         this.real_account_signup_form_step = step;
+    }
+
+    setWalletMigrationState(state) {
+        this.wallet_migration_state = state;
+    }
+
+    setIsWalletMigrationRequestIsInProgress(value) {
+        this.is_wallet_migration_request_is_in_progress = value;
+    }
+
+    async getWalletMigrationState() {
+        try {
+            const response = await WS.authorized.getWalletMigrationState();
+            if (response?.wallet_migration?.state) this.setWalletMigrationState(response?.wallet_migration?.state);
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.log(`Something wrong: code = ${error?.error?.code}, message = ${error?.error?.message}`);
+        }
+    }
+
+    async startWalletMigration() {
+        this.setIsWalletMigrationRequestIsInProgress(true);
+        try {
+            await WS.authorized.startWalletMigration();
+            this.getWalletMigrationState();
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.log(`Something wrong: code = ${error?.error?.code}, message = ${error?.error?.message}`);
+        } finally {
+            this.setIsWalletMigrationRequestIsInProgress(false);
+        }
+    }
+
+    async resetWalletMigration() {
+        this.setIsWalletMigrationRequestIsInProgress(true);
+        try {
+            await WS.authorized.resetWalletMigration();
+            this.getWalletMigrationState();
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.log(`Something wrong: code = ${error?.error?.code}, message = ${error?.error?.message}`);
+        } finally {
+            this.setIsWalletMigrationRequestIsInProgress(false);
+        }
     }
 
     setIsPasskeySupported(is_passkey_supported = false) {

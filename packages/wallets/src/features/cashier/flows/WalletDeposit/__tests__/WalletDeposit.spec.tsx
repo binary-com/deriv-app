@@ -1,7 +1,6 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import { useActiveWalletAccount } from '@deriv/api-v2';
 import { render, screen } from '@testing-library/react';
-import { CashierLocked, DepositLocked } from '../../../modules';
 import WalletDeposit from '../WalletDeposit';
 
 jest.mock('@deriv/api-v2', () => ({
@@ -9,22 +8,17 @@ jest.mock('@deriv/api-v2', () => ({
 }));
 
 jest.mock('../../../modules', () => ({
-    CashierLocked: jest.fn(({ children }) => <>{children}</>),
     DepositCryptoModule: jest.fn(() => <div>MockedDepositCryptoModule</div>),
     DepositFiatModule: jest.fn(() => <div>MockedDepositFiatModule</div>),
-    DepositLocked: jest.fn(({ children }) => <>{children}</>),
-    SystemMaintenance: jest.fn(({ children }) => <>{children}</>),
 }));
 
-const wrapper = ({ children }: PropsWithChildren) => (
-    <CashierLocked>
-        <DepositLocked>{children}</DepositLocked>
-    </CashierLocked>
-);
-
 describe('WalletDeposit', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
     it('should render crypto module when wallet is crypto', () => {
-        (useActiveWalletAccount as jest.Mock).mockReturnValueOnce({
+        (useActiveWalletAccount as jest.Mock).mockReturnValue({
             data: {
                 currency_config: {
                     is_crypto: true,
@@ -32,14 +26,14 @@ describe('WalletDeposit', () => {
             },
         });
 
-        render(<WalletDeposit />, { wrapper });
+        render(<WalletDeposit />);
 
         expect(screen.getByText(/MockedDepositCryptoModule/)).toBeInTheDocument();
         expect(screen.queryByText(/MockedDepositFiatModule/)).not.toBeInTheDocument();
     });
 
-    it('should render fiat module when wallet is not crypto', () => {
-        (useActiveWalletAccount as jest.Mock).mockReturnValueOnce({
+    it('should render fiat module when wallet is fiat', () => {
+        (useActiveWalletAccount as jest.Mock).mockReturnValue({
             data: {
                 currency_config: {
                     is_crypto: false,
@@ -47,7 +41,7 @@ describe('WalletDeposit', () => {
             },
         });
 
-        render(<WalletDeposit />, { wrapper });
+        render(<WalletDeposit />);
 
         expect(screen.getByText(/MockedDepositFiatModule/)).toBeInTheDocument();
         expect(screen.queryByText(/MockedDepositCryptoModule/)).not.toBeInTheDocument();

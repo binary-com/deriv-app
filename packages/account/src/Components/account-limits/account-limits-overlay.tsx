@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Popup, StaticUrl } from '@deriv/components';
 import { Localize, localize } from '@deriv/translations';
 import AccountLimitsContext from './account-limits-context';

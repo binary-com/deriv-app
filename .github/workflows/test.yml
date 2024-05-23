@@ -37,22 +37,16 @@ jobs:
       run: npx tsc --project packages/wallets/tsconfig.json -noEmit
     - name: Check TypeScript for @deriv/tradershub
       run: npx tsc --project packages/tradershub/tsconfig.json -noEmit
-    - name: Check TypeScript for @deriv/account-v2
-      run: npx tsc --project packages/account-v2/tsconfig.json -noEmit
     - name: Check TypeScript for @deriv/cashier-v2
       run: npx tsc --project packages/cashier-v2/tsconfig.json -noEmit
     - name: Check ESLint for @deriv/wallets
       run: npx eslint --fix --ignore-path packages/wallets/.eslintignore --config packages/wallets/.eslintrc.js packages/wallets
     - name: Check ESLint for @deriv/tradershub
       run: npx eslint --fix --ignore-path packages/tradershub/.eslintignore --config packages/tradershub/.eslintrc.js packages/tradershub
-    - name: Check ESLint for @deriv/account-v2
-      run: npx eslint --fix --ignore-path packages/account-v2/.eslintignore --config packages/account-v2/.eslintrc.js packages/account-v2
     - name: Check ESLint for @deriv/cashier-v2
       run: npx eslint --fix --ignore-path packages/cashier-v2/.eslintignore --config packages/cashier-v2/.eslintrc.js packages/cashier-v2
     - name: Check Stylelint for @deriv/wallets
       run: npx stylelint packages/wallets/**/*.scss
-    - name: Check Stylelint for @deriv/account-v2
-      run: npx stylelint packages/account-v2/**/*.scss
     - name: Check Stylelint for @deriv/cashier-v2
       run: npx stylelint packages/cashier-v2/**/*.scss
     - name: Check tests for @deriv/hooks

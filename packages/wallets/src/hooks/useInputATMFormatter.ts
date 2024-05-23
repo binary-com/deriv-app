@@ -14,7 +14,8 @@ const getSeparatorRegex = () => /[,.]/g; // locale-agnostic
 const useInputATMFormatter = (inputRef: React.RefObject<HTMLInputElement>, initial?: number, options?: TOptions) => {
     const input = inputRef.current;
 
-    // helper values for pasting
+    // helper values for editing
+    const isErasing = useRef(false);
     const isPasting = useRef(false);
     const isRewriting = useRef(false);
     const clipboardContent = useRef('');
@@ -74,11 +75,16 @@ const useInputATMFormatter = (inputRef: React.RefObject<HTMLInputElement>, initi
         let newCaretPosition = input.value.length - (input.selectionStart ?? 0) + integerEditingCaretOffset;
 
         const caretInFractions = hasSeparator && newCaretPosition <= fractionDigits;
-        if (caretInFractions && newCaretPosition > 0 && input.value[input.value.length - newCaretPosition] === '0') {
-            input.value =
-                input.value.slice(0, input.value.length - newCaretPosition) +
-                input.value.slice(input.value.length - newCaretPosition + 1);
-            newCaretPosition--;
+        const decimalPlacesCount = unFormatLocaleString(input.value, locale).split('.')?.[1]?.length;
+        if (caretInFractions && !isErasing.current) {
+            if (newCaretPosition > 0 && input.value[input.value.length - newCaretPosition] === '0') {
+                input.value =
+                    input.value.slice(0, input.value.length - newCaretPosition) +
+                    input.value.slice(input.value.length - newCaretPosition + 1);
+                newCaretPosition--;
+            } else if (decimalPlacesCount < fractionDigits) {
+                newCaretPosition = fractionDigits - decimalPlacesCount;
+            }
         }
 
         setCaret(newCaretPosition);
@@ -97,7 +103,8 @@ const useInputATMFormatter = (inputRef: React.RefObject<HTMLInputElement>, initi
 
         // The new value has one less decimal places than the fraction digits,
         // so we need to shift the decimal point to the right.
-        if (unformattedFraction + 1 === fractionDigits) {
+        // This behavior is designated for erasing only.
+        if (isErasing.current && unformattedFraction + 1 === fractionDigits) {
             return onChangeDecimal({ target: { value: unShifted } });
         }
 
@@ -168,6 +175,14 @@ const useInputATMFormatter = (inputRef: React.RefObject<HTMLInputElement>, initi
         [formattedValue, locale]
     );
 
+    const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Backspace' || e.key === 'Delete') isErasing.current = true;
+    };
+
+    const onKeyUp = () => {
+        isErasing.current = false;
+    };
+
     useEffect(() => {
         if (typeof initial === 'number') {
             return onChangeDecimal({
@@ -181,7 +196,7 @@ const useInputATMFormatter = (inputRef: React.RefObject<HTMLInputElement>, initi
         }
     }, [fractionDigits, initial, locale, onChangeDecimal]);
 
-    return { onChange, onPaste, value: formattedValue };
+    return { onChange, onKeyDown, onKeyUp, onPaste, value: formattedValue };
 };
 
 export default useInputATMFormatter;

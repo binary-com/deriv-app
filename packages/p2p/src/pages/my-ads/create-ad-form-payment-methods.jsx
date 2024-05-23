@@ -12,8 +12,8 @@ const CreateAdFormPaymentMethods = ({ is_sell_advert, onSelectPaymentMethods }) 
     const { showModal } = useModalManagerContext();
     const { data: p2p_advertiser_payment_methods } = useP2PAdvertiserPaymentMethods();
     const { my_ads_store } = useStores();
-    const [selected_buy_methods, setSelectedBuyMethods] = React.useState([]);
-    const [selected_sell_methods, setSelectedSellMethods] = React.useState([]);
+    const [selected_buy_methods, setSelectedBuyMethods] = React.useState(my_ads_store.payment_method_names);
+    const [selected_sell_methods, setSelectedSellMethods] = React.useState(my_ads_store.payment_method_ids);
 
     const onClickPaymentMethodCard = payment_method => {
         if (!my_ads_store.payment_method_ids.includes(payment_method.id)) {
@@ -28,15 +28,6 @@ const CreateAdFormPaymentMethods = ({ is_sell_advert, onSelectPaymentMethods }) 
             setSelectedSellMethods(selected_sell_methods.filter(i => i !== payment_method.id));
         }
     };
-
-    React.useEffect(() => {
-        return () => {
-            my_ads_store.payment_method_ids = [];
-            my_ads_store.payment_method_names = [];
-        };
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     React.useEffect(() => {
         if (is_sell_advert) {

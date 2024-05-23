@@ -1,16 +1,8 @@
-input[type='date']::-webkit-calendar-picker-indicator {
-    display: none;
-    -webkit-appearance: none;
-}
-
-abbr[title] {
-    text-decoration: none;
-}
-
 .wallets-datepicker {
     display: flex;
     flex-direction: column;
     position: relative;
+    caret-color: transparent;
 
     &__button {
         all: unset;

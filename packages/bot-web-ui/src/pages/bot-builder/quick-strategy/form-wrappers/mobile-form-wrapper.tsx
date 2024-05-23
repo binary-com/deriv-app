@@ -5,6 +5,12 @@ import { Button, SelectNative, Text, ThemedScrollbars } from '@deriv/components'
 import { observer } from '@deriv/stores';
 import { localize } from '@deriv/translations';
 import { useDBotStore } from 'Stores/useDBotStore';
+import {
+    rudderStackSendQsRunStrategyEvent,
+    rudderStackSendQsSelectedTabEvent,
+    rudderStackSendSelectQsStrategyGuideEvent,
+} from '../analytics/rudderstack-quick-strategy';
+import { getQsActiveTabString } from '../analytics/utils';
 import { STRATEGIES } from '../config';
 import { TFormValues } from '../types';
 import FormTabs from './form-tabs';
@@ -19,7 +25,7 @@ type TMobileFormWrapper = {
 
 const MobileFormWrapper: React.FC<TMobileFormWrapper> = observer(({ children, active_tab_ref }) => {
     const [active_tab, setActiveTab] = React.useState('TRADE_PARAMETERS');
-    const { isValid, validateForm } = useFormikContext<TFormValues>();
+    const { isValid, validateForm, values } = useFormikContext<TFormValues>();
     const { quick_strategy } = useDBotStore();
     const { selected_strategy, setSelectedStrategy } = quick_strategy;
     const { handleSubmit } = useQsSubmitHandler();
@@ -27,18 +33,27 @@ const MobileFormWrapper: React.FC<TMobileFormWrapper> = observer(({ children, ac
 
     React.useEffect(() => {
         validateForm();
-    }, [selected_strategy]);
+    }, [selected_strategy, validateForm]);
 
     const onChangeStrategy = (strategy: string) => {
         setSelectedStrategy(strategy);
         setActiveTab('TRADE_PARAMETERS');
+        rudderStackSendSelectQsStrategyGuideEvent({
+            selected_strategy,
+        });
     };
 
     const handleTabChange = (tab: string) => {
         setActiveTab(tab);
+        rudderStackSendQsSelectedTabEvent({ quick_strategy_tab: getQsActiveTabString(tab) });
     };
 
     const onRun = () => {
+        rudderStackSendQsRunStrategyEvent({
+            form_values: values,
+            selected_strategy,
+            quick_strategy_tab: getQsActiveTabString(active_tab),
+        });
         handleSubmit();
     };
 

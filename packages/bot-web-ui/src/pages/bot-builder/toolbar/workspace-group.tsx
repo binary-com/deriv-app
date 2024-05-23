@@ -57,7 +57,7 @@ const WorkspaceGroup = observer(() => {
                 </DesktopWrapper>
                 <DesktopWrapper>
                     <ToolbarIcon
-                        popover_message={localize('Trading View Chart')}
+                        popover_message={localize('TradingView Chart')}
                         icon='IcTradingViewChart'
                         icon_id='db-toolbar__tradingview-button'
                         action={() => setTradingViewModalVisibility()}

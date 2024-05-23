@@ -4,6 +4,7 @@ import useBalance from './useBalance';
 import useCurrencyConfig from './useCurrencyConfig';
 import { displayMoney } from '../utils';
 import useAuthorizedQuery from '../useAuthorizedQuery';
+import { getAccountListWithAuthToken } from '@deriv/utils';
 
 /** A custom hook that returns the list of accounts for the current user. */
 const useDerivAccountsList = () => {
@@ -23,7 +24,7 @@ const useDerivAccountsList = () => {
 
     // Add additional information to the authorize response.
     const modified_accounts = useMemo(() => {
-        return account_list_data?.account_list?.map(account => {
+        return getAccountListWithAuthToken(account_list_data?.account_list)?.map(account => {
             return {
                 ...account,
                 /** Creation time of the account. */

@@ -1,0 +1,30 @@
+.block-selector {
+    margin: 2rem 0;
+
+    &__label {
+        display: flex;
+        align-items: center;
+        column-gap: 1rem;
+    }
+
+    &__options {
+        display: flex;
+        column-gap: 1rem;
+
+        @include mobile {
+            justify-content: space-between;
+        }
+    }
+
+    &__option {
+        background-color: transparent;
+        border: 1px solid var(--border-normal);
+        border-radius: 0.4rem;
+        padding: 0.7rem 1.6rem;
+        width: 12.4rem;
+
+        &--selected {
+            background-color: var(--general-main-3);
+        }
+    }
+}

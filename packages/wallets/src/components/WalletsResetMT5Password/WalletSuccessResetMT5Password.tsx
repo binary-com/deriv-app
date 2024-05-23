@@ -1,9 +1,8 @@
 import React, { FC, useCallback } from 'react';
 import { Trans } from 'react-i18next';
 import { DerivLightIcMt5PasswordUpdatedIcon, DerivLightMt5SuccessPasswordResetIcon } from '@deriv/quill-icons';
-import { PlatformDetails } from '../../features/cfd/constants';
 import useDevice from '../../hooks/useDevice';
-import { ModalWrapper, WalletButton, WalletText } from '../Base';
+import { ModalStepWrapper, WalletButton } from '../Base';
 import { useModal } from '../ModalProvider';
 import { WalletsActionScreen } from '../WalletsActionScreen';
 
@@ -28,20 +27,19 @@ const WalletSuccessResetMT5Password: FC<WalletSuccessResetMT5PasswordProps> = ({
 
     const renderButtons = useCallback(() => {
         return (
-            <WalletButton onClick={handleSuccess} size='lg'>
+            <WalletButton isFullWidth={isMobile} onClick={handleSuccess} size='lg'>
                 {isInvestorPassword ? <Trans defaults='Ok' /> : <Trans defaults='Done' />}
             </WalletButton>
         );
-    }, [handleSuccess, isInvestorPassword]);
+    }, [handleSuccess, isInvestorPassword, isMobile]);
 
     return (
-        <ModalWrapper hideCloseButton={isMobile || !isInvestorPassword}>
+        <ModalStepWrapper
+            renderFooter={isMobile ? renderButtons : undefined}
+            shouldHideFooter={!isMobile}
+            title={isInvestorPassword ? `Reset ${title} password` : `Manage ${title} password`}
+        >
             <div className='wallets-reset-mt5-password'>
-                {isInvestorPassword && (
-                    <WalletText size='md' weight='bold'>
-                        Reset {PlatformDetails.mt5.title} investor password
-                    </WalletText>
-                )}
                 <WalletsActionScreen
                     description={
                         isInvestorPassword
@@ -56,11 +54,11 @@ const WalletSuccessResetMT5Password: FC<WalletSuccessResetMT5PasswordProps> = ({
                             <DerivLightMt5SuccessPasswordResetIcon height={100} width={100} />
                         )
                     }
-                    renderButtons={renderButtons}
+                    renderButtons={isMobile ? undefined : renderButtons}
                     title={isInvestorPassword ? 'Password saved' : 'Success'}
                 />
             </div>
-        </ModalWrapper>
+        </ModalStepWrapper>
     );
 };
 

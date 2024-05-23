@@ -63,7 +63,7 @@ const AdCreatedModal = ({ adverts_archive_period }: TAdCreatedModalProps) => {
                 />
             </Modal.Body>
             <Modal.Footer>
-                <Button has_effect text={localize('Ok')} onClick={onClickOkCreatedAd} primary large />
+                <Button has_effect text={localize('OK')} onClick={onClickOkCreatedAd} primary large />
             </Modal.Footer>
         </Modal>
     );

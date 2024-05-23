@@ -38,7 +38,7 @@ describe('<OrderTimeTooltipModal />', () => {
     it('should handle ok button click', () => {
         render(<OrderTimeTooltipModal {...props} />);
 
-        const ok_button = screen.getByRole('button', { name: 'Ok' });
+        const ok_button = screen.getByRole('button', { name: 'OK' });
         userEvent.click(ok_button);
         expect(mock_modal_manager.hideModal).toHaveBeenCalledTimes(1);
     });

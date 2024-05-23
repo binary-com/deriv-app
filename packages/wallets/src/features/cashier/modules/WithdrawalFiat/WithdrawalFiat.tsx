@@ -1,7 +1,8 @@
-import React, { ButtonHTMLAttributes, useEffect } from 'react';
+import React, { ButtonHTMLAttributes, useEffect, useState } from 'react';
 import { useCashierFiatAddress } from '@deriv/api-v2';
-import { Loader, WalletsErrorScreen } from '../../../../components';
+import { Loader } from '../../../../components';
 import { isServerError } from '../../../../utils/utils';
+import { WithdrawalErrorScreen } from '../../screens';
 import './WithdrawalFiat.scss';
 
 interface WithdrawalFiatProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -9,30 +10,35 @@ interface WithdrawalFiatProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const WithdrawalFiat: React.FC<WithdrawalFiatProps> = ({ verificationCode }) => {
-    const { data: iframeUrl, error: withdrawalFiatError, isError, isLoading, mutate } = useCashierFiatAddress();
+    const { data: iframeUrl, error, isLoading: isWithdrawalFiatLoading, mutateAsync } = useCashierFiatAddress();
+    const [isIframeLoading, setIsIframeLoading] = useState(true);
+    const withdrawalFiatError = error?.error;
 
     useEffect(() => {
         if (verificationCode) {
-            mutate('withdraw', {
+            mutateAsync('withdraw', {
                 verification_code: verificationCode,
             });
         }
-    }, [mutate, verificationCode]);
+    }, [mutateAsync, verificationCode]);
 
-    if (isError && isServerError(withdrawalFiatError.error)) {
-        return <WalletsErrorScreen message={withdrawalFiatError.error.message} />;
+    if (isWithdrawalFiatLoading) return <Loader />;
+
+    if (isServerError(withdrawalFiatError)) {
+        return <WithdrawalErrorScreen error={withdrawalFiatError} />;
     }
 
     return (
         <React.Fragment>
-            {isLoading && <Loader />}
+            {isIframeLoading && <Loader />}
             {iframeUrl && (
                 <iframe
                     className='wallets-withdrawal-fiat__iframe'
                     data-testid='dt_wallets_withdrawal_fiat_iframe'
                     key={iframeUrl}
+                    onLoad={() => setIsIframeLoading(false)}
                     src={iframeUrl}
-                    style={{ display: isLoading ? 'none' : 'block' }}
+                    style={{ display: isIframeLoading ? 'none' : 'block' }}
                 />
             )}
         </React.Fragment>

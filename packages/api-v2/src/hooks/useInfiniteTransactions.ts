@@ -32,8 +32,6 @@ const useInfiniteTransactions = () => {
         },
         payload: {
             action_type: filter,
-            // TODO: remove this once backend adds `to` and `from` for Deriv X transfers
-            description: 1,
         },
     });
 

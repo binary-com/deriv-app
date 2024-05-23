@@ -30,7 +30,7 @@ const NIMCSlipDocumentUpload = () => {
                             fileFormats={['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'application/pdf']}
                             icon={<NIMCSlipFront />}
                             maxSize={8388608}
-                            onFileChange={(file: File) => setFormValues('nimcCardFront', file)}
+                            onFileChange={(file?: File) => setFormValues('nimcCardFront', file)}
                         />
                     </div>
                     <div className='wallets-nimc-slip-document-upload__dropzones--right'>
@@ -41,7 +41,8 @@ const NIMCSlipDocumentUpload = () => {
                             fileFormats={['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'application/pdf']}
                             icon={<ProofOfAgeIcon />}
                             maxSize={8388608}
-                            onFileChange={(file: File) => setFormValues('nimcCardBack', file)}
+                            noClick
+                            onFileChange={(file?: File) => setFormValues('nimcCardBack', file)}
                         />
                     </div>
                 </div>

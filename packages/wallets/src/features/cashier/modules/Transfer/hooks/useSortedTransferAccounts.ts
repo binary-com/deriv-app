@@ -71,8 +71,14 @@ const sortTradingAccounts = (a: TAccount, b: TAccount) => {
         const marketTypeA = getMarketType(a.mt5_group);
         const marketTypeB = getMarketType(b.mt5_group);
 
-        if (marketTypeOrder[marketTypeA] !== marketTypeOrder[marketTypeB]) {
-            return marketTypeOrder[marketTypeA] - marketTypeOrder[marketTypeB];
+        if (
+            marketTypeOrder[marketTypeA ?? MT5MarketTypeDetails.all.name] !==
+            marketTypeOrder[marketTypeB ?? MT5MarketTypeDetails.all.name]
+        ) {
+            return (
+                marketTypeOrder[marketTypeA ?? MT5MarketTypeDetails.all.name] -
+                marketTypeOrder[(marketTypeB ?? MT5MarketTypeDetails.all.name) as keyof typeof marketTypeOrder]
+            );
         }
 
         // For 'synthetic' and 'financial' market types, compare landing company name

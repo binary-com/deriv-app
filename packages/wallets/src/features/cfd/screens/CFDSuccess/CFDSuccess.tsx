@@ -1,12 +1,11 @@
 import React, { ComponentProps } from 'react';
 import classNames from 'classnames';
 import { useActiveWalletAccount } from '@deriv/api-v2';
-import { WalletSuccess, WalletText } from '../../../../components';
+import { WalletMarketCurrencyIcon, WalletSuccess, WalletText } from '../../../../components';
 import { WalletGradientBackground } from '../../../../components/WalletGradientBackground';
-import { WalletMarketCurrencyIcon } from '../../../../components/WalletMarketCurrencyIcon';
 import useDevice from '../../../../hooks/useDevice';
 import { TDisplayBalance, THooks, TMarketTypes, TPlatforms } from '../../../../types';
-import { CFD_PLATFORMS, MarketTypeDetails, PlatformDetails } from '../../constants';
+import { CFD_PLATFORMS, MARKET_TYPE, MarketTypeDetails, PlatformDetails } from '../../constants';
 import './CFDSuccess.scss';
 
 type TSuccessProps = {
@@ -37,7 +36,7 @@ const CFDSuccess: React.FC<TSuccessProps> = ({
     const landingCompanyName = landingCompany.toUpperCase();
 
     const isDxtradeOrCtrader =
-        marketType === 'all' &&
+        marketType === MARKET_TYPE.ALL &&
         (platform === PlatformDetails.dxtrade.platform || platform === PlatformDetails.ctrader.platform);
 
     let marketTypeTitle = 'Options';
@@ -76,12 +75,14 @@ const CFDSuccess: React.FC<TSuccessProps> = ({
                                     {isDemo ? 'Demo' : 'Real'}
                                 </WalletText>
                             </div>
-                            <WalletMarketCurrencyIcon
-                                currency={data?.currency ?? 'USD'}
-                                isDemo={isDemo ?? false}
-                                marketType={marketType}
-                                platform={platform}
-                            />
+                            <div className='wallets-cfd-success__market-icon'>
+                                <WalletMarketCurrencyIcon
+                                    currency={data?.currency ?? 'USD'}
+                                    isDemo={isDemo ?? false}
+                                    marketType={marketType}
+                                    platform={platform}
+                                />
+                            </div>
                             <div className='wallets-cfd-success__info'>
                                 <WalletText size='2xs'>
                                     {platformTitlePrefix} {marketTypeTitle}{' '}
@@ -90,9 +91,13 @@ const CFDSuccess: React.FC<TSuccessProps> = ({
                                 <WalletText color='primary' size='2xs'>
                                     {data?.currency} Wallet
                                 </WalletText>
-                                <WalletText size='sm' weight='bold'>
-                                    {displayBalance}
-                                </WalletText>
+                                {!displayBalance ? (
+                                    <div className='wallets-skeleton wallets-cfd-success__balance-loader' />
+                                ) : (
+                                    <WalletText size='sm' weight='bold'>
+                                        {displayBalance}
+                                    </WalletText>
+                                )}
                             </div>
                         </div>
                     </div>

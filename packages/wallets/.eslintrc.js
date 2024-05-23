@@ -1,3 +1,5 @@
+const webpackConfig = require('./webpack.config.js');
+
 module.exports = {
     env: { es6: true },
     extends: ['../../.eslintrc.js', 'eslint:recommended', 'plugin:react/recommended'],
@@ -63,5 +65,10 @@ module.exports = {
         'sort-keys': 'error',
         'typescript-sort-keys/interface': 'error',
         'typescript-sort-keys/string-enum': 'error',
+    },
+    settings: {
+        'import/resolver': {
+            webpack: { config: webpackConfig({}) },
+        },
     },
 };

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import { useHistory, useLocation } from 'react-router-dom';
-import { Icon, Popover, StaticUrl } from '@deriv/components';
+import { Icon, Popover, StaticUrl, Loading } from '@deriv/components';
 import { useIsRealAccountNeededForCashier } from '@deriv/hooks';
-import { routes, platforms, formatMoney } from '@deriv/shared';
+import { routes, platforms, formatMoney, makeLazyLoader, moduleLoader } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
 import { MenuLinks } from 'App/Components/Layout/Header';
@@ -11,31 +11,52 @@ import platform_config from 'App/Constants/platform-config';
 import ToggleMenuDrawer from 'App/Components/Layout/Header/toggle-menu-drawer.jsx';
 import { BinaryLink } from 'App/Components/Routes';
 import DerivBrandLogo from 'Assets/SvgComponents/header/deriv-rebranding-logo.svg';
-import RealAccountSignup from 'App/Containers/RealAccountSignup';
-import AccountInfo from 'App/Components/Layout/Header/account-info';
-import SetAccountCurrencyModal from 'App/Containers/SetAccountCurrencyModal';
-import CurrencySelectionModal from '../../CurrencySelectionModal';
 import DefaultMobileLinks from './default-mobile-links';
 import ShowNotifications from './show-notifications';
-import TradersHubOnboarding from './traders-hub-onboarding';
 import TradersHubHomeButton from './traders-hub-home-button';
 
 type TPlatformConfig = typeof platform_config;
 type TPlatforms = typeof platforms;
 
+const RealAccountSignup = makeLazyLoader(
+    () =>
+        moduleLoader(
+            () => import(/* webpackChunkName: "core_real_account_signup" */ 'App/Containers/RealAccountSignup')
+        ),
+    () => <Loading />
+)();
+
+const AccountInfo = makeLazyLoader(
+    () =>
+        moduleLoader(
+            () => import(/* webpackChunkName: "core_account-info" */ 'App/Components/Layout/Header/account-info')
+        ),
+    () => <Loading />
+)();
+
+const SetAccountCurrencyModal = makeLazyLoader(
+    () =>
+        moduleLoader(
+            () =>
+                import(
+                    /* webpackChunkName: "core_set-account-currency-info" */ 'App/Containers/SetAccountCurrencyModal'
+                )
+        ),
+    () => <Loading />
+)();
+
+const CurrencySelectionModal = makeLazyLoader(
+    () =>
+        moduleLoader(
+            () => import(/* webpackChunkName: "core_currency-selection-modal" */ '../../CurrencySelectionModal')
+        ),
+    () => <Loading />
+)();
+
 const TradersHubHeader = observer(() => {
     const { client, common, traders_hub, ui } = useStore();
-    const {
-        account_type,
-        balance,
-        country_standpoint,
-        currency,
-        has_any_real_account,
-        is_eu,
-        is_logged_in,
-        is_mt5_allowed,
-        is_virtual,
-    } = client;
+    const { account_type, balance, currency, has_any_real_account, is_eu, is_logged_in, is_mt5_allowed, is_virtual } =
+        client;
     const { platform } = common;
     const { modal_data } = traders_hub;
     const {
@@ -49,6 +70,7 @@ const TradersHubHeader = observer(() => {
         toggleNeedRealAccountForCashierModal,
         toggleReadyToDepositModal,
         is_real_acc_signup_on,
+        is_set_currency_modal_visible,
     } = ui;
 
     const history = useHistory();
@@ -117,9 +139,6 @@ const TradersHubHeader = observer(() => {
                     <div className='traders-hub-header__menu-right'>
                         <div className='traders-hub-header__divider' />
                         <div className='traders-hub-header__menu-right--items'>
-                            <div className='traders-hub-header__menu-right--items--onboarding'>
-                                <TradersHubOnboarding />
-                            </div>
                             <div className='traders-hub-header__menu-right--items--notifications'>
                                 <ShowNotifications />
                             </div>
@@ -140,7 +159,6 @@ const TradersHubHeader = observer(() => {
                                         acc_switcher_disabled_message={account_switcher_disabled_message}
                                         account_type={account_type}
                                         balance={account_balance}
-                                        country_standpoint={country_standpoint}
                                         currency={currency}
                                         is_dialog_on={is_accounts_switcher_on}
                                         is_disabled={false}
@@ -169,7 +187,6 @@ const TradersHubHeader = observer(() => {
                                             acc_switcher_disabled_message={account_switcher_disabled_message}
                                             account_type={account_type}
                                             balance={account_balance}
-                                            country_standpoint={country_standpoint}
                                             currency={currency}
                                             is_dialog_on={is_accounts_switcher_on}
                                             is_disabled={false}
@@ -184,11 +201,13 @@ const TradersHubHeader = observer(() => {
                             )}
                         </div>
                     </div>
-                    <RealAccountSignup />
+                    {is_real_acc_signup_on && <RealAccountSignup />}
                 </React.Fragment>
             )}
-            <SetAccountCurrencyModal />
-            <CurrencySelectionModal is_visible={modal_data.active_modal === 'currency_selection'} />
+            {is_set_currency_modal_visible && <SetAccountCurrencyModal />}
+            {modal_data.active_modal === 'currency_selection' && (
+                <CurrencySelectionModal is_visible={modal_data.active_modal === 'currency_selection'} />
+            )}
         </header>
     );
 });

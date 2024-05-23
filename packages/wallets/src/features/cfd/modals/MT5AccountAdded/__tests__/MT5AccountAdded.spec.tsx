@@ -30,6 +30,9 @@ jest.mock('@deriv/api-v2', () => ({
         })),
         isSuccess: true,
     })),
+    useMT5AccountsList: jest.fn(() => ({
+        data: [{ display_balance: '10,000.00 USD', market_type: 'financial' }],
+    })),
     usePOI: jest.fn(() => ({
         data: {
             current: {
@@ -63,7 +66,7 @@ describe('MT5AccountAdded', () => {
             </APIProvider>
         );
         expect(screen.getByText('Your Financial demo account is ready')).toBeInTheDocument();
-        expect(screen.getByText("Let's practise trading with 10000 USD virtual funds.")).toBeInTheDocument();
+        expect(screen.getByText("Let's practise trading with 10,000.00 USD virtual funds.")).toBeInTheDocument();
         const okButton = screen.getByRole('button', { name: 'OK' });
         expect(okButton).toBeInTheDocument();
         expect(okButton).toBeEnabled();

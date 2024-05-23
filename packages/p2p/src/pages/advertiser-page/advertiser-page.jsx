@@ -18,9 +18,9 @@ import TradeBadge from 'Components/trade-badge';
 import UserAvatar from 'Components/user/user-avatar';
 import { api_error_codes } from 'Constants/api-error-codes';
 import { my_profile_tabs } from 'Constants/my-profile-tabs';
-import { getErrorMessage, getErrorModalTitle, getWidth } from 'Utils/block-user';
 import { useStores } from 'Stores';
-
+import { getEligibilityMessage } from 'Utils/adverts';
+import { getErrorMessage, getErrorModalTitle, getWidth } from 'Utils/block-user';
 import AdvertiserPageAdverts from './advertiser-page-adverts.jsx';
 import AdvertiserPageDropdownMenu from './advertiser-page-dropdown-menu.jsx';
 import AdvertiserPageStats from './advertiser-page-stats.jsx';
@@ -75,14 +75,22 @@ const AdvertiserPage = () => {
 
     const { data: p2p_advert_info } = useP2PAdvertInfo(counterparty_advert_id);
 
-    const showErrorModal = () => {
+    const showErrorModal = eligibility_status => {
+        let error_message = localize("It's either deleted or no longer active.");
+        let error_modal_title = localize('This ad is unavailable');
+
+        if (eligibility_status?.length > 0) {
+            error_modal_title = '';
+            error_message = getEligibilityMessage(eligibility_status);
+        }
+
         setCounterpartyAdvertId('');
         showModal({
             key: 'ErrorModal',
             props: {
-                error_message: "It's either deleted or no longer active.",
+                error_message,
                 error_modal_button_text: 'OK',
-                error_modal_title: 'This ad is unavailable',
+                error_modal_title,
                 onClose: () => {
                     hideModal({ should_hide_all_modals: true });
                 },
@@ -94,16 +102,16 @@ const AdvertiserPage = () => {
     const setShowAdvertInfo = React.useCallback(
         () => {
             if (p2p_advert_info) {
-                const { is_active, is_buy, is_visible } = p2p_advert_info || {};
+                const { eligibility_status, is_active, is_buy, is_eligible, is_visible } = p2p_advert_info || {};
                 const advert_type = is_buy ? 1 : 0;
 
-                if (is_active && is_visible) {
+                if (is_active && is_visible && is_eligible) {
                     advertiser_page_store.setActiveIndex(advert_type);
                     advertiser_page_store.handleTabItemClick(advert_type);
                     buy_sell_store.setSelectedAdState(p2p_advert_info);
                     showModal({ key: 'BuySellModal' });
                 } else {
-                    showErrorModal();
+                    showErrorModal(eligibility_status);
                 }
             }
         },

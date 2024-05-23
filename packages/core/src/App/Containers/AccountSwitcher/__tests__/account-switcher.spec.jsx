@@ -104,7 +104,6 @@ let store = mockStore({
             },
         ],
         residence: 'id',
-        country_standpoint: { is_united_kingdom: true },
         is_eu: false,
         is_landing_company_loaded: true,
         is_low_risk: true,

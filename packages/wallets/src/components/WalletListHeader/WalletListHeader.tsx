@@ -14,7 +14,7 @@ const WalletListHeader: React.FC = () => {
 
     const demoAccount = wallets?.find(wallet => wallet.is_virtual)?.loginid;
     const firstRealAccount = wallets?.find(wallet => !wallet.is_virtual)?.loginid;
-    const shouldShowSwitcher = !isMobile && demoAccount && firstRealAccount;
+    const shouldShowSwitcher = demoAccount && firstRealAccount;
     const isDemo = activeWallet?.is_virtual;
     const [isChecked, setIsChecked] = useState(!isDemo);
 
@@ -30,6 +30,8 @@ const WalletListHeader: React.FC = () => {
     useEffect(() => {
         setIsChecked(!isDemo);
     }, [isDemo]);
+
+    if (isMobile) return null;
 
     return (
         <div className='wallets-list-header'>
@@ -50,6 +52,7 @@ const WalletListHeader: React.FC = () => {
                         <input
                             checked={isChecked}
                             className='wallets-list-header__switcher-input'
+                            data-testid='wallets_list_header__switcher_input'
                             id='wallets-list-header__switcher'
                             onChange={handleToggle}
                             type='checkbox'

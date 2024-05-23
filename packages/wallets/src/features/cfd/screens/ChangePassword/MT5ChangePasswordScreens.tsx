@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { Trans } from 'react-i18next';
-import { LegacyArrowRight2pxIcon } from '@deriv/quill-icons';
+import { LegacyArrowLeft2pxIcon } from '@deriv/quill-icons';
 import { SentEmailContent } from '../../../../components';
 import { Tab, Tabs, WalletText } from '../../../../components/Base';
 import useDevice from '../../../../hooks/useDevice';
@@ -31,7 +31,7 @@ const MT5ChangePasswordScreens = () => {
                     }
                 }}
             >
-                <LegacyArrowRight2pxIcon iconSize='xs' />
+                <LegacyArrowLeft2pxIcon iconSize='xs' />
                 <WalletText weight='bold'>
                     <Trans defaults='Back' />
                 </WalletText>

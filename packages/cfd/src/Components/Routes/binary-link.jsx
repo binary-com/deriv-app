@@ -1,14 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { PlatformContext } from '@deriv/shared';
 import getRoutesConfig from '../../Constants/routes-config';
 import { findRouteByPath, normalizePath } from './helpers';
 
 const BinaryLink = ({ active_class, to, children, ...props }) => {
-    const { is_dashboard } = React.useContext(PlatformContext);
     const path = normalizePath(to);
-    const route = findRouteByPath(path, getRoutesConfig({ is_dashboard }));
+    const route = findRouteByPath(path, getRoutesConfig());
 
     if (!route) {
         throw new Error(`Route not found: ${to}`);

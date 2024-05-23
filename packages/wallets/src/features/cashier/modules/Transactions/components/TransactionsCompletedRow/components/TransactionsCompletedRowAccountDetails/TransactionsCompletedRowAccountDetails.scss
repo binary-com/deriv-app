@@ -3,6 +3,10 @@
     width: max-content;
     gap: 0.8rem;
 
+    &__currency-card {
+        border-radius: 0.4rem;
+    }
+
     &__type-and-wallet-name {
         display: flex;
         flex-direction: column;

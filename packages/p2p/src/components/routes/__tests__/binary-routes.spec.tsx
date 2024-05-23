@@ -2,7 +2,6 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
-import { PlatformContext } from '@deriv/shared';
 import { mockStore, StoreProvider } from '@deriv/stores';
 import BinaryRoutes from '../binary-routes';
 
@@ -22,12 +21,7 @@ const wrapper = ({ children }: { children: JSX.Element }) => <StoreProvider stor
 const renderComponent = (component: React.ReactElement) => {
     const history = createBrowserHistory();
 
-    return render(
-        <PlatformContext.Provider value={{ is_appstore: false, is_deriv_crypto: false, is_pre_appstore: false }}>
-            <Router history={history}>{component}</Router>
-        </PlatformContext.Provider>,
-        { wrapper }
-    );
+    return render(<Router history={history}>{component}</Router>, { wrapper });
 };
 
 describe('<BinaryRoutes />', () => {

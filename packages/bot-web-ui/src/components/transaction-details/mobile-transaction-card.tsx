@@ -70,7 +70,7 @@ const IconContainer = ({ message, icon }: { message: string; icon: ReactElement 
 
 export default function MobileTransactionCards({ transaction }: { transaction: TTransaction }) {
     return (
-        <div className={`${PARENT_CLASS}__card`}>
+        <div className={`${PARENT_CLASS}__card`} data-testid='dt_mobile_transaction_card'>
             <div className={`${PARENT_CLASS}__card__row`}>
                 <CardColumn
                     label={

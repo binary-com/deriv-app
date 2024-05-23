@@ -74,7 +74,7 @@ describe('CashierLockedContent', () => {
         if (result) render(result.description);
         expect(
             screen.getByText(
-                'Due to system maintenance, deposits into your BTC Wallet are unavailable at the moment. Please try again later.'
+                'Due to system maintenance, deposits with your BTC Wallet are unavailable at the moment. Please try again later.'
             )
         ).toBeInTheDocument();
 
@@ -94,7 +94,7 @@ describe('CashierLockedContent', () => {
         if (result) render(result.description);
         expect(
             screen.getByText(
-                'Due to system maintenance, withdrawals from your BTC Wallet are unavailable at the moment. Please try again later.'
+                'Due to system maintenance, withdrawals with your BTC Wallet are unavailable at the moment. Please try again later.'
             )
         ).toBeInTheDocument();
 

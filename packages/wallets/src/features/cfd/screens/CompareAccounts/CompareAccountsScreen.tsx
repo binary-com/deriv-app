@@ -1,8 +1,7 @@
-import React, { useMemo } from 'react';
-import { useActiveWalletAccount, useCFDAccountsList, useCFDCompareAccounts } from '@deriv/api-v2';
+import React from 'react';
+import { useActiveWalletAccount, useCFDCompareAccounts } from '@deriv/api-v2';
 import { CompareAccountsCarousel } from '../../components';
 import CompareAccountsCard from './CompareAccountsCard';
-import { isCTraderAccountAdded, isDxtradeAccountAdded } from './compareAccountsConfig';
 import CompareAccountsHeader from './CompareAccountsHeader';
 import './CompareAccountsScreen.scss';
 
@@ -13,19 +12,8 @@ const CompareAccountsScreen = () => {
     const { is_malta_wallet: isEuUser = false, is_virtual: isDemo = false } = activeWallet || {};
 
     const { data: compareAccounts, hasCTraderAccountAvailable, hasDxtradeAccountAvailable } = useCFDCompareAccounts();
-    const { data: cfdAccounts } = useCFDAccountsList();
 
     const { ctraderAccount, dxtradeAccount, mt5Accounts } = compareAccounts;
-
-    const isDxtradeAdded = useMemo(
-        () => !!cfdAccounts && isDxtradeAccountAdded(cfdAccounts.dxtrade, isDemo),
-        [cfdAccounts, isDemo]
-    );
-
-    const isCtraderAdded = useMemo(
-        () => !!cfdAccounts && isCTraderAccountAdded(cfdAccounts.ctrader, isDemo),
-        [cfdAccounts, isDemo]
-    );
 
     return (
         <div className='wallets-compare-accounts'>
@@ -34,7 +22,6 @@ const CompareAccountsScreen = () => {
                 <CompareAccountsCarousel>
                     {mt5Accounts?.map(item => (
                         <CompareAccountsCard
-                            isAccountAdded={item?.is_added}
                             isDemo={isDemo}
                             isEuRegion={isEuRegion}
                             isEuUser={isEuUser}
@@ -47,7 +34,6 @@ const CompareAccountsScreen = () => {
                     {/* Renders cTrader data */}
                     {mt5Accounts?.length && hasCTraderAccountAvailable && ctraderAccount && (
                         <CompareAccountsCard
-                            isAccountAdded={isCtraderAdded}
                             isDemo={isDemo}
                             isEuRegion={isEuRegion}
                             isEuUser={isEuUser}
@@ -59,7 +45,6 @@ const CompareAccountsScreen = () => {
                     {/* Renders Deriv X data */}
                     {mt5Accounts?.length && hasDxtradeAccountAvailable && dxtradeAccount && (
                         <CompareAccountsCard
-                            isAccountAdded={isDxtradeAdded}
                             isDemo={isDemo}
                             isEuRegion={isEuRegion}
                             isEuUser={isEuUser}

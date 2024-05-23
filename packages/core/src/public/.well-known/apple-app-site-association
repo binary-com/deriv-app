@@ -7,25 +7,27 @@
             {
                 "appID": "36S5Q8S4V5.com.deriv.app",
                 "paths": [
-                    "/redirect"
+                    "/redirect/derivgo"
                 ]
             },
             {
                 "appID": "36S5Q8S4V5.com.deriv.app.dev",
                 "paths": [
-                    "/redirect"
+                    "/redirect/derivgo"
                 ]
             },
             {
                 "appID": "36S5Q8S4V5.com.deriv.app.staging",
                 "paths": [
-                    "/redirect"
+                    "/redirect/derivgo"
                 ]
             },
             {
                 "appID": "36S5Q8S4V5.com.deriv.dp2p",
                 "paths": [
-                    "/cashier/p2p"
+                    "/cashier/p2p",
+                    "/cashier/p2p/advertiser",
+                    "/redirect/p2p"
                 ]
             },
             {
@@ -59,6 +61,7 @@
             "36S5Q8S4V5.com.deriv.app",
             "36S5Q8S4V5.com.deriv.app.dev",
             "36S5Q8S4V5.com.deriv.app.staging",
+            "36S5Q8S4V5.com.deriv.dp2p",
             "36S5Q8S4V5.com.deriv.blanc",
             "36S5Q8S4V5.com.deriv.blanc.dev",
             "36S5Q8S4V5.com.deriv.blanc.stg",

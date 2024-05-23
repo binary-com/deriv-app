@@ -91,9 +91,6 @@ export const Modals = {
                 /* webpackChunkName: "delete-payment-method-error-modal" */ 'Components/modal-manager/modals/delete-payment-method-error-modal'
             )
     ),
-    DisclaimerModal: React.lazy(
-        () => import(/* webpackChunkName: "disclaimer-modal" */ 'Components/modal-manager/modals/disclaimer-modal')
-    ),
     EmailLinkBlockedModal: React.lazy(
         () =>
             import(
@@ -183,6 +180,12 @@ export const Modals = {
         () =>
             import(
                 /* webpackChunkName: "order-time-tooltip-modal" */ 'Components/modal-manager/modals/order-time-tooltip-modal'
+            )
+    ),
+    PreferredCountriesModal: React.lazy(
+        () =>
+            import(
+                /* webpackChunkName: "preferred-countries-modal" */ 'Components/modal-manager/modals/preferred-countries-modal'
             )
     ),
     QuickAddModal: React.lazy(

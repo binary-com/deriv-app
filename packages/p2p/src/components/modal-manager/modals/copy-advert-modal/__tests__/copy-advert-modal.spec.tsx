@@ -15,6 +15,8 @@ const mock_store: DeepPartial<ReturnType<typeof useStores>> = {
     my_ads_store: {
         payment_method_ids: [],
         payment_method_names: [],
+        setMinCompletionRate: jest.fn(),
+        setMinJoinDays: jest.fn(),
         setShowEditAdForm: jest.fn(),
     },
 };
@@ -45,7 +47,7 @@ describe('<CopyAdvertModal />', () => {
     });
 
     it('should render CopyAdvertModal', () => {
-        render(<CopyAdvertModal advert={adverts[0]} />, { wrapper });
+        render(<CopyAdvertModal advert={adverts[0]} country_list={{}} />, { wrapper });
 
         expect(screen.getByText('Create a similar ad')).toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'Cancel' }));

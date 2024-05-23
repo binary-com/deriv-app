@@ -25,8 +25,8 @@ describe('WalletsListingRoute', () => {
         render(<WalletsListingRoute />, { wrapper });
         expect(screen.getByText('WalletListHeader')).toBeInTheDocument();
         expect(screen.getByText('DesktopWalletsList')).toBeInTheDocument();
-        expect(screen.getByText('WalletTourGuide')).toBeInTheDocument();
         expect(screen.queryByText('WalletsCarousel')).not.toBeInTheDocument();
+        expect(screen.getByText('WalletTourGuide')).toBeInTheDocument();
     });
 
     it('renders WalletsCarousel and WalletsAddMoreCarousel correctly on mobile', () => {
@@ -36,6 +36,6 @@ describe('WalletsListingRoute', () => {
         expect(screen.getByText('WalletListHeader')).toBeInTheDocument();
         expect(screen.queryByText('DesktopWalletsList')).not.toBeInTheDocument();
         expect(screen.getByText('WalletsCarousel')).toBeInTheDocument();
-        expect(screen.queryByText('WalletTourGuide')).not.toBeInTheDocument();
+        expect(screen.queryByText('WalletTourGuide')).toBeInTheDocument();
     });
 });

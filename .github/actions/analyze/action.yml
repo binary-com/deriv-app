@@ -1,0 +1,155 @@
+name: analyze
+description: Analyze all packages
+inputs:
+  REF_NAME:
+    description: 'Git ref name'
+    required: true
+    default: 'test'
+  NODE_ENV:
+    description: 'Node environment'
+    required: false
+    default: 'test'
+  CROWDIN_WALLETS_API_KEY:
+    description: 'Crowdin wallets api key'
+    required: false
+  DATADOG_CLIENT_TOKEN:
+    description: 'Datadog client token'
+    required: false
+  DATADOG_APPLICATION_ID:
+    description: 'Datadog application id'
+    required: false
+  DATADOG_CLIENT_TOKEN_LOGS:
+    description: 'Datadog client token for logs'
+    required: false
+  DATADOG_SESSION_REPLAY_SAMPLE_RATE:
+    description: 'Datadog session replay sample rate'
+    required: false
+  DATADOG_SESSION_SAMPLE_RATE:
+    description: 'Datadog session sample rate'
+    required: false
+  GITHUB_TOKEN:
+    description: 'Github token for downloading artifacts'
+    required: true
+  GD_API_KEY:
+    description: 'Google drive api key'
+    required: false
+  GD_APP_ID:
+    description: 'Google drive app id'
+    required: false
+  GD_CLIENT_ID:
+    description: 'Google drive client id'
+    required: false
+  RUDDERSTACK_KEY:
+    description: 'Rudderstack key'
+    required: false
+  GROWTHBOOK_CLIENT_KEY:
+    description: 'Growthbook key'
+    required: false
+  GROWTHBOOK_DECRYPTION_KEY:
+    description: 'Growthbook decryption key'
+    required: false
+  DATADOG_SESSION_SAMPLE_RATE_LOGS:
+    description: 'Datadog session sample rate for logs'
+    required: false
+  REMOTE_CONFIG_URL:
+    description: 'Remote config backup URL'
+    required: true
+  IS_GROWTHBOOK_ENABLED:
+    description: 'Is growthbook enabled'
+    required: true
+  ISSUE_NUMBER:
+    description: 'Issue to post a comment to'
+    required: false
+
+runs:
+  using: composite
+  steps:
+
+  - name: Get artifact URL
+    id: get_artifact_url
+    env:
+      GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+    shell: bash
+    run: |
+      ARTIFACT_URL=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+        "https://api.github.com/repos/${{ github.repository }}/actions/artifacts" | \
+        jq -r '.artifacts | map(select(.workflow_run.head_branch == "master" and (.name | startswith("reports-")))) | .[0] | .archive_download_url')
+      echo "artifact_url=$ARTIFACT_URL" >> $GITHUB_OUTPUT
+      echo "artifact_url=$ARTIFACT_URL"
+
+  - name: Download artifact
+    if: steps.get_artifact_url.outputs.artifact_url != 'null'
+    env:
+      ARTIFACT_URL: ${{ steps.get_artifact_url.outputs.artifact_url }}
+      GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+    shell: bash
+    run: |
+      curl -L -H "Authorization: Bearer $GITHUB_TOKEN" \
+        "$ARTIFACT_URL" \
+        -o artifact.zip
+      unzip artifact.zip -d old
+      cd old
+      unzip reports.zip
+
+  - name: Analyze all packages
+    env:
+      NODE_ENV: ${{ inputs.NODE_ENV }}
+      CROWDIN_WALLETS_API_KEY: ${{ inputs.CROWDIN_WALLETS_API_KEY }}
+      DATADOG_APPLICATION_ID: ${{ inputs.DATADOG_APPLICATION_ID }}
+      DATADOG_CLIENT_TOKEN: ${{ inputs.DATADOG_CLIENT_TOKEN }}
+      DATADOG_CLIENT_TOKEN_LOGS: ${{ inputs.DATADOG_CLIENT_TOKEN_LOGS }}
+      DATADOG_SESSION_REPLAY_SAMPLE_RATE: ${{ inputs.DATADOG_SESSION_REPLAY_SAMPLE_RATE }}
+      DATADOG_SESSION_SAMPLE_RATE: ${{ inputs.DATADOG_SESSION_SAMPLE_RATE }}
+      DATADOG_SESSION_SAMPLE_RATE_LOGS: ${{ inputs.DATADOG_SESSION_SAMPLE_RATE_LOGS }}
+      IS_GROWTHBOOK_ENABLED: ${{ inputs.IS_GROWTHBOOK_ENABLED }}
+      GD_API_KEY: ${{ inputs.GD_API_KEY }}
+      GD_APP_ID: ${{ inputs.GD_APP_ID }}
+      GD_CLIENT_ID: ${{ inputs.GD_CLIENT_ID }}
+      RUDDERSTACK_KEY: ${{ inputs.RUDDERSTACK_KEY }}
+      GROWTHBOOK_CLIENT_KEY: ${{ inputs.GROWTHBOOK_CLIENT_KEY }}
+      GROWTHBOOK_DECRYPTION_KEY: ${{ inputs.GROWTHBOOK_DECRYPTION_KEY }}
+      REF_NAME: ${{ inputs.REF_NAME }}
+      REMOTE_CONFIG_URL: ${{ inputs.REMOTE_CONFIG_URL }}
+      NODE_OPTIONS: "--max_old_space_size=4096"
+    shell: bash
+    run: npm run build:prod && npm run analyze:stats && npm run analyze:build
+
+  - name: Compare report to master
+    id: diff
+    if: steps.get_artifact_url.outputs.artifact_url != 'null'
+    shell: bash
+    run: |
+      DIFF_OUTPUT=$(node .github/actions/analyze/compareReports.js)
+      echo "diff_output<<EOF" >> $GITHUB_OUTPUT
+      echo "$DIFF_OUTPUT" >> $GITHUB_OUTPUT
+      echo "EOF" >> $GITHUB_OUTPUT
+      echo $DIFF_OUTPUT
+
+  # - name: Comment on PR with Diff Output
+  #   if: steps.get_artifact_url.outputs.artifact_url != 'null' && inputs.ISSUE_NUMBER
+  #   uses: actions/github-script@v5
+  #   env:
+  #     DIFF_OUTPUT: ${{ steps.diff.outputs.diff_output }}
+  #     ISSUE_NUMBER: ${{ inputs.ISSUE_NUMBER }}
+  #   with:
+  #     script: |
+  #       const diffOutput = process.env.DIFF_OUTPUT;
+  #       const issueNumber = process.env.ISSUE_NUMBER;
+  #       github.rest.issues.createComment({
+  #         owner: context.repo.owner,
+  #         repo: context.repo.repo,
+  #         issue_number: issueNumber,
+  #         body: `${diffOutput}`
+  #       });
+
+  - name: Zip all report.json files
+    shell: bash
+    run: |
+      zip -r reports.zip packages/*/report.json
+
+  - name: Upload reports.zip
+    uses: actions/upload-artifact@v4
+    with:
+      name: reports-${{ github.sha }}
+      path: reports.zip
+      retention-days: 5

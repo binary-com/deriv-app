@@ -6,6 +6,13 @@ import Icon from '@deriv/components/src/components/icon/icon';
 import { observer } from '@deriv/stores';
 import { localize } from '@deriv/translations';
 import { useDBotStore } from 'Stores/useDBotStore';
+import {
+    rudderStackSendQsEditStrategyEvent,
+    rudderStackSendQsRunStrategyEvent,
+    rudderStackSendQsSelectedTabEvent,
+    rudderStackSendSelectQsStrategyGuideEvent,
+} from '../analytics/rudderstack-quick-strategy';
+import { getQsActiveTabString } from '../analytics/utils';
 import { STRATEGIES } from '../config';
 import { TFormData, TFormValues } from '../types';
 import FormTabs from './form-tabs';
@@ -21,7 +28,7 @@ type TDesktopFormWrapper = {
 
 const FormWrapper: React.FC<TDesktopFormWrapper> = observer(({ children, onClickClose, active_tab_ref }) => {
     const [activeTab, setActiveTab] = React.useState('TRADE_PARAMETERS');
-    const { submitForm, isValid, setFieldValue, validateForm } = useFormikContext<TFormValues>();
+    const { submitForm, isValid, setFieldValue, validateForm, values } = useFormikContext<TFormValues>();
     const { quick_strategy } = useDBotStore();
     const { selected_strategy, setSelectedStrategy, onSubmit, is_stop_bot_dialog_open } = quick_strategy;
     const strategy = STRATEGIES[selected_strategy as keyof typeof STRATEGIES];
@@ -29,18 +36,25 @@ const FormWrapper: React.FC<TDesktopFormWrapper> = observer(({ children, onClick
 
     React.useEffect(() => {
         validateForm();
-    }, [selected_strategy]);
+    }, [selected_strategy, validateForm]);
 
     const onChangeStrategy = (strategy: string) => {
         setSelectedStrategy(strategy);
         setActiveTab('TRADE_PARAMETERS');
+        rudderStackSendSelectQsStrategyGuideEvent({ selected_strategy });
     };
 
     const handleTabChange = (tab: string) => {
         setActiveTab(tab);
+        rudderStackSendQsSelectedTabEvent({ quick_strategy_tab: getQsActiveTabString(tab) });
     };
 
     const onEdit = async () => {
+        rudderStackSendQsEditStrategyEvent({
+            form_values: values,
+            selected_strategy,
+            quick_strategy_tab: getQsActiveTabString(activeTab),
+        });
         await setFieldValue('action', 'EDIT');
         validateForm();
         submitForm().then((form_data: TFormData | void) => {
@@ -51,6 +65,10 @@ const FormWrapper: React.FC<TDesktopFormWrapper> = observer(({ children, onClick
     };
 
     const onRun = () => {
+        rudderStackSendQsRunStrategyEvent({
+            form_values: values,
+            selected_strategy,
+        });
         handleSubmit();
     };
 

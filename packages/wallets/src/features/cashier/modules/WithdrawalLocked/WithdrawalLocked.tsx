@@ -20,7 +20,7 @@ const WithdrawalLocked: React.FC<React.PropsWithChildren> = ({ children }) => {
     const { data: accountLimits } = useAccountLimits();
     const { data: accountStatus } = useAccountStatus();
     const { isLoading: isCurrencyConfigLoading } = useCurrencyConfig();
-    const { data: cryptoConfig, isLoading: isCryptoConfigLoading } = useCryptoConfig();
+    const { data: cryptoConfig } = useCryptoConfig();
 
     const currency = activeWallet?.currency || 'USD';
 
@@ -45,7 +45,7 @@ const WithdrawalLocked: React.FC<React.PropsWithChildren> = ({ children }) => {
         typeof minimumWithdrawal !== 'undefined' &&
         +remainder < minimumWithdrawal
     );
-    const isLoading = isCurrencyConfigLoading || isCryptoConfigLoading || !accountStatus;
+    const isLoading = isCurrencyConfigLoading || !accountStatus;
 
     if (isLoading) {
         return <Loader />;

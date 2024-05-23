@@ -62,6 +62,7 @@ const AdvertiserPageAdverts = () => {
                                             <Localize i18n_default_text='Payment methods' />
                                         </Table.Head>
                                         <Table.Head>{''}</Table.Head>
+                                        <Table.Head />
                                     </Table.Row>
                                 </Table.Header>
                             )}

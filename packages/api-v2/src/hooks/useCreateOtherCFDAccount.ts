@@ -15,7 +15,7 @@ const useCreateOtherCFDAccount = () => {
     const modified_data = useMemo(() => {
         if (!data) return undefined;
 
-        return { ...data };
+        return { ...data.trading_platform_new_account };
     }, [data]);
 
     return {

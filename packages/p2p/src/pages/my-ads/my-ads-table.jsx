@@ -20,7 +20,7 @@ const getHeaders = offered_currency => [
     { text: '' }, // empty header for delete and archive icons
 ];
 
-const MyAdsTable = ({ table_ref }) => {
+const MyAdsTable = ({ country_list, table_ref }) => {
     const { general_store, my_ads_store } = useStores();
     const {
         client: { currency },
@@ -79,7 +79,9 @@ const MyAdsTable = ({ table_ref }) => {
                             items={my_ads_store.adverts}
                             keyMapperFn={item => item.id}
                             loadMoreRowsFn={my_ads_store.loadMoreAds}
-                            rowRenderer={row_props => <MyAdsRowRenderer {...row_props} table_ref={table_ref} />}
+                            rowRenderer={row_props => (
+                                <MyAdsRowRenderer {...row_props} country_list={country_list} table_ref={table_ref} />
+                            )}
                         />
                     </Table.Body>
                 </Table>

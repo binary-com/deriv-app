@@ -6,7 +6,9 @@ describe('WithdrawalVerificationRequest', () => {
     test('should render component correctly', () => {
         render(<WithdrawalVerificationRequest sendEmail={jest.fn()} />);
 
-        expect(screen.getByText("Hit the button below, and we'll email you a verification link.")).toBeInTheDocument();
+        expect(
+            screen.getByText("Press the button below, and we'll email you a verification link.")
+        ).toBeInTheDocument();
 
         const sendEmailButton = screen.getByRole('button', { name: 'Send email' });
         expect(sendEmailButton).toBeInTheDocument();

@@ -294,26 +294,6 @@ describe('getChartAnalyticsData', () => {
             event_type: market_event_type,
         });
     });
-    it('should return correct object with data and event_type for STATE_TYPES.MARKET_INFO_REDIRECT', () => {
-        expect(
-            getChartAnalyticsData(STATE_TYPES.MARKET_INFO_REDIRECT, {
-                symbol_category: mocked_data.symbol_category,
-            })
-        ).toEqual({
-            data: {
-                action: ACTION.INFO_REDIRECT,
-                tab_market_name,
-            },
-            event_type: market_event_type,
-        });
-        expect(getChartAnalyticsData(STATE_TYPES.MARKET_INFO_REDIRECT)).toEqual({
-            data: {
-                action: ACTION.INFO_REDIRECT,
-                tab_market_name: '',
-            },
-            event_type: market_event_type,
-        });
-    });
     it('should return correct object with data and event_type for STATE_TYPES.FAVORITE_MARKETS_TOGGLE', () => {
         expect(
             getChartAnalyticsData(STATE_TYPES.FAVORITE_MARKETS_TOGGLE, {

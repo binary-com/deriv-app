@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import { Trans } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -14,10 +14,6 @@ import { TradingAccountCard } from '../TradingAccountCard';
 import './OptionsAndMultipliersListing.scss';
 
 type TLinkTitleProps = Pick<typeof optionsAndMultipliersContent[number], 'icon' | 'title'>;
-
-type TOptionsAndMultipliersListingProps = {
-    onOptionsAndMultipliersLoaded?: (value: boolean) => void;
-};
 
 const LinkTitle: React.FC<TLinkTitleProps> = ({ icon, title }) => {
     const handleClick = (event: React.KeyboardEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>) => {
@@ -59,17 +55,10 @@ const LinkTitle: React.FC<TLinkTitleProps> = ({ icon, title }) => {
     );
 };
 
-const OptionsAndMultipliersListing: React.FC<TOptionsAndMultipliersListingProps> = ({
-    onOptionsAndMultipliersLoaded,
-}) => {
+const OptionsAndMultipliersListing: React.FC = () => {
     const { isMobile } = useDevice();
     const history = useHistory();
     const { data: activeLinkedToTradingAccount } = useActiveLinkedToTradingAccount();
-
-    useEffect(() => {
-        onOptionsAndMultipliersLoaded?.(true);
-        return () => onOptionsAndMultipliersLoaded?.(false);
-    }, [onOptionsAndMultipliersLoaded]);
 
     return (
         <div className='wallets-options-and-multipliers-listing'>

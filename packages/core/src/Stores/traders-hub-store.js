@@ -19,7 +19,6 @@ export default class TradersHubStore extends BaseStore {
     is_failed_verification_modal_visible = false;
     is_regulators_compare_modal_visible = false;
     is_mt5_notification_modal_visible = false;
-    is_tour_open = false;
     account_type_card = '';
     selected_platform_type = 'options';
     mt5_existing_account = {};
@@ -50,7 +49,6 @@ export default class TradersHubStore extends BaseStore {
             is_regulators_compare_modal_visible: observable,
             is_mt5_notification_modal_visible: observable,
             is_failed_verification_modal_visible: observable,
-            is_tour_open: observable,
             modal_data: observable,
             is_onboarding_visited: observable,
             is_first_time_visit: observable,
@@ -105,7 +103,6 @@ export default class TradersHubStore extends BaseStore {
             toggleFailedVerificationModalVisibility: action.bound,
             setMT5ExistingAccount: action.bound,
             openFailedVerificationModal: action.bound,
-            toggleIsTourOpen: action.bound,
             toggleRegulatorsCompareModal: action.bound,
             showTopUpModal: action.bound,
             toggleWalletsUpgrade: action.bound,
@@ -212,17 +209,22 @@ export default class TradersHubStore extends BaseStore {
             await switchAccount(account_list.find(acc => acc.is_virtual && !acc.is_disabled)?.loginid);
         } else if (account_type === 'real') {
             if (!has_active_real_account && this.content_flag === ContentFlag.EU_DEMO) {
-                this.root_store.client.real_account_creation_unlock_date
-                    ? this.root_store.ui.setShouldShowCooldownModal(true)
-                    : this.root_store.ui.openRealAccountSignup('maltainvest');
+                if (this.root_store.client.real_account_creation_unlock_date) {
+                    this.root_store.ui.setShouldShowCooldownModal(true);
+                } else {
+                    this.root_store.ui.openRealAccountSignup('maltainvest');
+                }
+            } else if (!has_active_real_account) {
+                this.root_store.ui.openRealAccountSignup('svg');
             }
+
             if (prev_real_account_loginid) {
                 await switchAccount(prev_real_account_loginid);
             } else {
                 await switchAccount(account_list.find(acc => !acc.is_virtual && !acc.is_disabled)?.loginid);
             }
         }
-        this.selected_account_type = account_type;
+        this.selected_account_type = !has_active_real_account ? 'demo' : account_type;
     }
 
     async switchToCRAccount() {
@@ -248,10 +250,6 @@ export default class TradersHubStore extends BaseStore {
 
     selectRegion(region) {
         this.selected_region = region;
-    }
-
-    toggleIsTourOpen(is_tour_open) {
-        this.is_tour_open = is_tour_open;
     }
 
     get is_demo_low_risk() {
@@ -374,19 +372,17 @@ export default class TradersHubStore extends BaseStore {
     getAvailableCFDAccounts() {
         const getAccountDesc = () => {
             return !this.is_eu_user || this.is_demo_low_risk
-                ? localize('This account offers CFDs on financial instruments.')
+                ? localize('CFDs on financial instruments.')
                 : localize('CFDs on derived and financial instruments.');
         };
         const getSwapFreeAccountDesc = () => {
-            return localize(
-                'Trade swap-free CFDs on MT5 with forex, stocks, stock indices, commodities cryptocurrencies, ETFs and synthetic indices.'
-            );
+            return localize('Swap-free CFDs on selected financial and derived instruments.');
         };
 
         const all_available_accounts = [
             ...getCFDAvailableAccount(),
             {
-                name: !this.is_eu_user || this.is_demo_low_risk ? localize('Financial') : localize('CFDs'),
+                name: !this.is_eu_user || this.is_demo_low_risk ? 'Financial' : 'CFDs',
                 description: getAccountDesc(),
                 platform: CFD_PLATFORMS.MT5,
                 market_type: 'financial',
@@ -394,7 +390,7 @@ export default class TradersHubStore extends BaseStore {
                 availability: 'All',
             },
             {
-                name: localize('Swap-Free'),
+                name: 'Swap-Free',
                 description: getSwapFreeAccountDesc(),
                 platform: CFD_PLATFORMS.MT5,
                 market_type: 'all',
@@ -406,6 +402,9 @@ export default class TradersHubStore extends BaseStore {
             return {
                 ...account,
                 description: account.description,
+                //tracking name need not be localised,so added the localization here for the account name.
+                tracking_name: account.name,
+                name: localize(account.name),
             };
         });
         this.getAvailableDxtradeAccounts();
@@ -686,6 +685,7 @@ export default class TradersHubStore extends BaseStore {
                             action_type: 'multi-action',
                             availability: this.selected_region,
                             market_type: account.market_type,
+                            tracking_name: account.tracking_name,
                         },
                     ];
                 });
@@ -701,6 +701,7 @@ export default class TradersHubStore extends BaseStore {
                         action_type: 'get',
                         availability: this.selected_region,
                         market_type: account.market_type,
+                        tracking_name: account.tracking_name,
                     },
                 ];
             }

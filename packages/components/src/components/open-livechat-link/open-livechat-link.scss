@@ -1,0 +1,14 @@
+.open-livechat {
+    &__link {
+        background: transparent;
+        border: none;
+        margin: 0;
+        padding: 0;
+        color: var(--brand-red-coral);
+
+        &:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+}

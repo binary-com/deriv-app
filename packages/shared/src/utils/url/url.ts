@@ -139,7 +139,7 @@ export const setUrlLanguage = (lang: string) => {
 /**
  * @deprecated Please use 'URLUtils.getDerivStaticURL' from '@deriv-com/utils' instead of this.
  */
-export const getStaticUrl = (path = '', _options = {}, is_document = false, is_eu_url = false) => {
+export const getStaticUrl = (path = '', is_document = false, is_eu_url = false) => {
     const host = is_eu_url ? deriv_urls.DERIV_COM_PRODUCTION_EU : deriv_urls.DERIV_COM_PRODUCTION;
     let lang = default_language?.toLowerCase();
 

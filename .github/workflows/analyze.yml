@@ -1,0 +1,48 @@
+name: Analyse Bundle
+on:
+  pull_request:
+    branches:
+    - master
+  push:
+    branches:
+    - master
+
+
+jobs:
+  build_and_test:
+    name: Analyze Bundle
+    runs-on: Runner_16cores_Deriv-app
+    environment: Preview
+    permissions:
+      contents: read
+      pull-requests: write
+      actions: read
+    steps:
+    - name: Checkout
+      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+    - name: Setup Node
+      uses: "./.github/actions/setup_node"
+    - name: Install dependencies
+      uses: "./.github/actions/npm_install_from_cache"
+    - name: Analyze
+      uses: "./.github/actions/analyze"
+      with:
+        NODE_ENV: production
+        CROWDIN_WALLETS_API_KEY: ${{ secrets.CROWDIN_WALLETS_API_KEY }}
+        DATADOG_APPLICATION_ID: ${{ vars.DATADOG_APPLICATION_ID }}
+        IS_GROWTHBOOK_ENABLED: ${{ vars.IS_GROWTHBOOK_ENABLED }}
+        DATADOG_CLIENT_TOKEN: ${{ vars.DATADOG_CLIENT_TOKEN }}
+        DATADOG_CLIENT_TOKEN_LOGS: ${{ vars.DATADOG_CLIENT_TOKEN_LOGS }}
+        DATADOG_SESSION_REPLAY_SAMPLE_RATE: ${{ vars.DATADOG_SESSION_REPLAY_SAMPLE_RATE }}
+        DATADOG_SESSION_SAMPLE_RATE: ${{ vars.DATADOG_SESSION_SAMPLE_RATE }}
+        DATADOG_SESSION_SAMPLE_RATE_LOGS: ${{ vars.DATADOG_SESSION_SAMPLE_RATE_LOGS }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GD_API_KEY: ${{ secrets.GD_API_KEY }}
+        GD_APP_ID: ${{ secrets.GD_APP_ID }}
+        GD_CLIENT_ID: ${{ secrets.GD_CLIENT_ID }}
+        RUDDERSTACK_KEY: ${{ vars.RUDDERSTACK_KEY }}
+        GROWTHBOOK_CLIENT_KEY: ${{ vars.GROWTHBOOK_CLIENT_KEY }}
+        GROWTHBOOK_DECRYPTION_KEY: ${{ vars.GROWTHBOOK_DECRYPTION_KEY }}
+        REF_NAME: ${{ github.ref_name }}
+        REMOTE_CONFIG_URL: ${{ vars.REMOTE_CONFIG_URL }}
+        ISSUE_NUMBER: ${{ github.event.pull_request.number }}

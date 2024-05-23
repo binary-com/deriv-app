@@ -61,7 +61,7 @@ const useSyncLocalStorageClientAccounts = () => {
                     is_virtual: Number(data.is_virtual),
                     landing_company_name: newAccount.landing_company_shortcode,
                     landing_company_shortcode: newAccount.landing_company_shortcode,
-                    linked_to: [{ loginid: data.loginid, platform: 'dwallet' }],
+                    linked_to: [],
                     residence: settingsData.citizen || settingsData.country_code,
                     session_start: moment().utc().valueOf() / 1000,
                     token: newAccount.oauth_token,

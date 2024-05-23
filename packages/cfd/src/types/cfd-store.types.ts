@@ -17,6 +17,7 @@ export type TCFDStore = {
         demo: string;
         real: string;
     };
+    loadCTraderTokens: (url: string, account_type: 'real' | 'demo') => void;
     mt5_trade_account: Required<
         TDetailsOfEachMT5Loginid & {
             market_type?: TTradingPlatformAvailableAccount['market_type'] | 'synthetic';

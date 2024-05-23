@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Loading } from '@deriv/components';
 import {
     getBrandWebsiteName,
@@ -71,7 +71,7 @@ type TResponse = {
 
 const SelfExclusion = observer(({ is_app_settings, overlay_ref, setIsOverlayShown }: TSelfExclusion) => {
     const { client, ui } = useStore();
-    const { currency, is_virtual, is_switching, standpoint, is_eu, is_uk, logout, landing_company_shortcode } = client;
+    const { currency, is_virtual, is_switching, standpoint, is_eu, logout, landing_company_shortcode } = client;
     const { is_tablet } = ui;
     const is_wrapper_bypassed = false;
     const is_mf = landing_company_shortcode === 'maltainvest';
@@ -440,7 +440,6 @@ const SelfExclusion = observer(({ is_app_settings, overlay_ref, setIsOverlayShow
         is_eu,
         is_mf,
         is_tablet,
-        is_uk,
         is_wrapper_bypassed,
         objectValuesToString,
         overlay_ref,

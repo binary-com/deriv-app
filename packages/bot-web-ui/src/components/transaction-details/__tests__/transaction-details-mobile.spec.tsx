@@ -8,17 +8,23 @@ import TransactionDetailsMobile from '../transaction-details-mobile';
 
 jest.mock('../../../utils/session-storage', () => ({
     ...jest.requireActual('../../../utils/session-storage'),
-    getStoredItemsByUser: jest.fn(() => [
-        {
-            type: 'contract',
-            data: {
-                ...mock_contract,
+    getStoredItemsByUser: jest.fn(() => ({
+        '001': [
+            {
+                type: 'contract',
+                data: {
+                    ...mock_contract,
+                    transaction_ids: {
+                        buy: 421306672718,
+                        sell: 421306674448,
+                    },
+                },
             },
-        },
-        {
-            type: 'divider',
-        },
-    ]),
+            {
+                type: 'divider',
+            },
+        ],
+    })),
 }));
 
 jest.mock('@deriv/bot-skeleton/src/scratch/blockly', () => jest.fn());
@@ -51,6 +57,9 @@ describe('TransactionDetailsMobile', () => {
     const mock_store = mockStore({});
 
     beforeAll(() => {
+        const mock_store = mockStore({
+            client: { loginid: '001' },
+        });
         mock_DBot_store = mockDBotStore(mock_store, mock_ws);
 
         wrapper = ({ children }: { children: JSX.Element }) => (

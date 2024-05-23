@@ -49,3 +49,7 @@ export const statusCodes: Record<TStatusCodes, string> = {
     suspected: 'suspected',
     verified: 'verified',
 } as const;
+
+export const ErrorCode = {
+    DuplicateUpload: 'DuplicateUpload',
+} as const;

@@ -1,26 +1,12 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
+import { TooltipRenderProps } from 'react-joyride';
 import { LegacyClose2pxIcon } from '@deriv/quill-icons';
-import { Step, TooltipRenderProps } from '@deriv/react-joyride';
 import { THooks } from '../../types';
-import { WalletButton } from '../Base';
-import { getDesktopSteps } from './DesktopSteps';
-import { getMobileSteps } from './MobileSteps';
+import { WalletButton, WalletText } from '../Base';
 import './WalletTourGuide.scss';
 
 export const walletsOnboardingLocalStorageKey = 'walletsOnboarding';
 export const walletsOnboardingStartValue = 'started';
-
-export const tourStepConfig = (
-    isMobile: boolean,
-    isDemoWallet: boolean,
-    hasMT5Account: boolean,
-    hasDerivAppsTradingAccount: boolean,
-    isAllWalletsAlreadyAdded: boolean,
-    walletIndex = 1
-): Step[] =>
-    isMobile
-        ? getMobileSteps(isDemoWallet, hasMT5Account, hasDerivAppsTradingAccount, isAllWalletsAlreadyAdded, walletIndex)
-        : getDesktopSteps(isDemoWallet, hasMT5Account, hasDerivAppsTradingAccount, isAllWalletsAlreadyAdded);
 
 export const TooltipComponent = ({
     backProps,
@@ -57,10 +43,12 @@ export const TooltipComponent = ({
     );
 };
 
+export const SpotLightHeader = ({ children }: PropsWithChildren) => (
+    <WalletText color='red' size='sm' weight='bold'>
+        {children}
+    </WalletText>
+);
+
 export const getFiatWalletLoginId = (wallets?: THooks.WalletAccountsList[]) => {
     return wallets?.find(wallet => !wallet.is_crypto)?.loginid;
-};
-
-export const getWalletIndexForTarget = (loginid?: string, wallets?: THooks.WalletAccountsList[]) => {
-    return (wallets?.findIndex(wallet => wallet.loginid === loginid) ?? 0) + 1;
 };

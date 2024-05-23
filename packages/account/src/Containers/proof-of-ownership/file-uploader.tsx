@@ -58,8 +58,9 @@ const FileUploader = ({ class_name, name, sub_index, payment_id }: TFileUploader
     };
 
     const updateError = () => {
-        const payment_method_error = errors?.[name] ?? {};
-        const payment_method_file_error = payment_method_error?.[payment_id]?.files ?? {};
+        // @ts-expect-error Error is an object
+        const payment_method_error = { ...(errors?.[name] ?? {}) };
+        const payment_method_file_error = { ...(payment_method_error?.[payment_id]?.files ?? {}) };
         delete payment_method_file_error?.[sub_index];
         // @ts-expect-error Error is an object
         payment_method_error[payment_id] = {
@@ -67,9 +68,6 @@ const FileUploader = ({ class_name, name, sub_index, payment_id }: TFileUploader
             ...(payment_method_error[payment_id] ?? {}),
             files: payment_method_file_error,
         };
-        if (Object.keys(payment_method_error[payment_id]?.files).length === 0) {
-            delete payment_method_error[payment_id]?.payment_method_identifier;
-        }
 
         // @ts-expect-error Error is an array
         setFieldError(name, { ...payment_method_error });

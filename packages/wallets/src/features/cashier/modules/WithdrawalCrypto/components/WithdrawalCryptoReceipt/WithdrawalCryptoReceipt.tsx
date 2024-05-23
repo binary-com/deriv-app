@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { LegacyArrowRight2pxIcon } from '@deriv/quill-icons';
+import { LegacyArrowDown2pxIcon } from '@deriv/quill-icons';
 import { WalletButton, WalletCard, WalletText } from '../../../../../../components';
 import { LandingCompanyDetails } from '../../../../constants';
 import { TWithdrawalReceipt } from '../../types';
@@ -25,7 +25,7 @@ const WithdrawalCryptoReceipt: React.FC<TProps> = ({ onClose, withdrawalReceipt 
                     iconSize='md'
                     landingCompanyName={LandingCompanyDetails.svg.shortcode}
                 />
-                <LegacyArrowRight2pxIcon iconSize='xs' />
+                <LegacyArrowDown2pxIcon iconSize='xs' />
                 <WithdrawalCryptoDestinationAddress address={address} />
             </div>
             <div className='wallets-withdrawal-crypto-receipt__withdrawal-info'>

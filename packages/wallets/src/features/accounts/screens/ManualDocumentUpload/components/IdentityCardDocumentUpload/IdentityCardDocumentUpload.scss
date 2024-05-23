@@ -2,20 +2,22 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 2.4rem;
     padding: 2.4rem;
-    width: fit-content;
+    gap: 2.4rem;
     background: var(--light-8-primary-background, #fff);
 
     @include mobile {
         width: 100%;
+        gap: 1.6rem;
     }
 
-    &__document-section {
+    &__input-group {
         width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+    }
+
+    &__document-upload {
+        width: 100%;
+        display: grid;
         gap: 1.7rem;
 
         @include mobile {
@@ -23,63 +25,14 @@
         }
     }
 
-    &__dropzones {
-        width: 100%;
-        display: flex;
-        align-items: flex-start;
+    &__input-group,
+    &__dropzone {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 2.4rem;
 
         @include mobile {
-            flex-direction: column;
-        }
-
-        &--left {
-            width: 100%;
-
-            & > .wallets-dropzone__container {
-                width: 33.5rem;
-            }
-
-            & > .wallets-dropzone {
-                padding: 4rem 4.7rem 4rem 3.9rem;
-            }
-        }
-
-        &--right {
-            width: 100%;
-
-            & > .wallets-dropzone__container {
-                width: 31rem;
-            }
-
-            & > .wallets-dropzone {
-                padding: 4rem 2.4rem;
-            }
-        }
-
-        & .wallets-dropzone__container {
-            height: 25rem;
-
-            @include mobile {
-                width: 100%;
-            }
-        }
-
-        & .wallets-dropzone {
-            @include mobile {
-                padding: 2rem;
-            }
-        }
-    }
-
-    &__input-group {
-        display: flex;
-        gap: 2.4rem;
-        padding-bottom: 2rem;
-        width: 100%;
-
-        @include mobile {
-            flex-direction: column;
+            grid-template-columns: unset;
             gap: 1.6rem;
         }
     }
