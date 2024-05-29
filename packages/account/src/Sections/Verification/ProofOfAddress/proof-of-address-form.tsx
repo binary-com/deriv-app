@@ -23,7 +23,7 @@ type TProofOfAddressForm = {
     is_resubmit: boolean;
     is_for_cfd_modal?: boolean;
     onCancel?: () => void;
-    onSubmit: (needs_poi: boolean) => void;
+    onSubmit: () => void;
     onSubmitForCFDModal: (index: number, values: FormikValues) => void;
     step_index: number;
 };
@@ -224,7 +224,7 @@ const ProofOfAddressForm = observer(
 
                 const { needs_verification } = get_account_status.authentication;
                 const needs_poi = Boolean(needs_verification.length) && needs_verification.includes('identity');
-                onSubmit?.(needs_poi);
+                onSubmit?.();
 
                 ['authenticate', 'needs_poa', 'poa_expired'].forEach(key => {
                     removeNotificationMessage({ key });

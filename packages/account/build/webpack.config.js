@@ -35,7 +35,6 @@ module.exports = function (env) {
             'personal-details-config': 'Configs/personal-details-config',
             'poa-expired': 'Components/poa/status/expired',
             'poa-needs-review': 'Components/poa/status/needs-review',
-            'poa-submitted': 'Components/poa/status/submitted',
             'poa-unverified': 'Components/poa/status/unverified',
             'poa-verified': 'Components/poa/status/verified',
             'poi-expired': 'Components/poi/status/expired',
