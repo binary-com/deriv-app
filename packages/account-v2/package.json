@@ -17,7 +17,7 @@
         "@deriv-com/utils": "^0.0.20",
         "@deriv/api-types": "1.0.172",
         "@deriv/api-v2": "^1.0.0",
-        "@deriv/quill-icons": "^1.22.8",
+        "@deriv/quill-icons": "^1.22.9",
         "class-variance-authority": "^0.7.0",
         "dayjs": "^1.11.10",
         "formik": "^2.1.4",

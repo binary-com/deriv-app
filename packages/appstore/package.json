@@ -27,6 +27,7 @@
     "license": "Apache-2.0",
     "dependencies": {
         "@deriv-com/analytics": "1.4.13",
+        "@deriv-com/quill-ui": "^1.10.5",
         "@deriv/account": "^1.0.0",
         "@deriv/cashier": "^1.0.0",
         "@deriv/cfd": "^1.0.0",
@@ -35,6 +36,7 @@
         "@deriv/stores": "^1.0.0",
         "@deriv/translations": "^1.0.0",
         "@deriv/hooks": "^1.0.0",
+        "@deriv/quill-icons": "^1.22.9",
         "@deriv/wallets": "^1.0.0",
         "classnames": "^2.2.6",
         "mobx": "^6.6.1",

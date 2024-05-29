@@ -37,7 +37,7 @@
         "@deriv/components": "^1.0.0",
         "@deriv/hooks": "^1.0.0",
         "@deriv/integration": "1.0.0",
-        "@deriv/quill-icons": "^1.22.8",
+        "@deriv/quill-icons": "^1.22.9",
         "@deriv/shared": "^1.0.0",
         "@deriv/stores": "^1.0.0",
         "@deriv/translations": "^1.0.0",

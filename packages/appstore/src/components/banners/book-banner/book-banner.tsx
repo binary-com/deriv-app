@@ -3,6 +3,7 @@ import { SessionStore } from '@deriv/shared';
 import { getAllowedLanguages, getLanguage } from '@deriv/translations';
 import { Analytics } from '@deriv-com/analytics';
 import BookBannerTemplate from 'Components/banners/book-banner/banner-template';
+import BookModalTemplate from 'Components/modals/book-modal/book-modal';
 
 type TEbooks = 'forex-ebook' | 'stock-ebook' | 'cryptocurrencies-ebook' | 'synthetic-indices-ebook' | 'chart-patterns';
 export type TEbooksUrl = { [B in TEbooks]: Record<keyof ReturnType<typeof getAllowedLanguages>, string> };
@@ -57,9 +58,18 @@ const BookBanner = () => {
             />
         );
     }
-    // Will be a part of upcoming a/b experiment
-    // if (e_book && e_book_show_way === 'popup') return ( <BookPopupTemplate e_books_url={e_books_url} e_book={e_book} lang={lang} />)
+
+    if (e_book_from_landing && e_book_show_way?.includes('popup')) {
+        return (
+            <BookModalTemplate
+                e_book_show_way={e_book_show_way}
+                e_books_url={e_books_url}
+                e_book_from_landing={e_book_from_landing}
+                lang={lang}
+            />
+        );
+    }
+
     return null;
 };
-
 export default BookBanner;
