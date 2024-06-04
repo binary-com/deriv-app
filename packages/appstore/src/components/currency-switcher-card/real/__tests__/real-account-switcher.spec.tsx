@@ -1,4 +1,3 @@
-import React from 'react';
 import RealAccountSwitcher from '../real-account-switcher';
 import { render, screen } from '@testing-library/react';
 import { StoreProvider, mockStore } from '@deriv/stores';

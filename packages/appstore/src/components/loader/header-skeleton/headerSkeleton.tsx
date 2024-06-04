@@ -1,4 +1,3 @@
-import React from 'react';
 import BrandSkeleton from '../brand-skeleton/brandSkeleton';
 import CashierButtonSkeleton from '../cashier-button-skeleton/cashierButtonSkeleton';
 import { VerticalDivider } from '../divider/divider';

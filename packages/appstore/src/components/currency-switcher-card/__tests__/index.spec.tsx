@@ -1,4 +1,3 @@
-import React from 'react';
 import CurrencySwitcherCard from '../index';
 import { render } from '@testing-library/react';
 import { StoreProvider, mockStore } from '@deriv/stores';

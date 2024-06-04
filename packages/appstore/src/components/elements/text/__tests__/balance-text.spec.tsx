@@ -1,4 +1,3 @@
-import React from 'react';
 import BalanceText from '../balance-text';
 import { render, screen } from '@testing-library/react';
 import { StoreProvider, mockStore } from '@deriv/stores';

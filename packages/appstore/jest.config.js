@@ -14,4 +14,5 @@ module.exports = {
         '^Types/(.*)$': '<rootDir>/src/types/$1',
         '^Utils/(.*)$': '<rootDir>/src/utils/$1',
     },
+    setupFilesAfterEnv: ['./src/jest-setup.ts'],
 };

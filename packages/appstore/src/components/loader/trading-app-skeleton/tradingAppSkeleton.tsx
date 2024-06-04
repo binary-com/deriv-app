@@ -1,4 +1,3 @@
-import React from 'react';
 import './tradingAppSkeleton.scss';
 import { HorizontalDivider } from '../divider/divider';
 

@@ -1,5 +1,5 @@
-import React from 'react';
-import classNames from 'classnames';
+import * as React from 'react';
+import clsx from 'clsx';
 import { Icon } from '@deriv/components';
 import { Jurisdiction } from '@deriv/shared';
 import { useStore, observer } from '@deriv/stores';
@@ -68,20 +68,20 @@ const CurrentSwitcherContainer = observer(
 
         return (
             <div
-                className={classNames(className, 'currency-switcher-container', {
+                className={clsx(className, 'currency-switcher-container', {
                     'currency-switcher-container--has-interaction': has_interaction,
                 })}
             >
                 <div className='currency-switcher-container--left'>
                     <CurrencyPlatformIcon icon={icon} />
                     <div
-                        className={classNames(
+                        className={clsx(
                             'currency-switcher-container__content',
                             `currency-switcher-container--${document_status || 'failed' || 'pending' || 'default'}`
                         )}
                     >
                         <div
-                            className={classNames(
+                            className={clsx(
                                 'currency-switcher-container__content--text',
                                 `currency-switcher-container__content--text--${
                                     document_status || 'failed' || 'pending' || 'default'

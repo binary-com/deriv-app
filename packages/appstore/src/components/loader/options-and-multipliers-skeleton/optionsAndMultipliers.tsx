@@ -1,4 +1,3 @@
-import React from 'react';
 import './optionsAndMultipliers.scss';
 
 const OptionsAndMultipliersSkeleton = () => (

@@ -1,4 +1,3 @@
-import React from 'react';
 import { PageError } from '@deriv/components';
 import { routes, getUrlBase } from '@deriv/shared';
 import { localize } from '@deriv/translations';

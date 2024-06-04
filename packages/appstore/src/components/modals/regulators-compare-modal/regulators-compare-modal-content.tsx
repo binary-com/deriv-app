@@ -1,4 +1,3 @@
-import React from 'react';
 import { Table, Div100vhContainer, Text, ThemedScrollbars } from '@deriv/components';
 import { localize } from '@deriv/translations';
 import { isDesktop, isMobile } from '@deriv/shared';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Icon, Text } from '@deriv/components';
 import './wallet-account.scss';
 

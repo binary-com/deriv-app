@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
-import { observer } from 'mobx-react-lite';
+import { useEffect } from 'react';
+import { observer, useStore } from '@deriv/stores';
 import { Text, StaticUrl } from '@deriv/components';
 import { ContentFlag, setPerformanceValue } from '@deriv/shared';
-import { useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
 import ListingContainer from 'Components/containers/listing-container';
 import PlatformLoader from 'Components/pre-loader/platform-loader';

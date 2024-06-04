@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { Text, DesktopWrapper, MobileWrapper, Tabs, Icon, Loading } from '@deriv/components';
 import { ContentFlag, makeLazyLoader, moduleLoader } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
@@ -29,13 +29,13 @@ const MainTitleBar = () => {
         content_flag === ContentFlag.LOW_RISK_CR_NON_EU || content_flag === ContentFlag.LOW_RISK_CR_EU;
     const show_wallets_banner = wallet_migration_state && wallet_migration_state !== 'ineligible';
 
-    const [active_index, setActiveIndex] = React.useState(0);
-    React.useEffect(() => {
+    const [active_index, setActiveIndex] = useState(0);
+    useEffect(() => {
         setActiveIndex(selected_region === 'Non-EU' ? 0 : 1);
     }, [selected_region]);
 
     return (
-        <React.Fragment>
+        <Fragment>
             <BookBanner />
             {show_wallets_banner && <WalletsBanner />}
             <DesktopWrapper>
@@ -92,7 +92,7 @@ const MainTitleBar = () => {
                 </div>
                 <AssetSummary />
             </MobileWrapper>
-        </React.Fragment>
+        </Fragment>
     );
 };
 

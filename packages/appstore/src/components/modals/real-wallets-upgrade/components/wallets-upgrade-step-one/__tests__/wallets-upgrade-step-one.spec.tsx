@@ -1,4 +1,3 @@
-import React from 'react';
 import { WalletsUpgradeStepOneContent } from '../wallets-upgrade-step-one';
 import { render, screen } from '@testing-library/react';
 import { StoreProvider, mockStore } from '@deriv/stores';

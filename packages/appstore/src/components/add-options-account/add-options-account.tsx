@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import { DesktopWrapper, MobileWrapper, Button, Text } from '@deriv/components';
 import { Localize, localize } from '@deriv/translations';
 import './add-options-account.scss';
@@ -18,7 +18,7 @@ const AddOptions = observer(() => {
     const eu_user = content_flag === ContentFlag.LOW_RISK_CR_EU || content_flag === ContentFlag.EU_REAL;
 
     return (
-        <React.Fragment>
+        <Fragment>
             <div className='add-options-account__title'>
                 <Text size={isMobile() ? 'xxs' : 's'} weight='bold'>
                     <Localize i18n_default_text={add_deriv_account_text} />
@@ -53,13 +53,13 @@ const AddOptions = observer(() => {
                     primary
                 />
             </div>
-        </React.Fragment>
+        </Fragment>
     );
 });
 
 const AddOptionsAccount = observer(() => {
     return (
-        <React.Fragment>
+        <Fragment>
             <div className='add-options-account'>
                 <DesktopWrapper>
                     <AddOptions />
@@ -68,7 +68,7 @@ const AddOptionsAccount = observer(() => {
                     <AddOptions />
                 </MobileWrapper>
             </div>
-        </React.Fragment>
+        </Fragment>
     );
 });
 

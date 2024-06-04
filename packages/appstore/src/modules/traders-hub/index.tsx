@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef, useEffect, useLayoutEffect, Fragment } from 'react';
 import { DesktopWrapper, MobileWrapper, ButtonToggle, Div100vhContainer, Text } from '@deriv/components';
 import { isDesktop, routes, checkServerMaintenance, startPerformanceEventTimer } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
@@ -8,7 +8,7 @@ import ModalManager from 'Components/modals/modal-manager';
 import MainTitleBar from 'Components/main-title-bar';
 import OptionsAndMultipliersListing from 'Components/options-multipliers-listing';
 import ButtonToggleLoader from 'Components/pre-loader/button-toggle-loader';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import './traders-hub.scss';
 import { useContentFlag, useGrowthbookGetFeatureValue } from '@deriv/hooks';
 
@@ -34,7 +34,7 @@ const TradersHub = observer(() => {
 
     const { is_cr_demo, is_eu_demo, is_eu_real } = useContentFlag();
     const { selected_platform_type, setTogglePlatformType, is_eu_user } = traders_hub;
-    const traders_hub_ref = React.useRef<HTMLDivElement>(null);
+    const traders_hub_ref = useRef<HTMLDivElement>(null);
 
     const can_show_notify =
         (!is_switching && !is_logging_in && is_account_setting_loaded && is_landing_company_loaded) ||
@@ -45,7 +45,7 @@ const TradersHub = observer(() => {
         defaultValue: false,
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (is_eu_user) {
             setTogglePlatformType('cfd');
         }
@@ -71,11 +71,11 @@ const TradersHub = observer(() => {
         setTogglePlatformType,
     ]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (is_eu_user) setTogglePlatformType('cfd');
     }, [is_eu_user, setTogglePlatformType]);
 
-    React.useLayoutEffect(() => {
+    useLayoutEffect(() => {
         startPerformanceEventTimer('option_multiplier_section_loading_time');
     }, []);
 
@@ -101,7 +101,7 @@ const TradersHub = observer(() => {
         return (
             <div
                 data-testid='dt_traders_hub'
-                className={classNames('traders-hub__main-container', {
+                className={clsx('traders-hub__main-container', {
                     'traders-hub__main-container-reversed': is_eu_user,
                 })}
             >
@@ -126,12 +126,12 @@ const TradersHub = observer(() => {
     };
 
     return (
-        <React.Fragment>
+        <Fragment>
             <Div100vhContainer className='traders-hub--mobile' height_offset='50px' is_disabled={isDesktop()}>
                 {can_show_notify && <Notifications />}
                 <div
                     id='traders-hub'
-                    className={classNames('traders-hub', {
+                    className={clsx('traders-hub', {
                         'traders-hub--eu-user': is_eu_user && is_mt5_allowed,
                         'traders-hub--eu-user-without-mt5': is_eu_user && !is_mt5_allowed,
                     })}
@@ -174,7 +174,7 @@ const TradersHub = observer(() => {
                     <div className='disclaimer__bottom-plug' />
                 </div>
             )}
-        </React.Fragment>
+        </Fragment>
     );
 });
 

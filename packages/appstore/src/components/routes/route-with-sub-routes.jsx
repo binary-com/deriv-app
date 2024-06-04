@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { redirectToLogin, isEmptyObject, routes, removeBranchName, default_title } from '@deriv/shared';
 import { getLanguage } from '@deriv/translations';
@@ -30,10 +30,10 @@ const RouteWithSubRoutes = route => {
             const pathname = removeBranchName(location.pathname);
 
             result = (
-                <React.Fragment>
+                <Fragment>
                     {has_default_subroute && pathname === route.path && <Redirect to={default_subroute.path} />}
                     <route.component {...props} routes={route.routes} />
-                </React.Fragment>
+                </Fragment>
             );
         }
 

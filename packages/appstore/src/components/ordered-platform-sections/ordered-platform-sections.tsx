@@ -1,5 +1,4 @@
-import React from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { observer, useStore } from '@deriv/stores';
 import OptionsAndMultipliersListingLoggedOut from 'Components/options-multipliers-listing-logged-out';
 import CFDsListingLoggedOut from 'Components/cfds-listing-logged-out';
@@ -21,7 +20,7 @@ const GetOrderedPlatformSections = observer(
 
         return (
             <div
-                className={classNames('ordered-platform-sections', {
+                className={clsx('ordered-platform-sections', {
                     'ordered-platform-sections__reversed': is_eu_user,
                 })}
             >

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Modal } from '@deriv/components';
 import { useStore, observer } from '@deriv/stores';
 import { TRealWalletsUpgradeSteps } from 'Types';

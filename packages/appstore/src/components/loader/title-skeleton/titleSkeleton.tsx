@@ -1,4 +1,3 @@
-import React from 'react';
 import './titleSkeleton.scss';
 
 const TitleSkeleton = () => (

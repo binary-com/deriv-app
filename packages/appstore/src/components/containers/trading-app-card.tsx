@@ -1,5 +1,5 @@
-import React from 'react';
-import classNames from 'classnames';
+import { useState } from 'react';
+import clsx from 'clsx';
 import getStatusBadgeConfig from '@deriv/account/src/Configs/get-status-badge-config';
 import { Text, StatusBadge } from '@deriv/components';
 import { localize } from '@deriv/translations';
@@ -57,7 +57,7 @@ const TradingAppCard = ({
     const { is_account_being_created } = cfd;
     const { account_status: { authentication } = {}, is_logged_in } = client;
 
-    const [is_open_position_svg_modal_open, setIsOpenPositionSvgModalOpen] = React.useState(false);
+    const [is_open_position_svg_modal_open, setIsOpenPositionSvgModalOpen] = useState(false);
     const demo_label = localize('Demo');
 
     const low_risk_cr_non_eu = content_flag === ContentFlag.LOW_RISK_CR_NON_EU;
@@ -137,14 +137,14 @@ const TradingAppCard = ({
     return (
         <div className='trading-app-card' key={`trading-app-card__${current_language}`}>
             <div
-                className={classNames('trading-app-card__icon--container', {
+                className={clsx('trading-app-card__icon--container', {
                     'trading-app-card__icon--container__clickable': clickable_icon,
                 })}
             >
                 <TradingPlatformIconProps icon={icon} onClick={clickable_icon ? openStaticPage : undefined} size={48} />
             </div>
             <div
-                className={classNames('trading-app-card__container', { 'trading-app-card--divider': has_divider })}
+                className={clsx('trading-app-card__container', { 'trading-app-card--divider': has_divider })}
                 data-testid={`dt_trading-app-card_${is_real ? 'real' : 'demo'}_${platform_name
                     .replaceAll(' ', '-')
                     .toLowerCase()}${

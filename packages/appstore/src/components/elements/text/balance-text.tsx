@@ -1,5 +1,4 @@
-import React from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { Text } from '@deriv/components';
 import { formatMoney } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
@@ -31,7 +30,7 @@ const BalanceText = observer(({ balance, currency, size = 'm', underline_style =
 
     return (
         <div
-            className={classNames('balance-text__container', { 'balance-text--dotted': underline_style === 'dotted' })}
+            className={clsx('balance-text__container', { 'balance-text--dotted': underline_style === 'dotted' })}
             data-testid='dt_balance_text_container'
         >
             <Text weight='bold' size={size} className={getTextClassName()}>

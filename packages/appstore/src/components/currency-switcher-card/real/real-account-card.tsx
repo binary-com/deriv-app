@@ -1,4 +1,3 @@
-import React from 'react';
 import { useHistory } from 'react-router';
 import { Button, Text } from '@deriv/components';
 import { getCurrencyName, routes, isCryptocurrency, startPerformanceEventTimer } from '@deriv/shared';

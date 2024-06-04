@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef } from 'react';
 import { Text, useOnClickOutside, Modal, Button } from '@deriv/components';
 import { useStore, observer } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
@@ -9,7 +9,7 @@ const WalletsMigrationFailed = observer(() => {
     const { is_wallet_migration_failed, setWalletsMigrationFailedPopup } = traders_hub;
     const { is_mobile } = ui;
 
-    const wallets_migration_failed_ref = React.useRef<HTMLDivElement>(null);
+    const wallets_migration_failed_ref = useRef<HTMLDivElement>(null);
 
     const handleClose = () => {
         setWalletsMigrationFailedPopup(false);

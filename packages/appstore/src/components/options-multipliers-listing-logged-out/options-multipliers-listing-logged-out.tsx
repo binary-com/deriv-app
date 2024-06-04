@@ -1,4 +1,3 @@
-import React from 'react';
 import { useStore, observer } from '@deriv/stores';
 import ListingContainer from 'Components/containers/listing-container';
 import TradingAppCard from 'Components/containers/trading-app-card';

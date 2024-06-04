@@ -1,5 +1,5 @@
-import React from 'react';
-import classNames from 'classnames';
+import * as React from 'react';
+import clsx from 'clsx';
 import { Dropdown } from '@deriv/components';
 import { Analytics } from '@deriv-com/analytics';
 import { getAccountTypes } from 'Constants/platform-config';
@@ -15,14 +15,11 @@ const AccountTypeDropdown = observer(() => {
     const { current_language } = common;
 
     return (
-        <div className={classNames('account-type-dropdown--parent')}>
+        <div className={clsx('account-type-dropdown--parent')}>
             <Dropdown
                 classNameIcon={`account-type-dropdown__icon--${selected_account_type}`}
                 value={selected_account_type}
-                classNameDisplay={classNames(
-                    'account-type-dropdown',
-                    `account-type-dropdown--${selected_account_type}`
-                )}
+                classNameDisplay={clsx('account-type-dropdown', `account-type-dropdown--${selected_account_type}`)}
                 list={getAccountTypes()}
                 key={`account-type-dropdown__icon--key-${current_language}`}
                 onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {

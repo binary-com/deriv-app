@@ -172,8 +172,6 @@ module.exports = function (env) {
             {
                 react: true,
                 'react-dom': true,
-                classnames: true,
-                mobx: true,
                 'react-router': true,
                 'react-router-dom': true,
                 '@deriv/shared': true,

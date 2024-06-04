@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { useWalletMigration } from '@deriv/hooks';
 import { Button, Icon, Text, Modal } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
@@ -13,7 +13,7 @@ const WalletsUpgradeModal = observer(() => {
     const { is_mobile, is_desktop } = ui;
     const { is_eligible } = useWalletMigration();
     const isWalletMigrationModalClosed = localStorage.getItem('is_wallet_migration_modal_closed');
-    const [modalOpen, setModalOpen] = React.useState(!isWalletMigrationModalClosed);
+    const [modalOpen, setModalOpen] = useState(!isWalletMigrationModalClosed);
 
     const closeModal = () => {
         setModalOpen(false);

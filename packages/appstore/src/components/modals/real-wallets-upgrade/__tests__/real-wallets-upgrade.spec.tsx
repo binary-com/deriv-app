@@ -1,4 +1,3 @@
-import React from 'react';
 import RealWalletsUpgrade from '../real-wallets-upgrade';
 import { render } from '@testing-library/react';
 import { StoreProvider, mockStore } from '@deriv/stores';

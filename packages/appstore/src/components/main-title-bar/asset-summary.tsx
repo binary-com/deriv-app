@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import { Text, Popover } from '@deriv/components';
 import { localize } from '@deriv/translations';
 import { isMobile } from '@deriv/shared';
@@ -54,18 +54,18 @@ const AssetSummary = observer(() => {
 
     if (should_show_loader) {
         return (
-            <React.Fragment>
+            <Fragment>
                 <div className='asset-summary__container content-loader'>
                     <TotalAssetsLoader />
                 </div>
-            </React.Fragment>
+            </Fragment>
         );
     }
 
     return (
         <div className='asset-summary'>
             {has_active_related_deriv_account || selected_account_type === 'demo' ? (
-                <React.Fragment>
+                <Fragment>
                     {!isMobile() ? (
                         <Text align='right' key={`asset-summary--key-${current_language}`} size='xs' line_height='s'>
                             {localize('Total assets')}
@@ -89,7 +89,7 @@ const AssetSummary = observer(() => {
                             underline_style='dotted'
                         />
                     </Popover>
-                </React.Fragment>
+                </Fragment>
             ) : null}
         </div>
     );

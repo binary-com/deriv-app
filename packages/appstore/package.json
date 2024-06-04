@@ -36,12 +36,9 @@
         "@deriv/translations": "^1.0.0",
         "@deriv/hooks": "^1.0.0",
         "@deriv/wallets": "^1.0.0",
-        "classnames": "^2.2.6",
-        "mobx": "^6.6.1",
-        "mobx-react-lite": "^3.4.0",
+        "clsx": "^2.1.1",
         "react": "^17.0.2",
         "react-content-loader": "^6.2.0",
-        "react-joyride": "^2.5.3",
         "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0"
     },

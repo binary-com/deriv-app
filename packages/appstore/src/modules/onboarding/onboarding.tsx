@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { routes } from '@deriv/shared';
 import { useStore, observer } from '@deriv/stores';

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { Icon } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import './trustpilot-star-rating.scss';
@@ -7,9 +7,9 @@ const TrustpilotStarRating = observer(({ score }: { score: number }) => {
     const { common } = useStore();
     const { current_language } = common;
     const html = document.getElementsByTagName('html');
-    const [is_rtl, setIsRtl] = React.useState(html?.[0]?.getAttribute('dir') === 'rtl');
+    const [is_rtl, setIsRtl] = useState(html?.[0]?.getAttribute('dir') === 'rtl');
 
-    React.useEffect(() => {
+    useEffect(() => {
         setIsRtl(html?.[0]?.getAttribute('dir') === 'rtl');
     }, [current_language]);
 

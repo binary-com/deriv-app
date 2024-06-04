@@ -1,4 +1,3 @@
-import React from 'react';
 import { WalletsUpgradeStepOneContent, WalletsUpgradeStepOneFooter } from '../wallets-upgrade-step-one';
 import { WalletsUpgradeStepTwoContent, WalletsUpgradeStepTwoFooter } from '../wallets-upgrade-step-two';
 import { TWalletSteps } from 'Types';

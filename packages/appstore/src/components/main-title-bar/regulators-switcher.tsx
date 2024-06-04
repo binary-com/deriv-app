@@ -1,5 +1,5 @@
-import React, { HTMLAttributes } from 'react';
-import classNames from 'classnames';
+import { HTMLAttributes } from 'react';
+import clsx from 'clsx';
 import { Icon, Text } from '@deriv/components';
 import { localize } from '@deriv/translations';
 import { region_availability } from 'Constants/platform-config';
@@ -14,7 +14,7 @@ type SwitcherItemProps = {
 
 const SwitcherItem = ({ children, is_selected, ...props }: SwitcherItemProps & HTMLAttributes<HTMLDivElement>) => {
     return (
-        <div className={classNames('item', { 'is-selected': is_selected })} {...props}>
+        <div className={clsx('item', { 'is-selected': is_selected })} {...props}>
             <Text size='xs' weight={is_selected ? 'bold' : 'normal'} color={is_selected ? 'prominent' : 'general'}>
                 {children}
             </Text>

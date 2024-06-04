@@ -1,4 +1,3 @@
-import React from 'react';
 import { observer } from '@deriv/stores';
 import { useWalletMigration } from '@deriv/hooks';
 import WalletsBannerUpgrade from './wallets-banner-upgrade';

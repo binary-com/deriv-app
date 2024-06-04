@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Icon, Text } from '@deriv/components';
 import { useStore, observer } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
@@ -28,14 +28,14 @@ const TrustpilotWidget = observer(() => {
             <a href='https://www.trustpilot.com/review/deriv.com' target='_blank' rel='noopener noreferrer'>
                 <div className='trustpilot-widget__content'>
                     {!is_mobile && (
-                        <React.Fragment>
+                        <Fragment>
                             <Text size='s' color='prominent'>
                                 <Localize i18n_default_text='Our customers say' />
                             </Text>
                             <Text size='s' weight='bold' color='prominent'>
                                 <Localize i18n_default_text='Excellent' />
                             </Text>
-                        </React.Fragment>
+                        </Fragment>
                     )}
                     <TrustpilotStarRating score={trustpilotData.trustScore} />
                     {!is_mobile && (

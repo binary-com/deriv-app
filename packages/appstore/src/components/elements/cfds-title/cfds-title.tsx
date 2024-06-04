@@ -1,4 +1,3 @@
-import React from 'react';
 import { Text } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { localize } from '@deriv/translations';

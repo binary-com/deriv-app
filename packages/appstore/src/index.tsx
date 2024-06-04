@@ -1,4 +1,3 @@
-import React from 'react';
 import { makeLazyLoader, moduleLoader } from '@deriv/shared';
 import { Loading } from '@deriv/components';
 

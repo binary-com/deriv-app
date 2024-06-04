@@ -1,5 +1,4 @@
 import ContentLoader from 'react-content-loader';
-import React from 'react';
 import { DesktopWrapper, MobileWrapper } from '@deriv/components';
 
 const TotalAssetsLoader = () => (

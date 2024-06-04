@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import CashierStoreProvider from '@deriv/cashier/src/cashier-providers';
 import CFDStoreProvider from '@deriv/cfd/src/cfd-providers';
 import { StoreProvider } from '@deriv/stores';

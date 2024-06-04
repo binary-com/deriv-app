@@ -1,4 +1,3 @@
-import React from 'react';
 import './cfdAppskeleton.scss';
 
 const CfdAppSkeleton = () => (

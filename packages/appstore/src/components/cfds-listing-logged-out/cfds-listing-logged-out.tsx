@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import { observer, useStore } from '@deriv/stores';
 import { Text } from '@deriv/components';
 import { redirectToLogin } from '@deriv/shared';
@@ -72,7 +72,7 @@ const CFDsListingLoggedOut = observer(() => {
                 />
             ))}
             {!is_eu_user && (
-                <React.Fragment>
+                <Fragment>
                     <div className='cfds-listing-logged-out__cfd-full-row'>
                         <hr className='cfds-listing-logged-out__divider' />
                     </div>
@@ -82,7 +82,7 @@ const CFDsListingLoggedOut = observer(() => {
                             {localize('Deriv X')}
                         </Text>
                     </div>
-                </React.Fragment>
+                </Fragment>
             )}
             {available_dxtrade_accounts?.map(account => (
                 <TradingAppCard

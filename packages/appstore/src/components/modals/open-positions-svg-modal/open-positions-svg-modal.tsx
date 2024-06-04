@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Button, Modal, Text } from '@deriv/components';
 import { Jurisdiction, MT5_ACCOUNT_STATUS, getMT5AccountTitle } from '@deriv/shared';
 import { useStore } from '@deriv/stores';

@@ -1,5 +1,5 @@
-import React from 'react';
-import classNames from 'classnames';
+import * as React from 'react';
+import clsx from 'clsx';
 import { Icon, Text, WalletCard } from '@deriv/components';
 import { Localize } from '@deriv/translations';
 import WalletAccount from '../wallet-account/wallet-account';
@@ -46,7 +46,7 @@ const WalletLinkWrapper = observer(({ wallet_details, account_list }: TWalletLin
             </div>
             <div className='wallet-link-wrapper__link'>
                 <div
-                    className={classNames('wallet-link-wrapper__link-bracket', {
+                    className={clsx('wallet-link-wrapper__link-bracket', {
                         'wallet-link-wrapper__link-bracket--single': account_list.length === 1,
                     })}
                 />

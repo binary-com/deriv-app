@@ -1,4 +1,3 @@
-import React from 'react';
 import AccountTypeDropdown from '../account-type-dropdown';
 import { render, screen } from '@testing-library/react';
 import { StoreProvider, mockStore } from '@deriv/stores';

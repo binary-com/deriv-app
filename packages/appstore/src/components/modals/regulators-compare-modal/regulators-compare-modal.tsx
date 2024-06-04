@@ -1,4 +1,4 @@
-import React from 'react';
+import { Suspense } from 'react';
 import { observer, useStore } from '@deriv/stores';
 import { localize } from '@deriv/translations';
 import RegulatorsCompareModalContent from './regulators-compare-modal-content';
@@ -14,7 +14,7 @@ const RegulatorsCompareModal = () => {
     };
 
     return (
-        <React.Suspense fallback={<UILoader />}>
+        <Suspense fallback={<UILoader />}>
             <DesktopWrapper>
                 <Modal
                     disableApp={disableApp}
@@ -38,7 +38,7 @@ const RegulatorsCompareModal = () => {
                     <RegulatorsCompareModalContent />
                 </MobileDialog>
             </MobileWrapper>
-        </React.Suspense>
+        </Suspense>
     );
 };
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import './cfdToggleSkeleton.scss';
 
 const CFDToggleSkeleton = () => (

@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import { MobileDialog, ProgressBarTracker, SwipeableWrapper } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { TRealWalletsUpgradeSteps } from 'Types';
@@ -47,7 +47,7 @@ const MobileRealWalletsUpgrade = observer(({ wallet_upgrade_steps }: TRealWallet
                     }}
                 >
                     {wallet_steps.map(slide => (
-                        <React.Fragment key={slide.name}>{slide.content}</React.Fragment>
+                        <Fragment key={slide.name}>{slide.content}</Fragment>
                     ))}
                 </SwipeableWrapper>
             </div>

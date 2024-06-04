@@ -1,4 +1,3 @@
-import React from 'react';
 import RealAccountCard from '../real-account-card';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { StoreProvider, mockStore } from '@deriv/stores';

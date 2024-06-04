@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import CfdAppSkeleton from '../cfd-app-skeleton/cfdAppSkeleton';
 import CFDToggleSkeleton from '../cfd-toggle-skeleton/cfdToggleSkeleton';
 import HeaderSkeleton from '../header-skeleton/headerSkeleton';
@@ -10,11 +10,11 @@ import TradingAppCardSkeleton from '../trading-app-skeleton/tradingAppSkeleton';
 import './onbordingSkeleton.scss';
 
 const TradingAppCardSkeletonBox = () => (
-    <React.Fragment>
+    <Fragment>
         <TradingAppCardSkeleton />
         <TradingAppCardSkeleton />
         <TradingAppCardSkeleton />
-    </React.Fragment>
+    </Fragment>
 );
 const OnboardingSkeleton = () => (
     <div className='onboarding-skeleton'>

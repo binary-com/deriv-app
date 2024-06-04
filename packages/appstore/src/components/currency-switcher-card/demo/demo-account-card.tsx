@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Text } from '@deriv/components';
 import CurrencySwitcherContainer from 'Components/containers/currency-switcher-container';
 import BalanceText from 'Components/elements/text/balance-text';

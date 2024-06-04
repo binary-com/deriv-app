@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Icon, Modal, Text } from '@deriv/components';
 import { Localize, localize } from '@deriv/translations';
 import { useStore } from '@deriv/stores';

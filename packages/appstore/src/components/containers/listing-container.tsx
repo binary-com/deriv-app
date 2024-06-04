@@ -1,5 +1,5 @@
-import React, { HTMLAttributes, ReactNode } from 'react';
-import classNames from 'classnames';
+import { HTMLAttributes, ReactNode } from 'react';
+import clsx from 'clsx';
 import { observer, useStore } from '@deriv/stores';
 import CurrencySwitcherCard from 'Components/currency-switcher-card';
 import GridContainer from 'Components/containers/grid-container';
@@ -47,7 +47,7 @@ const ListingContainer = ({
     className,
 }: TListingContainerProps & Omit<HTMLAttributes<HTMLDivElement>, 'title'>) => {
     return (
-        <div className={classNames('listing-container', className)}>
+        <div className={clsx('listing-container', className)}>
             <div className='listing-container__top-container'>
                 <Options title={title} description={description} is_deriv_platform={is_deriv_platform} />
                 <Switcher is_deriv_platform={is_deriv_platform} />

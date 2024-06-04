@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { observer, useStore } from '@deriv/stores';
 import { DesktopRealWalletsUpgrade, MobileRealWalletsUpgrade } from './components/modal-elements';
 import { useWalletMigration } from '@deriv/hooks';
@@ -9,15 +9,15 @@ const RealWalletsUpgrade = observer(() => {
     const { is_mobile } = ui;
     const { startMigration, is_in_progress, is_ineligible, is_migrated, is_migrating } = useWalletMigration();
 
-    const [current_step, setCurrentStep] = React.useState(0);
+    const [current_step, setCurrentStep] = useState(0);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (is_migrating || is_in_progress || is_ineligible || is_migrated) {
             toggleWalletsUpgrade(false);
         }
     }, [is_in_progress, is_ineligible, is_migrated, is_migrating, toggleWalletsUpgrade]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!is_real_wallets_upgrade_on) {
             setCurrentStep(0);
         }
@@ -43,13 +43,13 @@ const RealWalletsUpgrade = observer(() => {
     };
 
     return (
-        <React.Fragment>
+        <Fragment>
             {is_mobile ? (
                 <MobileRealWalletsUpgrade wallet_upgrade_steps={wallet_upgrade_steps} />
             ) : (
                 <DesktopRealWalletsUpgrade wallet_upgrade_steps={wallet_upgrade_steps} />
             )}
-        </React.Fragment>
+        </Fragment>
     );
 });
 

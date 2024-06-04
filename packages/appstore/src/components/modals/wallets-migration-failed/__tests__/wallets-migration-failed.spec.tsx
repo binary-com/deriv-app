@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import { StoreProvider, mockStore } from '@deriv/stores';
 import WalletsMigrationFailed from '../wallets-migration-failed';

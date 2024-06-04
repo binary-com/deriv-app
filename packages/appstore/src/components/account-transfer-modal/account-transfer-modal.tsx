@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Modal } from '@deriv/components';
 import { routes } from '@deriv/shared';
@@ -25,7 +25,7 @@ const AccountTransferModal = observer(({ is_modal_open, toggleModal }: TAccountT
 
     const history = useHistory();
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (is_modal_open) setActiveTab('account_transfer');
 
         return () => {

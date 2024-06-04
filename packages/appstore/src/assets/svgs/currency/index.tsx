@@ -1,4 +1,3 @@
-import React from 'react';
 import { Icon } from '@deriv/components';
 import { capitalizeFirstLetter } from '@deriv/shared';
 import { IconProps } from '../icon-types';

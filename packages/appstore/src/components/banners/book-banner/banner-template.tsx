@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { useStore } from '@deriv/stores';
 import { Analytics } from '@deriv-com/analytics';
 import { SessionStore } from '@deriv/shared';
@@ -14,7 +14,7 @@ type TBookBannerTemplate = {
 };
 
 const BookBannerTemplate = ({ e_book_show_way, e_books_url, e_book_from_landing, lang }: TBookBannerTemplate) => {
-    const [is_banner_shows, setIsBannerShows] = React.useState(true);
+    const [is_banner_shows, setIsBannerShows] = useState(true);
     const { traders_hub, ui } = useStore();
     const { selected_account_type } = traders_hub;
     const analytics_data: Parameters<typeof Analytics.trackEvent>[1] = {
@@ -22,7 +22,7 @@ const BookBannerTemplate = ({ e_book_show_way, e_books_url, e_book_from_landing,
         account_mode: selected_account_type,
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         Analytics.trackEvent('ce_tradershub_banner', {
             action: 'open',
             ...analytics_data,
@@ -30,7 +30,7 @@ const BookBannerTemplate = ({ e_book_show_way, e_books_url, e_book_from_landing,
     }, []);
 
     return (
-        <React.Fragment>
+        <Fragment>
             {is_banner_shows ? (
                 <div id='e-book-banner' className='book-banner-template'>
                     <div className='book-banner-template__left'>
@@ -78,7 +78,7 @@ const BookBannerTemplate = ({ e_book_show_way, e_books_url, e_book_from_landing,
                     />
                 </div>
             ) : null}
-        </React.Fragment>
+        </Fragment>
     );
 };
 

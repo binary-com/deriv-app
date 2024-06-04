@@ -2,7 +2,6 @@ import { Button } from '@deriv/components';
 import { localize } from '@deriv/translations';
 import { Actions } from 'Components/containers/trading-app-card-actions';
 import TradeButton from 'Components/trade-button';
-import React from 'react';
 
 /**
  * Handles Transfer, Trade and top up. It uses the name attribute of the <button /> element to distinguish between transfer and top up

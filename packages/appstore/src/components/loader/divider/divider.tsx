@@ -1,4 +1,3 @@
-import React from 'react';
 import './divider.scss';
 
 export const VerticalDivider = () => <div className='vertical-divider' />;

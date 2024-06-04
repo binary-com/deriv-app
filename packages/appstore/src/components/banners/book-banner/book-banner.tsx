@@ -1,4 +1,3 @@
-import React from 'react';
 import { SessionStore } from '@deriv/shared';
 import { getAllowedLanguages, getLanguage } from '@deriv/translations';
 import { Analytics } from '@deriv-com/analytics';
