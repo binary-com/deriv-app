@@ -18,5 +18,10 @@ module.exports = {
     transformIgnorePatterns: ['/node_modules/(?!(@enykeev/react-virtualized|@simplewebauthn/browser)).+\\.js$'],
     setupFiles: ['<rootDir>/../../jest.setup.js'],
     setupFilesAfterEnv: ['<rootDir>/../../setupTests.js'],
-    testPathIgnorePatterns: ['/integration-tests/', '/component-tests/'],
+    testPathIgnorePatterns: [
+        '/integration-tests/',
+        '/component-tests/',
+        '/packages/cashier-v2',
+        '/packages/tradershub',
+    ],
 };

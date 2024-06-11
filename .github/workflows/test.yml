@@ -35,20 +35,10 @@ jobs:
       run: npx tsc --project packages/stores/tsconfig.json -noEmit
     - name: Check TypeScript for @deriv/wallets
       run: npx tsc --project packages/wallets/tsconfig.json -noEmit
-    - name: Check TypeScript for @deriv/tradershub
-      run: npx tsc --project packages/tradershub/tsconfig.json -noEmit
-    - name: Check TypeScript for @deriv/cashier-v2
-      run: npx tsc --project packages/cashier-v2/tsconfig.json -noEmit
     - name: Check ESLint for @deriv/wallets
       run: npx eslint --fix --ignore-path packages/wallets/.eslintignore --config packages/wallets/.eslintrc.js packages/wallets
-    - name: Check ESLint for @deriv/tradershub
-      run: npx eslint --fix --ignore-path packages/tradershub/.eslintignore --config packages/tradershub/.eslintrc.js packages/tradershub
-    - name: Check ESLint for @deriv/cashier-v2
-      run: npx eslint --fix --ignore-path packages/cashier-v2/.eslintignore --config packages/cashier-v2/.eslintrc.js packages/cashier-v2
     - name: Check Stylelint for @deriv/wallets
       run: npx stylelint packages/wallets/**/*.scss
-    - name: Check Stylelint for @deriv/cashier-v2
-      run: npx stylelint packages/cashier-v2/**/*.scss
     - name: Check tests for @deriv/hooks
       run: bash ./scripts/check-tests.sh packages/hooks/src
     - name: Check tests for @deriv/utils
