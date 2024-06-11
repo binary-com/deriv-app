@@ -47,16 +47,25 @@ const BookBanner = () => {
     const e_book_from_landing: TEbooks = SessionStore.get('show_book');
     const lang = getLanguage();
 
-    if (e_book_from_landing && e_book_show_way?.includes('banner')) {
-        return (
-            <BookBannerTemplate
-                e_book_show_way={e_book_show_way}
-                e_books_url={e_books_url}
-                e_book_from_landing={e_book_from_landing}
-                lang={lang}
-            />
-        );
+    const isEbookAvailable = (ebook: TEbooks, ebooksUrl: TEbooksUrl): boolean => {
+        if (!ebook) return false;
+        return ebook in ebooksUrl;
+    };
+    const download_ebook = isEbookAvailable(e_book_from_landing, e_books_url);
+
+    if (download_ebook && e_books_url) {
+        if (e_book_show_way?.includes('banner')) {
+            return (
+                <BookBannerTemplate
+                    e_book_show_way={e_book_show_way}
+                    e_books_url={e_books_url}
+                    e_book_from_landing={e_book_from_landing}
+                    lang={lang}
+                />
+            );
+        }
     }
+
     // Will be a part of upcoming a/b experiment
     // if (e_book && e_book_show_way === 'popup') return ( <BookPopupTemplate e_books_url={e_books_url} e_book={e_book} lang={lang} />)
     return null;
