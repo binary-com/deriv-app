@@ -346,18 +346,20 @@ describe('<PersonalDetails/>', () => {
             errors: {
                 ...mock_errors,
                 first_name: 'letters, spaces, periods, hyphens, apostrophes only',
-                last_name: 'last name should be between 2 and 50 characters.',
+                last_name: 'Enter no more than 50 characters.',
                 date_of_birth: 'You must be 18 years old and above.',
                 tax_identification_number: "Tax Identification Number can't be longer than 25 characters.",
             },
         });
         fireEvent.change(first_name, { target: { value: '123' } });
-        fireEvent.change(last_name, { target: { value: 'a' } });
+        fireEvent.change(last_name, {
+            target: { value: 'ABCDEFGHIJKLMNOP.QRSTU VWXYZabcdefghi-jklmnopqrstuvwxyzh-shs' },
+        });
         fireEvent.change(date_of_birth, { target: { value: '2021-04-13' } });
         fireEvent.change(tax_identification_number, { target: { value: '123456789012345678901234567890' } });
 
         expect(await screen.findByText(/letters, spaces, periods, hyphens, apostrophes only/i)).toBeInTheDocument();
-        expect(await screen.findByText(/last name should be between 2 and 50 characters/i)).toBeInTheDocument();
+        expect(await screen.findByText(/Enter no more than 50 characters./i)).toBeInTheDocument();
         expect(await screen.findByText(/you must be 18 years old and above\./i)).toBeInTheDocument();
         expect(
             await screen.findByText(/tax Identification Number can't be longer than 25 characters\./i)

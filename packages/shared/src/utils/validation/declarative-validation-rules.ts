@@ -58,7 +58,7 @@ export const validPostCode = (value: string) => value === '' || /^[A-Za-z0-9][A-
 export const validTaxID = (value: string) => /(?!^$|\s+)[A-Za-z0-9./\s-]$/.test(value);
 export const validPhone = (value: string) => /^\+?([0-9-]+\s)*[0-9-]+$/.test(value);
 export const validLetterSymbol = (value: string) => /^[A-Za-z]+([a-zA-Z.' -])*[a-zA-Z.' -]+$/.test(value);
-export const validName = (value: string) => /^(?!.*\s{2,})[\p{L}\s'.-]{2,50}$/u.test(value);
+export const validName = (value: string) => /^(?!\s)[\p{L}'.-]+(?:\s[\p{L}'.-]+)*$/u.test(value);
 export const validLength = (value = '', options: TOptions) =>
     (options.min ? value.length >= Number(options.min) : true) &&
     (options.max ? value.length <= Number(options.max) : true);

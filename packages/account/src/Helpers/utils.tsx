@@ -135,8 +135,8 @@ export const makeSettingsRequest = (values: FormikValues, changeable_fields: str
 
 export const validateName = (name: string) => {
     if (name) {
-        if (!validLength(name.trim(), { min: 2, max: 50 })) {
-            return localize('You should enter 2-50 characters.');
+        if (!validLength(name.trim(), { min: 1, max: 50 })) {
+            return localize('Enter no more than 50 characters.');
         } else if (!validName(name)) {
             return localize('Letters, spaces, periods, hyphens, apostrophes only.');
         }

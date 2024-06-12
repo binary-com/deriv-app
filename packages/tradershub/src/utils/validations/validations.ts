@@ -10,13 +10,13 @@ export const personalDetails = Yup.object().shape({
     firstName: Yup.string()
         .required('First name is required.')
         .matches(/^[a-zA-Z\s\-.'']+$/, 'Letters, spaces, periods, hyphens, apostrophes only.')
-        .min(2, 'You should enter 2-50 characters.')
-        .max(50, 'You should enter 2-50 characters.'),
+        .min(1, 'Enter no more than 50 characters.')
+        .max(50, 'Enter no more than 50 characters.'),
     lastName: Yup.string()
         .required('Last Name is required.')
         .matches(/^[a-zA-Z\s\-.'']+$/, 'Letters, spaces, periods, hyphens, apostrophes only.')
-        .min(2, 'You should enter 2-50 characters.')
-        .max(50, 'You should enter 2-50 characters.'),
+        .min(1, 'Enter no more than 50 characters.')
+        .max(50, 'Enter no more than 50 characters.'),
     phoneNumber: Yup.string()
         .required('Phone number is required.')
         .min(9, 'You should enter 9-35 numbers.')

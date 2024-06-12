@@ -7,18 +7,19 @@ const getBaseSchema = () =>
     Yup.object().shape({
         first_name: Yup.string()
             .required(localize('First name is required.'))
-            .min(2, localize('You should enter 2-50 characters.'))
-            .max(50, localize('You should enter 2-50 characters.'))
+            .min(1, localize('Enter no more than 50 characters.'))
+            .max(50, localize('Enter no more than 50 characters.'))
             .matches(
-                /^(?!.*\s{2,})[\p{L}\s'.-]{2,50}$/u,
+                /^(?!\s)[\p{L}'.-]+(?:\s[\p{L}'.-]+)*$/u,
+
                 localize('Letters, spaces, periods, hyphens, apostrophes only.')
             ),
         last_name: Yup.string()
             .required(localize('Last name is required.'))
-            .min(2, localize('You should enter 2-50 characters.'))
-            .max(50, localize('You should enter 2-50 characters.'))
+            .min(1, localize('Enter no more than 50 characters.'))
+            .max(50, localize('Enter no more than 50 characters.'))
             .matches(
-                /^(?!.*\s{2,})[\p{L}\s'.-]{2,50}$/u,
+                /^(?!\s)[\p{L}'.-]+(?:\s[\p{L}'.-]+)*$/u,
                 localize('Letters, spaces, periods, hyphens, apostrophes only.')
             ),
         phone: Yup.string()
