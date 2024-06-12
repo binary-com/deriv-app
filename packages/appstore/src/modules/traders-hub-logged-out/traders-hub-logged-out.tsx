@@ -2,18 +2,26 @@ import React from 'react';
 import classNames from 'classnames';
 import { observer, useStore } from '@deriv/stores';
 import { Div100vhContainer, DesktopWrapper, MobileWrapper, Loading, Text } from '@deriv/components';
-import { isEuCountry } from '@deriv/shared';
+import { isEuCountry, makeLazyLoader, moduleLoader } from '@deriv/shared';
 import { Localize } from '@deriv/translations';
 import OrderedPlatformSections from 'Components/ordered-platform-sections';
 import GetStartedTradingBanner from 'Components/get-started-trading-banner';
 import TabsOrTitle from 'Components/tabs-or-title';
 import './traders-hub-logged-out.scss';
 
+const DerivGoModal = makeLazyLoader(
+    () =>
+        moduleLoader(
+            () => import(/* webpackChunkName: "modal_deriv-go-modal" */ '../../components/modals/deriv-go-modal')
+        ),
+    () => <Loading />
+)();
+
 const TradersHubLoggedOut = observer(() => {
     const { traders_hub, client, ui } = useStore();
     const { is_desktop } = ui;
     const { clients_country } = client;
-    const { setTogglePlatformType, selectRegion, is_eu_user } = traders_hub;
+    const { setTogglePlatformType, selectRegion, is_eu_user, is_deriv_go_modal_visible } = traders_hub;
 
     React.useEffect(() => {
         if (clients_country) {
@@ -46,6 +54,7 @@ const TradersHubLoggedOut = observer(() => {
                     <TabsOrTitle />
                     <OrderedPlatformSections />
                 </MobileWrapper>
+                {is_deriv_go_modal_visible && <DerivGoModal />}
             </div>
         </Div100vhContainer>
     );

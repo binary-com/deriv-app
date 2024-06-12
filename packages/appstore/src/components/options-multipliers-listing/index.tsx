@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Text, StaticUrl } from '@deriv/components';
-import { ContentFlag, setPerformanceValue } from '@deriv/shared';
+import { ContentFlag, getPlatformSettingsAppstore, setPerformanceValue } from '@deriv/shared';
 import { useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
 import ListingContainer from 'Components/containers/listing-container';
-import PlatformLoader from 'Components/pre-loader/platform-loader';
 import TradingAppCard from 'Components/containers/trading-app-card';
-import { BrandConfig } from 'Constants/platform-config';
 import { getHasDivider } from 'Constants/utils';
 import { Analytics } from '@deriv-com/analytics';
 
@@ -20,10 +18,11 @@ const OptionsAndMultipliersListing = observer(() => {
         no_MF_account,
         no_CR_account,
         is_demo,
-        content_flag,
         selected_account_type,
+        content_flag,
+        setIsDerivGoModalVisible,
     } = traders_hub;
-    const { is_landing_company_loaded, is_eu, has_maltainvest_account, real_account_creation_unlock_date } = client;
+    const { has_maltainvest_account, is_eu, real_account_creation_unlock_date, is_landing_company_loaded } = client;
 
     const { setShouldShowCooldownModal, openRealAccountSignup, is_mobile } = ui;
 
@@ -34,6 +33,15 @@ const OptionsAndMultipliersListing = observer(() => {
     const high_risk_cr = content_flag === ContentFlag.HIGH_RISK_CR;
 
     const cr_demo = content_flag === ContentFlag.CR_DEMO;
+
+    const analyticsAction = (available_platform: typeof available_platforms[number]) => {
+        Analytics.trackEvent('ce_tradershub_dashboard_form', {
+            action: 'account_open',
+            form_name: 'traders_hub_default',
+            account_mode: selected_account_type,
+            account_name: is_demo ? `${available_platform.name} ${localize('Demo')}` : available_platform.name,
+        });
+    };
 
     const OptionsTitle = () => {
         if (is_mobile) return null;
@@ -114,33 +122,37 @@ const OptionsAndMultipliersListing = observer(() => {
                     />
                 </div>
             )}
+            {available_platforms?.map((available_platform, index) => {
+                const is_deriv_go_platform = available_platform?.name === getPlatformSettingsAppstore('go').name;
 
-            {is_landing_company_loaded ? (
-                available_platforms.map((available_platform: BrandConfig, index: number) => (
+                return (
                     <TradingAppCard
                         key={`trading_app_card_${available_platform.name}`}
                         {...available_platform}
                         clickable_icon
                         action_type={
-                            is_demo || (!no_CR_account && !is_eu_user) || (has_maltainvest_account && is_eu_user)
+                            is_demo ||
+                            (!no_CR_account && !is_eu_user) ||
+                            (has_maltainvest_account && is_eu_user) ||
+                            is_deriv_go_platform
                                 ? 'trade'
                                 : 'none'
                         }
                         is_deriv_platform
-                        onAction={() => {
-                            Analytics.trackEvent('ce_tradershub_dashboard_form', {
-                                action: 'account_open',
-                                form_name: 'traders_hub_default',
-                                account_mode: selected_account_type,
-                                account_name: is_demo ? `${available_platform.name} Demo` : available_platform.name,
-                            });
-                        }}
                         has_divider={(!is_eu_user || is_demo) && getHasDivider(index, available_platforms.length, 3)}
+                        onAction={
+                            is_deriv_go_platform
+                                ? () => {
+                                      analyticsAction(available_platform);
+                                      setIsDerivGoModalVisible(true);
+                                  }
+                                : () => {
+                                      analyticsAction(available_platform);
+                                  }
+                        }
                     />
-                ))
-            ) : (
-                <PlatformLoader />
-            )}
+                );
+            })}
         </ListingContainer>
     );
 });

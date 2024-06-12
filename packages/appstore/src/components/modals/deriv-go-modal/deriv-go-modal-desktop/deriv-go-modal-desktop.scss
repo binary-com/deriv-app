@@ -1,0 +1,68 @@
+.deriv-go-modal-desktop {
+    height: 38.2rem;
+    background-image: url('./../../../../public/images/deriv-go-modal-background-desktop.svg');
+    background-repeat: no-repeat;
+    background-position-y: 5.6rem;
+
+    &__logo {
+        font-family: 'Ubuntu', sans-serif;
+        display: flex;
+        justify-content: center;
+        gap: 0.8rem;
+        padding: 1.6rem 2.4rem;
+    }
+
+    &__content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-self: stretch;
+        gap: 4.8rem;
+        padding: 0 2.4rem 2.4rem;
+    }
+
+    &__description-and-links {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    &__links {
+        display: flex;
+        justify-content: space-between;
+        gap: 1.6rem;
+        padding-top: 2.4rem;
+    }
+
+    &__qr {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0.8rem;
+        gap: 0.8rem;
+
+        border-radius: $BORDER_RADIUS;
+        border: 1px solid var(--general-section-5);
+        background: var(--general-main-2);
+
+        &-image {
+            background: $color-white;
+            padding: 0.8rem;
+        }
+
+        &-description {
+            text-align: center;
+        }
+    }
+
+    &__apps {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    &__note {
+        padding-top: 0.8rem;
+    }
+}

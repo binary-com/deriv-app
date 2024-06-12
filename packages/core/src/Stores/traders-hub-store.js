@@ -33,6 +33,7 @@ export default class TradersHubStore extends BaseStore {
     is_wallet_migration_failed = false;
     active_modal_tab;
     active_modal_wallet_id;
+    is_deriv_go_modal_visible = false;
 
     constructor(root_store) {
         super({ root_store });
@@ -62,6 +63,7 @@ export default class TradersHubStore extends BaseStore {
             open_failed_verification_for: observable,
             is_real_wallets_upgrade_on: observable,
             is_wallet_migration_failed: observable,
+            is_deriv_go_modal_visible: observable,
             closeModal: action.bound,
             content_flag: computed,
             getAccount: action.bound,
@@ -107,6 +109,7 @@ export default class TradersHubStore extends BaseStore {
             showTopUpModal: action.bound,
             toggleWalletsUpgrade: action.bound,
             setWalletsMigrationFailedPopup: action.bound,
+            setIsDerivGoModalVisible: action.bound,
         });
 
         reaction(
@@ -765,5 +768,9 @@ export default class TradersHubStore extends BaseStore {
 
     setWalletsMigrationFailedPopup(value) {
         this.is_wallet_migration_failed = value;
+    }
+
+    setIsDerivGoModalVisible(value) {
+        this.is_deriv_go_modal_visible = value;
     }
 }

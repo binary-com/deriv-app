@@ -172,6 +172,11 @@ const CTraderTransferModal = makeLazyLoader(
     () => <Loading />
 )();
 
+const DerivGoModal = makeLazyLoader(
+    () => moduleLoader(() => import(/* webpackChunkName: "modal_deriv-go-modal" */ './deriv-go-modal')),
+    () => <Loading />
+)();
+
 type TCurrentList = DetailsOfEachMT5Loginid & {
     enabled: number;
 };
@@ -225,6 +230,7 @@ const ModalManager = () => {
         is_failed_verification_modal_visible,
         is_regulators_compare_modal_visible,
         is_wallet_migration_failed,
+        is_deriv_go_modal_visible,
     } = traders_hub;
 
     const [password_manager, setPasswordManager] = React.useState<{
@@ -350,6 +356,7 @@ const ModalManager = () => {
                     {is_eligible && <WalletsUpgradeModal />}
                 </React.Fragment>
             )}
+            {is_deriv_go_modal_visible && <DerivGoModal />}
         </React.Fragment>
     );
 };

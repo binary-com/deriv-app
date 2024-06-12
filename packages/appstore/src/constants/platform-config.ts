@@ -1,4 +1,4 @@
-import { getUrlBinaryBot, getUrlSmartTrader, getPlatformSettingsAppstore, routes, getStaticUrl } from '@deriv/shared';
+import { getUrlBinaryBot, getUrlSmartTrader, getPlatformSettingsAppstore, routes, mobileOSDetect } from '@deriv/shared';
 import { localize } from '@deriv/translations';
 import { PlatformIcons } from 'Assets/svgs/trading-platform';
 import { TAccountCategory, TRegionAvailability } from 'Types';
@@ -58,9 +58,8 @@ export const getAppstorePlatforms = (): PlatformConfig[] => [
     {
         name: getPlatformSettingsAppstore('go').name,
         app_desc: localize('The mobile app for trading multipliers and accumulators.'),
-        link_to: getStaticUrl('/deriv-go'),
-        is_external: true,
-        new_tab: true,
+        is_external: false,
+        new_tab: false,
     },
 ];
 
@@ -82,3 +81,41 @@ export const DERIV_PLATFORM_NAMES = {
     BBOT: 'Binary Bot',
     GO: 'Deriv GO',
 } as const;
+
+export const MOBILE_PLATFORMS = {
+    IOS: 'ios',
+    HAUWEI: 'huawei',
+    ANDROID: 'android',
+} as const;
+
+type TMobilePlatforms = typeof MOBILE_PLATFORMS[keyof typeof MOBILE_PLATFORMS];
+
+const DERIVGO_IOS_APP_URL = 'https://apps.apple.com/my/app/deriv-go-online-trading-app/id1550561298';
+const DERIVGO_ANDROID_APP_URL = 'https://play.google.com/store/apps/details?id=com.deriv.app';
+const DERIVGO_HUAWEI_APP_URL = 'https://appgallery.huawei.com/app/C103801913';
+export const DERIVGO_QRCODE_APP_URL = 'https://static.deriv.com/scripts/storeRedirect?app=deriv-go';
+export const DERIVGO_OPEN_APP_URL = 'deriv://multipliers';
+
+export const getPlatformDerivGoDownloadLink = (platform: TMobilePlatforms) => {
+    switch (platform) {
+        case MOBILE_PLATFORMS.IOS:
+            return DERIVGO_IOS_APP_URL;
+        case MOBILE_PLATFORMS.HAUWEI:
+            return DERIVGO_HUAWEI_APP_URL;
+        case MOBILE_PLATFORMS.ANDROID:
+            return DERIVGO_ANDROID_APP_URL;
+        default:
+            return '';
+    }
+};
+
+export const getMobileDerivGoAppInstallerURL = () => {
+    if (mobileOSDetect() === 'iOS') {
+        return getPlatformDerivGoDownloadLink(MOBILE_PLATFORMS.IOS);
+    } else if (mobileOSDetect() === 'huawei') {
+        return getPlatformDerivGoDownloadLink(MOBILE_PLATFORMS.HAUWEI);
+    } else if (mobileOSDetect() === 'Android') {
+        return getPlatformDerivGoDownloadLink(MOBILE_PLATFORMS.ANDROID);
+    }
+    return '';
+};
