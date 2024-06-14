@@ -17,18 +17,18 @@ const TourStartDialog = observer(() => {
     const { dashboard } = useDBotStore();
     const { active_tab, is_tour_dialog_visible, setTourDialogVisibility, setActiveTour, setShowMobileTourDialog } =
         dashboard;
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const tour_token = active_tab === 0 ? 'onboard_tour_token' : 'bot_builder_token';
     const toggleTour = () => {
-        if (is_mobile) setShowMobileTourDialog(false);
+        if (is_mobile_or_tablet) setShowMobileTourDialog(false);
         setTourDialogVisibility(false);
         setActiveTour('');
         setTourSettings(new Date().getTime(), tour_token);
     };
 
     const onboard_tour = active_tab === DBOT_TABS.DASHBOARD;
-    const tour_dialog_info = getTourDialogInfo(is_mobile);
-    const tour_dialog_action = getTourDialogAction(is_mobile);
+    const tour_dialog_info = getTourDialogInfo(is_mobile_or_tablet);
+    const tour_dialog_action = getTourDialogAction(is_mobile_or_tablet);
 
     const getTourContent = () => {
         return (
@@ -58,14 +58,14 @@ const TourStartDialog = observer(() => {
 
     const onHandleConfirm = () => {
         setActiveTour(tour_list[active_tab]);
-        if (is_mobile) setShowMobileTourDialog(false);
+        if (is_mobile_or_tablet) setShowMobileTourDialog(false);
         setTourDialogVisibility(false);
         setTourSettings(new Date().getTime(), tour_token);
     };
-    const header_text_size = is_mobile ? 'xs' : 's';
-    const content_text_size = is_mobile ? 'xxs' : 'xs';
+    const header_text_size = is_mobile_or_tablet ? 'xs' : 's';
+    const content_text_size = is_mobile_or_tablet ? 'xxs' : 'xs';
 
-    const tour_headers = active_tab === 0 ? onboarding_tour_header : getBotBuilderTourHeader(is_mobile);
+    const tour_headers = active_tab === 0 ? onboarding_tour_header : getBotBuilderTourHeader(is_mobile_or_tablet);
     return (
         <div>
             <Dialog

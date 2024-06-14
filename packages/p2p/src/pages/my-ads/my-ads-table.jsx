@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import { Button, InfiniteDataList, Loading, Table } from '@deriv/components';
-import { isDesktop, isMobile } from '@deriv/shared';
+import { isDesktop, isMobileOrTablet } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { localize } from 'Components/i18next';
 import ToggleAds from 'Pages/my-ads/toggle-ads.jsx';
@@ -85,7 +85,7 @@ const MyAdsTable = ({ country_list, table_ref }) => {
                         />
                     </Table.Body>
                 </Table>
-                {isMobile() && (
+                {isMobileOrTablet() && (
                     <div className='my-ads__create-container'>
                         <Button
                             className='my-ads__create'

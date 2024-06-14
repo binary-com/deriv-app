@@ -6,7 +6,7 @@
         background-color: var(--general-hover, #e6e9e9);
         height: 24.8rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 100%;
         }
 

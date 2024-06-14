@@ -8,7 +8,7 @@
         align-self: center;
         padding-bottom: 2.4rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding-bottom: 1.6rem;
         }
     }

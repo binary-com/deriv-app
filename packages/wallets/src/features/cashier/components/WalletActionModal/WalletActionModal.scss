@@ -7,7 +7,7 @@
     flex-direction: column;
     gap: 2.4rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 100%;
         padding: 1.6rem;
         gap: 1.6rem;

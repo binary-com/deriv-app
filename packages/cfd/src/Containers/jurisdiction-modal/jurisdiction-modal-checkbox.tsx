@@ -16,7 +16,7 @@ const JurisdictionCheckBox = observer(
         should_restrict_vanuatu_account_creation,
     }: TJurisdictionCheckBoxProps) => {
         const { ui } = useStore();
-        const { is_mobile } = ui;
+        const { is_mobile_or_tablet } = ui;
 
         const shouldShowCheckBox = () => {
             if (
@@ -31,7 +31,7 @@ const JurisdictionCheckBox = observer(
         };
 
         const getCheckboxLabel = () => (
-            <Text as='p' align='center' size={is_mobile ? 'xxs' : 'xs'} line_height='xs'>
+            <Text as='p' align='center' size={is_mobile_or_tablet ? 'xxs' : 'xs'} line_height='xs'>
                 <Localize
                     i18n_default_text="I confirm and accept {{company}} 's <0>Terms and Conditions</0>"
                     values={{ company: DBVI_COMPANY_NAMES[jurisdiction_selected_shortcode].name }}

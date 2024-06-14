@@ -6,9 +6,9 @@ import ConnectedAppsInfoBullets from './connected-apps-info-bullets';
 
 const ConnectedAppsInfo = observer(() => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
 
-    const text_size = is_mobile ? 'xxxs' : 'xxs';
+    const text_size = is_mobile_or_tablet ? 'xxxs' : 'xxs';
 
     return (
         <InlineMessage

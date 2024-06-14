@@ -96,7 +96,7 @@ describe('<FilterModal />', () => {
         };
         render(<FilterModal />, {
             wrapper: ({ children }) => (
-                <StoreProvider store={mockStore({ ui: { is_mobile: true } })}>{children}</StoreProvider>
+                <StoreProvider store={mockStore({ ui: { is_mobile_or_tablet: true } })}>{children}</StoreProvider>
             ),
         });
         const close_icon = screen.getByTestId('dt_modal_close_icon');

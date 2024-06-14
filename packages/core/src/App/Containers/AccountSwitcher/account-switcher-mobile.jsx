@@ -6,6 +6,7 @@ import AccountSwitcher from 'App/Containers/AccountSwitcher';
 
 const AccountSwitcherMobile = props => {
     const { disableApp, enableApp, is_visible, is_upgrade_enabled, toggle } = props;
+
     return (
         <Modal
             id='dt_account_switcher_modal'

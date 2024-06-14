@@ -177,6 +177,7 @@ const TradersHubHeader = observer(() => {
                                             is_eu={is_eu}
                                             is_virtual={is_virtual}
                                             toggleDialog={toggleAccountsDialog}
+                                            is_mobile
                                         />
                                     </div>
                                 </React.Fragment>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createPortal } from 'react-dom';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import PopupBody from './popup-body';
 import PopupContext, { TPopupContext } from './popup-context';
 import PopupHeader from './popup-header';
@@ -53,7 +53,7 @@ const Popup = ({
         should_show_popup: false,
     };
 
-    if (isMobile()) {
+    if (isMobileOrTablet()) {
         return createPortal(
             <PopupContext.Provider value={context_value}>
                 <div className='dc-popup'>

@@ -25,7 +25,7 @@ type TGuideContent = {
 
 const GuideContent = ({ guide_tab_content, video_tab_content, is_dialog_open }: TGuideContent) => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const { dashboard } = useDBotStore();
     const {
         dialog_options,
@@ -41,13 +41,13 @@ const GuideContent = ({ guide_tab_content, video_tab_content, is_dialog_open }: 
         if (type === 'OnBoard') {
             removeKeyValue('onboard_tour_token');
             setActiveTab(DBOT_TABS.DASHBOARD);
-            if (is_mobile) setActiveTour('onboarding');
+            if (is_mobile_or_tablet) setActiveTour('onboarding');
             setTourDialogVisibility(true);
         } else {
             setActiveTab(DBOT_TABS.BOT_BUILDER);
-            if (is_mobile) setActiveTour('bot_builder');
+            if (is_mobile_or_tablet) setActiveTour('bot_builder');
             setTourDialogVisibility(true);
-            if (is_mobile) setShowMobileTourDialog(true);
+            if (is_mobile_or_tablet) setShowMobileTourDialog(true);
         }
     };
 
@@ -69,7 +69,7 @@ const GuideContent = ({ guide_tab_content, video_tab_content, is_dialog_open }: 
                                     weight='bold'
                                     color='prominent'
                                     line_height='s'
-                                    size={is_mobile ? 'xs' : 's'}
+                                    size={is_mobile_or_tablet ? 'xs' : 's'}
                                 >
                                     <Localize i18n_default_text='Step-by-step guides' />
                                 </Text>
@@ -96,7 +96,7 @@ const GuideContent = ({ guide_tab_content, video_tab_content, is_dialog_open }: 
                                                 align='center'
                                                 color='prominent'
                                                 line_height='s'
-                                                size={is_mobile ? 'xs' : 's'}
+                                                size={is_mobile_or_tablet ? 'xs' : 's'}
                                             >
                                                 {content}
                                             </Text>
@@ -115,7 +115,7 @@ const GuideContent = ({ guide_tab_content, video_tab_content, is_dialog_open }: 
                                     weight='bold'
                                     color='prominent'
                                     line_height='s'
-                                    size={is_mobile ? 'xs' : 's'}
+                                    size={is_mobile_or_tablet ? 'xs' : 's'}
                                 >
                                     <Localize i18n_default_text='Videos on Deriv Bot' />
                                 </Text>
@@ -153,7 +153,7 @@ const GuideContent = ({ guide_tab_content, video_tab_content, is_dialog_open }: 
                                                     align='left'
                                                     color='prominent'
                                                     line_height='s'
-                                                    size={is_mobile ? 'xs' : 's'}
+                                                    size={is_mobile_or_tablet ? 'xs' : 's'}
                                                 >
                                                     {content}
                                                 </Text>

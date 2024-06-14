@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, DesktopWrapper, MobileWrapper, MultiStep, PageOverlay, UILoader } from '@deriv/components';
+import { Modal, DesktopWrapper, MobileOrTabletWrapper, MultiStep, PageOverlay, UILoader } from '@deriv/components';
 import { localize } from '@deriv/translations';
 import { VerifyEmailResponse } from '@deriv/api-types';
 import { getCFDPlatformLabel } from '@deriv/shared';
@@ -109,7 +109,7 @@ const CFDPasswordManagerModal = observer(
                         <CFDPasswordManagerTabContentWrapper steps={steps} multi_step_ref={multi_step_ref} />
                     </Modal>
                 </DesktopWrapper>
-                <MobileWrapper>
+                <MobileOrTabletWrapper>
                     <PageOverlay
                         is_open={is_visible}
                         portal_id='deriv_app'
@@ -118,7 +118,7 @@ const CFDPasswordManagerModal = observer(
                     >
                         <CFDPasswordManagerTabContentWrapper steps={steps} multi_step_ref={multi_step_ref} />
                     </PageOverlay>
-                </MobileWrapper>
+                </MobileOrTabletWrapper>
             </React.Suspense>
         );
     }

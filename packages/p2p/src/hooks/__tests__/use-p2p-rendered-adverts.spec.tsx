@@ -40,7 +40,7 @@ jest.mock('Stores', () => ({
 const mockUseStores = useStores as jest.MockedFunction<typeof useStores>;
 
 const renderHookWithConfig = (config: Record<string, object>, mock?: TCoreStores) => {
-    const mock_store = mock || mockStore({ ui: { is_mobile: false } });
+    const mock_store = mock || mockStore({ ui: { is_mobile_or_tablet: false } });
     mockUseStores.mockReturnValueOnce(config);
     const wrapper = ({ children }: { children: JSX.Element }) => (
         <StoreProvider store={mock_store}>{children}</StoreProvider>
@@ -294,7 +294,7 @@ describe('useP2PRenderedAdverts', () => {
             },
             advertiser_page_store: { counterparty_type: 'buy' },
         };
-        const view = renderHookWithConfig(config, mockStore({ ui: { is_mobile: true } }));
+        const view = renderHookWithConfig(config, mockStore({ ui: { is_mobile_or_tablet: true } }));
 
         expect(view).toHaveLength(2);
         expect(view[1]?.country).toBe('id');
@@ -316,7 +316,7 @@ describe('useP2PRenderedAdverts', () => {
             },
             advertiser_page_store: { counterparty_type: 'buy' },
         };
-        const view = renderHookWithConfig(config, mockStore({ ui: { is_mobile: true } }));
+        const view = renderHookWithConfig(config, mockStore({ ui: { is_mobile_or_tablet: true } }));
 
         expect(view).toHaveLength(2);
         expect(view[1]?.country).toBe('id');

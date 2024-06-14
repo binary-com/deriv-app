@@ -6,7 +6,7 @@ import {
     Button,
     DesktopWrapper,
     FormSubmitErrorMessage,
-    MobileWrapper,
+    MobileOrTabletWrapper,
     SelectNative,
 } from '@deriv/components';
 import { useFileUploader } from '@deriv/hooks';
@@ -39,7 +39,7 @@ const ProofOfIncomeForm = observer(({ onSubmit }: TProofOfIncomeForm) => {
 
     const { notifications, ui } = useStore();
     const { addNotificationMessageByKey, removeNotificationMessage, removeNotificationByKey } = notifications;
-    const { is_mobile, is_desktop } = ui;
+    const { is_mobile_or_tablet, is_desktop } = ui;
 
     const { upload } = useFileUploader();
 
@@ -120,7 +120,7 @@ const ProofOfIncomeForm = observer(({ onSubmit }: TProofOfIncomeForm) => {
                         <fieldset className='proof-of-income__form-field'>
                             <FormSubHeader
                                 title={localize('Select document')}
-                                title_text_size={is_mobile ? 'xs' : 's'}
+                                title_text_size={is_mobile_or_tablet ? 'xs' : 's'}
                             />
                             <Field name='document_type'>
                                 {({ field }: FormikValues) => (
@@ -148,7 +148,7 @@ const ProofOfIncomeForm = observer(({ onSubmit }: TProofOfIncomeForm) => {
                                                 required
                                             />
                                         </DesktopWrapper>
-                                        <MobileWrapper>
+                                        <MobileOrTabletWrapper>
                                             <SelectNative
                                                 name='document_type'
                                                 placeholder={localize('Select your document*')}
@@ -165,7 +165,7 @@ const ProofOfIncomeForm = observer(({ onSubmit }: TProofOfIncomeForm) => {
                                                 required
                                                 hide_top_placeholder
                                             />
-                                        </MobileWrapper>
+                                        </MobileOrTabletWrapper>
                                     </React.Fragment>
                                 )}
                             </Field>
@@ -173,7 +173,7 @@ const ProofOfIncomeForm = observer(({ onSubmit }: TProofOfIncomeForm) => {
                         <div className='proof-of-income__form-field'>
                             <FormSubHeader
                                 title={localize('Document submission')}
-                                title_text_size={is_mobile ? 'xs' : 's'}
+                                title_text_size={is_mobile_or_tablet ? 'xs' : 's'}
                             />
                             <FileUploaderContainer
                                 onFileDrop={files => {

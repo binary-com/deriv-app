@@ -11,13 +11,13 @@ type TOnRampProviderCardProps = {
 
 const OnRampProviderCard = observer(({ provider }: TOnRampProviderCardProps) => {
     const { ui } = useStore();
-    const { is_dark_mode_on, is_mobile } = ui;
+    const { is_dark_mode_on, is_mobile_or_tablet } = ui;
     const { onramp } = useCashierStore();
     const { setSelectedProvider } = onramp;
 
     const payment_icons = provider.getPaymentIcons();
     const gtm_identifier = provider.name.toLowerCase().replace(' ', '-');
-    const logo_size = is_mobile ? 56 : 128;
+    const logo_size = is_mobile_or_tablet ? 56 : 128;
 
     return (
         <div className='on-ramp__provider'>
@@ -60,7 +60,7 @@ const OnRampProviderCard = observer(({ provider }: TOnRampProviderCardProps) => 
                 onClick={() => setSelectedProvider(provider)}
                 text={localize('Select')}
                 primary
-                small={is_mobile}
+                small={is_mobile_or_tablet}
             />
         </div>
     );

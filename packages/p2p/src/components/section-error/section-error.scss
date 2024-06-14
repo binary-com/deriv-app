@@ -14,7 +14,7 @@
         &--center {
             @extend .section-error__table;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 align-items: center;
             }
         }

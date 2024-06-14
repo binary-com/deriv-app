@@ -2,32 +2,36 @@ import React from 'react';
 import ContentLoader from 'react-content-loader';
 
 type TAccountsInfoLoaderWallets = {
-    is_mobile: boolean;
+    is_mobile_or_tablet: boolean;
     is_logged_in: boolean;
     speed: number;
 };
 
-const AccountsInfoLoaderWallets = ({ is_mobile, is_logged_in, speed }: TAccountsInfoLoaderWallets) => (
+const AccountsInfoLoaderWallets = ({ is_mobile_or_tablet, is_logged_in, speed }: TAccountsInfoLoaderWallets) => (
     <ContentLoader
-        height={is_mobile ? 42 : 46}
-        width={is_mobile ? 216 : 450}
+        height={is_mobile_or_tablet ? 42 : 46}
+        width={is_mobile_or_tablet ? 216 : 450}
         speed={speed}
         backgroundColor={'var(--general-section-1)'}
         foregroundColor={'var(--general-hover)'}
     >
-        {is_logged_in ? <LoggedInPreloader is_mobile={is_mobile} /> : <LoggedOutPreloader is_mobile={is_mobile} />}
+        {is_logged_in ? (
+            <LoggedInPreloader is_mobile_or_tablet={is_mobile_or_tablet} />
+        ) : (
+            <LoggedOutPreloader is_mobile_or_tablet={is_mobile_or_tablet} />
+        )}
     </ContentLoader>
 );
 
-const LoggedOutPreloader = ({ is_mobile }: Pick<TAccountsInfoLoaderWallets, 'is_mobile'>) => (
+const LoggedOutPreloader = ({ is_mobile_or_tablet }: Pick<TAccountsInfoLoaderWallets, 'is_mobile_or_tablet'>) => (
     <React.Fragment>
-        <rect x={is_mobile ? 42 : 166} y='8' rx='4' ry='4' width='66' height='32' />
-        <rect x={is_mobile ? 120 : 250} y='8' rx='4' ry='4' width='80' height='32' />
+        <rect x={is_mobile_or_tablet ? 42 : 166} y='8' rx='4' ry='4' width='66' height='32' />
+        <rect x={is_mobile_or_tablet ? 120 : 250} y='8' rx='4' ry='4' width='80' height='32' />
     </React.Fragment>
 );
 
-const LoggedInPreloader = ({ is_mobile }: Pick<TAccountsInfoLoaderWallets, 'is_mobile'>) =>
-    is_mobile ? (
+const LoggedInPreloader = ({ is_mobile_or_tablet }: Pick<TAccountsInfoLoaderWallets, 'is_mobile_or_tablet'>) =>
+    is_mobile_or_tablet ? (
         <React.Fragment>
             <circle cx='97' cy='22' r='13' />
             <circle cx='59' cy='22' r='13' />

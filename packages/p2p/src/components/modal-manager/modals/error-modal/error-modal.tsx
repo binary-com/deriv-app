@@ -20,7 +20,7 @@ const ErrorModal = ({
     onClose,
 }: TErrorModalProps) => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const { hideModal, is_modal_open } = useModalManagerContext();
 
     return (
@@ -30,7 +30,7 @@ const ErrorModal = ({
             is_open={is_modal_open}
             title={error_modal_title}
             toggleModal={onClose ?? hideModal}
-            width={is_mobile ? '90rem' : '40rem'}
+            width={is_mobile_or_tablet ? '90rem' : '40rem'}
         >
             <Modal.Body className='error-modal__body'>
                 <Text size='xs'>{error_message}</Text>

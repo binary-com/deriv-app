@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         flex: 1 1 34%; // basis width for columns on mobile is "more than a third of parent's". This way we get 2 columns
     }
 

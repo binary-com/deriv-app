@@ -42,7 +42,7 @@
         white-space: normal;
     }
 
-    @include mobile {
+    @include mobile-screen {
         position: unset;
         top: unset;
         left: unset;

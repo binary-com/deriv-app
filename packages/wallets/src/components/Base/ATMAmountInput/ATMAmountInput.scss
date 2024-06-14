@@ -10,7 +10,7 @@
         inset: 0;
         color: var(--system-light-2-general-text, #333);
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             inset: auto 0 0;
         }
 

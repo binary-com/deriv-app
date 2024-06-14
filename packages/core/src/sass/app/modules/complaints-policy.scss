@@ -6,7 +6,7 @@
     &__container {
         width: 100%;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             overflow: auto;
         }
     }
@@ -15,7 +15,7 @@
         color: var(--text-prominent);
         max-width: 80rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 0 0.6rem 2.4rem;
             overflow: auto;
             height: 100%;
@@ -33,7 +33,7 @@
             font-weight: bold;
             padding-top: 2.4rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 font-size: 1.4rem;
                 line-height: 2rem;
                 padding-top: 1.6rem;
@@ -44,7 +44,7 @@
             padding: 0.8rem 0 0 1.8rem;
             line-height: 2rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 font-size: 1rem;
                 line-height: 1.4rem;
             }
@@ -57,7 +57,7 @@
             padding-top: 1.6rem;
             line-height: 2.4rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 font-size: 1.4rem;
                 line-height: 2rem;
                 padding-top: 0.8rem;
@@ -67,7 +67,7 @@
             font-size: 1.4rem;
             padding: 0.8rem 0 0 3.2rem;
             line-height: 2rem;
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 font-size: 1rem;
                 line-height: 1.4rem;
                 padding-left: 0;
@@ -76,7 +76,7 @@
         &-bullet {
             padding-left: 1.8rem;
             line-height: 2rem;
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 padding-left: 0;
                 font-size: 1rem;
                 line-height: 1.4rem;
@@ -88,7 +88,7 @@
         font-size: 1.4rem;
         line-height: 2rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding-left: 0;
             font-size: 1rem;
             line-height: 1.4rem;

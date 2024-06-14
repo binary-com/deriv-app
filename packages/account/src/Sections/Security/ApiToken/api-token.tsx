@@ -35,7 +35,7 @@ type TApiTokenForm = {
 const ApiToken = observer(() => {
     const { client, ui } = useStore();
     const { is_switching } = client;
-    const { is_desktop, is_mobile } = ui;
+    const { is_desktop, is_mobile_or_tablet } = ui;
     const prev_is_switching = React.useRef(is_switching);
 
     const [state, setState] = React.useReducer(
@@ -190,8 +190,8 @@ const ApiToken = observer(() => {
         <ApiTokenContext.Provider value={context_value}>
             <section className='da-api-token'>
                 <div className='da-api-token__wrapper'>
-                    <ThemedScrollbars className='da-api-token__scrollbars' is_bypassed={is_mobile}>
-                        {is_mobile && <ApiTokenArticle />}
+                    <ThemedScrollbars className='da-api-token__scrollbars' is_bypassed={is_mobile_or_tablet}>
+                        {is_mobile_or_tablet && <ApiTokenArticle />}
                         <Formik initialValues={initial_form} onSubmit={handleSubmit} validate={validateFields}>
                             {({
                                 values,

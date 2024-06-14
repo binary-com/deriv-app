@@ -10,7 +10,7 @@ import './wallets-upgrade-completed-modal.scss';
 const WalletsUpgradeCompletedModal = observer(() => {
     const history = useHistory();
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const [isOpen, setIsOpen] = useState(true);
 
     const handleClose = () => {
@@ -20,7 +20,7 @@ const WalletsUpgradeCompletedModal = observer(() => {
     };
 
     const Wrapper = ({ children, footer }: React.PropsWithChildren & { footer: React.ReactNode }) =>
-        is_mobile ? (
+        is_mobile_or_tablet ? (
             <MobileDialog
                 portal_element_id='modal_root'
                 visible={isOpen}
@@ -52,11 +52,13 @@ const WalletsUpgradeCompletedModal = observer(() => {
                 <div className='wallets-upgrade-completed-modal__text-container'>
                     <Localize
                         i18n_default_text='<0>Your Wallets are ready!</0>'
-                        components={[<Text key={0} align='center' size={is_mobile ? 'xsm' : 'm'} weight='bold' />]}
+                        components={[
+                            <Text key={0} align='center' size={is_mobile_or_tablet ? 'xsm' : 'm'} weight='bold' />,
+                        ]}
                     />
                     <Localize
                         i18n_default_text='<0>Explore the exciting new features that your Wallet offers.</0>'
-                        components={[<Text key={0} align='center' size={is_mobile ? 'xs' : 's'} />]}
+                        components={[<Text key={0} align='center' size={is_mobile_or_tablet ? 'xs' : 's'} />]}
                     />
                 </div>
             </div>

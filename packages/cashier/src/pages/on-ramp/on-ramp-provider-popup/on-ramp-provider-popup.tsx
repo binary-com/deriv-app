@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import { Button, HintBox, Icon, Loading, Popover, Text, useCopyToClipboard } from '@deriv/components';
-import { getKebabCase, website_name, isMobile } from '@deriv/shared';
+import { getKebabCase, website_name, isMobileOrTablet } from '@deriv/shared';
 import { localize, Localize } from '@deriv/translations';
 import { observer, useStore } from '@deriv/stores';
 import { useCashierStore } from '../../../stores/useCashierStores';
@@ -100,10 +100,10 @@ const OnRampProviderPopup = observer(() => {
                 <React.Fragment>
                     <div className='on-ramp__popup-deposit'>
                         <Text
-                            size={isMobile() ? 'xxs' : 'xs'}
+                            size={isMobileOrTablet() ? 'xxs' : 'xs'}
                             color='general'
-                            line_height={isMobile() ? 'm' : 'l'}
-                            align={isMobile() ? 'left' : 'center'}
+                            line_height={isMobileOrTablet() ? 'm' : 'l'}
+                            align={isMobileOrTablet() ? 'left' : 'center'}
                         >
                             <Localize i18n_default_text="Please copy the crypto address you see below. You'll need it to deposit your cryptocurrency." />
                         </Text>
@@ -120,7 +120,7 @@ const OnRampProviderPopup = observer(() => {
                                 <Icon
                                     className='on-ramp__popup-deposit-address-icon'
                                     data_testid='dti_deposit_address_icon'
-                                    icon={isMobile() ? 'IcCopy' : 'icClipboard'}
+                                    icon={isMobileOrTablet() ? 'IcCopy' : 'icClipboard'}
                                     size={16}
                                     onClick={onClickCopyDepositAddress}
                                 />
@@ -150,7 +150,7 @@ const OnRampProviderPopup = observer(() => {
                     <Localize i18n_default_text='Disclaimer' />
                 </Text>
                 <Text
-                    size={isMobile() ? 'xxs' : 'xs'}
+                    size={isMobileOrTablet() ? 'xxs' : 'xs'}
                     line_height='l'
                     color='general'
                     as='p'

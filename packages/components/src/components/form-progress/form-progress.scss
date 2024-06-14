@@ -56,7 +56,7 @@
         &--after {
             border-top: 2px solid var(--brand-red-coral);
             transition: width 0.3s ease;
-            @include desktop {
+            @include desktop-screen {
                 bottom: 0;
                 content: '';
                 left: 0;
@@ -64,7 +64,7 @@
                 position: absolute; /* positioning must be absolute here, and relative positioning must be applied to the parent */
                 top: 1.7rem;
             }
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 position: absolute;
                 top: 0;
             }

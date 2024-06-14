@@ -13,7 +13,7 @@
         width: fit-content;
     }
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         align-self: center;
         position: absolute;
         right: 4rem;

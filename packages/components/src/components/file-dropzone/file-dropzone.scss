@@ -51,7 +51,7 @@
                 opacity: 0;
                 transform: translate3d(0, -16px, 0);
             }
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 max-width: 26rem;
             }
         }

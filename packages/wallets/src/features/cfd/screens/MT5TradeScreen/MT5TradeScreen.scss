@@ -2,7 +2,7 @@
     width: 100%;
     max-width: 60rem;
     min-width: 51.2rem;
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 100%;
         min-width: 100%;
         height: auto;

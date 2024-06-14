@@ -3,6 +3,11 @@ import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import FilterModalSearch from '../filter-modal-search';
 
+jest.mock('@deriv/shared', () => ({
+    ...jest.requireActual('@deriv/shared'),
+    isDesktop: jest.fn(() => true),
+}));
+
 const mock_store = {
     buy_sell_store: {
         setIsFilterModalLoading: jest.fn(),

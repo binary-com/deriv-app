@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import { timeSince } from '@deriv/bot-skeleton';
 import { save_types } from '@deriv/bot-skeleton/src/constants/save-type';
-import { DesktopWrapper, Icon, MobileWrapper, Text } from '@deriv/components';
+import { DesktopWrapper, Icon, MobileOrTabletWrapper, Text } from '@deriv/components';
 import { isDesktop } from '@deriv/shared';
 import { observer } from '@deriv/stores';
 import { DBOT_TABS } from 'Constants/bot-contents';
@@ -153,7 +153,7 @@ const RecentWorkspace = observer(({ workspace, index }: TRecentWorkspace) => {
                     ))}
                 </div>
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <div className='bot-list__item__actions'>
                     <button ref={toggle_ref} onClick={onToggleDropdown} tabIndex={0}>
                         <Icon icon='IcMenuDots' />
@@ -188,7 +188,7 @@ const RecentWorkspace = observer(({ workspace, index }: TRecentWorkspace) => {
                         </div>
                     ))}
                 </div>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </div>
     );
 });

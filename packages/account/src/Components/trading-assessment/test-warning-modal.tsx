@@ -1,5 +1,5 @@
 import React from 'react';
-import { DesktopWrapper, MobileDialog, MobileWrapper, Modal } from '@deriv/components';
+import { DesktopWrapper, MobileDialog, MobileOrTabletWrapper, Modal } from '@deriv/components';
 import { localize } from '@deriv/translations';
 
 type TestWarningModalProps = {
@@ -10,7 +10,7 @@ type TestWarningModalProps = {
 
 const TestWarningModal = ({ show_risk_modal, body_content, footer_content }: TestWarningModalProps) => (
     <React.Fragment>
-        <MobileWrapper>
+        <MobileOrTabletWrapper>
             <MobileDialog
                 wrapper_classname='test-warning'
                 portal_element_id='modal_root'
@@ -21,7 +21,7 @@ const TestWarningModal = ({ show_risk_modal, body_content, footer_content }: Tes
                 <Modal.Body>{body_content}</Modal.Body>
                 <Modal.Footer>{footer_content}</Modal.Footer>
             </MobileDialog>
-        </MobileWrapper>
+        </MobileOrTabletWrapper>
         <DesktopWrapper>
             <Modal
                 width='44rem'

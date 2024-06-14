@@ -16,20 +16,20 @@ type TFileUploaderProps = {
 
 const UploadMessage = observer(() => {
     const {
-        ui: { is_mobile },
+        ui: { is_mobile_or_tablet },
     } = useStore();
     return (
         <React.Fragment>
             <Icon icon='IcUpload' className='dc-file-dropzone__message-icon' size={30} />
             <div className='dc-file-dropzone__message-subtitle'>
                 <Text size='xxs' align='center' weight='bold' color='less-prominent'>
-                    {is_mobile ? (
+                    {is_mobile_or_tablet ? (
                         <Localize i18n_default_text='Click here to browse your files.' />
                     ) : (
                         <Localize i18n_default_text='Drag and drop a file or click to browse your files.' />
                     )}
                 </Text>
-                <Text size={is_mobile ? 'xxxxs' : 'xxxs'} align='center' color='less-prominent'>
+                <Text size={is_mobile_or_tablet ? 'xxxxs' : 'xxxs'} align='center' color='less-prominent'>
                     <Localize i18n_default_text='Remember, selfies, pictures of houses, or non-related images will be rejected.' />
                 </Text>
             </div>

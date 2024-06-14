@@ -8,7 +8,7 @@
     margin: 2rem auto 0;
     width: 100%;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         flex-direction: column;
         width: 100%;
         padding-bottom: 1.5rem;
@@ -18,7 +18,7 @@
         padding: 1.5rem;
         margin-right: 0.5rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin-bottom: 1rem;
             padding: 0.3rem 1.1rem;
             text-align: center;

@@ -1,5 +1,5 @@
 .ready-to-deposit-dialog {
-    @include mobile {
+    @include mobile-or-tablet-screen {
         .dc-dialog {
             &__content,
             &__button {

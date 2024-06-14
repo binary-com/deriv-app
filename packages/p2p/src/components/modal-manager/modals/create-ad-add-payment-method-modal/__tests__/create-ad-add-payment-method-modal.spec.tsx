@@ -1,12 +1,18 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { useDevice } from '@deriv-com/ui';
 import { APIProvider } from '@deriv/api';
-import { isDesktop, isMobile } from '@deriv/shared';
+import { isDesktop, isMobile, isMobileOrTablet } from '@deriv/shared';
 import { mockStore, StoreProvider } from '@deriv/stores';
 import { useStores } from 'Stores';
 import { TModalManagerContext } from 'Types';
 import CreateAdAddPaymentMethodModal from '../create-ad-add-payment-method-modal';
+
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isDesktop: true, isTablet: false, isMobile: false })),
+}));
 
 const wrapper = ({ children }) => (
     <APIProvider>
@@ -34,6 +40,7 @@ jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
     isDesktop: jest.fn(() => true),
     isMobile: jest.fn(() => false),
+    isMobileOrTablet: jest.fn(() => false),
 }));
 
 describe('<CreateAdAddPaymentMethodModal />', () => {
@@ -101,6 +108,9 @@ describe('<CreateAdAddPaymentMethodModal />', () => {
     it('should render CreateAdAddPaymentMethodModal component in mobile view', () => {
         (isDesktop as jest.Mock).mockReturnValue(false);
         (isMobile as jest.Mock).mockReturnValue(true);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
+        (useDevice as jest.Mock).mockReturnValue({ isDesktop: false, isTablet: false, isMobile: true });
+
         render(<CreateAdAddPaymentMethodModal />, { wrapper });
         expect(screen.getByTestId('dt_div_100_vh')).toBeInTheDocument();
         expect(screen.getByText('Add payment method')).toBeInTheDocument();

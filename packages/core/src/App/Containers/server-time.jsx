@@ -5,7 +5,7 @@ import { toGMTFormat, toLocalFormat } from '@deriv/shared';
 import { Popover } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 
-const ServerTime = observer(({ is_mobile }) => {
+const ServerTime = observer(({ is_mobile_or_tablet }) => {
     const { common } = useStore();
     const { server_time } = common;
     const gmt_time = toGMTFormat(server_time);
@@ -15,7 +15,7 @@ const ServerTime = observer(({ is_mobile }) => {
             alignment='top'
             message={local_time}
             className={classNames('server-time', {
-                'server-time--is-mobile': is_mobile,
+                'server-time--is-mobile': is_mobile_or_tablet,
             })}
             zIndex={9999}
         >
@@ -25,7 +25,7 @@ const ServerTime = observer(({ is_mobile }) => {
 });
 
 ServerTime.propTypes = {
-    is_mobile: PropTypes.bool,
+    is_mobile_or_tablet: PropTypes.bool,
 };
 
 export default ServerTime;

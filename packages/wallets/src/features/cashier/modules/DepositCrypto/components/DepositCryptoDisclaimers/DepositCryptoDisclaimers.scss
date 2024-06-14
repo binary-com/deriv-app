@@ -4,7 +4,7 @@
     justify-content: center;
     gap: 2.4rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         gap: 1.6rem;
     }
 
@@ -15,7 +15,7 @@
         line-height: 1.4rem;
         gap: 1rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             gap: 0.8rem;
         }
     }
@@ -32,7 +32,7 @@
         display: flex;
         justify-content: center;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             justify-content: unset;
         }
     }

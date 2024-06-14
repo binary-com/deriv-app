@@ -35,7 +35,7 @@ describe('<FAQContent />', () => {
     let wrapper: ({ children }: { children: JSX.Element }) => JSX.Element;
     const mock_store = mockStore({
         ui: {
-            is_mobile: true,
+            is_mobile_or_tablet: true,
         },
     });
     const mock_DBot_store = mockDBotStore(mock_store, mock_ws);

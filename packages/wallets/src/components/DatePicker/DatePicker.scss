@@ -19,11 +19,11 @@
         width: 28rem;
         z-index: 1;
 
-        @include desktop {
+        @include desktop-screen {
             transform: translate(50%, 4rem);
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             align-self: center;
 
             &--above {

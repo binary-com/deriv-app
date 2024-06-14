@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { MobileWrapper, Money, SwipeableNotification, Text } from '@deriv/components';
+import { MobileOrTabletWrapper, Money, SwipeableNotification, Text } from '@deriv/components';
 import { useStore } from '@deriv/stores';
 import { getCardLabels, getContractPath } from '@deriv/shared';
 import { localize, Localize } from '@deriv/translations';
@@ -12,7 +12,7 @@ const TradeNotifications = observer(({ show_trade_notifications }: { show_trade_
     if (!show_trade_notifications || !trade_notifications.length) return null;
 
     return (
-        <MobileWrapper>
+        <MobileOrTabletWrapper>
             <div className='trade-notifications'>
                 {trade_notifications.slice(0, 3).map(notification => {
                     const { buy_price, contract_id, currency, contract_type, id, profit, symbol, status, timestamp } =
@@ -56,7 +56,7 @@ const TradeNotifications = observer(({ show_trade_notifications }: { show_trade_
                     );
                 })}
             </div>
-        </MobileWrapper>
+        </MobileOrTabletWrapper>
     );
 });
 

@@ -4,7 +4,7 @@
     border-radius: 0.4rem;
     background: #fff;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         display: flex;
         align-items: center;
         width: 100%;

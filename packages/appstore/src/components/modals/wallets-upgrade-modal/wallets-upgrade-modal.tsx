@@ -10,7 +10,7 @@ const MODAL_TRANSITION_TIMEOUT_MS = 250; // matching the default one
 const WalletsUpgradeModal = observer(() => {
     const { traders_hub, ui } = useStore();
     const { toggleWalletsUpgrade } = traders_hub;
-    const { is_mobile, is_desktop } = ui;
+    const { is_mobile_or_tablet, is_desktop } = ui;
     const { is_eligible } = useWalletMigration();
     const isWalletMigrationModalClosed = localStorage.getItem('is_wallet_migration_modal_closed');
     const [modalOpen, setModalOpen] = React.useState(!isWalletMigrationModalClosed);
@@ -32,17 +32,21 @@ const WalletsUpgradeModal = observer(() => {
             <Modal.Body>
                 <div className='wallets-upgrade-modal__content'>
                     <Icon
-                        icon={`IcAppstoreWalletsUpgradeCoins${is_mobile ? 'Horizontal' : ''}`}
-                        width={is_mobile ? 190 : 300}
-                        height={is_mobile ? 80 : 300}
+                        icon={`IcAppstoreWalletsUpgradeCoins${is_mobile_or_tablet ? 'Horizontal' : ''}`}
+                        width={is_mobile_or_tablet ? 190 : 300}
+                        height={is_mobile_or_tablet ? 80 : 300}
                         className='wallets-upgrade-modal__image'
-                        data_testid={`dt_wallets_upgrade_coins${is_mobile ? '_horizontal' : ''}`}
+                        data_testid={`dt_wallets_upgrade_coins${is_mobile_or_tablet ? '_horizontal' : ''}`}
                     />
                     <div className='wallets-upgrade-modal__description'>
-                        <Text align={is_mobile ? 'center' : 'left'} size={is_mobile ? 's' : 'm'} weight='bold'>
+                        <Text
+                            align={is_mobile_or_tablet ? 'center' : 'left'}
+                            size={is_mobile_or_tablet ? 's' : 'm'}
+                            weight='bold'
+                        >
                             <Localize i18n_default_text='Introducing Wallets' />
                         </Text>
-                        <Text align={is_mobile ? 'center' : 'left'} size={is_mobile ? 'xs' : 's'}>
+                        <Text align={is_mobile_or_tablet ? 'center' : 'left'} size={is_mobile_or_tablet ? 'xs' : 's'}>
                             <Localize
                                 i18n_default_text='Enjoy seamless transactions across multiple currencies and an intuitive user interface with funds segregation.'
                                 components={[<br key={0} />]}

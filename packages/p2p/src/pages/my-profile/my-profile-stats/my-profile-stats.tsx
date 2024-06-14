@@ -1,5 +1,5 @@
 import React from 'react';
-import { DesktopWrapper, Icon, MobileFullPageModal, MobileWrapper, Text } from '@deriv/components';
+import { DesktopWrapper, Icon, MobileFullPageModal, MobileOrTabletWrapper, Text } from '@deriv/components';
 import { observer } from '@deriv/stores';
 import { Localize, localize } from 'Components/i18next';
 import SeparatorContainerLine from 'Components/separator-container-line';
@@ -47,7 +47,7 @@ const MyProfileStats = () => {
             <DesktopWrapper>
                 <MyProfileStatsTable />
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <SeparatorContainerLine className='my-profile-stats__separator' />
                 <MyProfilePrivacy />
                 <SeparatorContainerLine className='my-profile-stats__separator' />
@@ -66,7 +66,7 @@ const MyProfileStats = () => {
                         </React.Fragment>
                     );
                 })}
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </React.Fragment>
     );
 };

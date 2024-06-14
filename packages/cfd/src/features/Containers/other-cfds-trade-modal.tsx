@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, Icon, Money } from '@deriv/components';
 import { TTradingPlatformAccounts, TCFDDashboardContainer, TCFDsPlatformType } from 'Components/props.types';
 import { DetailsOfEachMT5Loginid } from '@deriv/api-types';
-import { getCFDAccountKey, isMobile, mobileOSDetect } from '@deriv/shared';
+import { getCFDAccountKey, isMobileOrTablet, mobileOSDetect } from '@deriv/shared';
 import { localize, Localize } from '@deriv/translations';
 import { getPlatformQRCode, PlatformsDesktopDownload, mobileDownloadLink } from '../../Helpers/config';
 import { getTitle, platformsText, CTRADER_DESKTOP_WINDOWS_DOWNLOAD } from '../../Helpers/constants';
@@ -27,7 +27,7 @@ type TOtherCFDsTradeModalProps = {
     ctraderTokenCall: (url: string, account_type: 'real' | 'demo') => void;
     is_demo: string;
     platform: TCFDsPlatformType;
-    is_mobile?: boolean;
+    is_mobile_or_tablet?: boolean;
 };
 
 const PlatformIconsAndDescriptions = (
@@ -74,7 +74,7 @@ const OtherCFDsTradeModal = ({
     ctraderTokenCall,
     is_demo,
     platform,
-    is_mobile,
+    is_mobile_or_tablet,
 }: TOtherCFDsTradeModalProps) => {
     const CTraderDescription = () => {
         const platform_name = 'cTrader';
@@ -98,7 +98,7 @@ const OtherCFDsTradeModal = ({
                         align='center'
                         as='p'
                         className='cfd-trade-modal__download-center-text'
-                        size={isMobile() ? 'xxxs' : 'xxs'}
+                        size={isMobileOrTablet() ? 'xxxs' : 'xxs'}
                         weight='bold'
                     >
                         {localize('Download Deriv X on your phone to trade with the Deriv X account')}
@@ -110,7 +110,7 @@ const OtherCFDsTradeModal = ({
                         align='center'
                         as='p'
                         className='cfd-trade-modal__download-center-text'
-                        size={isMobile() ? 'xxxs' : 'xxs'}
+                        size={isMobileOrTablet() ? 'xxxs' : 'xxs'}
                         weight='bold'
                     >
                         {localize('Download cTrader on your phone to trade with the Deriv cTrader account')}
@@ -125,9 +125,9 @@ const OtherCFDsTradeModal = ({
         let app_title = '';
         if (platform_type === CFD_PLATFORMS.DXTRADE) {
             app_title = localize('Run Deriv X on your browser');
-        } else if (platform_type === CFD_PLATFORMS.CTRADER && !is_mobile) {
+        } else if (platform_type === CFD_PLATFORMS.CTRADER && !is_mobile_or_tablet) {
             app_title = localize('Run cTrader on your browser');
-        } else if (platform_type === CFD_PLATFORMS.CTRADER && is_mobile) {
+        } else if (platform_type === CFD_PLATFORMS.CTRADER && is_mobile_or_tablet) {
             return null;
         } else {
             return null;
@@ -207,7 +207,7 @@ const OtherCFDsTradeModal = ({
                 <div className='cfd-trade-modal__maintenance'>
                     <Icon
                         icon='IcAlertWarning'
-                        size={isMobile() ? 28 : 24}
+                        size={isMobileOrTablet() ? 28 : 24}
                         className='cfd-trade-modal__maintenance-icon'
                     />
                     <div className='cfd-trade-modal__maintenance-text'>
@@ -228,7 +228,7 @@ const OtherCFDsTradeModal = ({
             <div className='cfd-trade-modal__download-center-app'>{downloadCenterAppOption(platform)}</div>
             {platform === CFD_PLATFORMS.CTRADER && (
                 <React.Fragment>
-                    {!is_mobile && (
+                    {!is_mobile_or_tablet && (
                         <div className='cfd-trade-modal__download-center-app--windows'>
                             <Icon icon='IcWindowsLogo' size={32} />
                             <Text className='cfd-trade-modal__download-center-app--windows-item' size='xs'>
@@ -247,7 +247,7 @@ const OtherCFDsTradeModal = ({
                             </a>
                         </div>
                     )}
-                    {is_mobile && mobileOSDetect() === 'iOS' && (
+                    {is_mobile_or_tablet && mobileOSDetect() === 'iOS' && (
                         <div className='cfd-trade-modal__download-center-app-ctrader-container'>
                             <Text
                                 className='cfd-trade-modal__download-center-app-ctrader__banner-text'
@@ -281,7 +281,11 @@ const OtherCFDsTradeModal = ({
                                 target='_blank'
                                 rel='noopener noreferrer'
                             >
-                                <Icon icon='IcInstallationApple' width={isMobile() ? '160' : '130'} height={40} />
+                                <Icon
+                                    icon='IcInstallationApple'
+                                    width={isMobileOrTablet() ? '160' : '130'}
+                                    height={40}
+                                />
                             </a>
                         </div>
                     )}
@@ -314,7 +318,7 @@ const OtherCFDsTradeModal = ({
                         </React.Fragment>
                     )}
                 </div>
-                {!isMobile() && (
+                {!isMobileOrTablet() && (
                     <div className='cfd-trade-modal__download-center-options--qrcode'>
                         {getPlatformQRCode(platform)}
                     </div>

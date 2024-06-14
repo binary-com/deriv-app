@@ -17,7 +17,7 @@ import { useMT5MigrationModalContext } from './mt5-migration-modal-context';
 
 const MT5MigrationFrontSideContent = observer(() => {
     const { ui } = useStore();
-    const { is_mobile, setMT5MigrationModalEnabled } = ui;
+    const { is_mobile_or_tablet, setMT5MigrationModalEnabled } = ui;
     const { setShowModalFrontSide } = useMT5MigrationModalContext();
     const {
         getEligibleAccountToMigrate,
@@ -54,7 +54,7 @@ const MT5MigrationFrontSideContent = observer(() => {
         <React.Fragment>
             <div className='mt5-migration-modal__container'>
                 <div>
-                    <Text as='p' size={is_mobile ? 'xs' : 's'} align='center'>
+                    <Text as='p' size={is_mobile_or_tablet ? 'xs' : 's'} align='center'>
                         {has_derived_and_financial_mt5 ? (
                             <Localize
                                 i18n_default_text='Enhance your trading experience by upgrading your <0>{{platform}} {{type_1}}</0> <1/>and <0>{{type_2}} {{from_account}}</0> account(s).'
@@ -83,7 +83,7 @@ const MT5MigrationFrontSideContent = observer(() => {
                     <HintBox
                         icon='IcInfoBlue'
                         message={
-                            <Text as='p' size={is_mobile ? 'xxxs' : 'xxs'}>
+                            <Text as='p' size={is_mobile_or_tablet ? 'xxxs' : 'xxs'}>
                                 {has_derived_and_financial_mt5 ? (
                                     <Localize
                                         i18n_default_text='Your existing <0>{{platform}} {{type_1}}</0> <1/>and <0>{{type_2}} {{from_account}}</0> account(s) will remain accessible.'
@@ -107,7 +107,7 @@ const MT5MigrationFrontSideContent = observer(() => {
                     />
                 </div>
                 <div>
-                    <Text as='p' size={is_mobile ? 'xxs' : 'xs'} align='center'>
+                    <Text as='p' size={is_mobile_or_tablet ? 'xxs' : 'xs'} align='center'>
                         {has_derived_and_financial_mt5 ? (
                             <Localize
                                 i18n_default_text='By clicking on <0>Next</0> you agree to move your {{platform}} {{type_1}} and {{type_2}} {{from_account}} account(s) under Deriv {{account_to_migrate}} Ltd’s <1>terms and conditions</1>.'
@@ -135,7 +135,7 @@ const MT5MigrationFrontSideContent = observer(() => {
                                         href={DBVI_COMPANY_NAMES[getEligibleAccountToMigrate()]?.tnc_url}
                                         is_document
                                     />,
-                                    is_mobile ? null : <br key={2} />,
+                                    is_mobile_or_tablet ? null : <br key={2} />,
                                 ]}
                                 values={{
                                     ...getFormattedAccounts(),

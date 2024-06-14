@@ -2,28 +2,32 @@ import ContentLoader from 'react-content-loader';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const AccountsInfoLoader = ({ is_mobile, is_logged_in, speed }) => (
+const AccountsInfoLoader = ({ is_mobile_or_tablet, is_logged_in, speed }) => (
     <ContentLoader
-        height={is_mobile ? 42 : 46}
-        width={is_mobile ? 216 : 350}
+        height={is_mobile_or_tablet ? 42 : 46}
+        width={is_mobile_or_tablet ? 216 : 350}
         speed={speed}
         backgroundColor={'var(--general-section-1)'}
         foregroundColor={'var(--general-hover)'}
     >
-        {is_logged_in ? <LoggedInPreloader is_mobile={is_mobile} /> : <LoggedOutPreloader is_mobile={is_mobile} />}
+        {is_logged_in ? (
+            <LoggedInPreloader is_mobile_or_tablet={is_mobile_or_tablet} />
+        ) : (
+            <LoggedOutPreloader is_mobile_or_tablet={is_mobile_or_tablet} />
+        )}
     </ContentLoader>
 );
 
-const LoggedOutPreloader = ({ is_mobile }) => (
+const LoggedOutPreloader = ({ is_mobile_or_tablet }) => (
     <React.Fragment>
-        <rect x={is_mobile ? 42 : 166} y='8' rx='4' ry='4' width='66' height='32' />
-        <rect x={is_mobile ? 120 : 250} y='8' rx='4' ry='4' width='80' height='32' />
+        <rect x={is_mobile_or_tablet ? 42 : 166} y='8' rx='4' ry='4' width='66' height='32' />
+        <rect x={is_mobile_or_tablet ? 120 : 250} y='8' rx='4' ry='4' width='80' height='32' />
     </React.Fragment>
 );
 
-const LoggedInPreloader = ({ is_mobile }) => (
+const LoggedInPreloader = ({ is_mobile_or_tablet }) => (
     <>
-        {is_mobile ? (
+        {is_mobile_or_tablet ? (
             <React.Fragment>
                 <circle cx='97' cy='22' r='13' />
                 <circle cx='59' cy='22' r='13' />
@@ -44,7 +48,7 @@ const LoggedInPreloader = ({ is_mobile }) => (
 
 AccountsInfoLoader.propTypes = {
     speed: PropTypes.number,
-    is_mobile: PropTypes.bool,
+    is_mobile_or_tablet: PropTypes.bool,
     is_logged_in: PropTypes.bool,
 };
 

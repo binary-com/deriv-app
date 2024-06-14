@@ -1,6 +1,6 @@
 import React from 'react';
 import { ThemedScrollbars } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { observer } from 'mobx-react-lite';
 import { localize } from 'Components/i18next';
 import PropTypes from 'prop-types';
@@ -9,8 +9,8 @@ import PaymentMethodCard from 'Components/payment-method-card';
 import './sell-ad-payment-methods-list.scss';
 
 const SellAdPaymentMethodsList = ({
-    is_only_horizontal = isMobile(),
-    is_scrollable = isMobile(),
+    is_only_horizontal = isMobileOrTablet(),
+    is_scrollable = isMobileOrTablet(),
     onClickAdd,
     onClickPaymentMethodCard,
     p2p_advertiser_payment_methods,

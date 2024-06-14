@@ -5,7 +5,7 @@ import Badge from '../badge';
 import Button from '../button';
 import Icon from '../icon';
 import Text from '../text';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { WalletIcon } from '../wallet-icon';
 import './wallet-card.scss';
 
@@ -33,7 +33,7 @@ type IconComponentProps = {
 const IconComponent = ({ size, icon_type, icon }: IconComponentProps) => {
     let icon_size: React.ComponentProps<typeof WalletIcon>['size'] = 'large';
     if (size === 'small') icon_size = 'medium';
-    if (size === 'medium') icon_size = isMobile() && icon_type === 'crypto' ? 'medium' : 'large';
+    if (size === 'medium') icon_size = isMobileOrTablet() && icon_type === 'crypto' ? 'medium' : 'large';
     return <WalletIcon type={icon_type} icon={icon} size={icon_size} />;
 };
 
@@ -71,10 +71,10 @@ const WalletCard: React.FC<React.PropsWithChildren<TWalletCardProps>> = ({
                     <div className='wallet-card__bottom-wrapper'>
                         {state !== 'add' && state !== 'added' ? (
                             <React.Fragment>
-                                <Text color='prominent' size={isMobile() ? 'xxxxs' : 'xxxs'}>
+                                <Text color='prominent' size={isMobileOrTablet() ? 'xxxxs' : 'xxxs'}>
                                     {wallet.name}
                                 </Text>
-                                <Text color='prominent' weight='bold' size={isMobile() ? 'xxs' : 'xs'}>
+                                <Text color='prominent' weight='bold' size={isMobileOrTablet() ? 'xxs' : 'xs'}>
                                     {wallet.balance} {wallet.currency}
                                 </Text>
                             </React.Fragment>

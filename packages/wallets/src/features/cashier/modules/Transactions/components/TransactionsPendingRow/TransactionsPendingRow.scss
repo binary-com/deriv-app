@@ -8,7 +8,7 @@
     border-top: 0.1rem solid var(--system-light-3-border, #e5e5e5);
     padding: 1.6rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         height: unset;
         flex-wrap: wrap;
         gap: 0.4rem;
@@ -36,7 +36,7 @@
         gap: 1.6rem;
         align-items: flex-start;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             order: 0;
             flex-wrap: wrap;
             gap: 0.8rem;
@@ -73,7 +73,7 @@
             align-items: center;
             align-self: center;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 align-self: flex-start;
                 order: -1;
             }
@@ -90,7 +90,7 @@
                 background-color: unset;
                 text-align: unset;
 
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     align-self: flex-start;
                     order: -1;
                 }

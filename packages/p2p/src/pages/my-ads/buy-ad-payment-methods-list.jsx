@@ -3,7 +3,7 @@ import { Formik, Field } from 'formik';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { Autocomplete, Icon, Text, useOnClickOutside } from '@deriv/components';
-import { isDesktop, isMobile } from '@deriv/shared';
+import { isDesktop, isMobileOrTablet } from '@deriv/shared';
 import { useStores } from 'Stores';
 import { localize, Localize } from 'Components/i18next';
 import PaymentMethodIcon from 'Components/payment-method-icon';
@@ -230,7 +230,7 @@ const BuyAdPaymentMethodsList = ({
                                                             }
                                                             onTouchStart={e => {
                                                                 e.preventDefault();
-                                                                if (isMobile())
+                                                                if (isMobileOrTablet())
                                                                     onClickIcon(payment_method, key, setFieldValue);
                                                             }}
                                                             onMouseDown={() => {

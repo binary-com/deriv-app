@@ -8,7 +8,7 @@ import DepositCryptoSideNoteTryFiatOnRamp from './components/deposit-crypto-side
 
 const DepositCrypto: React.FC = observer(() => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const { general_store } = useCashierStore();
     const { setIsDeposit } = general_store;
 
@@ -25,15 +25,15 @@ const DepositCrypto: React.FC = observer(() => {
             // Hide the side note and render it in the page content on mobile to match the design,
             // Need to talk with the design team to put `DepositCryptoSideNoteTryFiatOnRamp` in the
             // side notes for consistency and then we can remove unnecessary components from the children.
-            right={is_mobile ? undefined : <DepositCryptoSideNotes />}
+            right={is_mobile_or_tablet ? undefined : <DepositCryptoSideNotes />}
         >
             <DepositCryptoCurrencyDetails />
             <DepositCryptoWalletAddress />
             <Divider />
-            {is_mobile && <DepositCryptoSideNotes />}
-            {is_mobile && <Divider />}
+            {is_mobile_or_tablet && <DepositCryptoSideNotes />}
+            {is_mobile_or_tablet && <Divider />}
             {/* This should be in the side notes, Need to talk to the design team to change it */}
-            <div style={{ alignSelf: is_mobile ? 'unset' : 'center' }}>
+            <div style={{ alignSelf: is_mobile_or_tablet ? 'unset' : 'center' }}>
                 <DepositCryptoSideNoteTryFiatOnRamp />
             </div>
         </PageContainer>

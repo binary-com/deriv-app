@@ -1,5 +1,5 @@
 import React from 'react';
-import { DesktopWrapper, Dropdown, Icon, Loading, MobileWrapper, SelectNative, Text } from '@deriv/components';
+import { DesktopWrapper, Dropdown, Icon, Loading, MobileOrTabletWrapper, SelectNative, Text } from '@deriv/components';
 import { useStore, observer } from '@deriv/stores';
 import { localize, Localize } from '@deriv/translations';
 import SideNote from 'Components/side-note';
@@ -79,11 +79,11 @@ const PaymentAgentContainer = observer(({ is_deposit }: TPaymentAgentContainer) 
     return (
         <React.Fragment>
             {!has_payment_agent_search_warning && (
-                <SideNote className='payment-agent-list__side-note' has_title={false} is_mobile>
+                <SideNote className='payment-agent-list__side-note' has_title={false} is_mobile_or_tablet>
                     <PaymentAgentDisclaimer />
                 </SideNote>
             )}
-            <SideNote className='payment-agent-list__side-note-second' has_title={false} is_mobile>
+            <SideNote className='payment-agent-list__side-note-second' has_title={false} is_mobile_or_tablet>
                 <MissingPaymentMethodNote />
             </SideNote>
             <div className='payment-agent-list__list-header'>
@@ -121,7 +121,7 @@ const PaymentAgentContainer = observer(({ is_deposit }: TPaymentAgentContainer) 
                                 onChange={onChangePaymentMethod}
                             />
                         </DesktopWrapper>
-                        <MobileWrapper>
+                        <MobileOrTabletWrapper>
                             <SelectNative
                                 hide_top_placeholder={false}
                                 placeholder={localize('All payment methods')}
@@ -139,7 +139,7 @@ const PaymentAgentContainer = observer(({ is_deposit }: TPaymentAgentContainer) 
                                 }
                                 use_text={false}
                             />
-                        </MobileWrapper>
+                        </MobileOrTabletWrapper>
                     </React.Fragment>
                 )}
             </div>

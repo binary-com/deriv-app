@@ -3,7 +3,7 @@
     flex-direction: row;
     justify-content: flex-start;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         margin: 0;
     }
 

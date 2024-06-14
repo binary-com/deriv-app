@@ -263,7 +263,7 @@
 .dc-remaining-time {
     display: inline;
 
-    @include mobile {
+    @include mobile-screen {
         font-size: 0.9rem;
     }
 }

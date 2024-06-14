@@ -27,13 +27,13 @@ const getSearchResults = (items: TAdvertList, search_term: string) => {
 const getRenderedAdverts = (
     search_term: string,
     search_results: TAdvertList,
-    is_mobile: boolean,
+    is_mobile_or_tablet: boolean,
     filtered_items: TAdvertList = []
 ) => {
     const EMPTY_ITEM_PLACE_HOLDER = { id: 'WATCH_THIS_SPACE' };
     const NO_MATCH_ROW = { id: 'NO_MATCH_ROW' };
     let rendered_adverts: DeepPartial<TAdvertList> = [];
-    if (is_mobile) {
+    if (is_mobile_or_tablet) {
         if (search_term) {
             rendered_adverts = [EMPTY_ITEM_PLACE_HOLDER, NO_MATCH_ROW];
             if (search_results?.length) {
@@ -80,7 +80,7 @@ const useP2PRenderedAdverts = () => {
         search_term,
     } = buy_sell_store;
     const { list_item_limit } = general_store;
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const counterparty_type = is_buy ? buy_sell.BUY : buy_sell.SELL;
 
     const { data: items = [], ...rest } = useP2PAdvertList({
@@ -106,8 +106,8 @@ const useP2PRenderedAdverts = () => {
     }, [search_term, items]);
 
     const rendered_adverts = React.useMemo(() => {
-        return getRenderedAdverts(search_term, search_results, is_mobile, filtered_items);
-    }, [search_term, filtered_items, is_mobile, search_results]);
+        return getRenderedAdverts(search_term, search_results, is_mobile_or_tablet, filtered_items);
+    }, [search_term, filtered_items, is_mobile_or_tablet, search_results]);
 
     return {
         rendered_adverts,

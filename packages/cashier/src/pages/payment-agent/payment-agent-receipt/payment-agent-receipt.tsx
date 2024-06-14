@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { withRouter } from 'react-router';
 import { Button, Text } from '@deriv/components';
-import { isMobile, routes } from '@deriv/shared';
+import { isMobileOrTablet, routes } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { localize, Localize } from '@deriv/translations';
 import PaymentAgentDetail from '../payment-agent-detail';
@@ -59,7 +59,7 @@ const PaymentAgentReceipt = observer(({ history }: TPaymentAgentReceipt) => {
 
     return (
         <div className='cashier__wrapper--align-center payment-agent-receipt'>
-            <SideNote className='payment-agent-list__side-note' is_mobile>
+            <SideNote className='payment-agent-list__side-note' is_mobile_or_tablet>
                 <PaymentAgentDisclaimer />
             </SideNote>
             <Text
@@ -67,7 +67,7 @@ const PaymentAgentReceipt = observer(({ history }: TPaymentAgentReceipt) => {
                 align='center'
                 color='prominent'
                 line_height='m'
-                size={isMobile() ? 'xsm' : 'sm'}
+                size={isMobileOrTablet() ? 'xsm' : 'sm'}
                 weight='bold'
                 className={classNames('payment-agent-receipt__header', {
                     'payment-agent-receipt__header-listed': receipt.payment_agent_name,
@@ -94,7 +94,7 @@ const PaymentAgentReceipt = observer(({ history }: TPaymentAgentReceipt) => {
             >
                 <Localize
                     i18n_default_text='{{ text }}. <0></0>You can view the summary of this transaction in your email.'
-                    components={!isMobile() ? [<br key={0} />] : []}
+                    components={!isMobileOrTablet() ? [<br key={0} />] : []}
                     values={{
                         text: receipt.payment_agent_name
                             ? localize('To receive your funds, contact the payment agent with the details below')

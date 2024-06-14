@@ -6,7 +6,7 @@ import {
     DesktopWrapper,
     Div100vhContainer,
     FadeWrapper,
-    MobileWrapper,
+    MobileOrTabletWrapper,
     PageOverlay,
     VerticalTab,
     Loading,
@@ -70,7 +70,7 @@ const Cashier = observer(({ history, location, routes: routes_config }: TCashier
     } = usePaymentAgentTransferVisible();
     const { is_payment_agent_visible } = payment_agent;
     const { is_from_derivgo } = common;
-    const { is_cashier_visible: is_visible, is_mobile, toggleCashier, toggleReadyToDepositModal } = ui;
+    const { is_cashier_visible: is_visible, is_mobile_or_tablet, toggleCashier, toggleReadyToDepositModal } = ui;
     const { currency, is_account_setting_loaded, is_logged_in, is_logging_in, is_svg, is_virtual } = client;
     const is_account_transfer_visible = useAccountTransferVisible();
     const is_onramp_visible = useOnrampVisible();
@@ -130,10 +130,11 @@ const Cashier = observer(({ history, location, routes: routes_config }: TCashier
     const is_default_route = !!selected_route.default;
 
     const getHeaderTitle = useMemo(() => {
-        if (!is_mobile || (is_default_route && (is_loading || is_cashier_onboarding))) return localize('Cashier');
+        if (!is_mobile_or_tablet || (is_default_route && (is_loading || is_cashier_onboarding)))
+            return localize('Cashier');
 
         return selected_route.getTitle?.();
-    }, [is_cashier_onboarding, is_default_route, is_loading, selected_route, is_mobile]);
+    }, [is_cashier_onboarding, is_default_route, is_loading, selected_route, is_mobile_or_tablet]);
 
     const updateActiveTab = useCallback(
         (path?: string) => {
@@ -241,7 +242,7 @@ const Cashier = observer(({ history, location, routes: routes_config }: TCashier
     ]);
 
     if (
-        ((!is_logged_in || is_mobile) && is_logging_in) ||
+        ((!is_logged_in || is_mobile_or_tablet) && is_logging_in) ||
         !is_account_setting_loaded ||
         is_payment_agent_checking ||
         (is_p2p_enabled_loading && !is_p2p_enabled_success)
@@ -277,7 +278,7 @@ const Cashier = observer(({ history, location, routes: routes_config }: TCashier
                             }
                         />
                     </DesktopWrapper>
-                    <MobileWrapper>
+                    <MobileOrTabletWrapper>
                         <Div100vhContainer className='cashier__wrapper--is-mobile' height_offset='80px'>
                             {selected_route?.component && (
                                 <selected_route.component
@@ -287,7 +288,7 @@ const Cashier = observer(({ history, location, routes: routes_config }: TCashier
                                 />
                             )}
                         </Div100vhContainer>
-                    </MobileWrapper>
+                    </MobileOrTabletWrapper>
                 </PageOverlay>
             </div>
         </FadeWrapper>

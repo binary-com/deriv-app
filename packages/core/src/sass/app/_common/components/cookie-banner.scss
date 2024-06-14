@@ -17,7 +17,7 @@
     transition: top 0.3s ease-in-out;
     z-index: 1000;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         font-size: 12px;
         font-weight: bold;
         height: fit-content;
@@ -29,16 +29,16 @@
     }
     &--is-closed {
         transform: translateY(152px);
-        @include mobile {
+        @include mobile-or-tablet-screen {
             transform: translateY(168px);
         }
     }
     .description {
         margin: 0 auto;
-        @include desktop {
+        @include desktop-screen {
             width: 640px;
         }
-        @include mobile {
+        @include mobile-or-tablet-screen {
             max-width: 296px;
         }
     }
@@ -55,7 +55,7 @@
         line-height: 1.43;
         letter-spacing: normal;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             height: 32px;
             border-width: 1px;
         }

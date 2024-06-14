@@ -5,6 +5,11 @@ import { TApiContext, TToken } from '../../../Types';
 import ApiTokenContext from '../api-token-context';
 import ApiTokenDeleteButton from '../api-token-delete-button';
 
+jest.mock('@deriv/shared', () => ({
+    ...jest.requireActual('@deriv/shared'),
+    isDesktop: jest.fn(() => true),
+}));
+
 describe('ApiTokenDeleteButton', () => {
     let modal_root_el: HTMLElement;
 

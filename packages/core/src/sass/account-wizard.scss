@@ -552,7 +552,7 @@
 }
 
 .emp-status {
-    @include mobile() {
+    @include mobile-or-tablet-screen {
         padding-right: 2rem;
     }
 }
@@ -566,17 +566,17 @@
         align-items: flex-start;
     }
 
-    @include mobile() {
+    @include mobile-or-tablet-screen {
         height: calc(100vh - 16rem);
         overflow: auto;
     }
 
     &--existing-user {
-        @include desktop() {
+        @include desktop-screen {
             margin-top: 9.2rem;
         }
 
-        @include mobile() {
+        @include mobile-or-tablet-screen {
             height: calc(100vh - 12rem);
             .trading-assessment__side-note {
                 padding: 2.2rem 1.6rem;
@@ -592,7 +592,7 @@
         text-align: justify;
         padding: 0 10rem;
 
-        @include mobile() {
+        @include mobile-or-tablet-screen {
             padding: 0 1.6rem;
         }
     }
@@ -623,7 +623,7 @@
             display: flex;
             padding: 0 10rem;
 
-            @include mobile() {
+            @include mobile-or-tablet-screen {
                 padding: 0 1.6rem;
             }
         }
@@ -635,7 +635,7 @@
         .dc-dropdown__display .dc-dropdown__display-placeholder-text-limit-fit {
             max-width: initial;
             padding-bottom: 0.5rem;
-            @include mobile() {
+            @include mobile-or-tablet-screen {
                 width: 90%;
                 white-space: normal;
             }
@@ -648,13 +648,13 @@
             margin: 1.6rem 0;
         }
 
-        @include desktop() {
+        @include desktop-screen {
             padding: 0 2rem;
         }
         .dc-radio-group {
             gap: 1.6rem;
         }
-        @include mobile() {
+        @include mobile-or-tablet-screen {
             .dc-radio-group__circle {
                 align-self: flex-start !important;
             }
@@ -666,7 +666,7 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        @include desktop() {
+        @include desktop-screen {
             padding: 0 3rem;
         }
     }
@@ -675,7 +675,7 @@
         cursor: not-allowed;
     }
 
-    @include mobile() {
+    @include mobile-or-tablet-screen {
         .dc-dropdown__display-placeholder {
             width: 100%;
             .trading-assessment__form .dc-dropdown__display .dc-dropdown__display-placeholder-text-limit-fit {
@@ -700,7 +700,7 @@
     }
 
     &__btn-group {
-        @include mobile() {
+        @include mobile-or-tablet-screen {
             position: fixed;
             bottom: 0;
             padding: 1.6rem;
@@ -754,7 +754,7 @@
             }
 
             .dc-dropdown__display .dc-dropdown__display-placeholder-text-limit-fit {
-                @include desktop() {
+                @include desktop-screen {
                     white-space: inherit;
                     text-overflow: unset;
                 }
@@ -805,7 +805,7 @@
         width: 0;
         height: 0;
     }
-    @include desktop {
+    @include desktop-screen {
         padding-bottom: unset;
     }
 }

@@ -21,7 +21,7 @@ jest.mock('@deriv/api', () => ({
 describe('CashierOnboardingSideNotes', () => {
     test('should render CashierOnboardingSideNoteFiat on mobile if is_crypto is false', () => {
         const mock = mockStore({
-            ui: { is_mobile: true },
+            ui: { is_mobile_or_tablet: true },
             client: { currency: 'USD' },
         });
 
@@ -35,7 +35,7 @@ describe('CashierOnboardingSideNotes', () => {
 
     test('should render CashierOnboardingSideNoteCrypto on mobile on mobile if is_crypto is true', async () => {
         const mock = mockStore({
-            ui: { is_mobile: true },
+            ui: { is_mobile_or_tablet: true },
             client: { currency: 'BTC' },
             modules: {
                 cashier: {

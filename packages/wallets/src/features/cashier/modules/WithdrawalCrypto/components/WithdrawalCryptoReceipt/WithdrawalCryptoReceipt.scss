@@ -5,7 +5,7 @@
     align-items: center;
     gap: 2rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         max-width: 100%;
         gap: 1.6rem;
     }
@@ -20,7 +20,7 @@
             padding: 1.6rem;
             width: 20rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 width: 16rem;
                 padding: 0.8rem;
             }

@@ -37,7 +37,7 @@ jest.mock('@deriv/components', () => ({
 
 const mock_store = mockStore({
     ui: {
-        is_mobile: false,
+        is_mobile_or_tablet: false,
         toggleMT5MigrationModal: jest.fn(),
         setMT5MigrationModalEnabled: jest.fn(),
     },

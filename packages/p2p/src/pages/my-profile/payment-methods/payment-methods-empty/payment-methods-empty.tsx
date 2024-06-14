@@ -1,5 +1,5 @@
 import React from 'react';
-import { DesktopWrapper, Icon, MobileFullPageModal, MobileWrapper, Text, Button } from '@deriv/components';
+import { DesktopWrapper, Icon, MobileFullPageModal, MobileOrTabletWrapper, Text, Button } from '@deriv/components';
 import { observer } from '@deriv/stores';
 import { my_profile_tabs } from 'Constants/my-profile-tabs';
 import { Localize, localize } from 'Components/i18next';
@@ -33,7 +33,7 @@ const PaymentMethodsEmpty = () => {
             <DesktopWrapper>
                 <div className='payment-methods-empty'>{payment_method_empty_icon}</div>
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <MobileFullPageModal
                     body_className='payment-methods-list__modal'
                     height_offset='80px'
@@ -47,7 +47,7 @@ const PaymentMethodsEmpty = () => {
                 >
                     {payment_method_empty_icon}
                 </MobileFullPageModal>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </React.Fragment>
     );
 };

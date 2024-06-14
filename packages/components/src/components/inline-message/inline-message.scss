@@ -35,7 +35,7 @@
         &__sm {
             margin-top: 0.1rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-top: 0;
             }
         }
@@ -43,13 +43,13 @@
         &__md {
             margin-top: 0.2rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-top: 0.1rem;
             }
         }
 
         &__lg {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-top: 0.2rem;
             }
         }
@@ -64,13 +64,13 @@
         &__xs {
             margin-top: 0.1rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-top: 0.2rem;
             }
         }
 
         &__sm {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-top: 0.1rem;
             }
         }

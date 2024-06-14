@@ -38,11 +38,11 @@ const AccordionStrategyGroup = observer(
         setExpandedSubtitlesStorage,
     }: TAccordionStrategyGroupProps) => {
         const { ui } = useStore();
-        const { is_mobile } = ui;
+        const { is_mobile_or_tablet } = ui;
         const desktop_font_size = tutorial_selected_strategy ? 's' : 'xs';
         const font_size: string = React.useMemo<string>(
-            () => (is_mobile ? 'xs' : desktop_font_size),
-            [is_mobile, desktop_font_size]
+            () => (is_mobile_or_tablet ? 'xs' : desktop_font_size),
+            [is_mobile_or_tablet, desktop_font_size]
         );
 
         return (

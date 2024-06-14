@@ -1,5 +1,5 @@
 import React from 'react';
-import { DesktopWrapper, MobileWrapper, Text } from '@deriv/components';
+import { DesktopWrapper, MobileOrTabletWrapper, Text } from '@deriv/components';
 import { daysSince } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from 'Components/i18next';
@@ -49,7 +49,7 @@ const MyProfileName = () => {
                         <Text color='prominent' weight='bold'>
                             {user_nickname}
                         </Text>
-                        <MobileWrapper>
+                        <MobileOrTabletWrapper>
                             <div className='my-profile-name__row'>
                                 <Text
                                     className='my-profile-name__rating__row'
@@ -66,7 +66,7 @@ const MyProfileName = () => {
                                     )}
                                 </Text>
                             </div>
-                        </MobileWrapper>
+                        </MobileOrTabletWrapper>
                         <div className='my-profile-name__rating'>
                             <DesktopWrapper>
                                 <Text
@@ -135,13 +135,13 @@ const MyProfileName = () => {
                                 </div>
                             </DesktopWrapper>
                         </div>
-                        <MobileWrapper>
+                        <MobileOrTabletWrapper>
                             <div className='my-profile-name__row'>
                                 <div className='my-profile-name__rating__row'>
                                     <BlockUserCount />
                                 </div>
                             </div>
-                        </MobileWrapper>
+                        </MobileOrTabletWrapper>
                         <div className='my-profile-name__row'>
                             <TradeBadge
                                 is_poa_verified={

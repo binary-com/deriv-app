@@ -66,7 +66,7 @@ describe('<SymbolSelect />', () => {
     beforeEach(() => {
         const mock_store = mockStore({
             ui: {
-                is_mobile: true,
+                is_mobile_or_tablet: true,
             },
         });
 
@@ -110,7 +110,7 @@ describe('<SymbolSelect />', () => {
     });
 
     it('should input to be empty when the user clicks to type something', () => {
-        mockStore({ ui: { is_mobile: false, is_desktop: true } });
+        mockStore({ ui: { is_mobile_or_tablet: false, is_desktop: true } });
         render(<SymbolSelect />, {
             wrapper,
         });

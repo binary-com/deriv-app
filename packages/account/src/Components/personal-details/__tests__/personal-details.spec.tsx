@@ -1,8 +1,9 @@
 import React, { ComponentProps, ReactNode } from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { useDevice } from '@deriv-com/ui';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { isDesktop, isMobile } from '@deriv/shared';
+import { isDesktop, isMobile, isMobileOrTablet } from '@deriv/shared';
 import { splitValidationResultTypes } from '../../real-account-signup/helpers/utils';
 import PersonalDetails from '../personal-details';
 import { shouldShowIdentityInformation, isDocumentTypeValid, isAdditionalDocumentValid } from '../../../Helpers/utils';
@@ -17,10 +18,16 @@ jest.mock('@deriv/components', () => ({
     Popover: jest.fn(props => props.is_open && <span>{props.message}</span>),
 }));
 
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isDesktop: true, isTablet: false, isMobile: false })),
+}));
+
 // [TODO] - To be removed when PersonalDetailsForm is migrated to TSX
 jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
     isMobile: jest.fn(() => false),
+    isMobileOrTablet: jest.fn(() => false),
     isDesktop: jest.fn(() => true),
 }));
 
@@ -612,8 +619,10 @@ describe('<PersonalDetails/>', () => {
     it('should display proper data in mobile mode', () => {
         // [TODO] - Remove this when PersonalDetailsForm is migrated to TSX
         (isMobile as jest.Mock).mockReturnValue(true);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
         (isDesktop as jest.Mock).mockReturnValue(false);
-        const mock_store = mockStore({ ui: { is_mobile: true, is_desktop: false } });
+        (useDevice as jest.Mock).mockReturnValue({ isDesktop: false, isTablet: false, isMobile: true });
+        const mock_store = mockStore({ ui: { is_mobile: true, is_mobile_or_tablet: true, is_desktop: false } });
         const new_props = { ...mock_props, is_svg: false };
 
         renderwithRouter({ props: new_props, store: mock_store });
@@ -641,8 +650,10 @@ describe('<PersonalDetails/>', () => {
 
     it('should select correct dropdown options in mobile mode', () => {
         (isMobile as jest.Mock).mockReturnValue(true);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
         (isDesktop as jest.Mock).mockReturnValue(false);
-        const mock_store = mockStore({ ui: { is_mobile: true, is_desktop: false } });
+        (useDevice as jest.Mock).mockReturnValue({ isDesktop: false, isTablet: false, isMobile: true });
+        const mock_store = mockStore({ ui: { is_mobile: true, is_mobile_or_tablet: true, is_desktop: false } });
         const new_props = { ...mock_props, is_svg: false };
 
         renderwithRouter({ props: new_props, store: mock_store });
@@ -720,6 +731,8 @@ describe('<PersonalDetails/>', () => {
         // [TODO] - Remove this when PersonalDetailsForm is migrated to TSX
         (isMobile as jest.Mock).mockReturnValue(true);
         (isDesktop as jest.Mock).mockReturnValue(false);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
+        (useDevice as jest.Mock).mockReturnValue({ isDesktop: false, isTablet: false, isMobile: true });
 
         (splitValidationResultTypes as jest.Mock).mockReturnValue({ warnings: {}, errors: {} });
         const new_props = {

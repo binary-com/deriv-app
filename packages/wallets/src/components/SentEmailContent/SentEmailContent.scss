@@ -9,7 +9,7 @@
     border-radius: 0.8rem;
     background: var(--system-light-8-primary-background, #fff);
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 100%;
         justify-content: flex-start;
         border-radius: 0;

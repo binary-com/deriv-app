@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { withRouter } from 'react-router-dom';
-import { DesktopWrapper, MobileWrapper } from '@deriv/components';
+import { DesktopWrapper, MobileOrTabletWrapper } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { routes, platforms } from '@deriv/shared';
 import { MenuLinks, PlatformSwitcher } from 'App/Components/Layout/Header';
@@ -51,12 +51,12 @@ const MenuLeft = observer(() => {
                     current_language={current_language}
                 />
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <ToggleMenuDrawer platform_config={filterPlatformsForClients(platform_config)} />
                 {header_extension && is_logged_in && (
                     <div className='header__menu-left-extensions'>{header_extension}</div>
                 )}
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
             <MenuLinks />
         </div>
     );
@@ -65,7 +65,7 @@ const MenuLeft = observer(() => {
 const MenuRight = observer(() => {
     const { client, ui } = useStore();
     const { is_logged_in, is_logging_in, is_switching, accounts, loginid, is_crypto } = client;
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
 
     const active_account = accounts?.[loginid ?? ''];
     const currency = active_account?.currency ?? '';
@@ -73,7 +73,7 @@ const MenuRight = observer(() => {
     return (
         <div
             className={classNames('header__menu-right', {
-                'header__menu-right--hidden': is_mobile && is_logging_in,
+                'header__menu-right--hidden': is_mobile_or_tablet && is_logging_in,
             })}
         >
             {(is_logging_in || is_switching) && (
@@ -84,7 +84,11 @@ const MenuRight = observer(() => {
                         'acc-info__preloader__dtrader--is-crypto': is_crypto(currency),
                     })}
                 >
-                    <AccountsInfoLoaderWallets is_logged_in={is_logged_in} is_mobile={is_mobile} speed={3} />
+                    <AccountsInfoLoaderWallets
+                        is_logged_in={is_logged_in}
+                        is_mobile_or_tablet={is_mobile_or_tablet}
+                        speed={3}
+                    />
                 </div>
             )}
             <div id={'dt_core_header_acc-info-container'} className='acc-info__container'>

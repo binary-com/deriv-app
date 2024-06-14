@@ -19,7 +19,7 @@
         transform: rotateY(180deg);
     }
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         max-width: 100%;
         width: 100%;
     }
@@ -63,7 +63,7 @@
         justify-content: center;
         padding: 4rem 1.6rem 3.6rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 100%;
         }
 
@@ -79,7 +79,7 @@
         &__label {
             text-align: center;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-top: 2.5rem;
             }
         }

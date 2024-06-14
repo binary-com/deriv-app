@@ -3,7 +3,7 @@ import { Formik, FormikErrors } from 'formik';
 import { localize, Localize } from '@deriv/translations';
 import {
     isDesktop,
-    isMobile,
+    isMobileOrTablet,
     getCFDPlatformLabel,
     getCFDPlatformNames,
     getFormattedJurisdictionCode,
@@ -113,7 +113,7 @@ export const CFDPasswordForm = ({
                                 has_cancel={has_cancel_button}
                                 cancel_label={cancel_button_label}
                                 onCancel={handleCancel}
-                                is_absolute={isMobile()}
+                                is_absolute={isMobileOrTablet()}
                                 label={button_label}
                             />
                         </form>
@@ -248,7 +248,7 @@ export const CFDPasswordForm = ({
                         has_cancel={has_cancel_button}
                         cancel_label={cancel_button_label}
                         onCancel={handleCancel}
-                        is_absolute={isMobile()}
+                        is_absolute={isMobileOrTablet()}
                         is_loading={isSubmitting}
                         label={button_label}
                         is_center={should_set_trading_password}

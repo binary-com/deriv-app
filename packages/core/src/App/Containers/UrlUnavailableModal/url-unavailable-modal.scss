@@ -20,7 +20,7 @@
             }
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             &-header__title {
                 font-size: 1.4rem;
                 padding: 1.6rem;

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { MobileWrapper, Toast } from '@deriv/components';
+import { MobileOrTabletWrapper, Toast } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 
 type TToastPopUp = {
@@ -49,7 +49,7 @@ const NetworkStatusToastError = ({ status, portal_id, message }: TNetworkStatusT
     }
 
     return ReactDOM.createPortal(
-        <MobileWrapper>
+        <MobileOrTabletWrapper>
             <Toast
                 className={clsx({
                     'dc-toast--blinker': status === 'blinker',
@@ -60,7 +60,7 @@ const NetworkStatusToastError = ({ status, portal_id, message }: TNetworkStatusT
             >
                 {message}
             </Toast>
-        </MobileWrapper>,
+        </MobileOrTabletWrapper>,
         new_portal_id
     );
 };

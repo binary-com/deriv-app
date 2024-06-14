@@ -13,7 +13,7 @@ import {
     PasswordInput,
     PasswordMeter,
     Text,
-    MobileWrapper,
+    MobileOrTabletWrapper,
     DesktopWrapper,
 } from '@deriv/components';
 import {
@@ -969,7 +969,7 @@ const CFDPasswordModal = observer(({ form_error, platform }: TCFDPasswordModalPr
                     />
                 </Modal>
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <MobileDialog
                     has_full_height
                     portal_element_id='modal_root'
@@ -990,7 +990,7 @@ const CFDPasswordModal = observer(({ form_error, platform }: TCFDPasswordModalPr
                         onCancel={closeModal}
                     />
                 </MobileDialog>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </React.Fragment>
     );
 

@@ -7,14 +7,14 @@
     align-items: center;
     gap: 1.6rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         min-width: 100%;
     }
 
     &__get-account {
         min-width: 35.2rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 0;
         }
     }
@@ -23,7 +23,7 @@
         border-radius: 0.8rem;
         border: 0.1rem solid var(--system-light-7-secondary-background, #f2f3f4);
         min-width: 32rem;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 100%;
         }
     }
@@ -34,7 +34,7 @@
         flex: 1 0 0;
         height: 8.8rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             border-bottom: 0.1rem solid var(--system-light-6-hover-background, #e6e9e9);
             gap: 1.6rem;
             padding: 0;

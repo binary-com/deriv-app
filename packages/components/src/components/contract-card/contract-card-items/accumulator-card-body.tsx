@@ -4,7 +4,7 @@ import { isCryptocurrency, getLimitOrderAmount, isValidToSell } from '@deriv/sha
 import { TContractInfo } from '@deriv/shared/src/utils/contract/contract-types';
 import ContractCardItem from './contract-card-item';
 import ToggleCardDialog from './toggle-card-dialog';
-import MobileWrapper from '../../mobile-wrapper';
+import MobileOrTabletWrapper from '../../mobile-wrapper';
 import Money from '../../money';
 import { ResultStatusIcon } from '../result-overlay/result-overlay';
 import { ContractUpdate } from '@deriv/api-types';
@@ -94,7 +94,7 @@ const AccumulatorCardBody = ({
                 </ContractCardItem>
             </div>
             {!!is_sold && (
-                <MobileWrapper>
+                <MobileOrTabletWrapper>
                     <div
                         className={classNames('dc-contract-card__status', {
                             'dc-contract-card__status--accumulator-mobile-positions': is_positions,
@@ -102,7 +102,7 @@ const AccumulatorCardBody = ({
                     >
                         <ResultStatusIcon getCardLabels={getCardLabels} is_contract_won={is_won} />
                     </div>
-                </MobileWrapper>
+                </MobileOrTabletWrapper>
             )}
         </React.Fragment>
     );

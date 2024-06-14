@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { reaction } from 'mobx';
 import { useHistory, useLocation } from 'react-router-dom';
-import { DesktopWrapper, MobileFullPageModal, MobileWrapper, Modal, ThemedScrollbars } from '@deriv/components';
+import { DesktopWrapper, MobileFullPageModal, MobileOrTabletWrapper, Modal, ThemedScrollbars } from '@deriv/components';
 import { routes } from '@deriv/shared';
 import { observer } from '@deriv/stores';
 import { localize } from 'Components/i18next';
@@ -129,7 +129,7 @@ const BuySellModal = () => {
 
     return (
         <React.Fragment>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <MobileFullPageModal
                     body_className='buy-sell-modal__body'
                     className='buy-sell-modal'
@@ -166,7 +166,7 @@ const BuySellModal = () => {
                         )}
                     </ThemedScrollbars>
                 </MobileFullPageModal>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
             <DesktopWrapper>
                 <Modal
                     className={classNames('buy-sell-modal', {

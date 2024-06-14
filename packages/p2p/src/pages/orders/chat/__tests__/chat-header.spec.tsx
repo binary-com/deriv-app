@@ -9,6 +9,11 @@ jest.mock('Stores', () => ({
     useStores: () => mock_store,
 }));
 
+jest.mock('@deriv/shared', () => ({
+    ...jest.requireActual('@deriv/shared'),
+    isMobileOrTablet: jest.fn(() => false),
+}));
+
 describe('<ChatHeader />', () => {
     beforeEach(() => {
         mock_store = {

@@ -1,5 +1,5 @@
 .order-table {
-    @include mobile {
+    @include mobile-or-tablet-screen {
         border-bottom: 1px solid var(--general-section-1);
     }
 
@@ -23,7 +23,7 @@
                 }
             }
         }
-        @include mobile {
+        @include mobile-or-tablet-screen {
             align-self: center;
             flex-direction: column;
             width: 100%;
@@ -34,7 +34,7 @@
             gap: 0.8rem;
             align-items: center;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin: 0 1.6rem 3.2rem;
             }
 
@@ -48,7 +48,7 @@
                 &:hover {
                     cursor: pointer;
                 }
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     width: 4rem;
                     height: 4rem;
                 }

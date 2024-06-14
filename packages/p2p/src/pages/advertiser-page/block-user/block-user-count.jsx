@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { Button, Icon, MobileWrapper, Modal, Popover, Text } from '@deriv/components';
+import { Button, Icon, MobileOrTabletWrapper, Modal, Popover, Text } from '@deriv/components';
 import { localize } from 'Components/i18next';
 import { useStores } from 'Stores';
 import { isDesktop } from '@deriv/shared';
@@ -29,7 +29,7 @@ const BlockUserCount = () => {
 
     return (
         <React.Fragment>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <Modal has_close_icon={false} is_open={is_block_user_count_modal_open} width='440px'>
                     <Modal.Body>
                         <Text color='prominent' size='xs'>
@@ -48,7 +48,7 @@ const BlockUserCount = () => {
                         </Button>
                     </Modal.Footer>
                 </Modal>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
             <div onClick={!isDesktop() ? () => setIsBlockUserCountModalOpen(true) : null}>
                 <Popover
                     alignment='top'

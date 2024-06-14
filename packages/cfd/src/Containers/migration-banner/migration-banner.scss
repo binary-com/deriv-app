@@ -22,7 +22,7 @@
             margin: auto 3.2rem;
             padding-left: 3.8rem;
         }
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin: auto 0.8rem auto 3.2rem;
             &-text {
                 width: 90%;
@@ -36,7 +36,7 @@
         left: 0;
         top: 0;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             right: -0.1rem;
             bottom: -0.1rem;
             border-radius: $BORDER_RADIUS * 2;

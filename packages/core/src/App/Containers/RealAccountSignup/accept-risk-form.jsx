@@ -9,7 +9,7 @@ import {
     Modal,
 } from '@deriv/components';
 import { localize, Localize } from '@deriv/translations';
-import { isDesktop, isMobile } from '@deriv/shared';
+import { isDesktop, isMobileOrTablet } from '@deriv/shared';
 
 const AcceptRiskForm = ({ onConfirm, onClose }) => {
     return (
@@ -41,9 +41,9 @@ const AcceptRiskForm = ({ onConfirm, onClose }) => {
                                 </ThemedScrollbars>
                             </Div100vhContainer>
                             <input name='accept_risk' value='1' type='hidden' />
-                            <Modal.Footer has_separator is_bypassed={isMobile()}>
+                            <Modal.Footer has_separator is_bypassed={isMobileOrTablet()}>
                                 <FormSubmitButton
-                                    is_absolute={isMobile()}
+                                    is_absolute={isMobileOrTablet()}
                                     label={localize('Accept')}
                                     has_cancel
                                     cancel_label={localize('Decline')}

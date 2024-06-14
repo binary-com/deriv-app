@@ -1,6 +1,6 @@
 .order-details-cancel-modal {
     &__footer {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             .dc-btn__group {
                 align-items: center;
                 display: flex;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, FormikValues, useFormikContext } from 'formik';
-import { DesktopWrapper, MobileWrapper, Dropdown, SelectNative } from '@deriv/components';
+import { DesktopWrapper, MobileOrTabletWrapper, Dropdown, SelectNative } from '@deriv/components';
 import { EMPLOYMENT_VALUES, TEmploymentStatus, shouldHideOccupationField } from '@deriv/shared';
 import { localize } from '@deriv/translations';
 import {
@@ -65,7 +65,7 @@ const FinancialDetailsDropdownField = ({
                             {...field}
                         />
                     </DesktopWrapper>
-                    <MobileWrapper>
+                    <MobileOrTabletWrapper>
                         <SelectNative
                             placeholder={placeholder}
                             name={field.name}
@@ -80,7 +80,7 @@ const FinancialDetailsDropdownField = ({
                             required
                             {...field}
                         />
-                    </MobileWrapper>
+                    </MobileOrTabletWrapper>
                 </React.Fragment>
             )}
         </Field>
@@ -125,7 +125,7 @@ const FinancialDetailsOccupationDropdownField = ({
                             required
                         />
                     </DesktopWrapper>
-                    <MobileWrapper>
+                    <MobileOrTabletWrapper>
                         <SelectNative
                             {...field}
                             placeholder={placeholder}
@@ -140,7 +140,7 @@ const FinancialDetailsOccupationDropdownField = ({
                             }}
                             required
                         />
-                    </MobileWrapper>
+                    </MobileOrTabletWrapper>
                 </React.Fragment>
             )}
         </Field>

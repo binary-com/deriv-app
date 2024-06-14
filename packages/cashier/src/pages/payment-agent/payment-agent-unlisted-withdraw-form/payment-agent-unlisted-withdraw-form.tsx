@@ -86,7 +86,7 @@ const PaymentAgentUnlistedWithdrawForm = observer(({ setIsUnlistedWithdraw }: TP
                     <Localize i18n_default_text='Back to list' />
                 </Text>
             </div>
-            <SideNote className='payment-agent-list__side-note' has_title={false} is_mobile>
+            <SideNote className='payment-agent-list__side-note' has_title={false} is_mobile_or_tablet>
                 <PaymentAgentDisclaimer />
             </SideNote>
             <Formik

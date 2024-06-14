@@ -4,6 +4,12 @@ import { adverts } from 'Pages/my-ads/__mocks__/mock-data';
 import { requestWS } from 'Utils/websocket';
 import MyAdsStore from '../my-ads-store';
 
+jest.mock('@deriv/shared', () => ({
+    ...jest.requireActual('@deriv/shared'),
+    isMobile: jest.fn(() => false),
+    isMobileOrTablet: jest.fn(() => false),
+}));
+
 const mockFn = jest.fn();
 jest.mock('Utils/websocket', () => ({
     ...jest.requireActual('Utils/websocket'),

@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useDevice } from '@deriv-com/ui';
 import { mockStore } from '@deriv/stores';
-import { TRADE_TYPES } from '@deriv/shared';
+import { TRADE_TYPES, isDesktop } from '@deriv/shared';
 import TraderProviders from '../../../../../../trader-providers';
 import Strike from '../strike';
 import userEvent from '@testing-library/user-event';
@@ -31,6 +31,7 @@ jest.mock('@deriv-com/ui', () => ({
     ...jest.requireActual('@deriv-com/ui'),
     useDevice: jest.fn(() => ({
         isMobile: false,
+        isDesktop: true,
     })),
 }));
 jest.mock('Modules/Trading/Containers/strike-param-modal', () => jest.fn(() => <div>{mocked_strike_param_modal}</div>));

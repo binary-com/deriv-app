@@ -70,7 +70,7 @@ jest.mock('Stores', () => ({
 jest.mock('@deriv/components', () => ({
     ...jest.requireActual('@deriv/components'),
     DesktopWrapper: jest.fn(({ children }) => children),
-    MobileWrapper: jest.fn(({ children }) => children),
+    MobileOrTabletWrapper: jest.fn(({ children }) => children),
 }));
 
 jest.mock('Components/modal-manager/modal-manager-context', () => ({

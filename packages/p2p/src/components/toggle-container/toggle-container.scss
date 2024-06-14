@@ -8,7 +8,7 @@
         margin: 2.4rem 0;
     }
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         align-self: center;
         margin: 1.6rem;
     }

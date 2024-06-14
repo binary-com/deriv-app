@@ -1,10 +1,10 @@
 .ad-wizard {
-    @include desktop {
+    @include desktop-screen {
         width: 67.2rem;
     }
 
     > div:first-child {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             display: flex;
             align-items: center;
             column-gap: 1rem;
@@ -24,7 +24,7 @@
     }
 
     .wizard__main-step {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 1.6rem;
         }
     }

@@ -158,7 +158,7 @@
         flex: 1;
         height: #{$HEADER_HEIGHT - 1px};
 
-        @include desktop {
+        @include desktop-screen {
             align-items: center;
         }
 
@@ -183,7 +183,7 @@
         &--hidden {
             display: none;
         }
-        @include mobile {
+        @include mobile-or-tablet-screen {
             .acc-info__separator {
                 display: none;
             }
@@ -372,7 +372,7 @@
         margin-right: 0.8rem;
         vertical-align: middle;
     }
-    @include mobile {
+    @include mobile-or-tablet-screen {
         height: $MOBILE_HEADER_HEIGHT;
 
         .header__menu-left,
@@ -387,7 +387,7 @@
         margin-left: 0.8rem;
         background: var(--general-section-2);
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             height: 2.4rem;
         }
     }

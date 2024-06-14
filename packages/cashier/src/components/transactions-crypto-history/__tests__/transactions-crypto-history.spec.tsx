@@ -5,6 +5,13 @@ import CashierProviders from '../../../cashier-providers';
 import { mockStore } from '@deriv/stores';
 import { useSubscription } from '@deriv/api';
 
+jest.mock('@deriv/shared', () => ({
+    ...jest.requireActual('@deriv/shared'),
+    isMobile: jest.fn(() => false),
+    isMobileOrTablet: jest.fn(() => false),
+    isDesktop: jest.fn(() => true),
+}));
+
 jest.mock('@deriv/api', () => ({
     ...jest.requireActual('@deriv/api'),
     useSubscription: jest.fn(),

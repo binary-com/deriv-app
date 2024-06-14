@@ -15,7 +15,7 @@ import { TPaymentMethod } from 'Types/my-profile.types';
 const EditPaymentMethodForm = () => {
     const { general_store, my_profile_store } = useStores();
     const {
-        ui: { is_desktop, is_mobile },
+        ui: { is_desktop, is_mobile_or_tablet },
     } = useStore();
     const { showModal } = useModalManagerContext();
     const { mutation, update } = useP2PAdvertiserPaymentMethods();
@@ -154,7 +154,7 @@ const EditPaymentMethodForm = () => {
                             <div
                                 className={classNames('edit-payment-method-form__buttons', {
                                     'edit-payment-method-form__buttons--separated-footer':
-                                        general_store.active_index === 3 && is_mobile,
+                                        general_store.active_index === 3 && is_mobile_or_tablet,
                                     'edit-payment-method-form__buttons--separated-footer-profile':
                                         general_store.active_index === 3 && is_desktop,
                                 })}

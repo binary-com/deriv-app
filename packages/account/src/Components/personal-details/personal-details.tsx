@@ -79,7 +79,7 @@ const PersonalDetails = observer(
     }: TPersonalDetailProps) => {
         const {
             traders_hub: { is_eu_user },
-            ui: { is_mobile, is_desktop },
+            ui: { is_mobile_or_tablet, is_desktop },
         } = useStore();
         const { account_status, account_settings, residence, real_account_signup_target } = props;
         const [should_close_tooltip, setShouldCloseTooltip] = useState(false);
@@ -209,8 +209,10 @@ const PersonalDetails = observer(
                                 data-testid='personal_details_form'
                             >
                                 <ScrollToFieldWithError
-                                    fields_to_scroll_bottom={is_mobile ? undefined : ['account_opening_reason']}
-                                    fields_to_scroll_top={is_mobile ? ['account_opening_reason'] : undefined}
+                                    fields_to_scroll_bottom={
+                                        is_mobile_or_tablet ? undefined : ['account_opening_reason']
+                                    }
+                                    fields_to_scroll_top={is_mobile_or_tablet ? ['account_opening_reason'] : undefined}
                                     should_recollect_inputs_names={
                                         values?.document_type?.id === IDV_NOT_APPLICABLE_OPTION.id
                                     }
@@ -270,12 +272,12 @@ const PersonalDetails = observer(
                                         </div>
                                     </ThemedScrollbars>
                                 </Div100vhContainer>
-                                <Modal.Footer has_separator is_bypassed={is_mobile}>
+                                <Modal.Footer has_separator is_bypassed={is_mobile_or_tablet}>
                                     <FormSubmitButton
                                         cancel_label={localize('Previous')}
                                         has_cancel
                                         is_disabled={isSubmitting}
-                                        is_absolute={is_mobile}
+                                        is_absolute={is_mobile_or_tablet}
                                         label={localize('Next')}
                                         onCancel={() => handleCancel(values)}
                                     />

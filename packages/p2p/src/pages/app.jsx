@@ -20,7 +20,7 @@ const App = () => {
     const { balance, is_logging_in } = client;
     const { setOnRemount } = modules?.cashier?.general_store;
 
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const { setP2POrderProps, setP2PRedirectTo } = notifications;
 
     const history = useHistory();
@@ -161,7 +161,7 @@ const App = () => {
 
         setActionParam(url_params.get('action'));
 
-        if (is_mobile) {
+        if (is_mobile_or_tablet) {
             setCodeParam(localStorage.getItem('verification_code.p2p_order_confirm'));
         } else if (!code_param) {
             if (url_params.has('code')) {
@@ -192,7 +192,7 @@ const App = () => {
         input_order_id => {
             const current_query_params = new URLSearchParams(location.search);
 
-            if (is_mobile) {
+            if (is_mobile_or_tablet) {
                 current_query_params.delete('action');
                 current_query_params.delete('code');
             }

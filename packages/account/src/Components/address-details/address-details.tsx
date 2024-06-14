@@ -12,7 +12,7 @@ import {
     Div100vhContainer,
     FormSubmitButton,
     Loading,
-    MobileWrapper,
+    MobileOrTabletWrapper,
     Modal,
     SelectNative,
     Text,
@@ -97,7 +97,7 @@ const AddressDetails = observer(
             traders_hub: { is_eu_user },
         } = useStore();
 
-        const { is_desktop, is_mobile } = ui;
+        const { is_desktop, is_mobile_or_tablet } = ui;
         const { data: states_list, isFetched } = useStatesList(residence);
 
         const handleCancel = (values: TAddressDetailFormProps) => {
@@ -144,7 +144,7 @@ const AddressDetails = observer(
                                     is_disabled={is_desktop}
                                 >
                                     <ScrollToFieldWithError />
-                                    {is_mobile && (
+                                    {is_mobile_or_tablet && (
                                         <Text size='xs' weight='bold' className='details-form__heading'>
                                             <Localize i18n_default_text='Complete your address details' />
                                         </Text>
@@ -225,7 +225,7 @@ const AddressDetails = observer(
                                                                     }
                                                                 />
                                                             </DesktopWrapper>
-                                                            <MobileWrapper>
+                                                            <MobileOrTabletWrapper>
                                                                 <SelectNative
                                                                     placeholder={localize('Please select')}
                                                                     label={localize('State/Province')}
@@ -248,7 +248,7 @@ const AddressDetails = observer(
                                                                             has_real_account)
                                                                     }
                                                                 />
-                                                            </MobileWrapper>
+                                                            </MobileOrTabletWrapper>
                                                         </Fragment>
                                                     )}
                                                 </Field>
@@ -280,11 +280,11 @@ const AddressDetails = observer(
                                         </div>
                                     </ThemedScrollbars>
                                 </Div100vhContainer>
-                                <Modal.Footer has_separator is_bypassed={is_mobile}>
+                                <Modal.Footer has_separator is_bypassed={is_mobile_or_tablet}>
                                     <FormSubmitButton
                                         is_disabled={isSubmitting}
                                         label={localize('Next')}
-                                        is_absolute={is_mobile}
+                                        is_absolute={is_mobile_or_tablet}
                                         has_cancel
                                         cancel_label={localize('Previous')}
                                         onCancel={() => handleCancel(values)}

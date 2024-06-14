@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { Field, FieldProps, FormikProps, FormikValues } from 'formik';
 import { localize } from '@deriv/translations';
-import { isMobile, supported_filetypes, max_document_size } from '@deriv/shared';
+import { isMobileOrTablet, supported_filetypes, max_document_size } from '@deriv/shared';
 import { Button, Icon, Text, FileDropzone } from '@deriv/components';
 import { ROOT_CLASS } from '../constants';
 
@@ -48,7 +48,7 @@ const Message = ({ data, open }: TMessage) => (
         <Button
             medium
             secondary
-            text={isMobile() ? localize('Tap here to upload') : localize('Drop file or click here to upload')}
+            text={isMobileOrTablet() ? localize('Tap here to upload') : localize('Drop file or click here to upload')}
             onClick={open}
         />
     </div>
@@ -131,7 +131,9 @@ const Uploader = ({ data, value, is_full, onChange, has_frame }: Omit<TUploader,
             <Button
                 medium
                 secondary
-                text={isMobile() ? localize('Tap here to upload') : localize('Drop file or click here to upload')}
+                text={
+                    isMobileOrTablet() ? localize('Tap here to upload') : localize('Drop file or click here to upload')
+                }
                 onClick={open}
             />
         </div>

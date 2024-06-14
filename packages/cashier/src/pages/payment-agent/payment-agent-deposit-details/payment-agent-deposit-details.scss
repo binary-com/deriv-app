@@ -6,7 +6,7 @@
     margin-top: 3.2rem;
     & > .payment-agent-detail:nth-child(-n + 2) {
         margin-bottom: 2.4rem;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin-bottom: 0;
         }
     }
@@ -17,7 +17,7 @@
             background: var(--icon-grey-background);
             border-radius: $BORDER_RADIUS * 2;
         }
-        @include mobile {
+        @include mobile-or-tablet-screen {
             &.deposit-commission {
                 order: 5;
             }
@@ -27,7 +27,7 @@
             }
         }
     }
-    @include mobile {
+    @include mobile-or-tablet-screen {
         grid-template-columns: 1fr;
         margin-top: 2.4rem;
     }

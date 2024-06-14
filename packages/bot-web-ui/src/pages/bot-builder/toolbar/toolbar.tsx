@@ -10,7 +10,7 @@ import WorkspaceGroup from './workspace-group';
 const Toolbar = observer(() => {
     const { run_panel, toolbar, quick_strategy } = useDBotStore();
     const {
-        ui: { is_mobile },
+        ui: { is_mobile_or_tablet },
     } = useStore();
     const { is_dialog_open, closeResetDialog, onResetOkButtonClick: onOkButtonClick } = toolbar;
     const { is_running } = run_panel;
@@ -26,7 +26,7 @@ const Toolbar = observer(() => {
         <React.Fragment>
             <div className='toolbar dashboard__toolbar' data-testid='dashboard__toolbar'>
                 <div className='toolbar__section'>
-                    {is_mobile && (
+                    {is_mobile_or_tablet && (
                         <ToolbarButton
                             popover_message={localize('Click here to start building your Deriv Bot.')}
                             button_id='db-toolbar__get-started-button'
@@ -35,10 +35,10 @@ const Toolbar = observer(() => {
                             button_text={localize('Quick strategy')}
                         />
                     )}
-                    {!is_mobile && <WorkspaceGroup />}
+                    {!is_mobile_or_tablet && <WorkspaceGroup />}
                 </div>
             </div>
-            {is_mobile && <WorkspaceGroup />}
+            {is_mobile_or_tablet && <WorkspaceGroup />}
             <Dialog
                 portal_element_id='modal_root'
                 title={localize('Are you sure?')}

@@ -9,7 +9,7 @@
     max-width: 79.2rem;
     padding: 1.6rem 3.2rem 1.6rem 1.6rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         align-items: flex-start;
         display: grid;
         grid-gap: 0.8rem;
@@ -23,7 +23,7 @@
         flex-direction: column;
         gap: 0.8rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             grid-column: 2 / 5;
             grid-row-start: 1;
         }
@@ -34,7 +34,7 @@
         flex-direction: row;
         padding-top: 0.8rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             display: none;
         }
     }
@@ -47,7 +47,7 @@
             width: inherit;
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             grid-column: 1 / 2;
             grid-row-start: 1;
             height: 4.5rem;
@@ -58,7 +58,7 @@
     &__mobile-icons {
         display: none;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             display: flex;
             flex-direction: row;
             grid-column: 1 / 4;

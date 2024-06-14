@@ -11,7 +11,7 @@
         height: fit-content;
         border-radius: 0.4rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 0.8rem;
         }
     }

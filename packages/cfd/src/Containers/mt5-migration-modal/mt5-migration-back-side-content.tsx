@@ -10,7 +10,7 @@ import { TCFDPasswordFormValues } from 'Containers/cfd-password-modal';
 
 const MT5MigrationBackSideContent = observer(() => {
     const { ui, common, client } = useStore();
-    const { toggleMT5MigrationModal, setMT5MigrationModalEnabled, is_mobile } = ui;
+    const { toggleMT5MigrationModal, setMT5MigrationModalEnabled, is_mobile_or_tablet } = ui;
     const { email } = client;
     const { setAppstorePlatform } = common;
     const { setJurisdictionSelectedShortcode, setSentEmailModalStatus, submitMt5Password } = useCfdStore();
@@ -21,7 +21,7 @@ const MT5MigrationBackSideContent = observer(() => {
         password: '',
     };
 
-    const content_size = is_mobile ? 'xxs' : 'xs';
+    const content_size = is_mobile_or_tablet ? 'xxs' : 'xs';
 
     const closeModal = () => {
         setAppstorePlatform(CFD_PLATFORMS.MT5);
@@ -121,7 +121,7 @@ const MT5MigrationBackSideContent = observer(() => {
                     <Modal.Footer>
                         <FormSubmitButton
                             is_disabled={!!errors.password || isSubmitting}
-                            is_absolute={is_mobile}
+                            is_absolute={is_mobile_or_tablet}
                             label={localize('Upgrade')}
                             has_cancel
                             onCancel={onForgotPassword}

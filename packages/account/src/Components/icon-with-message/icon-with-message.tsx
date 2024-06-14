@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon, Text, Button } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { localize } from '@deriv/translations';
 
@@ -22,7 +22,7 @@ const IconWithMessage = observer(({ has_button, icon, message }: TIconWithMessag
                 className='da-icon-with-message__text'
                 as='p'
                 color='general'
-                size={isMobile() ? 'xs' : 's'}
+                size={isMobileOrTablet() ? 'xs' : 's'}
                 line_height='m'
                 weight='bold'
             >

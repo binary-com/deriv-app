@@ -5,14 +5,14 @@ import NetworkStatus from '../network-status.jsx';
 import { StoreProvider, mockStore } from '@deriv/stores';
 
 const store = mockStore();
-const MockNetworkStatus = ({ is_mobile = true }) => (
+const MockNetworkStatus = ({ is_mobile_or_tablet = true }) => (
     <StoreProvider store={store}>
-        <NetworkStatus is_mobile={is_mobile} />
+        <NetworkStatus is_mobile_or_tablet={is_mobile_or_tablet} />
     </StoreProvider>
 );
 
 describe('network-status component', () => {
-    it('should has "network-status__wrapper--is-mobile" class when the "is_mobile" property is true', () => {
+    it('should has "network-status__wrapper--is-mobile" class when the "is_mobile_or_tablet" property is true', () => {
         render(<MockNetworkStatus />);
         const div_element = screen.getByTestId('dt_network_status');
         expect(div_element).toHaveClass('network-status__wrapper--is-mobile');
@@ -48,7 +48,7 @@ describe('network-status component', () => {
 
     it('should contain "Popover" with default message when "status.tooltip" is empty', () => {
         store.common.network_status.tooltip = '';
-        render(<MockNetworkStatus is_mobile={false} />);
+        render(<MockNetworkStatus is_mobile_or_tablet={false} />);
         const popover_wrapper = screen.getByTestId('dt_popover_wrapper');
         userEvent.hover(popover_wrapper);
         const network_status = screen.getByText(/connecting to server/i);

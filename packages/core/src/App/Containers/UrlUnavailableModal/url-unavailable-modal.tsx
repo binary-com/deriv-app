@@ -6,7 +6,7 @@ import './url-unavailable-modal.scss';
 
 const UrlUnavailableModal = observer(() => {
     const { ui } = useStore();
-    const { isUrlUnavailableModalVisible, toggleUrlUnavailableModal, is_mobile } = ui;
+    const { isUrlUnavailableModalVisible, toggleUrlUnavailableModal, is_mobile_or_tablet } = ui;
     const onConfirm = () => toggleUrlUnavailableModal(false);
     return (
         <Modal
@@ -17,7 +17,7 @@ const UrlUnavailableModal = observer(() => {
             toggleModal={onConfirm}
             className='url-unavailable-modal'
             should_close_on_click_outside
-            width={is_mobile ? 'calc(100vw - 3.2rem)' : 'auto'}
+            width={is_mobile_or_tablet ? 'calc(100vw - 3.2rem)' : 'auto'}
         >
             <Modal.Body>
                 <Localize i18n_default_text='This could be because:' />
@@ -27,8 +27,8 @@ const UrlUnavailableModal = observer(() => {
                         components={[
                             <Text
                                 as='li'
-                                line_height={is_mobile ? 'l' : 'xl'}
-                                size={is_mobile ? 'xxs' : 'xs'}
+                                line_height={is_mobile_or_tablet ? 'l' : 'xl'}
+                                size={is_mobile_or_tablet ? 'xxs' : 'xs'}
                                 key={0}
                             />,
                         ]}

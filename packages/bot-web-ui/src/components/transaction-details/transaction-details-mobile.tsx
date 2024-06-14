@@ -47,7 +47,7 @@ const TransactionDetailsMobile = observer(() => {
             </div>
             <div className='transaction-details-modal-mobile__card__footer'>
                 <StatisticsSummary
-                    is_mobile
+                    is_mobile_or_tablet
                     currency={client?.currency}
                     lost_contracts={statistics?.lost_contracts ?? 0}
                     number_of_runs={statistics?.number_of_runs ?? 0}

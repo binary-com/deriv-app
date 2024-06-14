@@ -54,7 +54,7 @@ describe('<TradeType />', () => {
     beforeEach(() => {
         const mock_store = mockStore({
             ui: {
-                is_mobile: true,
+                is_mobile_or_tablet: true,
             },
         });
         mock_DBot_store = mockDBotStore(mock_store, mock_ws);

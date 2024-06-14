@@ -1,5 +1,5 @@
 import React from 'react';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import Button from '../button';
 import Icon from '../icon';
 import Text from '../text';
@@ -48,7 +48,7 @@ const AlertMessage = (props: TAlertMessageProps) => {
                 </div>
             </div>
             <div className='alert-message__message-container'>
-                <Text size={isMobile() ? 'xxxs' : 'xxs'} color={color}>
+                <Text size={isMobileOrTablet() ? 'xxxs' : 'xxs'} color={color}>
                     {message}
                 </Text>
             </div>

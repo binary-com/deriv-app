@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Text } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { Localize } from '@deriv/translations';
 import { ContinueTradingButton } from '../../../poa/continue-trading-button/continue-trading-button';
 import IdvDocumentVerified from '../../../../Assets/ic-idv-verified.svg';
@@ -31,7 +31,7 @@ const IdvVerified = ({ needs_poa, is_from_external, redirect_button }: Partial<T
             </Text>
             {needs_poa ? (
                 <React.Fragment>
-                    {!isMobile() && (
+                    {!isMobileOrTablet() && (
                         <Text className='text' size='xs' align='center'>
                             <Localize i18n_default_text="Next, we'll need your proof of address." />
                         </Text>

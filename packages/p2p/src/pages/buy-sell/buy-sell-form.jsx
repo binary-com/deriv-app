@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import { InlineMessage, Input, Text } from '@deriv/components';
 import { useP2PAdvertiserPaymentMethods, useP2PExchangeRate } from '@deriv/hooks';
-import { getDecimalPlaces, isDesktop, isMobile } from '@deriv/shared';
+import { getDecimalPlaces, isDesktop, isMobileOrTablet } from '@deriv/shared';
 import { reaction } from 'mobx';
 import { observer, Observer } from 'mobx-react-lite';
 import { localize, Localize } from 'Components/i18next';
@@ -85,7 +85,7 @@ const BuySellForm = props => {
             const disposeReceiveAmountReaction = reaction(
                 () => buy_sell_store.receive_amount,
                 () => {
-                    if (isMobile() && typeof setPageFooterParent === 'function') {
+                    if (isMobileOrTablet() && typeof setPageFooterParent === 'function') {
                         setPageFooterParent(<BuySellFormReceiveAmount />);
                     }
                 }

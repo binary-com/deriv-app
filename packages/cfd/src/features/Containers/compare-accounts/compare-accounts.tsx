@@ -1,7 +1,14 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import classNames from 'classnames';
-import { Text, Icon, PageOverlay, DesktopWrapper, MobileWrapper, CFDCompareAccountsCarousel } from '@deriv/components';
+import {
+    Text,
+    Icon,
+    PageOverlay,
+    DesktopWrapper,
+    MobileOrTabletWrapper,
+    CFDCompareAccountsCarousel,
+} from '@deriv/components';
 import { routes } from '@deriv/shared';
 import { Localize, localize } from '@deriv/translations';
 import { observer, useStore } from '@deriv/stores';
@@ -132,7 +139,7 @@ const CompareAccounts = observer(() => {
                     </div>
                 </div>
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <PageOverlay
                     header={
                         <Localize
@@ -179,7 +186,7 @@ const CompareAccounts = observer(() => {
                         </CFDCompareAccountsCarousel>
                     </div>
                 </PageOverlay>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </React.Fragment>
     );
 });

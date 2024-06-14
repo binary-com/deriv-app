@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Button, DesktopWrapper, Icon, MobileFullPageModal, MobileWrapper, Modal } from '@deriv/components';
+import { Button, DesktopWrapper, Icon, MobileFullPageModal, MobileOrTabletWrapper, Modal } from '@deriv/components';
 import { observer } from '@deriv/stores';
 import { localize, Localize } from 'Components/i18next';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
@@ -66,7 +66,7 @@ const CreateAdAddPaymentMethodModal = () => {
                     )}
                 </Modal>
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <MobileFullPageModal
                     body_className={classNames('create-ad-add-payment-method-modal__body', {
                         'create-ad-add-payment-method-modal__body--form': selected_payment_method,
@@ -81,7 +81,7 @@ const CreateAdAddPaymentMethodModal = () => {
                 >
                     <AddPaymentMethod should_show_page_return={false} should_show_separated_footer />
                 </MobileFullPageModal>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </React.Fragment>
     );
 };

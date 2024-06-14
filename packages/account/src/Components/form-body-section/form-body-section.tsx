@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 
 import { Text } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { Localize } from '@deriv/translations';
 
 export type TFormBodySection = {
@@ -54,12 +54,16 @@ const FormBodySection = ({
                     })}
                 >
                     {type === 'text' ? (
-                        <Text color='less-prominent' size={isMobile() ? 'xxs' : 'xs'} data-testid='dt_side_note_text'>
+                        <Text
+                            color='less-prominent'
+                            size={isMobileOrTablet() ? 'xxs' : 'xs'}
+                            data-testid='dt_side_note_text'
+                        >
                             {side_note}
                         </Text>
                     ) : (
                         <React.Fragment>
-                            <Text as='p' size={isMobile() ? 'xxs' : 'xs'} weight='bold'>
+                            <Text as='p' size={isMobileOrTablet() ? 'xxs' : 'xs'} weight='bold'>
                                 <Localize i18n_default_text='Example :' />
                             </Text>
                             <div className='account-form__section-side-note__example-image'>{side_note}</div>

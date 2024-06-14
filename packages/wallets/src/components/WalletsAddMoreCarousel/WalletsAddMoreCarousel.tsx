@@ -10,7 +10,7 @@ import WalletsAddMoreCard from '../WalletsAddMoreCard';
 import './WalletsAddMoreCarousel.scss';
 
 const WalletsAddMoreCarousel: React.FC = () => {
-    const { isDesktop, isMobile } = useDevice();
+    const { isDesktop, isMobileOrTablet } = useDevice();
     const { data: wallets, isLoading } = useAllWalletAccounts();
     const { isInitializing } = useAuthorize();
 
@@ -37,7 +37,7 @@ const WalletsAddMoreCarousel: React.FC = () => {
         if (!walletsAddMoreEmblaAPI) return;
 
         walletsAddMoreEmblaAPI.reInit({ watchDrag: isMobile });
-    }, [walletsAddMoreEmblaAPI, isMobile]);
+    }, [walletsAddMoreEmblaAPI, isMobileOrTablet]);
 
     useEffect(() => {
         if (!walletsAddMoreEmblaAPI) return;

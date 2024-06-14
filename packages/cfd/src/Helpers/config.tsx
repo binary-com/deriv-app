@@ -12,7 +12,7 @@ import {
     platformsText,
     CTRADER_URL,
 } from './constants';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { Localize } from '@deriv/translations';
 
 import { TCFDDashboardContainer } from 'Containers/props.types';
@@ -30,7 +30,7 @@ export const mobileDownloadLink = (platform: TCFDsPlatformType, type: TMobilePla
 };
 
 export const getPlatformQRCode = (acc_type: TCFDsPlatformType) => {
-    const qr_code_mobile = isMobile() ? '100%' : '80%';
+    const qr_code_mobile = isMobileOrTablet() ? '100%' : '80%';
 
     const QRCodeLinks = () => {
         switch (acc_type) {

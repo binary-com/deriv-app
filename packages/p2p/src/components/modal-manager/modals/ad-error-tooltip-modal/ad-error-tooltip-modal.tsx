@@ -24,7 +24,7 @@ const AdErrorTooltipModal = ({
 }: TAdErrorTooltipModal) => {
     const { general_store } = useStores();
     const {
-        ui: { is_mobile },
+        ui: { is_mobile_or_tablet },
     } = useStore();
     const { hideModal, is_modal_open } = useModalManagerContext();
     const { advertiser_buy_limit, advertiser_sell_limit } = general_store;
@@ -108,8 +108,8 @@ const AdErrorTooltipModal = ({
                     <Text
                         as='div'
                         color='prominent'
-                        size={is_mobile ? 'xxs' : 'xs'}
-                        line_height={is_mobile ? 'l' : 'xl'}
+                        size={is_mobile_or_tablet ? 'xxs' : 'xs'}
+                        line_height={is_mobile_or_tablet ? 'l' : 'xl'}
                     >
                         {visibility_status.length === 1 ? (
                             getAdErrorMessage(visibility_status[0])

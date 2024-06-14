@@ -2,7 +2,7 @@
 .account-signup {
     & .signup-separator-container {
         border-bottom: 1px solid var(--general-section-1);
-        @include mobile {
+        @include mobile-or-tablet-screen {
             display: none;
         }
     }
@@ -12,7 +12,7 @@
         }
         .dc-dialog__dialog {
             max-height: unset;
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 padding: 1.6rem;
             }
         }
@@ -27,7 +27,7 @@
         display: flex;
         flex-direction: column;
         gap: 2.4rem;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             gap: 1.6rem;
         }
     }
@@ -61,7 +61,7 @@
         }
     }
     &__heading {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin-bottom: 0.8rem;
         }
     }
@@ -70,7 +70,7 @@
     }
     &__label {
         line-height: var(--text-lh-m);
-        @include mobile {
+        @include mobile-or-tablet-screen {
             line-height: var(--text-lh-l);
             font-size: var(--text-size-xxs);
         }
@@ -78,7 +78,7 @@
     &__footer {
         display: grid;
         justify-content: flex-end;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             justify-content: stretch;
         }
     }

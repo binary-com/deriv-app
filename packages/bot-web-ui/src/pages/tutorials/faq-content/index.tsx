@@ -17,14 +17,14 @@ type TFAQList = {
     search_id?: string;
 };
 
-const FAQ = ({ type, content = '', src, imageclass, is_mobile }: TDescription) => {
+const FAQ = ({ type, content = '', src, imageclass, is_mobile_or_tablet }: TDescription) => {
     if (type === 'image') return <img src={src} className={imageclass} />;
 
     return (
         <Text
             as='p'
-            size={is_mobile ? 'xs' : 's'}
-            line_height={is_mobile ? 'xl' : 'xxl'}
+            size={is_mobile_or_tablet ? 'xs' : 's'}
+            line_height={is_mobile_or_tablet ? 'xl' : 'xxl'}
             className='faq__description'
             weight='normal'
             key={content}
@@ -44,7 +44,7 @@ const scrollToElement = (wrapper_element: HTMLElement, offset: number) => {
 
 const FAQContent = ({ faq_list, handleTabChange }: TFAQContent) => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const { dashboard } = useDBotStore();
     const { faq_title, setFaqTitle } = dashboard;
 
@@ -103,13 +103,17 @@ const FAQContent = ({ faq_list, handleTabChange }: TFAQContent) => {
                     className='faq__title'
                     weight='bold'
                     key={title}
-                    size={is_mobile ? 'xs' : 's'}
+                    size={is_mobile_or_tablet ? 'xs' : 's'}
                 >
                     {title}
                 </Text>
             ),
             content: description?.map((item, index) => (
-                <FAQ {...item} is_mobile={is_mobile} key={`faq-description-item-${item?.content}-${index}`} />
+                <FAQ
+                    {...item}
+                    is_mobile_or_tablet={is_mobile_or_tablet}
+                    key={`faq-description-item-${item?.content}-${index}`}
+                />
             )),
         }));
     };
@@ -125,7 +129,7 @@ const FAQContent = ({ faq_list, handleTabChange }: TFAQContent) => {
                                 line_height='xl'
                                 className='faq__wrapper__header'
                                 weight='bold'
-                                size={is_mobile ? 'xs' : 's'}
+                                size={is_mobile_or_tablet ? 'xs' : 's'}
                             >
                                 <Localize i18n_default_text='FAQ' />
                             </Text>

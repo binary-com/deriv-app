@@ -42,7 +42,7 @@ const mock_p2p_advertiser_payment_methods_hooks = {
 
 jest.mock('@deriv/components', () => ({
     ...jest.requireActual('@deriv/components'),
-    MobileWrapper: jest.fn(({ children }) => children),
+    MobileOrTabletWrapper: jest.fn(({ children }) => children),
 }));
 
 jest.mock('@deriv/hooks', () => ({

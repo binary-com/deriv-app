@@ -11,7 +11,7 @@ import PaymentMethodsList from './payment-methods-list';
 const PaymentMethods = () => {
     const { my_profile_store } = useStores();
     const {
-        ui: { is_mobile },
+        ui: { is_mobile_or_tablet },
     } = useStore();
     const { data: p2p_advertiser_payment_methods, isRefetching } = useP2PAdvertiserPaymentMethods();
 
@@ -25,7 +25,7 @@ const PaymentMethods = () => {
     }, []);
 
     if (my_profile_store.is_loading) {
-        return <Loading is_fullscreen={is_mobile} />;
+        return <Loading is_fullscreen={is_mobile_or_tablet} />;
     } else if (my_profile_store.should_show_add_payment_method_form) {
         return <AddPaymentMethod />;
     } else if (!p2p_advertiser_payment_methods?.length && !isRefetching) {

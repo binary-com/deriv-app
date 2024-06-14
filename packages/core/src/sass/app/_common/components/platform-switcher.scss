@@ -35,7 +35,7 @@
     &--active &__arrow {
         transform: rotate(180deg);
     }
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 100%;
         height: 100%;
         justify-content: center;

@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { Input, Text } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 import { localize, Localize } from 'Components/i18next';
@@ -21,7 +21,7 @@ const ChatFooter = observer(() => {
     };
 
     const handleKeyDown = event => {
-        if (event.key === 'Enter' && !isMobile()) {
+        if (event.key === 'Enter' && !isMobileOrTablet()) {
             if (event.ctrlKey || event.metaKey) {
                 const { target: element } = event;
                 const { value } = element;

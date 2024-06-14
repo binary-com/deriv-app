@@ -25,7 +25,7 @@ jest.mock('@deriv/shared', () => ({
 
 const mock_props = {
     ui: {
-        is_mobile: false,
+        is_mobile_or_tablet: false,
     },
 };
 
@@ -61,7 +61,7 @@ describe('<OrderTimeSelection/>', () => {
         expect(screen.getByText('Orders will expire if they aren’t completed within this time.')).toBeInTheDocument();
     });
     it('should open orderTimeTooltipModal on clicking info icon in responsive view', () => {
-        renderComponent({ ui: { is_mobile: true } });
+        renderComponent({ ui: { is_mobile_or_tablet: true } });
 
         const info_icon = screen.getByTestId('dt_order_time_selection_info_icon');
 

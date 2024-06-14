@@ -4,7 +4,7 @@
     align-items: center;
     width: 65rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 100%;
         align-self: flex-start;
     }
@@ -24,7 +24,7 @@
         grid-template-columns: 1fr 1fr;
         padding: 0.8rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             min-height: 9rem;
             grid-template-columns: 60% 40%;
         }

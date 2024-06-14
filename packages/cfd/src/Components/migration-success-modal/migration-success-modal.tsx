@@ -16,7 +16,7 @@ const MigrationSuccessModal = observer(({ is_open, closeModal }: TMigrationSucce
     const history = useHistory();
     const { ui, client } = useStore();
     const { mt5_login_list } = client;
-    const { is_mobile, setMT5MigrationModalEnabled } = ui;
+    const { is_mobile_or_tablet, setMT5MigrationModalEnabled } = ui;
     const { migrated_mt5_accounts, setIsFromMt5MigrationModal } = useCfdStore();
 
     const has_migrated_mt5_accounts = !!migrated_mt5_accounts.length;
@@ -82,7 +82,7 @@ const MigrationSuccessModal = observer(({ is_open, closeModal }: TMigrationSucce
         />
     );
 
-    return is_mobile ? (
+    return is_mobile_or_tablet ? (
         <PageOverlay
             is_open={is_open}
             header_classname='cfd-success-dialog-migration'

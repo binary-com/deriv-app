@@ -4,7 +4,7 @@
     display: flex;
     flex: 1 0 0;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         flex: unset;
         flex-direction: column;
         padding: 0;
@@ -15,7 +15,7 @@
         top: -2.4rem;
         left: 0.4rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             top: -0.8rem;
         }
     }
@@ -26,7 +26,7 @@
         flex-direction: column;
         width: 100%;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             flex-direction: column-reverse;
             justify-content: space-between;
             padding-top: 4rem;
@@ -40,7 +40,7 @@
         padding-bottom: 1.6rem;
         max-width: 79.2rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 1.6rem 0 0;
             box-shadow: 0 0.2rem 0 0 #f2f3f4 inset;
         }

@@ -18,7 +18,7 @@ jest.mock('Stores', () => ({
 
 jest.mock('@deriv/components', () => ({
     ...jest.requireActual('@deriv/components'),
-    MobileWrapper: jest.fn(({ children }) => children),
+    MobileOrTabletWrapper: jest.fn(({ children }) => children),
 }));
 
 describe('<PaymentMethodsEmpty/>', () => {

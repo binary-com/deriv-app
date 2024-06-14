@@ -1,7 +1,7 @@
 .wallets-transaction-status {
     width: 100%;
 
-    @include desktop {
+    @include desktop-screen {
         width: 28.2rem;
     }
 
@@ -28,7 +28,7 @@
         gap: 0.8rem;
     }
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 100%;
     }
 

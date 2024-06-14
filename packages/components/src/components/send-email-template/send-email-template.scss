@@ -18,7 +18,7 @@
     }
     &__icon {
         margin-bottom: 2.4rem;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin-top: 3.2rem;
         }
     }
@@ -56,7 +56,7 @@
     &-dashboard {
         width: calc(100vw - 33rem);
     }
-    @include mobile {
+    @include mobile-or-tablet-screen {
         margin-bottom: 1.6rem;
         width: 100%;
     }

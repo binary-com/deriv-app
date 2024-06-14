@@ -30,7 +30,7 @@ describe('<OnRampProviderCard />', () => {
         const mock_root_store = mockStore({
             ui: {
                 is_dark_mode_on: false,
-                is_mobile: false,
+                is_mobile_or_tablet: false,
             },
             modules: {
                 cashier: {
@@ -58,7 +58,7 @@ describe('<OnRampProviderCard />', () => {
         const mock_root_store = mockStore({
             ui: {
                 is_dark_mode_on: true,
-                is_mobile: false,
+                is_mobile_or_tablet: false,
             },
             modules: {
                 cashier: {
@@ -81,7 +81,7 @@ describe('<OnRampProviderCard />', () => {
         const mock_root_store = mockStore({
             ui: {
                 is_dark_mode_on: false,
-                is_mobile: false,
+                is_mobile_or_tablet: false,
             },
             modules: {
                 cashier: {

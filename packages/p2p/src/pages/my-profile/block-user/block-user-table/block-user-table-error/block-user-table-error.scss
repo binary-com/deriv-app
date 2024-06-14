@@ -10,7 +10,7 @@
     &__text {
         margin: 3rem 11rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin: 3rem 2rem;
         }
     }

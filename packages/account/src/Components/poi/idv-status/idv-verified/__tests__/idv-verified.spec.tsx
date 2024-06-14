@@ -2,12 +2,12 @@ import React from 'react';
 import { Router } from 'react-router';
 import { createBrowserHistory } from 'history';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import IdvVerified from '../idv-verified';
 
 jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
-    isMobile: jest.fn(() => false),
+    isMobileOrTablet: jest.fn(() => false),
 }));
 
 jest.mock('../../../../../Assets/ic-idv-verified.svg', () => jest.fn(() => 'mockedSVGIcon'));
@@ -36,7 +36,7 @@ describe('<IdvVerified />', () => {
     });
 
     it('should render the IdvVerified component when needs_poa is false and is_from_external is true in mobile', () => {
-        (isMobile as jest.Mock).mockReturnValue(true);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
         renderWithRouter(<IdvVerified is_from_external />);
         expect(screen.getByTestId('poi_idv_verified_container')).toBeInTheDocument();
         expect(screen.getByText(/mockedsvgicon/i)).toBeInTheDocument();

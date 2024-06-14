@@ -1,7 +1,7 @@
 .currency-dropdown {
     position: relative;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         grid-column: 2;
         grid-row: 1;
         margin: 0;
@@ -17,7 +17,7 @@
             width: 100%;
 
             &-symbol {
-                @include desktop {
+                @include desktop-screen {
                     padding-right: 1rem;
                 }
             }
@@ -39,7 +39,7 @@
         height: 4.2rem;
         justify-content: start;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             height: 4rem;
 
             &:focus {

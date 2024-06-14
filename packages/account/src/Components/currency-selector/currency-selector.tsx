@@ -84,8 +84,13 @@ const CurrencySelector = observer(
 
         const has_currency = Boolean(currency);
 
-        const { real_account_signup, real_account_signup_target, resetRealAccountSignupParams, is_desktop, is_mobile } =
-            ui;
+        const {
+            real_account_signup,
+            real_account_signup_target,
+            resetRealAccountSignupParams,
+            is_desktop,
+            is_mobile_or_tablet,
+        } = ui;
 
         // Wrapped with String() to avoid type mismatch
         const crypto = legal_allowed_currencies.filter(
@@ -182,7 +187,7 @@ const CurrencySelector = observer(
                                 <Div100vhContainer
                                     className={clsx('currency-selector__container', {
                                         'currency-selector__container--no-top-margin':
-                                            !has_currency && has_real_account && is_mobile,
+                                            !has_currency && has_real_account && is_mobile_or_tablet,
                                     })}
                                     height_offset={getHeightOffset()}
                                     is_disabled={is_desktop}
@@ -248,7 +253,7 @@ const CurrencySelector = observer(
                                         )}
                                     </ThemedScrollbars>
                                 </Div100vhContainer>
-                                <Modal.Footer has_separator is_bypassed={is_mobile}>
+                                <Modal.Footer has_separator is_bypassed={is_mobile_or_tablet}>
                                     <FormSubmitButton
                                         className={
                                             set_currency

@@ -1,5 +1,5 @@
 import React from 'react';
-import { getCFDPlatformLabel, isMobile } from '@deriv/shared';
+import { getCFDPlatformLabel, isMobileOrTablet } from '@deriv/shared';
 import { Localize } from '@deriv/translations';
 import { Text } from '@deriv/components';
 
@@ -15,10 +15,10 @@ export const PasswordModalHeader = ({
     is_password_reset_error,
     platform,
 }: TPasswordModalHeaderProps) => {
-    const element = isMobile() ? 'p' : 'span';
+    const element = isMobileOrTablet() ? 'p' : 'span';
     const alignment = 'center';
     const font_size = 's';
-    const style = isMobile()
+    const style = isMobileOrTablet()
         ? {
               padding: '2rem',
           }

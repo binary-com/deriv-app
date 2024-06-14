@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { isDesktop, isMobile } from '@deriv/shared';
+import { isDesktop, isMobileOrTablet } from '@deriv/shared';
 import PopupContext from './popup-context';
 import Button from '../button';
 import Icon from '../icon';
@@ -35,7 +35,7 @@ const PopupHeader = () => {
                                     {title}
                                 </Text>
                             </div>
-                            {header_banner_text && isMobile() && (
+                            {header_banner_text && isMobileOrTablet() && (
                                 <div className='dc-popup__header-banner'>
                                     <Text size='xxxxs' line_height='m' color='prominent'>
                                         {header_banner_text}
@@ -50,7 +50,7 @@ const PopupHeader = () => {
                             {header_button_text && (
                                 <Button
                                     primary
-                                    is_circle={isMobile()}
+                                    is_circle={isMobileOrTablet()}
                                     is_circular={isDesktop()}
                                     className='dc-popup__header-button'
                                     icon={<Icon icon='IcPlay' size={10} color='active' />}

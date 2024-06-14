@@ -1,5 +1,5 @@
 import React from 'react';
-import { DesktopWrapper, Icon, MobileFullPageModal, MobileWrapper, Text } from '@deriv/components';
+import { DesktopWrapper, Icon, MobileFullPageModal, MobileOrTabletWrapper, Text } from '@deriv/components';
 import { observer } from '@deriv/stores';
 import { Localize, localize } from 'Components/i18next';
 import { my_profile_tabs } from 'Constants/my-profile-tabs';
@@ -26,7 +26,7 @@ const BlockUserTableError = ({ error_message }: TBlockUserTableErrorProps) => {
             <DesktopWrapper>
                 <div className='block-user-table-error'>{BlockUserTableErrorIcon}</div>
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <MobileFullPageModal
                     body_className='block-user-table-error'
                     height_offset='80px'
@@ -36,7 +36,7 @@ const BlockUserTableError = ({ error_message }: TBlockUserTableErrorProps) => {
                 >
                     {BlockUserTableErrorIcon}
                 </MobileFullPageModal>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </React.Fragment>
     );
 };

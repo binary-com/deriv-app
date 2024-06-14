@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon, Popover, Text } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { localize } from 'Components/i18next';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
 import { getTextSize } from 'Utils/responsive';
@@ -34,7 +34,7 @@ const RecommendedBy = ({ recommended_average, recommended_count }: TRecommendedB
                 className='recommended-by__container'
                 message={getRecommendedMessage()}
                 onClick={
-                    isMobile()
+                    isMobileOrTablet()
                         ? () =>
                               showModal({
                                   key: 'RecommendedModal',

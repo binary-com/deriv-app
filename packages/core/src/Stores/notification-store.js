@@ -19,7 +19,7 @@ import {
     isCryptocurrency,
     isEmptyObject,
     isHighLow,
-    isMobile,
+    isMobileOrTablet,
     isMultiplierContract,
     LocalStore,
     routes,
@@ -168,7 +168,7 @@ export default class NotificationStore extends BaseStore {
                     return;
                 }
 
-                const sortFn = isMobile() ? sortNotificationsMobile : sortNotifications;
+                const sortFn = isMobileOrTablet() ? sortNotificationsMobile : sortNotifications;
                 this.notification_messages = [...this.notification_messages, notification].sort(sortFn);
 
                 if (

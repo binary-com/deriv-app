@@ -142,7 +142,7 @@ $font-style-map: (
 
     @each $size, $values in $desktop-font-size-map {
         &__size--#{$size} {
-            @include desktop {
+            @include desktop-screen {
                 font-size: map-get($values, size);
                 line-height: map-get($values, line_height);
             }
@@ -151,7 +151,7 @@ $font-style-map: (
 
     @each $size, $values in $mobile-font-size-map {
         &__size--#{$size} {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 font-size: map-get($values, size);
                 line-height: map-get($values, line_height);
             }

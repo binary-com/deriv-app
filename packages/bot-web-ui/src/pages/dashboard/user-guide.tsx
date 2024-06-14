@@ -4,12 +4,12 @@ import { localize } from '@deriv/translations';
 import { DBOT_TABS } from 'Constants/bot-contents';
 
 type TUserGuide = {
-    is_mobile?: boolean;
+    is_mobile_or_tablet?: boolean;
     handleTabChange: (item: number) => void;
     setActiveTabTutorial: (active_tab: number) => void;
 };
 
-const UserGuide: React.FC<TUserGuide> = ({ is_mobile, handleTabChange, setActiveTabTutorial }) => {
+const UserGuide: React.FC<TUserGuide> = ({ is_mobile_or_tablet, handleTabChange, setActiveTabTutorial }) => {
     return (
         <div className='user-guide'>
             <button
@@ -21,7 +21,7 @@ const UserGuide: React.FC<TUserGuide> = ({ is_mobile, handleTabChange, setActive
                 data-testid='btn-user-guide'
             >
                 <Icon className='user-guide__icon' icon={'IcDbotUserGuide'} />
-                {!is_mobile && (
+                {!is_mobile_or_tablet && (
                     <Text size='xs' line_height='s' className='user-guide__label'>
                         {localize('User Guide')}
                     </Text>

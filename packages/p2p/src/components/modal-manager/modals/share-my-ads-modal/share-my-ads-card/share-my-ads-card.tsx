@@ -1,7 +1,7 @@
 import React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Text } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { Localize } from 'Components/i18next';
 import { base64_images } from 'Constants/base64-images';
 import { buy_sell } from 'Constants/buy-sell';
@@ -66,7 +66,7 @@ const ShareMyAdsCard = ({ advert, advert_url, div_ref }: TShareMyAdsCardProps) =
                 <div className='share-my-ads-card__qr-container'>
                     <QRCodeSVG
                         value={advert_url}
-                        size={isMobile() ? 120 : 140}
+                        size={isMobileOrTablet() ? 120 : 140}
                         imageSettings={{
                             src: '',
                             height: 25,

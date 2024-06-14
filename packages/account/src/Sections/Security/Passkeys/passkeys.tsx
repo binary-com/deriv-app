@@ -19,7 +19,7 @@ import { TServerError } from '../../../Types/common.type';
 
 const Passkeys = observer(() => {
     const { ui, client, common } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const { is_passkey_supported } = client;
     let timeout: ReturnType<typeof setTimeout>;
     const history = useHistory();
@@ -37,7 +37,7 @@ const Passkeys = observer(() => {
         passkey_registration_error,
     } = useRegisterPasskey();
 
-    const should_show_passkeys = is_passkey_supported && is_mobile;
+    const should_show_passkeys = is_passkey_supported && is_mobile_or_tablet;
     const error = passkeys_list_error || passkey_registration_error;
     const modal_content = getModalContent({
         error,

@@ -11,7 +11,7 @@
         backface-visibility: hidden;
         transition: transform 600ms ease;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin: 1.5rem 2.4rem 2.4rem;
         }
 
@@ -35,7 +35,7 @@
         grid-template-columns: 1fr 1fr;
         margin: 0 10rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             grid-template-columns: 1fr;
             margin: 0 6.5rem;
         }

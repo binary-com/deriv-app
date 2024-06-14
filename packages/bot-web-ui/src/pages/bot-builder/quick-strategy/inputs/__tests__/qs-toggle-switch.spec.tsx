@@ -32,7 +32,7 @@ describe('<QSCheckbox />', () => {
     beforeEach(() => {
         const mock_store = mockStore({
             ui: {
-                is_mobile: false,
+                is_mobile_or_tablet: false,
             },
         });
         mock_DBot_store = mockDBotStore(mock_store, mock_ws);

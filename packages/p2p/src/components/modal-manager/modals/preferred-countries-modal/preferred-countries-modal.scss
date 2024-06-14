@@ -46,17 +46,17 @@
     &__body {
         padding: 0;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             flex-direction: column;
         }
     }
 
     &__footer {
-        @include desktop {
+        @include desktop-screen {
             padding-right: 2.4rem;
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             column-gap: 0.8rem;
         }
 

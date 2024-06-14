@@ -4,7 +4,7 @@
     flex-direction: column;
     max-width: 79.2rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         justify-content: flex-start;
         gap: 0.8rem;
     }
@@ -16,7 +16,7 @@
         padding-top: 4.2rem;
         width: 100%;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding-top: 0.8rem;
         }
     }

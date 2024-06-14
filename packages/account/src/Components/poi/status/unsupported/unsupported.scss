@@ -1,5 +1,5 @@
 .manual-poi {
-    @include mobile {
+    @include mobile-or-tablet-screen {
         margin: 3.2rem 0 1.6rem;
     }
 
@@ -65,7 +65,7 @@
         height: 10rem;
         grid-gap: 1rem;
         margin: 1rem 0 0;
-        @include desktop {
+        @include desktop-screen {
             grid-template-columns: repeat(4, 1fr);
         }
         &--no-margin {

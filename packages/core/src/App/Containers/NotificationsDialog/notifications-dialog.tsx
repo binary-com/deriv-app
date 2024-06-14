@@ -20,7 +20,7 @@ const NotificationsDialog = observer(() => {
     } = notifications;
 
     const wrapper_ref = React.useRef<HTMLDivElement>(null);
-    const { isMobile } = useDevice();
+    const { isMobile, isTablet } = useDevice();
 
     const handleClickOutside = (event: MouseEvent) => {
         const notifications_toggle_btn = !(event?.target as Element)?.classList.contains(
@@ -54,7 +54,7 @@ const NotificationsDialog = observer(() => {
 
     useOnClickOutside(wrapper_ref, handleClickOutside);
 
-    if (isMobile) {
+    if (isMobile || isTablet) {
         return (
             <MobileDialog
                 portal_element_id='modal_root'

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, FieldProps, useFormikContext } from 'formik';
 
-import { DesktopWrapper, Icon, Input, MobileWrapper } from '@deriv/components';
+import { DesktopWrapper, Icon, Input, MobileOrTabletWrapper } from '@deriv/components';
 import { useExchangeRate } from '@deriv/hooks';
 import { getCurrencyDisplayCode } from '@deriv/shared';
 import { observer } from '@deriv/stores';
@@ -107,9 +107,9 @@ const CryptoFiatConverter = observer(
                         />
                     )}
                 </Field>
-                <MobileWrapper>
+                <MobileOrTabletWrapper>
                     {arrow_icon_direction === 'right' ? <Icon icon='IcArrowDownBold' /> : <Icon icon='IcArrowUpBold' />}
-                </MobileWrapper>
+                </MobileOrTabletWrapper>
                 <DesktopWrapper>
                     <div className='crypto-fiat-converter__arrow-container'>
                         {arrow_icon_direction === 'right' ? (

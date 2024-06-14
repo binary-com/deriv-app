@@ -1,20 +1,20 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import Badge from '../badge';
 
 jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
-    isMobile: jest.fn(),
+    isMobileOrTablet: jest.fn(),
 }));
 
 describe('Badge component', () => {
     beforeEach(() => {
-        (isMobile as jest.Mock).mockReturnValue(true);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
     });
 
     afterEach(() => {
-        (isMobile as jest.Mock).mockReset();
+        (isMobileOrTablet as jest.Mock).mockReset();
     });
 
     it('Should render properly with default values and label', () => {
@@ -30,7 +30,7 @@ describe('Badge component', () => {
     });
 
     it('Should render proper medium badge in desktop view', () => {
-        (isMobile as jest.Mock).mockReturnValue(false);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(false);
 
         render(<Badge label='Badge' type='bordered' size='medium' />);
         const badge = screen.getByText('Badge');
@@ -46,7 +46,7 @@ describe('Badge component', () => {
     });
 
     it('Should render proper large badge in desktop view', () => {
-        (isMobile as jest.Mock).mockReturnValue(false);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(false);
 
         render(<Badge label='Badge' type='bordered' size='large' />);
         const badge = screen.getByText('Badge');
@@ -73,7 +73,7 @@ describe('Badge component', () => {
     });
 
     it('Should render badge with proper font-size in desktop view', () => {
-        (isMobile as jest.Mock).mockReturnValue(false);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(false);
 
         render(<Badge label='Badge' type='bordered' />);
         const badge = screen.getByText('Badge');

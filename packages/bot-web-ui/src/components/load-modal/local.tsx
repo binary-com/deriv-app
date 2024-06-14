@@ -15,7 +15,7 @@ const LocalComponent = observer(() => {
 
     const file_input_ref = React.useRef<HTMLInputElement>(null);
     const [is_file_supported, setIsFileSupported] = React.useState(true);
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
 
     if (loaded_local_file && is_file_supported) {
         return (
@@ -41,7 +41,7 @@ const LocalComponent = observer(() => {
                         </div>
                     </div>
                 </div>
-                {is_mobile && (
+                {is_mobile_or_tablet && (
                     <div className='load-strategy__local-footer'>
                         <LocalFooter />
                     </div>
@@ -68,11 +68,19 @@ const LocalComponent = observer(() => {
                         handleFileChange(e, false);
                     }}
                 >
-                    {is_mobile ? (
-                        <Icon icon='IcLocal' className='load-strategy__local-icon' size={is_mobile ? 96 : 128} />
+                    {is_mobile_or_tablet ? (
+                        <Icon
+                            icon='IcLocal'
+                            className='load-strategy__local-icon'
+                            size={is_mobile_or_tablet ? 96 : 128}
+                        />
                     ) : (
                         <React.Fragment>
-                            <Icon icon='IcPc' className='load-strategy__local-icon' size={is_mobile ? 96 : 128} />
+                            <Icon
+                                icon='IcPc'
+                                className='load-strategy__local-icon'
+                                size={is_mobile_or_tablet ? 96 : 128}
+                            />
                             <div className='load-strategy__local-title'>
                                 <Localize i18n_default_text='Drag your XML file here' />
                             </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import Text from '../text';
 
 type TBadgeSize = 'medium' | 'large';
@@ -47,13 +47,13 @@ const Badge = (props: BadgeProps) => {
         switch (size) {
             case 'large':
                 return {
-                    height: isMobile() ? '1.6rem' : '2.2rem',
+                    height: isMobileOrTablet() ? '1.6rem' : '2.2rem',
                     paddingInline: '0.8rem',
                 };
             case 'medium':
             default:
                 return {
-                    height: isMobile() ? '1.2rem' : '1.4rem',
+                    height: isMobileOrTablet() ? '1.2rem' : '1.4rem',
                     paddingInline: '0.4rem',
                 };
         }
@@ -83,7 +83,7 @@ const Badge = (props: BadgeProps) => {
             as='span'
             className={badge_class_names}
             color={custom_color}
-            size={isMobile() ? 'xxxxs' : 'xxxs'}
+            size={isMobileOrTablet() ? 'xxxxs' : 'xxxs'}
             styles={badge_height}
             weight={weight}
             {...rest}

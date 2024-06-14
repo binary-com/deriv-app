@@ -20,7 +20,7 @@
             }
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             flex-direction: column;
             height: unset;
             width: unset;
@@ -39,14 +39,14 @@
         margin-left: 0;
         width: 32.4rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: inherit;
         }
 
         &--contact-details {
             margin-bottom: 5.9rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-bottom: 3.7rem;
             }
         }
@@ -58,7 +58,7 @@
             margin: 2rem 0 0;
             width: 67.2rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 height: 9.8rem;
                 width: auto;
             }
@@ -72,7 +72,7 @@
                     top: 9.7rem;
                     right: 0rem;
 
-                    @include mobile {
+                    @include mobile-or-tablet-screen {
                         display: flex;
                         right: 0;
                     }
@@ -99,7 +99,7 @@
             }
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin-top: 0;
             padding: 0.5rem 0;
         }

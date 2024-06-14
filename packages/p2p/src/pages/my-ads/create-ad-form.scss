@@ -1,5 +1,5 @@
 .create-ad-form {
-    @include mobile {
+    @include mobile-or-tablet-screen {
         .dc-input__footer {
             justify-content: space-between;
             width: 86vw;
@@ -34,7 +34,7 @@
         }
 
         &-container {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 width: 90vw;
                 margin: 0 1.6rem;
 
@@ -49,7 +49,7 @@
             }
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             height: fit-content;
             position: unset;
             width: 100%;
@@ -67,7 +67,7 @@
         justify-content: flex-end;
         column-gap: 0.8rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             border-top: 2px solid var(--general-section-1);
             flex-direction: row;
             padding: 1.6rem;

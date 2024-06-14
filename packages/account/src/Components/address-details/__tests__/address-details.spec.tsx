@@ -1,19 +1,26 @@
 import React from 'react';
 import { FormikProps } from 'formik';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { useDevice } from '@deriv-com/ui';
 import { useStatesList } from '@deriv/hooks';
-import { isDesktop, isMobile } from '@deriv/shared';
+import { isDesktop, isMobile, isMobileOrTablet } from '@deriv/shared';
 import { StoreProvider, mockStore } from '@deriv/stores';
 import AddressDetails, { TAddressDetailFormProps } from '../address-details';
 import { TStores } from '@deriv/stores/types';
 import userEvent from '@testing-library/user-event';
 import { splitValidationResultTypes } from 'Components/real-account-signup/helpers/utils';
 
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isDesktop: true, isTablet: false, isMobile: false })),
+}));
+
 jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
     getLocation: jest.fn().mockReturnValue('Default test state'),
     isDesktop: jest.fn(),
     isMobile: jest.fn(),
+    isMobileOrTablet: jest.fn(),
     makeCancellablePromise: jest.fn(() => ({ cancel: jest.fn(), promise: Promise.resolve('resolved') })),
 }));
 
@@ -103,6 +110,8 @@ describe('<AddressDetails/>', () => {
     beforeEach(() => {
         (isDesktop as jest.Mock).mockReturnValue(true);
         (isMobile as jest.Mock).mockReturnValue(false);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(false);
+        (useDevice as jest.Mock).mockReturnValue({ isDesktop: true, isTablet: false, isMobile: false });
         jest.clearAllMocks();
     });
 
@@ -122,6 +131,7 @@ describe('<AddressDetails/>', () => {
             ui: {
                 ...store.ui,
                 is_mobile: true,
+                is_mobile_or_tablet: true,
             },
         };
 
@@ -211,6 +221,8 @@ describe('<AddressDetails/>', () => {
     it('should render AddressDetails component with states_list for mobile', async () => {
         (isDesktop as jest.Mock).mockReturnValue(false);
         (isMobile as jest.Mock).mockReturnValue(true);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
+        (useDevice as jest.Mock).mockReturnValue({ isDesktop: false, isTablet: false, isMobile: true });
         (useStatesList as jest.Mock).mockReturnValue({
             data: [
                 { text: 'State 1', value: 'State 1' },
@@ -223,6 +235,7 @@ describe('<AddressDetails/>', () => {
             ui: {
                 ...store.ui,
                 is_mobile: true,
+                is_mobile_or_tablet: true,
             },
         };
         renderComponent({ store_config: new_store_config });

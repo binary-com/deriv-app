@@ -7,7 +7,7 @@ import { getTradingAssessmentQuestions } from 'Constants/trading-assessment-ques
 import {
     DesktopWrapper,
     Dropdown,
-    MobileWrapper,
+    MobileOrTabletWrapper,
     SelectNative,
     Text,
     FormSubmitButton,
@@ -15,7 +15,7 @@ import {
     Loading,
 } from '@deriv/components';
 import FormFooter from 'Components/form-footer';
-import { isMobile, routes, WS } from '@deriv/shared';
+import { isMobileOrTablet, routes, WS } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { useHistory, withRouter } from 'react-router';
 import { Formik, Form } from 'formik';
@@ -164,7 +164,7 @@ const TradingAssessment = observer(() => {
             {({ values, dirty, isSubmitting, handleChange, handleBlur }) => {
                 return (
                     <Form className='account-form account-form__trading-assessment'>
-                        <FormBody scroll_offset={isMobile() ? '150px' : '80px'}>
+                        <FormBody scroll_offset={isMobileOrTablet() ? '150px' : '80px'}>
                             <FormSubHeader
                                 title={localize('Trading Experience')}
                                 subtitle={localize('All fields are required')}
@@ -193,7 +193,7 @@ const TradingAssessment = observer(() => {
                                                     handleBlur={handleBlur}
                                                 />
                                             </DesktopWrapper>
-                                            <MobileWrapper>
+                                            <MobileOrTabletWrapper>
                                                 <Text
                                                     as='h1'
                                                     color='prominent'
@@ -211,7 +211,7 @@ const TradingAssessment = observer(() => {
                                                     onChange={e => handleChange(e)}
                                                     should_show_empty_option={false}
                                                 />
-                                            </MobileWrapper>
+                                            </MobileOrTabletWrapper>
                                         </fieldset>
                                     );
                                     // eslint-disable-next-line no-else-return
@@ -241,7 +241,7 @@ const TradingAssessment = observer(() => {
                                                                 handleBlur={handleBlur}
                                                             />
                                                         </DesktopWrapper>
-                                                        <MobileWrapper>
+                                                        <MobileOrTabletWrapper>
                                                             <Text
                                                                 as='h1'
                                                                 color='prominent'
@@ -259,7 +259,7 @@ const TradingAssessment = observer(() => {
                                                                 onChange={e => handleChange(e)}
                                                                 should_show_empty_option={false}
                                                             />
-                                                        </MobileWrapper>
+                                                        </MobileOrTabletWrapper>
                                                     </fieldset>
                                                 );
                                             })}
@@ -273,7 +273,7 @@ const TradingAssessment = observer(() => {
                                 is_disabled={isSubmitting || !dirty || is_btn_loading}
                                 is_loading={is_btn_loading}
                                 has_effect
-                                is_absolute={isMobile()}
+                                is_absolute={isMobileOrTablet()}
                                 is_submit_success={is_submit_success && !dirty}
                                 green={is_submit_success && !dirty}
                                 label={localize('Submit')}

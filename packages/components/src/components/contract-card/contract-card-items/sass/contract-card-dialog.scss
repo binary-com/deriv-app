@@ -74,7 +74,7 @@
         .dc-btn {
             width: 100%;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 flex: 1;
                 height: 4rem;
                 margin: 0 1.6rem;

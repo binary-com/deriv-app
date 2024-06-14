@@ -1,5 +1,5 @@
 import React from 'react';
-import { DesktopWrapper, Icon, MobileWrapper, Popover } from '@deriv/components';
+import { DesktopWrapper, Icon, MobileOrTabletWrapper, Popover } from '@deriv/components';
 import { popover_zindex } from 'Constants/z-indexes';
 
 type TToolbarIcon = {
@@ -25,7 +25,7 @@ const ToolbarIcon = ({ popover_message, icon, icon_id, icon_color, action, data_
 
     return (
         <>
-            <MobileWrapper>{renderIcon()}</MobileWrapper>
+            <MobileOrTabletWrapper>{renderIcon()}</MobileOrTabletWrapper>
             <DesktopWrapper>
                 <Popover
                     alignment='bottom'

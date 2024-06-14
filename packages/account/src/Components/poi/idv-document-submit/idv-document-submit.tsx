@@ -50,7 +50,7 @@ const IdvDocumentSubmit = observer(
     ({ handleBack, handleViewComplete, handleSelectionNext, selected_country }: TIDVDocumentSubmitProps) => {
         const { client, ui } = useStore();
         const { account_settings, getChangeableFields } = client;
-        const { is_mobile, is_desktop } = ui;
+        const { is_mobile_or_tablet, is_desktop } = ui;
 
         const IDV_NOT_APPLICABLE_OPTION = React.useMemo(() => getIDVNotApplicableOption(), []);
         const shouldSkipIdv = (document_id?: string) => document_id === IDV_NOT_APPLICABLE_OPTION.id;
@@ -201,7 +201,7 @@ const IdvDocumentSubmit = observer(
                                     />
                                 </div>
                             )}
-                            <FormBody className='form-body' scroll_offset={is_mobile ? '180px' : '80px'}>
+                            <FormBody className='form-body' scroll_offset={is_mobile_or_tablet ? '180px' : '80px'}>
                                 <FormSubHeader title={localize('Identity verification')} />
                                 <IDVForm selected_country={selected_country} class_name='idv-layout' />
                                 {!shouldSkipIdv(values?.document_type?.id) && (

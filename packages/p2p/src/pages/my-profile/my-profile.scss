@@ -1,7 +1,7 @@
 .my-profile {
     display: flex;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         display: block;
         height: 100%;
     }
@@ -24,7 +24,7 @@
             max-width: 100%;
             min-width: 672px;
         }
-        @include mobile {
+        @include mobile-or-tablet-screen {
             display: block;
             padding: 0 1.6rem;
             height: calc(100% - 5rem);

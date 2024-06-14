@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Text } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { useP2PExchangeRate } from '@deriv/hooks';
 import { useStores } from 'Stores';
@@ -70,7 +70,7 @@ const AdvertiserPageRow = ({ row: advert }) => {
         }
     };
 
-    if (isMobile()) {
+    if (isMobileOrTablet()) {
         return (
             <Table.Row className='advertiser-page-adverts__table-row'>
                 <Table.Cell className='advertiser-page__cell'>

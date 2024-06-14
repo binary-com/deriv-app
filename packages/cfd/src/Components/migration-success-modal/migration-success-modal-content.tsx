@@ -15,10 +15,10 @@ type TMigrationSuccessModalContent = {
 const MigrationSuccessModalContent = observer(
     ({ has_open_positions, icon, eligible_account_to_migrate, directToCashier }: TMigrationSuccessModalContent) => {
         const { ui } = useStore();
-        const { is_mobile } = ui;
+        const { is_mobile_or_tablet } = ui;
 
         const platform = getCFDPlatformNames(CFD_PLATFORMS.MT5);
-        const text_size = is_mobile ? 'xxs' : 'xs';
+        const text_size = is_mobile_or_tablet ? 'xxs' : 'xs';
         return (
             <div className='cfd-success-dialog-migration__modal-content'>
                 <Modal.Body

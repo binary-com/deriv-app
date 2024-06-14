@@ -6,7 +6,7 @@
     background-color: var(--general-main-1);
     height: calc(100vh - 17rem);
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         height: calc(100vh - 8rem);
     }
 
@@ -34,7 +34,7 @@
             padding: 0 0 2.4rem 2.4rem;
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 0;
             max-width: 100%;
         }
@@ -47,7 +47,7 @@
         padding: 0 2.4rem 2.4rem;
         gap: 2.4rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 1.6rem;
         }
     }

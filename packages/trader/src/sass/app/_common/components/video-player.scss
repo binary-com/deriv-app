@@ -204,7 +204,7 @@
         left: calc(100% - 0.6rem);
         bottom: -0.3rem;
 
-        @include desktop {
+        @include desktop-screen {
             &:hover {
                 bottom: -0.6rem;
                 width: 1.6rem;
@@ -277,7 +277,7 @@
 
         .dc-list,
         .dc-themed-scrollbars {
-            @include mobile {
+            @include mobile-screen {
                 height: 13.2rem;
             }
         }

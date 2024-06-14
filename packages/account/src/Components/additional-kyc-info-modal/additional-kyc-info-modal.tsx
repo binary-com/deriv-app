@@ -2,7 +2,7 @@ import {
     DesktopWrapper,
     Div100vhContainer,
     InlineMessage,
-    MobileWrapper,
+    MobileOrTabletWrapper,
     Modal,
     PageOverlay,
     Text,
@@ -82,7 +82,7 @@ export const AdditionalKycInfoModal = observer(() => {
                         </Modal.Body>
                     </Modal>
                 </DesktopWrapper>
-                <MobileWrapper>
+                <MobileOrTabletWrapper>
                     <PageOverlay
                         is_open
                         portal_id='deriv_app'
@@ -98,7 +98,7 @@ export const AdditionalKycInfoModal = observer(() => {
                             <AdditionalKycInfoFormWithHintBox />
                         </Div100vhContainer>
                     </PageOverlay>
-                </MobileWrapper>
+                </MobileOrTabletWrapper>
             </div>
         </React.Suspense>
     );

@@ -5,14 +5,14 @@
     width: 100%;
     padding-top: 1.6rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         padding-top: 0;
     }
 
     &__header {
         margin-bottom: 1.6rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding-left: 1.6rem;
             margin-bottom: 0;
         }
@@ -25,7 +25,7 @@
         position: relative;
         height: 100%;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 1.6rem 0 2.4rem 1.6rem;
             border-radius: unset;
         }

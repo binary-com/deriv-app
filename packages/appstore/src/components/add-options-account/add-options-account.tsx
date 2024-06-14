@@ -1,9 +1,9 @@
 import React from 'react';
-import { DesktopWrapper, MobileWrapper, Button, Text } from '@deriv/components';
+import { DesktopWrapper, MobileOrTabletWrapper, Button, Text } from '@deriv/components';
 import { Localize, localize } from '@deriv/translations';
 import './add-options-account.scss';
 import { useStore, observer } from '@deriv/stores';
-import { isMobile, ContentFlag } from '@deriv/shared';
+import { isMobileOrTablet, ContentFlag } from '@deriv/shared';
 import { Analytics } from '@deriv-com/analytics';
 
 const AddOptions = observer(() => {
@@ -20,7 +20,7 @@ const AddOptions = observer(() => {
     return (
         <React.Fragment>
             <div className='add-options-account__title'>
-                <Text size={isMobile() ? 'xxs' : 's'} weight='bold'>
+                <Text size={isMobileOrTablet() ? 'xxs' : 's'} weight='bold'>
                     <Localize i18n_default_text={add_deriv_account_text} />
                 </Text>
             </div>
@@ -64,9 +64,9 @@ const AddOptionsAccount = observer(() => {
                 <DesktopWrapper>
                     <AddOptions />
                 </DesktopWrapper>
-                <MobileWrapper>
+                <MobileOrTabletWrapper>
                     <AddOptions />
-                </MobileWrapper>
+                </MobileOrTabletWrapper>
             </div>
         </React.Fragment>
     );

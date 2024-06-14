@@ -32,11 +32,11 @@
             margin: 0;
             width: 100%;
 
-            @include desktop {
+            @include desktop-screen {
                 max-width: 17.6rem;
             }
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 .inline-icon {
                     top: 1.2rem;
                 }
@@ -50,7 +50,7 @@
                 border: 1px solid var(--border-normal);
                 appearance: none;
 
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     height: 4rem;
                     text-align: left;
                     padding-left: 3rem;

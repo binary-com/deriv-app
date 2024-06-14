@@ -1,7 +1,8 @@
 import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { isDesktop, isMobile } from '@deriv/shared';
+import { isDesktop, isMobileOrTablet, isMobile } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import { StoreProvider, mockStore } from '@deriv/stores';
 import { isDocumentNumberValid } from 'Helpers/utils';
 import IdvDocumentSubmit from '../idv-document-submit';
@@ -10,7 +11,7 @@ const mock_store = mockStore({
     client: {
         getChangeableFields: jest.fn(() => []),
     },
-    ui: { is_desktop: true },
+    ui: { is_desktop: true, is_mobile_or_tablet: false },
 });
 
 jest.mock('Assets/ic-document-submit-icon.svg', () => jest.fn(() => 'DocumentSubmitLogo'));
@@ -40,6 +41,7 @@ jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
     isDesktop: jest.fn(() => true),
     isMobile: jest.fn(() => false),
+    isMobileOrTablet: jest.fn(() => false),
     formatInput: jest.fn(() => '5436454364243'),
     WS: {
         send: jest.fn(() => Promise.resolve({ error: '' })),
@@ -55,6 +57,11 @@ jest.mock('@deriv/shared', () => ({
         last_name: 'test',
         date_of_birth: '1970-01-01',
     })),
+}));
+
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isDesktop: true, isTablet: false, isMobile: false })),
 }));
 
 describe('<IdvDocumentSubmit/>', () => {
@@ -136,6 +143,8 @@ describe('<IdvDocumentSubmit/>', () => {
     it('should change inputs, check document_number validation and trigger "Verify" button after rendering IdvDocumentSubmit component', async () => {
         (isDesktop as jest.Mock).mockReturnValue(false);
         (isMobile as jest.Mock).mockReturnValue(true);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
+        (useDevice as jest.Mock).mockReturnValue({ isDesktop: false, isTablet: false, isMobile: true });
 
         render(
             <StoreProvider store={mock_store}>

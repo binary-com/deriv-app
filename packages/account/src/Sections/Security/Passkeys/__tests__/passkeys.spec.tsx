@@ -84,7 +84,7 @@ describe('Passkeys', () => {
 
     beforeEach(() => {
         mock_store = mockStore({
-            ui: { is_mobile: true },
+            ui: { is_mobile_or_tablet: true },
             client: { is_passkey_supported: true },
             common: { network_status: { class: 'online' } },
         });
@@ -116,7 +116,7 @@ describe('Passkeys', () => {
             passkeys_list: mock_passkeys_list,
         });
 
-        mock_store.ui.is_mobile = false;
+        mock_store.ui.is_mobile_or_tablet = false;
         render(
             <RenderWrapper>
                 <Passkeys />
@@ -129,7 +129,7 @@ describe('Passkeys', () => {
     });
 
     it('renders loader if passkeys list is loading', () => {
-        mock_store.ui.is_mobile = true;
+        mock_store.ui.is_mobile_or_tablet = true;
         (useGetPasskeysList as jest.Mock).mockReturnValue({
             is_passkeys_list_loading: true,
         });

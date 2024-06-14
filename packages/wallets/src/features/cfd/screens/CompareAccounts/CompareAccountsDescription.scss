@@ -1,7 +1,7 @@
 .wallets-compare-accounts-text-container {
     height: 24.5rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         height: 21rem;
     }
 

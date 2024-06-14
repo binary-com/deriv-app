@@ -7,7 +7,7 @@
         height: 1.6rem;
         border-radius: 0.4rem;
         width: 5rem;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 1.6rem;
         }
     }

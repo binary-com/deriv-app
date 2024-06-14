@@ -8,7 +8,7 @@ import {
     getCFDPlatformLabel,
     getPlatformSettings,
     getUrlBase,
-    isMobile,
+    isMobileOrTablet,
 } from '@deriv/shared';
 import { Localize, localize } from '@deriv/translations';
 import { getWebtraderUrl, getPlatformMt5DownloadLink } from '../../Helpers/constants';
@@ -144,7 +144,7 @@ const DMT5TradeModal = ({
                 <div className='cfd-trade-modal__maintenance'>
                     <Icon
                         icon='IcAlertWarning'
-                        size={isMobile() ? 28 : 20}
+                        size={isMobileOrTablet() ? 28 : 20}
                         className='cfd-trade-modal__maintenance-icon'
                     />
                     <div className='cfd-trade-modal__maintenance-text'>
@@ -226,7 +226,7 @@ const DMT5TradeModal = ({
                 align='center'
                 as='div'
                 className='cfd-trade-modal__download-center-text'
-                size={isMobile() ? 'xxxs' : 'xxs'}
+                size={isMobileOrTablet() ? 'xxxs' : 'xxs'}
                 weight='bold'
             >
                 {localize(

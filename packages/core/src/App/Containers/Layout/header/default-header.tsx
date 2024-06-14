@@ -122,7 +122,11 @@ const DefaultHeader = observer(() => {
                                 'acc-info__preloader--is-crypto': getDecimalPlaces(currency) > 2,
                             })}
                         >
-                            <AccountsInfoLoader is_logged_in={is_logged_in} is_mobile={!isDesktop} speed={3} />
+                            <AccountsInfoLoader
+                                is_logged_in={is_logged_in}
+                                is_mobile_or_tablet={!isDesktop}
+                                speed={3}
+                            />
                         </div>
                     )}
                     <HeaderAccountActions onClickDeposit={onClickDeposit} />

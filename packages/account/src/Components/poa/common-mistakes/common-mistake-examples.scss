@@ -7,11 +7,17 @@
         row-gap: 1.6rem;
         margin-bottom: 2.4rem;
 
-        @include desktop {
+        @include tablet-screen {
+            grid-template-columns: repeat(2, 1fr);
+            row-gap: 3.2rem;
+        }
+
+        @include desktop-screen {
             grid-template-columns: repeat(3, 1fr);
             column-gap: calc((100% - 23.7rem * 3) / 2);
             row-gap: 3.2rem;
         }
+
         &-layout {
             background-color: var(--transparent-danger);
             gap: 1.6rem;
@@ -25,7 +31,7 @@
             width: 23.7rem;
             height: 21.8rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-inline: auto;
             }
         }

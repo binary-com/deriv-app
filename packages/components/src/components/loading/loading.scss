@@ -43,10 +43,10 @@
         width: 100vw;
         height: 100vh;
 
-        @include desktop {
+        @include desktop-screen {
             height: calc(100vh - #{$HEADER_HEIGHT} - #{$FOOTER_HEIGHT});
         }
-        @include mobile {
+        @include mobile-or-tablet-screen {
             height: calc(100vh - #{$MOBILE_HEADER_HEIGHT});
         }
     }

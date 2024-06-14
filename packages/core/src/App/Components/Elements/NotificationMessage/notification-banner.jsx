@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { Button, Icon, Text } from '@deriv/components';
 
 const NotificationBanner = ({
@@ -22,10 +22,15 @@ const NotificationBanner = ({
         data-testid='dt_notification_banner'
     >
         <div className='notification-banner--left'>
-            <Text as='h4' size={isMobile() ? 'xs' : 's'} weight='bold' className='notification-banner__title'>
+            <Text as='h4' size={isMobileOrTablet() ? 'xs' : 's'} weight='bold' className='notification-banner__title'>
                 {header}
             </Text>
-            <Text as='p' size={isMobile() ? 'xxs' : 'xs'} className='notification-banner__description' line_height='xs'>
+            <Text
+                as='p'
+                size={isMobileOrTablet() ? 'xxs' : 'xs'}
+                className='notification-banner__description'
+                line_height='xs'
+            >
                 {message}
             </Text>
             {!!primary_btn && (

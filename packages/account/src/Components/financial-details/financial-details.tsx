@@ -9,7 +9,7 @@ import {
     Text,
     ThemedScrollbars,
 } from '@deriv/components';
-import { isDesktop, isMobile, EMPLOYMENT_VALUES, shouldHideOccupationField } from '@deriv/shared';
+import { isDesktop, isMobileOrTablet, EMPLOYMENT_VALUES, shouldHideOccupationField } from '@deriv/shared';
 import { Localize, localize } from '@deriv/translations';
 import { TFinancialInformationForm } from 'Types';
 import { observer, useStore } from '@deriv/stores';
@@ -64,10 +64,10 @@ const FinancialDetails = observer((props: TFinancialDetails) => {
         return errors;
     };
 
-    const fields_to_scroll_top = isMobile()
+    const fields_to_scroll_top = isMobileOrTablet()
         ? ['income_source', 'account_turnover', 'estimated_worth']
         : ['income_source'];
-    const fields_to_scroll_bottom = isMobile() ? [] : ['account_turnover', 'estimated_worth'];
+    const fields_to_scroll_bottom = isMobileOrTablet() ? [] : ['account_turnover', 'estimated_worth'];
 
     return (
         <Formik
@@ -124,7 +124,7 @@ const FinancialDetails = observer((props: TFinancialDetails) => {
                                         </div>
                                     </ThemedScrollbars>
                                 </Div100vhContainer>
-                                <Modal.Footer has_separator is_bypassed={isMobile()}>
+                                <Modal.Footer has_separator is_bypassed={isMobileOrTablet()}>
                                     <FormSubmitButton
                                         is_disabled={
                                             isSubmitting ||
@@ -133,7 +133,7 @@ const FinancialDetails = observer((props: TFinancialDetails) => {
                                                 values?.occupation === EMPLOYMENT_VALUES.UNEMPLOYED
                                             )
                                         }
-                                        is_absolute={isMobile()}
+                                        is_absolute={isMobileOrTablet()}
                                         label={localize('Next')}
                                         has_cancel
                                         cancel_label={localize('Previous')}

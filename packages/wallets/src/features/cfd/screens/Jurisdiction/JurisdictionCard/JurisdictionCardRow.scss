@@ -5,7 +5,7 @@
     padding: 1rem 0;
     width: 100%;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         padding: 2rem 0;
     }
 

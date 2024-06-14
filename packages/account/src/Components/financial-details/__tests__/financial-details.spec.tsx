@@ -1,15 +1,22 @@
 import React from 'react';
 import { FormikValues } from 'formik';
-import { EMPLOYMENT_VALUES, isDesktop, isMobile } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
+import { EMPLOYMENT_VALUES, isDesktop, isMobile, isMobileOrTablet } from '@deriv/shared';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import FinancialDetails from '../financial-details';
 import { StoreProvider, mockStore } from '@deriv/stores';
 
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isDesktop: true, isTablet: false, isMobile: false })),
+}));
+
 jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
     isDesktop: jest.fn(() => true),
     isMobile: jest.fn(() => false),
+    isMobileOrTablet: jest.fn(() => false),
 }));
 
 const modal_root_el = document.createElement('div');
@@ -47,7 +54,13 @@ describe('<FinancialDetails />', () => {
         expect(screen.getByText('Source of wealth')).toBeInTheDocument();
     };
 
-    const mock_store = mockStore({});
+    const mock_store = mockStore({
+        // ui: {
+        //     is_mobile: true,
+        //     is_mobile_or_tablet: true,
+        //     is_desktop: false,
+        // },
+    });
 
     const renderComponent = ({ props = mock_props }) => {
         render(
@@ -72,6 +85,8 @@ describe('<FinancialDetails />', () => {
     it('should render "FinancialDetails" for mobile', () => {
         (isDesktop as jest.Mock).mockReturnValue(false);
         (isMobile as jest.Mock).mockReturnValue(true);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
+        (useDevice as jest.Mock).mockReturnValue({ isDesktop: false, isTablet: false, isMobile: true });
 
         renderComponent({});
 
@@ -99,6 +114,8 @@ describe('<FinancialDetails />', () => {
     it('should trigger "Previous" or "Submit" button', async () => {
         (isDesktop as jest.Mock).mockReturnValue(false);
         (isMobile as jest.Mock).mockReturnValue(true);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
+        (useDevice as jest.Mock).mockReturnValue({ isDesktop: false, isTablet: false, isMobile: true });
 
         renderComponent({});
 
@@ -145,6 +162,8 @@ describe('<FinancialDetails />', () => {
     it('should change the selected value when user changes the value in the dropdown', () => {
         (isDesktop as jest.Mock).mockReturnValue(false);
         (isMobile as jest.Mock).mockReturnValue(true);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
+        (useDevice as jest.Mock).mockReturnValue({ isDesktop: false, isTablet: false, isMobile: true });
 
         renderComponent({});
 
@@ -163,6 +182,9 @@ describe('<FinancialDetails />', () => {
     it('should show "Unemployed" in occupation list if employment status is not "Employed"', async () => {
         (isDesktop as jest.Mock).mockReturnValue(false);
         (isMobile as jest.Mock).mockReturnValue(true);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
+        (useDevice as jest.Mock).mockReturnValue({ isDesktop: false, isTablet: false, isMobile: true });
+
         const new_mock_props: React.ComponentProps<typeof FinancialDetails> = {
             ...mock_props,
             employment_status: 'Pensioner',

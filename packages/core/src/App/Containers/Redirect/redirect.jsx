@@ -20,7 +20,7 @@ const Redirect = observer(() => {
         toggleResetPasswordModal,
         toggleResetEmailModal,
         toggleUpdateEmailModal,
-        is_mobile,
+        is_mobile_or_tablet,
     } = ui;
 
     const url_query_string = window.location.search;
@@ -41,7 +41,9 @@ const Redirect = observer(() => {
         case 'signup': {
             Analytics.trackEvent('ce_virtual_signup_form', {
                 action: 'email_confirmed',
-                form_name: is_mobile ? 'virtual_signup_web_mobile_default' : 'virtual_signup_web_desktop_default',
+                form_name: is_mobile_or_tablet
+                    ? 'virtual_signup_web_mobile_default'
+                    : 'virtual_signup_web_desktop_default',
                 email: url_params.get('email'),
             });
             if (url_params?.get('utm_content')) {

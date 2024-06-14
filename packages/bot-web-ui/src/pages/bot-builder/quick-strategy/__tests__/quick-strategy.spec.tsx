@@ -182,7 +182,7 @@ describe('<QuickStrategy />', () => {
     let wrapper: ({ children }: { children: JSX.Element }) => JSX.Element;
     let mock_store = mockStore({
         ui: {
-            is_mobile: true,
+            is_mobile_or_tablet: true,
         },
     });
     const mock_DBot_store = mockDBotStore(mock_store, mock_ws);
@@ -241,7 +241,7 @@ describe('<QuickStrategy />', () => {
     it('It should render desktop', () => {
         mock_store = mockStore({
             ui: {
-                is_mobile: false,
+                is_mobile_or_tablet: false,
             },
         });
         render(<QuickStrategy />, {

@@ -4,11 +4,11 @@
         grid-template-columns: repeat(3, 1fr);
         padding-bottom: 2.4rem;
 
-        @include desktop {
+        @include desktop-screen {
             gap: 1.6rem;
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             grid-template-rows: repeat(3, 1fr);
             grid-template-columns: auto;
             padding-bottom: 0;

@@ -8,7 +8,7 @@ jest.mock('usehooks-ts', () => ({
 
 describe('useDevice', () => {
     it('should correctly identify a desktop device', () => {
-        mockWindowSize.mockReturnValue({ width: 1024 });
+        mockWindowSize.mockReturnValue({ width: 1280 });
         const { result } = renderHook(() => useDevice());
         expect(result.current.isDesktop).toBe(true);
         expect(result.current.isMobile).toBe(false);
@@ -16,7 +16,7 @@ describe('useDevice', () => {
     });
 
     it('should correctly identify a mobile device', () => {
-        mockWindowSize.mockReturnValue({ width: 767 });
+        mockWindowSize.mockReturnValue({ width: 600 });
         const { result } = renderHook(() => useDevice());
         expect(result.current.isMobile).toBe(true);
         expect(result.current.isDesktop).toBe(false);
@@ -24,7 +24,7 @@ describe('useDevice', () => {
     });
 
     it('should correctly identify a tablet device', () => {
-        mockWindowSize.mockReturnValue({ width: 768 });
+        mockWindowSize.mockReturnValue({ width: 601 });
         const { result } = renderHook(() => useDevice());
         expect(result.current.isTablet).toBe(true);
         expect(result.current.isDesktop).toBe(false);

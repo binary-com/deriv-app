@@ -7,7 +7,7 @@
     border: 1px solid $color-grey-2;
     border-radius: 0.8rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 24.4rem;
     }
 

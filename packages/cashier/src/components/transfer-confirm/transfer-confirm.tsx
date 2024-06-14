@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import { Button, Checkbox, Icon, Text } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { Localize, localize } from '@deriv/translations';
 import ErrorDialog from 'Components/error-dialog';
 import { TError } from '../../types';
@@ -109,7 +109,7 @@ const TransferConfirm = ({
                 weight='bold'
                 align='center'
                 className='transfer-confirm__warning-icon__description'
-                size={isMobile() ? 'xs' : 's'}
+                size={isMobileOrTablet() ? 'xs' : 's'}
             >
                 {is_payment_agent_withdraw
                     ? localize('Funds transfer information')

@@ -1,5 +1,5 @@
 .preferred-countries-selector {
-    @include desktop {
+    @include desktop-screen {
         max-width: 32.8rem !important;
 
         &__input,

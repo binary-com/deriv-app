@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Text } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { Localize } from '@deriv/translations';
 import { useStore, observer } from '@deriv/stores';
 import './virtual.scss';
@@ -31,7 +31,7 @@ const Virtual = observer(() => {
                 </Text>
                 <Text
                     as='p'
-                    size={isMobile() ? 'xxs' : 'xs'}
+                    size={isMobileOrTablet() ? 'xxs' : 'xs'}
                     line_height='s'
                     align='center'
                     className='cashier__paragraph cashier__text'

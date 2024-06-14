@@ -11,7 +11,7 @@
         color: var(--text-general);
         cursor: pointer;
     }
-    @include mobile {
+    @include mobile-screen {
         &__subtitle {
             color: var(--text-less-prominent);
         }

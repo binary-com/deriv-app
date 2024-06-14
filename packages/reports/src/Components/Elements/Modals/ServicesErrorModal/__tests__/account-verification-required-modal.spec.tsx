@@ -26,7 +26,7 @@ jest.mock('@deriv/stores', () => ({
     observer: jest.fn(x => x),
     useStore: jest.fn(() => ({
         ui: {
-            is_mobile: true,
+            is_mobile_or_tablet: true,
         },
     })),
 }));
@@ -78,7 +78,7 @@ describe('<AccountVerificationRequiredModal />', () => {
     it('height should be 220px if isMobile is false', () => {
         (useStore as jest.Mock).mockReturnValue({
             ui: {
-                is_mobile: false,
+                is_mobile_or_tablet: false,
             },
         });
         render(<AccountVerificationRequiredModal {...mocked_props} />);

@@ -1,12 +1,13 @@
 import React from 'react';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet, isDesktop } from '@deriv/shared';
 import { render, screen } from '@testing-library/react';
 import SelfExclusionWrapper from '../self-exclusion-wrapper';
 import SelfExclusionContext from '../self-exclusion-context';
 
 jest.mock('@deriv/shared/src/utils/screen/responsive', () => ({
     ...jest.requireActual('@deriv/shared/src/utils/screen/responsive'),
-    isMobile: jest.fn(),
+    isMobileOrTablet: jest.fn(),
+    isDesktop: jest.fn(() => true),
 }));
 
 jest.mock('../self-exclusion-article', () => {
@@ -49,7 +50,7 @@ describe('<SelfExclusionWrapper />', () => {
 
     it('should render SelfExclusionWrapper mobile component without wrapper', () => {
         mock_context.is_wrapper_bypassed = true;
-        (isMobile as jest.Mock).mockReturnValue(true);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
 
         render(
             <SelfExclusionContext.Provider value={mock_context}>
@@ -63,7 +64,7 @@ describe('<SelfExclusionWrapper />', () => {
     });
 
     it('should render SelfExclusionWrapper component with wrapper', () => {
-        (isMobile as jest.Mock).mockReturnValue(false);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(false);
         const mock_child = <div>MockChild</div>;
 
         render(
@@ -73,13 +74,13 @@ describe('<SelfExclusionWrapper />', () => {
         );
 
         expect(screen.getByText('MockChild')).toBeInTheDocument();
-        expect(screen.getAllByText('SelfExclusionArticle').length).toBe(1);
+        expect(screen.getByText('SelfExclusionArticle')).toBeInTheDocument();
         expect(screen.getByTestId('dt_div_100_vh')).toHaveClass('da-self-exclusion__wrapper');
         expect(screen.getByTestId('dt_themed_scrollbars')).toHaveClass('da-self-exclusion__scrollbars');
     });
 
     it('should render SelfExclusionWrapper mobile component with wrapper', () => {
-        (isMobile as jest.Mock).mockReturnValue(true);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
         const mock_child = <div>MockChild</div>;
 
         render(
@@ -89,7 +90,7 @@ describe('<SelfExclusionWrapper />', () => {
         );
 
         expect(screen.getByText('MockChild')).toBeInTheDocument();
-        expect(screen.getAllByText('SelfExclusionArticle').length).toBe(2);
+        expect(screen.getAllByText('SelfExclusionArticle')).toHaveLength(2);
         expect(screen.getByTestId('dt_div_100_vh')).toHaveClass('da-self-exclusion__wrapper');
         expect(screen.getByTestId('dt_div_100_vh')).not.toHaveClass('da-self-exclusion__scrollbars');
     });

@@ -32,7 +32,7 @@
             min-width: 9rem;
         }
     }
-    @include mobile {
+    @include mobile-or-tablet-screen {
         &--absolute {
             background-color: var(--general-section-2);
             top: unset;

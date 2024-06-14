@@ -1,5 +1,5 @@
 .buy-sell-currency-selector {
-    @include desktop {
+    @include desktop-screen {
         position: absolute;
         margin-top: 0.4rem;
         width: 24rem;
@@ -15,7 +15,7 @@
         margin-top: 0;
         padding: 0.8rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             box-shadow: none;
             height: 100%;
             max-height: calc(100% - 11.8rem);
@@ -29,7 +29,7 @@
             padding: 0.8rem 1.6rem;
             min-height: 36px;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin: 0.8rem 1.6rem;
             }
 
@@ -41,7 +41,7 @@
                 background: none;
                 word-break: break-word;
 
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     display: block;
                     font-weight: bold;
                     margin-top: 14rem;
@@ -63,7 +63,7 @@
         &__field {
             padding-inline-start: 3.4rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 padding-inline-start: 2.2rem;
             }
         }

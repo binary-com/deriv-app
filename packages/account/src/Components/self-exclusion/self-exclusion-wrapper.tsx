@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { isDesktop, isMobile } from '@deriv/shared';
+import { isDesktop, isMobileOrTablet } from '@deriv/shared';
 import { Div100vhContainer, ThemedScrollbars } from '@deriv/components';
 import SelfExclusionArticle from './self-exclusion-article';
 import SelfExclusionContext from './self-exclusion-context';
@@ -19,7 +19,7 @@ const SelfExclusionWrapper = ({ children }: { children?: React.ReactNode }) => {
                     'da-self-exclusion--app-settings': is_app_settings,
                 })}
             >
-                {isMobile() && <SelfExclusionArticle />}
+                {isMobileOrTablet() && <SelfExclusionArticle />}
                 {children}
             </section>
         );
@@ -33,8 +33,8 @@ const SelfExclusionWrapper = ({ children }: { children?: React.ReactNode }) => {
             is_disabled={isDesktop()}
             height_offset='80px'
         >
-            <ThemedScrollbars className='da-self-exclusion__scrollbars' is_bypassed={isMobile()}>
-                {isMobile() && <SelfExclusionArticle />}
+            <ThemedScrollbars className='da-self-exclusion__scrollbars' is_bypassed={isMobileOrTablet()}>
+                {isMobileOrTablet() && <SelfExclusionArticle />}
                 {children}
             </ThemedScrollbars>
             {isDesktop() && <SelfExclusionArticle />}

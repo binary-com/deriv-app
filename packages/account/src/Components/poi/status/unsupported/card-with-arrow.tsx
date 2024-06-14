@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon, Text } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 
 type TCardWithArrow = {
     onClick: () => void;
@@ -17,12 +17,12 @@ const CardWithArrow = ({ onClick, title, description, icon }: TCardWithArrow) =>
                 <Text as='p' size='xs' weight='bold' color='prominent'>
                     {title}
                 </Text>
-                <Text as='p' size={isMobile() ? 'xxxs' : 'xxs'}>
+                <Text as='p' size={isMobileOrTablet() ? 'xxxs' : 'xxs'}>
                     {description}
                 </Text>
             </div>
 
-            <Icon icon='IcChevronRight' size={isMobile() ? 23 : 31} />
+            <Icon icon='IcChevronRight' size={isMobileOrTablet() ? 23 : 31} />
         </div>
     );
 };

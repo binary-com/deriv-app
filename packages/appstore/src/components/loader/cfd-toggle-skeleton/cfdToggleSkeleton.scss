@@ -4,7 +4,7 @@
     display: none;
     width: 100%;
     gap: 0.4rem;
-    @include mobile {
+    @include mobile-or-tablet-screen {
         display: block;
     }
     &__switcher {

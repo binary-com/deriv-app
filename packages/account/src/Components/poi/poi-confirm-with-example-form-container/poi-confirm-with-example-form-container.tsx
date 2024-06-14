@@ -7,7 +7,7 @@ import { Localize, localize } from '@deriv/translations';
 import {
     filterObjProperties,
     isEmptyObject,
-    isMobile,
+    isMobileOrTablet,
     removeEmptyPropertiesFromObject,
     toMoment,
     WS,
@@ -170,7 +170,7 @@ const PoiConfirmWithExampleFormContainer = ({
                             <Checkbox
                                 value={checked}
                                 label={
-                                    <Text size={isMobile() ? 'xxs' : 'xs'}>
+                                    <Text size={isMobileOrTablet() ? 'xxs' : 'xs'}>
                                         {localize(
                                             'I confirm that the name and date of birth above match my chosen identity document (see below)'
                                         )}

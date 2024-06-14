@@ -20,7 +20,7 @@ type TMigrationBannerProps = {
 };
 const MigrationBanner = observer(({ is_trade_modal = false }: TMigrationBannerProps) => {
     const { ui } = useStore();
-    const { is_dark_mode_on, toggleMT5MigrationModal, is_mobile } = ui;
+    const { is_dark_mode_on, toggleMT5MigrationModal, is_mobile_or_tablet } = ui;
     const { setMT5MigrationError, is_mt5_trade_modal_visible, toggleMT5TradeModal } = useCfdStore();
     const { has_derived_mt5_to_migrate, has_derived_and_financial_mt5 } = useMT5SVGEligibleToMigrate();
     const openMT5MigrationModal = () => {
@@ -31,7 +31,7 @@ const MigrationBanner = observer(({ is_trade_modal = false }: TMigrationBannerPr
         });
         toggleMT5MigrationModal(true);
     };
-    const is_desktop_trade_modal = is_trade_modal && !is_mobile;
+    const is_desktop_trade_modal = is_trade_modal && !is_mobile_or_tablet;
     return (
         <div
             className={classNames('mt5-migration-banner', {

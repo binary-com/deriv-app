@@ -8,12 +8,12 @@
     p {
         padding-left: 0.8rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             line-height: 20px;
         }
     }
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         padding: 0 1.6rem 1rem;
         position: absolute;
         bottom: 7rem;

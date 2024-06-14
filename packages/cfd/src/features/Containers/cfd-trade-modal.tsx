@@ -1,5 +1,12 @@
 import React from 'react';
-import { DesktopWrapper, Div100vhContainer, Modal, MobileWrapper, PageOverlay, UILoader } from '@deriv/components';
+import {
+    DesktopWrapper,
+    Div100vhContainer,
+    Modal,
+    MobileOrTabletWrapper,
+    PageOverlay,
+    UILoader,
+} from '@deriv/components';
 import { localize } from '@deriv/translations';
 import { observer, useStore } from '@deriv/stores';
 import OtherCFDsTradeModal from './other-cfds-trade-modal';
@@ -27,7 +34,7 @@ const CFDTradeModal = observer(
 
         const { show_eu_related_content } = traders_hub;
         const { platform } = common;
-        const { is_mobile } = ui;
+        const { is_mobile_or_tablet } = ui;
 
         const { mt5_trade_account, dxtrade_tokens, ctrader_tokens, loadCTraderTokens } = useCfdStore();
 
@@ -52,7 +59,7 @@ const CFDTradeModal = observer(
                     platform={platform}
                     ctrader_tokens={ctrader_tokens}
                     dxtrade_tokens={dxtrade_tokens}
-                    is_mobile={is_mobile}
+                    is_mobile_or_tablet={is_mobile_or_tablet}
                     ctraderTokenCall={loadCTraderTokens}
                 />
             );
@@ -72,7 +79,7 @@ const CFDTradeModal = observer(
                         <CFDTradeModal />
                     </Modal>
                 </DesktopWrapper>
-                <MobileWrapper>
+                <MobileOrTabletWrapper>
                     <PageOverlay
                         is_open={is_open}
                         portal_id='deriv_app'
@@ -84,7 +91,7 @@ const CFDTradeModal = observer(
                             <CFDTradeModal />
                         </Div100vhContainer>
                     </PageOverlay>
-                </MobileWrapper>
+                </MobileOrTabletWrapper>
             </React.Suspense>
         );
     }

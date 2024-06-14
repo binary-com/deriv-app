@@ -68,7 +68,7 @@
         }
     }
     &__trade-params {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             max-width: calc(100vw - 6.7rem);
         }
     }
@@ -79,7 +79,7 @@
     max-width: 28rem;
 }
 .accu-info-display__popover {
-    @include mobile {
+    @include mobile-or-tablet-screen {
         max-width: 33rem;
         margin-right: 1rem;
     }

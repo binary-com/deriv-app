@@ -23,7 +23,7 @@
         opacity: 1;
         filter: blur(400px);
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 111%;
             right: -30%;
             top: 30%;
@@ -42,7 +42,7 @@
         opacity: 1;
         filter: blur(140px);
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 62%;
             right: -33%;
             top: -10%;
@@ -61,7 +61,7 @@
         opacity: 1;
         filter: blur(240px);
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 71%;
             left: -35%;
             top: 10%;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, DesktopWrapper, MobileWrapper } from '@deriv/components';
+import { Modal, DesktopWrapper, MobileOrTabletWrapper } from '@deriv/components';
 import { withRouter } from 'react-router';
 import './warning-scam-message-modal.scss';
 import WarningScamMessageModal from './warning-scam-message-modal';
@@ -32,7 +32,7 @@ const WarningScamMessage = observer(() => {
                         />
                     </Modal>
                 </DesktopWrapper>
-                <MobileWrapper>
+                <MobileOrTabletWrapper>
                     <Modal
                         id='warning_scam_message'
                         className='warning-scam-message'
@@ -46,7 +46,7 @@ const WarningScamMessage = observer(() => {
                             is_message_read={!is_message_read}
                         />
                     </Modal>
-                </MobileWrapper>
+                </MobileOrTabletWrapper>
             </React.Fragment>
         );
     }

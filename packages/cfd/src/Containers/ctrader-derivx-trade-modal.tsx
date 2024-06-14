@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer, useStore } from '@deriv/stores';
 import { localize, Localize } from '@deriv/translations';
-import { getCFDAccountKey, isMobile } from '@deriv/shared';
+import { getCFDAccountKey, isMobileOrTablet } from '@deriv/shared';
 import { DetailsOfEachMT5Loginid } from '@deriv/api-types';
 import { Icon, Money, Text, ExpansionPanel, Button } from '@deriv/components';
 import SpecBox from '../Components/specbox';
@@ -34,7 +34,7 @@ type TTradeModalProps = {
     ctrader_tokens: TCFDDashboardContainer['ctrader_tokens'];
     is_demo: string;
     platform: TCFDsPlatformType;
-    is_mobile?: boolean;
+    is_mobile_or_tablet?: boolean;
 };
 
 const PlatformIconsAndDescriptions = (
@@ -82,7 +82,7 @@ const CTraderDerivXTradeModal = ({
     ctrader_tokens,
     is_demo,
     platform,
-    is_mobile,
+    is_mobile_or_tablet,
 }: TTradeModalProps) => {
     const {
         ui,
@@ -148,7 +148,7 @@ const CTraderDerivXTradeModal = ({
                         align='center'
                         as='p'
                         className='cfd-trade-modal__download-center-text'
-                        size={isMobile() ? 'xxxs' : 'xxs'}
+                        size={isMobileOrTablet() ? 'xxxs' : 'xxs'}
                         weight='bold'
                     >
                         {localize('Download Deriv X on your phone to trade with the Deriv X account')}
@@ -160,7 +160,7 @@ const CTraderDerivXTradeModal = ({
                         align='center'
                         as='p'
                         className='cfd-trade-modal__download-center-text'
-                        size={isMobile() ? 'xxxs' : 'xxs'}
+                        size={isMobileOrTablet() ? 'xxxs' : 'xxs'}
                         weight='bold'
                     >
                         {localize('Download cTrader on your phone to trade with the Deriv cTrader account')}
@@ -175,9 +175,9 @@ const CTraderDerivXTradeModal = ({
         let app_title = '';
         if (platform_type === CFD_PLATFORMS.DXTRADE) {
             app_title = localize('Run Deriv X on your browser');
-        } else if (platform_type === 'ctrader' && !is_mobile) {
+        } else if (platform_type === 'ctrader' && !is_mobile_or_tablet) {
             app_title = localize('Run cTrader on your browser');
-        } else if (platform_type === 'ctrader' && is_mobile) {
+        } else if (platform_type === 'ctrader' && is_mobile_or_tablet) {
             return null;
         } else {
             return null;
@@ -330,7 +330,7 @@ const CTraderDerivXTradeModal = ({
                 <div className='cfd-trade-modal__maintenance'>
                     <Icon
                         icon='IcAlertWarning'
-                        size={isMobile() ? 28 : 24}
+                        size={isMobileOrTablet() ? 28 : 24}
                         className='cfd-trade-modal__maintenance-icon'
                     />
                     <div className='cfd-trade-modal__maintenance-text'>
@@ -351,7 +351,7 @@ const CTraderDerivXTradeModal = ({
             <div className='cfd-trade-modal__download-center-app'>{downloadCenterAppOption(platform)}</div>
             {platform === CFD_PLATFORMS.CTRADER && (
                 <React.Fragment>
-                    {!is_mobile && (
+                    {!is_mobile_or_tablet && (
                         <React.Fragment>
                             <div className='cfd-trade-modal__download-center-app--windows'>
                                 <Icon icon='IcWindowsLogo' size={32} />
@@ -397,7 +397,7 @@ const CTraderDerivXTradeModal = ({
                 <div className='cfd-trade-modal__download-center-options--mobile-links'>
                     <div className='cfd-trade-modal__download-center-options--mobile-links--apple'>
                         <a href={mobileDownloadLink(platform, 'ios')} target='_blank' rel='noopener noreferrer'>
-                            <Icon icon='IcInstallationApple' width={isMobile() ? '160' : '130'} height={40} />
+                            <Icon icon='IcInstallationApple' width={isMobileOrTablet() ? '160' : '130'} height={40} />
                         </a>
                     </div>
                     <a href={mobileDownloadLink(platform, 'android')} target='_blank' rel='noopener noreferrer'>
@@ -410,7 +410,7 @@ const CTraderDerivXTradeModal = ({
                         </a>
                     )}
                 </div>
-                {!isMobile() && (
+                {!isMobileOrTablet() && (
                     <div className='cfd-trade-modal__download-center-options--qrcode'>
                         {getPlatformQRCode(platform)}
                     </div>

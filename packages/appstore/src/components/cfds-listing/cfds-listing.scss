@@ -274,7 +274,7 @@
 
 .cfd-jurisdiction-card--synthetic {
     &__footnotes-container {
-        @include desktop {
+        @include desktop-screen {
             min-height: 11rem;
         }
     }

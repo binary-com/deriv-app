@@ -21,7 +21,7 @@ const OrderDetailsConfirmModal = () => {
     const { hideModal, is_modal_open } = useModalManagerContext();
     const { order_details_store, order_store, sendbird_store } = useStores();
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const { error_message } = order_details_store;
     const { confirmOrderRequest, order_information } = order_store;
     const { sendFile } = sendbird_store;
@@ -55,8 +55,8 @@ const OrderDetailsConfirmModal = () => {
                 renderTitle={() => (
                     <Text
                         color='prominent'
-                        line-height={is_mobile ? 'xl' : 'xxl'}
-                        size={is_mobile ? 'xs' : 's'}
+                        line-height={is_mobile_or_tablet ? 'xl' : 'xxl'}
+                        size={is_mobile_or_tablet ? 'xs' : 's'}
                         weight='bold'
                     >
                         <Localize i18n_default_text='Payment confirmation' />
@@ -65,7 +65,7 @@ const OrderDetailsConfirmModal = () => {
                 width='44rem'
             >
                 <Modal.Body className='order-details-confirm-modal__body'>
-                    <Text color='general' line-height='xl' size={is_mobile ? 'xxs' : 'xs'}>
+                    <Text color='general' line-height='xl' size={is_mobile_or_tablet ? 'xxs' : 'xs'}>
                         <Localize
                             i18n_default_text="Please make sure that you've paid {{amount}} {{currency}} to {{other_user_name}}, and upload the receipt as proof of your payment"
                             values={{
@@ -78,7 +78,7 @@ const OrderDetailsConfirmModal = () => {
                     <Text
                         color='less-prominent'
                         line-height='xl'
-                        size={is_mobile ? 'xxs' : 'xs'}
+                        size={is_mobile_or_tablet ? 'xxs' : 'xs'}
                         as='div'
                         className='order-details-confirm-modal__file_format'
                     >

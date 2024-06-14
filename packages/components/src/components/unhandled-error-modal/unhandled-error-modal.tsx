@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from '../icon';
 import DesktopWrapper from '../desktop-wrapper';
-import MobileWrapper from '../mobile-wrapper';
+import MobileOrTabletWrapper from '../mobile-wrapper';
 import Modal from '../modal';
 import Text from '../text';
 import Button from '../button';
@@ -60,7 +60,7 @@ const UnhandledErrorModal = () => {
                     <ModalContent />
                 </Modal.Body>
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <MobileDialog
                     portal_element_id='modal_root'
                     has_close_icon
@@ -71,7 +71,7 @@ const UnhandledErrorModal = () => {
                         <ModalContent />
                     </Modal.Body>
                 </MobileDialog>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </Modal>
     );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { Button, Icon, MobileFullPageModal, Modal, Text } from '@deriv/components';
 import { useP2PAdvertiserPaymentMethods } from '@deriv/hooks';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { observer } from '@deriv/stores';
 import { localize, Localize } from 'Components/i18next';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
@@ -70,7 +70,7 @@ const QuickAddModal = ({ advert }) => {
         }
     };
 
-    if (isMobile()) {
+    if (isMobileOrTablet()) {
         if (is_buy_advert) {
             return (
                 <MobileFullPageModal

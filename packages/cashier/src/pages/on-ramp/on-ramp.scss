@@ -112,7 +112,7 @@
                 padding: 1.2rem;
                 margin: 1.6rem;
                 background-color: var(--general-section-2);
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     margin: 1.6rem 0.8rem;
                     width: calc(100% - 1.6rem);
                     display: flex;
@@ -129,7 +129,7 @@
                     cursor: pointer;
                     width: 26.5rem;
                     background: unset;
-                    @include mobile {
+                    @include mobile-or-tablet-screen {
                         width: calc(100% - 2rem);
                         overflow-x: scroll !important;
                         &::-webkit-scrollbar {
@@ -176,7 +176,7 @@
             justify-content: flex-end;
             margin-top: 2.4rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-bottom: 4rem;
             }
         }
@@ -192,7 +192,7 @@
             }
         }
         & .dc-hint-box {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 &__icon {
                     align-self: start;
                 }
@@ -217,7 +217,7 @@
 }
 .dc-modal__container {
     &_on-ramp__modal {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             max-width: calc(100vw - 6rem) !important;
             max-height: calc(100vh - 6rem) !important;
         }
@@ -228,7 +228,7 @@
             }
         }
         > .dc-modal-body {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 overflow: scroll;
             }
         }

@@ -12,9 +12,15 @@ jest.mock('@deriv/bot-skeleton/src/scratch/dbot', () => ({
     unHighlightAllBlocks: jest.fn(),
 }));
 
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isDesktop: false, isTablet: false, isMobile: true })),
+}));
+
 jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
     isMobile: () => true,
+    isMobileOrTablet: () => true,
 }));
 
 jest.useFakeTimers();

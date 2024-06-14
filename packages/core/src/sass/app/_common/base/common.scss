@@ -41,7 +41,7 @@ html,
     -ms-text-size-adjust: 100%;
     box-sizing: border-box;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         -webkit-touch-callout: none;
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }

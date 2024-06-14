@@ -9,7 +9,7 @@ import BlockUserRow from './block-user-row';
 const BlockUserTable = () => {
     const { my_profile_store } = useStores();
     const {
-        ui: { is_mobile },
+        ui: { is_mobile_or_tablet },
     } = useStore();
 
     React.useEffect(() => {
@@ -27,12 +27,12 @@ const BlockUserTable = () => {
     }, []);
 
     if (my_profile_store.is_block_user_table_loading) {
-        return <Loading is_fullscreen={is_mobile} />;
+        return <Loading is_fullscreen={is_mobile_or_tablet} />;
     }
 
     if (my_profile_store.search_term && my_profile_store.rendered_trade_partners_list.length === 0) {
         return (
-            <Text align='center' className='block-user-table__text' weight={is_mobile ? 'normal' : 'bold'}>
+            <Text align='center' className='block-user-table__text' weight={is_mobile_or_tablet ? 'normal' : 'bold'}>
                 <Localize i18n_default_text='There are no matching name.' />
             </Text>
         );

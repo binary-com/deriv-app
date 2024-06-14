@@ -7,7 +7,7 @@
     flex-direction: column;
     justify-content: space-between;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         top: 2rem;
         height: calc(100vh - 2rem);
     }

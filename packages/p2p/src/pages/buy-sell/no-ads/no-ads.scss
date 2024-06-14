@@ -4,7 +4,7 @@
     align-items: center;
     margin-top: 2.4rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         margin-top: calc(17.2rem + 2.6rem);
     }
 
@@ -13,7 +13,7 @@
     }
 
     &__message {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 32rem;
         }
     }
@@ -26,12 +26,12 @@
 .ads-page {
     margin: 4.5rem 1.6rem;
 
-    @include desktop {
+    @include desktop-screen {
         position: absolute;
         inset-inline-start: 5rem;
     }
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         margin-top: 11.8rem;
         .no-ads__message {
             width: 100%;

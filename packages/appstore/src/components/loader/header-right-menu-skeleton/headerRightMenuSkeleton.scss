@@ -5,7 +5,7 @@
     align-items: center;
     gap: 2.4rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         gap: 1.6rem;
     }
 

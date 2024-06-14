@@ -1,5 +1,5 @@
 import React from 'react';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import Icon from '../icon/icon';
 import Text from '../text';
 import './inline-message.scss';
@@ -12,10 +12,10 @@ const type_icon_mapper = {
 };
 
 const size_to_font_size_mapper = {
-    xs: isMobile() ? 'xxxxs' : 'xxxs',
-    sm: isMobile() ? 'xxxs' : 'xxs',
-    md: isMobile() ? 'xxs' : 'xs',
-    lg: isMobile() ? 'xs' : 's',
+    xs: isMobileOrTablet() ? 'xxxxs' : 'xxxs',
+    sm: isMobileOrTablet() ? 'xxxs' : 'xxs',
+    md: isMobileOrTablet() ? 'xxs' : 'xs',
+    lg: isMobileOrTablet() ? 'xs' : 's',
 };
 
 type TProps = {
@@ -31,7 +31,7 @@ const InlineMessage: React.FC<React.PropsWithChildren<TProps>> = ({
     children,
 }) => {
     const icon = type_icon_mapper[type];
-    const icon_size = size === 'lg' && !isMobile() ? 24 : 16;
+    const icon_size = size === 'lg' && !isMobileOrTablet() ? 24 : 16;
     const font_size = size_to_font_size_mapper[size];
 
     return (

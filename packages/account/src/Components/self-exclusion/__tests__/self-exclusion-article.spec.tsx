@@ -38,7 +38,7 @@ describe('<SelfExclusionArticle />', () => {
         const new_store = mockStore({
             ui: {
                 is_desktop: true,
-                is_mobile: true,
+                is_mobile_or_tablet: true,
             },
         });
 
@@ -60,7 +60,7 @@ describe('<SelfExclusionArticle />', () => {
         const new_store = mockStore({
             ui: {
                 is_desktop: false,
-                is_mobile: true,
+                is_mobile_or_tablet: true,
             },
         });
 
@@ -81,7 +81,7 @@ describe('<SelfExclusionArticle />', () => {
         const new_store = mockStore({
             ui: {
                 is_desktop: false,
-                is_mobile: false,
+                is_mobile_or_tablet: false,
             },
         });
 
@@ -102,7 +102,7 @@ describe('<SelfExclusionArticle />', () => {
         const new_store = mockStore({
             ui: {
                 is_desktop: false,
-                is_mobile: true,
+                is_mobile_or_tablet: true,
             },
         });
         const mockToggleArticle = mock_self_exclusion_context.toggleArticle;

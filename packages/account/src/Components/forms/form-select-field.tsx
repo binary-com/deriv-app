@@ -27,7 +27,7 @@ const FormSelectField: FC<TFormSelectField> = ({
     list_height,
 }) => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
 
     const onSelect =
         (field: string, setFieldValue: TSetFieldValue) =>
@@ -39,7 +39,7 @@ const FormSelectField: FC<TFormSelectField> = ({
         <Field name={name}>
             {({ field, meta: { touched, error }, form: { setFieldValue } }: FieldProps<string>) => (
                 <Fragment>
-                    {is_mobile ? (
+                    {is_mobile_or_tablet ? (
                         <SelectNative
                             {...field}
                             // @ts-expect-error This needs to fixed in SelectNative component

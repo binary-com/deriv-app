@@ -87,7 +87,11 @@ const Drawer = ({
                     />
                 )}
             </div>
-            <div className={classNames('dc-drawer__container', { [`dc-drawer__container--${anchor}`]: !is_mobile })}>
+            <div
+                className={classNames('dc-drawer__container', {
+                    [`dc-drawer__container--${anchor}`]: !is_mobile,
+                })}
+            >
                 {header && <div className='dc-drawer__header'>{header}</div>}
                 <div className={classNames('dc-drawer__content', contentClassName)}>{children}</div>
                 {footer && <div className='dc-drawer__footer'>{footer}</div>}

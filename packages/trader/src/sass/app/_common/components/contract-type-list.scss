@@ -2,7 +2,7 @@
 .contract-type-list {
     padding: 1.6rem 0.8rem;
 
-    @include mobile {
+    @include mobile-screen {
         padding: 1.6rem;
     }
     &__label {
@@ -62,11 +62,11 @@
 
     &__icon {
         margin-left: auto;
-        @include mobile {
+        @include mobile-screen {
             display: block;
         }
 
-        @include mobile {
+        @include mobile-screen {
             display: block;
         }
 

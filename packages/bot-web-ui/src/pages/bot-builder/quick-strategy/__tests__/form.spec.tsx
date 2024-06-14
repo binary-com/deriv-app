@@ -190,7 +190,7 @@ describe('<QuickStrategyForm />', () => {
     let wrapper: ({ children }: { children: JSX.Element }) => JSX.Element, mock_DBot_store: RootStore | undefined;
     const mock_store = mockStore({
         ui: {
-            is_mobile: false,
+            is_mobile_or_tablet: false,
         },
     });
 

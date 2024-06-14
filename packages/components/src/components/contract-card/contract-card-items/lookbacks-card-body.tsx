@@ -2,7 +2,7 @@ import React from 'react';
 import { getDisplayStatus, getCardLabels, isCryptocurrency, CONTRACT_TYPES } from '@deriv/shared';
 import { Localize } from '@deriv/translations';
 import ContractCardItem from './contract-card-item';
-import MobileWrapper from '../../mobile-wrapper';
+import MobileOrTabletWrapper from '../../mobile-wrapper';
 import Money from '../../money';
 import Text from '../../text';
 import ArrowIndicator from '../../arrow-indicator';
@@ -73,7 +73,7 @@ const LookBacksCardBody = ({
                     <Money amount={buy_price} currency={currency} />
                 </ContractCardItem>
                 <ContractCardItem header={MULTIPLIER}>{`x${multiplier}`}</ContractCardItem>
-                <MobileWrapper>
+                <MobileOrTabletWrapper>
                     <div className='dc-contract-card__status'>
                         {is_sold ? (
                             <ResultStatusIcon
@@ -84,7 +84,7 @@ const LookBacksCardBody = ({
                             progress_slider_mobile_el
                         )}
                     </div>
-                </MobileWrapper>
+                </MobileOrTabletWrapper>
             </div>
             <ContractCardItem className='dc-contract-card-item__payout-limit'>
                 <Text align='center' line_height='l' size='xxs'>

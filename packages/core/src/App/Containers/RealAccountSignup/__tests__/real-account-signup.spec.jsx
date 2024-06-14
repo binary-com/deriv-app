@@ -15,7 +15,7 @@ jest.mock('@deriv/components', () => ({
             <div>{children}</div>
         </div>
     )),
-    MobileWrapper: jest.fn(({ children }) => (
+    MobileOrTabletWrapper: jest.fn(({ children }) => (
         <div>
             <div>{children}</div>
         </div>

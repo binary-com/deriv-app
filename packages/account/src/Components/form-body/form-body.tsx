@@ -1,7 +1,7 @@
 // [TODO] - To be removed once CFD is configured to use the new form-body component
 import React, { PropsWithChildren, Fragment } from 'react';
 import { ScrollbarsContainer } from '../scrollbars-container/scrollbars-container';
-import { Div100vhContainer, DesktopWrapper, MobileWrapper } from '@deriv/components';
+import { Div100vhContainer, DesktopWrapper, MobileOrTabletWrapper } from '@deriv/components';
 import clsx from 'clsx';
 
 type TFormBody = {
@@ -19,13 +19,13 @@ export const FormBody = ({ children, scroll_offset, className }: PropsWithChildr
                 {children}
             </ScrollbarsContainer>
         </DesktopWrapper>
-        <MobileWrapper>
+        <MobileOrTabletWrapper>
             <Div100vhContainer
                 className={clsx('account__scrollbars_container--grid-layout', className)}
                 height_offset={scroll_offset || '200px'}
             >
                 {children}
             </Div100vhContainer>
-        </MobileWrapper>
+        </MobileOrTabletWrapper>
     </Fragment>
 );

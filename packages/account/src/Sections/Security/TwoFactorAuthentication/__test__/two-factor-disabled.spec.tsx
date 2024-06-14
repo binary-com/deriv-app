@@ -19,7 +19,7 @@ describe('<TwoFactorDisabled />', () => {
 
     const store = mockStore({
         ui: {
-            is_mobile: true,
+            is_mobile_or_tablet: true,
         },
     });
 
@@ -93,7 +93,7 @@ describe('<TwoFactorDisabled />', () => {
             ...store,
             ui: {
                 ...store.ui,
-                is_mobile: true,
+                is_mobile_or_tablet: true,
             },
         };
 

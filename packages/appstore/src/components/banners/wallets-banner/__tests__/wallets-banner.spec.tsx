@@ -25,7 +25,7 @@ describe('<WalletsBanner />', () => {
         });
 
         it('Should render image properly for desktop', () => {
-            mockRootStore.ui.is_mobile = false;
+            mockRootStore.ui.is_mobile_or_tablet = false;
             render(<WalletsBannerUpgrade />, {
                 wrapper: ({ children }) => <StoreProvider store={mockRootStore}>{children}</StoreProvider>,
             });
@@ -37,7 +37,7 @@ describe('<WalletsBanner />', () => {
         });
 
         it('Should render image properly for mobile', () => {
-            mockRootStore.ui.is_mobile = true;
+            mockRootStore.ui.is_mobile_or_tablet = true;
             render(<WalletsBannerUpgrade />, {
                 wrapper: ({ children }) => <StoreProvider store={mockRootStore}>{children}</StoreProvider>,
             });
@@ -72,7 +72,7 @@ describe('<WalletsBanner />', () => {
         });
 
         it('Should render image properly for desktop', () => {
-            mockRootStore.ui.is_mobile = false;
+            mockRootStore.ui.is_mobile_or_tablet = false;
             render(<WalletsBannerUpgrading />, {
                 wrapper: ({ children }) => <StoreProvider store={mockRootStore}>{children}</StoreProvider>,
             });
@@ -84,7 +84,7 @@ describe('<WalletsBanner />', () => {
         });
 
         it('Should render image properly for mobile', () => {
-            mockRootStore.ui.is_mobile = true;
+            mockRootStore.ui.is_mobile_or_tablet = true;
             render(<WalletsBannerUpgrading />, {
                 wrapper: ({ children }) => <StoreProvider store={mockRootStore}>{children}</StoreProvider>,
             });

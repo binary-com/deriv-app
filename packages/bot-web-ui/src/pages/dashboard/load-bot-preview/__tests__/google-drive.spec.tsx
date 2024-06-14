@@ -89,7 +89,7 @@ describe('GoogleDrive', () => {
         expect(container).toBeInTheDocument();
     });
     it('should render GoogleDrive component with with svg element that has height and width equal 96 when it is a mobile version', () => {
-        mock_store.ui.is_mobile = true;
+        mock_store.ui.is_mobile_or_tablet = true;
         const { container } = render(<GoogleDrive />, { wrapper });
 
         const google_drive_container = screen.getByTestId('dt_google_drive');

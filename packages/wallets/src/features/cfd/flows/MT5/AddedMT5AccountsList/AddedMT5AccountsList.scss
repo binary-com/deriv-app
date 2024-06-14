@@ -58,7 +58,7 @@
             font-size: 1.2rem;
             line-height: 1.4rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 font-size: 1.4rem;
                 line-height: 2rem;
             }

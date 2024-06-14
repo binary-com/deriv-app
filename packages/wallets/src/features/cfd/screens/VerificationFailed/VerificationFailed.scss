@@ -7,7 +7,7 @@
     background-color: var(--system-light-8-primary-background, #fff);
     width: 44rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 32rem;
         padding: 1.6rem;
         gap: 1.6rem;
@@ -18,7 +18,7 @@
         flex-direction: column;
         gap: 0.6rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             gap: 0.4rem;
         }
     }
@@ -34,7 +34,7 @@
         flex-direction: column;
         gap: 2rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             gap: 1rem;
         }
     }

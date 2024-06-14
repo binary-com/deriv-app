@@ -5,7 +5,7 @@ import { mockStore, StoreProvider } from '@deriv/stores';
 import FileUploaderComponent from '../file-uploader-component';
 
 const wrapper = ({ children }: { children: JSX.Element }) => (
-    <StoreProvider store={mockStore({ ui: { is_mobile: false } })}>{children}</StoreProvider>
+    <StoreProvider store={mockStore({ ui: { is_mobile_or_tablet: false } })}>{children}</StoreProvider>
 );
 
 jest.mock('@deriv/shared', () => ({

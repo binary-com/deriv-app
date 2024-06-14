@@ -6,7 +6,7 @@ import {
     getUrlBinaryBot,
     getUrlSmartTrader,
     initMoment,
-    isMobile,
+    isMobileOrTablet,
     platforms,
     routes,
     toMoment,
@@ -277,7 +277,7 @@ export default class CommonStore extends BaseStore {
 
     setServicesError(error) {
         this.services_error = error;
-        if (isMobile()) {
+        if (isMobileOrTablet()) {
             if (error.code === 'CompanyWideLimitExceeded' || error.code === 'PleaseAuthenticate') {
                 this.root_store.ui.toggleServicesErrorModal(true);
             } else {

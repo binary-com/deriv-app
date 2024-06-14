@@ -1,5 +1,5 @@
 import React from 'react';
-import { DesktopWrapper, Dropdown, Icon, MobileWrapper } from '@deriv/components';
+import { DesktopWrapper, Dropdown, Icon, MobileOrTabletWrapper } from '@deriv/components';
 import { observer } from '@deriv/stores';
 import { localize } from 'Components/i18next';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
@@ -22,7 +22,7 @@ const BlockUserDropdown = () => {
                     value={my_profile_store.selected_sort_value}
                 />
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <div
                     className='block-user-dropdown'
                     onClick={() => {
@@ -31,7 +31,7 @@ const BlockUserDropdown = () => {
                 >
                     <Icon icon='IcCashierSort' data_testid='dt_block_user_filter_icon' />
                 </div>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </React.Fragment>
     );
 };

@@ -14,11 +14,11 @@ type TTwoFactorDisabled = {
 
 const TwoFactorDisabled = ({ secret_key, qr_secret_key, is_qr_loading }: TTwoFactorDisabled) => {
     const { ui } = useStore();
-    const { is_mobile, is_desktop } = ui;
+    const { is_mobile_or_tablet, is_desktop } = ui;
     return (
         <React.Fragment>
-            <ThemedScrollbars is_bypassed={is_mobile} autohide className='two-factor__scrollbars'>
-                {is_mobile && <TwoFactorAuthenticationArticle />}
+            <ThemedScrollbars is_bypassed={is_mobile_or_tablet} autohide className='two-factor__scrollbars'>
+                {is_mobile_or_tablet && <TwoFactorAuthenticationArticle />}
                 <Text as='h2' color='prominent' weight='bold' className='two-factor__title'>
                     <Localize i18n_default_text='How to set up 2FA for your Deriv account' />
                 </Text>

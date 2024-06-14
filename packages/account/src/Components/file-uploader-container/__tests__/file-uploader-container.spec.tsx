@@ -82,7 +82,7 @@ describe('<FileUploaderContainer />', () => {
 
         const mock_store = mockStore({
             ui: {
-                is_mobile: true,
+                is_mobile_or_tablet: true,
             },
         });
 

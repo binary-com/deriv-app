@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Modal } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { observer } from '@deriv/stores';
 import { localize, Localize } from 'Components/i18next';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
@@ -36,7 +36,7 @@ const RatingModal = ({
             is_open={is_modal_open}
             title={localize('How would you rate this transaction?')}
             toggleModal={onClickSkip}
-            width={isMobile() ? '90vw' : ''}
+            width={isMobileOrTablet() ? '90vw' : ''}
         >
             <Modal.Body className='rating-modal__body'>
                 <div className='rating-modal__body__star'>

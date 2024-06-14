@@ -4,11 +4,11 @@ import OnboardingTourDesktop from './onboarding-tour-desktop';
 import OnboardingTourMobile from './onboarding-tour-mobile';
 
 type TOnboardTourHandler = {
-    is_mobile: boolean;
+    is_mobile_or_tablet: boolean;
 };
 
-const OnboardTourHandler: React.FC<TOnboardTourHandler> = observer(({ is_mobile }) => {
-    return <>{is_mobile ? <OnboardingTourMobile /> : <OnboardingTourDesktop />}</>;
+const OnboardTourHandler: React.FC<TOnboardTourHandler> = observer(({ is_mobile_or_tablet }) => {
+    return <>{is_mobile_or_tablet ? <OnboardingTourMobile /> : <OnboardingTourDesktop />}</>;
 });
 
 export default OnboardTourHandler;

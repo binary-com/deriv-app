@@ -14,7 +14,7 @@ import { useStore } from '@deriv/stores';
 const ApiTokenTable = () => {
     const { api_tokens } = React.useContext<TApiContext>(ApiTokenContext);
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
 
     const formatTokenScopes = (str: string) => {
         const replace_filter = str.replace(/[-_]/g, ' ');
@@ -50,7 +50,7 @@ const ApiTokenTable = () => {
             token: token.token,
         };
     };
-    if (is_mobile) {
+    if (is_mobile_or_tablet) {
         return (
             <React.Fragment>
                 {api_tokens?.map((token_data: TToken) => {

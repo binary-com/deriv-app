@@ -1,5 +1,5 @@
 import React from 'react';
-import { DesktopWrapper, Modal, PageOverlay, UILoader, MobileWrapper, Text, Dialog } from '@deriv/components';
+import { DesktopWrapper, Modal, PageOverlay, UILoader, MobileOrTabletWrapper, Text, Dialog } from '@deriv/components';
 import { Localize, localize } from '@deriv/translations';
 import { observer, useStore } from '@deriv/stores';
 import MT5MigrationModalContent from './mt5-migration-modal-content';
@@ -15,7 +15,7 @@ const MT5MigrationModal = observer(() => {
         disableApp,
         enableApp,
         is_mt5_migration_modal_open,
-        is_mobile,
+        is_mobile_or_tablet,
         toggleMT5MigrationModal,
         setMT5MigrationModalEnabled,
         is_mt5_migration_modal_enabled,
@@ -23,7 +23,7 @@ const MT5MigrationModal = observer(() => {
     const { mt5_migration_error, setMT5MigrationError, setIsFromMt5MigrationModal } = cfd;
     const [show_modal_front_side, setShowModalFrontSide] = React.useState(true);
     const modal_title = (
-        <Text size={is_mobile ? 'xs' : 's'} weight='bold'>
+        <Text size={is_mobile_or_tablet ? 'xs' : 's'} weight='bold'>
             {show_modal_front_side ? (
                 <Localize i18n_default_text='Upgrade your MT5 account(s)' />
             ) : (
@@ -86,7 +86,7 @@ const MT5MigrationModal = observer(() => {
                             <MT5MigrationModalContent />
                         </Modal>
                     </DesktopWrapper>
-                    <MobileWrapper>
+                    <MobileOrTabletWrapper>
                         <PageOverlay
                             is_open={is_mt5_migration_modal_open}
                             header_classname='mt5-migration-modal__mobile-header'
@@ -98,7 +98,7 @@ const MT5MigrationModal = observer(() => {
                         >
                             <MT5MigrationModalContent />
                         </PageOverlay>
-                    </MobileWrapper>
+                    </MobileOrTabletWrapper>
                 </MT5MigrationModalContext.Provider>
             </React.Suspense>
         </div>

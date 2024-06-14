@@ -1,6 +1,6 @@
 import React from 'react';
-import { DataList, Icon, Loading, MobileWrapper, Modal, Table, Text } from '@deriv/components';
-import { isDesktop, isMobile, routes } from '@deriv/shared';
+import { DataList, Icon, Loading, MobileOrTabletWrapper, Modal, Table, Text } from '@deriv/components';
+import { isDesktop, isMobileOrTablet, routes } from '@deriv/shared';
 import { localize, Localize } from '@deriv/translations';
 import { useStore, observer } from '@deriv/stores';
 import TransactionsCryptoCancelModal from './transactions-crypto-cancel-modal';
@@ -49,16 +49,16 @@ const TransactionsCryptoHistory = observer(() => {
                         onClick={onClickBack}
                         data-testid='dt_transactions_crypto_history_back'
                     >
-                        <Icon icon={isMobile() ? 'IcChevronLeftBold' : 'IcArrowLeftBold'} />
+                        <Icon icon={isMobileOrTablet() ? 'IcChevronLeftBold' : 'IcArrowLeftBold'} />
                         <Text as='p' size='xs' weight='bold'>
                             <Localize i18n_default_text={'{{currency}} recent transactions'} values={{ currency }} />
                         </Text>
                     </div>
                 </div>
-                <MobileWrapper>
+                <MobileOrTabletWrapper>
                     <TransactionsCryptoCancelModal />
                     <TransactionsCryptoStatusModal />
-                </MobileWrapper>
+                </MobileOrTabletWrapper>
                 {(data?.length || 0) > 0 ? (
                     <Table className='transactions-crypto-history__table'>
                         {isDesktop() && (
@@ -84,7 +84,7 @@ const TransactionsCryptoHistory = observer(() => {
                                         />
                                     )}
                                     keyMapper={row => row.id}
-                                    row_gap={isMobile() ? 8 : 0}
+                                    row_gap={isMobileOrTablet() ? 8 : 0}
                                 />
                             )}
                         </Table.Body>

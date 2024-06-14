@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import { Button, Div100vhContainer, Icon, Text } from '@deriv/components';
-import { isDesktop, isMobile, routes } from '@deriv/shared';
+import { isDesktop, isMobileOrTablet, routes } from '@deriv/shared';
 import { localize, Localize } from '@deriv/translations';
 
 const FinishedAddCurrency = ({
@@ -42,13 +42,17 @@ const FinishedAddCurrency = ({
             <Div100vhContainer className='finished-add-currency__dialog' is_disabled={isDesktop()} height_offset='40px'>
                 <div
                     className={classNames('status-dialog__header', {
-                        'status-dialog__header--center': isMobile(),
+                        'status-dialog__header--center': isMobileOrTablet(),
                     })}
                 >
                     <IconNextCurrency />
                     <IconWon className='bottom-right-overlay' />
                 </div>
-                <div className={classNames('status-dialog__body', { 'status-dialog__body--no-grow': isMobile() })}>
+                <div
+                    className={classNames('status-dialog__body', {
+                        'status-dialog__body--no-grow': isMobileOrTablet(),
+                    })}
+                >
                     <Text as='h2' align='center' className='status-dialog__message-header' weight='bold'>
                         <Localize i18n_default_text='Your account is ready' />
                     </Text>

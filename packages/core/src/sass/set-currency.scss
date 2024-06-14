@@ -6,7 +6,7 @@
         color: var(--text-general);
 
         &__main-heading {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 padding: 0 3rem;
             }
         }
@@ -33,7 +33,7 @@
             display: none;
         }
 
-        @include desktop {
+        @include desktop-screen {
             &__crypto .currency-list__items {
                 margin-bottom: 9rem;
             }
@@ -58,7 +58,7 @@
             }
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             overflow-y: auto;
 
             &__container--no-top-margin {

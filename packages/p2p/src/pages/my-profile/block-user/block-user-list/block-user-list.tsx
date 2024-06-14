@@ -12,7 +12,7 @@ import BlockUserTableError from '../block-user-table/block-user-table-error';
 const BlockUserList = observer(() => {
     const { general_store, my_profile_store } = useStores();
     const {
-        ui: { is_mobile },
+        ui: { is_mobile_or_tablet },
     } = useStore();
 
     const debouncedGetSearchedTradePartners = debounce((search: string) => {
@@ -37,7 +37,7 @@ const BlockUserList = observer(() => {
     }
 
     if (my_profile_store.is_loading) {
-        return <Loading is_fullscreen={is_mobile} />;
+        return <Loading is_fullscreen={is_mobile_or_tablet} />;
     }
 
     return (

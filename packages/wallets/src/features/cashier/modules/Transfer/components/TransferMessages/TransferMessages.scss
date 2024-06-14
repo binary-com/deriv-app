@@ -2,7 +2,7 @@
     min-height: 2rem;
     padding-inline: 0.8rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         padding-inline: 0;
     }
 

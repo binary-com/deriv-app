@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { ScrollbarsContainer } from '../scrollbars-container';
 
 jest.mock('@deriv/shared/src/utils/screen/responsive', () => ({
     ...jest.requireActual('@deriv/shared'),
-    isMobile: jest.fn(() => false),
+    isMobileOrTablet: jest.fn(() => false),
 }));
 
 describe('<ScrollbarsContainer />', () => {
@@ -36,7 +36,7 @@ describe('<ScrollbarsContainer />', () => {
     });
 
     it('should render children with ScrollbarsContainer component with scroll_offset and extra className for mobile', () => {
-        (isMobile as jest.Mock).mockReturnValue(true);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
 
         render(
             <ScrollbarsContainer scroll_offset='33%' className='test__class-name'>

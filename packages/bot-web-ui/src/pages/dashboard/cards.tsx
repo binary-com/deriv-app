@@ -1,7 +1,7 @@
 //kept sometihings commented beacuse of mobx to integrate popup functionality here
 import React from 'react';
 import classNames from 'classnames';
-import { DesktopWrapper, Dialog, Icon, MobileFullPageModal, MobileWrapper, Text } from '@deriv/components';
+import { DesktopWrapper, Dialog, Icon, MobileFullPageModal, MobileOrTabletWrapper, Text } from '@deriv/components';
 import { observer } from '@deriv/stores';
 import { localize } from '@deriv/translations';
 import { NOTIFICATION_TYPE } from 'Components/bot-notification/bot-notification-utils';
@@ -13,7 +13,7 @@ import GoogleDrive from './load-bot-preview/google-drive';
 
 type TCardProps = {
     has_dashboard_strategies: boolean;
-    is_mobile: boolean;
+    is_mobile_or_tablet: boolean;
 };
 
 type TCardArray = {
@@ -23,7 +23,7 @@ type TCardArray = {
     method: () => void;
 };
 
-const Cards = observer(({ is_mobile, has_dashboard_strategies }: TCardProps) => {
+const Cards = observer(({ is_mobile_or_tablet, has_dashboard_strategies }: TCardProps) => {
     const { dashboard, load_modal, quick_strategy } = useDBotStore();
     const {
         onCloseDialog,
@@ -59,8 +59,8 @@ const Cards = observer(({ is_mobile, has_dashboard_strategies }: TCardProps) => 
     const actions: TCardArray[] = [
         {
             type: 'my-computer',
-            icon: is_mobile ? 'IcLocal' : 'IcMyComputer',
-            content: is_mobile ? localize('Local') : localize('My computer'),
+            icon: is_mobile_or_tablet ? 'IcLocal' : 'IcMyComputer',
+            content: is_mobile_or_tablet ? localize('Local') : localize('My computer'),
             method: openFileLoader,
         },
         {
@@ -93,12 +93,12 @@ const Cards = observer(({ is_mobile, has_dashboard_strategies }: TCardProps) => 
         () => (
             <div
                 className={classNames('tab__dashboard__table', {
-                    'tab__dashboard__table--minimized': has_dashboard_strategies && is_mobile,
+                    'tab__dashboard__table--minimized': has_dashboard_strategies && is_mobile_or_tablet,
                 })}
             >
                 <div
                     className={classNames('tab__dashboard__table__tiles', {
-                        'tab__dashboard__table__tiles--minimized': has_dashboard_strategies && is_mobile,
+                        'tab__dashboard__table__tiles--minimized': has_dashboard_strategies && is_mobile_or_tablet,
                     })}
                     id='tab__dashboard__table__tiles'
                 >
@@ -108,7 +108,8 @@ const Cards = observer(({ is_mobile, has_dashboard_strategies }: TCardProps) => 
                             <div
                                 key={content}
                                 className={classNames('tab__dashboard__table__block', {
-                                    'tab__dashboard__table__block--minimized': has_dashboard_strategies && is_mobile,
+                                    'tab__dashboard__table__block--minimized':
+                                        has_dashboard_strategies && is_mobile_or_tablet,
                                 })}
                             >
                                 <Icon
@@ -123,7 +124,7 @@ const Cards = observer(({ is_mobile, has_dashboard_strategies }: TCardProps) => 
                                         method();
                                     }}
                                 />
-                                <Text color='prominent' size={is_mobile ? 'xxs' : 'xs'}>
+                                <Text color='prominent' size={is_mobile_or_tablet ? 'xxs' : 'xs'}>
                                     {content}
                                 </Text>
                             </div>
@@ -153,7 +154,7 @@ const Cards = observer(({ is_mobile, has_dashboard_strategies }: TCardProps) => 
                             <GoogleDrive />
                         </Dialog>
                     </DesktopWrapper>
-                    <MobileWrapper>
+                    <MobileOrTabletWrapper>
                         <MobileFullPageModal
                             is_modal_open={is_dialog_open}
                             className='load-strategy__wrapper'
@@ -169,7 +170,7 @@ const Cards = observer(({ is_mobile, has_dashboard_strategies }: TCardProps) => 
                                 <GoogleDrive />
                             </div>
                         </MobileFullPageModal>
-                    </MobileWrapper>
+                    </MobileOrTabletWrapper>
                 </div>
                 <DashboardBotList is_file_supported={is_file_supported} />
             </div>

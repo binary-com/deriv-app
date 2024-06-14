@@ -1,5 +1,5 @@
 import React from 'react';
-import { DesktopWrapper, MobileDialog, MobileWrapper, Modal, UILoader } from '@deriv/components';
+import { DesktopWrapper, MobileDialog, MobileOrTabletWrapper, Modal, UILoader } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import VerificationModalContent from './verification-modal-content';
 
@@ -44,7 +44,7 @@ const VerificationModal = observer(() => {
                     />
                 </Modal>
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <MobileDialog
                     portal_element_id='deriv_app'
                     title={modal_title}
@@ -59,7 +59,7 @@ const VerificationModal = observer(() => {
                         }}
                     />
                 </MobileDialog>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </React.Suspense>
     );
 });

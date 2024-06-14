@@ -15,7 +15,7 @@ const ReadyToVerifyModal = observer(() => {
         enableApp,
         setIsVerificationModalVisible,
         setIsFromSuccessDepositModal,
-        is_mobile,
+        is_mobile_or_tablet,
     } = ui;
     const { has_mf_account_deposited } = useHasMFAccountDeposited();
 
@@ -47,7 +47,7 @@ const ReadyToVerifyModal = observer(() => {
             has_close_icon={false}
             onEscapeButtonCancel={onClose}
         >
-            <Text align='center' size={is_mobile ? 'xxs' : 'xs'}>
+            <Text align='center' size={is_mobile_or_tablet ? 'xxs' : 'xs'}>
                 {has_mf_account_deposited ? (
                     <Localize i18n_default_text='Your funds will be available for trading once the verification of your account is complete.' />
                 ) : (

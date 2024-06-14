@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Modal, Text } from '@deriv/components';
 import { useP2PAdvertiserPaymentMethods } from '@deriv/hooks';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { Localize, localize } from 'Components/i18next';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
 
@@ -33,7 +33,7 @@ const DeletePaymentMethodConfirmationModal = ({
                         error_message: mutation_error.message,
                     },
                 },
-                { should_stack_modal: isMobile() }
+                { should_stack_modal: isMobileOrTablet() }
             );
         }
     }, [mutation_error, mutation_status]);

@@ -9,7 +9,7 @@
     text-align: center;
     background: var(--system-light-8-primary-background, #fff);
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 100%;
         height: calc(100% - 8.5rem);
     }

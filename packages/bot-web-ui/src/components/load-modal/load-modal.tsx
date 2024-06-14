@@ -24,10 +24,10 @@ const LoadModal = observer(() => {
         tab_name,
     } = load_modal;
     const { setPreviewOnPopup } = dashboard;
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const header_text = localize('Load strategy');
 
-    if (is_mobile) {
+    if (is_mobile_or_tablet) {
         return (
             <MobileFullPageModal
                 is_modal_open={is_load_modal_open}

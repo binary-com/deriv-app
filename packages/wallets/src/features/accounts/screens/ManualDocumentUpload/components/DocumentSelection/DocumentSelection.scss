@@ -6,7 +6,7 @@
     align-items: center;
     flex-shrink: 0;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 100%;
         height: auto;
         padding: 1.6rem;
@@ -21,7 +21,7 @@
         gap: 1.9rem;
         width: 67.5rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 32.8rem;
         }
     }

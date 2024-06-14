@@ -15,7 +15,7 @@ type TInsufficientBalanceModal = RouteComponentProps & {
 const InsufficientBalanceModal = observer(
     ({ history, is_virtual, is_visible, message, toggleModal }: TInsufficientBalanceModal) => {
         const {
-            ui: { is_mobile },
+            ui: { is_mobile_or_tablet },
             client,
         } = useStore();
         const { has_wallet } = client;
@@ -24,7 +24,7 @@ const InsufficientBalanceModal = observer(
                 id='dt_insufficient_balance_modal'
                 is_open={is_visible}
                 small
-                is_vertical_centered={is_mobile}
+                is_vertical_centered={is_mobile_or_tablet}
                 toggleModal={toggleModal}
                 title={localize('Insufficient balance')}
             >

@@ -66,7 +66,7 @@
         &__checkbox-container {
             height: 36rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 height: 100%;
 
                 .dc-checkbox {
@@ -87,7 +87,7 @@
         }
 
         &-button-group {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 width: 100%;

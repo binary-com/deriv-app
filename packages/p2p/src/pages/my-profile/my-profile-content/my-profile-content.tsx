@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { DesktopWrapper, MobileFullPageModal, MobileWrapper } from '@deriv/components';
+import { DesktopWrapper, MobileFullPageModal, MobileOrTabletWrapper } from '@deriv/components';
 import { observer } from '@deriv/stores';
 import { localize } from 'Components/i18next';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
@@ -29,7 +29,7 @@ const MyProfileContent = () => {
                 <DesktopWrapper>
                     <PaymentMethods />
                 </DesktopWrapper>
-                <MobileWrapper>
+                <MobileOrTabletWrapper>
                     <MobileFullPageModal
                         body_className={classNames('payment-methods-list__modal', {
                             'payment-methods-list__modal-add':
@@ -63,7 +63,7 @@ const MyProfileContent = () => {
                     >
                         <PaymentMethods />
                     </MobileFullPageModal>
-                </MobileWrapper>
+                </MobileOrTabletWrapper>
             </React.Fragment>
         );
     } else if (active_tab === my_profile_tabs.MY_COUNTERPARTIES) {

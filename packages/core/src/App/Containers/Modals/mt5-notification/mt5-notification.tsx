@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, useStore } from '@deriv/stores';
-import { Modal, DesktopWrapper, MobileDialog, MobileWrapper, UILoader, Button } from '@deriv/components';
+import { Modal, DesktopWrapper, MobileDialog, MobileOrTabletWrapper, UILoader, Button } from '@deriv/components';
 import { localize } from '@deriv/translations';
 import MT5NotificationDescription from './mt5-notification-description';
 
@@ -37,7 +37,7 @@ const MT5Notification = observer(() => {
                     </Modal.Footer>
                 </Modal>
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <MobileDialog
                     portal_element_id='modal_root'
                     wrapper_classname='mt5-notification-modal-description'
@@ -62,7 +62,7 @@ const MT5Notification = observer(() => {
                 >
                     <MT5NotificationDescription setMT5NotificationModal={setMT5NotificationModal} />
                 </MobileDialog>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </React.Suspense>
     );
 });

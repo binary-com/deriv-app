@@ -7,14 +7,14 @@ import useLiveChat from 'App/Components/Elements/LiveChat/use-livechat';
 const LiveChat = observer(({ showPopover }: { showPopover?: boolean }) => {
     const { client, ui } = useStore();
     const { has_cookie_account, loginid } = client;
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const liveChat = useLiveChat(has_cookie_account, loginid);
 
     if (!liveChat.isReady) return null;
 
     const liveChatClickHandler = () => liveChat.widget?.call('maximize');
 
-    if (is_mobile)
+    if (is_mobile_or_tablet)
         return (
             <div
                 className='livechat gtm-deriv-livechat'

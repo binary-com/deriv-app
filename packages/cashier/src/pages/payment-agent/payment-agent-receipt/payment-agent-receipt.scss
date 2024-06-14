@@ -14,7 +14,7 @@
                 margin-left: 0.4rem;
             }
         }
-        @include mobile {
+        @include mobile-or-tablet-screen {
             &-button {
                 width: unset;
                 max-width: 18rem;
@@ -24,12 +24,12 @@
     }
     &__header {
         margin-top: 9.6rem;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin-top: 3.2rem;
         }
         &-listed {
             margin-bottom: 4.8rem;
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-bottom: 1.6rem;
             }
         }
@@ -43,7 +43,7 @@
         flex-wrap: wrap;
         column-gap: 1.6rem;
         margin: 0.8rem 0 3.2rem;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             flex-direction: column;
             align-items: center;
             row-gap: 0.8rem;
@@ -52,7 +52,7 @@
             align-items: center;
             &__icon-wrapper {
                 margin-inline-end: 0.5rem;
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     margin-inline-end: 0.9rem;
                 }
             }
@@ -71,7 +71,7 @@
     }
     &__explanation {
         margin: 0.8rem 0 2.4rem;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 32rem;
         }
         &-unlisted {

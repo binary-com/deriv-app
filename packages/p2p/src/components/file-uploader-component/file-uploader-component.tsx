@@ -30,19 +30,24 @@ const FileUploaderComponent = ({
     value,
 }: TFileUploaderComponentProps) => {
     const {
-        ui: { is_mobile },
+        ui: { is_mobile_or_tablet },
     } = useStore();
 
     const getUploadMessage = React.useCallback(() => {
         return (
             <>
                 <Icon icon='IcCloudUpload' size={50} />
-                <Text as='div' line-height={is_mobile ? 'xl' : 'l'} size={is_mobile ? 'xxs' : 'xs'} weight='bold'>
+                <Text
+                    as='div'
+                    line-height={is_mobile_or_tablet ? 'xl' : 'l'}
+                    size={is_mobile_or_tablet ? 'xxs' : 'xs'}
+                    weight='bold'
+                >
                     {upload_message}
                 </Text>
             </>
         );
-    }, [is_mobile, upload_message]);
+    }, [is_mobile_or_tablet, upload_message]);
 
     return (
         <div className='file-uploader-component'>

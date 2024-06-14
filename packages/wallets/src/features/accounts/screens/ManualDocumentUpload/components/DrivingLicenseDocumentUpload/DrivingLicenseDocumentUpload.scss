@@ -6,7 +6,7 @@
     gap: 2.4rem;
     background: var(--light-8-primary-background, #fff);
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 100%;
         gap: 1.6rem;
     }
@@ -20,7 +20,7 @@
         display: grid;
         gap: 1.7rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             gap: 1.6rem;
         }
     }
@@ -31,7 +31,7 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 2.4rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             grid-template-columns: unset;
             gap: 1.6rem;
         }

@@ -11,6 +11,7 @@ const OptionsTitle = ({ is_eu_user }: TOptionsTitle) => {
     const { isDesktop } = useDevice();
 
     if (!isDesktop) return null;
+
     return is_eu_user ? (
         <Text size='sm' weight='bold' color='prominent'>
             <Localize i18n_default_text='Multipliers' />

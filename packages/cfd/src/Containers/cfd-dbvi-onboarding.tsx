@@ -4,7 +4,7 @@ import { PoiPoaDocsSubmitted } from '@deriv/account';
 import { AccountStatusResponse } from '@deriv/api-types';
 import { Button, Icon, Loading, MobileDialog, Modal, Text, UILoader } from '@deriv/components';
 import { localize } from '@deriv/translations';
-import { getAuthenticationStatusInfo, isMobile, WS, isPOARequiredForMT5 } from '@deriv/shared';
+import { getAuthenticationStatusInfo, isMobileOrTablet, WS, isPOARequiredForMT5 } from '@deriv/shared';
 import CFDFinancialStpRealAccountSignup from './cfd-financial-stp-real-account-signup';
 import { observer, useStore } from '@deriv/stores';
 import { useCfdStore } from '../Stores/Modules/CFD/Helpers/useCfdStores';
@@ -13,7 +13,7 @@ import { JURISDICTION } from '../Helpers/cfd-config';
 const SwitchToRealAccountMessage = ({ onClickOk }: { onClickOk: () => void }) => (
     <div className='da-icon-with-message'>
         <Icon icon={'IcPoaLock'} size={128} />
-        <Text className='da-icon-with-message__text' as='p' size={isMobile() ? 'xs' : 's'} weight='bold'>
+        <Text className='da-icon-with-message__text' as='p' size={isMobileOrTablet() ? 'xs' : 's'} weight='bold'>
             {localize('Switch to your real account to submit your documents')}
         </Text>
         <Button

@@ -1,7 +1,7 @@
 import 'Sass/app/_common/components/platform-switcher.scss';
 
 import { Icon } from '@deriv/components';
-import { getPlatformInformation, getUrlBinaryBot, isMobile } from '@deriv/shared';
+import { getPlatformInformation, getUrlBinaryBot, isMobileOrTablet } from '@deriv/shared';
 
 import { CSSTransition } from 'react-transition-group';
 import { PlatformDropdown } from './platform-dropdown.jsx';
@@ -52,10 +52,10 @@ const PlatformSwitcher = ({
         <div
             data-testid='dt_platform_switcher_preloader'
             className={classNames('platform-switcher__preloader', {
-                'platform-switcher__preloader--is-mobile': isMobile(),
+                'platform-switcher__preloader--is-mobile': isMobileOrTablet(),
             })}
         >
-            <PlatformSwitcherLoader is_mobile={isMobile()} speed={3} />
+            <PlatformSwitcherLoader is_mobile_or_tablet={isMobileOrTablet()} speed={3} />
         </div>
     ) : (
         <React.Fragment>
@@ -64,7 +64,7 @@ const PlatformSwitcher = ({
                 className={classNames(
                     'platform-switcher',
                     { 'platform-switcher--active': is_open },
-                    { 'platform-switcher--is-mobile': isMobile() }
+                    { 'platform-switcher--is-mobile': isMobileOrTablet() }
                 )}
                 onClick={() => setIsOpen(!is_open)}
             >
@@ -85,7 +85,7 @@ const PlatformSwitcher = ({
                 classNames={{
                     enterDone: 'platform-dropdown--enter-done',
                 }}
-                timeout={!isMobile() && is_open ? 0 : 250}
+                timeout={!isMobileOrTablet() && is_open ? 0 : 250}
                 unmountOnExit
             >
                 <PlatformDropdown

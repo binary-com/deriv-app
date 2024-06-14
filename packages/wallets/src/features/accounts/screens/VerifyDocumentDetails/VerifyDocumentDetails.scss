@@ -11,7 +11,7 @@
         flex-direction: row;
         padding-top: 1.6rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             flex-direction: column-reverse;
         }
     }
@@ -33,7 +33,7 @@
             accent-color: #ff444f;
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding-top: 1.6rem;
         }
 
@@ -58,14 +58,14 @@
         flex: 1;
         gap: 1.6rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             align-items: center;
         }
 
         & .wallets-textfield {
             max-width: 35.9rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 max-width: 100%;
             }
         }
@@ -86,7 +86,7 @@
             width: 100%;
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 0 0 1.6rem;
         }
     }

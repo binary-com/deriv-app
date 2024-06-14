@@ -5,7 +5,7 @@
     max-width: 120rem;
     perspective: 2000rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 100%;
         padding: 0;
     }

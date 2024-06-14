@@ -108,7 +108,7 @@
 
             #dt_purchase_vanillalongcall_button,
             #dt_purchase_vanillalongput_button {
-                @include desktop {
+                @include desktop-screen {
                     .btn-purchase__info--left {
                         width: 80%;
                     }
@@ -282,7 +282,7 @@
                     display: flex;
                 }
             }
-            @include desktop {
+            @include desktop-screen {
                 min-height: 2.1rem;
             }
 
@@ -467,7 +467,7 @@
             align-items: center;
             padding: 0 1rem;
             border-bottom: 0.1rem solid var(--general-hover);
-            @include mobile {
+            @include mobile-screen {
                 height: 4.5rem;
                 padding: 0 1.6rem;
                 border-bottom: 0.1rem solid var(--general-section-1);
@@ -489,7 +489,7 @@
         }
         &__text {
             padding: 1.6rem 1.6rem 0;
-            @include mobile {
+            @include mobile-screen {
                 padding: 1.6rem 0 0.8rem 1.6rem;
             }
         }
@@ -517,7 +517,7 @@
                 background-color: var(--general-active);
                 font-weight: var(--text-weight-bold);
             }
-            @include mobile {
+            @include mobile-screen {
                 display: flex;
                 align-items: center;
                 height: 4.8rem;
@@ -770,7 +770,7 @@
         margin-top: 0.4rem;
         display: flex;
         justify-content: space-between;
-        @include desktop {
+        @include desktop-screen {
             height: 2.8rem;
         }
 
@@ -857,17 +857,17 @@
         }
         .dc-btn--sell {
             margin-bottom: 0.5rem;
-            @include mobile {
+            @include mobile-screen {
                 margin-bottom: 1rem;
             }
         }
-        @include mobile {
+        @include mobile-screen {
             padding: 0;
             margin-bottom: 0;
         }
     }
     &__notification {
-        @include mobile {
+        @include mobile-screen {
             margin-bottom: 0.6rem;
         }
     }
@@ -931,7 +931,7 @@
 }
 
 /** @define dc-collapsible */
-@include mobile {
+@include mobile-screen {
     .dc-collapsible {
         position: absolute;
         bottom: 0;
@@ -969,7 +969,7 @@
 }
 
 /** @define market-unavailable-modal */
-@include mobile {
+@include mobile-screen {
     .market-unavailable-modal {
         @include mobile-screen {
             align-items: flex-start;
@@ -1013,7 +1013,7 @@
 }
 
 .account-verification-required-modal {
-    @include mobile {
+    @include mobile-screen {
         &-text {
             padding: 1.5rem;
         }
@@ -1033,7 +1033,7 @@
         &-body {
             padding: 0 2.4rem;
         }
-        @include mobile {
+        @include mobile-screen {
             &-header__title {
                 font-size: 1.4rem;
                 padding: 1.6rem;
@@ -1059,6 +1059,8 @@
         height: 100svw;
         width: 100svh;
         transition: transform 0.5s;
+        /* need to disable scroll for DTrader in tablet view turning on in MobileDialog */
+        overflow: hidden !important;
     }
 
     &[dir='rtl'] body {

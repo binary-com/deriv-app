@@ -3,9 +3,9 @@ import classNames from 'classnames';
 import { reaction } from 'mobx';
 import { useP2PAdvertiserAdverts } from 'Hooks';
 import { useHistory, useLocation } from 'react-router-dom';
-import { DesktopWrapper, Loading, MobileWrapper, Text } from '@deriv/components';
+import { DesktopWrapper, Loading, MobileOrTabletWrapper, Text } from '@deriv/components';
 import { useP2PAdvertInfo } from '@deriv/hooks';
-import { daysSince, isEmptyObject, isMobile, routes } from '@deriv/shared';
+import { daysSince, isEmptyObject, isMobileOrTablet, routes } from '@deriv/shared';
 import { observer } from '@deriv/stores';
 
 import { Localize, localize } from 'Components/i18next';
@@ -94,7 +94,7 @@ const AdvertiserPage = () => {
                 onClose: () => {
                     hideModal({ should_hide_all_modals: true });
                 },
-                width: isMobile() ? '90vw' : '',
+                width: isMobileOrTablet() ? '90vw' : '',
             },
         });
     };
@@ -247,9 +247,9 @@ const AdvertiserPage = () => {
                     page_title={localize("Advertiser's page")}
                 />
                 {!is_my_advert && (
-                    <MobileWrapper>
+                    <MobileOrTabletWrapper>
                         <AdvertiserPageDropdownMenu />
-                    </MobileWrapper>
+                    </MobileOrTabletWrapper>
                 )}
             </div>
             <BlockUserOverlay
@@ -264,8 +264,8 @@ const AdvertiserPage = () => {
                     <div className='advertiser-page__header-details'>
                         <UserAvatar
                             nickname={nickname}
-                            size={isMobile() ? 32 : 64}
-                            text_size={isMobile() ? 's' : 'sm'}
+                            size={isMobileOrTablet() ? 32 : 64}
+                            text_size={isMobileOrTablet() ? 's' : 'sm'}
                         />
                         <div className='advertiser-page__header-name--column'>
                             <div className='advertiser-page__header-name'>
@@ -280,7 +280,7 @@ const AdvertiserPage = () => {
                                     </div>
                                 )}
                             </div>
-                            <MobileWrapper>
+                            <MobileOrTabletWrapper>
                                 <div className='advertiser-page__row'>
                                     <div className='advertiser-page__rating--row'>
                                         <OnlineStatusIcon is_online={is_online} />
@@ -303,7 +303,7 @@ const AdvertiserPage = () => {
                                         </Text>
                                     </div>
                                 </div>
-                            </MobileWrapper>
+                            </MobileOrTabletWrapper>
                             {!isEmptyObject(info) && (
                                 <div className='advertiser-page__rating'>
                                     <DesktopWrapper>
@@ -334,7 +334,7 @@ const AdvertiserPage = () => {
                                     {rating_average ? (
                                         <React.Fragment>
                                             <div className='advertiser-page__rating--row'>
-                                                <Text color='prominent' size={isMobile() ? 'xxxs' : 'xs'}>
+                                                <Text color='prominent' size={isMobileOrTablet() ? 'xxxs' : 'xs'}>
                                                     {rating_average_decimal}
                                                 </Text>
                                                 <StarRating
@@ -346,10 +346,13 @@ const AdvertiserPage = () => {
                                                     is_readonly
                                                     number_of_stars={5}
                                                     should_allow_hover_effect={false}
-                                                    star_size={isMobile() ? 17 : 20}
+                                                    star_size={isMobileOrTablet() ? 17 : 20}
                                                 />
                                                 <div className='advertiser-page__rating--text'>
-                                                    <Text color='less-prominent' size={isMobile() ? 'xxxs' : 'xs'}>
+                                                    <Text
+                                                        color='less-prominent'
+                                                        size={isMobileOrTablet() ? 'xxxs' : 'xs'}
+                                                    >
                                                         {rating_count === 1 ? (
                                                             <Localize
                                                                 i18n_default_text='({{number_of_ratings}} rating)'
@@ -373,7 +376,7 @@ const AdvertiserPage = () => {
                                         </React.Fragment>
                                     ) : (
                                         <div className='advertiser-page__rating--row'>
-                                            <Text color='less-prominent' size={isMobile() ? 'xxxs' : 'xs'}>
+                                            <Text color='less-prominent' size={isMobileOrTablet() ? 'xxxs' : 'xs'}>
                                                 <Localize i18n_default_text='Not rated yet' />
                                             </Text>
                                         </div>

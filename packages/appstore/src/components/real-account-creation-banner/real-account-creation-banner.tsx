@@ -1,19 +1,17 @@
 import React, { useEffect } from 'react';
-import './real-account-creation-banner.scss';
+import { useDevice } from '@deriv-com/ui';
 import { getUrlBase, Jurisdiction } from '@deriv/shared';
 import { Analytics } from '@deriv-com/analytics';
 import { Localize } from '@deriv/translations';
 import { Text, Button } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
+import './real-account-creation-banner.scss';
 
 const RealAccountCreationBanner = observer(() => {
-    const {
-        ui: { is_mobile },
-    } = useStore();
-
+    const { isDesktop } = useDevice();
     const { ui } = useStore();
     const { openRealAccountSignup, is_dark_mode_on } = ui;
-    const device = is_mobile ? 'mobile' : 'desktop';
+    const device = !isDesktop ? 'mobile' : 'desktop';
 
     const handleClick = () => {
         Analytics.trackEvent('ce_tradershub_banner', {
@@ -42,7 +40,7 @@ const RealAccountCreationBanner = observer(() => {
             />
 
             <div className='real-account-creation-banner__content'>
-                <Text size={is_mobile ? 'xs' : 'm'}>
+                <Text size={!isDesktop ? 'xs' : 'm'}>
                     <Localize i18n_default_text='Get a real account to deposit money and start trading.' />
                 </Text>
                 <Button type='button' onClick={handleClick} primary>

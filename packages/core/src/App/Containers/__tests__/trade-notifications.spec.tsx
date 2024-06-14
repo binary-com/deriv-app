@@ -12,7 +12,7 @@ type TMockedSwipeableNotificationProps = React.ComponentProps<typeof SwipeableNo
 
 jest.mock('@deriv/components', () => ({
     ...jest.requireActual('@deriv/components'),
-    MobileWrapper: jest.fn(({ children }) => children),
+    MobileOrTabletWrapper: jest.fn(({ children }) => children),
     SwipeableNotification: ({ children, onUnmount, timestamp }: TMockedSwipeableNotificationProps) => {
         if (onUnmount) onUnmount();
         return (

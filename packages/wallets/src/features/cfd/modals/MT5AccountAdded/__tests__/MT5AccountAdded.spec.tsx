@@ -8,6 +8,15 @@ import { ModalProvider } from '../../../../../components/ModalProvider';
 import { THooks } from '../../../../../types';
 import MT5AccountAdded from '../MT5AccountAdded';
 
+jest.mock('../../../../../hooks/useDevice', () => ({
+    __esModule: true,
+    default: jest.fn(() => ({
+        isDesktop: true,
+        isTablet: false,
+        isMobile: false,
+    })),
+}));
+
 const mockHide = jest.fn();
 jest.mock('../../../../../components/ModalProvider', () => ({
     ...jest.requireActual('../../../../../components/ModalProvider'),

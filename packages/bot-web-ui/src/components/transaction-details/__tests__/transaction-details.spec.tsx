@@ -66,7 +66,7 @@ describe('TransactionDetails', () => {
     it('should render Mobile component on mobile', async () => {
         const mock_store = mockStore({
             ui: {
-                is_mobile: true,
+                is_mobile_or_tablet: true,
             },
         });
         await waitFor(() => render(<TransactionDetails />, { wrapper: wrapper(mock_store) }));

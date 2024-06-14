@@ -1,7 +1,7 @@
 import React from 'react';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
 
-import { isEmptyObject, isMobile, routes, toMoment } from '@deriv/shared';
+import { isEmptyObject, isMobileOrTablet, routes, toMoment } from '@deriv/shared';
 
 import { Localize, localize } from 'Components/i18next';
 import { api_error_codes } from 'Constants/api-error-codes';
@@ -61,7 +61,7 @@ export default class GeneralStore extends BaseStore {
     user_blocked_count = 0;
     user_blocked_until = null;
 
-    list_item_limit = isMobile() ? 10 : 50;
+    list_item_limit = isMobileOrTablet() ? 10 : 50;
     path = {
         buy_sell: 0,
         orders: 1,

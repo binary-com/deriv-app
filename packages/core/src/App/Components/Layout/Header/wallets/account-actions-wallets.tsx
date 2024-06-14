@@ -14,7 +14,7 @@ import 'Sass/app/_common/components/account-switcher.scss';
 const AccountActionsWallets = observer(() => {
     const { client, ui, notifications } = useStore();
     const { is_logged_in, accounts, loginid } = client;
-    const { openRealAccountSignup, toggleAccountsDialog, is_mobile, is_accounts_switcher_on } = ui;
+    const { openRealAccountSignup, toggleAccountsDialog, is_mobile_or_tablet, is_accounts_switcher_on } = ui;
     const { is_notifications_visible, notifications: notificationsArray, toggleNotificationsModal } = notifications;
 
     const notifications_count = notificationsArray?.length;
@@ -44,7 +44,7 @@ const AccountActionsWallets = observer(() => {
         );
     }
 
-    if (is_mobile) {
+    if (is_mobile_or_tablet) {
         return (
             <React.Fragment>
                 <AccountInfoWallets is_dialog_on={is_accounts_switcher_on} toggleDialog={toggleAccountsDialog} />

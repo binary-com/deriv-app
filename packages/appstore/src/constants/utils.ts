@@ -1,4 +1,4 @@
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 
 /**
  * This function checks whether the current item should have a border at the bottom 'aka "divider" '.
@@ -11,7 +11,7 @@ import { isMobile } from '@deriv/shared';
 export const getHasDivider = (current_item_index: number, list_size: number, available_grid_columns: number) => {
     if (list_size < available_grid_columns) {
         return false;
-    } else if (isMobile()) {
+    } else if (isMobileOrTablet()) {
         return current_item_index < list_size - 1;
     }
     return (

@@ -25,7 +25,7 @@
         }
     }
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         max-width: 27.2rem;
     }
 }

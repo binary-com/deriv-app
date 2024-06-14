@@ -32,7 +32,7 @@
         position: absolute;
         right: 2.4rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             bottom: 0.8rem;
             right: 1.2rem;
         }

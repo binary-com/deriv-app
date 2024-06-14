@@ -4,11 +4,11 @@ import BotBuilderTourDesktop from './bot-builder-tour-desktop';
 import BotBuilderTourMobile from './bot-builder-tour-mobile';
 
 type TBotBuilderTourHandler = {
-    is_mobile: boolean;
+    is_mobile_or_tablet: boolean;
 };
 
-const BotBuilderTourHandler: React.FC<TBotBuilderTourHandler> = observer(({ is_mobile }) => {
-    return <>{is_mobile ? <BotBuilderTourMobile /> : <BotBuilderTourDesktop />};</>;
+const BotBuilderTourHandler: React.FC<TBotBuilderTourHandler> = observer(({ is_mobile_or_tablet }) => {
+    return <>{is_mobile_or_tablet ? <BotBuilderTourMobile /> : <BotBuilderTourDesktop />};</>;
 });
 
 export default BotBuilderTourHandler;

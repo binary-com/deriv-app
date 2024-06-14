@@ -13,7 +13,7 @@ const ResetPasswordModal = observer(() => {
         disableApp,
         enableApp,
         is_loading,
-        is_mobile,
+        is_mobile_or_tablet,
         is_reset_password_modal_visible: is_visible,
         toggleResetPasswordModal,
         toggleLinkExpiredModal,
@@ -141,7 +141,7 @@ const ResetPasswordModal = observer(() => {
                                             <Localize i18n_default_text='Strong passwords contain at least 8 characters. combine uppercase and lowercase letters, numbers, and symbols.' />
                                         )}
                                     </Text>
-                                    {!is_mobile && <div className='reset-password__divider' />}
+                                    {!is_mobile_or_tablet && <div className='reset-password__divider' />}
                                     <Button
                                         className={classNames('reset-password__btn', {
                                             'reset-password__btn--disabled':

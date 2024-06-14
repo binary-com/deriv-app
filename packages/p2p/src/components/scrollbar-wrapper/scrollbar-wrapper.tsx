@@ -7,11 +7,11 @@ type TScrollbarWrapper = {
 
 const ScrollbarWrapper = ({ children, height }: PropsWithChildren<TScrollbarWrapper>) => {
     const {
-        ui: { is_mobile },
+        ui: { is_mobile_or_tablet },
     } = useStore();
 
     return (
-        <div className='scrollbar-wrapper' style={{ height: is_mobile ? '100%' : height }}>
+        <div className='scrollbar-wrapper' style={{ height: is_mobile_or_tablet ? '100%' : height }}>
             {children}
         </div>
     );

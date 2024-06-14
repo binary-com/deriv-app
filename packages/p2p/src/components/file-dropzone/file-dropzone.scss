@@ -7,7 +7,7 @@
     transform: translate3d(0, 0, 0);
     transition: transform 0.25s ease, opacity 0.15s linear;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         max-width: 26rem;
     }
 }

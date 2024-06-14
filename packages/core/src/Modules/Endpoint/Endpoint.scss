@@ -3,7 +3,7 @@
     min-width: 30rem;
     margin: 20vh auto;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         margin: auto;
     }
     &__title {

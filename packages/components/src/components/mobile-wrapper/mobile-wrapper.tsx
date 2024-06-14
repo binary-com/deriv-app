@@ -1,12 +1,13 @@
 import React from 'react';
-import { isMobile } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 
 type TMobileWrapper = {
     children: React.ReactNode;
 };
 
 const MobileWrapper = ({ children }: TMobileWrapper) => {
-    if (!isMobile()) return null;
+    const { isMobile } = useDevice();
+    if (!isMobile) return null;
 
     return <React.Fragment>{children}</React.Fragment>;
 };

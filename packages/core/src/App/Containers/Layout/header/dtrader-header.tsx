@@ -124,7 +124,11 @@ const DTraderHeader = observer(() => {
                                 'acc-info__preloader__dtrader--is-crypto': getDecimalPlaces(currency) > 2,
                             })}
                         >
-                            <AccountsInfoLoader is_logged_in={is_logged_in} is_mobile={!isDesktop} speed={3} />
+                            <AccountsInfoLoader
+                                is_logged_in={is_logged_in}
+                                is_mobile_or_tablet={!isDesktop}
+                                speed={3}
+                            />
                         </div>
                     )}
                     <HeaderAccountActions onClickDeposit={handleClickCashier} />

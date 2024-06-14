@@ -20,7 +20,7 @@ type TStatisticsTile = {
 
 type TStatisticsSummary = {
     currency: string;
-    is_mobile: boolean;
+    is_mobile_or_tablet: boolean;
     lost_contracts: number;
     number_of_runs: number;
     total_stake: number;
@@ -31,7 +31,7 @@ type TStatisticsSummary = {
 };
 type TDrawerHeader = {
     is_clear_stat_disabled: boolean;
-    is_mobile: boolean;
+    is_mobile_or_tablet: boolean;
     is_drawer_open: boolean;
     onClearStatClick: () => void;
 };
@@ -49,7 +49,7 @@ type TDrawerFooter = {
 };
 
 type TStatisticsInfoModal = {
-    is_mobile: boolean;
+    is_mobile_or_tablet: boolean;
     is_statistics_info_modal_open: boolean;
     toggleStatisticsInfoModal: () => void;
 };
@@ -63,7 +63,7 @@ const StatisticsTile = ({ content, contentClassName, title }: TStatisticsTile) =
 
 export const StatisticsSummary = ({
     currency,
-    is_mobile,
+    is_mobile_or_tablet,
     lost_contracts,
     number_of_runs,
     total_stake,
@@ -74,7 +74,7 @@ export const StatisticsSummary = ({
 }: TStatisticsSummary) => (
     <div
         className={classNames('run-panel__stat', {
-            'run-panel__stat--mobile': is_mobile,
+            'run-panel__stat--mobile': is_mobile_or_tablet,
         })}
     >
         <div className='run-panel__stat--info' onClick={toggleStatisticsInfoModal}>
@@ -109,8 +109,13 @@ export const StatisticsSummary = ({
     </div>
 );
 
-const DrawerHeader = ({ is_clear_stat_disabled, is_mobile, is_drawer_open, onClearStatClick }: TDrawerHeader) =>
-    is_mobile &&
+const DrawerHeader = ({
+    is_clear_stat_disabled,
+    is_mobile_or_tablet,
+    is_drawer_open,
+    onClearStatClick,
+}: TDrawerHeader) =>
+    is_mobile_or_tablet &&
     is_drawer_open && (
         <Button
             id='db-run-panel__clear-button'
@@ -166,20 +171,24 @@ const MobileDrawerFooter = () => {
 };
 
 const StatisticsInfoModal = ({
-    is_mobile,
+    is_mobile_or_tablet,
     is_statistics_info_modal_open,
     toggleStatisticsInfoModal,
 }: TStatisticsInfoModal) => {
     return (
         <Modal
-            className={classNames('statistics__modal', { 'statistics__modal--mobile': is_mobile })}
+            className={classNames('statistics__modal', { 'statistics__modal--mobile': is_mobile_or_tablet })}
             title={localize("What's this?")}
             is_open={is_statistics_info_modal_open}
             toggleModal={toggleStatisticsInfoModal}
             width={'440px'}
         >
             <Modal.Body>
-                <div className={classNames('statistics__modal-body', { 'statistics__modal-body--mobile': is_mobile })}>
+                <div
+                    className={classNames('statistics__modal-body', {
+                        'statistics__modal-body--mobile': is_mobile_or_tablet,
+                    })}
+                >
                     <ThemedScrollbars className='statistics__modal-scrollbar'>
                         <Text as='p' weight='bold' className='statistics__modal-body--content no-margin'>
                             {localize('Total stake')}
@@ -228,7 +237,7 @@ const RunPanel = observer(() => {
     const { run_panel, dashboard, transactions } = useDBotStore();
     const {
         client,
-        ui: { is_mobile },
+        ui: { is_mobile_or_tablet },
     } = useStore();
     const { currency } = client;
     const {
@@ -255,7 +264,7 @@ const RunPanel = observer(() => {
     }, [onMount, onUnmount]);
 
     React.useEffect(() => {
-        if (is_mobile) {
+        if (is_mobile_or_tablet) {
             toggleDrawer(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -266,7 +275,7 @@ const RunPanel = observer(() => {
             active_index={active_index}
             currency={currency}
             is_drawer_open={is_drawer_open}
-            is_mobile={is_mobile}
+            is_mobile_or_tablet={is_mobile_or_tablet}
             lost_contracts={lost_contracts}
             number_of_runs={number_of_runs}
             setActiveTabIndex={setActiveTabIndex}
@@ -284,27 +293,27 @@ const RunPanel = observer(() => {
     const header = (
         <DrawerHeader
             is_clear_stat_disabled={is_clear_stat_disabled}
-            is_mobile={is_mobile}
+            is_mobile_or_tablet={is_mobile_or_tablet}
             is_drawer_open={is_drawer_open}
             onClearStatClick={onClearStatClick}
         />
     );
 
     const show_run_panel = [BOT_BUILDER, CHART].includes(active_tab) || active_tour;
-    if ((!show_run_panel && !is_mobile) || active_tour === 'bot_builder') return null;
+    if ((!show_run_panel && !is_mobile_or_tablet) || active_tour === 'bot_builder') return null;
 
     return (
         <>
-            <div className={is_mobile && is_drawer_open ? 'run-panel__container--mobile' : 'run-panel'}>
+            <div className={is_mobile_or_tablet && is_drawer_open ? 'run-panel__container--mobile' : 'run-panel'}>
                 <Drawer
                     anchor='right'
                     className={classNames('run-panel', {
-                        'run-panel__container': !is_mobile,
-                        'run-panel__container--tour-active': !is_mobile && active_tour,
+                        'run-panel__container': !is_mobile_or_tablet,
+                        'run-panel__container--tour-active': !is_mobile_or_tablet && active_tour,
                     })}
                     contentClassName='run-panel__content'
                     header={header}
-                    footer={!is_mobile && footer}
+                    footer={!is_mobile_or_tablet && footer}
                     is_open={is_drawer_open}
                     toggleDrawer={toggleDrawer}
                     width={366}
@@ -312,11 +321,11 @@ const RunPanel = observer(() => {
                 >
                     {content}
                 </Drawer>
-                {is_mobile && <MobileDrawerFooter />}
+                {is_mobile_or_tablet && <MobileDrawerFooter />}
             </div>
             <SelfExclusion onRunButtonClick={onRunButtonClick} />
             <StatisticsInfoModal
-                is_mobile={is_mobile}
+                is_mobile_or_tablet={is_mobile_or_tablet}
                 is_statistics_info_modal_open={is_statistics_info_modal_open}
                 toggleStatisticsInfoModal={toggleStatisticsInfoModal}
             />

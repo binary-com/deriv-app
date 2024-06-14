@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { Field, Formik } from 'formik';
 import { Autocomplete, Icon } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { localize } from 'Components/i18next';
 
 const CurrencySelector = ({ className, default_value, list, onSelect }) => {
@@ -43,7 +43,7 @@ const CurrencySelector = ({ className, default_value, list, onSelect }) => {
                             historyValue={default_value}
                             is_list_visible
                             leading_icon={<Icon className='currency-selector__search-icon' icon='IcSearch' />}
-                            list_height={isMobile() ? '100%' : '288px'}
+                            list_height={isMobileOrTablet() ? '100%' : '288px'}
                             list_items={filtered_currency_list}
                             not_found_text={
                                 list.filter(

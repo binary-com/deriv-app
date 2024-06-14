@@ -18,7 +18,7 @@
         }
 
         .dc-themed-scrollbars-wrapper li {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 flex: 1;
             }
         }
@@ -28,7 +28,7 @@
             flex-direction: column;
             flex: 1;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 overflow-y: scroll;
                 overflow-x: hidden;
             }
@@ -65,7 +65,7 @@
         height: 80vh;
     }
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         .dc-autocomplete__field {
             border: none;
         }

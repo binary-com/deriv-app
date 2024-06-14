@@ -195,7 +195,7 @@ const FormikWrapper: React.FC<TFormikWrapper> = observer(({ children }) => {
 const QuickStrategy = observer(() => {
     const { quick_strategy } = useDBotStore();
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const { is_open, setFormVisibility, form_data, selected_strategy } = quick_strategy;
 
     const active_tab_ref = useRef<HTMLDivElement>(null);
@@ -221,7 +221,7 @@ const QuickStrategy = observer(() => {
         <FormikWrapper>
             <FormikForm>
                 <LossThresholdWarningDialog />
-                {is_mobile ? (
+                {is_mobile_or_tablet ? (
                     <MobileFullPageModal
                         is_modal_open={is_open}
                         className='quick-strategy__wrapper'

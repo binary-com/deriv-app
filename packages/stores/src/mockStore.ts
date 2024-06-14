@@ -357,6 +357,7 @@ const mock = (): TStores & { is_mock: boolean } => {
             header_extension: null,
             is_link_expired_modal_visible: false,
             is_mobile: false,
+            is_mobile_or_tablet: false,
             is_tablet: false,
             is_mobile_language_menu_open: false,
             is_positions_drawer_on: false,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, DesktopWrapper, MobileDialog, MobileWrapper } from '@deriv/components';
+import { Modal, DesktopWrapper, MobileDialog, MobileOrTabletWrapper } from '@deriv/components';
 import { Localize, localize } from '@deriv/translations';
 import TradingAssessmentForm from '@deriv/account/src/Components/trading-assessment/trading-assessment-form';
 import tradingAssessmentConfig from '@deriv/account/src/Configs/trading-assessment-config';
@@ -117,7 +117,7 @@ const TradingAssessmentExistingUser = observer(() => {
                         />
                     </Modal>
                 </DesktopWrapper>
-                <MobileWrapper>
+                <MobileOrTabletWrapper>
                     <MobileDialog
                         visible={should_show_trade_assessment_form}
                         title={localize('Trading Experience Assessment')}
@@ -134,7 +134,7 @@ const TradingAssessmentExistingUser = observer(() => {
                             should_move_to_next={should_move_to_next}
                         />
                     </MobileDialog>
-                </MobileWrapper>
+                </MobileOrTabletWrapper>
             </React.Fragment>
         );
     }

@@ -1,7 +1,7 @@
 .buy-sell-modal {
     opacity: 1 !important;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         .dc-mobile-full-page-modal__header--border-bottom {
             border-bottom: 2px solid var(--general-section-1);
         }
@@ -12,7 +12,7 @@
         display: block;
         padding-top: 2.4rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             & > form {
                 height: fit-content !important;
             }
@@ -20,7 +20,7 @@
     }
 
     &__footer {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             border-top: 2px solid var(--general-section-1);
             display: flex;
             flex-direction: row;
@@ -74,7 +74,7 @@
                 margin: $gap 0 0 $gap;
             }
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 flex-direction: column;
 
                 .dc-input__wrapper {
@@ -153,11 +153,11 @@
         }
 
         &-field {
-            @include desktop {
+            @include desktop-screen {
                 display: flex;
             }
         }
-        @include mobile {
+        @include mobile-or-tablet-screen {
             .dc-input {
                 &__container {
                     width: 100%;
@@ -179,7 +179,7 @@
         .payment-method-card {
             margin: unset;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 min-height: 8.8rem;
                 min-width: unset;
                 width: 13.6rem;
@@ -188,7 +188,7 @@
             &--add {
                 margin: unset;
 
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     min-height: 8.8rem;
                     width: 13.6rem;
                 }
@@ -196,7 +196,7 @@
             &__body {
                 margin-top: 0.8rem;
 
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     margin-top: 0;
                 }
             }
@@ -225,7 +225,7 @@
 }
 
 .notification-messages {
-    @include desktop {
+    @include desktop-screen {
         z-index: 9999;
     }
 }

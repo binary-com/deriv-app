@@ -8,7 +8,7 @@
         border-radius: 0.2rem;
         outline: 0.1rem solid var(--system-light-1-prominent-text, #333);
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             height: 1.2rem;
         }
 

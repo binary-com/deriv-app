@@ -11,7 +11,7 @@
         justify-content: flex-start;
         min-height: 3.2rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin: 0;
         }
 

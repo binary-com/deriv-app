@@ -3,7 +3,7 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import classNames from 'classnames';
 
 import { Button, Icon, Modal, Text } from '@deriv/components';
-import { getCurrencyDisplayCode, isMobile, routes } from '@deriv/shared';
+import { getCurrencyDisplayCode, isMobileOrTablet, routes } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
 
@@ -146,7 +146,7 @@ const AccountTransferReceipt = observer(({ onClose, history }: TAccountTransferR
             <Modal
                 is_open={is_switch_visible}
                 toggleModal={toggleSwitchAlert}
-                has_close_icon={isMobile()}
+                has_close_icon={isMobileOrTablet()}
                 className='account_transfer_switch_modal'
                 small
                 title={localize(`Switch to ${switch_to.currency} account?`)}

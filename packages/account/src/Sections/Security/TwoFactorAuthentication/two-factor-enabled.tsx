@@ -6,9 +6,9 @@ import { Localize } from '@deriv/translations';
 
 const TwoFactorEnabled = () => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     return (
-        <ThemedScrollbars is_bypassed={is_mobile} className='two-factor__scrollbars'>
+        <ThemedScrollbars is_bypassed={is_mobile_or_tablet} className='two-factor__scrollbars'>
             <div className='two-factor__wrapper--enabled'>
                 <Icon icon='IcQrPhone' className='two-factor__icon' />
                 <Text as='h3' align='center' weight='bold' color='prominent' className='two-factor__qr--title'>

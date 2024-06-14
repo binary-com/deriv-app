@@ -5,7 +5,7 @@
     gap: 1.6rem;
     max-width: 85rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 100%;
     }
 
@@ -16,7 +16,7 @@
         align-items: center;
         gap: 1.1rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             display: flex;
             align-items: center;
             gap: 0.8rem;
@@ -29,7 +29,7 @@
             flex-shrink: 0;
             background: var(--system-light-7-secondary-background, #f2f3f4);
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 height: 0.1rem;
                 flex: 1 0 0;
             }
@@ -44,7 +44,7 @@
         &-message {
             width: 80rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 width: 100%;
             }
         }
@@ -56,13 +56,13 @@
         flex-direction: column;
         gap: 1.6rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 100%;
         }
 
         & .wallets-dropdown,
         & .wallets-textfield {
-            @include desktop {
+            @include desktop-screen {
                 max-width: 84rem;
             }
         }

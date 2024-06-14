@@ -11,7 +11,7 @@
     justify-content: space-between;
     gap: 1.6rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         padding-top: 0;
         height: fit-content;
     }
@@ -22,7 +22,7 @@
         align-items: center;
         padding-inline: 4rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 1.6rem 1.6rem 0rem;
         }
     }
@@ -31,7 +31,7 @@
         display: flex;
         flex-direction: column;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             gap: 0.4rem;
         }
     }
@@ -41,7 +41,7 @@
         gap: 0.8rem;
         align-items: center;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             opacity: 1;
             max-height: 2rem;
             transition: opacity 0.25s ease, max-height 0.25s ease;
@@ -58,13 +58,13 @@
         gap: 1.6rem;
         align-items: start;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             gap: 0.8rem;
         }
     }
 
     &__currency-icon {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             & > :first-child {
                 max-height: 4.8rem;
                 transition: opacity 0.2s ease, max-height 0.2s ease;
@@ -98,7 +98,7 @@
             display: none;
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding-inline: 1.6rem;
         }
     }
@@ -115,7 +115,7 @@
         flex-shrink: 0;
         cursor: pointer;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             height: 4rem;
             min-width: 7.2rem;
         }

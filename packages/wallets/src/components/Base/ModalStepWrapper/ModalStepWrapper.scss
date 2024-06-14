@@ -4,7 +4,7 @@
     animation: fadein 0.6s ease backwards;
     overflow-y: auto;
 
-    @include desktop {
+    @include desktop-screen {
         max-height: calc(var(--wallets-vh, 1vh) * 100 - 10rem);
     }
 
@@ -12,7 +12,7 @@
         overflow: unset;
     }
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         animation: popup 0.2s;
         height: calc(var(--wallets-vh, 1vh) * 100 - 4rem);
         width: 100vw;
@@ -58,7 +58,7 @@
             cursor: pointer;
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             display: grid;
             grid-template-columns: auto 2rem;
             background: var(--general-main-2, #ffffff);
@@ -84,7 +84,7 @@
         justify-content: flex-end;
         align-items: center;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             background: var(--general-main-2, #ffffff);
             position: relative;
             z-index: 99;

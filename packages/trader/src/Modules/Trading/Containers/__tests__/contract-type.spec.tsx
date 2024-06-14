@@ -24,6 +24,15 @@ const default_mock_store = {
     },
 };
 
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({
+        isMobile: true,
+        isTablet: false,
+        isDesktop: false,
+    })),
+}));
+
 jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
     isMobile: () => true,

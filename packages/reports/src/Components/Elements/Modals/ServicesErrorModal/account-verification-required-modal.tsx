@@ -14,17 +14,17 @@ const AccountVerificationRequiredModal = observer(
     ({ is_visible, onConfirm }: TAccountVerificationRequiredModalProps) => {
         const history = useHistory();
         const {
-            ui: { is_mobile },
+            ui: { is_mobile_or_tablet },
         } = useStore();
         return (
             <Modal
                 is_open={is_visible}
-                is_vertical_centered={is_mobile}
+                is_vertical_centered={is_mobile_or_tablet}
                 className='account-verification-required-modal'
                 toggleModal={onConfirm}
                 title={localize('Account verification required')}
                 width='440px'
-                height={is_mobile ? 'auto' : '220px'}
+                height={is_mobile_or_tablet ? 'auto' : '220px'}
             >
                 <Modal.Body className='account-verification-required-modal-text'>
                     <Localize i18n_default_text='Please submit your proof of identity and proof of address to verify your account and continue trading.' />

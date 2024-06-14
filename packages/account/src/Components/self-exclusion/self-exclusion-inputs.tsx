@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Button, DatePicker, Input, Text } from '@deriv/components';
-import { epochToMoment, toMoment, isMobile } from '@deriv/shared';
+import { epochToMoment, toMoment, isMobileOrTablet } from '@deriv/shared';
 import { Localize, localize } from '@deriv/translations';
 import {
     Field,
@@ -37,7 +37,7 @@ const SectionTitle = ({ title, has_border_line }: TSectionTitle) => {
         <Text
             as='h2'
             weight='bold'
-            size={isMobile() ? 'xxs' : 'xs'}
+            size={isMobileOrTablet() ? 'xxs' : 'xs'}
             className={clsx('da-self-exclusion__header', {
                 'da-self-exclusion__header-border': has_border_line,
             })}

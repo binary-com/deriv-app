@@ -5,7 +5,7 @@ import {
     Clipboard,
     DesktopWrapper,
     Icon,
-    MobileWrapper,
+    MobileOrTabletWrapper,
     Modal,
     Text,
     useCopyToClipboard,
@@ -103,7 +103,7 @@ const ShareMyAdsModal = ({ advert }: TAdvert) => {
                             >
                                 <Localize i18n_default_text='Download this QR code' />
                             </Button>
-                            <MobileWrapper>
+                            <MobileOrTabletWrapper>
                                 <Button.Group className='share-my-ads-modal__container__card__button-group'>
                                     <Button icon={<Icon icon='IcShare' />} secondary onClick={handleShareLink}>
                                         <Localize i18n_default_text='Share link' />
@@ -122,7 +122,7 @@ const ShareMyAdsModal = ({ advert }: TAdvert) => {
                                         <Localize i18n_default_text='Copy link' />
                                     </Button>
                                 </Button.Group>
-                            </MobileWrapper>
+                            </MobileOrTabletWrapper>
                         </div>
                         <DesktopWrapper>
                             <div className='share-my-ads-modal__share'>

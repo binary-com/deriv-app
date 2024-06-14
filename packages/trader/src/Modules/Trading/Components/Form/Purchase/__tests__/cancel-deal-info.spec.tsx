@@ -6,6 +6,11 @@ import { TProposalTypeInfo } from 'Types';
 import CancelDealInfo from '../cancel-deal-info';
 import TraderProviders from '../../../../../../trader-providers';
 
+jest.mock('@deriv/shared', () => ({
+    ...jest.requireActual('@deriv/shared'),
+    isDesktop: jest.fn(() => true),
+}));
+
 const deal_cancellation = 'Deal cancel. fee';
 const price = '1,023.00 USD';
 const mock_proposal_info: TProposalTypeInfo = {

@@ -11,13 +11,13 @@ import {
     FormSubmitErrorMessage,
     Input,
     Loading,
-    MobileWrapper,
+    MobileOrTabletWrapper,
     Modal,
     SelectNative,
     Text,
     ThemedScrollbars,
 } from '@deriv/components';
-import { isDeepEqual, isDesktop, isMobile } from '@deriv/shared';
+import { isDeepEqual, isDesktop, isMobileOrTablet } from '@deriv/shared';
 import { Localize, localize } from '@deriv/translations';
 
 type TPersonalDetailsFormProps = {
@@ -288,7 +288,7 @@ const PersonalDetailsForm = ({
                                             }
                                         />
                                     </Text>
-                                    <ThemedScrollbars height='512px' is_bypassed={isMobile()}>
+                                    <ThemedScrollbars height='512px' is_bypassed={isMobileOrTablet()}>
                                         <div className='details-form__elements'>
                                             <fieldset className='account-form__fieldset'>
                                                 <DesktopWrapper>
@@ -313,7 +313,7 @@ const PersonalDetailsForm = ({
                                                         )}
                                                     </Field>
                                                 </DesktopWrapper>
-                                                <MobileWrapper>
+                                                <MobileOrTabletWrapper>
                                                     <SelectNative
                                                         placeholder={localize('Please select')}
                                                         label={localize('Citizenship*')}
@@ -328,7 +328,7 @@ const PersonalDetailsForm = ({
                                                         required
                                                         should_hide_disabled_options={false}
                                                     />
-                                                </MobileWrapper>
+                                                </MobileOrTabletWrapper>
                                             </fieldset>
                                             <fieldset className='account-form__fieldset'>
                                                 <DesktopWrapper>
@@ -353,7 +353,7 @@ const PersonalDetailsForm = ({
                                                         )}
                                                     </Field>
                                                 </DesktopWrapper>
-                                                <MobileWrapper>
+                                                <MobileOrTabletWrapper>
                                                     <SelectNative
                                                         placeholder={localize('Please select')}
                                                         label={localize('Place of birth*')}
@@ -368,7 +368,7 @@ const PersonalDetailsForm = ({
                                                         required
                                                         should_hide_disabled_options={false}
                                                     />
-                                                </MobileWrapper>
+                                                </MobileOrTabletWrapper>
                                             </fieldset>
                                             <fieldset className='account-form__fieldset'>
                                                 <DesktopWrapper>
@@ -392,7 +392,7 @@ const PersonalDetailsForm = ({
                                                         )}
                                                     </Field>
                                                 </DesktopWrapper>
-                                                <MobileWrapper>
+                                                <MobileOrTabletWrapper>
                                                     <SelectNative
                                                         placeholder={localize('Please select')}
                                                         label={localize('Tax residence*')}
@@ -406,7 +406,7 @@ const PersonalDetailsForm = ({
                                                         }
                                                         required
                                                     />
-                                                </MobileWrapper>
+                                                </MobileOrTabletWrapper>
                                             </fieldset>
                                             <fieldset className='account-form__fieldset'>
                                                 <InputField
@@ -441,7 +441,7 @@ const PersonalDetailsForm = ({
                                                                 list_portal_id='modal_root'
                                                             />
                                                         </DesktopWrapper>
-                                                        <MobileWrapper>
+                                                        <MobileOrTabletWrapper>
                                                             <SelectNative
                                                                 {...field}
                                                                 placeholder={localize('Please select')}
@@ -461,18 +461,18 @@ const PersonalDetailsForm = ({
                                                                 }}
                                                                 data_testid='account_opening_reason_mobile'
                                                             />
-                                                        </MobileWrapper>
+                                                        </MobileOrTabletWrapper>
                                                     </React.Fragment>
                                                 )}
                                             </Field>
                                         </div>
                                     </ThemedScrollbars>
                                 </Div100vhContainer>
-                                <Modal.Footer is_bypassed={isMobile()} has_separator>
+                                <Modal.Footer is_bypassed={isMobileOrTablet()} has_separator>
                                     {form_error && <FormSubmitErrorMessage message={form_error} />}
                                     <FormSubmitButton
                                         is_disabled={isSubmitting || !isValid || Object.keys(errors).length > 0}
-                                        is_absolute={isMobile()}
+                                        is_absolute={isMobileOrTablet()}
                                         label={localize('Next')}
                                     />
                                 </Modal.Footer>

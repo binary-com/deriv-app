@@ -6,7 +6,7 @@
     align-items: center;
     gap: 1.6rem;
 
-    @include desktop {
+    @include desktop-screen {
         overflow: auto;
     }
 

@@ -19,7 +19,7 @@ const DashboardComponent = observer(({ handleTabChange }: TMobileIconGuide) => {
     const { dashboard_strategies } = load_modal;
     const { setActiveTabTutorial, active_tab, active_tour } = dashboard;
     const has_dashboard_strategies = !!dashboard_strategies?.length;
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
 
     return (
         <React.Fragment>
@@ -30,14 +30,14 @@ const DashboardComponent = observer(({ handleTabChange }: TMobileIconGuide) => {
             >
                 <div className='tab__dashboard__content'>
                     <UserGuide
-                        is_mobile={is_mobile}
+                        is_mobile_or_tablet={is_mobile_or_tablet}
                         handleTabChange={handleTabChange}
                         setActiveTabTutorial={setActiveTabTutorial}
                     />
                     <div className='quick-panel'>
                         <div
                             className={classNames('tab__dashboard__header', {
-                                'tab__dashboard__header--listed': !is_mobile && has_dashboard_strategies,
+                                'tab__dashboard__header--listed': !is_mobile_or_tablet && has_dashboard_strategies,
                             })}
                         >
                             {!has_dashboard_strategies && (
@@ -45,7 +45,7 @@ const DashboardComponent = observer(({ handleTabChange }: TMobileIconGuide) => {
                                     className='title'
                                     as='h2'
                                     color='prominent'
-                                    size={is_mobile ? 's' : 'sm'}
+                                    size={is_mobile_or_tablet ? 's' : 'sm'}
                                     line_height='xxl'
                                     weight='bold'
                                 >
@@ -56,7 +56,7 @@ const DashboardComponent = observer(({ handleTabChange }: TMobileIconGuide) => {
                                 as='p'
                                 color='prominent'
                                 line_height='s'
-                                size={is_mobile ? 'xxs' : 's'}
+                                size={is_mobile_or_tablet ? 'xxs' : 's'}
                                 className={classNames('subtitle', { 'subtitle__has-list': has_dashboard_strategies })}
                             >
                                 {localize(
@@ -64,12 +64,15 @@ const DashboardComponent = observer(({ handleTabChange }: TMobileIconGuide) => {
                                 )}
                             </Text>
                         </div>
-                        <Cards has_dashboard_strategies={has_dashboard_strategies} is_mobile={is_mobile} />
+                        <Cards
+                            has_dashboard_strategies={has_dashboard_strategies}
+                            is_mobile_or_tablet={is_mobile_or_tablet}
+                        />
                     </div>
                 </div>
             </div>
             <InfoPanel />
-            {active_tab === 0 && <OnboardTourHandler is_mobile={is_mobile} />}
+            {active_tab === 0 && <OnboardTourHandler is_mobile_or_tablet={is_mobile_or_tablet} />}
         </React.Fragment>
     );
 });

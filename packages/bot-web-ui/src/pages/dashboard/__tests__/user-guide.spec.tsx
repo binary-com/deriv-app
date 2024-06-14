@@ -34,7 +34,7 @@ jest.mock('@deriv/components', () => {
         messageWithButton: jest.fn(() => 'messageWithButton'),
         arrayAsMessage: jest.fn(() => 'messageWithButton'),
         DesktopWrapper: jest.fn(() => 'DesktopWrapper'),
-        MobileWrapper: jest.fn(() => 'MobileWrapper'),
+        MobileOrTabletWrapper: jest.fn(() => 'MobileOrTabletWrapper'),
         Text: jest.fn(() => 'Text'),
     };
 });

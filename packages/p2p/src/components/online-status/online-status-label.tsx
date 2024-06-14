@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { observer } from '@deriv/stores';
 import { getLastOnlineLabel } from 'Utils/adverts';
 
@@ -13,7 +13,7 @@ type TOnlineStatusLabelProps = {
 const OnlineStatusLabel = ({
     is_online,
     last_online_time,
-    size = isMobile() ? 'xxxs' : 'xs',
+    size = isMobileOrTablet() ? 'xxxs' : 'xs',
 }: TOnlineStatusLabelProps) => {
     return (
         <Text color='less-prominent' size={size}>

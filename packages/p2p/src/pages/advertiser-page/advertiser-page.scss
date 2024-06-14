@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         overflow-y: auto;
     }
 
@@ -21,7 +21,7 @@
         height: fit-content;
         justify-content: space-between;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding-top: 1.6rem;
             width: 100vw;
         }
@@ -29,7 +29,7 @@
         &-details {
             display: flex;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 display: inline-grid;
                 grid-template-columns: auto auto;
                 margin: 0 0 3rem;
@@ -37,7 +37,7 @@
                 .dp2p-avatar {
                     align-self: center;
 
-                    @include mobile {
+                    @include mobile-or-tablet-screen {
                         align-self: flex-start;
                         margin-top: 0.6rem;
                         margin-right: 0.7rem;
@@ -72,7 +72,7 @@
             align-items: center;
             display: flex;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 display: grid;
                 position: absolute;
                 right: 1.6rem;
@@ -82,7 +82,7 @@
                 margin-left: 0.4rem;
                 vertical-align: sub;
 
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     vertical-align: text-top;
                 }
             }
@@ -106,7 +106,7 @@
     }
 
     &__modal {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             max-width: 100vw;
         }
     }
@@ -116,7 +116,7 @@
         flex-direction: row;
         padding-bottom: 0.7rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding-top: 0.7rem;
         }
 
@@ -159,7 +159,7 @@
     }
 
     &__cell {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             display: block;
         }
         &-limit {
@@ -171,7 +171,7 @@
         &-icon {
             margin: 1.6rem 0.8rem 1.6rem 2.4rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin: 1.6rem 1rem;
             }
         }
@@ -194,13 +194,13 @@
         margin: 0.25rem;
         width: fit-content;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 0.4rem;
         }
     }
 
     .dc-tabs__content {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             position: fixed;
             top: 140px;
 
@@ -232,7 +232,7 @@
             border: 1px solid var(--general-hover);
             border-radius: 0.8rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 border-radius: unset;
             }
         }

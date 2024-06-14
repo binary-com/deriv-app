@@ -34,7 +34,7 @@ describe('LanguageSettings', () => {
                 current_language: 'lang_1',
             },
             ui: {
-                is_mobile: false,
+                is_mobile_or_tablet: false,
             },
         });
     });
@@ -71,7 +71,7 @@ describe('LanguageSettings', () => {
     });
 
     it('should redirect in mobile view when the user tries to reach `/account/languages` route', () => {
-        mockRootStore.ui.is_mobile = true;
+        mockRootStore.ui.is_mobile_or_tablet = true;
         Object.defineProperty(window, 'location', {
             configurable: true,
             value: { pathname: routes.languages },

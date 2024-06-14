@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { useDevice } from '@deriv-com/ui';
 import { mockStore } from '@deriv/stores';
 import { TCoreStores } from '@deriv/stores/types';
-import { isDesktop, isMobile } from '@deriv/shared';
+import { isDesktop, isMobile, isMobileOrTablet } from '@deriv/shared';
 import TraderProviders from '../../../../../../trader-providers';
 import Barrier from '../barrier';
 
@@ -33,6 +34,11 @@ const mock_default_store = {
     },
 };
 
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isDesktop: true, isTablet: false, isMobile: false })),
+}));
+
 jest.mock('@deriv/components', () => ({
     ...jest.requireActual('@deriv/components'),
     InputField: jest.fn(() => <div>{mocked_input_field}</div>),
@@ -40,6 +46,7 @@ jest.mock('@deriv/components', () => ({
 jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
     isDesktop: jest.fn(() => true),
+    isMobileOrTablet: jest.fn(() => false),
     isMobile: jest.fn(() => false),
 }));
 jest.mock('../../LabeledQuantityInputMobile', () =>
@@ -108,7 +115,9 @@ describe('<Barrier />', () => {
 
     it('should render Modal for mobile devices after user clicked on LabeledQuantityInputMobile', () => {
         (isMobile as jest.Mock).mockReturnValue(true);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
         (isDesktop as jest.Mock).mockReturnValue(false);
+        (useDevice as jest.Mock).mockReturnValue({ isDesktop: false, isTablet: false, isMobile: true });
         render(mockBarrier(mockStore(mock_default_store), default_props));
 
         expect(screen.queryByText(/Current Price/i)).not.toBeInTheDocument();

@@ -1,5 +1,5 @@
 import React from 'react';
-import { DesktopWrapper, Icon, MobileWrapper, Text } from '@deriv/components';
+import { DesktopWrapper, Icon, MobileOrTabletWrapper, Text } from '@deriv/components';
 import { observer } from '@deriv/stores';
 import { localize, Localize } from 'Components/i18next';
 import PageReturn from 'Components/page-return';
@@ -23,7 +23,7 @@ const FilterModalHeader = ({ pageHeaderReturnFn }: TFilterModalHeaderProps) => {
                         page_title={localize('Payment methods')}
                     />
                 </DesktopWrapper>
-                <MobileWrapper>
+                <MobileOrTabletWrapper>
                     <Text align='center' weight='bold'>
                         <Icon
                             className='filter-modal-header__return-button'
@@ -32,7 +32,7 @@ const FilterModalHeader = ({ pageHeaderReturnFn }: TFilterModalHeaderProps) => {
                         />
                         <Localize i18n_default_text='Payment methods' />
                     </Text>
-                </MobileWrapper>
+                </MobileOrTabletWrapper>
             </React.Fragment>
         );
     }

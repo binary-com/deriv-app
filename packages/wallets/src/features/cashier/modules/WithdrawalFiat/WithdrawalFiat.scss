@@ -5,7 +5,7 @@
         max-width: 58.8rem;
         border: none;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 100%;
         }
     }

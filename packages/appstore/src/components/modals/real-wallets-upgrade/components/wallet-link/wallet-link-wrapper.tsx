@@ -18,11 +18,11 @@ export type TWalletLinkWrapper = {
 
 const WalletLinkWrapper = observer(({ wallet_details, account_list }: TWalletLinkWrapper) => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     return (
         <div className='wallet-link-wrapper'>
             <div className='wallet-link-wrapper__accounts'>
-                {is_mobile && (
+                {is_mobile_or_tablet && (
                     <Text
                         as='div'
                         className='wallet-link-wrapper__title-text wallet-link-wrapper__accounts-title'
@@ -56,7 +56,7 @@ const WalletLinkWrapper = observer(({ wallet_details, account_list }: TWalletLin
             </div>
             <div className='wallet-link-wrapper__card-wrapper'>
                 <WalletCard wallet={wallet_details} size='large' state='default' />
-                {is_mobile && (
+                {is_mobile_or_tablet && (
                     <Text
                         className='wallet-link-wrapper__title-text wallet-link-wrapper__card-wrapper-title'
                         color='prominent'

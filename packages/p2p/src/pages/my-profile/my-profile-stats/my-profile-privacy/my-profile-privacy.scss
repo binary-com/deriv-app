@@ -4,7 +4,7 @@
     flex-direction: row;
     margin-bottom: 2.4rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         justify-content: space-between;
     }
 
@@ -18,7 +18,7 @@
             flex-direction: column;
             margin-top: 1.6rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 align-items: unset;
                 margin-top: 0;
             }

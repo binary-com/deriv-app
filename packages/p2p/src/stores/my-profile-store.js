@@ -4,7 +4,7 @@ import { localize } from 'Components/i18next';
 import { textValidator } from 'Utils/validations';
 import BaseStore from 'Stores/base_store';
 import { my_profile_tabs } from 'Constants/my-profile-tabs';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 
 export default class MyProfileStore extends BaseStore {
     active_tab = my_profile_tabs.MY_STATS;
@@ -437,7 +437,7 @@ export default class MyProfileStore extends BaseStore {
         this.setSelectedSortValue(e.target.value);
         this.getTradePartnersList({ startIndex: 0 }, true);
 
-        if (isMobile()) {
+        if (isMobileOrTablet()) {
             this.root_store.general_store.hideModal();
         }
     }

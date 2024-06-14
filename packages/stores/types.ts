@@ -688,6 +688,7 @@ type TUiStore = {
     is_app_disabled: boolean;
     is_link_expired_modal_visible: boolean;
     is_mobile: boolean;
+    is_mobile_or_tablet: boolean;
     is_tablet: boolean;
     is_mobile_language_menu_open: boolean;
     is_positions_drawer_on: boolean;

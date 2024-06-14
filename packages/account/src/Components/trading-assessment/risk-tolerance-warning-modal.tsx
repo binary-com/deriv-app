@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Icon, Modal, Text, DesktopWrapper, MobileDialog, MobileWrapper } from '@deriv/components';
+import { Button, Icon, Modal, Text, DesktopWrapper, MobileDialog, MobileOrTabletWrapper } from '@deriv/components';
 import { localize } from '@deriv/translations';
 
 type RiskToleranceWarningModalProps = {
@@ -48,7 +48,7 @@ const RiskToleranceWarningModal = ({
                     </Modal.Footer>
                 </Modal>
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <MobileDialog
                     visible={show_risk_modal}
                     title={has_sub_header ? localize('Trading Experience Assessment') : title}
@@ -85,7 +85,7 @@ const RiskToleranceWarningModal = ({
                         />
                     </Modal.Footer>
                 </MobileDialog>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </React.Fragment>
     );
 };

@@ -11,7 +11,7 @@ import {
 } from '@deriv/components';
 import { useResidenceSelfDeclaration } from '@deriv/hooks';
 import { observer } from '@deriv/stores';
-import { isDesktop, isMobile, TBrokerCodes } from '@deriv/shared';
+import { isDesktop, isMobileOrTablet, TBrokerCodes } from '@deriv/shared';
 import { localize, Localize } from '@deriv/translations';
 import CheckboxField from './checkbox-field';
 import { SharedMessage, BrokerSpecificMessage, Hr } from './terms-of-use-messages';
@@ -165,7 +165,7 @@ const TermsOfUse = observer(
                                         </div>
                                     </ThemedScrollbars>
                                 </Div100vhContainer>
-                                <Modal.Footer has_separator is_bypassed={isMobile()}>
+                                <Modal.Footer has_separator is_bypassed={isMobileOrTablet()}>
                                     <FormSubmitButton
                                         is_disabled={
                                             isSubmitting ||
@@ -178,7 +178,7 @@ const TermsOfUse = observer(
                                         }
                                         label={getSubmitButtonLabel()}
                                         has_cancel
-                                        is_absolute={isMobile()}
+                                        is_absolute={isMobileOrTablet()}
                                         onCancel={() => handleCancel()}
                                         cancel_label={localize('Previous')}
                                         form_error={props.form_error}

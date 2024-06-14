@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { useHistory } from 'react-router-dom';
 import { useStore } from '@deriv/stores';
-import { DesktopWrapper, MobileWrapper, StaticUrl } from '@deriv/components';
+import { DesktopWrapper, MobileOrTabletWrapper, StaticUrl } from '@deriv/components';
 import { getDecimalPlaces, platforms, routes } from '@deriv/shared';
 import { AccountActions, MenuLinks, PlatformSwitcher } from 'App/Components/Layout/Header';
 import { AccountsInfoLoader } from 'App/Components/Layout/Header/Components/Preloader';
@@ -27,7 +27,7 @@ const DefaultHeaderWallets = () => {
         openRealAccountSignup,
         toggleAccountsDialog,
         is_trading_assessment_for_existing_user_enabled,
-        is_mobile,
+        is_mobile_or_tablet,
     } = ui;
     const {
         account_type,
@@ -112,17 +112,17 @@ const DefaultHeaderWallets = () => {
                             current_language={current_language}
                         />
                     </DesktopWrapper>
-                    <MobileWrapper>
+                    <MobileOrTabletWrapper>
                         <ToggleMenuDrawer platform_config={filterPlatformsForClients(platform_config)} />
                         {header_extension && is_logged_in && (
                             <div className='header__menu-left-extensions'>{header_extension}</div>
                         )}
-                    </MobileWrapper>
+                    </MobileOrTabletWrapper>
                     <MenuLinks />
                 </div>
                 <div
                     className={classNames('header__menu-right', {
-                        'header__menu-right--hidden': is_mobile && is_logging_in,
+                        'header__menu-right--hidden': is_mobile_or_tablet && is_logging_in,
                     })}
                 >
                     {(is_logging_in || is_switching) && (
@@ -133,7 +133,11 @@ const DefaultHeaderWallets = () => {
                                 'acc-info__preloader--is-crypto': getDecimalPlaces(currency) > 2,
                             })}
                         >
-                            <AccountsInfoLoader is_logged_in={is_logged_in} is_mobile={is_mobile} speed={3} />
+                            <AccountsInfoLoader
+                                is_logged_in={is_logged_in}
+                                is_mobile_or_tablet={is_mobile_or_tablet}
+                                speed={3}
+                            />
                         </div>
                     )}
 

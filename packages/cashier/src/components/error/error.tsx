@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Icon, ButtonLink, StaticUrl, Text } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { localize, Localize } from '@deriv/translations';
 import ErrorStore from '../../stores/error-store';
 import './error.scss';
@@ -27,7 +27,13 @@ const ErrorComponent = ({ header, message, button_link, onClickButton, button_te
             </Text>
         )}
         {message && (
-            <Text as='p' align='center' size={isMobile() ? 'xxs' : 'xs'} line_height='s' className='cashier__paragraph'>
+            <Text
+                as='p'
+                align='center'
+                size={isMobileOrTablet() ? 'xxs' : 'xs'}
+                line_height='s'
+                className='cashier__paragraph'
+            >
                 {message}
             </Text>
         )}

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { addComma, getDisplayStatus, isCryptocurrency } from '@deriv/shared';
 import { TContractInfo } from '@deriv/shared/src/utils/contract/contract-types';
 import DesktopWrapper from '../../desktop-wrapper';
-import MobileWrapper from '../../mobile-wrapper';
+import MobileOrTabletWrapper from '../../mobile-wrapper';
 import ContractCardItem from './contract-card-item';
 import Money from '../../money';
 import { ResultStatusIcon } from '../result-overlay/result-overlay';
@@ -72,7 +72,7 @@ const VanillaOptionsCardBody: React.FC<TVanillaOptionsCardBodyProps> = ({
                     {!is_sold && <ArrowIndicator className='dc-contract-card__indicative--movement' value={profit} />}
                 </ContractCardItem>
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <div className='dc-contract-card-items-wrapper--mobile'>
                     <div className='dc-contract-card-items-wrapper-group'>
                         <ContractCardItem header={STAKE}>
@@ -126,7 +126,7 @@ const VanillaOptionsCardBody: React.FC<TVanillaOptionsCardBodyProps> = ({
                         )}
                     </ContractCardItem>
                 </div>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </React.Fragment>
     );
 };

@@ -13,7 +13,7 @@ type TSaveModalForm = {
     button_status: number;
     google_drive_connected?: boolean;
     is_authorised: boolean;
-    is_mobile?: boolean;
+    is_mobile_or_tablet?: boolean;
     is_onscreen_keyboard_active?: boolean;
     is_save_modal_open?: boolean;
     icon?: string;
@@ -33,7 +33,7 @@ const SaveModalForm = ({
     onDriveConnect,
     validateBotName,
     toggleSaveModal,
-    is_mobile,
+    is_mobile_or_tablet,
     is_onscreen_keyboard_active,
     setCurrentFocus,
 }: TSaveModalForm) => (
@@ -47,7 +47,7 @@ const SaveModalForm = ({
         onSubmit={onConfirmSave}
     >
         {({ values: { is_local }, setFieldValue, touched, errors }) => {
-            const content_height = !is_mobile ? '500px' : `calc(100%)`;
+            const content_height = !is_mobile_or_tablet ? '500px' : `calc(100%)`;
             return (
                 <ThemedScrollbars height={content_height} autohide>
                     <Form className={classNames({ 'form--active-keyboard': is_onscreen_keyboard_active })}>
@@ -89,7 +89,12 @@ const SaveModalForm = ({
                                         label={
                                             <IconRadio
                                                 text={localize('Local')}
-                                                icon={<Icon icon={is_mobile ? 'IcLocal' : 'IcMyComputer'} size={48} />}
+                                                icon={
+                                                    <Icon
+                                                        icon={is_mobile_or_tablet ? 'IcLocal' : 'IcMyComputer'}
+                                                        size={48}
+                                                    />
+                                                }
                                             />
                                         }
                                         value={save_types.LOCAL}
@@ -178,7 +183,7 @@ const SaveModal = observer(() => {
         validateBotName,
     } = save_modal;
     const { is_authorised } = google_drive;
-    const { is_onscreen_keyboard_active, setCurrentFocus, is_mobile } = ui;
+    const { is_onscreen_keyboard_active, setCurrentFocus, is_mobile_or_tablet } = ui;
     const { active_tab } = dashboard;
 
     useEffect(() => {
@@ -187,7 +192,7 @@ const SaveModal = observer(() => {
         }
     }, [active_tab, dashboard_strategies, updateBotName]);
 
-    return is_mobile ? (
+    return is_mobile_or_tablet ? (
         <MobileFullPageModal
             is_modal_open={is_save_modal_open}
             className='save-modal__wrapper'
@@ -204,7 +209,7 @@ const SaveModal = observer(() => {
                 onDriveConnect={onDriveConnect}
                 validateBotName={validateBotName}
                 toggleSaveModal={toggleSaveModal}
-                is_mobile={is_mobile}
+                is_mobile_or_tablet={is_mobile_or_tablet}
                 is_onscreen_keyboard_active={is_onscreen_keyboard_active}
                 setCurrentFocus={setCurrentFocus}
             />

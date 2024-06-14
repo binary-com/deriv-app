@@ -11,7 +11,7 @@
             align-self: flex-start;
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             border-bottom: 1px solid var(--general-section-1);
             margin: unset;
             padding: 1.2rem 0;
@@ -27,7 +27,7 @@
     }
 
     &__empty {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin-top: calc(#{$mobile_tabs_height} + 2.6rem); // Header + Margin
         }
     }

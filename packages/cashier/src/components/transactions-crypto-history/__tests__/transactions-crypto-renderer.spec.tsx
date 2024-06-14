@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { isMobile } from '@deriv/shared';
+import { isMobile, isMobileOrTablet } from '@deriv/shared';
 import TransactionsCryptoRenderer from '../transactions-crypto-renderer';
 import CashierProviders from '../../../cashier-providers';
 import { mockStore } from '@deriv/stores';
@@ -9,6 +9,7 @@ import { mockStore } from '@deriv/stores';
 jest.mock('@deriv/shared/src/utils/screen/responsive', () => ({
     ...jest.requireActual('@deriv/shared/src/utils/screen/responsive'),
     isMobile: jest.fn(),
+    isMobileOrTablet: jest.fn(),
 }));
 
 describe('<TransactionsCryptoRenderer />', () => {
@@ -105,6 +106,7 @@ describe('<TransactionsCryptoRenderer />', () => {
 
     it('should trigger onClick callback when "transactions-crypto-history__table-status" is clicked in Mobile mode', () => {
         (isMobile as jest.Mock).mockReturnValue(true);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
 
         renderTransactionsCryptoRenderer();
 
@@ -118,6 +120,7 @@ describe('<TransactionsCryptoRenderer />', () => {
 
     it('should show the proper data in Mobile mode', () => {
         (isMobile as jest.Mock).mockReturnValue(true);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
 
         renderTransactionsCryptoRenderer();
 
@@ -131,6 +134,7 @@ describe('<TransactionsCryptoRenderer />', () => {
 
     it('should trigger onClick callback when the user clicks "Cancel transaction" button in Mobile mode', () => {
         (isMobile as jest.Mock).mockReturnValue(true);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
 
         renderTransactionsCryptoRenderer();
 
@@ -143,6 +147,8 @@ describe('<TransactionsCryptoRenderer />', () => {
 
     it('should display popover when hovering on tooltip for third-party transactions (CoinsPaid)', () => {
         (isMobile as jest.Mock).mockReturnValue(false);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(false);
+
         const tooltip_props = {
             row: {
                 address_hash: 'tb1ql7w62elx9ucw4pj5lgw4l028hmuw80sndtntxt',
@@ -176,6 +182,8 @@ describe('<TransactionsCryptoRenderer />', () => {
 
     it('should check whether the tooltip is clickable for third-party transactions (CoinsPaid)', () => {
         (isMobile as jest.Mock).mockReturnValue(true);
+        (isMobileOrTablet as jest.Mock).mockReturnValue(true);
+
         const tooltip_props = {
             row: {
                 address_hash: 'tb1ql7w62elx9ucw4pj5lgw4l028hmuw80sndtntxt',

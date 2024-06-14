@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { DesktopWrapper, Icon, MobileWrapper, Text } from '@deriv/components';
+import { DesktopWrapper, Icon, MobileOrTabletWrapper, Text } from '@deriv/components';
 import { Localize } from 'Components/i18next';
 
 const BlockUserEmpty = () => {
@@ -19,7 +19,7 @@ const BlockUserEmpty = () => {
                     </Text>
                 </div>
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <div className='block-user-empty__mobile-content'>
                     <Icon
                         icon='IcEmptyBlockedAdvertisers'
@@ -31,7 +31,7 @@ const BlockUserEmpty = () => {
                         <Localize i18n_default_text='No one to show here' />
                     </Text>
                 </div>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </React.Fragment>
     );
 };

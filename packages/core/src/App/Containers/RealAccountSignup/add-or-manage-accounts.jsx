@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Tabs, ThemedScrollbars } from '@deriv/components';
 import { localize } from '@deriv/translations';
-import { CURRENCY_TYPE, isDesktop, isMobile } from '@deriv/shared';
+import { CURRENCY_TYPE, isDesktop, isMobileOrTablet } from '@deriv/shared';
 import { WS } from 'Services';
 import AddCryptoCurrency from './add-crypto-currency.jsx';
 import AddCurrency from './add-currency.jsx';
@@ -137,7 +137,7 @@ const AddOrManageAccounts = observer(props => {
     const is_mf_active = loginid?.startsWith('MF');
 
     return (
-        <ThemedScrollbars is_bypassed={isMobile()} autohide={false}>
+        <ThemedScrollbars is_bypassed={isMobileOrTablet()} autohide={false}>
             {(show_eu_related_content && !is_low_risk && has_fiat) || is_mf_active ? (
                 fiat_section
             ) : (

@@ -30,7 +30,7 @@ describe('TradingAssessmentForm', () => {
         should_move_to_next: false,
         setSubSectionIndex: mockSetSubSectionIndex,
         is_independent_section: false,
-        is_mobile: false,
+        is_mobile_or_tablet: false,
     };
 
     afterEach(() => {
@@ -40,7 +40,7 @@ describe('TradingAssessmentForm', () => {
     it('should display the provided question', () => {
         const mock_store = mockStore({
             ui: {
-                is_mobile: false,
+                is_mobile_or_tablet: false,
             },
         });
         render(
@@ -56,7 +56,7 @@ describe('TradingAssessmentForm', () => {
     it('should display the provided options in the form', () => {
         const mock_store = mockStore({
             ui: {
-                is_mobile: false,
+                is_mobile_or_tablet: false,
             },
         });
         render(
@@ -71,7 +71,7 @@ describe('TradingAssessmentForm', () => {
     it('should go to the next question on when the checkbox is "yes" and next button is selected', async () => {
         const mock_store = mockStore({
             ui: {
-                is_mobile: false,
+                is_mobile_or_tablet: false,
             },
         });
         render(
@@ -93,7 +93,7 @@ describe('TradingAssessmentForm', () => {
     it('should call onCancel when displaying the first question and "Previous" is clicked', async () => {
         const mock_store = mockStore({
             ui: {
-                is_mobile: false,
+                is_mobile_or_tablet: false,
             },
         });
         render(

@@ -1,7 +1,7 @@
 import React from 'react';
 import { localize, Localize } from '@deriv/translations';
 import { Div100vhContainer, Icon, MobileDialog, Modal, SendEmailTemplate, Text, Popover } from '@deriv/components';
-import { getPlatformSettings, CFD_PLATFORMS, isMobile, isDesktop } from '@deriv/shared';
+import { getPlatformSettings, CFD_PLATFORMS, isMobileOrTablet, isDesktop } from '@deriv/shared';
 
 type TSentEmailModal = {
     identifier_title: string;
@@ -136,7 +136,7 @@ const SentEmailModal = ({
         </SendEmailTemplate>
     );
 
-    if (isMobile() && !is_modal_when_mobile) {
+    if (isMobileOrTablet() && !is_modal_when_mobile) {
         return (
             <MobileDialog
                 portal_element_id='modal_root'

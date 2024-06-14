@@ -2,9 +2,9 @@ import React from 'react';
 import classnames from 'classnames';
 import ContentLoader from 'react-content-loader';
 
-const JournalLoader = ({ is_mobile }: { is_mobile: boolean }) => (
+const JournalLoader = ({ is_mobile_or_tablet }: { is_mobile_or_tablet: boolean }) => (
     <ContentLoader
-        className={classnames('journal__loader', { 'journal__loader--mobile': is_mobile })}
+        className={classnames('journal__loader', { 'journal__loader--mobile': is_mobile_or_tablet })}
         speed={3}
         width={350}
         height={92}

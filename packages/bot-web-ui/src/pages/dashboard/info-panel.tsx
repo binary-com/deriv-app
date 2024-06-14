@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { DesktopWrapper, Icon, MobileWrapper, Modal, Text } from '@deriv/components';
+import { DesktopWrapper, Icon, MobileOrTabletWrapper, Modal, Text } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { DBOT_TABS } from 'Constants/bot-contents';
 import { useDBotStore } from 'Stores/useDBotStore';
@@ -8,7 +8,7 @@ import { SIDEBAR_INTRO } from './constants';
 
 const InfoPanel = observer(() => {
     const {
-        ui: { is_mobile },
+        ui: { is_mobile_or_tablet },
     } = useStore();
     const { dashboard } = useDBotStore();
     const {
@@ -44,7 +44,13 @@ const InfoPanel = observer(() => {
                 const { label, content, link } = sidebar_item;
                 return (
                     <div key={`${label}-${content}`}>
-                        <Text color='prominent' line_height='xxl' size={is_mobile ? 's' : 'm'} weight='bold' as='h1'>
+                        <Text
+                            color='prominent'
+                            line_height='xxl'
+                            size={is_mobile_or_tablet ? 's' : 'm'}
+                            weight='bold'
+                            as='h1'
+                        >
                             {label}
                         </Text>
                         {content.map(text => (
@@ -57,7 +63,7 @@ const InfoPanel = observer(() => {
                                 line_height='xl'
                                 as='p'
                                 onClick={() => switchTab(link, label, text.faq_id)}
-                                size={is_mobile ? 'xxs' : 's'}
+                                size={is_mobile_or_tablet ? 'xxs' : 's'}
                             >
                                 {text.data}
                             </Text>
@@ -81,7 +87,7 @@ const InfoPanel = observer(() => {
                     </div>
                 )}
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <Modal
                     className='statistics__modal statistics__modal--mobile'
                     is_open={is_info_panel_visible}
@@ -90,7 +96,7 @@ const InfoPanel = observer(() => {
                 >
                     <Modal.Body>{renderInfo()}</Modal.Body>
                 </Modal>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </>
     );
 });

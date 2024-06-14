@@ -1,7 +1,7 @@
 .questionnaire-modal {
     border-radius: 1.6rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         border-radius: 1.6rem;
         padding-inline: 0;
     }
@@ -29,7 +29,7 @@
             box-shadow: 0 0.4rem 0.6rem -0.2rem rgba(14, 14, 14, 0.03), 0 1.2rem 1.6rem -0.4rem rgba(14, 14, 14, 0.08);
             border-radius: $BORDER-RADIUS * 4;
             border: 0.1rem solid var(--general-active);
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 inline-size: 28rem;
             }
             &:hover {
@@ -57,7 +57,7 @@
             &:hover {
                 box-shadow: 0 0.2rem 0.8rem 0 var(--shadow-menu);
             }
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 min-inline-size: 13.2rem;
                 min-block-size: 13.8rem;
             }

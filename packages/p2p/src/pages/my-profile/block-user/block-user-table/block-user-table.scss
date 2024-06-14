@@ -3,7 +3,7 @@
     flex: 1;
     flex-direction: column;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         height: 100%;
     }
 
@@ -13,7 +13,7 @@
         flex-direction: column;
 
         & .data-list {
-            @include desktop {
+            @include desktop-screen {
                 height: 28rem;
             }
         }

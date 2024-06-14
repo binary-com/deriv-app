@@ -6,7 +6,7 @@
     gap: 2.4rem;
     background: var(--light-8-primary-background, #fff);
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 100%;
         gap: 1.6rem;
     }
@@ -16,7 +16,7 @@
         display: grid;
         gap: 1.7rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             gap: 1.6rem;
         }
     }
@@ -27,7 +27,7 @@
         gap: 2.4rem;
         width: 100%;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             grid-template-columns: unset;
             gap: 1.6rem;
         }
@@ -36,7 +36,7 @@
     & .wallets-dropzone__container {
         min-height: 18.6rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             min-height: 25rem;
         }
     }

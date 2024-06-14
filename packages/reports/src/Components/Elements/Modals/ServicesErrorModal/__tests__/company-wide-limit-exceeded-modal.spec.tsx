@@ -42,7 +42,7 @@ jest.mock('@deriv/stores', () => ({
     observer: jest.fn(x => x),
     useStore: jest.fn(() => ({
         ui: {
-            is_mobile: false,
+            is_mobile_or_tablet: false,
         },
     })),
 }));

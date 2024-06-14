@@ -51,7 +51,7 @@ describe('InfoPanel', () => {
     });
 
     it('should render the tutorial tab and FAQ tab', () => {
-        mock_store.ui.is_mobile = true;
+        mock_store.ui.is_mobile_or_tablet = true;
         render(<InfoPanel />, { wrapper });
 
         const faq_tab = screen.getByText('What is Deriv Bot?');

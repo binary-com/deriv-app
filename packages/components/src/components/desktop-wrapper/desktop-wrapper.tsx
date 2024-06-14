@@ -1,12 +1,14 @@
-import { isDesktop } from '@deriv/shared';
 import React from 'react';
+import { useDevice } from '@deriv-com/ui';
 
 type TDesktopProps = {
     children: React.ReactNode;
 };
 
 const Desktop = ({ children }: TDesktopProps) => {
-    if (!isDesktop()) return null;
+    const { isDesktop } = useDevice();
+    if (!isDesktop) return null;
+
     return <React.Fragment>{children}</React.Fragment>;
 };
 

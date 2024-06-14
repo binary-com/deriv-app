@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { RadioGroup } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { localize } from 'Components/i18next';
 import 'Components/order-details/order-details-complain-modal-radio-group.scss';
 
@@ -12,7 +12,7 @@ const OrderDetailsComplainModalRadioGroup = ({ dispute_reason, onCheckboxChange,
         onToggle={event => onCheckboxChange(event.target.value)}
         selected={dispute_reason}
         required
-        should_wrap_items={isMobile()}
+        should_wrap_items={isMobileOrTablet()}
     >
         <RadioGroup.Item
             value={is_buy_order_for_user ? 'seller_not_released' : 'buyer_not_paid'}

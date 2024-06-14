@@ -12,7 +12,7 @@
     }
 
     &__action .dc-btn__text {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             font-size: var(--text-size-xxs);
         }
     }

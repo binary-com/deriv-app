@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { observer } from 'mobx-react-lite';
 import { OnlineStatusAvatar } from 'Components/online-status';
 import { useStores } from 'Stores';
@@ -25,7 +25,7 @@ const ChatHeaderBody = observer(() => {
                     as='p'
                     className='chat-header-user-timestamp'
                     color='less-prominent'
-                    size={isMobile() ? 'xxs' : 'xs'}
+                    size={isMobileOrTablet() ? 'xxs' : 'xs'}
                 >
                     {getLastOnlineLabel(is_online, last_online_time)}
                 </Text>
@@ -35,7 +35,7 @@ const ChatHeaderBody = observer(() => {
 });
 
 const ChatHeader = () => {
-    if (isMobile()) {
+    if (isMobileOrTablet()) {
         return null; // Handled in chat-wrapper.jsx
     }
 

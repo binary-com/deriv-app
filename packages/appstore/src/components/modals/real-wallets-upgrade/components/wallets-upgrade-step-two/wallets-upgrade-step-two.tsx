@@ -12,30 +12,35 @@ type TWalletsUpgradeStepTwoFooter = {
 
 const WalletsUpgradeStepTwoContent = observer(() => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
 
     return (
         <div className='wallets-upgrade-step-two__content'>
             <Icon
                 icon='IcAppstoreWalletsUpgradeStepTwo'
-                width={is_mobile ? 150 : 240}
-                height={is_mobile ? 170 : 270}
+                width={is_mobile_or_tablet ? 150 : 240}
+                height={is_mobile_or_tablet ? 170 : 270}
                 className='wallets-upgrade-step-two__image'
                 data_testid='dt_wallets_upgrade_step_two'
             />
             <div className='wallets-upgrade-step-two__text'>
-                <Text size={is_mobile ? 'xsm' : 'l'} align='center' weight='bold' line_height={is_mobile ? 'm' : 'xs'}>
+                <Text
+                    size={is_mobile_or_tablet ? 'xsm' : 'l'}
+                    align='center'
+                    weight='bold'
+                    line_height={is_mobile_or_tablet ? 'm' : 'xs'}
+                >
                     <Localize i18n_default_text='Ready to enable Wallets' />
                 </Text>
                 <div className='wallets-upgrade-step-two__description'>
-                    <Text size={is_mobile ? 'xs' : 's'} align='center' line_height='m'>
+                    <Text size={is_mobile_or_tablet ? 'xs' : 's'} align='center' line_height='m'>
                         <Localize i18n_default_text='Wallets will become your dedicated fund management tool, allowing you to transfer funds between Wallets and trading accounts instantly.' />
                     </Text>
                 </div>
             </div>
             <div className='wallets-upgrade-step-two__info-section'>
                 <Icon className='wallets-upgrade-step-two__info-section-icon' icon='ic-info-blue' size={16} />
-                <Text size={is_mobile ? 'xxs' : 'xs'} line_height='m'>
+                <Text size={is_mobile_or_tablet ? 'xxs' : 'xs'} line_height='m'>
                     <Localize i18n_default_text='Your open trading positions will not be affected while we are setting up your wallets.' />
                 </Text>
             </div>

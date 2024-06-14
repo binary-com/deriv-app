@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Icon, Modal, Text } from '@deriv/components';
 import { Localize, localize } from '@deriv/translations';
-import { formatDate, formatTime, isMobile } from '@deriv/shared';
+import { formatDate, formatTime, isMobileOrTablet } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 
 const CooldownWarningModal = observer(() => {
@@ -20,7 +20,7 @@ const CooldownWarningModal = observer(() => {
             is_open={should_show_cooldown_modal}
             toggleModal={handleToggleModal}
             className='center-risk-modal'
-            has_close_icon={!isMobile()}
+            has_close_icon={!isMobileOrTablet()}
         >
             <Modal.Body>
                 <Icon icon='IcRedWarning' size={63} />

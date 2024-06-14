@@ -6,6 +6,15 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { ModalProvider } from '../../../../../../components/ModalProvider';
 import AddedCTraderAccountsList from '../AddedCTraderAccountsList';
 
+jest.mock('../../../../../../hooks/useDevice', () => ({
+    __esModule: true,
+    default: jest.fn(() => ({
+        isDesktop: true,
+        isTablet: false,
+        isMobile: false,
+    })),
+}));
+
 jest.mock('@deriv/api-v2', () => ({
     useCtraderAccountsList: jest.fn(),
 }));

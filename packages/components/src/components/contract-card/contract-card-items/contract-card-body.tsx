@@ -4,7 +4,7 @@ import { isCryptocurrency, getIndicativePrice, getCurrentTick, getDisplayStatus,
 import ContractCardItem from './contract-card-item';
 import CurrencyBadge from '../../currency-badge';
 import DesktopWrapper from '../../desktop-wrapper';
-import MobileWrapper from '../../mobile-wrapper';
+import MobileOrTabletWrapper from '../../mobile-wrapper';
 import Money from '../../money';
 import { ResultStatusIcon } from '../result-overlay/result-overlay';
 import ProgressSliderMobile from '../../progress-slider-mobile';
@@ -179,7 +179,7 @@ const ContractCardBody = ({
                         <Money currency={currency} amount={payout} />
                     </ContractCardItem>
                 </div>
-                <MobileWrapper>
+                <MobileOrTabletWrapper>
                     <div className='dc-contract-card__status'>
                         {is_sold ? (
                             <ResultStatusIcon
@@ -190,7 +190,7 @@ const ContractCardBody = ({
                             progress_slider_mobile_el
                         )}
                     </div>
-                </MobileWrapper>
+                </MobileOrTabletWrapper>
             </React.Fragment>
         );
     }
@@ -199,7 +199,7 @@ const ContractCardBody = ({
         <React.Fragment>
             <CurrencyBadge currency={currency} />
             <DesktopWrapper>{card_body}</DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <div
                     className={classNames('dc-contract-card__separatorclass', {
                         'dc-contract-card__body-wrapper': !is_multiplier && !is_turbos && !is_lookbacks,
@@ -207,7 +207,7 @@ const ContractCardBody = ({
                 >
                     {card_body}
                 </div>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </React.Fragment>
     );
 };

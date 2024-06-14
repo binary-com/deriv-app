@@ -9,9 +9,9 @@ const LanguageSettings = observer(() => {
     const { client, common, ui } = useStore();
     const { has_wallet } = client;
     const { changeSelectedLanguage, current_language } = common;
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
 
-    if (is_mobile || has_wallet) {
+    if (is_mobile_or_tablet || has_wallet) {
         return <Redirect to={routes.traders_hub} />;
     }
 

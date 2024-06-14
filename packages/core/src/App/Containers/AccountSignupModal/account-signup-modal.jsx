@@ -21,7 +21,7 @@ import 'Sass/app/modules/account-signup.scss';
 
 const AccountSignup = ({
     enableApp,
-    is_mobile,
+    is_mobile_or_tablet,
     isModalVisible,
     clients_country,
     onSignup,
@@ -83,12 +83,12 @@ const AccountSignup = ({
 
         Analytics.trackEvent('ce_virtual_signup_form', {
             action: 'signup_confirmed',
-            form_name: is_mobile ? 'virtual_signup_web_mobile_default' : 'virtual_signup_web_desktop_default',
+            form_name: is_mobile_or_tablet ? 'virtual_signup_web_mobile_default' : 'virtual_signup_web_desktop_default',
         });
 
         Analytics.trackEvent('ce_virtual_signup_form', {
             action: 'country_selection_screen_opened',
-            form_name: is_mobile ? 'virtual_signup_web_mobile_default' : 'virtual_signup_web_desktop_default',
+            form_name: is_mobile_or_tablet ? 'virtual_signup_web_mobile_default' : 'virtual_signup_web_desktop_default',
         });
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -122,7 +122,9 @@ const AccountSignup = ({
 
             Analytics.trackEvent('ce_virtual_signup_form', {
                 action: 'signup_flow_error',
-                form_name: is_mobile ? 'virtual_signup_web_mobile_default' : 'virtual_signup_web_desktop_default',
+                form_name: is_mobile_or_tablet
+                    ? 'virtual_signup_web_mobile_default'
+                    : 'virtual_signup_web_desktop_default',
                 error_message: error,
             });
         } else {
@@ -133,7 +135,9 @@ const AccountSignup = ({
 
             Analytics.trackEvent('ce_virtual_signup_form', {
                 action: 'signup_done',
-                form_name: is_mobile ? 'virtual_signup_web_mobile_default' : 'virtual_signup_web_desktop_default',
+                form_name: is_mobile_or_tablet
+                    ? 'virtual_signup_web_mobile_default'
+                    : 'virtual_signup_web_desktop_default',
             });
         }
     };
@@ -166,7 +170,7 @@ const AccountSignup = ({
                                 <div className='account-signup__location-selection'>
                                     <Text
                                         as='h1'
-                                        size={is_mobile ? 'xs' : 's'}
+                                        size={is_mobile_or_tablet ? 'xs' : 's'}
                                         weight='bold'
                                         className='account-signup__heading'
                                     >
@@ -254,7 +258,7 @@ AccountSignup.propTypes = {
     enableApp: PropTypes.func,
     onSignup: PropTypes.func,
     residence_list: PropTypes.array,
-    is_mobile: PropTypes.bool,
+    is_mobile_or_tablet: PropTypes.bool,
     isModalVisible: PropTypes.func,
     setIsFromSignupAccount: PropTypes.func,
 };
@@ -268,7 +272,7 @@ const AccountSignupModal = observer(() => {
         enableApp,
         disableApp,
         is_loading,
-        is_mobile,
+        is_mobile_or_tablet,
         setIsFromSignupAccount,
     } = ui;
 
@@ -292,7 +296,7 @@ const AccountSignupModal = observer(() => {
                 clients_country={clients_country}
                 onSignup={onSignup}
                 residence_list={residence_list}
-                is_mobile={is_mobile}
+                is_mobile_or_tablet={is_mobile_or_tablet}
                 isModalVisible={toggleAccountSignupModal}
                 enableApp={enableApp}
                 setIsFromSignupAccount={setIsFromSignupAccount}

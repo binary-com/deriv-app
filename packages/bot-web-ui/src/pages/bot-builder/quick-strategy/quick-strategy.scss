@@ -12,7 +12,7 @@
     --input-action-width: 4.6rem;
     --group-outer-padding: 1.6rem;
 
-    @include mobile() {
+    @include mobile-or-tablet-screen {
         --select-height: 4rem;
         --input-height: 3.4rem;
         --footer-height: 4.2rem;
@@ -52,11 +52,11 @@
     &__body {
         display: flex;
 
-        @include desktop() {
+        @include desktop-screen {
             height: 72rem;
         }
 
-        @include mobile() {
+        @include mobile-or-tablet-screen {
             display: block;
         }
 
@@ -102,7 +102,7 @@
             position: relative;
             padding: 0.8rem;
 
-            @include mobile() {
+            @include mobile-or-tablet-screen {
                 width: 100%;
                 padding: 0;
             }
@@ -111,7 +111,7 @@
                 @include flex-center;
                 padding-bottom: 1rem;
 
-                @include mobile() {
+                @include mobile-or-tablet-screen {
                     padding: 0 1.6rem 1.6rem;
                     margin-top: 1.6rem;
                 }
@@ -123,7 +123,7 @@
                     border-radius: 0.6rem;
                     height: 4rem;
 
-                    @include mobile() {
+                    @include mobile-or-tablet-screen {
                         width: 100%;
                     }
 
@@ -135,7 +135,7 @@
                         border-radius: 0.4rem;
                         user-select: none;
 
-                        @include mobile() {
+                        @include mobile-or-tablet-screen {
                             min-width: auto;
                             width: 50%;
                         }
@@ -160,7 +160,7 @@
             &__description {
                 padding: 1rem 2.4rem;
 
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     padding: 1rem;
                 }
             }
@@ -176,7 +176,7 @@
             &__form {
                 padding: 0 2.4rem;
 
-                @include mobile() {
+                @include mobile-or-tablet-screen {
                     padding: 0 1.6rem;
                 }
 
@@ -218,14 +218,14 @@
             // to overwrite the height of the ThemedScrollbar
             max-height: calc(100vh - 23rem) !important;
 
-            @include desktop() {
+            @include desktop-screen {
                 height: calc(100vh - 16rem) !important;
             }
 
             margin-bottom: 1rem;
             overflow-y: auto;
 
-            @include mobile() {
+            @include mobile-or-tablet-screen {
                 margin-bottom: 0;
                 max-height: calc(100% - 12.2rem) !important;
             }
@@ -233,7 +233,7 @@
             &--no-footer {
                 max-height: 100% !important;
 
-                @include mobile() {
+                @include mobile-or-tablet-screen {
                     max-height: calc(100% - 8rem) !important;
                 }
             }
@@ -356,7 +356,7 @@
                 display: flex;
                 flex-direction: row-reverse;
 
-                @include mobile() {
+                @include mobile-or-tablet-screen {
                     top: -2.6rem;
                     right: 5rem;
                 }
@@ -385,7 +385,7 @@
                 height: 2.4rem;
                 width: 2.4rem;
 
-                @include mobile() {
+                @include mobile-or-tablet-screen {
                     top: 50%;
                     left: 0;
                     transform: translateY(-50%);
@@ -431,7 +431,7 @@
                 font-weight: bold;
                 color: var(--text-general);
 
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     text-align: center;
                 }
             }
@@ -521,7 +521,7 @@
                 left: 0.3rem;
                 color: var(--text-general);
 
-                @include mobile() {
+                @include mobile-or-tablet-screen {
                     left: 0.2rem;
                 }
 
@@ -540,7 +540,7 @@
                 right: 1rem;
                 color: var(--text-general);
 
-                @include mobile() {
+                @include mobile-or-tablet-screen {
                     right: 1.6rem;
                 }
 
@@ -609,7 +609,7 @@
         &__content {
             margin-bottom: 0.8rem;
 
-            @include desktop {
+            @include desktop-screen {
                 padding-left: 1rem;
             }
 
@@ -619,7 +619,7 @@
                 span {
                     font-size: 1.2rem;
 
-                    @include mobile {
+                    @include mobile-or-tablet-screen {
                         font-size: 1.2rem;
                     }
                 }
@@ -642,7 +642,7 @@
             width: 100%;
             margin-bottom: 2rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 height: 36rem;
             }
 
@@ -653,7 +653,7 @@
                 object-fit: contain;
             }
 
-            @include desktop {
+            @include desktop-screen {
                 padding-left: 1rem;
             }
 

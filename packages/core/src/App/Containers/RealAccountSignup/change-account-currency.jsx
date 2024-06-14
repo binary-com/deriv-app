@@ -2,7 +2,7 @@ import { Field, Formik } from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormSubmitButton, Text } from '@deriv/components';
-import { isMobile, reorderCurrencies } from '@deriv/shared';
+import { isMobileOrTablet, reorderCurrencies } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { localize, Localize } from '@deriv/translations';
 import { CurrencyRadioButtonGroup, CurrencyRadioButton } from '@deriv/account';
@@ -107,7 +107,7 @@ const ChangeAccountCurrency = observer(
                             className='change-currency__button'
                             is_disabled={isSubmitting || !values.fiat}
                             label={localize('Change currency')}
-                            is_absolute={!isMobile()}
+                            is_absolute={!isMobileOrTablet()}
                             form_error={form_error}
                         />
                     </form>

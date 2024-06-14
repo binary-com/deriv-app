@@ -8,7 +8,7 @@ import {
     isAccumulatorContract,
     isSmartTraderContract,
     isBot,
-    isMobile,
+    isMobileOrTablet,
     isTurbosContract,
     isMultiplierContract,
     getLocalizedTurbosSubtype,
@@ -19,7 +19,7 @@ import Icon from '../../icon';
 import Text from '../../text';
 import ProgressSlider from '../../progress-slider';
 import DesktopWrapper from '../../desktop-wrapper';
-import MobileWrapper from '../../mobile-wrapper';
+import MobileOrTabletWrapper from '../../mobile-wrapper';
 import TickCounterBar from './tick-counter-bar';
 import { TContractInfo } from '@deriv/shared/src/utils/contract/contract-types';
 import { TGetCardLables, TGetContractTypeDisplay } from '../../types/common.types';
@@ -68,7 +68,7 @@ const ContractCardHeader = ({
     const is_sold = !!contract_info.is_sold || is_contract_sold;
     const is_accumulator = isAccumulatorContract(contract_type);
     const is_smarttrader_contract = isSmartTraderContract(contract_type);
-    const is_mobile = isMobile();
+    const is_mobile = isMobileOrTablet();
     const is_turbos = isTurbosContract(contract_type);
     const is_multipliers = isMultiplierContract(contract_type);
     const is_high_low = isHighLow({ shortcode });
@@ -144,7 +144,7 @@ const ContractCardHeader = ({
                         type={contract_type}
                     />
                 </div>
-                <MobileWrapper>
+                <MobileOrTabletWrapper>
                     {is_valid_to_sell ? (
                         <CSSTransition
                             in={!!is_valid_to_sell}
@@ -170,7 +170,7 @@ const ContractCardHeader = ({
                             </div>
                         </CSSTransition>
                     ) : null}
-                </MobileWrapper>
+                </MobileOrTabletWrapper>
             </div>
             {!is_sold && is_accumulator && (
                 <TickCounterBar
@@ -179,9 +179,9 @@ const ContractCardHeader = ({
                     label={getCardLabels().TICKS}
                 />
             )}
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <div className='dc-progress-slider--completed' />
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
             <DesktopWrapper>
                 {(!has_progress_slider || !!is_sold) && <div className='dc-progress-slider--completed' />}
                 {has_progress_slider && !is_sold && !is_accumulator && (

@@ -50,7 +50,7 @@
             width: unset;
             height: 40px;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 padding: 0 1.1rem;
             }
         }

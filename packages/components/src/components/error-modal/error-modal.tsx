@@ -1,6 +1,6 @@
 import React from 'react';
 import DesktopWrapper from '../desktop-wrapper';
-import MobileWrapper from '../mobile-wrapper';
+import MobileOrTabletWrapper from '../mobile-wrapper';
 import Modal from '../modal';
 import MobileDialog from '../mobile-dialog';
 import ErrorModalContent from './error-modal-content';
@@ -33,7 +33,7 @@ const ErrorModal = ({ messages }: TErrorModalProps) => {
                     <ErrorModalContent error_message={error_message_description} />
                 </Modal.Body>
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <MobileDialog
                     portal_element_id='modal_root'
                     has_close_icon
@@ -44,7 +44,7 @@ const ErrorModal = ({ messages }: TErrorModalProps) => {
                         <ErrorModalContent error_message={error_message_description} />
                     </Modal.Body>
                 </MobileDialog>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </Modal>
     );
 };

@@ -27,12 +27,14 @@ const PasswordSelectionModal = observer(
         values,
     }) => {
         const { ui } = useStore();
-        const { is_mobile } = ui;
+        const { is_mobile_or_tablet } = ui;
 
         React.useEffect(() => {
             Analytics.trackEvent('ce_virtual_signup_form', {
                 action: 'password_screen_opened',
-                form_name: is_mobile ? 'virtual_signup_web_mobile_default' : 'virtual_signup_web_desktop_default',
+                form_name: is_mobile_or_tablet
+                    ? 'virtual_signup_web_mobile_default'
+                    : 'virtual_signup_web_desktop_default',
             });
 
             //eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,7 +44,7 @@ const PasswordSelectionModal = observer(
             <div className='account-signup__password-selection'>
                 <Text
                     as='p'
-                    size={is_mobile ? 'xs' : 's'}
+                    size={is_mobile_or_tablet ? 'xs' : 's'}
                     weight='bold'
                     className='account-signup__heading'
                     align='center'

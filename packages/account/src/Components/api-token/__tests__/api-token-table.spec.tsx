@@ -58,7 +58,7 @@ describe('ApiTokenTable', () => {
     it('should render in mobile view', () => {
         const mock_store = mockStore({
             ui: {
-                is_mobile: true,
+                is_mobile_or_tablet: true,
             },
         });
         expectedTexts.push('Last Used');

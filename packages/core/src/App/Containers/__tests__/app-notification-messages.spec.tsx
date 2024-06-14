@@ -3,6 +3,13 @@ import { render, screen } from '@testing-library/react';
 import AppNotificationMessages from '../app-notification-messages';
 import { StoreProvider, mockStore } from '@deriv/stores';
 
+jest.mock('@deriv/shared', () => ({
+    ...jest.requireActual('@deriv/shared'),
+    isMobile: jest.fn(() => false),
+    isMobileOrTablet: jest.fn(() => false),
+    isDesktop: jest.fn(() => true),
+}));
+
 jest.mock('react-router-dom', () => ({
     useLocation: jest.fn(() => ({
         pathname: '/appstore/traders-hub',

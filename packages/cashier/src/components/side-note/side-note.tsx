@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import React from 'react';
-import { DesktopWrapper, MobileWrapper, Text } from '@deriv/components';
+import { DesktopWrapper, MobileOrTabletWrapper, Text } from '@deriv/components';
 import { Localize } from '@deriv/translations';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import './side-note.scss';
 
 type TSideNoteTitle = {
@@ -19,7 +19,7 @@ type TSideNoteProps = React.PropsWithChildren<{
     className?: string;
     has_bullets?: boolean;
     has_title?: boolean;
-    is_mobile?: boolean;
+    is_mobile_or_tablet?: boolean;
     side_notes?: React.ReactNode[];
     title?: string | JSX.Element;
 }>;
@@ -48,11 +48,11 @@ const SideNote = ({
     className,
     has_bullets = true,
     has_title = true,
-    is_mobile,
+    is_mobile_or_tablet,
     side_notes,
     title,
 }: TSideNoteProps) => {
-    const Wrapper = is_mobile ? MobileWrapper : DesktopWrapper;
+    const Wrapper = is_mobile_or_tablet ? MobileOrTabletWrapper : DesktopWrapper;
 
     return (
         <>
@@ -61,7 +61,7 @@ const SideNote = ({
                     <div
                         className={classNames(
                             'side-note-legacy',
-                            { 'side-note-legacy--mobile': isMobile() },
+                            { 'side-note-legacy--mobile': isMobileOrTablet() },
                             className
                         )}
                     >

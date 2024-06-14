@@ -2,7 +2,15 @@ import React from 'react';
 import classNames from 'classnames';
 import { Field, Form, Formik } from 'formik';
 import { Observer } from 'mobx-react-lite';
-import { Button, DesktopWrapper, Input, Loading, MobileFullPageModal, MobileWrapper, Text } from '@deriv/components';
+import {
+    Button,
+    DesktopWrapper,
+    Input,
+    Loading,
+    MobileFullPageModal,
+    MobileOrTabletWrapper,
+    Text,
+} from '@deriv/components';
 import { observer } from '@deriv/stores';
 import { Localize, localize } from 'Components/i18next';
 import SectionError from 'Components/section-error';
@@ -99,7 +107,7 @@ const MyProfileForm = () => {
             <DesktopWrapper>
                 <div className='my-profile-form'>{content}</div>
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <MobileFullPageModal
                     className='my-profile-form'
                     is_modal_open={my_profile_store.active_tab === my_profile_tabs.AD_TEMPLATE}
@@ -111,7 +119,7 @@ const MyProfileForm = () => {
                 >
                     {content}
                 </MobileFullPageModal>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </>
     );
 };

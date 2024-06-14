@@ -5,7 +5,7 @@ import { Popover } from '@deriv/components';
 import { localize } from '@deriv/translations';
 import { observer, useStore } from '@deriv/stores';
 
-const NetworkStatus = observer(({ is_mobile }) => {
+const NetworkStatus = observer(({ is_mobile_or_tablet }) => {
     const { common } = useStore();
     const { network_status: status } = common;
 
@@ -23,10 +23,10 @@ const NetworkStatus = observer(({ is_mobile }) => {
         <div
             data-testid='dt_network_status'
             className={classNames('network-status__wrapper', {
-                'network-status__wrapper--is-mobile': is_mobile,
+                'network-status__wrapper--is-mobile': is_mobile_or_tablet,
             })}
         >
-            {is_mobile ? (
+            {is_mobile_or_tablet ? (
                 network_status_element
             ) : (
                 <Popover
@@ -44,7 +44,7 @@ const NetworkStatus = observer(({ is_mobile }) => {
 });
 
 NetworkStatus.propTypes = {
-    is_mobile: PropTypes.bool,
+    is_mobile_or_tablet: PropTypes.bool,
 };
 
 export default NetworkStatus;

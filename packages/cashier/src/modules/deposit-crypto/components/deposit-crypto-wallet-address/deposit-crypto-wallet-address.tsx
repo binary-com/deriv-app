@@ -10,7 +10,7 @@ import './deposit-crypto-wallet-address.scss';
 
 const DepositCryptoWalletAddress: React.FC = observer(() => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const { data: deposit_crypto_address, isLoading, error, resend } = useDepositCryptoAddress();
 
     if (isLoading) return <Loading is_fullscreen={false} />;
@@ -35,21 +35,21 @@ const DepositCryptoWalletAddress: React.FC = observer(() => {
         <>
             <QRCode
                 value={deposit_crypto_address || ''}
-                size={is_mobile ? 128 : 160}
+                size={is_mobile_or_tablet ? 128 : 160}
                 className='deposit-crypto-wallet-address__qrcode-container'
             />
             <div className='deposit-crypto-wallet-address__address-container'>
                 <div className='deposit-crypto-wallet-address__hash-container'>
-                    <Text size={is_mobile ? 'xxs' : 'xs'} weight='bold'>
+                    <Text size={is_mobile_or_tablet ? 'xxs' : 'xs'} weight='bold'>
                         {deposit_crypto_address}
                     </Text>
                 </div>
                 <div className='deposit-crypto-wallet-address__action-container'>
                     <Clipboard
                         text_copy={deposit_crypto_address || ''}
-                        info_message={is_mobile ? undefined : localize('copy')}
+                        info_message={is_mobile_or_tablet ? undefined : localize('copy')}
                         success_message={localize('copied!')}
-                        popoverAlignment={is_mobile ? 'left' : 'bottom'}
+                        popoverAlignment={is_mobile_or_tablet ? 'left' : 'bottom'}
                     />
                 </div>
             </div>

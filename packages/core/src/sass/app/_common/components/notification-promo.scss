@@ -46,7 +46,7 @@
         cursor: pointer;
     }
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         height: 100%;
         max-height: 12.2rem;
         width: calc(100vw - 1.6rem);

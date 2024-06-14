@@ -61,7 +61,7 @@
         padding: 1.6rem;
 
         &--medium {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 padding: 0.8rem;
             }
         }
@@ -78,7 +78,7 @@
         height: 12rem;
         border-radius: $BORDER_RADIUS_2;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 16rem;
             height: 9.6rem;
         }
@@ -89,7 +89,7 @@
         height: 14.4rem;
         border-radius: $BORDER_RADIUS_2;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 21.6rem;
             height: 12.8rem;
         }

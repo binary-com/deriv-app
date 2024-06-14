@@ -20,7 +20,7 @@ const AddPaymentMethodForm = ({ should_show_separated_footer = false }: TAddPaym
     const { create, mutation } = useP2PAdvertiserPaymentMethods();
     const { general_store, my_ads_store, my_profile_store } = useStores();
     const {
-        ui: { is_mobile },
+        ui: { is_mobile_or_tablet },
     } = useStore();
     const {
         payment_method_value,
@@ -149,7 +149,8 @@ const AddPaymentMethodForm = ({ should_show_separated_footer = false }: TAddPaym
                         <div
                             className={classNames('add-payment-method-form__buttons', {
                                 'add-payment-method-form__buttons--separated-footer':
-                                    (should_show_separated_footer && is_mobile) || general_store.active_index !== 3,
+                                    (should_show_separated_footer && is_mobile_or_tablet) ||
+                                    general_store.active_index !== 3,
                                 'add-payment-method-form__buttons--separated-footer-profile':
                                     general_store.active_index === 3 && isDesktop(),
                             })}

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Loading, Button, InfiniteDataList, Div100vhContainer, Text } from '@deriv/components';
 import { reaction } from 'mobx';
-import { isMobile, routes } from '@deriv/shared';
+import { isMobileOrTablet, routes } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from 'Components/i18next';
 import TableError from 'Components/section-error';
@@ -14,7 +14,7 @@ import { useStores } from 'Stores';
 import { createExtendedOrderDetails } from 'Utils/orders';
 
 const ContentWrapper = ({ children }) => {
-    if (isMobile()) {
+    if (isMobileOrTablet()) {
         return <Div100vhContainer height_offset='21rem'>{children}</Div100vhContainer>;
     }
     return <OrderTableHeader>{children}</OrderTableHeader>;

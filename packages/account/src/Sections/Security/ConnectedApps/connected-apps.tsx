@@ -15,7 +15,7 @@ import './connected-apps.scss';
 
 const ConnectedApps = observer(() => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
 
     const [is_loading, setLoading] = React.useState(true);
     const [is_modal_open, setIsModalOpen] = React.useState(false);
@@ -68,7 +68,7 @@ const ConnectedApps = observer(() => {
                 {connected_apps.length ? (
                     <div className='connected-apps__content--wrapper'>
                         <ConnectedAppsInfo />
-                        {is_mobile ? (
+                        {is_mobile_or_tablet ? (
                             <DataListTemplate connected_apps={connected_apps} handleToggleModal={handleToggleModal} />
                         ) : (
                             <DataTableTemplate connected_apps={connected_apps} handleToggleModal={handleToggleModal} />

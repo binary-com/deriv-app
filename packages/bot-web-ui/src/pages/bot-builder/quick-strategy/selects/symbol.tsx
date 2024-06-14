@@ -30,7 +30,7 @@ const MarketOption: React.FC<TMarketOption> = ({ symbol }) => (
 const SymbolSelect: React.FC = () => {
     const { quick_strategy } = useDBotStore();
     const {
-        ui: { is_mobile, is_desktop },
+        ui: { is_mobile_or_tablet, is_desktop },
     } = useStore();
     const { setValue } = quick_strategy;
     const [active_symbols, setActiveSymbols] = React.useState<TSymbol[]>([]);
@@ -114,7 +114,7 @@ const SymbolSelect: React.FC = () => {
                     <>
                         <Autocomplete
                             {...rest_field}
-                            readOnly={is_mobile}
+                            readOnly={is_mobile_or_tablet}
                             inputMode='none'
                             data-testid='qs_autocomplete_symbol'
                             autoComplete='off'

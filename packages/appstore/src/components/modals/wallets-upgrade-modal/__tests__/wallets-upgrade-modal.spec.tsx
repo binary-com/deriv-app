@@ -36,7 +36,7 @@ describe('<WalletsUpgradeModal />', () => {
                 toggleWalletsUpgrade: jest.fn(),
             },
             ui: {
-                is_mobile: false,
+                is_mobile_or_tablet: false,
                 is_desktop: true,
             },
         });
@@ -59,7 +59,7 @@ describe('<WalletsUpgradeModal />', () => {
                 toggleWalletsUpgrade: jest.fn(),
             },
             ui: {
-                is_mobile: false,
+                is_mobile_or_tablet: false,
                 is_desktop: true,
             },
         });
@@ -85,7 +85,7 @@ describe('<WalletsUpgradeModal />', () => {
                 toggleWalletsUpgrade: jest.fn(),
             },
             ui: {
-                is_mobile: false,
+                is_mobile_or_tablet: false,
                 is_desktop: true,
             },
         });
@@ -110,7 +110,7 @@ describe('<WalletsUpgradeModal />', () => {
                 toggleWalletsUpgrade: jest.fn(),
             },
             ui: {
-                is_mobile: false,
+                is_mobile_or_tablet: false,
                 is_desktop: true,
             },
         });

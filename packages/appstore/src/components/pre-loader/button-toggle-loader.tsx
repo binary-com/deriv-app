@@ -1,6 +1,6 @@
 import ContentLoader from 'react-content-loader';
 import React from 'react';
-import { MobileWrapper } from '@deriv/components';
+import { MobileOrTabletWrapper } from '@deriv/components';
 
 const ButtonToggleLoader = () => (
     <ContentLoader
@@ -9,9 +9,9 @@ const ButtonToggleLoader = () => (
         foregroundColor={'var(--general-hover)'}
         width={500}
     >
-        <MobileWrapper>
+        <MobileOrTabletWrapper>
             <rect x='10' y='35' rx='5' ry='5' width='330' height='45' />
-        </MobileWrapper>
+        </MobileOrTabletWrapper>
     </ContentLoader>
 );
 

@@ -42,7 +42,7 @@ const CFDPasswordChange = observer(
         const { ui, modules } = useStore();
         const { cfd } = modules;
         const { setIsMt5PasswordChangedModalVisible, setIsFromMt5MigrationModal } = cfd;
-        const { is_mobile, is_mt5_migration_modal_enabled } = ui;
+        const { is_mobile_or_tablet, is_mt5_migration_modal_enabled } = ui;
         const has_cancel_button = (isDesktop() ? !should_set_trading_password : true) || error_type === 'PasswordReset';
 
         const handleCancel = () => {
@@ -189,7 +189,7 @@ const CFDPasswordChange = observer(
                                 <FormSubmitButton
                                     is_disabled={!values.old_password || !values.new_password || !isValid}
                                     has_cancel={has_cancel_button}
-                                    is_absolute={is_mobile}
+                                    is_absolute={is_mobile_or_tablet}
                                     cancel_label={localize('Forgot password?')}
                                     onCancel={handleCancel}
                                     is_loading={isSubmitting}

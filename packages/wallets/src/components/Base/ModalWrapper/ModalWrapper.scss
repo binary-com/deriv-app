@@ -4,11 +4,11 @@
     display: flex;
     justify-content: center;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         animation: popup 0.2s;
     }
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: calc(100vw - 3.2rem);
     }
 

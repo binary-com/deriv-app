@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Field } from 'formik';
-import { DesktopWrapper, Dropdown, MobileWrapper, Text, SelectNative } from '@deriv/components';
+import { DesktopWrapper, Dropdown, MobileOrTabletWrapper, Text, SelectNative } from '@deriv/components';
 import { localize } from '@deriv/translations';
 import { TTradingAssessmentForm, TQuestion } from 'Types';
 import { MAX_QUESTION_TEXT_LENGTH } from '../../Constants/trading-assessment';
@@ -89,7 +89,7 @@ const TradingAssessmentDropdown = ({
                                         error={meta.touched && meta.error}
                                     />
                                 </DesktopWrapper>
-                                <MobileWrapper>
+                                <MobileOrTabletWrapper>
                                     <Text as='h1' color='prominent' weight='bold' size='xs'>
                                         {question?.question_text}
                                     </Text>
@@ -107,7 +107,7 @@ const TradingAssessmentDropdown = ({
                                         disabled={disabled_items.includes(question.form_control)}
                                         error={meta.touched && meta.error}
                                     />
-                                </MobileWrapper>
+                                </MobileOrTabletWrapper>
                             </React.Fragment>
                         );
                     }}

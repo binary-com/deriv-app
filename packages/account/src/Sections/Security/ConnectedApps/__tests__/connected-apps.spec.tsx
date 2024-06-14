@@ -112,7 +112,7 @@ describe('ConnectedApps', () => {
     });
 
     it('should render the app list in Mobile view', async () => {
-        renderComponent(mockStore({ ui: { is_mobile: true } }));
+        renderComponent(mockStore({ ui: { is_mobile_or_tablet: true } }));
         const mock_permissions = getConnectedAppsScopes(mock_connected_apps[0]?.scopes);
 
         await waitFor(() => {

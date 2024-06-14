@@ -23,9 +23,9 @@ type TLoginHistoryContent = {
 
 const LoginHistoryContent = observer(({ data }: TLoginHistoryContent) => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
 
-    return is_mobile ? renderList(data) : renderTable(getLoginHistoryTableHeaders(), data);
+    return is_mobile_or_tablet ? renderList(data) : renderTable(getLoginHistoryTableHeaders(), data);
 });
 
 const renderTable = (fields: TGetFields, login_history: TLoginHistoryData) => (

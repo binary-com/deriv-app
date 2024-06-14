@@ -2,15 +2,14 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
 import { Icon, Popover } from '@deriv/components';
-import { routes } from '@deriv/shared';
+import { routes, isTabletOs } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
-import { isTabletOs } from '@deriv/shared';
 
 const TradersHubOnboarding = observer(() => {
     const history = useHistory();
     const { ui } = useStore();
-    const { is_dark_mode_on, is_mobile } = ui;
+    const { is_dark_mode_on, is_mobile_or_tablet } = ui;
     const [, setWalletsOnboarding] = useLocalStorage('walletsOnboarding', '');
 
     const onClickHandler = () => {
@@ -38,7 +37,7 @@ const TradersHubOnboarding = observer(() => {
                     <Popover
                         classNameBubble='account-settings-toggle__tooltip'
                         alignment='bottom'
-                        message={!is_mobile && <Localize i18n_default_text='View tutorial' />}
+                        message={!is_mobile_or_tablet && <Localize i18n_default_text='View tutorial' />}
                         should_disable_pointer_events
                         zIndex='9999'
                     >

@@ -4,7 +4,7 @@
     justify-content: space-between;
     gap: 2.4rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         flex-direction: column;
         gap: 0;
     }
@@ -12,7 +12,7 @@
     &__arrow {
         margin-top: 1.2rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             height: fit-content;
             margin-top: 0;
             margin-inline: auto;
@@ -21,7 +21,7 @@
         & > svg {
             transition: rotate 0.2s ease;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 rotate: 90deg;
                 margin-bottom: 2.2rem;
             }
@@ -31,7 +31,7 @@
             & > svg {
                 rotate: 180deg;
 
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     rotate: -90deg;
                 }
             }

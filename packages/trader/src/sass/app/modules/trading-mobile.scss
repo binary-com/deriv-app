@@ -368,7 +368,7 @@
             }
         }
         &__header {
-            @include mobile {
+            @include mobile-screen {
                 padding: 0.5rem 0;
 
                 &-label {

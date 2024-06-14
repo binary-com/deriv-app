@@ -397,7 +397,7 @@ describe('<CurrencySelector/>', () => {
             ui: {
                 ...store.ui,
                 is_desktop: false,
-                is_mobile: true,
+                is_mobile_or_tablet: true,
             },
         };
         renderComponent({ store_config: new_store });

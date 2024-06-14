@@ -7,7 +7,7 @@ import './wallets-migration-failed.scss';
 const WalletsMigrationFailed = observer(() => {
     const { traders_hub, ui } = useStore();
     const { is_wallet_migration_failed, setWalletsMigrationFailedPopup } = traders_hub;
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
 
     const wallets_migration_failed_ref = React.useRef<HTMLDivElement>(null);
 
@@ -30,7 +30,7 @@ const WalletsMigrationFailed = observer(() => {
         <Modal
             is_open={is_wallet_migration_failed}
             toggleModal={handleClose}
-            width={is_mobile ? '32.3rem' : '44rem'}
+            width={is_mobile_or_tablet ? '32.3rem' : '44rem'}
             should_header_stick_body={false}
             has_close_icon={false}
         >
@@ -38,14 +38,14 @@ const WalletsMigrationFailed = observer(() => {
                 <Modal.Body className='wallets-migration-failed'>
                     <Text
                         as='h1'
-                        size={is_mobile ? 'xs' : 's'}
+                        size={is_mobile_or_tablet ? 'xs' : 's'}
                         color='prominent'
                         weight='bold'
                         className='wallets-migration-failed__title'
                     >
                         <Localize i18n_default_text='Sorry for the interruption' />
                     </Text>
-                    <Text size={is_mobile ? 'xxs' : 'xs'}>
+                    <Text size={is_mobile_or_tablet ? 'xxs' : 'xs'}>
                         <Localize i18n_default_text='We’re unable to complete with the Wallet upgrade. Please try again later or contact us via live chat.' />
                     </Text>
                 </Modal.Body>

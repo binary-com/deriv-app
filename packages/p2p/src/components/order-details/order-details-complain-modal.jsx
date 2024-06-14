@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, MobileFullPageModal, Modal, Text } from '@deriv/components';
-import { isMobile, useIsMounted } from '@deriv/shared';
+import { isMobileOrTablet, useIsMounted } from '@deriv/shared';
 import { localize, Localize } from 'Components/i18next';
 import { requestWS } from 'Utils/websocket';
 import FormError from 'Components/section-error';
@@ -57,7 +57,7 @@ const OrderDetailsComplainModal = ({
 
     const onCheckboxChange = reason => setDisputeReason(reason);
 
-    if (isMobile()) {
+    if (isMobileOrTablet()) {
         return (
             <MobileFullPageModal
                 body_className='order-details-complain-modal__body'

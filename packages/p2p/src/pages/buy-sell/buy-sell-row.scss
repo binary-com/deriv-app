@@ -1,5 +1,5 @@
 .buy-sell-row {
-    @include mobile {
+    @include mobile-or-tablet-screen {
         border-bottom: 1px solid var(--general-section-1);
         padding: 1.6rem;
         min-height: 18.6rem;
@@ -34,7 +34,7 @@
         flex-direction: row;
         justify-content: space-between;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             display: grid;
             grid-template-columns: 3fr 1.7fr;
             grid-template-rows: 2fr 1fr;
@@ -42,7 +42,7 @@
     }
 
     &__payment-methods-list {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             grid-column: 1 / 3;
             grid-row: 2;
             display: flex;
@@ -72,7 +72,7 @@
             width: fit-content;
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             align-items: center;
             border: 1px solid var(--border-normal);
             border-radius: 0.4rem;
@@ -108,7 +108,7 @@
             margin-top: 0.8rem;
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin-left: 4rem;
         }
     }

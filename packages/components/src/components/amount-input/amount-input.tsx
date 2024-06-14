@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import Input from '../input';
 import Text from '../text';
 
@@ -112,7 +112,7 @@ const AmountInput = ({
 
     return (
         <div className='amount-input-wrapper'>
-            <Text size={isMobile() ? 'xxs' : 'xs'}>{label}</Text>
+            <Text size={isMobileOrTablet() ? 'xxs' : 'xs'}>{label}</Text>
             <div
                 className={classNames('amount-input-container', {
                     'amount-input-container--error': has_error,

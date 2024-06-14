@@ -1,6 +1,6 @@
 import React from 'react';
 import { reaction } from 'mobx';
-import { DesktopWrapper, MobileFullPageModal, MobileWrapper } from '@deriv/components';
+import { DesktopWrapper, MobileFullPageModal, MobileOrTabletWrapper } from '@deriv/components';
 import { observer } from '@deriv/stores';
 import { localize } from 'Components/i18next';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
@@ -67,7 +67,7 @@ const BlockUser = () => {
             <DesktopWrapper>
                 <BlockUserList />
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <MobileFullPageModal
                     body_className='block-user__modal'
                     height_offset='80px'
@@ -82,7 +82,7 @@ const BlockUser = () => {
                 >
                     <BlockUserList />
                 </MobileFullPageModal>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </React.Fragment>
     );
 };

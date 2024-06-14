@@ -1,6 +1,6 @@
 .payment-agent-list {
     padding: 0 4.2rem 1.6rem;
-    @include mobile {
+    @include mobile-or-tablet-screen {
         padding: 0;
     }
     .side-note--mobile {
@@ -11,12 +11,12 @@
         margin-top: 2.4rem;
     }
     &__instructions {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             display: grid;
             grid-template-columns: 1fr;
             grid-gap: 0.8rem;
             .dc-tabs__list--header--tabs--desktop {
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     position: fixed;
                     background-color: var(--general-main-1);
                     width: 100%;
@@ -54,7 +54,7 @@
             &-text {
                 min-width: fit-content;
             }
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-top: 1.6rem;
             }
         }
@@ -86,7 +86,7 @@
                 }
             }
         }
-        @include mobile {
+        @include mobile-or-tablet-screen {
             &-header {
                 position: relative;
                 z-index: 1;
@@ -136,7 +136,7 @@
             &__header--title {
                 font-size: var(--text-size-sm);
             }
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 &__dialog {
                     width: 100%;
                     margin: 0 1.6rem;
@@ -151,7 +151,7 @@
         }
     }
     &__search-loader {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             height: unset;
         }
     }

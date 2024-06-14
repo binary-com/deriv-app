@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
-import { isMobile, getSignupFormFields } from '@deriv/shared';
+import { isMobileOrTablet, getSignupFormFields } from '@deriv/shared';
 import { Button, Icon, StaticUrl, Text } from '@deriv/components';
 import { localize, Localize } from '@deriv/translations';
 
@@ -15,7 +15,7 @@ const Heading = ({ code }) => {
             );
         case 'InvalidAccount':
             return (
-                <Text as='h2' size={isMobile() ? 'xs' : 's'} align='center' weight='bold' line_height='xxl'>
+                <Text as='h2' size={isMobileOrTablet() ? 'xs' : 's'} align='center' weight='bold' line_height='xxl'>
                     <Localize i18n_default_text='You can’t add another real account' />
                 </Text>
             );
@@ -57,7 +57,7 @@ const Message = ({ code, message, details }) => {
             );
         case 'InvalidAccount':
             return (
-                <Text size={isMobile() ? 'xxs' : 'xs'} align='center'>
+                <Text size={isMobileOrTablet() ? 'xxs' : 'xs'} align='center'>
                     {message}
                 </Text>
             );

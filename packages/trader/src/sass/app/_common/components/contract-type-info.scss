@@ -6,7 +6,7 @@
     flex-direction: column;
     margin: 0 auto;
 
-    @include mobile {
+    @include mobile-screen {
         height: calc(100% - 7.4rem);
 
         &--has-only-toggle-buttons {
@@ -35,7 +35,7 @@
         width: 52.8rem;
         height: 4rem;
 
-        @include mobile {
+        @include mobile-screen {
             width: 32.8rem;
             margin: 1.6rem auto 0;
         }
@@ -65,7 +65,7 @@
         justify-content: space-between;
         height: 100%;
 
-        @include mobile {
+        @include mobile-screen {
             height: 100%;
             padding: 0;
             margin-bottom: 1.6rem;
@@ -116,7 +116,7 @@
                 direction: rtl;
             }
         }
-        @include mobile {
+        @include mobile-screen {
             /* postcss-bem-linter: ignore */
             h2 {
                 @include typeface(--small-left-bold-black, none);
@@ -144,7 +144,7 @@
         text-align: center;
         margin-top: 1.6rem;
 
-        @include mobile {
+        @include mobile-screen {
             height: 16.4rem;
             background-color: var(--general-section-1);
             svg {
@@ -155,7 +155,7 @@
         &--has-video {
             height: 27rem;
 
-            @include mobile {
+            @include mobile-screen {
                 height: 18.45rem;
             }
         }
@@ -206,7 +206,7 @@
         padding: 1.6rem 2.4rem;
         margin-top: 1.6rem;
 
-        @include mobile {
+        @include mobile-screen {
             margin-top: 0;
             padding: 1.6rem;
         }
@@ -215,7 +215,7 @@
         flex-shrink: 0;
         width: 52.3rem;
 
-        @include mobile {
+        @include mobile-screen {
             padding: 1.5rem 0;
             align-self: center;
             width: 32.8rem;
@@ -228,7 +228,7 @@
         border-radius: $BORDER_RADIUS * 1.5;
         width: 52.3rem;
 
-        @include mobile {
+        @include mobile-screen {
             width: 32.8rem;
             margin: 1.6rem auto;
         }
@@ -254,7 +254,7 @@
         margin-bottom: 1.6rem;
         overflow: hidden;
 
-        @include mobile {
+        @include mobile-screen {
             height: 18.45rem;
             margin-bottom: 1.8rem;
         }
@@ -263,7 +263,7 @@
     &__banner-wrapper {
         margin: 0 0.8rem 0.8rem;
 
-        @include mobile {
+        @include mobile-screen {
             width: 32.8rem;
             margin: 0.8rem auto;
         }

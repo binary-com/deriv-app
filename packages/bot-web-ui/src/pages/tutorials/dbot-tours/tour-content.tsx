@@ -534,8 +534,8 @@ export const DBOT_ONBOARDING_MOBILE: TMobileTourConfig[] = [
     },
 ];
 
-export const getTourDialogInfo = (is_mobile: boolean) => {
-    return is_mobile ? (
+export const getTourDialogInfo = (is_mobile_or_tablet: boolean) => {
+    return is_mobile_or_tablet ? (
         <Localize
             key='tour-dialog-info-mobile'
             i18n_default_text='Here’s a quick guide on how to use Deriv Bot on the go.'
@@ -548,8 +548,8 @@ export const getTourDialogInfo = (is_mobile: boolean) => {
     );
 };
 
-export const getTourDialogAction = (is_mobile: boolean) => {
-    if (is_mobile) {
+export const getTourDialogAction = (is_mobile_or_tablet: boolean) => {
+    if (is_mobile_or_tablet) {
         return (
             <Localize
                 key='tour-dialog-action-mobile'
@@ -569,8 +569,8 @@ export const onboarding_tour_header = (
     <Localize key='onboarding-tour-header' i18n_default_text='Get started on Deriv Bot' />
 );
 
-export const getBotBuilderTourHeader = (is_mobile: boolean) => {
-    if (is_mobile) {
+export const getBotBuilderTourHeader = (is_mobile_or_tablet: boolean) => {
+    if (is_mobile_or_tablet) {
         return <Localize key='tour_header-mobile' i18n_default_text='Bot Builder guide' />;
     }
     return <Localize key='tour_header-desktop' i18n_default_text="Let's build a Bot!" />;

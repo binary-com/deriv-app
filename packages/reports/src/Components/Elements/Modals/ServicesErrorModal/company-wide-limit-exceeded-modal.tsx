@@ -10,13 +10,13 @@ type TCompanyWideLimitExceededModal = {
 
 const CompanyWideLimitExceededModal = observer(({ is_visible, onConfirm }: TCompanyWideLimitExceededModal) => {
     const {
-        ui: { is_mobile },
+        ui: { is_mobile_or_tablet },
     } = useStore();
     return (
         <Modal
             is_open={is_visible}
             small
-            is_vertical_centered={is_mobile}
+            is_vertical_centered={is_mobile_or_tablet}
             toggleModal={onConfirm}
             title={localize('Purchase Error')}
         >

@@ -5,7 +5,7 @@ import {
     DesktopWrapper,
     Loading,
     MobileFullPageModal,
-    MobileWrapper,
+    MobileOrTabletWrapper,
     Text,
     ThemedScrollbars,
 } from '@deriv/components';
@@ -94,7 +94,7 @@ const PaymentMethodsList = () => {
                         </div>
                     </div>
                 </DesktopWrapper>
-                <MobileWrapper>
+                <MobileOrTabletWrapper>
                     <MobileFullPageModal
                         body_className='payment-methods-list__modal'
                         height_offset='80px'
@@ -145,7 +145,7 @@ const PaymentMethodsList = () => {
                                 })}
                         </div>
                     </MobileFullPageModal>
-                </MobileWrapper>
+                </MobileOrTabletWrapper>
             </React.Fragment>
         </ScrollbarWrapper>
     );

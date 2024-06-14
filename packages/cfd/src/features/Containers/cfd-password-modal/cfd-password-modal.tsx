@@ -9,7 +9,7 @@ import {
     getErrorMessages,
     getFormattedJurisdictionCode,
     isDesktop,
-    isMobile,
+    isMobileOrTablet,
     routes,
     validLength,
     validPassword,
@@ -355,7 +355,7 @@ const CFDPasswordModal = observer(({ form_error, platform }: TCFDPasswordModalPr
 
     const should_show_password_dialog = React.useMemo(() => {
         if (should_show_password) {
-            if (!should_set_trading_password) return isMobile();
+            if (!should_set_trading_password) return isMobileOrTablet();
         }
         return false;
     }, [should_set_trading_password, should_show_password]);
@@ -487,7 +487,7 @@ const CFDPasswordModal = observer(({ form_error, platform }: TCFDPasswordModalPr
             onUnmount={() => getAccountStatus(platform)}
             onExited={() => setPasswordModalExited(true)}
             onEntered={() => setPasswordModalExited(false)}
-            width={isMobile() ? '32.8rem' : 'auto'}
+            width={isMobileOrTablet() ? '32.8rem' : 'auto'}
         >
             {cfd_password_form}
         </Modal>
@@ -538,8 +538,8 @@ const CFDPasswordModal = observer(({ form_error, platform }: TCFDPasswordModalPr
                         : account_type.category === CATEGORY.REAL
                 }
                 has_close_icon={false}
-                width={isMobile() ? '32.8rem' : 'auto'}
-                is_medium_button={isMobile()}
+                width={isMobileOrTablet() ? '32.8rem' : 'auto'}
+                is_medium_button={isMobileOrTablet()}
             />
             <SentEmailModal
                 is_open={should_show_sent_email_modal}

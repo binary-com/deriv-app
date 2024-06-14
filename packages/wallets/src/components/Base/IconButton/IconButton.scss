@@ -75,12 +75,12 @@ $border-radius-map: (
     @each $color, $values in $color-map {
         &__color--#{$color} {
             background-color: map-get($values, backgroundcolor);
-            @include desktop {
+            @include desktop-screen {
                 &:hover {
                     background-color: map-get($values, hover);
                 }
             }
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 &:active {
                     background-color: map-get($values, hover);
                 }

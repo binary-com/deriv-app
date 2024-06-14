@@ -2,7 +2,7 @@ import React from 'react';
 import { RouteComponentProps, useHistory, withRouter } from 'react-router-dom';
 import { FormikConsumer } from 'formik';
 import { Button, Icon, Modal } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { localize } from '@deriv/translations';
 import IconMessageContent from '../icon-message-content';
 
@@ -22,7 +22,13 @@ const LeaveConfirmMessage = ({ back, leave }: TLeaveConfirmMessage) => {
             className='leave-confirm'
             message={localize('Unsaved changes')}
             text={localize('You have unsaved changes. Are you sure you want to discard changes and leave this page?')}
-            icon={<Icon icon='IcUnsavedChanges' size={isMobile() ? 93 : 128} data_testid='dt_unsaved_changes_icon' />}
+            icon={
+                <Icon
+                    icon='IcUnsavedChanges'
+                    size={isMobileOrTablet() ? 93 : 128}
+                    data_testid='dt_unsaved_changes_icon'
+                />
+            }
         >
             <div className='account-management-flex-wrapper account-management-leave-confirm'>
                 <Button
@@ -31,7 +37,7 @@ const LeaveConfirmMessage = ({ back, leave }: TLeaveConfirmMessage) => {
                     onClick={back}
                     text={localize('Cancel')}
                     secondary
-                    {...(isMobile() ? { large: true } : {})}
+                    {...(isMobileOrTablet() ? { large: true } : {})}
                 />
                 <Button
                     type='button'
@@ -39,7 +45,7 @@ const LeaveConfirmMessage = ({ back, leave }: TLeaveConfirmMessage) => {
                     onClick={leave}
                     text={localize('Leave Settings')}
                     primary
-                    {...(isMobile() ? { large: true } : {})}
+                    {...(isMobileOrTablet() ? { large: true } : {})}
                 />
             </div>
         </IconMessageContent>
@@ -87,7 +93,7 @@ export const TransitionBlocker = ({ dirty, onDirty }: TTransitionBlocker) => {
 
     return (
         <>
-            {show && isMobile() ? (
+            {show && isMobileOrTablet() ? (
                 <LeaveConfirmMessage back={back} leave={leave} />
             ) : (
                 <Modal is_open={show} small toggleModal={back}>

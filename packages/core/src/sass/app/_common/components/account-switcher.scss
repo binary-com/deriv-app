@@ -237,15 +237,17 @@
     &__wrapper {
         border-radius: $BORDER_RADIUS;
         position: absolute;
-        @include tablet-screen {
-            position: unset;
-        }
         transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.25s linear;
         box-shadow: 0 8px 16px 0 var(--shadow-menu);
         right: 0;
         top: calc(100% + 4px);
         width: 320px;
         background-color: var(--general-main-2);
+
+        @include mobile-or-tablet-screen {
+            position: unset;
+            width: unset;
+        }
 
         &--wallets {
             width: 32rem;
@@ -512,7 +514,7 @@
     &__traders-hub {
         padding: 1.2rem 0.5rem 0.6rem 0.8rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 1.2rem 0.5rem 0.6rem 2.5rem;
         }
         &--link {

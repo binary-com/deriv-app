@@ -1,7 +1,7 @@
 .payment-agent-listed-withdraw-form {
     padding: 0 1.6rem;
     margin-top: 3.2rem;
-    @include mobile {
+    @include mobile-or-tablet-screen {
         padding: 0;
     }
     &__header {
@@ -9,7 +9,7 @@
     }
     &__form {
         display: flex;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             flex-direction: column;
         }
         .dc-input {
@@ -17,7 +17,7 @@
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
             margin-bottom: 1.8rem;
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 border: 1px solid var(--border-normal);
                 border-top-right-radius: 0.4rem;
                 border-bottom-right-radius: 0.4rem;
@@ -29,7 +29,7 @@
         .dc-btn {
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-top: 1.2rem;
                 border-top-left-radius: 0.4rem;
                 border-bottom-left-radius: 0.4rem;

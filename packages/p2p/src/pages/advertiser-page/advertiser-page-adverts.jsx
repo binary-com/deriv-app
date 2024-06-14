@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { InfiniteDataList, Loading, Table, Tabs, Text } from '@deriv/components';
-import { isDesktop, isMobile } from '@deriv/shared';
+import { isDesktop, isMobileOrTablet } from '@deriv/shared';
 import { useStore, observer } from '@deriv/stores';
 import { localize, Localize } from 'Components/i18next';
 import { useP2PAdvertiserAdverts } from 'Hooks';
@@ -33,7 +33,7 @@ const AdvertiserPageAdverts = () => {
             <Tabs
                 active_index={advertiser_page_store.active_index}
                 className='advertiser-page-adverts__tabs'
-                is_full_width={isMobile()}
+                is_full_width={isMobileOrTablet()}
                 onTabItemClick={advertiser_page_store.handleTabItemClick}
                 header_fit_content
                 top
@@ -79,7 +79,7 @@ const AdvertiserPageAdverts = () => {
                         </Table>
                     ) : (
                         <P2pEmpty
-                            className={classNames('', { 'advertiser-page-empty': isMobile() })}
+                            className={classNames('', { 'advertiser-page-empty': isMobileOrTablet() })}
                             icon='IcNoData'
                             title={<EmptyAdsMessage />}
                         />

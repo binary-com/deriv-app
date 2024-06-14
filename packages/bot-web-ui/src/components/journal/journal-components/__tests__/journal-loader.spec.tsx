@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import JournalLoader from '../journal-loader';
 
 jest.mock('react-content-loader', () => {
-    return jest.fn(({ children, ...props }: { children: React.ReactElement; is_mobile: boolean }) => (
+    return jest.fn(({ children, ...props }: { children: React.ReactElement; is_mobile_or_tablet: boolean }) => (
         <div data-testid='mock-content-loader' {...props}>
             {children}
         </div>
@@ -13,7 +13,7 @@ jest.mock('react-content-loader', () => {
 
 describe('JournalLoader', () => {
     it('Renders correctly for desktop', () => {
-        render(<JournalLoader is_mobile={false} />);
+        render(<JournalLoader is_mobile_or_tablet={false} />);
 
         const journal_loader = screen.getByTestId('mock-content-loader');
 
@@ -22,7 +22,7 @@ describe('JournalLoader', () => {
     });
 
     it('Renders correctly for mobile with given props', () => {
-        render(<JournalLoader is_mobile={true} />);
+        render(<JournalLoader is_mobile_or_tablet={true} />);
 
         const journal_loader = screen.getByTestId('mock-content-loader');
 

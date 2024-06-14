@@ -7,7 +7,7 @@
     align-items: center;
     gap: 0.8rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 100%;
         padding: 1.6rem;
         flex: 1 0 41%;

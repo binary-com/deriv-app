@@ -10,7 +10,7 @@
     }
     &__button {
         margin: 3.2rem auto 1.6rem;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: calc(100% - 3.2rem);
         }
     }

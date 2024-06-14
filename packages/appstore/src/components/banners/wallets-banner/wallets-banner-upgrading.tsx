@@ -5,7 +5,7 @@ import { Localize } from '@deriv/translations';
 
 const WalletsBannerUpgrading = observer(() => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
 
     return (
         <div className='wallets-banner__container wallets-banner-upgrading'>
@@ -20,8 +20,8 @@ const WalletsBannerUpgrading = observer(() => {
                     components={[
                         <Text
                             key={0}
-                            line_height={is_mobile ? 's' : 'm'}
-                            size={is_mobile ? 'xs' : 'sm'}
+                            line_height={is_mobile_or_tablet ? 's' : 'm'}
+                            size={is_mobile_or_tablet ? 'xs' : 'sm'}
                             weight='bold'
                         />,
                     ]}
@@ -33,17 +33,17 @@ const WalletsBannerUpgrading = observer(() => {
                             className='wallets-banner-upgrading__description'
                             key={0}
                             line_height='s'
-                            size={is_mobile ? 'xxxs' : 'xs'}
+                            size={is_mobile_or_tablet ? 'xxxs' : 'xs'}
                         />,
                     ]}
                 />
             </div>
             <Icon
-                icon={`IcAppstoreWalletsUpgradeCoins${is_mobile ? '' : 'Horizontal'}`}
-                width={is_mobile ? 220 : 448}
-                height={is_mobile ? 220 : '100%'}
+                icon={`IcAppstoreWalletsUpgradeCoins${is_mobile_or_tablet ? '' : 'Horizontal'}`}
+                width={is_mobile_or_tablet ? 220 : 448}
+                height={is_mobile_or_tablet ? 220 : '100%'}
                 className='wallets-banner-upgrading__image'
-                data_testid={`dt_wallets_upgrade_coins${is_mobile ? '' : '_horizontal'}`}
+                data_testid={`dt_wallets_upgrade_coins${is_mobile_or_tablet ? '' : '_horizontal'}`}
             />
         </div>
     );

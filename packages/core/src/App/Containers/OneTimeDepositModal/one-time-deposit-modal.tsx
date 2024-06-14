@@ -5,7 +5,7 @@ import {
     Icon,
     InlineMessage,
     MobileFullPageModal,
-    MobileWrapper,
+    MobileOrTabletWrapper,
     Modal,
     Text,
 } from '@deriv/components';
@@ -19,7 +19,7 @@ const OneTimeDepositModal = observer(() => {
     const { client, ui } = useStore();
     const { loginid } = client;
     const {
-        is_mobile,
+        is_mobile_or_tablet,
         should_show_one_time_deposit_modal,
         setShouldShowOneTimeDepositModal,
         toggleAccountSuccessModal,
@@ -45,10 +45,10 @@ const OneTimeDepositModal = observer(() => {
     const getModalContent = () => (
         <div className='one-time-deposit-modal__content'>
             <div className='one-time-deposit-modal__title'>
-                <Text as='h1' size={is_mobile ? 'm' : 'l'} weight='bold'>
+                <Text as='h1' size={is_mobile_or_tablet ? 'm' : 'l'} weight='bold'>
                     <Localize i18n_default_text='Deposit' />
                 </Text>
-                <Text as='p' size={is_mobile ? 'xs' : 's'} align='center'>
+                <Text as='p' size={is_mobile_or_tablet ? 'xs' : 's'} align='center'>
                     <Localize i18n_default_text='Account created. Select payment method for deposit.' />
                 </Text>
             </div>
@@ -95,7 +95,7 @@ const OneTimeDepositModal = observer(() => {
                     <Modal.Body className='one-time-deposit-modal__body'>{getModalContent()}</Modal.Body>
                 </Modal>
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <MobileFullPageModal
                     className='one-time-deposit-modal'
                     body_className='one-time-deposit-modal__body'
@@ -106,7 +106,7 @@ const OneTimeDepositModal = observer(() => {
                 >
                     {getModalContent()}
                 </MobileFullPageModal>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </React.Fragment>
     );
 });

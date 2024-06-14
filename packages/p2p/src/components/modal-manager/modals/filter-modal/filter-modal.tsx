@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, useStore } from '@deriv/stores';
-import { DesktopWrapper, MobileFullPageModal, MobileWrapper, Modal } from '@deriv/components';
+import { DesktopWrapper, MobileFullPageModal, MobileOrTabletWrapper, Modal } from '@deriv/components';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
 import { useStores } from 'Stores';
 import { getListDifference } from 'Utils/helper';
@@ -16,7 +16,7 @@ export type TPaymentMethod = {
 const FilterModal = () => {
     const { buy_sell_store, my_profile_store } = useStores();
     const {
-        ui: { is_mobile },
+        ui: { is_mobile_or_tablet },
     } = useStore();
     const { hideModal, is_modal_open, showModal, useSavedState } = useModalManagerContext();
     const {
@@ -82,7 +82,7 @@ const FilterModal = () => {
                 key: 'LeavePageModal',
                 props: {
                     onLeavePage: () => {
-                        if (is_mobile) {
+                        if (is_mobile_or_tablet) {
                             setSelectedMethods(
                                 selected_methods.filter((selected_method: string) =>
                                     selected_payment_method_value.includes(selected_method)
@@ -203,7 +203,7 @@ const FilterModal = () => {
                     </Modal.Footer>
                 </Modal>
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <MobileFullPageModal
                     body_className='filter-modal__body'
                     is_modal_open={is_modal_open}
@@ -233,7 +233,7 @@ const FilterModal = () => {
                         selected_methods_text={selected_methods_text}
                     />
                 </MobileFullPageModal>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </React.Fragment>
     );
 };

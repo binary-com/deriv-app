@@ -5,7 +5,7 @@
         flex-direction: column;
         gap: 0.8rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 100%;
             align-items: center;
         }
@@ -17,7 +17,7 @@
             overflow: hidden;
             background-color: var(--general-section-1);
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 width: 32.8rem;
                 padding: 1.6rem;
             }
@@ -28,7 +28,7 @@
             flex-direction: column;
             align-items: flex-start;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 align-items: center;
             }
         }
@@ -36,32 +36,32 @@
             display: flex;
             justify-content: flex-start;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 justify-content: center;
             }
         }
         &__button {
             margin-left: 0;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 height: 3rem;
             }
         }
     }
     .dc-btn__text {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             font-size: var(--text-size-xxs);
         }
     }
     &__pic {
-        @include desktop {
+        @include desktop-screen {
             position: absolute;
             right: -3rem;
             bottom: 1rem;
             height: 12.8rem;
             width: 23.5rem;
         }
-        @include mobile {
+        @include mobile-or-tablet-screen {
             position: relative;
             width: 100%;
             height: 8.2rem;

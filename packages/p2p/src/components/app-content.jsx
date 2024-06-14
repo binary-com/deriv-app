@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 
 import { Loading, Tabs } from '@deriv/components';
 import { useIsSystemMaintenance, useP2PNotificationCount } from '@deriv/hooks';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import { useStore } from '@deriv/stores';
 
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
@@ -64,8 +64,8 @@ const AppContent = ({ order_id }) => {
     return (
         <Tabs
             active_index={general_store.active_index}
-            header_fit_content={!isMobile()}
-            is_100vw={isMobile()}
+            header_fit_content={!isMobileOrTablet()}
+            is_100vw={isMobileOrTablet()}
             is_scrollable
             is_overflow_hidden
             onTabItemClick={active_tab_index => {

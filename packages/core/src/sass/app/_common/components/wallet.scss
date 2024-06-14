@@ -802,7 +802,7 @@ $wallet-bg-color: (
                         }
                     }
 
-                    @include mobile {
+                    @include mobile-or-tablet-screen {
                         background: map-get($colors, 'mobile');
                     }
                 }

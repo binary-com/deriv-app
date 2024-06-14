@@ -10,7 +10,7 @@ const GoogleDrive = observer(() => {
     const { google_drive, load_modal } = useDBotStore();
     const { is_authorised } = google_drive;
     const { is_open_button_loading, onDriveConnect, onDriveOpen } = load_modal;
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
 
     return (
         <div className='load-strategy__container' data-testid='dt_google_drive'>
@@ -20,7 +20,7 @@ const GoogleDrive = observer(() => {
                     className={classnames('load-strategy__google-drive-icon', {
                         'load-strategy__google-drive-icon--disabled': !is_authorised,
                     })}
-                    size={is_mobile ? 96 : 128}
+                    size={is_mobile_or_tablet ? 96 : 128}
                 />
                 <div className='load-strategy__google-drive-connected-text'>
                     {is_authorised ? (

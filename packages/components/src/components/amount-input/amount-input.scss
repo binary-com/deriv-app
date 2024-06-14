@@ -26,7 +26,7 @@
         }
     }
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         height: 2.4rem;
     }
 }
@@ -44,7 +44,7 @@
         font-size: var(--text-size-sm);
         font-weight: var(--text-weight-bold);
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             font-size: var(--text-size-s);
         }
     }

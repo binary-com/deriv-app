@@ -16,9 +16,9 @@ type TIconMessageList = {
 
 const IconMessageList = observer(({ className, icon, message, message_list = [], onContinue }: TIconMessageList) => {
     const { ui } = useStore();
-    const { is_mobile, is_desktop } = ui;
+    const { is_mobile_or_tablet, is_desktop } = ui;
     return (
-        <ThemedScrollbars is_bypassed={is_mobile}>
+        <ThemedScrollbars is_bypassed={is_mobile_or_tablet}>
             <Div100vhContainer
                 className='account-management__message-wrapper'
                 is_disabled={is_desktop}

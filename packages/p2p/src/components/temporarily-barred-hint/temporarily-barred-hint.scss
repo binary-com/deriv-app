@@ -2,7 +2,7 @@
     margin-top: 1.6rem;
     width: fit-content;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         margin: 1rem 2rem;
     }
 }

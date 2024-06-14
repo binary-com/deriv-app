@@ -30,7 +30,7 @@ const ProofOfOwnershipForm = observer(({ grouped_payment_method_data }: TProofOf
     const { client, notifications, ui } = useStore();
     const { refreshNotifications } = notifications;
     const { email: client_email, updateAccountStatus } = client;
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
 
     const grouped_payment_method_data_keys = Object.keys(grouped_payment_method_data) as Array<TPaymentMethod>;
 
@@ -40,11 +40,11 @@ const ProofOfOwnershipForm = observer(({ grouped_payment_method_data }: TProofOf
 
     const getScrollOffset = React.useCallback(
         (items_count = 0) => {
-            if (is_mobile) return '20rem';
+            if (is_mobile_or_tablet) return '20rem';
             if (items_count <= 2) return '0rem';
             return '8rem';
         },
-        [is_mobile]
+        [is_mobile_or_tablet]
     );
 
     const initial_values = React.useMemo(() => {

@@ -65,13 +65,13 @@ describe('<LoginHistory />', () => {
                 is_authorize: true,
             },
             ui: {
-                is_mobile: false,
+                is_mobile_or_tablet: false,
             },
         });
     });
 
-    it('should render Login History List when is_mobile is true', async () => {
-        mock_store.ui.is_mobile = true;
+    it('should render Login History List when is_mobile_or_tablet is true', async () => {
+        mock_store.ui.is_mobile_or_tablet = true;
         renderComponent();
         await waitFor(() => {
             expect(screen.getByText(/date and time/i)).toHaveClass('dc-text login-history__list__row__cell--title');

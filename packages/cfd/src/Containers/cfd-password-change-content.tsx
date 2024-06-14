@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, useStore } from '@deriv/stores';
-import { DesktopWrapper, Modal, Button, Icon, Text, MobileDialog, MobileWrapper } from '@deriv/components';
+import { DesktopWrapper, Modal, Button, Icon, Text, MobileDialog, MobileOrTabletWrapper } from '@deriv/components';
 import { Localize } from '@deriv/translations';
 
 type TCFDPasswordChangeContentProps = {
@@ -67,7 +67,7 @@ const CFDPasswordChangeContent = observer(({ closeModal, password_value }: TCFDP
                     </Modal.Footer>
                 </Modal>
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <MobileDialog
                     portal_element_id='modal_root'
                     wrapper_classname='cfd-password-modal'
@@ -79,7 +79,7 @@ const CFDPasswordChangeContent = observer(({ closeModal, password_value }: TCFDP
                 >
                     {password_changed_success__body}
                 </MobileDialog>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </React.Fragment>
     );
 });

@@ -44,7 +44,7 @@ describe('TradingAssessmentNewUser', () => {
         mockGetCurrentStep.mockReturnValue(2);
         const mock_store = mockStore({
             ui: {
-                is_mobile: false,
+                is_mobile_or_tablet: false,
             },
         });
         render(

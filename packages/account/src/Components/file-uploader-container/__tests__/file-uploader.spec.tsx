@@ -40,7 +40,7 @@ describe('<FileUploader />', () => {
         (isDesktop as jest.Mock).mockReturnValue(false);
         const mock_store = mockStore({
             ui: {
-                is_mobile: true,
+                is_mobile_or_tablet: true,
             },
         });
         render(<FileUploader {...props} />, {

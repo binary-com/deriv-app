@@ -53,7 +53,7 @@ const Header = ({ currency }: THeaderProps) => {
 const WithdrawalCryptoForm = observer(() => {
     const [arrow_icon_direction, setArrowIconDirection] = React.useState<'right' | 'left'>('right');
     const { client, ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const {
         balance,
         currency,
@@ -114,11 +114,14 @@ const WithdrawalCryptoForm = observer(() => {
 
     return (
         <div className='withdrawal-crypto-form__wrapper' data-testid='dt_withdrawal_crypto_form'>
-            {!is_mobile && <Header currency={currency} />}
-            <div className={classNames({ 'withdrawal-crypto-form__icon': is_mobile })}>
-                <Icon icon={`IcCurrency-${account_details?.icon?.toLowerCase()}`} size={is_mobile ? 64 : 128} />
+            {!is_mobile_or_tablet && <Header currency={currency} />}
+            <div className={classNames({ 'withdrawal-crypto-form__icon': is_mobile_or_tablet })}>
+                <Icon
+                    icon={`IcCurrency-${account_details?.icon?.toLowerCase()}`}
+                    size={is_mobile_or_tablet ? 64 : 128}
+                />
             </div>
-            {is_mobile && <Header currency={currency} />}
+            {is_mobile_or_tablet && <Header currency={currency} />}
             <Formik
                 initialValues={{
                     address: '',

@@ -1,5 +1,5 @@
 .failed-verification-modal {
-    @include mobile {
+    @include mobile-or-tablet-screen {
         .dc-dialog__dialog {
             max-width: 32rem;
         }

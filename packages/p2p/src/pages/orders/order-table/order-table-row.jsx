@@ -7,7 +7,7 @@ import { millisecondsToTimer } from 'Utils/date-time';
 import { createExtendedOrderDetails } from 'Utils/orders';
 import { getDistanceToServerTime } from 'Utils/server_time';
 import { useStores } from 'Stores';
-import { DesktopWrapper, Icon, MobileWrapper, Table, Text } from '@deriv/components';
+import { DesktopWrapper, Icon, MobileOrTabletWrapper, Table, Text } from '@deriv/components';
 import { formatMoney, routes } from '@deriv/shared';
 import { localize } from 'Components/i18next';
 import RatingCellRenderer from 'Components/rating-cell-renderer';
@@ -200,7 +200,7 @@ const OrderRow = ({ row: order }) => {
                         </Table.Cell>
                     </Table.Row>
                 </DesktopWrapper>
-                <MobileWrapper>
+                <MobileOrTabletWrapper>
                     <Table.Row
                         className={classNames('orders__mobile', {
                             'orders__mobile--attention': !isOrderSeen(id),
@@ -276,7 +276,7 @@ const OrderRow = ({ row: order }) => {
                             />
                         </Table.Cell>
                     </Table.Row>
-                </MobileWrapper>
+                </MobileOrTabletWrapper>
             </div>
         </React.Fragment>
     );

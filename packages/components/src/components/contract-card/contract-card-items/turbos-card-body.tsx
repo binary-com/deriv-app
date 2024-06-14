@@ -3,7 +3,7 @@ import React from 'react';
 import { addComma, getLimitOrderAmount, isCryptocurrency, isValidToSell } from '@deriv/shared';
 import ContractCardItem from './contract-card-item';
 import ToggleCardDialog from './toggle-card-dialog';
-import MobileWrapper from '../../mobile-wrapper';
+import MobileOrTabletWrapper from '../../mobile-wrapper';
 import Money from '../../money';
 import { ResultStatusIcon } from '../result-overlay/result-overlay';
 import { TGeneralContractCardBodyProps } from './contract-update-form';
@@ -101,7 +101,7 @@ const TurbosCardBody = ({
                 <ContractCardItem header={BARRIER} className='dc-contract-card__barrier-level'>
                     {addComma(barrier)}
                 </ContractCardItem>
-                <MobileWrapper>
+                <MobileOrTabletWrapper>
                     <div className='dc-contract-card__status'>
                         {is_sold ? (
                             <ResultStatusIcon getCardLabels={getCardLabels} is_contract_won={!!profit && profit > 0} />
@@ -109,7 +109,7 @@ const TurbosCardBody = ({
                             progress_slider_mobile_el
                         )}
                     </div>
-                </MobileWrapper>
+                </MobileOrTabletWrapper>
             </div>
             <ContractCardItem
                 className='dc-contract-card-item__total-profit-loss'

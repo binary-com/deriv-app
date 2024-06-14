@@ -8,7 +8,7 @@
         display: flex;
         align-items: center;
         margin-bottom: 1.6rem;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             display: block;
             margin: 1.6rem;
         }
@@ -21,7 +21,7 @@
         .dc-text {
             margin-left: 0.8rem;
             width: max-content;
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-left: 2.2rem;
             }
         }
@@ -30,7 +30,7 @@
         display: flex;
         flex-direction: column;
         height: 100%;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 1.6rem;
         }
 
@@ -39,7 +39,7 @@
             display: flex;
             flex-direction: column;
 
-            @include desktop {
+            @include desktop-screen {
                 min-height: 72vh;
                 .data-list,
                 .data-list__body-wrapper {
@@ -51,7 +51,7 @@
             padding: 1.6rem;
             grid-template-columns: 1fr 1fr 0.7fr 0.8fr 0.7fr 0.8fr 0.7fr 0.4fr;
             border: 0;
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 display: flex;
                 flex-direction: column;
                 border-radius: 0.8rem;
@@ -59,7 +59,7 @@
             }
 
             .dc-table__cell:not(.transactions-crypto-history__table-confirm) {
-                @include desktop {
+                @include desktop-screen {
                     margin-right: 1.6rem;
                 }
             }
@@ -69,7 +69,7 @@
         }
         &-type {
             text-transform: capitalize;
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-left: 1.2rem;
                 flex: 1;
             }
@@ -79,12 +79,12 @@
             }
         }
         &-amount {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-bottom: 0.8rem;
             }
         }
         &-hash {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-bottom: 0.8rem;
             }
 
@@ -96,12 +96,12 @@
             justify-content: center;
         }
         &-time {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-bottom: 0.8rem;
             }
         }
         &-status {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 display: flex;
                 align-items: center;
             }
@@ -111,7 +111,7 @@
                 margin-right: 0.8rem;
                 border-radius: 50%;
                 background-color: var(--status-warning);
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     width: 0.8rem;
                     height: 0.8rem;
                 }
@@ -155,7 +155,7 @@
             }
         }
         &-action {
-            @include desktop {
+            @include desktop-screen {
                 justify-content: center;
             }
         }
@@ -193,7 +193,7 @@
         left: 10%;
         width: 50%;
         margin: auto;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             position: static;
         }
     }

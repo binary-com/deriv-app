@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
-import { MobileWrapper, Toast } from '@deriv/components';
+import { MobileOrTabletWrapper, Toast } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 
 // TODO: Need to sanitize,
@@ -30,7 +30,7 @@ const NetworkStatusToastError = observer(({ should_open = false }: { should_open
     }
 
     return ReactDOM.createPortal(
-        <MobileWrapper>
+        <MobileOrTabletWrapper>
             <Toast
                 className={classNames({
                     'dc-toast--blinker': status === 'blinker',
@@ -41,7 +41,7 @@ const NetworkStatusToastError = observer(({ should_open = false }: { should_open
             >
                 {message}
             </Toast>
-        </MobileWrapper>,
+        </MobileOrTabletWrapper>,
         portal_el
     );
 });

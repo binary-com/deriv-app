@@ -1,6 +1,6 @@
 import ContentLoader from 'react-content-loader';
 import React from 'react';
-import { DesktopWrapper, MobileWrapper } from '@deriv/components';
+import { DesktopWrapper, MobileOrTabletWrapper } from '@deriv/components';
 
 const TitleCardLoader = () => (
     <ContentLoader
@@ -13,9 +13,9 @@ const TitleCardLoader = () => (
             <rect x='0' y='0' rx='4' ry='4' width='200' height='30' />
             <rect x='0' y='40' rx='3' ry='3' width='2000' height='20' />
         </DesktopWrapper>
-        <MobileWrapper>
+        <MobileOrTabletWrapper>
             <rect x='0' y='0' rx='3' ry='3' width='350' height='40' />
-        </MobileWrapper>
+        </MobileOrTabletWrapper>
     </ContentLoader>
 );
 

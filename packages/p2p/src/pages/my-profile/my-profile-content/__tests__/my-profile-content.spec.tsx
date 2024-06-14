@@ -14,7 +14,7 @@ let mock_store: DeepPartial<ReturnType<typeof useStores>>;
 
 jest.mock('@deriv/components', () => ({
     ...jest.requireActual('@deriv/components'),
-    MobileWrapper: jest.fn(({ children }) => children),
+    MobileOrTabletWrapper: jest.fn(({ children }) => children),
 }));
 
 jest.mock('Components/modal-manager/modal-manager-context', () => ({

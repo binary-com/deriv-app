@@ -19,7 +19,7 @@ const crypto_currency_to_network_mapper: Record<string, string> = {
 
 const DepositCryptoDisclaimers: React.FC = observer(() => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const currency_config = useCurrentCurrencyConfig();
 
     const minimum_deposit_disclaimer = currency_config?.is_tUSDT ? (
@@ -61,10 +61,10 @@ const DepositCryptoDisclaimers: React.FC = observer(() => {
                     </li>
                 </ul>
             </InlineMessage>
-            <Text align='center' size={is_mobile ? 'xxxs' : 'xxs'}>
+            <Text align='center' size={is_mobile_or_tablet ? 'xxxs' : 'xxs'}>
                 <Localize
                     i18n_default_text='<0>Note:</0> You’ll receive an email when your deposit starts being processed.'
-                    components={[<Text key={0} size={is_mobile ? 'xxxs' : 'xxs'} weight='bold' />]}
+                    components={[<Text key={0} size={is_mobile_or_tablet ? 'xxxs' : 'xxs'} weight='bold' />]}
                 />
             </Text>
         </div>

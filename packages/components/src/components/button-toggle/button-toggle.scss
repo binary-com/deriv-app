@@ -25,7 +25,7 @@
         .dc-btn__text {
             display: contents;
         }
-        @include desktop {
+        @include desktop-screen {
             &:hover:not(.dc-button-menu__button--active) {
                 background-color: var(--state-hover) !important;
             }
@@ -58,7 +58,7 @@
         .dc-btn__text {
             display: contents;
         }
-        @include desktop {
+        @include desktop-screen {
             &:hover:not(.dc-button-menu__button--active) {
                 background-color: var(--state-hover) !important;
             }

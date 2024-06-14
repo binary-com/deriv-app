@@ -11,7 +11,7 @@ type TNotificationsClearAllFooter = {
 const NotificationsClearAllFooter = observer(({ clearNotifications }: TNotificationsClearAllFooter) => {
     const { notifications, ui } = useStore();
     const { is_notifications_empty } = notifications;
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
 
     return (
         <React.Fragment>
@@ -20,7 +20,7 @@ const NotificationsClearAllFooter = observer(({ clearNotifications }: TNotificat
                 data-testid='dt_clear_all_footer_button'
                 className={classNames('notifications-dialog__footer', {
                     'notifications-dialog__content--empty': is_notifications_empty,
-                    'notifications-dialog__content--sticky': is_mobile,
+                    'notifications-dialog__content--sticky': is_mobile_or_tablet,
                 })}
             >
                 <Button

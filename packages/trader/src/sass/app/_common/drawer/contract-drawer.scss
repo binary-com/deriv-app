@@ -123,7 +123,7 @@ $header-height: 4em;
         .dc-btn--cancel {
             height: 2.4rem;
 
-            @include mobile {
+            @include mobile-screen {
                 height: 3.2rem;
             }
         }

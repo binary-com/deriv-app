@@ -6,7 +6,7 @@
     gap: 1.6rem;
     background: var(--light-8-primary-background, #fff);
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 100%;
     }
 
@@ -14,7 +14,7 @@
         min-width: 67.2rem;
         min-height: 25.8rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             min-width: 100%;
             min-height: 20.2rem;
         }
@@ -22,13 +22,13 @@
     & .wallets-dropzone {
         min-height: 25.8rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             min-height: 20.2rem;
         }
     }
 
     & .wallets-dropzone__content {
-        @include desktop {
+        @include desktop-screen {
             gap: 0.8rem;
         }
     }

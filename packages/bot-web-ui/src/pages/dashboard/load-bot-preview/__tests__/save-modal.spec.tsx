@@ -43,7 +43,7 @@ describe('RecentComponent', () => {
     const mock_store = mockStore({
         ui: {
             setCurrentFocus: jest.fn(),
-            is_mobile: false,
+            is_mobile_or_tablet: false,
         },
     });
     mock_DBot_store = mockDBotStore(mock_store, mock_ws);
@@ -99,7 +99,7 @@ describe('RecentComponent', () => {
     });
 
     it('Should render SaveModal in mobile mode', () => {
-        mock_store.ui.is_mobile = true;
+        mock_store.ui.is_mobile_or_tablet = true;
         render(<SaveModal />, { wrapper });
         const modal_text = screen.getByText(/Enter your bot name, choose to save on your computer or Google Drive/i);
 
@@ -107,7 +107,7 @@ describe('RecentComponent', () => {
     });
 
     it('Should check save to Google Drive ', async () => {
-        mock_store.ui.is_mobile = true;
+        mock_store.ui.is_mobile_or_tablet = true;
         render(<SaveModal />, { wrapper });
 
         userEvent.click(screen.getByRole('radio', { name: /Google Drive/i }));
@@ -122,7 +122,7 @@ describe('RecentComponent', () => {
     });
 
     it('Should check save to  Local', async () => {
-        mock_store.ui.is_mobile = true;
+        mock_store.ui.is_mobile_or_tablet = true;
         render(<SaveModal />, { wrapper });
 
         userEvent.click(screen.getByRole('radio', { name: /Local/i }));

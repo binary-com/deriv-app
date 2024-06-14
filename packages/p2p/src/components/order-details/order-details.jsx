@@ -3,7 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Icon, InlineMessage, Text, ThemedScrollbars } from '@deriv/components';
 import { useP2PSettings } from '@deriv/hooks';
-import { formatMoney, isDesktop, isMobile, routes } from '@deriv/shared';
+import { formatMoney, isDesktop, isMobileOrTablet, routes } from '@deriv/shared';
 import { useStore, observer } from '@deriv/stores';
 import { Localize, localize } from 'Components/i18next';
 import { api_error_codes } from 'Constants/api-error-codes';
@@ -151,7 +151,7 @@ const OrderDetails = observer(() => {
             order_store.error_code !== api_error_codes.EXCESSIVE_VERIFICATION_REQUESTS &&
             !order_store.is_verifying_email
         ) {
-            showModal({ key: 'EmailLinkExpiredModal' }, { should_stack_modal: isMobile() });
+            showModal({ key: 'EmailLinkExpiredModal' }, { should_stack_modal: isMobileOrTablet() });
         }
 
         if (status_string === 'Expired' && isCurrentModal('EmailLinkExpiredModal', 'OrderDetailsConfirmModal'))
@@ -394,7 +394,7 @@ const OrderDetails = observer(() => {
                                             is_readonly
                                             number_of_stars={5}
                                             should_allow_hover_effect={false}
-                                            star_size={isMobile() ? 17 : 20}
+                                            star_size={isMobileOrTablet() ? 17 : 20}
                                         />
                                         <div className='order-details-card__ratings--row'>
                                             {review_details.recommended !== null &&

@@ -3,7 +3,7 @@
     height: 3.2rem;
     background-color: var(--system-light-7-secondary-background, #f2f3f4);
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         display: none;
     }
 }

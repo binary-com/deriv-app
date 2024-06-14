@@ -1,7 +1,7 @@
 .withdrawal-crypto-receipt {
     &__detail {
         display: inline-block;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 100%;
             min-width: auto;
             margin-bottom: 2.6rem !important;
@@ -15,7 +15,7 @@
             margin-right: 0.8rem;
         }
         &-wrapper {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -37,7 +37,7 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 100%;
             min-width: auto;
             margin-bottom: 2.4rem !important;
@@ -50,7 +50,7 @@
     &__crypto {
         min-width: 36rem;
         margin: 1.6rem 0;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 100%;
             min-width: auto;
         }
@@ -61,7 +61,7 @@
         min-width: 36rem;
         border: 1px solid var(--border-normal);
         border-radius: $BORDER_RADIUS * 2;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 100%;
             min-width: auto;
         }

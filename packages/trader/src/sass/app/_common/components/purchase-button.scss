@@ -234,7 +234,7 @@
                 background: var(--purchase-main-2);
             }
         }
-        @include mobile {
+        @include mobile-screen {
             background: var(--purchase-section-2);
             background: linear-gradient(
                 0deg,
@@ -342,7 +342,7 @@
             width: 72px;
         }
         .btn-purchase__top {
-            @include mobile {
+            @include mobile-screen {
                 justify-content: center;
             }
         }

@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import Loadable from 'react-loadable';
-import { DesktopWrapper, InputField, MobileWrapper, useOnClickOutside } from '@deriv/components';
+import { DesktopWrapper, InputField, MobileOrTabletWrapper, useOnClickOutside } from '@deriv/components';
 import { daysFromTodayTo, toMoment } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { localize } from 'Components/i18next';
@@ -213,14 +213,14 @@ const CompositeCalendar = (props: TCompositeCalendarProps) => {
                     </div>
                 )}
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <CompositeCalendarMobile
                     duration_list={days_duration_list}
                     current_focus={current_focus}
                     setCurrentFocus={setCurrentFocus}
                     {...props}
                 />
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </React.Fragment>
     );
 };

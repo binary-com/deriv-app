@@ -1,5 +1,5 @@
 import React from 'react';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 import Icon from '../icon/icon';
 import Text from '../text';
 import './side-note.scss';
@@ -17,8 +17,8 @@ type TProps = {
 } & RequireAtLeastOne<{ title: React.ReactNode; description: React.ReactNode; children: React.ReactNode }>;
 
 const SideNote: React.FC<React.PropsWithChildren<TProps>> = ({ title, description, type, action, children }) => {
-    const title_font_size = isMobile() ? 'xxs' : 'xs';
-    const content_font_size = isMobile() ? 'xxxs' : 'xxs';
+    const title_font_size = isMobileOrTablet() ? 'xxs' : 'xs';
+    const content_font_size = isMobileOrTablet() ? 'xxxs' : 'xxs';
 
     return (
         <div className='side-note'>

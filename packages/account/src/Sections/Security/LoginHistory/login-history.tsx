@@ -11,7 +11,7 @@ type TLoginData = { id: number; date: string; action: string; browser: string; i
 const LoginHistory = observer(() => {
     const { client, ui } = useStore();
     const { is_switching } = client;
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const [is_loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState('');
     const [data, setData] = React.useState<TLoginData>([]);
@@ -39,7 +39,7 @@ const LoginHistory = observer(() => {
     if (error) return <LoadErrorMessage error_message={error} />;
 
     return (
-        <ThemedScrollbars is_bypassed={is_mobile} className='login-history'>
+        <ThemedScrollbars is_bypassed={is_mobile_or_tablet} className='login-history'>
             {data.length > 0 ? <LoginHistoryContent data={data} /> : null}
         </ThemedScrollbars>
     );

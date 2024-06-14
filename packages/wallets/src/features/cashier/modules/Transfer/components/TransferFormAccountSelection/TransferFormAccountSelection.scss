@@ -9,7 +9,7 @@
     box-shadow: 0rem 3.2rem 6.4rem 0rem rgba(14, 14, 14, 0.14);
     max-height: 52.8rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         position: absolute;
         inset: 0;
         width: 100%;
@@ -28,7 +28,7 @@
         width: 100%;
         overflow-y: auto;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 0 1.6rem 1.6rem;
             gap: 1.6rem;
             overflow-y: unset;
@@ -47,7 +47,7 @@
             border-bottom: 4px solid var(--system-light-7-secondary-background, #f2f3f4);
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 0;
             gap: 0.4rem;
         }
@@ -64,7 +64,7 @@
         border-radius: 0.4rem;
         padding: 0.8rem 1.6rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 0.8rem;
         }
 
@@ -87,7 +87,7 @@
         align-self: stretch;
         border-bottom: 2px solid var(--system-light-7-secondary-background, #f2f3f4);
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             position: sticky;
             top: -2.4rem;
             left: 0;
@@ -101,7 +101,7 @@
     }
 
     &__label {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding-left: 0.8rem;
         }
     }
@@ -111,7 +111,7 @@
         cursor: pointer;
         padding: 0.8rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 0;
             padding-right: 0.8rem;
         }
@@ -121,7 +121,7 @@
         display: flex;
         padding-inline: 1.6rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding-inline: 0.8rem;
         }
     }
@@ -135,7 +135,7 @@
 
     &__transfer-to-hint {
         padding: 0 0.8rem 1.6rem;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 0 1.6rem 0.8rem;
         }
     }

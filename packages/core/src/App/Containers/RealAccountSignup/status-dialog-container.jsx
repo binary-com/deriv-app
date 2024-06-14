@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Div100vhContainer, Icon } from '@deriv/components';
-import { routes, isDesktop, isMobile } from '@deriv/shared';
+import { routes, isDesktop, isMobileOrTablet } from '@deriv/shared';
 import { EXPERIAN, getExperianResult } from './helpers/constants';
 import { DialogHeading } from './helpers/dialog-heading.jsx';
 import { DialogMessage } from './helpers/dialog-message.jsx';
@@ -65,7 +65,7 @@ const StatusDialogContainer = observer(({ closeModal, currency, history, icon_si
             </div>
             <div
                 className={classNames('status-dialog__body', {
-                    'status-dialog__body--no-grow': isMobile(),
+                    'status-dialog__body--no-grow': isMobileOrTablet(),
                 })}
             >
                 <DialogHeading />

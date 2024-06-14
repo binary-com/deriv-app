@@ -8,7 +8,7 @@
     background: var(--system-light-8-primary-background, #fff);
     padding: 2.4rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         min-width: 100%;
         min-height: 100%;
     }
@@ -19,7 +19,7 @@
         flex-direction: column;
         gap: 2.4rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             gap: 1.6rem;
         }
     }
@@ -34,7 +34,7 @@
 
         & .wallets-dropdown,
         & .wallets-textfield {
-            @include desktop {
+            @include desktop-screen {
                 max-width: 40rem;
             }
         }
@@ -43,7 +43,7 @@
     &__inline {
         width: 40rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 100%;
         }
     }

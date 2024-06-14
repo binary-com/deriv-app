@@ -20,7 +20,7 @@ export type TTutorialsTabItem = {
 
 const TutorialsTab = observer(({ handleTabChange }: TTutorialsTab) => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const { dashboard } = useDBotStore();
     const [prev_active_tutorials, setPrevActiveTutorialsTab] = React.useState<number | null>(0);
 
@@ -82,7 +82,7 @@ const TutorialsTab = observer(({ handleTabChange }: TTutorialsTab) => {
         },
     ];
 
-    return is_mobile ? (
+    return is_mobile_or_tablet ? (
         <TutorialsTabMobile tutorial_tabs={tutorial_tabs} prev_active_tutorials={prev_active_tutorials} />
     ) : (
         <TutorialsTabDesktop tutorial_tabs={tutorial_tabs} prev_active_tutorials={prev_active_tutorials} />

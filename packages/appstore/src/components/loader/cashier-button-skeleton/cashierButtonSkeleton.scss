@@ -5,7 +5,7 @@
     height: 2.4rem;
     border-radius: $BORDER_RADIUS;
     width: 5.9rem;
-    @include mobile {
+    @include mobile-or-tablet-screen {
         display: block;
     }
 }

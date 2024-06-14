@@ -6,7 +6,7 @@
     width: 84% !important;
     padding-bottom: unset;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         margin: unset !important;
         width: unset !important;
     }
@@ -27,7 +27,7 @@
         width: 100%;
         border-top: 1px solid var(--general-section-1);
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             border-top-width: 2px;
             border-color: var(--border-disabled);
             width: 100%;
@@ -48,7 +48,7 @@
         display: none;
     }
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         & .dc-checkbox__box {
             width: 1.6rem;
             height: 1.6rem;
@@ -71,7 +71,7 @@
     &__points {
         line-height: 2rem !important;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             line-height: 1.8rem !important;
         }
     }

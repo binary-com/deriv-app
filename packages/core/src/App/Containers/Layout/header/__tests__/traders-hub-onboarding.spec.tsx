@@ -44,6 +44,7 @@ describe('TradersHubOnboarding', () => {
             mockStore({
                 ui: {
                     is_mobile: true,
+                    is_mobile_or_tablet: true,
                 },
             })
         );

@@ -3,7 +3,13 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { CFDAccountCard } from '../cfd-account-card';
 import { TCFDAccountCard } from '../props.types';
 import { mockStore } from '@deriv/stores';
+import { TCFDPasswordReset } from '../../Containers/props.types';
 import CFDProviders from '../../cfd-providers';
+
+jest.mock('@deriv/shared', () => ({
+    ...jest.requireActual('@deriv/shared'),
+    isMobileOrTablet: jest.fn(() => false),
+}));
 
 type TMockPlatformAccounts = {
     account_type?: TCFDPasswordReset['account_group'];

@@ -25,7 +25,7 @@ const OrderTimeSelection = ({
     const { values, handleChange }: TFormikContext = useFormikContext<TFormikContext>();
     const { showModal } = useModalManagerContext();
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const order_time_info_message = localize('Orders will expire if they aren’t completed within this time.');
     const order_completion_time_list = [
         {
@@ -62,7 +62,7 @@ const OrderTimeSelection = ({
                             data_testid='dt_order_time_selection_info_icon'
                             icon='IcInfoOutline'
                             onClick={() =>
-                                is_mobile &&
+                                is_mobile_or_tablet &&
                                 showModal({ key: 'OrderTimeTooltipModal', props: { order_time_info_message } })
                             }
                         />

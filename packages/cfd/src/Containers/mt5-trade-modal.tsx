@@ -1,6 +1,13 @@
 import React from 'react';
 
-import { DesktopWrapper, Div100vhContainer, MobileWrapper, Modal, PageOverlay, UILoader } from '@deriv/components';
+import {
+    DesktopWrapper,
+    Div100vhContainer,
+    MobileOrTabletWrapper,
+    Modal,
+    PageOverlay,
+    UILoader,
+} from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { localize } from '@deriv/translations';
 
@@ -30,7 +37,7 @@ const MT5TradeModal = observer(
 
         const { show_eu_related_content } = traders_hub;
         const { platform } = common;
-        const { is_mobile } = ui;
+        const { is_mobile_or_tablet } = ui;
 
         const { mt5_trade_account, dxtrade_tokens, ctrader_tokens } = useCfdStore();
 
@@ -55,7 +62,7 @@ const MT5TradeModal = observer(
                     platform={platform}
                     ctrader_tokens={ctrader_tokens}
                     dxtrade_tokens={dxtrade_tokens}
-                    is_mobile={is_mobile}
+                    is_mobile_or_tablet={is_mobile_or_tablet}
                 />
             );
         };
@@ -74,7 +81,7 @@ const MT5TradeModal = observer(
                         <CFDTradeModal />
                     </Modal>
                 </DesktopWrapper>
-                <MobileWrapper>
+                <MobileOrTabletWrapper>
                     <PageOverlay
                         is_open={is_open}
                         portal_id='deriv_app'
@@ -86,7 +93,7 @@ const MT5TradeModal = observer(
                             <CFDTradeModal />
                         </Div100vhContainer>
                     </PageOverlay>
-                </MobileWrapper>
+                </MobileOrTabletWrapper>
             </React.Suspense>
         );
     }

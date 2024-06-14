@@ -1,8 +1,8 @@
 import { action, autorun, computed, makeObservable, observable } from 'mobx';
 
-import { isMobile, isTouchDevice, routes } from '@deriv/shared';
+import { isMobileOrTablet, isTouchDevice, routes } from '@deriv/shared';
 
-import { MAX_MOBILE_WIDTH, MAX_TABLET_WIDTH } from 'Constants/ui';
+import { MAX_MOBILE_WIDTH, MIN_DESKTOP_WIDTH } from 'Constants/ui';
 
 import BaseStore from './base-store';
 
@@ -26,7 +26,7 @@ export default class UIStore extends BaseStore {
     settings_extension = undefined;
     notification_messages_ui = undefined;
 
-    is_dark_mode_on = window?.matchMedia?.('(prefers-color-scheme: dark)').matches && isMobile();
+    is_dark_mode_on = window?.matchMedia?.('(prefers-color-scheme: dark)').matches && isMobileOrTablet();
     is_settings_modal_on = false;
     is_language_settings_modal_on = false;
     is_mobile_language_menu_open = false;
@@ -333,6 +333,7 @@ export default class UIStore extends BaseStore {
             is_account_switcher_disabled: computed,
             is_desktop: computed,
             is_mobile: computed,
+            is_mobile_or_tablet: computed,
             is_tablet: computed,
             is_warning_scam_message_modal_visible: computed,
             url_hashed_values: observable,
@@ -517,15 +518,19 @@ export default class UIStore extends BaseStore {
     }
 
     get is_desktop() {
-        return this.screen_width > MAX_TABLET_WIDTH;
+        return this.screen_width >= MIN_DESKTOP_WIDTH;
     }
 
     get is_mobile() {
-        return this.screen_width <= MAX_MOBILE_WIDTH;
+        return this.screen_width > 0 && this.screen_width <= MAX_MOBILE_WIDTH;
+    }
+
+    get is_mobile_or_tablet() {
+        return this.screen_width > 0 && this.screen_width < MIN_DESKTOP_WIDTH;
     }
 
     get is_tablet() {
-        return MAX_MOBILE_WIDTH < this.screen_width && this.screen_width <= MAX_TABLET_WIDTH;
+        return MAX_MOBILE_WIDTH < this.screen_width && this.screen_width < MIN_DESKTOP_WIDTH;
     }
 
     get is_account_switcher_disabled() {

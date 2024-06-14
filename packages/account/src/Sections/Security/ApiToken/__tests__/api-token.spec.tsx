@@ -75,7 +75,7 @@ describe('<ApiToken/>', () => {
         },
         ui: {
             is_desktop: true,
-            is_mobile: false,
+            is_mobile_or_tablet: false,
         },
     });
 
@@ -107,7 +107,7 @@ describe('<ApiToken/>', () => {
         const mock_store = mockStore({
             ui: {
                 is_desktop: false,
-                is_mobile: true,
+                is_mobile_or_tablet: true,
             },
         });
 
@@ -186,7 +186,7 @@ describe('<ApiToken/>', () => {
             },
             ui: {
                 is_desktop: false,
-                is_mobile: true,
+                is_mobile_or_tablet: true,
             },
         });
         renderComponent({ store: new_store });
@@ -310,7 +310,7 @@ describe('<ApiToken/>', () => {
         const new_store = mockStore({
             ui: {
                 is_desktop: false,
-                is_mobile: true,
+                is_mobile_or_tablet: true,
             },
         });
         (getPropertyValue as jest.Mock).mockReturnValue([

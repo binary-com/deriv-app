@@ -6,7 +6,7 @@
     .dc-btn {
         margin-top: 2.4rem;
     }
-    @include mobile {
+    @include mobile-or-tablet-screen {
         height: calc(100vh - 80px);
         .dc-btn {
             width: 100%;

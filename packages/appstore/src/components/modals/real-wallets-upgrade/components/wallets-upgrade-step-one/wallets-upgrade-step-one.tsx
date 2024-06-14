@@ -11,7 +11,7 @@ type TWalletsUpgradeStepOneFooter = {
 
 const WalletsUpgradeStepOneBullets = () => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
 
     const bullets = [
         localize('Better funds segregation'),
@@ -27,15 +27,15 @@ const WalletsUpgradeStepOneBullets = () => {
                         <Icon
                             icon='IcAppstoreTick'
                             className='wallets-upgrade-step-one__bullet-icon'
-                            size={is_mobile ? 12 : 16}
+                            size={is_mobile_or_tablet ? 12 : 16}
                         />
                         <Text
                             as='p'
                             color='prominent'
                             align='center'
                             className='wallets-upgrade-step-one__bullet-text'
-                            size={is_mobile ? 'xs' : 's'}
-                            line_height={is_mobile ? 's' : 'm'}
+                            size={is_mobile_or_tablet ? 'xs' : 's'}
+                            line_height={is_mobile_or_tablet ? 's' : 'm'}
                         >
                             {bullet}
                         </Text>
@@ -47,15 +47,15 @@ const WalletsUpgradeStepOneBullets = () => {
 };
 const WalletsUpgradeStepOneContent = () => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
 
     return (
         <div className='wallets-upgrade-step-one__content'>
             <div className='wallets-upgrade-step-one__image-container'>
                 <Icon
                     icon='IcAppstoreWalletsUpgradeStepOne'
-                    width={is_mobile ? 150 : 240}
-                    height={is_mobile ? 170 : 270}
+                    width={is_mobile_or_tablet ? 150 : 240}
+                    height={is_mobile_or_tablet ? 170 : 270}
                     data_testid='dt_wallets_upgrade_step_one'
                 />
             </div>
@@ -64,16 +64,16 @@ const WalletsUpgradeStepOneContent = () => {
                 color='prominent'
                 weight='bold'
                 align='center'
-                size={is_mobile ? 'xsm' : 'l'}
+                size={is_mobile_or_tablet ? 'xsm' : 'l'}
                 className='wallets-upgrade-step-one__title'
-                line_height={is_mobile ? 'm' : 'xs'}
+                line_height={is_mobile_or_tablet ? 'm' : 'xs'}
             >
                 <Localize i18n_default_text='Why Wallets' />
             </Text>
             <Text
                 as='p'
                 color='prominent'
-                size={is_mobile ? 's' : 'm'}
+                size={is_mobile_or_tablet ? 's' : 'm'}
                 align='center'
                 className='wallets-upgrade-step-one__description'
                 line_height='m'

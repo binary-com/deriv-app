@@ -122,7 +122,7 @@
                 transform: scale(1) translateY(5px);
             }
 
-            @include mobile {
+            @include mobile-screen {
                 top: 10px;
                 transform: none;
                 font-size: 1.4rem;
@@ -140,7 +140,7 @@
             font-weight: 400;
             color: var(--text-general);
 
-            @include mobile {
+            @include mobile-screen {
                 top: 25px;
                 transform: none;
                 font-size: 1rem;
@@ -188,7 +188,7 @@
                     color: $color-white;
                 }
             }
-            @include mobile {
+            @include mobile-screen {
                 height: 48px;
                 width: 48px;
                 margin: 0;
@@ -229,7 +229,7 @@
                     background: var(--text-loss-danger);
                 }
             }
-            @include mobile {
+            @include mobile-screen {
                 display: flex;
                 justify-content: center;
                 top: 1.6rem;

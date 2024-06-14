@@ -1,7 +1,7 @@
 import React from 'react';
 import { Loading, Modal, SelectNative, ReadMore, Text } from '@deriv/components';
 import { useCashierLocked, useDepositLocked } from '@deriv/hooks';
-import { routes, isMobile } from '@deriv/shared';
+import { routes, isMobileOrTablet } from '@deriv/shared';
 import { Localize, localize } from '@deriv/translations';
 import { useStore, observer } from '@deriv/stores';
 import CashierLocked from '../../components/cashier-locked';
@@ -114,7 +114,7 @@ const OnRamp = observer(({ menu_options, setSideNotes }: TOnRampProps) => {
     return (
         <React.Fragment>
             <div className='cashier__wrapper cashier__wrapper--align-left on-ramp'>
-                {isMobile() && (
+                {isMobileOrTablet() && (
                     <React.Fragment>
                         <SelectNative
                             data_testid='dt_on_ramp_select_native'
@@ -134,8 +134,8 @@ const OnRamp = observer(({ menu_options, setSideNotes }: TOnRampProps) => {
                     </React.Fragment>
                 )}
                 <Text
-                    color={isMobile() ? 'less-prominent' : 'general'}
-                    weight={isMobile() ? 'normal' : 'bold'}
+                    color={isMobileOrTablet() ? 'less-prominent' : 'general'}
+                    weight={isMobileOrTablet() ? 'normal' : 'bold'}
                     align='center'
                     line_height='m'
                     className='on-ramp__page-header'

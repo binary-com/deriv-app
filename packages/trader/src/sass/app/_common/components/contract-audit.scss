@@ -115,7 +115,7 @@ $HEIGHT: calc(100vh - 34em);
             padding: 0.8rem 1.6rem;
             flex: 1;
 
-            @include mobile {
+            @include mobile-screen {
                 overflow-y: auto;
             }
         }

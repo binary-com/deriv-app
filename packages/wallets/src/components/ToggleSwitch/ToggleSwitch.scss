@@ -4,7 +4,7 @@
     width: 4.4rem;
     height: 2.4rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 3.8rem;
     }
 
@@ -32,7 +32,7 @@
             transition: 0.4s;
             border-radius: 50%;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 left: 0.4rem;
             }
         }
@@ -48,7 +48,7 @@
     -ms-transform: translateX(2rem);
     transform: translateX(2rem);
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         -webkit-transform: translateX(1.2rem);
         -ms-transform: translateX(1.2rem);
         transform: translateX(1.2rem);

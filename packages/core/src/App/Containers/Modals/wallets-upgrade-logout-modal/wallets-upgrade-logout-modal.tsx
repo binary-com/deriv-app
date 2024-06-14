@@ -9,7 +9,7 @@ import './wallets-upgrade-logout-modal.scss';
 const WalletsUpgradeLogoutModal = observer(() => {
     const { client, ui } = useStore();
     const { logout } = client;
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
 
     return (
         <Dialog
@@ -35,11 +35,17 @@ const WalletsUpgradeLogoutModal = observer(() => {
             <div className='wallets-upgrade-logout-modal__content'>
                 <Localize
                     i18n_default_text="<0>You're almost there!</0>"
-                    components={[<Text key={0} weight='bold' size={is_mobile ? 's' : 'm'} />]}
+                    components={[<Text key={0} weight='bold' size={is_mobile_or_tablet ? 's' : 'm'} />]}
                 />
                 <Localize
                     i18n_default_text='<0>To complete your Wallet setup, log out and then log in again.</0>'
-                    components={[<Text align={is_mobile ? 'center' : 'left'} key={0} size={is_mobile ? 'xxs' : 's'} />]}
+                    components={[
+                        <Text
+                            align={is_mobile_or_tablet ? 'center' : 'left'}
+                            key={0}
+                            size={is_mobile_or_tablet ? 'xxs' : 's'}
+                        />,
+                    ]}
                 />
             </div>
         </Dialog>

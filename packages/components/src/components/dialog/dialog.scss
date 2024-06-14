@@ -103,14 +103,14 @@
         justify-content: flex-end;
         align-items: center;
         width: 100%;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             flex-wrap: wrap;
             align-items: flex-start;
         }
     }
     &__button {
         margin-left: 0.8rem;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             &:not(:last-child) {
                 margin-bottom: 1rem;
             }

@@ -5,7 +5,7 @@ import React from 'react';
 import { usePaymentAgentList } from '@deriv/hooks';
 import { FormSubmitButton, Icon, Loading, Text, ThemedScrollbars } from '@deriv/components';
 import { localize } from '@deriv/translations';
-import { isMobile, reorderCurrencies, routes } from '@deriv/shared';
+import { isMobileOrTablet, reorderCurrencies, routes } from '@deriv/shared';
 import { CurrencyRadioButtonGroup, CurrencyRadioButton } from '@deriv/account';
 import AddCryptoCurrency from './add-crypto-currency.jsx';
 import CurrencyProvider from './choose-currency';
@@ -185,7 +185,7 @@ const AddCurrency = observer(({ onSubmit, hasNoAvailableCrypto, is_add_crypto, i
         >
             {({ handleSubmit, values, isSubmitting }) => (
                 <form onSubmit={handleSubmit}>
-                    <ThemedScrollbars height={isMobile() ? window.innerHeight - 190 : '460px'}>
+                    <ThemedScrollbars height={isMobileOrTablet() ? window.innerHeight - 190 : '460px'}>
                         <div>
                             <Text
                                 as='p'

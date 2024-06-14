@@ -5,7 +5,7 @@
     justify-content: center;
     gap: 4.6rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         gap: 2.4rem;
     }
 }

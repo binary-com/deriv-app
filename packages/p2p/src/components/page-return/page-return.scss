@@ -14,7 +14,7 @@
                 transform: rotate(180deg);
             }
         }
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding-inline-end: 1rem;
         }
     }

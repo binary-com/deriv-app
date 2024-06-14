@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { Button, Icon, Money, Popover, Table, Text } from '@deriv/components';
-import { epochToMoment, formatMoney, isMobile } from '@deriv/shared';
+import { epochToMoment, formatMoney, isMobileOrTablet } from '@deriv/shared';
 import { localize, Localize } from '@deriv/translations';
 import { useStore, observer } from '@deriv/stores';
 import { getStatus } from '../../constants/transaction-status';
@@ -37,7 +37,7 @@ const TransactionsCryptoRenderer = observer(({ row: crypto, onTooltipClick }: TT
         ? `${address_hash.substring(0, 4)}....${address_hash.substring(address_hash.length - 4)}`
         : '';
     const formatted_amount = transaction_type === 'withdrawal' ? `-${amount}` : `+${amount}`;
-    const formatted_submit_date = isMobile()
+    const formatted_submit_date = isMobileOrTablet()
         ? epochToMoment(submit_date).format('DD MMM YYYY')
         : epochToMoment(submit_date).format('DD MMM YYYY HH:mm:ss [GMT]');
     const formatted_submit_time = epochToMoment(submit_date).format('HH:mm:ss [GMT]');
@@ -63,7 +63,7 @@ const TransactionsCryptoRenderer = observer(({ row: crypto, onTooltipClick }: TT
 
     const is_third_party_transaction = transaction_url?.includes('CP:');
 
-    if (status && isMobile()) {
+    if (status && isMobileOrTablet()) {
         return (
             <div>
                 <Table.Row className='transactions-crypto-history__table-row'>

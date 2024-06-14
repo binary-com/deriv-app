@@ -12,7 +12,7 @@ import {
     ListRowProps,
     IndexRange,
 } from 'react-virtualized';
-import { isMobile, isDesktop, isForwardStartingBuyTransaction } from '@deriv/shared';
+import { isMobileOrTablet, isDesktop, isForwardStartingBuyTransaction } from '@deriv/shared';
 import DataListCell from './data-list-cell';
 import DataListRow, { TRowRenderer } from './data-list-row';
 import ThemedScrollbars from '../themed-scrollbars';
@@ -183,7 +183,7 @@ const DataList = React.memo(
                             {({ width, height }) => (
                                 // Don't remove `TransitionGroup`. When `TransitionGroup` is removed, transition life cycle events like `onEntered` won't be fired sometimes on it's `CSSTransition` children
                                 <TransitionGroup style={{ height, width }}>
-                                    <ThemedScrollbars onScroll={handleScroll} autohide is_bypassed={isMobile()}>
+                                    <ThemedScrollbars onScroll={handleScroll} autohide is_bypassed={isMobileOrTablet()}>
                                         <List
                                             className={className}
                                             deferredMeasurementCache={cache?.current}

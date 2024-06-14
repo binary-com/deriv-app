@@ -1,5 +1,4 @@
 import React from 'react';
-import { isMobile } from '@deriv/shared';
 import Dropdown from '../dropdown/dropdown';
 import SelectNative from '../select-native/select-native';
 import { useDevice } from '@deriv-com/ui';

@@ -8,14 +8,14 @@
 
     // ignore CashierContent top padding
     margin-top: -4.8rem;
-    @include mobile {
+    @include mobile-or-tablet-screen {
         margin-top: -2.4rem;
     }
 
     // adjust filter dropdown width
     .wallets-dropdown {
         max-width: 19.5rem;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             max-width: unset;
         }
     }
@@ -42,7 +42,7 @@
         z-index: 2;
         background-color: var(--system-light-8-primary-background, #fff);
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             top: -2.4rem;
             padding: 1.6rem 0;
             flex-direction: column;
@@ -59,7 +59,7 @@
         gap: 0.4rem;
         color: var(--system-light-2-general-text, #333);
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             align-self: flex-end;
         }
     }

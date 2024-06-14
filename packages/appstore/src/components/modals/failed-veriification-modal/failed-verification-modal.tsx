@@ -4,7 +4,7 @@ import { useStores } from 'Stores';
 import { useHistory } from 'react-router-dom';
 import { localize, Localize } from '@deriv/translations';
 import { Text, Dialog } from '@deriv/components';
-import { isMobile, getAuthenticationStatusInfo, routes, Jurisdiction } from '@deriv/shared';
+import { isMobileOrTablet, getAuthenticationStatusInfo, routes, Jurisdiction } from '@deriv/shared';
 import './failed-verification-modal.scss';
 
 type TFailedVerificationModal = {
@@ -24,13 +24,13 @@ const FailedVerificationModalContent = ({
 }: TFailedVerificationModal) => {
     return (
         <React.Fragment>
-            <Text size={isMobile() ? 'xxs' : 'xs'}>
+            <Text size={isMobileOrTablet() ? 'xxs' : 'xs'}>
                 <Localize i18n_default_text='The following documents you submitted did not pass our checks:' />
             </Text>
             <div className='failed-verification-modal__failed_list'>
                 {should_resubmit_poi && (
                     <Text
-                        size={isMobile() ? 'xxs' : 'xs'}
+                        size={isMobileOrTablet() ? 'xxs' : 'xs'}
                         line_height='xl'
                         className='failed-verification-modal__failed_list-item'
                     >
@@ -39,7 +39,7 @@ const FailedVerificationModalContent = ({
                 )}
                 {should_resubmit_poa && (
                     <Text
-                        size={isMobile() ? 'xxs' : 'xs'}
+                        size={isMobileOrTablet() ? 'xxs' : 'xs'}
                         line_height='xl'
                         className='failed-verification-modal__failed_list-item'
                     >
@@ -48,11 +48,11 @@ const FailedVerificationModalContent = ({
                 )}
             </div>
             {!is_from_multipliers && has_mf_mt5_account ? (
-                <Text size={isMobile() ? 'xxs' : 'xs'}>
+                <Text size={isMobileOrTablet() ? 'xxs' : 'xs'}>
                     <Localize i18n_default_text='To proceed, resubmit these documents' />
                 </Text>
             ) : (
-                <Text size={isMobile() ? 'xxs' : 'xs'}>
+                <Text size={isMobileOrTablet() ? 'xxs' : 'xs'}>
                     <Localize
                         i18n_default_text='If you’d like to get the {{from_account}} account, resubmit these documents.'
                         values={{ from_account }}

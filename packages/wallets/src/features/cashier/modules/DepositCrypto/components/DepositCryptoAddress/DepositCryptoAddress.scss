@@ -14,7 +14,7 @@
         border: 0.1rem solid #e6e6e6;
         border-radius: 0.4rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 100%;
         }
 

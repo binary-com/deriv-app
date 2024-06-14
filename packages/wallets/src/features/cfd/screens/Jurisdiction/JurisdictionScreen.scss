@@ -11,7 +11,7 @@
     transform-style: preserve-3d;
     transition: all 600ms ease;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         height: auto;
         margin: 0;
         padding: 0 2.4rem;
@@ -45,7 +45,7 @@
             opacity: 0.4;
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 100%;
         }
     }
@@ -57,7 +57,7 @@
         justify-content: center;
         width: 100%;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             flex-direction: column;
             padding: 2rem 0;
         }

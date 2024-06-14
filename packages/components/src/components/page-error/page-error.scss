@@ -6,7 +6,7 @@
         align-items: center;
         height: calc(100vh - 84px);
 
-        @include desktop {
+        @include desktop-screen {
             &--left {
                 justify-content: left;
             }
@@ -24,7 +24,7 @@
         align-items: center;
         justify-content: center;
 
-        @include desktop {
+        @include desktop-screen {
             &--left {
                 align-items: start;
             }
@@ -47,7 +47,7 @@
             justify-content: center;
 
             &--left {
-                @include desktop {
+                @include desktop-screen {
                     justify-content: left;
                 }
 
@@ -57,7 +57,7 @@
                 }
             }
         }
-        @include desktop {
+        @include desktop-screen {
             &--left {
                 text-align: left;
             }
@@ -72,7 +72,7 @@
             justify-content: center;
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin: 0 0 1.6rem;
 
             &-wrapper {

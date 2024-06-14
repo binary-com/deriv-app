@@ -24,7 +24,7 @@ const AccumulatorsStats = observer(({ is_expandable = true }: TAccumulatorStats)
     const { ui } = useStore();
     const { ticks_history_stats = {} } = useTraderStore();
     const { is_dark_mode_on: is_dark_theme } = ui;
-    const { isDesktop, isMobile } = useDevice();
+    const { isDesktop, isMobile, isTablet } = useDevice();
 
     const [is_collapsed, setIsCollapsed] = React.useState(true);
     const [is_manual_open, setIsManualOpen] = React.useState(false);
@@ -76,7 +76,7 @@ const AccumulatorsStats = observer(({ is_expandable = true }: TAccumulatorStats)
             </div>
             {is_expandable &&
                 !is_collapsed &&
-                (isDesktop ? (
+                (isDesktop || isTablet ? (
                     <ExpandedTicksHistory history_text_size={history_text_size} rows={rows} />
                 ) : (
                     <MobileDialog

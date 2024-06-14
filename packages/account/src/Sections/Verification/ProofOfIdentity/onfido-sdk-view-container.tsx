@@ -51,7 +51,7 @@ const OnfidoSdkViewContainer = observer(
         const { send, isSuccess: isNotified } = useNotificationEvent();
         const { common, ui } = useStore();
         const { current_language } = common;
-        const { is_mobile } = ui;
+        const { is_mobile_or_tablet } = ui;
 
         // IDV country code - Alpha ISO2. Onfido country code - Alpha ISO3
         const onfido_country_code = convertAlpha2toAlpha3(country_code);
@@ -231,7 +231,7 @@ const OnfidoSdkViewContainer = observer(
         }
 
         return (
-            <ThemedScrollbars is_bypassed={is_mobile} height={height}>
+            <ThemedScrollbars is_bypassed={is_mobile_or_tablet} height={height}>
                 <div className='onfido-container'>
                     {component_to_load || (
                         <CSSTransition

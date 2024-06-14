@@ -208,7 +208,7 @@
 }
 
 .dc-modal__container_animation__modal {
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 31.2rem !important;
     }
 }

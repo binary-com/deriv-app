@@ -22,7 +22,7 @@
             margin-top: -0.3rem;
             margin-right: -0.3rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-top: 0.5rem;
                 margin-right: 0.5rem;
             }
@@ -35,7 +35,7 @@
         &-button {
             margin-left: 1.6rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-left: 2.2rem;
             }
         }
@@ -52,11 +52,11 @@
             display: flex;
             align-items: center;
 
-            @include desktop {
+            @include desktop-screen {
                 margin-top: 0.4rem;
             }
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 background-color: var(--general-main-1);
                 margin-left: 0.8rem;
             }
@@ -90,7 +90,7 @@
 
             &__list {
                 &--header--popup {
-                    @include mobile {
+                    @include mobile-or-tablet-screen {
                         overflow-y: hidden;
 
                         @media (min-width: 27.5rem) {
@@ -105,7 +105,7 @@
                 }
 
                 &--popup {
-                    @include mobile {
+                    @include mobile-or-tablet-screen {
                         height: 5.8rem !important;
 
                         @media (max-width: 27.5rem) {
@@ -122,7 +122,7 @@
                 align-items: center;
                 justify-content: center;
 
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     height: 5.8rem;
                     width: 8.2rem !important;
                     flex-direction: column;
@@ -231,7 +231,7 @@
             &--popup {
                 width: 100%;
 
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     align-items: flex-start;
                 }
             }

@@ -1,8 +1,8 @@
 /**
  * Define Breakpoints here.
  */
-$tablet-width: 768px;
-$desktop-width: 1024px;
+$tablet-width: 601px;
+$desktop-width: 1280px;
 
 @mixin mobile {
     @media (max-width: #{$tablet-width - 1px}) {

@@ -8,7 +8,7 @@
         width: 100%;
         gap: 1.6rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding-top: 0;
             min-height: 19rem;
 

@@ -4,7 +4,7 @@
     z-index: 6;
     position: absolute;
     /*rtl:ignore*/
-    right: 0;
+    right: 1.6rem;
     margin-top: 1.6rem;
 
     > div {
@@ -13,10 +13,8 @@
         align-items: flex-end;
     }
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         max-width: calc(100% - 3.2rem);
-        left: 1.6rem;
-        right: 1.6rem;
     }
 
     &--traders-hub {
@@ -128,7 +126,7 @@
     &:not(:last-child) {
         margin-bottom: 16px;
     }
-    @include mobile {
+    @include mobile-or-tablet-screen {
         max-width: 328px;
         width: calc(100% - 0.8rem);
         margin-right: 0.4rem;

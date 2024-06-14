@@ -9,7 +9,7 @@
         font-weight: 400;
     }
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         margin: 0;
     }
 }

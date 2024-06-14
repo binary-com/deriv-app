@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { isMobile, routes } from '@deriv/shared';
+import { isMobileOrTablet, routes } from '@deriv/shared';
 import 'Sass/app/_common/components/app-notification-message.scss';
 import { observer, useStore } from '@deriv/stores';
 import Notification, {
@@ -19,7 +19,7 @@ import {
 import TradeNotifications from './trade-notifications';
 
 const Portal = ({ children }) =>
-    isMobile() ? ReactDOM.createPortal(children, document.getElementById('deriv_app')) : children;
+    isMobileOrTablet() ? ReactDOM.createPortal(children, document.getElementById('deriv_app')) : children;
 
 const NotificationsContent = ({
     is_notification_loaded,
@@ -78,7 +78,7 @@ const AppNotificationMessages = observer(
             if (is_mt5) {
                 stopNotificationLoading();
             }
-            if (notifications_ref && isMobile()) {
+            if (notifications_ref && isMobileOrTablet()) {
                 if (notifications_ref.parentElement !== null) {
                     const bounds = notifications_ref.parentElement.getBoundingClientRect();
                     setStyle({ top: bounds.top + 8 });
@@ -89,7 +89,7 @@ const AppNotificationMessages = observer(
 
         const notifications_msg = notification_messages.filter(message => {
             const is_not_marked_notification = !marked_notifications.includes(message.key);
-            const is_non_hidden_notification = isMobile()
+            const is_non_hidden_notification = isMobileOrTablet()
                 ? [
                       ...maintenance_notifications,
                       'authenticate',
@@ -145,7 +145,7 @@ const AppNotificationMessages = observer(
             );
         });
 
-        const notifications_limit = isMobile() ? max_display_notifications_mobile : max_display_notifications;
+        const notifications_limit = isMobileOrTablet() ? max_display_notifications_mobile : max_display_notifications;
 
         const filtered_excluded_notifications = notifications_msg.filter(message =>
             priority_toast_messages.includes(message.key) || message.type.includes('p2p')

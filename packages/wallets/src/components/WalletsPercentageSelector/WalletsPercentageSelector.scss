@@ -6,7 +6,7 @@
     height: fit-content;
     gap: 4px;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 100%;
     }
 
@@ -16,7 +16,7 @@
         height: 2.4rem;
         width: 100%;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 100%;
         }
 
@@ -33,7 +33,7 @@
         width: 100%;
         gap: 2px;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             flex: 1;
         }
     }

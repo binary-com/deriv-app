@@ -1,6 +1,6 @@
 import React from 'react';
 import { Popover, Text } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { isMobileOrTablet } from '@deriv/shared';
 
 type TAccountLimitsExtraInfo = {
     message: string;
@@ -8,7 +8,7 @@ type TAccountLimitsExtraInfo = {
 };
 
 const AccountLimitsExtraInfo = ({ message, ...props }: TAccountLimitsExtraInfo) => {
-    if (isMobile()) {
+    if (isMobileOrTablet()) {
         return (
             <Text color='less-prominent' line_height='s' size='xxxs'>
                 {message}

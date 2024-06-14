@@ -46,7 +46,7 @@ describe('<QuickStrategyGuides />', () => {
     });
 
     it('should render the component with xs font when on mobile', () => {
-        mock_store.ui.is_mobile = true;
+        mock_store.ui.is_mobile_or_tablet = true;
         render(<QuickStrategyGuides />, {
             wrapper,
         });

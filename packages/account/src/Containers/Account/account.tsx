@@ -32,12 +32,12 @@ const Account = observer(({ history, location, routes }: TAccountProps) => {
         should_allow_poinc_authentication,
         is_passkey_supported,
     } = client;
-    const { toggleAccountSettings, is_account_settings_visible, is_mobile, is_desktop } = ui;
+    const { toggleAccountSettings, is_account_settings_visible, is_mobile_or_tablet, is_desktop } = ui;
 
     // subroutes of a route is structured as an array of arrays
     const subroutes = flatten(routes.map(i => i.subroutes));
     const selected_content = subroutes.find(r => matchRoute(r, location.pathname));
-    const should_remove_passkeys_route = is_desktop || (is_mobile && !is_passkey_supported);
+    const should_remove_passkeys_route = is_desktop || (is_mobile_or_tablet && !is_passkey_supported);
 
     React.useEffect(() => {
         toggleAccountSettings(true);

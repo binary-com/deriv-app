@@ -27,7 +27,7 @@
         &--lost {
             color: $COLOR_WHITE;
         }
-        @include mobile {
+        @include mobile-screen {
             bottom: -9.5px;
             margin-left: -8px;
             font-size: 0.8rem;
@@ -44,7 +44,7 @@
         top: -12px;
         color: var(--text-general);
 
-        @include mobile {
+        @include mobile-screen {
             border-width: 3px;
             left: -9px;
             top: -9px;
@@ -56,7 +56,7 @@
         height: 24px;
         border-radius: 50%;
 
-        @include mobile {
+        @include mobile-screen {
             width: 16px;
             height: 16px;
         }
@@ -74,7 +74,7 @@
                     background-color: var(--status-info);
                     border: 2px solid var(--status-info);
                 }
-                @include mobile {
+                @include mobile-screen {
                     width: 4px;
                     height: 4px;
                     top: -2px;
@@ -93,12 +93,12 @@
                     height: 0.6rem;
                     border-radius: 50%;
                     background-color: var(--border-active);
-                    @include mobile {
+                    @include mobile-screen {
                         width: 0.4rem;
                         height: 0.4rem;
                     }
                 }
-                @include mobile {
+                @include mobile-screen {
                     width: 1.6rem;
                     height: 1.6rem;
                     margin-left: -0.85rem;
@@ -171,7 +171,7 @@
             .chart-spot-label__time-container {
                 margin-bottom: 2px;
             }
-            @include mobile {
+            @include mobile-screen {
                 bottom: 1.35rem;
             }
         }
@@ -189,7 +189,7 @@
             .chart-spot-label__time-container {
                 margin-top: 2px;
             }
-            @include mobile {
+            @include mobile-screen {
                 top: 7.5px;
             }
         }
@@ -233,7 +233,7 @@
         &--lost {
             color: var(--text-colored-background);
         }
-        @include mobile {
+        @include mobile-screen {
             font-size: 1rem;
             display: flex;
             justify-content: center;
@@ -253,7 +253,7 @@
             white-space: nowrap;
             background-color: var(--general-main-1);
 
-            @include mobile {
+            @include mobile-screen {
                 left: -7px;
             }
         }
@@ -310,7 +310,7 @@
                 fill: var(--text-loss-danger);
             }
         }
-        @include mobile {
+        @include mobile-screen {
             bottom: -15px;
             left: -7px;
             width: 16px;
@@ -365,7 +365,7 @@
         display: flex;
         align-items: center;
 
-        @include mobile {
+        @include mobile-screen {
             padding-left: 2.3rem;
         }
 
@@ -414,7 +414,7 @@
         &__currency {
             padding-left: 0.2rem;
             transform: translateY(-83%);
-            @include mobile {
+            @include mobile-screen {
                 transform: translateY(-78%);
             }
         }
@@ -427,7 +427,7 @@
             z-index: -2;
             background-color: var(--general-main-1);
 
-            @include mobile {
+            @include mobile-screen {
                 width: calc(100% - 2.3rem);
             }
         }
@@ -442,7 +442,7 @@
             box-shadow: 0 -8px 11px 0 rgba(0, 167, 158, 0.08), 0 8px 11px 0 rgba(0, 167, 158, 0.08),
                 0 0 11px -5px rgba(0, 167, 158, 0.08), 0 0 11px -5px rgba(0, 167, 158, 0.08);
 
-            @include mobile {
+            @include mobile-screen {
                 width: calc(100% - 2.3rem);
             }
         }
@@ -511,7 +511,7 @@
             opacity: 0.72;
             transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.1, 0.25);
 
-            @include mobile {
+            @include mobile-screen {
                 min-width: 7.5rem;
                 height: 4.6rem;
             }
@@ -618,7 +618,7 @@
 
 //Vanilla specific styles
 .vanilla-trade-chart {
-    @include mobile {
+    @include mobile-screen {
         height: calc(100% - #{$MOBILE_HEADER_HEIGHT});
     }
 }

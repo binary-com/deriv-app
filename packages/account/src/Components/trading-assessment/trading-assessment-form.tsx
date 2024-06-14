@@ -23,7 +23,7 @@ type TradingAssessmentFormProps = {
     should_move_to_next: boolean;
     setSubSectionIndex: (index: number) => void;
     is_independent_section: boolean;
-    is_mobile?: boolean;
+    is_mobile_or_tablet?: boolean;
 };
 
 const TradingAssessmentForm = observer(
@@ -38,7 +38,7 @@ const TradingAssessmentForm = observer(
         should_move_to_next,
         setSubSectionIndex,
         is_independent_section,
-        is_mobile,
+        is_mobile_or_tablet,
     }: TradingAssessmentFormProps) => {
         const { traders_hub } = useStore();
         const { is_eu_user } = traders_hub;
@@ -271,7 +271,7 @@ const TradingAssessmentForm = observer(
                                         </div>
                                         <Modal.Footer
                                             has_separator
-                                            is_bypassed={is_mobile}
+                                            is_bypassed={is_mobile_or_tablet}
                                             className='trading-assessment__existing_btn '
                                         >
                                             <Button.Group className='trading-assessment__btn-group'>

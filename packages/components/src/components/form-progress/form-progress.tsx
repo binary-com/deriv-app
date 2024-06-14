@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import Text from '../text';
 import DesktopWrapper from '../desktop-wrapper';
-import MobileWrapper from '../mobile-wrapper';
+import MobileOrTabletWrapper from '../mobile-wrapper';
 
 type TStep = { header: { active_title: string; title: string }; sub_step_count: number };
 
@@ -84,12 +84,12 @@ const FormProgress = ({ steps = [], current_step, sub_section_index }: TFormProg
                     </div>
                 </div>
             </DesktopWrapper>
-            <MobileWrapper>
+            <MobileOrTabletWrapper>
                 <div>
                     <div ref={el_completed_bar} className='dc-form-progress__steps--after' />
                     <div className='dc-form-progress--initial' />
                 </div>
-            </MobileWrapper>
+            </MobileOrTabletWrapper>
         </React.Fragment>
     );
 };

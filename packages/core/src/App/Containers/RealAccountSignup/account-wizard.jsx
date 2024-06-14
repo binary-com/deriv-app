@@ -3,7 +3,7 @@ import fromEntries from 'object.fromentries';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { DesktopWrapper, FormProgress, MobileWrapper, Text, Wizard } from '@deriv/components';
+import { DesktopWrapper, FormProgress, MobileOrTabletWrapper, Text, Wizard } from '@deriv/components';
 import { WS, getLocation, toMoment, formatIDVFormValues, shouldHideOccupationField } from '@deriv/shared';
 import { Localize } from '@deriv/translations';
 import { observer, useStore } from '@deriv/stores';
@@ -27,7 +27,7 @@ const StepperHeader = ({ has_target, has_real_account, items, getCurrentStep, ge
                     <DesktopWrapper>
                         <FormProgress steps={items} current_step={step} sub_section_index={sub_section_index} />
                     </DesktopWrapper>
-                    <MobileWrapper>
+                    <MobileOrTabletWrapper>
                         <FormProgress steps={items} current_step={step} sub_section_index={sub_section_index} />
                         <div className='account-wizard__header-steps'>
                             <Text
@@ -47,7 +47,7 @@ const StepperHeader = ({ has_target, has_real_account, items, getCurrentStep, ge
                                 />
                             </Text>
                         </div>
-                    </MobileWrapper>
+                    </MobileOrTabletWrapper>
                 </React.Fragment>
             )}
         </React.Fragment>

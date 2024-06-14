@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import {
     Button,
     DesktopWrapper,
-    MobileWrapper,
+    MobileOrTabletWrapper,
     Div100vhContainer,
     Icon,
     Money,
@@ -440,27 +440,27 @@ const AccountSwitcher = observer(({ history, is_mobile, is_visible }) => {
                             <DesktopWrapper>
                                 <ThemedScrollbars height='354px'>{real_accounts}</ThemedScrollbars>
                             </DesktopWrapper>
-                            <MobileWrapper>
+                            <MobileOrTabletWrapper>
                                 <Div100vhContainer
                                     className='acc-switcher__list-container'
                                     max_autoheight_offset='234px'
                                 >
                                     {real_accounts}
                                 </Div100vhContainer>
-                            </MobileWrapper>
+                            </MobileOrTabletWrapper>
                         </div>
                         <div label={localize('Demo')} id='dt_core_account-switcher_demo-tab'>
                             <DesktopWrapper>
                                 <ThemedScrollbars height='354px'>{demo_account}</ThemedScrollbars>
                             </DesktopWrapper>
-                            <MobileWrapper>
+                            <MobileOrTabletWrapper>
                                 <Div100vhContainer
                                     className='acc-switcher__list-container'
                                     max_autoheight_offset='234px'
                                 >
                                     {demo_account}
                                 </Div100vhContainer>
-                            </MobileWrapper>
+                            </MobileOrTabletWrapper>
                         </div>
                     </Tabs>
                     <div

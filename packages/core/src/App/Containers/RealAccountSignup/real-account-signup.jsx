@@ -3,7 +3,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import classNames from 'classnames';
 import { RiskToleranceWarningModal, TestWarningModal } from '@deriv/account';
-import { Button, DesktopWrapper, MobileDialog, MobileWrapper, Modal, Text, UILoader } from '@deriv/components';
+import { Button, DesktopWrapper, MobileDialog, MobileOrTabletWrapper, Modal, Text, UILoader } from '@deriv/components';
 import { WS, moduleLoader, routes } from '@deriv/shared';
 import { Localize, localize } from '@deriv/translations';
 import { observer, useStore } from '@deriv/stores';
@@ -667,7 +667,7 @@ const RealAccountSignup = observer(({ history, state_index, is_trading_experienc
                             />
                         </Modal>
                     </DesktopWrapper>
-                    <MobileWrapper>
+                    <MobileOrTabletWrapper>
                         <MobileDialog
                             portal_element_id='modal_root'
                             wrapper_classname='account-signup-mobile-dialog'
@@ -697,7 +697,7 @@ const RealAccountSignup = observer(({ history, state_index, is_trading_experienc
                                 deposit_target={deposit_target}
                             />
                         </MobileDialog>
-                    </MobileWrapper>
+                    </MobileOrTabletWrapper>
                 </React.Fragment>
             )}
         </React.Fragment>

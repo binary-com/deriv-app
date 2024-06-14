@@ -10,7 +10,7 @@ import './transactions-crypto-transaction-status-side-note.scss';
 
 const TransactionsCryptoTransactionStatusSideNote: React.FC = observer(() => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_mobile_or_tablet } = ui;
     const { transaction_history } = useCashierStore();
     const { setIsTransactionsCryptoVisible } = transaction_history;
     const { last_transaction, has_transactions, isLoading, error, subscribe } = useCryptoTransactions();
@@ -99,7 +99,7 @@ const TransactionsCryptoTransactionStatusSideNote: React.FC = observer(() => {
     const ErrorState = useCallback(
         () => (
             <>
-                <Text size={is_mobile ? 'xxs' : 'xs'}>
+                <Text size={is_mobile_or_tablet ? 'xxs' : 'xs'}>
                     {localize('Unfortunately, we cannot retrieve the information at this time. ')}
                 </Text>
                 <div className='transactions-crypto-transaction-status-side-note__divider' />
@@ -112,17 +112,17 @@ const TransactionsCryptoTransactionStatusSideNote: React.FC = observer(() => {
                 />
             </>
         ),
-        [is_mobile, subscribe]
+        [is_mobile_or_tablet, subscribe]
     );
 
     const NoTransactionState = useCallback(
         () => (
             <>
-                <Text size={is_mobile ? 'xxs' : 'xs'}>{localize('No recent transactions.')}</Text>
+                <Text size={is_mobile_or_tablet ? 'xxs' : 'xs'}>{localize('No recent transactions.')}</Text>
                 <div className='transactions-crypto-transaction-status-side-note__divider' />
             </>
         ),
-        [is_mobile]
+        [is_mobile_or_tablet]
     );
 
     return (

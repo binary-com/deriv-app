@@ -36,7 +36,7 @@ const getTitle = (market_type: string, show_eu_related_content: boolean) => {
 const DMT5TradeModal = observer(
     ({ mt5_trade_account, show_eu_related_content, onPasswordManager, toggleModal }: TMT5TradeModalProps) => {
         const { ui, client } = useStore();
-        const { is_mobile } = ui;
+        const { is_mobile_or_tablet } = ui;
         const { account_status: { authentication } = {} } = client;
         const is_eligible_to_migrate = mt5_trade_account.eligible_to_migrate;
         const getCompanyShortcode = () => {
@@ -165,7 +165,7 @@ const DMT5TradeModal = observer(
                     <div className='cfd-trade-modal__maintenance'>
                         <Icon
                             icon='IcAlertWarning'
-                            size={is_mobile ? 28 : 20}
+                            size={is_mobile_or_tablet ? 28 : 20}
                             className='cfd-trade-modal__maintenance-icon'
                         />
                         <div className='cfd-trade-modal__maintenance-text'>
@@ -175,7 +175,7 @@ const DMT5TradeModal = observer(
                 </div>
                 {is_eligible_to_migrate && <MigrationBanner is_trade_modal />}
 
-                {is_mobile ? (
+                {is_mobile_or_tablet ? (
                     <MT5MobileRedirectOption mt5_trade_account={mt5_trade_account} />
                 ) : (
                     <MT5DesktopRedirectOption account_title={getAccountTitle()} mt5_trade_account={mt5_trade_account} />

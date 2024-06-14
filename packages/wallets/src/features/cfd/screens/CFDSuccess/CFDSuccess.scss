@@ -9,7 +9,7 @@
     position: relative;
     border-radius: 1rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         height: fit-content;
     }
 
