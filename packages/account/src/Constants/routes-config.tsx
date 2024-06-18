@@ -43,11 +43,6 @@ const AccountClosed = makeLazyLoader(
     () => <Loading />
 )();
 
-const LanguageSettings = makeLazyLoader(
-    () => moduleLoader(() => import('../Sections/Profile/LanguageSettings')),
-    () => <Loading />
-)();
-
 const LoginHistory = makeLazyLoader(
     () => moduleLoader(() => import('../Sections/Security/LoginHistory')),
     () => <Loading />
@@ -90,11 +85,6 @@ const initRoutesConfig = () => [
                         component: PersonalDetails,
                         getTitle: () => localize('Personal details'),
                         default: true,
-                    },
-                    {
-                        path: routes.languages,
-                        component: LanguageSettings,
-                        getTitle: () => localize('Languages'),
                     },
                 ],
             },

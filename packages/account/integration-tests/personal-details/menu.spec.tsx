@@ -14,14 +14,7 @@ test.describe('Personal Details - Menu', () => {
         await page.goto(`${baseURL}/account/personal-details`);
 
         const personalDetailsLink = await page.getByRole('link', { name: 'Personal details' });
-        const languagesLink = await page.getByRole('link', { name: 'Languages' });
 
         expect(await personalDetailsLink.getAttribute('aria-current')).toBe('page');
-        expect(await languagesLink.getAttribute('aria-current')).not.toBe('page');
-
-        await languagesLink.click();
-
-        expect(await personalDetailsLink.getAttribute('aria-current')).not.toBe('page');
-        expect(await languagesLink.getAttribute('aria-current')).toBe('page');
     });
 });

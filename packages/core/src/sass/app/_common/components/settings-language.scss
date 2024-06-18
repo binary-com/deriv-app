@@ -1,7 +1,7 @@
 /** @define settings-language */
 .settings-language {
-    margin-left: 1.6rem;
-    width: fit-content;
+    margin-inline: auto;
+    //width: fit-content;
 
     @include mobile {
         display: flex;
@@ -51,10 +51,6 @@
 
             @include mobile {
                 padding: 8px;
-
-                &--pre-appstore {
-                    padding: 1.6rem;
-                }
             }
             text-decoration: none;
             background-color: var(--state-normal);
@@ -93,12 +89,6 @@
             @include mobile {
                 font-size: 1.4rem;
             }
-        }
-        &--radio-button {
-            display: none;
-        }
-        &--center-label {
-            text-align: center;
         }
     }
 }

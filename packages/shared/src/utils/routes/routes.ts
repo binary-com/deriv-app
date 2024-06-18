@@ -23,7 +23,6 @@ export const routes = {
     // account
     account: '/account',
     trading_assessment: '/account/trading-assessment',
-    languages: '/account/languages',
     financial_assessment: '/account/financial-assessment',
     personal_details: '/account/personal-details',
     proof_of_identity: '/account/proof-of-identity',

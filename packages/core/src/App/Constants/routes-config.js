@@ -152,12 +152,6 @@ const getModules = () => {
                             getTitle: () => localize('Personal details'),
                             default: true,
                         },
-
-                        {
-                            path: routes.languages,
-                            component: Account,
-                            getTitle: () => localize('Languages'),
-                        },
                     ],
                 },
                 {

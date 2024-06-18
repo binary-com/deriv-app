@@ -95,21 +95,6 @@ describe('MenuLink', () => {
         expect(link).not.toBeInTheDocument();
     });
 
-    it('should render menu link for mobile and two icons with passed suffix_icon', () => {
-        (isMobile as jest.Mock).mockReturnValue(true);
-        mock_props.link_to = '/account/languages';
-        mock_props.suffix_icon = 'suffix_icon';
-
-        renderComponent();
-
-        const icons = screen.getAllByText('Mock Link Icon');
-        expect(icons).toHaveLength(2);
-        const link = screen.getByTestId('dt_menu_link');
-        expect(link).toBeInTheDocument();
-        userEvent.click(link);
-        expect(mockRootStore.ui.setMobileLanguageMenuOpen).toHaveBeenCalled();
-    });
-
     it('should render menu link for cashier for real account on traders hub', () => {
         (useIsRealAccountNeededForCashier as jest.Mock).mockReturnValue(true);
         mock_props.link_to = '/cashier/deposit';

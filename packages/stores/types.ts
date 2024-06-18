@@ -33,7 +33,6 @@ type TRoutes =
     | '/404'
     | '/account'
     | '/account/trading-assessment'
-    | '/account/languages'
     | '/account/financial-assessment'
     | '/account/personal-details'
     | '/account/proof-of-identity'
