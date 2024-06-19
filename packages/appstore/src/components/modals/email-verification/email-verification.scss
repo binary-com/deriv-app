@@ -1,0 +1,23 @@
+.dc-modal {
+    &__container_email-verification-modal {
+        @include mobile {
+            height: calc(var(--vh, 1vh) * 100) !important;
+            width: 100vw !important;
+        }
+    }
+}
+
+.email-verification-modal_mobile {
+    &--submit-btn {
+        width: 100%;
+    }
+
+    ul {
+        list-style: disc;
+        padding-left: 1.6rem;
+
+        li {
+            margin-bottom: 0.8rem;
+        }
+    }
+}

@@ -83,3 +83,4 @@ export { default as useGrowthbookGetFeatureValue } from './useGrowthbookGetFeatu
 export { default as useResidenceSelfDeclaration } from './useResidenceSelfDeclaration';
 export { default as useTotalAssetCurrency } from './useTotalAssetCurrency';
 export { default as useGrowthbookIsOn } from './useGrowthbookIsOn';
+export { default as useIsEmailVerified } from './useIsEmailVerified';

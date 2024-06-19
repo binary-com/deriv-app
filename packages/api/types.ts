@@ -35,6 +35,8 @@ import type {
     CancelAContractResponse,
     CashierInformationRequest,
     CashierInformationResponse,
+    ConfirmEmailThroughVerificationCodeRequest,
+    ConfirmEmailThroughVerificationCodeResponse,
     ContractsForSymbolRequest,
     ContractsForSymbolResponse,
     CopyTradingListRequest,
@@ -2310,6 +2312,10 @@ type TSocketEndpoints = {
     buy: {
         request: BuyContractRequest;
         response: BuyContractResponse;
+    };
+    confirm_email: {
+        request: ConfirmEmailThroughVerificationCodeRequest;
+        response: ConfirmEmailThroughVerificationCodeResponse;
     };
     cancel: {
         request: CancelAContractRequest;

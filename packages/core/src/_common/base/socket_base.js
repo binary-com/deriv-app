@@ -205,13 +205,22 @@ const BinarySocketBase = (() => {
     const cancelCryptoTransaction = transaction_id =>
         deriv_api.send({ cashier_withdrawal_cancel: 1, id: transaction_id });
 
-    const newAccountVirtual = (verification_code, client_password, residence, device_data) =>
+    /**
+     * Create a new virtual account
+     *
+     * @param {object} payload
+     * @param {string} payload.residence - country code
+     * @param {string} payload.password - client password
+     * @param {string} payload.email - client email in case of lazy authorization without verification
+     * @param {string} payload.verification_code - verification code sent to client email
+     *
+     * - Other signup params are also included from ClientStore.getSignupParams()
+     * @returns Promise  - resolves with the response from the server
+     */
+    const newAccountVirtual = payload =>
         deriv_api.send({
             new_account_virtual: 1,
-            verification_code,
-            client_password,
-            residence,
-            ...device_data,
+            ...payload,
         });
 
     const setAccountCurrency = (currency, passthrough) =>
@@ -420,6 +429,8 @@ const BinarySocketBase = (() => {
             wallet_migration: 'reset',
         });
 
+    const confirmEmail = verification_code => deriv_api.send({ confirm_email: 1, email_consent: 1, verification_code });
+
     return {
         init,
         openNewConnection,
@@ -462,6 +473,7 @@ const BinarySocketBase = (() => {
         close,
         cryptoWithdraw,
         cryptoConfig,
+        confirmEmail,
         contractUpdate,
         contractUpdateHistory,
         getFinancialAssessment,

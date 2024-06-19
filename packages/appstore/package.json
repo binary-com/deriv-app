@@ -36,6 +36,7 @@
         "@deriv/translations": "^1.0.0",
         "@deriv/hooks": "^1.0.0",
         "@deriv/wallets": "^1.0.0",
+        "@deriv/api": "^1.0.0",
         "classnames": "^2.2.6",
         "mobx": "^6.6.1",
         "mobx-react-lite": "^3.4.0",

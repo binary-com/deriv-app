@@ -17,6 +17,7 @@ const mock = (): TStores & { is_mock: boolean } => {
     return {
         is_mock: true,
         client: {
+            is_email_verified: false,
             account_settings: {},
             account_type: 'virtual',
             accounts: {},
@@ -192,6 +193,7 @@ const mock = (): TStores & { is_mock: boolean } => {
                 system_email_change: '',
                 trading_platform_dxtrade_password_reset: '',
                 trading_platform_mt5_password_reset: '',
+                verify_account: '',
             },
             email: '',
             fetchStatesList: jest.fn(),
@@ -466,6 +468,10 @@ const mock = (): TStores & { is_mock: boolean } => {
             setAccountSwitcherDisabledMessage: jest.fn(),
             toggleUrlUnavailableModal: jest.fn(),
             is_set_currency_modal_visible: false,
+            is_email_verification_code_expired_modal_visible: false,
+            toggleEmailVerificationCodeExpiredModal: jest.fn(),
+            is_email_verification_modal_visible: false,
+            toggleEmailVerificationModal: jest.fn(),
         },
         traders_hub: {
             getAccount: jest.fn(),

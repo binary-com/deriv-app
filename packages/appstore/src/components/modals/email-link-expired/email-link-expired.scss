@@ -1,0 +1,16 @@
+.email-link-expired-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 2.4rem 2.4rem;
+    width: 44rem;
+
+    @include mobile {
+        max-width: 35rem;
+        padding: 0 1.6rem 1.6rem;
+    }
+
+    .dc-form-submit-button {
+        margin-top: 2.4rem;
+    }
+}

@@ -224,6 +224,7 @@ const BinarySocketGeneral = (() => {
                         'portfolio',
                         'proposal_open_contract',
                         'change_email',
+                        'confirm_email',
                     ].includes(msg_type)
                 ) {
                     return;

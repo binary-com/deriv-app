@@ -392,6 +392,7 @@ type RealAccountSignupSettings = {
 };
 
 type TClientStore = {
+    is_email_verified: boolean;
     fetchStatesList: () => Promise<StatesList>;
     account_type: string;
     accounts: { [k: string]: TActiveAccount };
@@ -514,6 +515,7 @@ type TClientStore = {
         system_email_change: string;
         trading_platform_dxtrade_password_reset: string;
         trading_platform_mt5_password_reset: string;
+        verify_account: string;
     };
     website_status: { mt5_status: TMt5StatusServer; dx_trade_status: TDXTraderStatusServerType };
     email: string;
@@ -796,6 +798,10 @@ type TUiStore = {
     toggleKycInformationSubmittedModal: () => void;
     setAccountSwitcherDisabledMessage: (message?: string) => void;
     is_set_currency_modal_visible: boolean;
+    is_email_verification_modal_visible: boolean;
+    toggleEmailVerificationModal: (state: boolean) => void;
+    is_email_verification_code_expired_modal_visible: boolean;
+    toggleEmailVerificationCodeExpiredModal: (state: boolean) => void;
 };
 
 type TPortfolioStore = {
