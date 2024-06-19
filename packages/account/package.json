@@ -30,7 +30,7 @@
     },
     "dependencies": {
         "@binary-com/binary-document-uploader": "^2.4.8",
-        "@deriv-com/analytics": "1.5.9",
+        "@deriv-com/analytics": "1.6.2",
         "@deriv-com/translations": "^1.2.3",
         "@deriv-com/utils": "^0.0.25",
         "@deriv/api": "^1.0.0",

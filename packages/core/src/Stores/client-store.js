@@ -2691,6 +2691,11 @@ export default class ClientStore extends BaseStore {
         } catch (error) {
             // eslint-disable-next-line no-console
             console.log(`Something wrong: code = ${error?.error?.code}, message = ${error?.error?.message}`);
+            Analytics.trackEvent('ce_wallets_migration_form', {
+                action: 'error',
+                form_name: 'ce_wallets_migration_form',
+                error_message: error?.error?.message,
+            });
         } finally {
             this.setIsWalletMigrationRequestIsInProgress(false);
         }

@@ -1,11 +1,23 @@
 import React from 'react';
+import { Analytics } from '@deriv-com/analytics';
 import { Icon, Text } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
 
 const WalletsBannerUpgrading = observer(() => {
-    const { ui } = useStore();
+    const { traders_hub, ui } = useStore();
+    const { is_demo } = traders_hub;
     const { is_mobile } = ui;
+
+    React.useEffect(() => {
+        Analytics.trackEvent('ce_tradershub_banner', {
+            action: 'open',
+            form_name: 'ce_tradershub_banner',
+            account_mode: is_demo ? 'demo' : 'real',
+            banner_name: 'setting_up_wallets',
+            banner_type: 'without_url',
+        });
+    }, [is_demo]);
 
     return (
         <div className='wallets-banner__container wallets-banner-upgrading'>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Analytics, TEvents } from '@deriv-com/analytics';
 import { useWalletMigration } from '@deriv/hooks';
 import { Button, Icon, Text, Modal } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
@@ -7,17 +8,49 @@ import './wallets-upgrade-modal.scss';
 
 const MODAL_TRANSITION_TIMEOUT_MS = 250; // matching the default one
 
+const trackAnalyticsEvent = (
+    action: TEvents['ce_tradershub_popup']['action'],
+    account_mode: TEvents['ce_tradershub_popup']['account_mode']
+) => {
+    Analytics.trackEvent('ce_tradershub_popup', {
+        action,
+        form_name: 'ce_tradershub_popup',
+        account_mode,
+        popup_name: 'wallets',
+        popup_type: 'with_cta',
+    });
+};
+
 const WalletsUpgradeModal = observer(() => {
     const { traders_hub, ui } = useStore();
-    const { toggleWalletsUpgrade } = traders_hub;
+    const { is_demo, toggleWalletsUpgrade } = traders_hub;
     const { is_mobile, is_desktop } = ui;
     const { is_eligible } = useWalletMigration();
+    const account_mode = is_demo ? 'demo' : 'real';
     const isWalletMigrationModalClosed = localStorage.getItem('is_wallet_migration_modal_closed');
     const [modalOpen, setModalOpen] = React.useState(!isWalletMigrationModalClosed);
+
+    React.useEffect(() => {
+        trackAnalyticsEvent('open', account_mode);
+    }, [account_mode]);
 
     const closeModal = () => {
         setModalOpen(false);
         localStorage.setItem('is_wallet_migration_modal_closed', 'true');
+    };
+
+    const onWalletsUpgradeHandler = () => {
+        closeModal();
+        // let this modal close before opening the next one
+        setTimeout(() => {
+            toggleWalletsUpgrade(true);
+            trackAnalyticsEvent('click_cta', account_mode);
+        }, MODAL_TRANSITION_TIMEOUT_MS);
+    };
+
+    const onToggleModalHandler = () => {
+        closeModal();
+        trackAnalyticsEvent('close', account_mode);
     };
 
     return (
@@ -26,7 +59,7 @@ const WalletsUpgradeModal = observer(() => {
             is_open={is_eligible && modalOpen}
             width='60rem'
             title=' '
-            toggleModal={closeModal}
+            toggleModal={onToggleModalHandler}
             transition_timeout={MODAL_TRANSITION_TIMEOUT_MS}
         >
             <Modal.Body>
@@ -51,11 +84,7 @@ const WalletsUpgradeModal = observer(() => {
                     </div>
                     <Button
                         large={is_desktop}
-                        onClick={() => {
-                            closeModal();
-                            // let this modal close before opening the next one
-                            setTimeout(() => toggleWalletsUpgrade(true), MODAL_TRANSITION_TIMEOUT_MS);
-                        }}
+                        onClick={onWalletsUpgradeHandler}
                         primary
                         text={localize('Enable now')}
                     />

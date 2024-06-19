@@ -84,7 +84,7 @@
         "webpack-node-externals": "^2.5.2"
     },
     "dependencies": {
-        "@deriv-com/analytics": "1.5.9",
+        "@deriv-com/analytics": "1.6.2",
         "@deriv-com/utils": "^0.0.25",
         "@deriv/account": "^1.0.0",
         "@deriv/api": "^1.0.0",

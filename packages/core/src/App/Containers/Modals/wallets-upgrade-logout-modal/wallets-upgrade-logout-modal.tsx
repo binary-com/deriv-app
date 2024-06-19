@@ -1,31 +1,53 @@
 import React from 'react';
 import Cookies from 'js-cookie';
+import { Analytics, TEvents } from '@deriv-com/analytics';
 import { Dialog, Icon, Text } from '@deriv/components';
 import { redirectToLogin, routes } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { getLanguage, localize, Localize } from '@deriv/translations';
 import './wallets-upgrade-logout-modal.scss';
 
+const trackAnalyticsEvent = (
+    action: TEvents['ce_tradershub_popup']['action'],
+    account_mode: TEvents['ce_tradershub_popup']['account_mode']
+) => {
+    Analytics.trackEvent('ce_tradershub_popup', {
+        action,
+        form_name: 'ce_tradershub_popup',
+        account_mode,
+        popup_name: 'wallets_almost_there',
+        popup_type: 'with_cta',
+    });
+};
+
 const WalletsUpgradeLogoutModal = observer(() => {
     const { client, ui } = useStore();
-    const { logout } = client;
+    const { is_virtual, logout } = client;
     const { is_mobile } = ui;
+    const account_mode = is_virtual ? 'demo' : 'real';
+
+    React.useEffect(() => {
+        trackAnalyticsEvent('open', account_mode);
+    }, [account_mode]);
+
+    const onConfirmHandler = () => {
+        Cookies.set('recent_wallets_migration', 'true', {
+            path: '/', // not available on other subdomains
+            expires: 0.5, // 12 hours expiration time
+            secure: true,
+        });
+        logout().then(() => {
+            window.location.href = routes.traders_hub;
+            redirectToLogin(false, getLanguage());
+        });
+        trackAnalyticsEvent('click_cta', account_mode);
+    };
 
     return (
         <Dialog
             className='wallets-upgrade-logout-modal'
             confirm_button_text={localize('Log out')}
-            onConfirm={() => {
-                Cookies.set('recent_wallets_migration', 'true', {
-                    path: '/', // not available on other subdomains
-                    expires: 0.5, // 12 hours expiration time
-                    secure: true,
-                });
-                logout().then(() => {
-                    window.location.href = routes.traders_hub;
-                    redirectToLogin(false, getLanguage());
-                });
-            }}
+            onConfirm={onConfirmHandler}
             is_closed_on_confirm
             is_visible
             dismissable={false}

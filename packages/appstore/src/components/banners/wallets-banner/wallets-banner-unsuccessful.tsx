@@ -1,12 +1,36 @@
 import React from 'react';
+import { Analytics, TEvents } from '@deriv-com/analytics';
 import { Icon, Text } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
 
+const trackAnalyticsEvent = (
+    action: TEvents['ce_tradershub_banner']['action'],
+    account_mode: TEvents['ce_tradershub_banner']['account_mode']
+) => {
+    Analytics.trackEvent('ce_tradershub_banner', {
+        action,
+        form_name: 'ce_tradershub_banner',
+        account_mode,
+        banner_name: 'setup_unsuccessful_wallets',
+        banner_type: 'with_cta',
+    });
+};
+
 const WalletBannerUnsuccessful = observer(() => {
     const { traders_hub, ui } = useStore();
     const { is_mobile } = ui;
-    const { toggleWalletsUpgrade } = traders_hub;
+    const { is_demo, toggleWalletsUpgrade } = traders_hub;
+    const account_mode = is_demo ? 'demo' : 'real';
+
+    React.useEffect(() => {
+        trackAnalyticsEvent('open', account_mode);
+    }, [account_mode]);
+
+    const onWalletsUpgradeHandler = () => {
+        toggleWalletsUpgrade(true);
+        trackAnalyticsEvent('click_cta', account_mode);
+    };
 
     return (
         <div className='wallets-banner__container wallets-banner-unsuccessful'>
@@ -34,7 +58,7 @@ const WalletBannerUnsuccessful = observer(() => {
                                 line_height='s'
                                 size={is_mobile ? 'xxxs' : 'xs'}
                                 weight='bold'
-                                onClick={() => toggleWalletsUpgrade(true)}
+                                onClick={onWalletsUpgradeHandler}
                             />,
                         ]}
                     />
