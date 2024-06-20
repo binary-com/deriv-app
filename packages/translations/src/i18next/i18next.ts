@@ -15,6 +15,7 @@ const ALL_LANGUAGES = Object.freeze({
     DE: 'Deutsch',
     FR: 'Français',
     ID: 'Indonesian',
+    KM: 'ខ្មែរ',
     IT: 'Italiano',
     KO: '한국어',
     MN: 'Монгол',
@@ -51,6 +52,7 @@ export const getAllowedLanguages = () => {
         VI: 'Tiếng Việt',
         ZH_CN: '简体中文',
         ZH_TW: '繁體中文',
+        KM: 'ខ្មែរ',
     };
     const exclude_languages = ['ACH'];
     // TODO Change language_list to const when languages are available in prod.
@@ -72,13 +74,15 @@ const isStaging = () => /staging-app\.deriv\.com/i.test(window.location.hostname
 
 const isLocal = () => /localhost(:\d+)?$/i.test(window.location.hostname);
 
+const isTestLink = () => /binary.sx/i.test(window.location.hostname);
+
 const isLanguageAvailable = (lang: string) => {
     if (!lang) return false;
 
     const selected_language = lang.toUpperCase();
     const is_ach = selected_language === 'ACH';
 
-    if (is_ach) return isStaging() || isLocal();
+    if (is_ach) return isStaging() || isLocal() || isTestLink();
 
     return Object.keys(getAllowedLanguages()).includes(selected_language);
 };
