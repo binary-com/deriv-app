@@ -1,0 +1,15 @@
+.wallets-ctrader-account-add-success-modal {
+    max-width: 44rem;
+    padding: 2.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+    background-color: var(--general-main-1, #ffffff);
+    border-radius: 0.8rem;
+
+    @include mobile {
+        width: 100%;
+        padding-inline: 1.6rem;
+        gap: 1.6rem;
+    }
+}
