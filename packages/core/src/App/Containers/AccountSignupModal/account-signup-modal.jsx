@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
 
 import { Button, Checkbox, Dialog, Loading, Text } from '@deriv/components';
+import { useContentFlag, useGrowthbookGetFeatureValue } from '@deriv/hooks/src';
 import { getLocation, SessionStore, setPerformanceValue, shuffleArray } from '@deriv/shared';
 import { getLanguage, localize } from '@deriv/translations';
 import { Analytics } from '@deriv-com/analytics';
@@ -261,7 +262,7 @@ AccountSignup.propTypes = {
 
 const AccountSignupModal = observer(() => {
     const { ui, client } = useStore();
-    const { onSignup, is_logged_in, residence_list, clients_country, logout } = client;
+    const { onSignup, is_logged_in, residence_list, clients_country, logout, has_active_real_account } = client;
     const {
         is_account_signup_modal_visible: is_visible,
         toggleAccountSignupModal,
@@ -270,7 +271,16 @@ const AccountSignupModal = observer(() => {
         is_loading,
         is_mobile,
         setIsFromSignupAccount,
+        is_from_signup_account,
+        openRealAccountSignup,
     } = ui;
+
+    const { is_cr_demo, is_eu_demo } = useContentFlag();
+
+    const [direct_to_real_account_creation] = useGrowthbookGetFeatureValue({
+        featureFlag: 'direct-real-account-creation-flow',
+        defaultValue: false,
+    });
 
     React.useEffect(() => {
         // a logged in user should not be able to create a new account
@@ -278,6 +288,25 @@ const AccountSignupModal = observer(() => {
             logout();
         }
     }, [is_visible, is_logged_in, logout]);
+
+    React.useEffect(() => {
+        if (!has_active_real_account && is_from_signup_account && is_logged_in) {
+            if (direct_to_real_account_creation && is_cr_demo) {
+                openRealAccountSignup('svg');
+            } else if (is_eu_demo) {
+                openRealAccountSignup('maltainvest');
+            }
+        }
+    }, [
+        is_cr_demo,
+        is_eu_demo,
+        has_active_real_account,
+        is_from_signup_account,
+        is_logged_in,
+        direct_to_real_account_creation,
+        openRealAccountSignup,
+        setIsFromSignupAccount,
+    ]);
 
     return (
         <Dialog

@@ -2720,7 +2720,9 @@ export default class ClientStore extends BaseStore {
     async fetchShouldShowEffortlessLoginModal() {
         try {
             const stored_value = localStorage.getItem('show_effortless_login_modal');
-            const show_effortless_login_modal = stored_value === null || JSON.parse(stored_value) === true;
+            const show_effortless_login_modal =
+                (stored_value === null || JSON.parse(stored_value) === true) &&
+                !this.root_store.ui?.is_from_signup_account;
 
             if (show_effortless_login_modal) {
                 localStorage.setItem('show_effortless_login_modal', JSON.stringify(true));
