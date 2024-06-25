@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text } from '@deriv-com/quill-ui';
 import BottomNav from 'AppV2/Components/BottomNav';
+import MarketSelector from 'AppV2/Components/MarketSelector';
 
 const Trade = () => {
     return (
         <BottomNav>
-            <Text size='sm'>Trade</Text>
+            <MarketSelector />
         </BottomNav>
     );
 };

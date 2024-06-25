@@ -1,0 +1,12 @@
+.market-selector {
+    &__search {
+        &--wrapper {
+            display: flex;
+            align-items: center;
+            padding: var(--core-spacing-400) var(--core-spacing-800);
+        }
+        &--isFocused {
+            padding: var(--core-spacing-400) var(--core-spacing-400) var(--core-spacing-400) var(--core-spacing-800);
+        }
+    }
+}
