@@ -99,6 +99,8 @@ export const getPlatformRedirect = (routing_history: TRoutingHistory) => {
         return { name: platform_name.DXtrade, route: routes.dxtrade };
     if (isNavigationFromExternalPlatform(routing_history, routes.smarttrader))
         return { name: platform_name.SmartTrader, route: routes.smarttrader };
+    if (isNavigationFromExternalPlatform(routing_history, routes.cashier_p2p))
+        return { name: 'P2P', route: routes.cashier_p2p };
     if (isNavigationFromP2P()) return { name: 'P2P', route: routes.cashier_p2p, ref: 'p2p' };
     if (isNavigationFromExternalPlatform(routing_history, routes.binarybot))
         return { name: platform_name.BinaryBot, route: routes.binarybot };

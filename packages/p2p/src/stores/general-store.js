@@ -53,6 +53,7 @@ export default class GeneralStore extends BaseStore {
     parameters = null;
     payment_info = '';
     p2p_poa_required = false;
+    poa_authenticated_with_idv = false;
     poa_status = null;
     poi_status = null;
     saved_form_state = null;
@@ -117,6 +118,7 @@ export default class GeneralStore extends BaseStore {
             orders: observable,
             parameters: observable,
             p2p_poa_required: observable,
+            poa_authenticated_with_idv: observable,
             poa_status: observable,
             poi_status: observable,
             saved_form_state: observable,
@@ -168,6 +170,7 @@ export default class GeneralStore extends BaseStore {
             setNicknameError: action.bound,
             setOrderTableType: action.bound,
             setP2pPoaRequired: action.bound,
+            setPoaAuthenticatedWithIdv: action.bound,
             setParameters: action.bound,
             setPoaStatus: action.bound,
             setPoiStatus: action.bound,
@@ -461,6 +464,7 @@ export default class GeneralStore extends BaseStore {
                 this.hideModal();
             } else {
                 this.setP2pPoaRequired(p2p_poa_required);
+                this.setPoaAuthenticatedWithIdv(status.includes('poa_authenticated_with_idv'));
                 this.setPoaStatus(document.status);
                 this.setPoiStatus(identity.status);
             }
@@ -687,6 +691,10 @@ export default class GeneralStore extends BaseStore {
 
     setP2pPoaRequired(p2p_poa_required) {
         this.p2p_poa_required = p2p_poa_required;
+    }
+
+    setPoaAuthenticatedWithIdv(poa_authenticated_with_idv) {
+        this.poa_authenticated_with_idv = poa_authenticated_with_idv;
     }
 
     setPoaStatus(poa_status) {

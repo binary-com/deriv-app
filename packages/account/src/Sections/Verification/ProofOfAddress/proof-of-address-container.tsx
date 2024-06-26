@@ -1,7 +1,7 @@
 import React from 'react';
 import { AccountStatusResponse, GetAccountStatus } from '@deriv/api-types';
 import { Button, Loading } from '@deriv/components';
-import { WS, getPlatformRedirect, platforms, AUTH_STATUS_CODES } from '@deriv/shared';
+import { WS, getPlatformRedirect, platforms, routes, AUTH_STATUS_CODES } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
 import Expired from '../../../Components/poa/status/expired';
@@ -29,6 +29,7 @@ type TAuthenticationStatus = Record<
     | 'poa_address_mismatch'
     | 'resubmit_poa'
     | 'poa_expiring_soon'
+    | 'poa_authenticated_with_idv'
     | 'has_submitted_duplicate_poa',
     boolean
 > & { document_status?: DeepRequired<GetAccountStatus>['authentication']['document']['status'] };
@@ -48,6 +49,7 @@ const ProofOfAddressContainer = observer(({ onSubmit }: TProofOfAddressContainer
         is_age_verified: false,
         poa_address_mismatch: false,
         poa_expiring_soon: false,
+        poa_authenticated_with_idv: false,
         has_submitted_duplicate_poa: false,
     });
 
@@ -71,6 +73,7 @@ const ProofOfAddressContainer = observer(({ onSubmit }: TProofOfAddressContainer
                         needs_poa,
                         needs_poi,
                         poa_address_mismatch,
+                        poa_authenticated_with_idv,
                         poa_expiring_soon,
                     } = populateVerificationStatus(get_account_status);
 
@@ -84,6 +87,7 @@ const ProofOfAddressContainer = observer(({ onSubmit }: TProofOfAddressContainer
                         needs_poa,
                         needs_poi,
                         poa_address_mismatch,
+                        poa_authenticated_with_idv,
                         poa_expiring_soon,
                     }));
                     setIsLoading(false);
@@ -131,6 +135,7 @@ const ProofOfAddressContainer = observer(({ onSubmit }: TProofOfAddressContainer
         has_submitted_poa,
         poa_address_mismatch,
         poa_expiring_soon,
+        poa_authenticated_with_idv,
         has_submitted_duplicate_poa,
     } = authentication_status;
 
@@ -145,7 +150,8 @@ const ProofOfAddressContainer = observer(({ onSubmit }: TProofOfAddressContainer
             document_status &&
             ['expired', 'rejected', 'suspected'].includes(document_status)) ||
         poa_address_mismatch ||
-        poa_expiring_soon;
+        poa_expiring_soon ||
+        (poa_authenticated_with_idv && from_platform?.route === routes.cashier_p2p);
 
     const redirect_button = should_show_redirect_btn && (
         <Button

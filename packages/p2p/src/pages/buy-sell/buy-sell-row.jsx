@@ -79,7 +79,8 @@ const BuySellRow = ({ row: advert }) => {
     });
     const is_poi_poa_verified =
         general_store.poi_status === identity_status_codes.VERIFIED &&
-        (!general_store.p2p_poa_required || general_store.poa_status === document_status_codes.VERIFIED);
+        (!general_store.p2p_poa_required ||
+            (general_store.poa_status === document_status_codes.VERIFIED && !general_store.poa_authenticated_with_idv));
     const onClickRow = () => {
         if ((general_store.is_advertiser || is_poi_poa_verified) && !general_store.is_barred) {
             buy_sell_store.showAdvertiserPage(advert);

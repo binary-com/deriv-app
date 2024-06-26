@@ -19,13 +19,15 @@ const getPoiAction = (status: string) => {
             return <Localize i18n_default_text='Upload documents to verify your identity.' />;
     }
 };
-const getPoaAction = (status: string) => {
+const getPoaAction = (poa_authenticated_with_idv: boolean, status: string) => {
     switch (status) {
         case document_status_codes.PENDING:
             return <Localize i18n_default_text='Address verification in progress.' />;
         case document_status_codes.REJECTED:
             return <Localize i18n_default_text='Address verification failed. Please try again.' />;
         case document_status_codes.VERIFIED:
+            if (poa_authenticated_with_idv)
+                return <Localize i18n_default_text='Upload documents to verify your address.' />;
             return <Localize i18n_default_text='Address verification complete.' />;
         default:
             return <Localize i18n_default_text='Upload documents to verify your address.' />;
@@ -34,7 +36,8 @@ const getPoaAction = (status: string) => {
 
 const Verification = () => {
     const { general_store } = useStores();
-    const { p2p_poa_required, poa_status, poi_status } = general_store;
+    const { p2p_poa_required, poa_authenticated_with_idv, poa_status, poi_status } = general_store;
+    const allow_poa_redirection = poa_status !== document_status_codes.VERIFIED || poa_authenticated_with_idv;
     const redirectToVerification = (route: string) => {
         const search = window.location.search;
         let updated_url = `${route}?ext_platform_url=${routes.cashier_p2p}`;
@@ -58,12 +61,11 @@ const Verification = () => {
         ...(p2p_poa_required
             ? [
                   {
-                      content: getPoaAction(poa_status),
+                      content: getPoaAction(poa_authenticated_with_idv, poa_status),
                       is_disabled: poa_status === document_status_codes.PENDING,
-                      status: poa_status === document_status_codes.VERIFIED ? 'done' : 'action',
+                      status: allow_poa_redirection ? 'action' : 'done',
                       onClick: () => {
-                          if (poa_status !== document_status_codes.VERIFIED)
-                              redirectToVerification(routes.proof_of_address);
+                          if (allow_poa_redirection) redirectToVerification(routes.proof_of_address);
                       },
                   },
               ]
