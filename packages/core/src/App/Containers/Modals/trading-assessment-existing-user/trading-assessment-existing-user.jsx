@@ -1,16 +1,18 @@
 import React from 'react';
-import { Modal, DesktopWrapper, MobileDialog, MobileWrapper } from '@deriv/components';
+import { Modal, MobileDialog } from '@deriv/components';
 import { Localize, localize } from '@deriv/translations';
 import TradingAssessmentForm from '@deriv/account/src/Components/trading-assessment/trading-assessment-form';
 import tradingAssessmentConfig from '@deriv/account/src/Configs/trading-assessment-config';
 import RiskToleranceWarningModal from '@deriv/account/src/Components/trading-assessment/risk-tolerance-warning-modal';
-import TradingExperienceModal from './trading-experience-modal.jsx';
+import TradingExperienceModal from '../trading-experience-modal';
+import './trading-assessment-existing-user.scss';
 import { observer, useStore } from '@deriv/stores';
-import 'Sass/details-form.scss';
+import { useDevice } from '@deriv-com/ui';
 
 const TradingAssessmentExistingUser = observer(() => {
     // Get the Trading assessment questions and initial_value
     const { client, ui } = useStore();
+    const { isDesktop } = useDevice();
     const {
         setFinancialAndTradingAssessment,
         updateAccountStatus,
@@ -97,7 +99,7 @@ const TradingAssessmentExistingUser = observer(() => {
     } else if (should_show_trade_assessment_form) {
         return (
             <React.Fragment>
-                <DesktopWrapper>
+                {isDesktop ? (
                     <Modal
                         is_open={should_show_trade_assessment_form}
                         title={localize('Trading Experience Assessment')}
@@ -116,8 +118,7 @@ const TradingAssessmentExistingUser = observer(() => {
                             should_move_to_next={should_move_to_next}
                         />
                     </Modal>
-                </DesktopWrapper>
-                <MobileWrapper>
+                ) : (
                     <MobileDialog
                         visible={should_show_trade_assessment_form}
                         title={localize('Trading Experience Assessment')}
@@ -132,9 +133,10 @@ const TradingAssessmentExistingUser = observer(() => {
                             setSubSectionIndex={setSubSectionIndex}
                             class_name='trading-assessment--existing-user'
                             should_move_to_next={should_move_to_next}
+                            is_responsive={!isDesktop}
                         />
                     </MobileDialog>
-                </MobileWrapper>
+                )}
             </React.Fragment>
         );
     }

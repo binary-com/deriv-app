@@ -12,6 +12,7 @@ import {
     WS,
 } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import {
     isAdditionalDocumentValid,
     isDocumentNumberValid,
@@ -48,9 +49,9 @@ export type TIdvDocumentSubmitForm = TIDVFormValues & TConfirmPersonalDetailsFor
 
 const IdvDocumentSubmit = observer(
     ({ handleBack, handleViewComplete, handleSelectionNext, selected_country }: TIDVDocumentSubmitProps) => {
-        const { client, ui } = useStore();
+        const { client } = useStore();
         const { account_settings, getChangeableFields } = client;
-        const { is_mobile, is_desktop } = ui;
+        const { isDesktop } = useDevice();
 
         const IDV_NOT_APPLICABLE_OPTION = React.useMemo(() => getIDVNotApplicableOption(), []);
         const shouldSkipIdv = (document_id?: string) => document_id === IDV_NOT_APPLICABLE_OPTION.id;
@@ -201,7 +202,7 @@ const IdvDocumentSubmit = observer(
                                     />
                                 </div>
                             )}
-                            <FormBody className='form-body' scroll_offset={is_mobile ? '180px' : '80px'}>
+                            <FormBody className='form-body' scroll_offset={isDesktop ? '80px' : '180px'}>
                                 <FormSubHeader title={localize('Identity verification')} />
                                 <IDVForm selected_country={selected_country} class_name='idv-layout' />
                                 {!shouldSkipIdv(values?.document_type?.id) && (
@@ -223,7 +224,7 @@ const IdvDocumentSubmit = observer(
                                 )}
                             </FormBody>
                             <FormFooter className='proof-of-identity__footer '>
-                                {is_desktop && (
+                                {isDesktop && (
                                     <Button
                                         className='back-btn'
                                         onClick={handleBack}

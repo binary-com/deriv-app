@@ -42,9 +42,10 @@ describe('<BuySellFormReceiveAmount/>', () => {
                     local_currency: 'USD',
                 },
                 is_sell_advert: false,
-                receive_amount: 100,
+                receive_amount: 205.55,
             },
         });
+        render(<BuySellFormReceiveAmount />);
 
         render(<BuySellFormReceiveAmount />);
         expect(screen.getByText("You'll send")).toBeInTheDocument();

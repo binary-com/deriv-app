@@ -1,16 +1,8 @@
-import {
-    DesktopWrapper,
-    Div100vhContainer,
-    InlineMessage,
-    MobileWrapper,
-    Modal,
-    PageOverlay,
-    Text,
-    UILoader,
-} from '@deriv/components';
+import { Div100vhContainer, InlineMessage, Modal, PageOverlay, Text, UILoader } from '@deriv/components';
 import { getPlatformSettings } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
+import { useDevice } from '@deriv-com/ui';
 import React from 'react';
 import AdditionalKycInfoForm from './additional-kyc-info-form';
 
@@ -44,6 +36,7 @@ export const AdditionalKycInfoModal = observer(() => {
     const {
         ui: { is_additional_kyc_info_modal_open: is_open, toggleAdditionalKycInfoModal },
     } = useStore();
+    const { isDesktop } = useDevice();
     const [error, setError] = React.useState<unknown>('');
 
     const toggleModal = (e?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
@@ -67,7 +60,7 @@ export const AdditionalKycInfoModal = observer(() => {
     return (
         <React.Suspense fallback={<UILoader />}>
             <div className='additional-kyc-info-modal__container'>
-                <DesktopWrapper>
+                {isDesktop ? (
                     <Modal
                         has_close_icon
                         is_open={is_open}
@@ -81,8 +74,7 @@ export const AdditionalKycInfoModal = observer(() => {
                             <AdditionalKycInfoFormWithHintBox setError={setError} error={error} />
                         </Modal.Body>
                     </Modal>
-                </DesktopWrapper>
-                <MobileWrapper>
+                ) : (
                     <PageOverlay
                         is_open
                         portal_id='deriv_app'
@@ -98,7 +90,7 @@ export const AdditionalKycInfoModal = observer(() => {
                             <AdditionalKycInfoFormWithHintBox />
                         </Div100vhContainer>
                     </PageOverlay>
-                </MobileWrapper>
+                )}
             </div>
         </React.Suspense>
     );

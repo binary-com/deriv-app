@@ -1,26 +1,24 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { isDesktop, readFiles } from '@deriv/shared';
+import { readFiles } from '@deriv/shared';
 import FileUploader from '../file-uploader';
-import { StoreProvider, mockStore } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 
 jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
-    isDesktop: jest.fn(),
     compressImageFiles: jest.fn(() => Promise.resolve([{ path: 'hello.pdf' }])),
     readFiles: jest.fn(),
+}));
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(),
 }));
 
 describe('<FileUploader />', () => {
     beforeEach(() => {
-        (isDesktop as jest.Mock).mockReturnValue(true);
+        (useDevice as jest.Mock).mockReturnValue({ isDesktop: true });
         jest.clearAllMocks();
     });
-
-    const mock_store = mockStore({});
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
-        <StoreProvider store={mock_store}>{children}</StoreProvider>
-    );
 
     const props: React.ComponentProps<typeof FileUploader> = {
         onFileDrop: jest.fn(),
@@ -32,25 +30,19 @@ describe('<FileUploader />', () => {
     const click_msg = /click here to browse your files/i;
 
     it('should render FileUploader component in desktop mode', () => {
-        render(<FileUploader {...props} />, { wrapper });
+        render(<FileUploader {...props} />);
         expect(screen.getByText(drop_click_msg)).toBeInTheDocument();
     });
 
     it('should render FileUploader component in mobile mode', () => {
-        (isDesktop as jest.Mock).mockReturnValue(false);
-        const mock_store = mockStore({
-            ui: {
-                is_mobile: true,
-            },
-        });
-        render(<FileUploader {...props} />, {
-            wrapper: ({ children }) => <StoreProvider store={mock_store}>{children}</StoreProvider>,
-        });
+        (useDevice as jest.Mock).mockReturnValue({ isMobile: true });
+
+        render(<FileUploader {...props} />);
         expect(screen.getByText(click_msg)).toBeInTheDocument();
     });
 
     it('should upload supported file', async () => {
-        render(<FileUploader {...props} />, { wrapper });
+        render(<FileUploader {...props} />);
 
         const file = new File(['hello'], 'hello.png', { type: 'image/png' });
 
@@ -64,7 +56,7 @@ describe('<FileUploader />', () => {
     });
 
     it('should show error message when unsupported file is uploaded', async () => {
-        render(<FileUploader {...props} />, { wrapper });
+        render(<FileUploader {...props} />);
 
         const file = new File(['hello'], 'hello.html', { type: 'html' });
         const input = screen.getByTestId('dt_file_upload_input');
@@ -76,7 +68,7 @@ describe('<FileUploader />', () => {
     });
 
     it('should show error message when multiple files are uploaded', async () => {
-        render(<FileUploader {...props} />, { wrapper });
+        render(<FileUploader {...props} />);
 
         const files = [
             new File(['hello'], 'hello.png', { type: 'image/png' }),
@@ -91,7 +83,7 @@ describe('<FileUploader />', () => {
     });
 
     it('should show error message when larger files are uploaded', async () => {
-        render(<FileUploader {...props} />, { wrapper });
+        render(<FileUploader {...props} />);
         const file = new File(['hello'], 'hello.png', { type: 'image/png' });
         Object.defineProperty(file, 'size', { value: 1024 * 1024 * 10 });
 
@@ -104,7 +96,7 @@ describe('<FileUploader />', () => {
     });
 
     it('should remove the file when close icon is clicked', async () => {
-        render(<FileUploader {...props} />, { wrapper });
+        render(<FileUploader {...props} />);
         const file = new File(['hello'], 'hello.png', { type: 'image/png' });
 
         const input: HTMLInputElement = screen.getByTestId('dt_file_upload_input');
@@ -128,7 +120,7 @@ describe('<FileUploader />', () => {
     it('upload methods should reject if readFile returns empty array ', async () => {
         (readFiles as jest.Mock).mockResolvedValue([]);
 
-        render(<FileUploader {...props} />, { wrapper });
+        render(<FileUploader {...props} />);
         const blob = new Blob(['sample_data']);
         const file = new File([blob], 'hello.pdf', { type: 'application/pdf' });
 

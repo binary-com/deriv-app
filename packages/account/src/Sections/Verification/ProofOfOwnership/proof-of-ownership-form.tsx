@@ -6,6 +6,7 @@ import { Form, Formik, FormikHelpers } from 'formik';
 import DocumentUploader from '@binary-com/binary-document-uploader';
 import { Button } from '@deriv/components';
 import { readFiles, WS, UPLOAD_FILE_TYPE } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import { observer, useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
 import FormFooter from '../../../Components/form-footer';
@@ -28,10 +29,10 @@ type TProofOfOwnershipFormProps = {
 };
 
 const ProofOfOwnershipForm = observer(({ grouped_payment_method_data }: TProofOfOwnershipFormProps) => {
-    const { client, notifications, ui } = useStore();
+    const { client, notifications } = useStore();
     const { refreshNotifications } = notifications;
     const { email: client_email, updateAccountStatus } = client;
-    const { is_mobile } = ui;
+    const { isDesktop } = useDevice();
 
     const grouped_payment_method_data_keys = Object.keys(grouped_payment_method_data) as Array<TPaymentMethod>;
 
@@ -41,11 +42,11 @@ const ProofOfOwnershipForm = observer(({ grouped_payment_method_data }: TProofOf
 
     const getScrollOffset = React.useCallback(
         (items_count = 0) => {
-            if (is_mobile) return '20rem';
+            if (!isDesktop) return '20rem';
             if (items_count <= 2) return '0rem';
             return '8rem';
         },
-        [is_mobile]
+        [isDesktop]
     );
 
     const initial_values = React.useMemo(() => {

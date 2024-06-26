@@ -79,7 +79,7 @@
                 }
             }
         }
-        @include desktop-screen {
+        @include tablet-or-desktop-screen {
             min-width: 440px !important;
             max-height: calc(100vh - #{$HEADER_HEIGHT} - #{$FOOTER_HEIGHT}) !important;
         }
@@ -88,7 +88,7 @@
         }
     }
     &__container_sent-email__modal {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             height: 42rem !important;
             overflow-y: scroll !important;
         }

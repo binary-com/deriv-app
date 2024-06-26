@@ -17,6 +17,7 @@ export const api_error_codes = Object.freeze({
     INVALID_VERIFICATION_TOKEN: 'InvalidVerificationToken',
     ORDER_CREATE_FAIL_CLIENT_BALANCE: 'OrderCreateFailClientBalance',
     ORDER_CREATE_FAIL_RATE_CHANGED: 'OrderCreateFailRateChanged',
+    ORDER_CREATE_FAIL_RATE_SLIPPAGE: 'OrderCreateFailRateSlippage',
     ORDER_EMAIL_VERIFICATION_REQUIRED: 'OrderEmailVerificationRequired',
     PERMISSION_DENIED: 'PermissionDenied',
     RESTRICTED_COUNTRY: 'RestrictedCountry',

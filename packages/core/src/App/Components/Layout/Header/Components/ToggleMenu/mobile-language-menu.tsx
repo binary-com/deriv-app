@@ -20,7 +20,7 @@ const MobileLanguageMenu = observer(({ expandSubMenu, toggleDrawer }: TMobileLan
         <MobileDrawer.SubMenu
             is_expanded={is_mobile_language_menu_open}
             has_subheader
-            submenu_title={localize('Language')}
+            submenu_title={localize('Select language')}
             onToggle={is_expanded => {
                 expandSubMenu(is_expanded);
                 setMobileLanguageMenuOpen(false);

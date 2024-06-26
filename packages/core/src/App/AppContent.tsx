@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRemoteConfig } from '@deriv/api';
+import { useDevice } from '@deriv-com/ui';
 import { useIsMounted } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { browserSupportsWebAuthn } from '@simplewebauthn/browser';
@@ -22,6 +23,7 @@ import { useGrowthbookIsOn } from '@deriv/hooks';
 const AppContent: React.FC<{ passthrough: unknown }> = observer(({ passthrough }) => {
     const store = useStore();
     const { has_wallet } = store.client;
+    const { isMobile } = useDevice();
 
     const [isWebPasskeysFFEnabled, isGBLoaded] = useGrowthbookIsOn({
         featureFlag: 'web_passkeys',
@@ -37,10 +39,10 @@ const AppContent: React.FC<{ passthrough: unknown }> = observer(({ passthrough }
     React.useEffect(() => {
         if (isGBLoaded && isWebPasskeysFFEnabled && isServicePasskeysFFEnabled) {
             store.client.setIsPasskeySupported(
-                is_passkeys_supported && isServicePasskeysFFEnabled && isWebPasskeysFFEnabled
+                is_passkeys_supported && isServicePasskeysFFEnabled && isWebPasskeysFFEnabled && isMobile
             );
         }
-    }, [isServicePasskeysFFEnabled, isGBLoaded, isWebPasskeysFFEnabled, is_passkeys_supported]);
+    }, [isServicePasskeysFFEnabled, isGBLoaded, isWebPasskeysFFEnabled, is_passkeys_supported, isMobile, store.client]);
 
     React.useEffect(() => {
         initDatadog(tracking_datadog);

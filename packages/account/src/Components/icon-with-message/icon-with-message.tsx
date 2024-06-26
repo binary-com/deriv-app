@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon, Text, Button } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import { observer, useStore } from '@deriv/stores';
 import { localize } from '@deriv/translations';
 
@@ -12,6 +12,7 @@ type TIconWithMessage = {
 
 const IconWithMessage = observer(({ has_button, icon, message }: TIconWithMessage) => {
     const { client, ui } = useStore();
+    const { isDesktop } = useDevice();
     const { has_any_real_account: has_real_account } = client;
     const { toggleAccountsDialog, toggleShouldShowRealAccountsList } = ui;
 
@@ -22,7 +23,7 @@ const IconWithMessage = observer(({ has_button, icon, message }: TIconWithMessag
                 className='da-icon-with-message__text'
                 as='p'
                 color='general'
-                size={isMobile() ? 'xs' : 's'}
+                size={isDesktop ? 's' : 'xs'}
                 line_height='m'
                 weight='bold'
             >

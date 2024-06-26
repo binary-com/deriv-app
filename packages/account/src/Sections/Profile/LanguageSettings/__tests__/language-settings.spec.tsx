@@ -4,13 +4,28 @@ import userEvent from '@testing-library/user-event';
 import { routes } from '@deriv/shared';
 import LanguageSettings from '../language-settings';
 import { mockStore, StoreProvider } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import { useTranslations } from '@deriv-com/translations';
+
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isDesktop: true })),
+}));
+
+jest.mock('@deriv/translations', () => ({
+    ...jest.requireActual('@deriv/translations'),
+    getAllowedLanguages: jest.fn(() => ({ lang_1: 'Test Lang 1', lang_2: 'Test Lang 2' })),
+}));
+
+jest.mock('@deriv/components', () => ({
+    ...jest.requireActual('@deriv/components'),
+    Icon: jest.fn(() => <div>Flag Icon</div>),
+}));
 
 jest.mock('@deriv-com/translations');
 
 jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
-    isMobile: jest.fn(() => false),
     TranslationFlag: { EN: () => <div>Language 1 Flag</div>, VI: () => <div>Language 2 Flag</div> },
 }));
 
@@ -26,9 +41,6 @@ describe('LanguageSettings', () => {
         mockRootStore = mockStore({
             common: {
                 current_language: 'lang_1',
-            },
-            ui: {
-                is_mobile: false,
             },
         });
         (useTranslations as jest.Mock).mockReturnValue({
@@ -47,7 +59,7 @@ describe('LanguageSettings', () => {
     it('should render LanguageSettings', () => {
         renderLanguageSettings();
 
-        expect(screen.getByText('Select Language')).toBeInTheDocument();
+        expect(screen.getByText('Select language')).toBeInTheDocument();
 
         const lang_1 = screen.getByText('English');
         const lang_2 = screen.getByText('Tiếng Việt');
@@ -67,8 +79,8 @@ describe('LanguageSettings', () => {
         expect(mockRootStore.common.changeSelectedLanguage).toHaveBeenCalled();
     });
 
-    it('should redirect in mobile view when the user tries to reach `/account/languages` route', () => {
-        mockRootStore.ui.is_mobile = true;
+    it('should redirect in responsive view when the user tries to reach `/account/languages` route', () => {
+        (useDevice as jest.Mock).mockReturnValue({ isDesktop: false });
         Object.defineProperty(window, 'location', {
             configurable: true,
             value: { pathname: routes.languages },
@@ -76,7 +88,7 @@ describe('LanguageSettings', () => {
 
         renderLanguageSettings();
 
-        expect(screen.queryByText('Select Language')).not.toBeInTheDocument();
+        expect(screen.queryByText('Select language')).not.toBeInTheDocument();
         expect(screen.getByText('Redirect')).toBeInTheDocument();
     });
 

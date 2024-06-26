@@ -17,6 +17,9 @@
             column-gap: calc((100% - 23.7rem * 3) / 2);
             row-gap: 3.2rem;
         }
+        @include tablet-screen {
+            grid-template-columns: repeat(2, 1fr);
+        }
 
         &-layout {
             background-color: var(--transparent-danger);

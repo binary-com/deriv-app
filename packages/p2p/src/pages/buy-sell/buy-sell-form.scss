@@ -27,6 +27,10 @@
             opacity: 0.32;
         }
 
+        &--floating {
+            margin-top: 2.2rem;
+        }
+
         &--textarea {
             border-top: 1px solid var(--general-section-5);
             margin-bottom: 3.5rem;
@@ -40,6 +44,44 @@
                 &__field {
                     padding-block: 1rem;
                 }
+            }
+        }
+
+        &-rate {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            &--floating {
+                position: absolute;
+
+                &:hover {
+                    @include desktop {
+                        position: fixed;
+                    }
+                }
+            }
+
+            .dc-tooltip[data-tooltip]:before {
+                background: var(--general-active);
+                color: var(--text-prominent);
+                width: 17rem;
+                border-radius: 0.8rem;
+                left: 9rem;
+                text-align: center;
+            }
+
+            .dc-tooltip[data-tooltip]:after {
+                border-top-color: var(--general-active);
+                left: 10rem;
+            }
+
+            &--float {
+                color: #1789e1;
+                background: rgba(44, 154, 255, 0.08);
+                padding: 0.2rem 0.4rem;
+                border-radius: 0.4rem;
+                cursor: pointer;
             }
         }
 

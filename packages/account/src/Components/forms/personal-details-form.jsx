@@ -5,16 +5,14 @@ import { Field, useFormikContext } from 'formik';
 import {
     Autocomplete,
     Checkbox,
-    DesktopWrapper,
     Dropdown,
     InlineMessage,
-    MobileWrapper,
     Popover,
     RadioGroup,
     SelectNative,
     Text,
 } from '@deriv/components';
-import { getLegalEntityName, isDesktop, isMobile, routes, validPhone } from '@deriv/shared';
+import { getLegalEntityName, routes, validPhone } from '@deriv/shared';
 import { Localize, localize } from '@deriv/translations';
 import { isFieldImmutable, verifyFields } from '../../Helpers/utils';
 import { getEmploymentStatusList } from '../../Sections/Assessment/FinancialAssessment/financial-information-list';
@@ -22,6 +20,7 @@ import FormBodySection from '../form-body-section';
 import { DateOfBirthField, FormInputField } from './form-fields';
 import FormSubHeader from '../form-sub-header';
 import InlineNoteWithIcon from '../inline-note-with-icon';
+import { useDevice } from '@deriv-com/ui';
 
 const PersonalDetailsForm = props => {
     const {
@@ -55,6 +54,7 @@ const PersonalDetailsForm = props => {
     const [is_tin_popover_open, setIsTinPopoverOpen] = React.useState(false);
 
     const { errors, touched, values, setFieldValue, handleChange, handleBlur, setFieldTouched } = useFormikContext();
+    const { isDesktop } = useDevice();
 
     const handleToolTipStatus = React.useCallback(() => {
         if (is_tax_residence_popover_open) {
@@ -131,7 +131,7 @@ const PersonalDetailsForm = props => {
                     <InlineNoteWithIcon
                         icon='IcAlertWarning'
                         message={poa_clarification_message}
-                        font_size={isMobile() ? 'xxxs' : 'xs'}
+                        font_size={isDesktop ? 'xs' : 'xxxs'}
                     />
                 )}
                 <FormBodySection
@@ -143,7 +143,7 @@ const PersonalDetailsForm = props => {
                     <fieldset className='account-form__fieldset'>
                         {'salutation' in values && !is_eu_user && (
                             <div>
-                                <Text size={isMobile() ? 'xs' : 'xxs'} align={isMobile() && 'center'}>
+                                <Text size={isDesktop ? 'xxs' : 'xs'} align={!isDesktop && 'center'}>
                                     {is_virtual ? (
                                         localize(
                                             'Please remember that it is your responsibility to keep your answers accurate and up to date. You can update your personal details at any time in your account settings.'
@@ -289,7 +289,7 @@ const PersonalDetailsForm = props => {
                         {'address_state' in values &&
                             (states_list?.length ? (
                                 <React.Fragment>
-                                    <DesktopWrapper>
+                                    {isDesktop ? (
                                         <Field name='address_state'>
                                             {({ field }) => (
                                                 <Autocomplete
@@ -306,8 +306,7 @@ const PersonalDetailsForm = props => {
                                                 />
                                             )}
                                         </Field>
-                                    </DesktopWrapper>
-                                    <MobileWrapper>
+                                    ) : (
                                         <SelectNative
                                             placeholder={localize('Please select')}
                                             label={localize('State/Province')}
@@ -317,7 +316,7 @@ const PersonalDetailsForm = props => {
                                             use_text
                                             onChange={e => setFieldValue('address_state', e.target.value, true)}
                                         />
-                                    </MobileWrapper>
+                                    )}
                                 </React.Fragment>
                             ) : (
                                 <FormInputField
@@ -359,7 +358,7 @@ const PersonalDetailsForm = props => {
                             <Field name='citizen'>
                                 {({ field }) => (
                                     <React.Fragment>
-                                        <DesktopWrapper>
+                                        {isDesktop ? (
                                             <Autocomplete
                                                 {...field}
                                                 data-lpignore='true'
@@ -380,8 +379,7 @@ const PersonalDetailsForm = props => {
                                                 required
                                                 data-testid='citizenship'
                                             />
-                                        </DesktopWrapper>
-                                        <MobileWrapper>
+                                        ) : (
                                             <SelectNative
                                                 placeholder={localize('Citizenship')}
                                                 name={field.name}
@@ -404,7 +402,7 @@ const PersonalDetailsForm = props => {
                                                 should_hide_disabled_options={false}
                                                 data_testid='citizenship_mobile'
                                             />
-                                        </MobileWrapper>
+                                        )}
                                     </React.Fragment>
                                 )}
                             </Field>
@@ -442,7 +440,7 @@ const PersonalDetailsForm = props => {
                                 )}
                                 {'employment_status' in values && (
                                     <fieldset className={clsx('account-form__fieldset', 'emp-status')}>
-                                        <DesktopWrapper>
+                                        {isDesktop ? (
                                             <Dropdown
                                                 placeholder={
                                                     is_eu_user
@@ -461,8 +459,7 @@ const PersonalDetailsForm = props => {
                                                 error={touched.employment_status && errors.employment_status}
                                                 disabled={isFieldImmutable('employment_status', editable_fields)}
                                             />
-                                        </DesktopWrapper>
-                                        <MobileWrapper>
+                                        ) : (
                                             <SelectNative
                                                 placeholder={localize('Please select')}
                                                 name='employment_status'
@@ -481,7 +478,7 @@ const PersonalDetailsForm = props => {
                                                 }}
                                                 disabled={isFieldImmutable('employment_status', editable_fields)}
                                             />
-                                        </MobileWrapper>
+                                        )}
                                     </fieldset>
                                 )}
                                 {'tax_identification_confirm' in values && (
@@ -533,7 +530,7 @@ const PersonalDetailsForm = props => {
                         label={
                             <Localize i18n_default_text='I confirm that the name and date of birth above match my chosen identity document' />
                         }
-                        label_font_size={isMobile() ? 'xxs' : 'xs'}
+                        label_font_size={isDesktop ? 'xs' : 'xxs'}
                         disabled={is_confirmation_checkbox_disabled}
                         onChange={handleChange}
                         has_error={!!(touched.confirmation_checkbox && errors.confirmation_checkbox)}
@@ -599,7 +596,7 @@ const PersonalDetailsForm = props => {
                                 label={
                                     <Localize i18n_default_text='I confirm that my tax information is accurate and complete.' />
                                 }
-                                label_font_size={isMobile() ? 'xxs' : 'xs'}
+                                label_font_size={isDesktop ? 'xs' : 'xxs'}
                                 onChange={e => {
                                     setFieldValue('crs_confirmation', e.target.checked, true);
                                     setFieldTouched('crs_confirmation', true);
@@ -630,50 +627,54 @@ const PhoneField = ({ value, editable_fields, has_real_account, required }) => (
     />
 );
 
-const PlaceOfBirthField = ({ handleChange, setFieldValue, disabled, residence_list, required }) => (
-    <Field name='place_of_birth'>
-        {({ field, meta }) => (
-            <React.Fragment>
-                <DesktopWrapper>
-                    <Autocomplete
-                        {...field}
-                        disabled={disabled}
-                        data-lpignore='true'
-                        autoComplete='none' // prevent chrome autocomplete
-                        type='text'
-                        label={required ? localize('Place of birth*') : localize('Place of birth')}
-                        error={meta.touched && meta.error}
-                        list_items={residence_list}
-                        onItemSelection={({ value, text }) => setFieldValue('place_of_birth', value ? text : '', true)}
-                        required
-                        data-testid='place_of_birth'
-                    />
-                </DesktopWrapper>
-                <MobileWrapper>
-                    <SelectNative
-                        placeholder={required ? localize('Place of birth') : localize('Place of birth')}
-                        name={field.name}
-                        disabled={disabled}
-                        label={required ? localize('Place of birth*') : localize('Place of birth')}
-                        list_items={residence_list}
-                        value={field.value}
-                        use_text
-                        error={meta.touched && meta.error}
-                        onChange={e => {
-                            handleChange(e);
-                            setFieldValue('place_of_birth', e.target.value, true);
-                        }}
-                        {...field}
-                        list_portal_id='modal_root'
-                        required
-                        should_hide_disabled_options={false}
-                        data_testid='place_of_birth_mobile'
-                    />
-                </MobileWrapper>
-            </React.Fragment>
-        )}
-    </Field>
-);
+const PlaceOfBirthField = ({ handleChange, setFieldValue, disabled, residence_list, required }) => {
+    const { isDesktop } = useDevice();
+    return (
+        <Field name='place_of_birth'>
+            {({ field, meta }) => (
+                <React.Fragment>
+                    {isDesktop ? (
+                        <Autocomplete
+                            {...field}
+                            disabled={disabled}
+                            data-lpignore='true'
+                            autoComplete='none' // prevent chrome autocomplete
+                            type='text'
+                            label={required ? localize('Place of birth*') : localize('Place of birth')}
+                            error={meta.touched && meta.error}
+                            list_items={residence_list}
+                            onItemSelection={({ value, text }) =>
+                                setFieldValue('place_of_birth', value ? text : '', true)
+                            }
+                            required
+                            data-testid='place_of_birth'
+                        />
+                    ) : (
+                        <SelectNative
+                            placeholder={required ? localize('Place of birth') : localize('Place of birth')}
+                            name={field.name}
+                            disabled={disabled}
+                            label={required ? localize('Place of birth*') : localize('Place of birth')}
+                            list_items={residence_list}
+                            value={field.value}
+                            use_text
+                            error={meta.touched && meta.error}
+                            onChange={e => {
+                                handleChange(e);
+                                setFieldValue('place_of_birth', e.target.value, true);
+                            }}
+                            {...field}
+                            list_portal_id='modal_root'
+                            required
+                            should_hide_disabled_options={false}
+                            data_testid='place_of_birth_mobile'
+                        />
+                    )}
+                </React.Fragment>
+            )}
+        </Field>
+    );
+};
 
 const TaxResidenceField = ({
     setFieldValue,
@@ -683,68 +684,72 @@ const TaxResidenceField = ({
     setIsTinPopoverOpen,
     is_tax_residence_popover_open,
     disabled,
-}) => (
-    <Field name='tax_residence'>
-        {({ field, meta }) => (
-            <div className='details-form__tax'>
-                <DesktopWrapper>
-                    <Autocomplete
-                        {...field}
-                        data-lpignore='true'
-                        autoComplete='none' // prevent chrome autocomplete
-                        type='text'
-                        label={required ? localize('Tax residence*') : localize('Tax residence')}
-                        error={meta.touched && meta.error}
-                        list_items={residence_list}
-                        onItemSelection={({ value, text }) => setFieldValue('tax_residence', value ? text : '', true)}
-                        list_portal_id='modal_root'
-                        data-testid='tax_residence'
-                        disabled={disabled}
-                        required={required}
-                    />
-                </DesktopWrapper>
-                <MobileWrapper>
-                    <SelectNative
-                        placeholder={required ? localize('Tax residence*') : localize('Tax residence')}
-                        name={field.name}
-                        label={required ? localize('Tax residence*') : localize('Tax residence')}
-                        list_items={residence_list}
-                        value={field.value}
-                        use_text
-                        error={meta.touched && meta.error}
-                        onChange={e => {
-                            field.onChange(e);
-                            setFieldValue('tax_residence', e.target.value, true);
+}) => {
+    const { isDesktop } = useDevice();
+    return (
+        <Field name='tax_residence'>
+            {({ field, meta }) => (
+                <div className='details-form__tax'>
+                    {isDesktop ? (
+                        <Autocomplete
+                            {...field}
+                            data-lpignore='true'
+                            autoComplete='none' // prevent chrome autocomplete
+                            type='text'
+                            label={required ? localize('Tax residence*') : localize('Tax residence')}
+                            error={meta.touched && meta.error}
+                            list_items={residence_list}
+                            onItemSelection={({ value, text }) =>
+                                setFieldValue('tax_residence', value ? text : '', true)
+                            }
+                            list_portal_id='modal_root'
+                            data-testid='tax_residence'
+                            disabled={disabled}
+                            required={required}
+                        />
+                    ) : (
+                        <SelectNative
+                            placeholder={required ? localize('Tax residence*') : localize('Tax residence')}
+                            name={field.name}
+                            label={required ? localize('Tax residence*') : localize('Tax residence')}
+                            list_items={residence_list}
+                            value={field.value}
+                            use_text
+                            error={meta.touched && meta.error}
+                            onChange={e => {
+                                field.onChange(e);
+                                setFieldValue('tax_residence', e.target.value, true);
+                            }}
+                            {...field}
+                            required={required}
+                            data_testid='tax_residence_mobile'
+                            disabled={disabled}
+                        />
+                    )}
+                    <div
+                        data-testid='tax_residence_pop_over'
+                        onClick={e => {
+                            setIsTaxResidencePopoverOpen(true);
+                            setIsTinPopoverOpen(false);
+                            e.stopPropagation();
                         }}
-                        {...field}
-                        required={required}
-                        data_testid='tax_residence_mobile'
-                        disabled={disabled}
-                    />
-                </MobileWrapper>
-                <div
-                    data-testid='tax_residence_pop_over'
-                    onClick={e => {
-                        setIsTaxResidencePopoverOpen(true);
-                        setIsTinPopoverOpen(false);
-                        e.stopPropagation();
-                    }}
-                >
-                    <Popover
-                        alignment={isDesktop() ? 'right' : 'left'}
-                        icon='info'
-                        message={localize(
-                            'The country in which you meet the criteria for paying taxes. Usually the country in which you physically reside.'
-                        )}
-                        zIndex={9998}
-                        disable_message_icon
-                        is_open={is_tax_residence_popover_open}
-                    />
+                    >
+                        <Popover
+                            alignment={isDesktop ? 'right' : 'left'}
+                            icon='info'
+                            message={localize(
+                                'The country in which you meet the criteria for paying taxes. Usually the country in which you physically reside.'
+                            )}
+                            zIndex={9998}
+                            disable_message_icon
+                            is_open={is_tax_residence_popover_open}
+                        />
+                    </div>
                 </div>
-            </div>
-        )}
-    </Field>
-);
+            )}
+        </Field>
+    );
+};
 
 const TaxIdentificationNumberField = ({
     is_tin_popover_open,
@@ -752,91 +757,98 @@ const TaxIdentificationNumberField = ({
     setIsTaxResidencePopoverOpen,
     disabled,
     required = false,
-}) => (
-    <div className='details-form__tax'>
-        <FormInputField
-            name='tax_identification_number'
-            label={required ? localize('Tax Identification Number*') : localize('Tax Identification Number')}
-            placeholder={localize('Tax Identification Number')}
-            data-testid='tax_identification_number'
-            disabled={disabled}
-            required={required}
-        />
-        <div
-            data-testid='tax_identification_number_pop_over'
-            onClick={e => {
-                setIsTaxResidencePopoverOpen(false);
-                setIsTinPopoverOpen(true);
-                if (e.target.tagName !== 'A') e.stopPropagation();
-            }}
-        >
-            <Popover
-                alignment={isDesktop() ? 'right' : 'left'}
-                icon='info'
-                is_open={is_tin_popover_open}
-                message={
-                    <Localize
-                        i18n_default_text={
-                            "Don't know your tax identification number? Click <0>here</0> to learn more."
-                        }
-                        components={[
-                            <a
-                                key={0}
-                                className='link link--red'
-                                rel='noopener noreferrer'
-                                target='_blank'
-                                href='https://www.oecd.org/tax/automatic-exchange/crs-implementation-and-assistance/tax-identification-numbers/'
-                            />,
-                        ]}
-                    />
-                }
-                zIndex={9998}
-                disable_message_icon
+}) => {
+    const { isDesktop } = useDevice();
+    return (
+        <div className='details-form__tax'>
+            <FormInputField
+                name='tax_identification_number'
+                label={required ? localize('Tax Identification Number*') : localize('Tax Identification Number')}
+                placeholder={localize('Tax Identification Number')}
+                data-testid='tax_identification_number'
+                disabled={disabled}
+                required={required}
             />
-        </div>
-    </div>
-);
-
-const AccountOpeningReasonField = ({ no_header, required, account_opening_reason_list, setFieldValue, disabled }) => (
-    <React.Fragment>
-        {!no_header && <FormSubHeader title={localize('Account opening reason')} />}
-        <Field name='account_opening_reason'>
-            {({ field, meta }) => (
-                <React.Fragment>
-                    <DesktopWrapper>
-                        <Dropdown
-                            placeholder={
-                                required ? localize('Account opening reason*') : localize('Account opening reason')
+            <div
+                data-testid='tax_identification_number_pop_over'
+                onClick={e => {
+                    setIsTaxResidencePopoverOpen(false);
+                    setIsTinPopoverOpen(true);
+                    if (e.target.tagName !== 'A') e.stopPropagation();
+                }}
+            >
+                <Popover
+                    alignment={isDesktop ? 'right' : 'left'}
+                    icon='info'
+                    is_open={is_tin_popover_open}
+                    message={
+                        <Localize
+                            i18n_default_text={
+                                "Don't know your tax identification number? Click <0>here</0> to learn more."
                             }
-                            name={field.name}
-                            disabled={disabled}
-                            is_align_text_left
-                            list={account_opening_reason_list}
-                            {...field}
-                            error={meta.touched && meta.error}
-                            list_portal_id='modal_root'
-                            required
+                            components={[
+                                <a
+                                    key={0}
+                                    className='link link--red'
+                                    rel='noopener noreferrer'
+                                    target='_blank'
+                                    href='https://www.oecd.org/tax/automatic-exchange/crs-implementation-and-assistance/tax-identification-numbers/'
+                                />,
+                            ]}
                         />
-                    </DesktopWrapper>
-                    <MobileWrapper>
-                        <SelectNative
-                            placeholder={localize('Please select')}
-                            name={field.name}
-                            label={required ? localize('Account opening reason*') : localize('Account opening reason')}
-                            list_items={account_opening_reason_list}
-                            error={meta.touched && meta.error}
-                            onChange={e => {
-                                field.onChange(e);
-                                setFieldValue('account_opening_reason', e.target.value, true);
-                            }}
-                            {...field}
-                            required
-                            data_testid='account_opening_reason_mobile'
-                            disabled={disabled}
-                        />
-                    </MobileWrapper>
-                </React.Fragment>
-            )}
-        </Field>
-    </React.Fragment>
-);
+                    }
+                    zIndex={9998}
+                    disable_message_icon
+                />
+            </div>
+        </div>
+    );
+};
+
+const AccountOpeningReasonField = ({ no_header, required, account_opening_reason_list, setFieldValue, disabled }) => {
+    const { isDesktop } = useDevice();
+    return (
+        <React.Fragment>
+            {!no_header && <FormSubHeader title={localize('Account opening reason')} />}
+            <Field name='account_opening_reason'>
+                {({ field, meta }) => (
+                    <React.Fragment>
+                        {isDesktop ? (
+                            <Dropdown
+                                placeholder={
+                                    required ? localize('Account opening reason*') : localize('Account opening reason')
+                                }
+                                name={field.name}
+                                disabled={disabled}
+                                is_align_text_left
+                                list={account_opening_reason_list}
+                                {...field}
+                                error={meta.touched && meta.error}
+                                list_portal_id='modal_root'
+                                required
+                            />
+                        ) : (
+                            <SelectNative
+                                placeholder={localize('Please select')}
+                                name={field.name}
+                                label={
+                                    required ? localize('Account opening reason*') : localize('Account opening reason')
+                                }
+                                list_items={account_opening_reason_list}
+                                error={meta.touched && meta.error}
+                                onChange={e => {
+                                    field.onChange(e);
+                                    setFieldValue('account_opening_reason', e.target.value, true);
+                                }}
+                                {...field}
+                                required
+                                data_testid='account_opening_reason_mobile'
+                                disabled={disabled}
+                            />
+                        )}
+                    </React.Fragment>
+                )}
+            </Field>
+        </React.Fragment>
+    );
+};

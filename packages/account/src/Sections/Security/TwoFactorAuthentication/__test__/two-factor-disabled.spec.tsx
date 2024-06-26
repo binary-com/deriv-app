@@ -1,7 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { StoreProvider, mockStore } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import TwoFactorDisabled from '../two-factor-disabled';
+
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isDesktop: true })),
+}));
 
 jest.mock('@deriv/components', () => ({
     ...jest.requireActual('@deriv/components'),
@@ -17,11 +23,7 @@ describe('<TwoFactorDisabled />', () => {
         is_qr_loading: false,
     };
 
-    const store = mockStore({
-        ui: {
-            is_mobile: true,
-        },
-    });
+    const store = mockStore({});
 
     const renderComponent = ({ store_config = store, mock = mock_props }) => {
         render(
@@ -88,16 +90,10 @@ describe('<TwoFactorDisabled />', () => {
         expect(digitform).toBeInTheDocument();
     });
 
-    it('should render 2FA article component for mobile', () => {
-        const new_store = {
-            ...store,
-            ui: {
-                ...store.ui,
-                is_mobile: true,
-            },
-        };
+    it('should render 2FA article component for responsive view', () => {
+        (useDevice as jest.Mock).mockReturnValueOnce({ isDesktop: false });
 
-        renderComponent({ store_config: new_store });
+        renderComponent({ store_config: store });
 
         const article_component = screen.getByText('Two-factor authentication (2FA)');
         expect(article_component).toBeInTheDocument();

@@ -1,12 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { isMobile, isDesktop } from '@deriv/shared';
 import { FormBody } from '../form-body';
+import { useDevice } from '@deriv-com/ui';
 
-jest.mock('@deriv/shared/src/utils/screen/responsive', () => ({
-    ...jest.requireActual('@deriv/shared/src/utils/screen/responsive'),
-    isMobile: jest.fn(),
-    isDesktop: jest.fn(() => true),
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isDesktop: true })),
 }));
 
 describe('<FormBody />', () => {
@@ -27,8 +26,7 @@ describe('<FormBody />', () => {
     });
 
     it('should render FormBody component with children in mobile', () => {
-        (isMobile as jest.Mock).mockReturnValue(true);
-        (isDesktop as jest.Mock).mockReturnValue(false);
+        (useDevice as jest.Mock).mockReturnValueOnce({ isDesktop: false });
         render(
             <FormBody>
                 <div>Test children mobile</div>

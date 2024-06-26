@@ -29,14 +29,14 @@
         height: 100%;
         position: relative;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 100%;
         }
 
         &--header {
             margin: 1.6rem 0 2.4rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 padding: 0;
             }
         }
@@ -55,7 +55,7 @@
                 flex-direction: column;
                 padding: 0 24.4rem;
 
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     padding: 0 1.6rem;
                 }
             }
@@ -74,7 +74,7 @@
         &-action {
             padding: 1.6rem 2.4rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 position: absolute;
                 bottom: 0;
                 width: 100%;
@@ -82,7 +82,7 @@
             }
 
             .dc-btn {
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     width: 100%;
                 }
             }

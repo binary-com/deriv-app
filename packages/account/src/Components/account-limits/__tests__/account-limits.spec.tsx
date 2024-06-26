@@ -1,6 +1,7 @@
 import React from 'react';
 import { screen, render } from '@testing-library/react';
-import { formatMoney, isDesktop, isMobile } from '@deriv/shared';
+import { formatMoney } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import AccountLimits from '../account-limits';
 import { BrowserRouter } from 'react-router-dom';
 import { StoreProvider, mockStore } from '@deriv/stores';
@@ -19,10 +20,13 @@ jest.mock('@deriv/shared/src/services/ws-methods', () => ({
     useWS: () => undefined,
 }));
 
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isDesktop: true })),
+}));
+
 jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
-    isMobile: jest.fn(() => false),
-    isDesktop: jest.fn(() => true),
     formatMoney: jest.fn(),
 }));
 
@@ -211,9 +215,8 @@ describe('<AccountLimits/>', () => {
         expect(screen.queryByTestId('account_limits_data')).toBeInTheDocument();
     });
 
-    it('should render AccountLimitsArticle component if should_show_article is true in mobile mode', () => {
-        (isMobile as jest.Mock).mockReturnValue(true);
-        (isDesktop as jest.Mock).mockReturnValue(false);
+    it('should render AccountLimitsArticle component if should_show_article is true in responsive mode', () => {
+        (useDevice as jest.Mock).mockReturnValueOnce({ isDesktop: false });
         render(
             <StoreProvider store={store}>
                 <AccountLimits {...props} should_show_article />
@@ -225,8 +228,7 @@ describe('<AccountLimits/>', () => {
 
     it('should not render AccountLimitsArticle component if should_show_article is false', () => {
         store = mockStore(mock);
-        (isMobile as jest.Mock).mockReturnValue(true);
-        (isDesktop as jest.Mock).mockReturnValue(false);
+        (useDevice as jest.Mock).mockReturnValueOnce({ isDesktop: false });
         render(
             <StoreProvider store={store}>
                 <AccountLimits {...props} should_show_article={false} />
@@ -372,15 +374,14 @@ describe('<AccountLimits/>', () => {
         expect(screen.getByText(/total withdrawal allowed/i)).toBeInTheDocument();
     });
 
-    it('should show limit_notice message when is_fully_authenticated is false in mobile mode', () => {
+    it('should show limit_notice message when is_fully_authenticated is false in responsive mode', () => {
         store = mockStore({
             client: {
                 ...mock.client,
                 is_fully_authenticated: false,
             },
         });
-        (isMobile as jest.Mock).mockReturnValue(true);
-        (isDesktop as jest.Mock).mockReturnValue(false);
+        (useDevice as jest.Mock).mockReturnValueOnce({ isDesktop: false });
         render(
             <BrowserRouter>
                 <StoreProvider store={store}>
@@ -398,8 +399,7 @@ describe('<AccountLimits/>', () => {
                 is_fully_authenticated: false,
             },
         });
-        (isMobile as jest.Mock).mockReturnValue(false);
-        (isDesktop as jest.Mock).mockReturnValue(true);
+        (useDevice as jest.Mock).mockReturnValueOnce({ isDesktop: true });
         render(
             <BrowserRouter>
                 <StoreProvider store={store}>
@@ -414,8 +414,7 @@ describe('<AccountLimits/>', () => {
 
     it('should show AccountLimitsArticle when should_show_article and isDesktop is true', () => {
         store = mockStore(mock);
-        (isMobile as jest.Mock).mockReturnValue(false);
-        (isDesktop as jest.Mock).mockReturnValue(true);
+        (useDevice as jest.Mock).mockReturnValueOnce({ isDesktop: true });
         render(
             <StoreProvider store={store}>
                 <AccountLimits {...props} should_show_article />

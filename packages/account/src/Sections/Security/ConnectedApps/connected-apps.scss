@@ -4,7 +4,7 @@
         gap: 1.6rem;
         grid-template-rows: min-content;
         grid-template-columns: 1fr min-content;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             grid-template-columns: 1fr;
             padding: 1.6rem;
         }
@@ -15,7 +15,7 @@
             display: flex;
             flex-direction: column;
             gap: 2.4rem;
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 gap: 1.6rem;
             }
         }
@@ -88,13 +88,13 @@
             align-items: center;
             gap: 1.6rem;
             margin-left: 0.8rem;
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-left: 0;
             }
 
             .da-article {
                 margin: 0;
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     width: 100%;
                 }
             }
@@ -107,7 +107,7 @@
             flex-direction: column;
             gap: 0.8rem;
             margin-top: 9.6rem;
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 gap: 1.6rem;
                 margin-top: 0;
             }
@@ -124,7 +124,7 @@
         &--with-apps {
             gap: 1.4rem;
             padding: 1.4rem 0 0 1.4rem;
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 padding: 1rem 0 0 1rem;
             }
         }
@@ -132,7 +132,7 @@
         &--without-apps {
             padding: 0 1.6rem;
             gap: 0.8rem;
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 gap: 0.4rem;
             }
         }

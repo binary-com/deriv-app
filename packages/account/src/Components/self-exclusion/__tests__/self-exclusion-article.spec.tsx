@@ -18,6 +18,8 @@ describe('<SelfExclusionArticle />', () => {
         handleSubmit: jest.fn(),
     };
 
+    const store = mockStore({});
+
     const eu_item =
         /these trading limits and self-exclusion help you control the amount of money and time you spend on deriv.com and exercise/i;
     const non_eu_item =
@@ -34,16 +36,9 @@ describe('<SelfExclusionArticle />', () => {
         };
     });
 
-    it('should render SelfExclusionArticle desktop component with selfExclusionArticleItems', () => {
-        const new_store = mockStore({
-            ui: {
-                is_desktop: true,
-                is_mobile: true,
-            },
-        });
-
+    it('should render SelfExclusionArticle with selfExclusionArticleItems', () => {
         render(
-            <StoreProvider store={new_store}>
+            <StoreProvider store={store}>
                 <SelfExclusionContext.Provider value={mock_self_exclusion_context}>
                     <SelfExclusionArticle />
                 </SelfExclusionContext.Provider>
@@ -55,17 +50,11 @@ describe('<SelfExclusionArticle />', () => {
         expect(screen.queryByText(non_eu_item)).toBeInTheDocument();
     });
 
-    it('should render SelfExclusionArticle desktop component without is_appstore for EU items', () => {
+    it('should render SelfExclusionArticle for EU items', () => {
         mock_self_exclusion_context.is_eu = true;
-        const new_store = mockStore({
-            ui: {
-                is_desktop: false,
-                is_mobile: true,
-            },
-        });
 
         render(
-            <StoreProvider store={new_store}>
+            <StoreProvider store={store}>
                 <SelfExclusionContext.Provider value={mock_self_exclusion_context}>
                     <SelfExclusionArticle />
                 </SelfExclusionContext.Provider>
@@ -77,16 +66,9 @@ describe('<SelfExclusionArticle />', () => {
         expect(screen.queryByText(non_eu_item)).not.toBeInTheDocument();
     });
 
-    it('should render SelfExclusionArticle desktop component for non EU items', () => {
-        const new_store = mockStore({
-            ui: {
-                is_desktop: false,
-                is_mobile: false,
-            },
-        });
-
+    it('should render SelfExclusionArticle for non EU items', () => {
         render(
-            <StoreProvider store={new_store}>
+            <StoreProvider store={store}>
                 <SelfExclusionContext.Provider value={mock_self_exclusion_context}>
                     <SelfExclusionArticle />
                 </SelfExclusionContext.Provider>
@@ -98,17 +80,11 @@ describe('<SelfExclusionArticle />', () => {
         expect(screen.queryByText(eu_item)).not.toBeInTheDocument();
     });
 
-    it('should render SelfExclusionArticle mobile component and trigger click', () => {
-        const new_store = mockStore({
-            ui: {
-                is_desktop: false,
-                is_mobile: true,
-            },
-        });
+    it('should render SelfExclusionArticle component and trigger click', () => {
         const mockToggleArticle = mock_self_exclusion_context.toggleArticle;
 
         render(
-            <StoreProvider store={new_store}>
+            <StoreProvider store={store}>
                 <SelfExclusionContext.Provider value={mock_self_exclusion_context}>
                     <SelfExclusionArticle />
                 </SelfExclusionContext.Provider>

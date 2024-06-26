@@ -2,9 +2,10 @@ import React from 'react';
 import clsx from 'clsx';
 import { Field, FieldProps, FormikProps, FormikValues } from 'formik';
 import { localize } from '@deriv/translations';
-import { isMobile, supported_filetypes, max_document_size } from '@deriv/shared';
+import { supported_filetypes, max_document_size } from '@deriv/shared';
 import { Button, Icon, Text, FileDropzone } from '@deriv/components';
 import { ROOT_CLASS } from '../constants';
+import { useDevice } from '@deriv-com/ui';
 
 const DROPZONE_ERRORS = {
     'file-too-large': localize('File size should be 8MB or less'),
@@ -39,20 +40,23 @@ type THandleRejectFiles = Array<{
     ];
 }>;
 
-const Message = ({ data, open }: TMessage) => (
-    <div className={`${ROOT_CLASS}__uploader-details`}>
-        <Icon className={`${ROOT_CLASS}__uploader-icon`} icon={data?.icon} size={236} />
-        <Text as='p' size='xs' color='general' align='center'>
-            {data?.info}
-        </Text>
-        <Button
-            medium
-            secondary
-            text={isMobile() ? localize('Tap here to upload') : localize('Drop file or click here to upload')}
-            onClick={open}
-        />
-    </div>
-);
+const Message = ({ data, open }: TMessage) => {
+    const { isDesktop } = useDevice();
+    return (
+        <div className={`${ROOT_CLASS}__uploader-details`}>
+            <Icon className={`${ROOT_CLASS}__uploader-icon`} icon={data?.icon} size={236} />
+            <Text as='p' size='xs' color='general' align='center'>
+                {data?.info}
+            </Text>
+            <Button
+                medium
+                secondary
+                text={isDesktop ? localize('Drop file or click here to upload') : localize('Tap here to upload')}
+                onClick={open}
+            />
+        </div>
+    );
+};
 
 const Preview = ({ data, setFieldValue, value, has_frame, handleChange }: Omit<TUploader, 'is_full' | 'onChange'>) => {
     const [background_url, setBackgroundUrl] = React.useState('');
@@ -95,6 +99,7 @@ const Preview = ({ data, setFieldValue, value, has_frame, handleChange }: Omit<T
 };
 
 const Uploader = ({ data, value, is_full, onChange, has_frame }: Omit<TUploader, 'setFieldValue' | 'handleChange'>) => {
+    const { isDesktop } = useDevice();
     const [image, setImage] = React.useState<FormikValues>();
 
     React.useEffect(() => {
@@ -131,7 +136,7 @@ const Uploader = ({ data, value, is_full, onChange, has_frame }: Omit<TUploader,
             <Button
                 medium
                 secondary
-                text={isMobile() ? localize('Tap here to upload') : localize('Drop file or click here to upload')}
+                text={isDesktop ? localize('Drop file or click here to upload') : localize('Tap here to upload')}
                 onClick={open}
             />
         </div>

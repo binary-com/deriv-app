@@ -8,6 +8,7 @@ import { localize } from '@deriv/translations';
 import RadioButton from './radio-button';
 import RadioButtonGroup from './radio-button-group';
 import { splitValidationResultTypes } from '../real-account-signup/helpers/utils';
+import { useDevice } from '@deriv-com/ui';
 
 export const Hr = () => <div className='currency-hr' />;
 
@@ -84,8 +85,8 @@ const CurrencySelector = observer(
 
         const has_currency = Boolean(currency);
 
-        const { real_account_signup, real_account_signup_target, resetRealAccountSignupParams, is_desktop, is_mobile } =
-            ui;
+        const { real_account_signup, real_account_signup_target, resetRealAccountSignupParams } = ui;
+        const { isMobile, isDesktop } = useDevice();
 
         // Wrapped with String() to avoid type mismatch
         const crypto = legal_allowed_currencies.filter(
@@ -182,10 +183,10 @@ const CurrencySelector = observer(
                                 <Div100vhContainer
                                     className={clsx('currency-selector__container', {
                                         'currency-selector__container--no-top-margin':
-                                            !has_currency && has_real_account && is_mobile,
+                                            !has_currency && has_real_account && isMobile,
                                     })}
                                     height_offset={getHeightOffset()}
-                                    is_disabled={is_desktop}
+                                    is_disabled={isDesktop}
                                 >
                                     <ThemedScrollbars height={height}>
                                         {!!fiat?.length && (
@@ -248,7 +249,7 @@ const CurrencySelector = observer(
                                         )}
                                     </ThemedScrollbars>
                                 </Div100vhContainer>
-                                <Modal.Footer has_separator is_bypassed={is_mobile}>
+                                <Modal.Footer has_separator is_bypassed={isMobile}>
                                     <FormSubmitButton
                                         className={
                                             set_currency

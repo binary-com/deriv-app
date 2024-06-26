@@ -12,6 +12,7 @@ import OnfidoSdkView from './onfido-sdk-view';
 import type { SdkError, SdkHandle, SdkResponse, SupportedLanguages } from '../../../Types';
 import { convertAlpha2toAlpha3, convertAlpha3toAlpha2, getOnfidoSupportedLocaleCode } from '../../../Helpers/utils';
 import { getOnfidoPhrases } from '../../../Constants/onfido';
+import { useDevice } from '@deriv-com/ui';
 
 type TAPIError = {
     code?: string;
@@ -49,9 +50,9 @@ const OnfidoSdkViewContainer = observer(
         const { data: account_settings } = useSettings();
 
         const { send, isSuccess: isNotified } = useNotificationEvent();
-        const { common, ui } = useStore();
+        const { common } = useStore();
         const { current_language } = common;
-        const { is_mobile } = ui;
+        const { isMobile } = useDevice();
 
         // IDV country code - Alpha ISO2. Onfido country code - Alpha ISO3
         const onfido_country_code = convertAlpha2toAlpha3(country_code);
@@ -231,7 +232,7 @@ const OnfidoSdkViewContainer = observer(
         }
 
         return (
-            <ThemedScrollbars is_bypassed={is_mobile} height={height}>
+            <ThemedScrollbars is_bypassed={isMobile} height={height}>
                 <div className='onfido-container'>
                     {component_to_load || (
                         <CSSTransition

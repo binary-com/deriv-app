@@ -1,18 +1,17 @@
 import React from 'react';
 import { Text } from '@deriv/components';
-import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
+import { useDevice } from '@deriv-com/ui';
 
 type TListItem = {
     text: React.ReactNode;
     index?: number;
 };
 
-const ListItem = observer(({ text, index }: TListItem) => {
-    const {
-        ui: { is_desktop },
-    } = useStore();
-    const text_size = is_desktop ? 'xs' : 'xxs';
+const ListItem = ({ text, index }: TListItem) => {
+    const { isDesktop } = useDevice();
+
+    const text_size = isDesktop ? 'xs' : 'xxs';
     return (
         <div className='account-management__list-text-container'>
             {index && (
@@ -25,6 +24,6 @@ const ListItem = observer(({ text, index }: TListItem) => {
             </Text>
         </div>
     );
-});
+};
 
 export default ListItem;

@@ -21,6 +21,7 @@ import FileUploaderContainer from '../../../Components/file-uploader-container';
 import { getFileUploaderDescriptions } from '../../../Constants/file-uploader';
 import { isServerError } from 'Helpers/utils';
 import { income_status_codes, getPoincDocumentsList } from 'Sections/Verification/ProofOfIncome/proof-of-income-utils';
+import { useDevice } from '@deriv-com/ui';
 
 type TProofOfIncomeForm = {
     onSubmit: (status: typeof income_status_codes[keyof typeof income_status_codes]) => void;
@@ -37,9 +38,9 @@ const ProofOfIncomeForm = observer(({ onSubmit }: TProofOfIncomeForm) => {
     const poinc_documents_list = React.useMemo(() => getPoincDocumentsList(), []);
     const poinc_uploader_files_descriptions = React.useMemo(() => getFileUploaderDescriptions('poinc'), []);
 
-    const { notifications, ui } = useStore();
+    const { notifications } = useStore();
     const { addNotificationMessageByKey, removeNotificationMessage, removeNotificationByKey } = notifications;
-    const { is_mobile, is_desktop } = ui;
+    const { isMobile, isDesktop } = useDevice();
 
     const { upload } = useFileUploader();
 
@@ -116,11 +117,11 @@ const ProofOfIncomeForm = observer(({ onSubmit }: TProofOfIncomeForm) => {
                 values,
             }) => (
                 <Form noValidate className='proof-of-income__form' onSubmit={handleSubmit}>
-                    <FormBody scroll_offset={is_desktop ? '0' : '20rem'}>
+                    <FormBody scroll_offset={isDesktop ? '0' : '20rem'}>
                         <fieldset className='proof-of-income__form-field'>
                             <FormSubHeader
                                 title={localize('Select document')}
-                                title_text_size={is_mobile ? 'xs' : 's'}
+                                title_text_size={isMobile ? 'xs' : 's'}
                             />
                             <Field name='document_type'>
                                 {({ field }: FormikValues) => (
@@ -173,7 +174,7 @@ const ProofOfIncomeForm = observer(({ onSubmit }: TProofOfIncomeForm) => {
                         <div className='proof-of-income__form-field'>
                             <FormSubHeader
                                 title={localize('Document submission')}
-                                title_text_size={is_mobile ? 'xs' : 's'}
+                                title_text_size={isMobile ? 'xs' : 's'}
                             />
                             <FileUploaderContainer
                                 onFileDrop={files => {

@@ -26,6 +26,7 @@ const mock_store_values: DeepPartial<ReturnType<typeof useStores>> = {
 
 const mock_p2p_settings = {
     p2p_settings: {
+        fixed_rate_adverts_end_date: undefined,
         reached_target_date: false,
         rate_type: 'float',
     },
@@ -102,6 +103,19 @@ describe('<MyAdsFloatingRateSwitchModal />', () => {
         userEvent.click(set_button);
         expect(onSwitch).toHaveBeenCalled();
     });
+    it("should handle onClick for clicking I'll do this later button", () => {
+        (useP2PSettings as jest.Mock).mockReturnValueOnce({
+            ...mock_p2p_settings,
+            p2p_settings: {
+                ...mock_p2p_settings.p2p_settings,
+                fixed_rate_adverts_end_date: '2024-12-31',
+            },
+        });
+        render(<MyAdsFloatingRateSwitchModal />, { wrapper });
+        const button = screen.getByRole('button', { name: "I'll do this later" });
+        userEvent.click(button);
+        expect(mock_store_values.my_ads_store.toggleMyAdsRateSwitchModal).toHaveBeenCalledWith('fixed', false);
+    });
     it('should handle onClick for cancel button', () => {
         (useP2PSettings as jest.Mock).mockReturnValueOnce({
             ...mock_p2p_settings,
@@ -113,6 +127,6 @@ describe('<MyAdsFloatingRateSwitchModal />', () => {
         render(<MyAdsFloatingRateSwitchModal />, { wrapper });
         const cancel_button = screen.getByRole('button', { name: 'Cancel' });
         userEvent.click(cancel_button);
-        expect(mock_store_values.my_ads_store.toggleMyAdsRateSwitchModal).toHaveBeenCalledWith('fixed', false);
+        expect(mock_store_values.my_ads_store.toggleMyAdsRateSwitchModal).toHaveBeenCalledWith('fixed', true);
     });
 });

@@ -1,9 +1,9 @@
 import { FC, Fragment } from 'react';
 import { Autocomplete, SelectNative } from '@deriv/components';
-import { useStore } from '@deriv/stores';
 import { Field, FieldProps, FormikErrors } from 'formik';
 import { TGetField } from '../additional-kyc-info-modal/form-config';
 import { TListItem } from 'Types';
+import { useDevice } from '@deriv-com/ui';
 
 type TFormSelectField = TGetField & {
     onItemSelection?: (item: TListItem) => void;
@@ -26,9 +26,7 @@ const FormSelectField: FC<TFormSelectField> = ({
     placeholder,
     list_height,
 }) => {
-    const { ui } = useStore();
-    const { is_mobile } = ui;
-
+    const { isDesktop } = useDevice();
     const onSelect =
         (field: string, setFieldValue: TSetFieldValue) =>
         ({ value, text }: TListItem) => {
@@ -39,7 +37,7 @@ const FormSelectField: FC<TFormSelectField> = ({
         <Field name={name}>
             {({ field, meta: { touched, error }, form: { setFieldValue } }: FieldProps<string>) => (
                 <Fragment>
-                    {is_mobile ? (
+                    {!isDesktop ? (
                         <SelectNative
                             {...field}
                             // @ts-expect-error This needs to fixed in SelectNative component

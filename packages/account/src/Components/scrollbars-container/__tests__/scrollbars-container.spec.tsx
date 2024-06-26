@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { isMobile } from '@deriv/shared';
 import { ScrollbarsContainer } from '../scrollbars-container';
+import { useDevice } from '@deriv-com/ui';
 
-jest.mock('@deriv/shared/src/utils/screen/responsive', () => ({
-    ...jest.requireActual('@deriv/shared'),
-    isMobile: jest.fn(() => false),
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isDesktop: true })),
 }));
 
 describe('<ScrollbarsContainer />', () => {
@@ -35,8 +35,8 @@ describe('<ScrollbarsContainer />', () => {
         expect(screen.getByTestId('dt_themed_scrollbars')).toHaveStyle('max-height: calc(100% - 33%)');
     });
 
-    it('should render children with ScrollbarsContainer component with scroll_offset and extra className for mobile', () => {
-        (isMobile as jest.Mock).mockReturnValue(true);
+    it('should render children with ScrollbarsContainer component with scroll_offset and extra className for responsive', () => {
+        (useDevice as jest.Mock).mockReturnValueOnce({ isDesktop: false });
 
         render(
             <ScrollbarsContainer scroll_offset='33%' className='test__class-name'>

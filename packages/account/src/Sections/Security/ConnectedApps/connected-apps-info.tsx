@@ -1,14 +1,14 @@
 import React from 'react';
 import { InlineMessage, Text } from '@deriv/components';
 import { Localize } from '@deriv/translations';
-import { observer, useStore } from '@deriv/stores';
+import { observer } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import ConnectedAppsInfoBullets from './connected-apps-info-bullets';
 
 const ConnectedAppsInfo = observer(() => {
-    const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { isDesktop } = useDevice();
 
-    const text_size = is_mobile ? 'xxxs' : 'xxs';
+    const text_size = isDesktop ? 'xxs' : 'xxxs';
 
     return (
         <InlineMessage

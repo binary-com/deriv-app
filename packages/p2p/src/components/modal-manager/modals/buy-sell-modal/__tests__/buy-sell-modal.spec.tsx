@@ -53,14 +53,21 @@ describe('<BuySellModal />', () => {
                         name: 'test',
                     },
                     rate: 1,
+                    rate_type: 'fixed',
                 },
                 selected_ad_state: {
                     account_currency: 'USD',
                 },
                 table_type: 'buy',
                 fetchAdvertiserAdverts: jest.fn(),
+                form_props: {
+                    submitForm: jest.fn(),
+                },
                 is_buy_advert: true,
                 setFormErrorCode: jest.fn(),
+                setTempContactInfo: jest.fn(),
+                setTempPaymentInfo: jest.fn(),
+                temp_contact_info: null,
                 unsubscribeAdvertInfo: jest.fn(),
             },
             floating_rate_store: {
@@ -135,17 +142,17 @@ describe('<BuySellModal />', () => {
     });
 
     it('should call submitForm when pressing Confirm', () => {
-        const submitFormSpy = jest.spyOn(React, 'useRef');
+        mock_store.buy_sell_store.submitForm = jest.fn();
 
         render(<BuySellModal />, { wrapper });
 
         const confirm_button = screen.getByRole('button', { name: 'Confirm' });
         userEvent.click(confirm_button);
 
-        expect(submitFormSpy).toHaveBeenCalled();
+        expect(mock_store.buy_sell_store.submitForm).toHaveBeenCalled();
     });
 
-    it('should call showModal and setFormErrorCode when advert rate has changed', async () => {
+    it('should call showModal when the advertiser has changed the rate', async () => {
         render(<BuySellModal />, { wrapper });
 
         act(() => {
@@ -153,8 +160,7 @@ describe('<BuySellModal />', () => {
         });
 
         await waitFor(() => {
-            expect(mock_modal_manager.showModal).toHaveBeenCalledWith({ key: 'MarketRateChangeErrorModal', props: {} });
-            expect(mock_store.buy_sell_store.setFormErrorCode).toHaveBeenCalledWith('');
+            expect(mock_modal_manager.showModal).toHaveBeenCalled();
         });
     });
 

@@ -40,6 +40,7 @@ import { API_ERROR_CODES } from '../../../../Constants/api-error-codes';
 import { TIDVFormValues, TConfirmPersonalDetailsForm } from '../../../../Types';
 import LoadErrorMessage from '../../../load-error-message';
 import { TIdvDocumentSubmitForm } from '../../idv-document-submit/idv-document-submit';
+import { useDevice } from '@deriv-com/ui';
 
 type TRestState = {
     api_error: string;
@@ -80,9 +81,9 @@ const IdvFailed = ({
     selected_country,
     handleSelectionNext,
 }: TIdvFailed) => {
-    const { client, ui } = useStore();
+    const { client } = useStore();
     const { setIsAlreadyAttempted } = client;
-    const { is_mobile } = ui;
+    const { isMobile, isDesktop } = useDevice();
 
     const [idv_failure, setIdvFailure] = React.useState<TIDVFailureConfig>({
         required_fields: [],
@@ -286,7 +287,7 @@ const IdvFailed = ({
     }
 
     const setScrollOffset = () => {
-        if (is_mobile) {
+        if (!isDesktop) {
             if (is_from_external) {
                 return '140px';
             }
@@ -316,7 +317,7 @@ const IdvFailed = ({
                     })}
                 >
                     <FormBody className='form-body' scroll_offset={setScrollOffset()}>
-                        <Text size={is_mobile ? 'xs' : 's'} weight='bold' align='center'>
+                        <Text size={isMobile ? 'xs' : 's'} weight='bold' align='center'>
                             <Localize i18n_default_text='Your identity verification failed because:' />
                         </Text>
                         {(status?.error_msg || idv_failure?.failure_message) && (
@@ -324,7 +325,7 @@ const IdvFailed = ({
                                 className={clsx('proof-of-identity__failed-message', 'hint-box-layout')}
                                 icon='IcAlertDanger'
                                 message={
-                                    <Text as='p' size={is_mobile ? 'xxs' : 'xs'} data-testid={mismatch_status}>
+                                    <Text as='p' size={isMobile ? 'xxs' : 'xs'} data-testid={mismatch_status}>
                                         {status?.error_msg ?? idv_failure?.failure_message}
                                     </Text>
                                 }
@@ -333,7 +334,7 @@ const IdvFailed = ({
                         )}
                         {is_document_upload_required && (
                             <div>
-                                <Text size='xs' align={is_mobile ? 'left' : 'center'}>
+                                <Text size='xs' align={isMobile ? 'left' : 'center'}>
                                     <Localize i18n_default_text='Let’s try again. Choose another document and enter the corresponding details.' />
                                 </Text>
                                 <FormSubHeader title={localize('Identity verification')} />

@@ -4,7 +4,7 @@ import { FileDropzone, Icon, Text } from '@deriv/components';
 import { Localize, localize } from '@deriv/translations';
 import { getSupportedFiles, max_document_size, supported_filetypes } from '@deriv/shared';
 import { DropzoneOptions } from 'react-dropzone';
-import { observer, useStore } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import { TFile } from '../../Types';
 
 type THandleRejectedFiles = DropzoneOptions['onDropRejected'];
@@ -14,28 +14,27 @@ type TFileUploaderProps = {
     onError?: (error_message: string) => void;
 };
 
-const UploadMessage = observer(() => {
-    const {
-        ui: { is_mobile },
-    } = useStore();
+const UploadMessage = () => {
+    const { isDesktop, isMobile } = useDevice();
+
     return (
         <React.Fragment>
             <Icon icon='IcUpload' className='dc-file-dropzone__message-icon' size={30} />
             <div className='dc-file-dropzone__message-subtitle'>
                 <Text size='xxs' align='center' weight='bold' color='less-prominent'>
-                    {is_mobile ? (
-                        <Localize i18n_default_text='Click here to browse your files.' />
-                    ) : (
+                    {isDesktop ? (
                         <Localize i18n_default_text='Drag and drop a file or click to browse your files.' />
+                    ) : (
+                        <Localize i18n_default_text='Click here to browse your files.' />
                     )}
                 </Text>
-                <Text size={is_mobile ? 'xxxxs' : 'xxxs'} align='center' color='less-prominent'>
+                <Text size={isMobile ? 'xxxxs' : 'xxxs'} align='center' color='less-prominent'>
                     <Localize i18n_default_text='Remember, selfies, pictures of houses, or non-related images will be rejected.' />
                 </Text>
             </div>
         </React.Fragment>
     );
-});
+};
 
 const FileUploader = ({ onFileDrop, onError }: TFileUploaderProps) => {
     const [document_files, setDocumentFiles] = React.useState<File[]>([]);

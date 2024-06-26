@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon, Text } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 
 type TCardWithArrow = {
     onClick: () => void;
@@ -10,6 +10,7 @@ type TCardWithArrow = {
 };
 
 const CardWithArrow = ({ onClick, title, description, icon }: TCardWithArrow) => {
+    const { isDesktop } = useDevice();
     return (
         <div className='manual-poi__card' onClick={onClick}>
             <Icon className='manual-poi__card-icon' icon={icon} size={64} />
@@ -17,12 +18,12 @@ const CardWithArrow = ({ onClick, title, description, icon }: TCardWithArrow) =>
                 <Text as='p' size='xs' weight='bold' color='prominent'>
                     {title}
                 </Text>
-                <Text as='p' size={isMobile() ? 'xxxs' : 'xxs'}>
+                <Text as='p' size={isDesktop ? 'xxs' : 'xxxs'}>
                     {description}
                 </Text>
             </div>
 
-            <Icon icon='IcChevronRight' size={isMobile() ? 23 : 31} />
+            <Icon icon='IcChevronRight' size={isDesktop ? 31 : 23} />
         </div>
     );
 };

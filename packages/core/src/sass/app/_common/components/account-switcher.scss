@@ -266,7 +266,7 @@
             margin: 0.2rem 0.8rem 0.8rem;
             height: 4rem;
         }
-        @include mobile-screen {
+        @include mobile-or-tablet-screen {
             position: relative;
             top: unset;
             left: unset;
@@ -572,7 +572,6 @@
 
 .dc-modal__container_accounts-switcher {
     @include tablet-screen {
-        width: unset !important;
-        right: 0;
+        inset-inline-start: 1.6rem;
     }
 }

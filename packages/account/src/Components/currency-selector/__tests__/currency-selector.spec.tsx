@@ -5,12 +5,17 @@ import { fireEvent, screen, render, waitFor } from '@testing-library/react';
 import { StoreProvider, mockStore } from '@deriv/stores';
 import CurrencySelector from '../currency-selector';
 import { TStores } from '@deriv/stores/types';
+import { useDevice } from '@deriv-com/ui';
 
 jest.mock('../../real-account-signup/helpers/utils.ts', () => ({
     splitValidationResultTypes: jest.fn(() => ({
         warnings: {},
         errors: {},
     })),
+}));
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isDesktop: false })),
 }));
 
 describe('<CurrencySelector/>', () => {
@@ -388,16 +393,12 @@ describe('<CurrencySelector/>', () => {
             configurable: true,
             value: 150,
         });
+        (useDevice as jest.Mock).mockReturnValueOnce({ isDesktop: false });
         const new_store = {
             ...store,
             client: {
                 ...store.client,
                 has_active_real_account: true,
-            },
-            ui: {
-                ...store.ui,
-                is_desktop: false,
-                is_mobile: true,
             },
         };
         renderComponent({ store_config: new_store });

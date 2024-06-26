@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { Formik, Form, FormikValues } from 'formik';
 import { Localize, localize } from '@deriv/translations';
-import { isMobile } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import { Button, Icon, Text } from '@deriv/components';
 import InputField from './input-field';
 import Uploader from './uploader';
@@ -52,6 +52,7 @@ const IconsItem = ({ data }: TIconsItem) => (
 );
 
 const DocumentsUpload = ({ initial_values, is_from_external, data, goToCards, onSubmit }: TDocumentsUpload) => {
+    const { isDesktop } = useDevice();
     const { fields, documents_title, documents } = data;
     const is_expiry_date_required = fields.some(field => field.name === date_field.name);
 
@@ -74,7 +75,7 @@ const DocumentsUpload = ({ initial_values, is_from_external, data, goToCards, on
     return (
         <div
             className={clsx(ROOT_CLASS, {
-                [`${ROOT_CLASS}--mobile`]: isMobile(),
+                [`${ROOT_CLASS}--mobile`]: !isDesktop,
             })}
         >
             <Formik
@@ -90,7 +91,7 @@ const DocumentsUpload = ({ initial_values, is_from_external, data, goToCards, on
 
                     return (
                         <Form className={`${ROOT_CLASS}__form`}>
-                            <FormBody className='form-body' scroll_offset={isMobile() ? '180px' : '80px'}>
+                            <FormBody className='form-body' scroll_offset={isDesktop ? '80px' : '180px'}>
                                 <div className={`${ROOT_CLASS}__fields-content`}>
                                     <Text as='h3' size='s' color='prominent'>
                                         {fields_title}

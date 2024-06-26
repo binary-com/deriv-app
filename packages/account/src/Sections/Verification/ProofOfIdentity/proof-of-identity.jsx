@@ -5,7 +5,7 @@ import ProofOfIdentityContainer from './proof-of-identity-container.jsx';
 
 const ProofOfIdentity = ({ is_from_external, onStateChange }) => {
     return (
-        <AutoHeightWrapper default_height={200}>
+        <AutoHeightWrapper>
             {({ setRef, height }) => (
                 <div ref={setRef} className='proof-of-identity'>
                     <div className='proof-of-identity__main-container'>

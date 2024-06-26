@@ -1,7 +1,7 @@
 import React from 'react';
 import { Popover, useOnClickOutside } from '@deriv/components';
 import { TPopoverProps } from '@deriv/components/src/components/types';
-import { isMobile } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 
 /**
  * A component that renders a popover with an info icon.
@@ -22,6 +22,7 @@ export const FormFieldInfo = (props: Omit<TPopoverProps, 'alignment'>) => {
     };
 
     useOnClickOutside(ref, () => setIsOpen(false), validateClickOutside);
+    const { isDesktop } = useDevice();
     return (
         <div ref={ref}>
             <Popover
@@ -33,7 +34,7 @@ export const FormFieldInfo = (props: Omit<TPopoverProps, 'alignment'>) => {
                 zIndex='9999'
                 is_open={is_open}
                 onClick={() => setIsOpen(prev_is_open => !prev_is_open)}
-                alignment={isMobile() ? 'left' : 'right'}
+                alignment={isDesktop ? 'right' : 'left'}
             />
         </div>
     );

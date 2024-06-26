@@ -1,8 +1,9 @@
 import React from 'react';
 import { Field, FormikValues, useFormikContext } from 'formik';
-import { DesktopWrapper, MobileWrapper, Dropdown, SelectNative } from '@deriv/components';
+import { Dropdown, SelectNative } from '@deriv/components';
 import { EMPLOYMENT_VALUES, TEmploymentStatus, shouldHideOccupationField } from '@deriv/shared';
 import { localize } from '@deriv/translations';
+import { useDevice } from '@deriv-com/ui';
 import {
     getAccountTurnoverList,
     getEducationLevelList,
@@ -45,12 +46,12 @@ const FinancialDetailsDropdownField = ({
     const { values, handleChange, handleBlur, touched, errors, setFieldValue } = useFormikContext<{
         [key: string]: string;
     }>();
-
+    const { isDesktop } = useDevice();
     return (
         <Field name={field_key}>
             {({ field }: FormikValues) => (
                 <React.Fragment>
-                    <DesktopWrapper>
+                    {isDesktop ? (
                         <Dropdown
                             placeholder={label}
                             is_align_text_left
@@ -64,8 +65,7 @@ const FinancialDetailsDropdownField = ({
                             required
                             {...field}
                         />
-                    </DesktopWrapper>
-                    <MobileWrapper>
+                    ) : (
                         <SelectNative
                             placeholder={placeholder}
                             name={field.name}
@@ -80,7 +80,7 @@ const FinancialDetailsDropdownField = ({
                             required
                             {...field}
                         />
-                    </MobileWrapper>
+                    )}
                 </React.Fragment>
             )}
         </Field>
@@ -97,6 +97,7 @@ const FinancialDetailsOccupationDropdownField = ({
     const { values, handleChange, handleBlur, touched, errors, setFieldValue } = useFormikContext<{
         [key: string]: string;
     }>();
+    const { isDesktop } = useDevice();
 
     const getFormattedOccupationValues = () =>
         employment_status === EMPLOYMENT_VALUES.EMPLOYED && values?.occupation === EMPLOYMENT_VALUES.UNEMPLOYED
@@ -107,7 +108,7 @@ const FinancialDetailsOccupationDropdownField = ({
         <Field name={field_key}>
             {({ field }: FormikValues) => (
                 <React.Fragment>
-                    <DesktopWrapper>
+                    {isDesktop ? (
                         <Dropdown
                             {...field}
                             placeholder={label}
@@ -124,8 +125,7 @@ const FinancialDetailsOccupationDropdownField = ({
                             list_portal_id='modal_root'
                             required
                         />
-                    </DesktopWrapper>
-                    <MobileWrapper>
+                    ) : (
                         <SelectNative
                             {...field}
                             placeholder={placeholder}
@@ -140,7 +140,7 @@ const FinancialDetailsOccupationDropdownField = ({
                             }}
                             required
                         />
-                    </MobileWrapper>
+                    )}
                 </React.Fragment>
             )}
         </Field>

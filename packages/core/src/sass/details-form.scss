@@ -26,6 +26,10 @@
         @include mobile-or-tablet-screen {
             padding: 0 1.6rem;
         }
+
+        @include tablet-screen {
+            display: inline;
+        }
     }
 
     &__sub-header {

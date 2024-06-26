@@ -6,6 +6,12 @@ import userEvent from '@testing-library/user-event';
 import ConnectedApps from '../connected-apps';
 import { WS } from '@deriv/shared';
 import { getConnectedAppsScopes } from '../template-helper';
+import { useDevice } from '@deriv-com/ui';
+
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isDesktop: true })),
+}));
 
 const mock_connected_apps: OauthApps = [
     {
@@ -111,8 +117,9 @@ describe('ConnectedApps', () => {
         });
     });
 
-    it('should render the app list in Mobile view', async () => {
-        renderComponent(mockStore({ ui: { is_mobile: true } }));
+    it('should render the app list in responsive view', async () => {
+        (useDevice as jest.Mock).mockReturnValueOnce({ isDesktop: false });
+        renderComponent();
         const mock_permissions = getConnectedAppsScopes(mock_connected_apps[0]?.scopes);
 
         await waitFor(() => {

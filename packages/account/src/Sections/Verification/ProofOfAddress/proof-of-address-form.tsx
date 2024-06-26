@@ -293,7 +293,7 @@ const ProofOfAddressForm = observer(
                                     is_bypassed={!is_for_cfd_modal || !isDesktop}
                                     className={className}
                                 >
-                                    <FormBody scroll_offset={setOffset(status)}>
+                                    <FormBody scroll_offset={setOffset(status)} isFullHeight={!isDesktop}>
                                         {(status?.msg || is_resubmit) && (
                                             <HintBox
                                                 className='account-form_poa-submit-error'

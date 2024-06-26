@@ -55,6 +55,10 @@
         justify-content: flex-start;
         padding-left: 1.2rem;
 
+        @include tablet-screen {
+            max-width: 56.8rem;
+        }
+
         &-text {
             color: var(--text-prominent);
             font-size: 1.4rem;

@@ -3,6 +3,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 import { InlineMessage, Loading } from '@deriv/components';
 import { useGetPasskeysList, useRegisterPasskey, useRenamePasskey } from '@deriv/hooks';
 import { routes } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
 import { PasskeyErrorModal } from './components/passkey-error-modal';
@@ -30,9 +31,9 @@ export type TCurrentManagedPasskey = {
 };
 
 const Passkeys = observer(() => {
-    const { client, ui, common } = useStore();
+    const { client, common } = useStore();
+    const { isMobile } = useDevice();
     const { is_passkey_supported } = client;
-    const { is_mobile } = ui;
     const is_network_on = common.network_status.class === 'online';
 
     const error_modal_timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -41,7 +42,7 @@ const Passkeys = observer(() => {
 
     const history = useHistory();
 
-    const { passkeys_list, is_passkeys_list_loading, passkeys_list_error, reloadPasskeysList } = useGetPasskeysList();
+    const { passkeys_list, is_passkeys_list_loading, passkeys_list_error } = useGetPasskeysList();
     const {
         createPasskey,
         clearPasskeyRegistrationError,
@@ -60,7 +61,7 @@ const Passkeys = observer(() => {
         name: '',
     });
 
-    const should_show_passkeys = is_passkey_supported && is_mobile;
+    const should_show_passkeys = is_passkey_supported && isMobile;
     const error = passkeys_list_error || passkey_registration_error || passkey_renaming_error;
 
     useEffect(() => {

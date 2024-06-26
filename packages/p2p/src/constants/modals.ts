@@ -194,9 +194,6 @@ export const Modals = {
     RatingModal: React.lazy(
         () => import(/* webpackChunkName: "rating-modal" */ 'Components/modal-manager/modals/rating-modal')
     ),
-    RateChangeModal: React.lazy(
-        () => import(/* webpackChunkName: "rate-change-modal" */ 'Components/modal-manager/modals/rate-change-modal')
-    ),
     RecommendedModal: React.lazy(
         () => import(/* webpackChunkName: "recommended-modal" */ 'Components/modal-manager/modals/recommended-modal')
     ),

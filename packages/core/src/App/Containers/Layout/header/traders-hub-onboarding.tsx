@@ -2,10 +2,9 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
 import { Icon, Popover } from '@deriv/components';
-import { routes } from '@deriv/shared';
+import { routes, isTabletOs } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
-import { isTabletOs } from '@deriv/shared';
 
 const TradersHubOnboarding = observer(() => {
     const history = useHistory();

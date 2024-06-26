@@ -5,5 +5,13 @@
         @include mobile {
             padding: 0 1.6rem;
         }
+
+        &--has-title {
+            padding-top: 2rem;
+
+            @include mobile {
+                padding: 1.6rem;
+            }
+        }
     }
 }

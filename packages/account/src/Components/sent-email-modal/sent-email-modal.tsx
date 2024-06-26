@@ -1,7 +1,8 @@
 import React from 'react';
 import { localize, Localize } from '@deriv/translations';
 import { Div100vhContainer, Icon, MobileDialog, Modal, SendEmailTemplate, Text, Popover } from '@deriv/components';
-import { getPlatformSettings, CFD_PLATFORMS, isMobile, isDesktop } from '@deriv/shared';
+import { getPlatformSettings, CFD_PLATFORMS } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 
 type TSentEmailModal = {
     identifier_title: string;
@@ -55,6 +56,8 @@ const SentEmailModal = ({
     onClickSendEmail,
     onClose,
 }: TSentEmailModal) => {
+    const { isDesktop } = useDevice();
+
     const getSubtitle = () => {
         let subtitle: string | React.ReactElement = '';
         switch (identifier_title) {
@@ -132,7 +135,7 @@ const SentEmailModal = ({
         </SendEmailTemplate>
     );
 
-    if (isMobile() && !is_modal_when_mobile) {
+    if (!isDesktop && !is_modal_when_mobile) {
         return (
             <MobileDialog
                 portal_element_id='modal_root'
@@ -159,7 +162,7 @@ const SentEmailModal = ({
         >
             <Div100vhContainer
                 className='account__scrollbars_container-wrapper'
-                is_disabled={isDesktop()}
+                is_disabled={isDesktop}
                 height_offset='80px'
             >
                 <Modal.Body>

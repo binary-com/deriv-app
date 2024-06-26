@@ -1,8 +1,9 @@
 import React from 'react';
 import { OauthApps } from '@deriv/api-types';
 import { Loading } from '@deriv/components';
-import { observer, useStore } from '@deriv/stores';
+import { observer } from '@deriv/stores';
 import { WS } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import ErrorComponent from '../../../Components/error-component';
 import ConnectedAppsKnowMore from './connected-apps-know-more';
 import ConnectedAppsInfo from './connected-apps-info';
@@ -14,9 +15,7 @@ import ConnectedAppsRevokeModal from './connected-apps-revoke-modal';
 import './connected-apps.scss';
 
 const ConnectedApps = observer(() => {
-    const { ui } = useStore();
-    const { is_mobile } = ui;
-
+    const { isDesktop } = useDevice();
     const [is_loading, setLoading] = React.useState(true);
     const [is_modal_open, setIsModalOpen] = React.useState(false);
     const [selected_app_id, setSelectedAppId] = React.useState<number | null>(null);
@@ -68,7 +67,7 @@ const ConnectedApps = observer(() => {
                 {connected_apps.length ? (
                     <div className='connected-apps__content--wrapper'>
                         <ConnectedAppsInfo />
-                        {is_mobile ? (
+                        {!isDesktop ? (
                             <DataListTemplate connected_apps={connected_apps} handleToggleModal={handleToggleModal} />
                         ) : (
                             <DataTableTemplate connected_apps={connected_apps} handleToggleModal={handleToggleModal} />

@@ -1,12 +1,11 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { isMobile } from '@deriv/shared';
 import SentEmailModal from '../sent-email-modal';
+import { useDevice } from '@deriv-com/ui';
 
-jest.mock('@deriv/shared', () => ({
-    ...jest.requireActual('@deriv/shared'),
-    isMobile: jest.fn(),
-    isDesktop: jest.fn(),
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isDesktop: true })),
 }));
 
 describe('<SentEmailModal/>', () => {
@@ -84,7 +83,7 @@ describe('<SentEmailModal/>', () => {
     });
 
     it('should render SentEmailModal component when isMobile is true', () => {
-        (isMobile as jest.Mock).mockReturnValue(true);
+        (useDevice as jest.Mock).mockReturnValueOnce({ isDesktop: false });
         render(
             <SentEmailModal
                 identifier_title='Change_Email'

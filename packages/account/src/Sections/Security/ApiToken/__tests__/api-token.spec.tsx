@@ -4,7 +4,13 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { getPropertyValue, WS } from '@deriv/shared';
 import { mockStore, StoreProvider } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import ApiToken from '../api-token';
+
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isDesktop: true })),
+}));
 
 jest.mock('@deriv/components', () => ({
     ...jest.requireActual('@deriv/components'),
@@ -73,10 +79,6 @@ describe('<ApiToken/>', () => {
         client: {
             is_switching: false,
         },
-        ui: {
-            is_desktop: true,
-            is_mobile: false,
-        },
     });
 
     const renderComponent = ({ store = mock_store }) =>
@@ -103,13 +105,8 @@ describe('<ApiToken/>', () => {
         expect(WS.authorized.apiToken).toHaveBeenCalled();
     });
 
-    it('should render ApiToken component for mobile', async () => {
-        const mock_store = mockStore({
-            ui: {
-                is_desktop: false,
-                is_mobile: true,
-            },
-        });
+    it('should render ApiToken component for responsive', async () => {
+        (useDevice as jest.Mock).mockReturnValueOnce({ isDesktop: false });
 
         renderComponent({ store: mock_store });
 
@@ -180,13 +177,10 @@ describe('<ApiToken/>', () => {
     });
 
     it('should not render ApiToken component if data is still loading', async () => {
+        (useDevice as jest.Mock).mockReturnValueOnce({ isDesktop: false });
         const new_store = mockStore({
             client: {
                 is_switching: true,
-            },
-            ui: {
-                is_desktop: false,
-                is_mobile: true,
             },
         });
         renderComponent({ store: new_store });
@@ -257,7 +251,7 @@ describe('<ApiToken/>', () => {
         const warning_msg =
             'Be careful who you share this token with. Anyone with this token can perform the following actions on your account behalf';
 
-        (getPropertyValue as jest.Mock).mockReturnValue([
+        (getPropertyValue as jest.Mock).mockReturnValueOnce([
             {
                 display_name: 'First test token',
                 last_used: '',
@@ -306,13 +300,8 @@ describe('<ApiToken/>', () => {
         jest.clearAllMocks();
     });
 
-    it('should render created tokens for mobile', async () => {
-        const new_store = mockStore({
-            ui: {
-                is_desktop: false,
-                is_mobile: true,
-            },
-        });
+    it('should render created tokens for responsive', async () => {
+        (useDevice as jest.Mock).mockReturnValueOnce({ isDesktop: false });
         (getPropertyValue as jest.Mock).mockReturnValue([
             {
                 display_name: 'First test token',
@@ -337,14 +326,15 @@ describe('<ApiToken/>', () => {
             },
         ]);
 
-        renderComponent({ store: new_store });
+        renderComponent({});
 
-        expect(await screen.findAllByText('Name')).toHaveLength(3);
-        expect(await screen.findAllByText('Last Used')).toHaveLength(3);
-        expect(await screen.findAllByText('Token')).toHaveLength(3);
-        expect(await screen.findAllByText('Scopes')).toHaveLength(3);
+        expect(await screen.findByText('Name')).toBeInTheDocument();
+        expect(await screen.findByText('Token')).toBeInTheDocument();
+        expect(await screen.findByText('Last used')).toBeInTheDocument();
+        expect(await screen.findByText('Scopes')).toBeInTheDocument();
         expect(await screen.findByText('First test token')).toBeInTheDocument();
         expect(await screen.findByText('Second test token')).toBeInTheDocument();
+        expect(await screen.findByText('Third test token')).toBeInTheDocument();
         expect(screen.queryByText('Action')).not.toBeInTheDocument();
         expect(screen.queryByText('SecondTokenID')).not.toBeInTheDocument();
         const never_used = await screen.findAllByText('Never');

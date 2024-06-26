@@ -1,21 +1,20 @@
 import { Text } from '@deriv/components';
 import React from 'react';
-import { observer, useStore } from '@deriv/stores';
 import { TFilesDescription } from '../../Types';
+import { useDevice } from '@deriv-com/ui';
 
-const FilesDescription = observer(({ descriptions, title }: TFilesDescription) => {
-    const {
-        ui: { is_mobile },
-    } = useStore();
+const FilesDescription = ({ descriptions, title }: TFilesDescription) => {
+    const { isMobile } = useDevice();
+
     return (
         <div className='files-description'>
-            <Text size={is_mobile ? 'xxs' : 'xs'} as='div' className='files-description__title' weight='bold'>
+            <Text size={isMobile ? 'xxs' : 'xs'} as='div' className='files-description__title' weight='bold'>
                 {title}
             </Text>
             <ul>
                 {descriptions.map(item => (
                     <li key={item.id}>
-                        <Text size={is_mobile ? 'xxs' : 'xs'} line_height={is_mobile ? 'l' : 'xl'}>
+                        <Text size={isMobile ? 'xxs' : 'xs'} line_height={isMobile ? 'l' : 'xl'}>
                             {item.value}
                         </Text>
                     </li>
@@ -23,6 +22,6 @@ const FilesDescription = observer(({ descriptions, title }: TFilesDescription) =
             </ul>
         </div>
     );
-});
+};
 
 export default FilesDescription;

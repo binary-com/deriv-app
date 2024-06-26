@@ -4,8 +4,9 @@ import { createBrowserHistory } from 'history';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useIsRealAccountNeededForCashier } from '@deriv/hooks';
-import { getStaticUrl, isMobile, routes } from '@deriv/shared';
+import { getStaticUrl, routes } from '@deriv/shared';
 import { mockStore, StoreProvider } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import MenuLink from 'App/Components/Layout/Header/menu-link';
 
 jest.mock('@deriv/components', () => ({
@@ -20,7 +21,6 @@ jest.mock('@deriv/hooks', () => ({
 
 jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
-    isMobile: jest.fn(() => false),
     getStaticUrl: jest.fn(() => 'MockUrl'),
 }));
 
@@ -104,7 +104,7 @@ describe('MenuLink', () => {
     });
 
     it('should render menu link for mobile and two icons with passed suffix_icon', () => {
-        (isMobile as jest.Mock).mockReturnValue(true);
+        (useDevice as jest.Mock).mockReturnValue({ isDesktop: false });
         mock_props.link_to = '/account/languages';
         mock_props.suffix_icon = 'suffix_icon';
 

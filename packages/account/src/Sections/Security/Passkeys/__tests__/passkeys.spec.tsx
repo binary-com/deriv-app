@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { Analytics } from '@deriv-com/analytics';
 import { APIProvider } from '@deriv/api';
 import { useGetPasskeysList, useRegisterPasskey } from '@deriv/hooks';
+import { useDevice } from '@deriv-com/ui';
 import { routes } from '@deriv/shared';
 import { mockStore, StoreProvider } from '@deriv/stores';
 import Passkeys from '../passkeys';
@@ -13,7 +14,7 @@ import { PasskeysList } from '../components/passkeys-list';
 const passkey_name_1 = 'Test Passkey 1';
 const passkey_name_2 = 'Test Passkey 2';
 
-export const mock_passkeys_list: React.ComponentProps<typeof PasskeysList>['passkeys_list'] = [
+const mock_passkeys_list: React.ComponentProps<typeof PasskeysList>['passkeys_list'] = [
     {
         id: 1,
         name: passkey_name_1,
@@ -59,6 +60,11 @@ jest.mock('@deriv/shared', () => ({
     getOSNameWithUAParser: () => 'test OS',
 }));
 
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isMobile: true })),
+}));
+
 describe('Passkeys', () => {
     let mock_store: ReturnType<typeof mockStore>, modal_root_el: HTMLElement;
     const create_passkey = 'Create passkey';
@@ -86,7 +92,6 @@ describe('Passkeys', () => {
 
     beforeEach(() => {
         mock_store = mockStore({
-            ui: { is_mobile: true },
             client: { is_passkey_supported: true },
             common: { network_status: { class: 'online' } },
         });
@@ -117,12 +122,12 @@ describe('Passkeys', () => {
     const mockClearPasskeyRegistrationError = jest.fn();
     const mockReloadPasskeysList = jest.fn();
 
-    it("doesn't render existed passkeys for desktop", () => {
+    it("doesn't render existed passkeys for desktop and tablet", () => {
         (useGetPasskeysList as jest.Mock).mockReturnValue({
             passkeys_list: mock_passkeys_list,
         });
+        (useDevice as jest.Mock).mockReturnValueOnce({ isMobile: false });
 
-        mock_store.ui.is_mobile = false;
         renderComponent();
 
         expect(screen.queryByText(passkey_name_1)).not.toBeInTheDocument();
@@ -131,7 +136,6 @@ describe('Passkeys', () => {
     });
 
     it('renders loader if passkeys list is loading', () => {
-        mock_store.ui.is_mobile = true;
         (useGetPasskeysList as jest.Mock).mockReturnValue({
             is_passkeys_list_loading: true,
         });

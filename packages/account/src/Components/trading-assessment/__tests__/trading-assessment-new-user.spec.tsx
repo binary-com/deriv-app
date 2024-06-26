@@ -42,11 +42,7 @@ describe('TradingAssessmentNewUser', () => {
 
     it('should handle the cancel event correctly', () => {
         mockGetCurrentStep.mockReturnValue(2);
-        const mock_store = mockStore({
-            ui: {
-                is_mobile: false,
-            },
-        });
+        const mock_store = mockStore({});
         render(
             <StoreProvider store={mock_store}>
                 <TradingAssessmentNewUser {...baseProps} />

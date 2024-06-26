@@ -1,7 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Button, DatePicker, Input, Text } from '@deriv/components';
-import { epochToMoment, toMoment, isMobile } from '@deriv/shared';
+import { epochToMoment, toMoment } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import { Localize, localize } from '@deriv/translations';
 import {
     Field,
@@ -33,11 +34,12 @@ type TFormikContext = {
 };
 
 const SectionTitle = ({ title, has_border_line }: TSectionTitle) => {
+    const { isDesktop } = useDevice();
     return (
         <Text
             as='h2'
             weight='bold'
-            size={isMobile() ? 'xxs' : 'xs'}
+            size={isDesktop ? 'xs' : 'xxs'}
             className={clsx('da-self-exclusion__header', {
                 'da-self-exclusion__header-border': has_border_line,
             })}

@@ -2,14 +2,14 @@
     $this: &;
     display: flex;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         flex-direction: column;
     }
 
     &__table {
         width: calc(100% - 2.4rem);
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 100%;
         }
 
@@ -28,7 +28,7 @@
             padding: 0.8rem 0;
             display: inline-flex;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 flex-direction: column;
             }
 
@@ -59,13 +59,13 @@
 
         &-wrapper {
             flex: 1;
+            margin-inline-end: 1rem;
 
-            @include desktop {
-                margin-right: 1rem;
-            }
-
-            @include mobile {
-                margin: 0 2rem 2rem;
+            @include mobile-or-tablet-screen {
+                margin-block-start: 0;
+                margin-inline-start: 1.6rem;
+                margin-block-end: 1.6rem;
+                margin-inline-end: 1.6rem;
             }
         }
     }
@@ -76,19 +76,5 @@
 
     &__popover {
         margin-inline-start: 0.8rem;
-    }
-
-    &--app-settings {
-        @include tablet-up {
-            padding: 2.4rem;
-        }
-
-        @include mobile {
-            padding: 1.6rem 0 0;
-        }
-
-        #{$this}__table {
-            width: 100%;
-        }
     }
 }

@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button, Icon, Modal, Text, Popover } from '@deriv/components';
-import { isDesktop, useIsMounted } from '@deriv/shared';
+import { useIsMounted } from '@deriv/shared';
 import { Localize } from '@deriv/translations';
 import ApiTokenContext from './api-token-context';
 import { TPopoverAlignment, TFormattedToken, TApiContext } from 'Types';
+import { useDevice } from '@deriv-com/ui';
 
 type TApiTokenDeleteButton = {
     popover_alignment?: TPopoverAlignment;
@@ -11,6 +12,7 @@ type TApiTokenDeleteButton = {
 };
 
 const ApiTokenDeleteButton = ({ token, popover_alignment = 'left' }: TApiTokenDeleteButton) => {
+    const { isDesktop } = useDevice();
     const { deleteToken } = React.useContext<TApiContext>(ApiTokenContext);
     const [is_deleting, setIsDeleting] = React.useState(false);
     const [is_loading, setIsLoading] = React.useState(false);
@@ -18,16 +20,16 @@ const ApiTokenDeleteButton = ({ token, popover_alignment = 'left' }: TApiTokenDe
     const isMounted = useIsMounted();
 
     const getConfirmationBeforeDelete = () => {
-        if (isDesktop()) setIsPopoverOpen(false);
+        if (isDesktop) setIsPopoverOpen(false);
         setIsDeleting(true);
     };
 
     const onMouseEnterHandler = () => {
-        if (!is_deleting && isDesktop()) setIsPopoverOpen(true);
+        if (!is_deleting && isDesktop) setIsPopoverOpen(true);
     };
 
     const onMouseLeaveHandler = () => {
-        if (!is_deleting && isDesktop()) setIsPopoverOpen(false);
+        if (!is_deleting && isDesktop) setIsPopoverOpen(false);
     };
 
     const onCancel = () => setIsDeleting(false);

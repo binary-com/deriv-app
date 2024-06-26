@@ -1,7 +1,10 @@
+import React from 'react';
 import { action, computed, observable, reaction, makeObservable } from 'mobx';
+import { Text } from '@deriv/components';
 import { formatMoney, getDecimalPlaces } from '@deriv/shared';
-import { localize } from 'Components/i18next';
+import { Localize, localize } from 'Components/i18next';
 import { buy_sell } from 'Constants/buy-sell';
+import { api_error_codes } from 'Constants/api-error-codes';
 import { requestWS, subscribeWS } from 'Utils/websocket';
 import { textValidator, lengthValidator } from 'Utils/validations';
 import { countDecimalPlaces } from 'Utils/string';
@@ -34,6 +37,8 @@ export default class BuySellStore extends BaseStore {
     sort_by = 'rate';
     submitForm = null;
     table_type = buy_sell.BUY;
+    temp_contact_info = null;
+    temp_payment_info = null;
     form_props = {};
     is_create_order_subscribed = false;
 
@@ -74,6 +79,8 @@ export default class BuySellStore extends BaseStore {
             sort_by: observable,
             submitForm: observable,
             table_type: observable,
+            temp_contact_info: observable,
+            temp_payment_info: observable,
             form_props: observable,
             is_create_order_subscribed: observable,
             account_currency: computed,
@@ -118,6 +125,8 @@ export default class BuySellStore extends BaseStore {
             setSortBy: action.bound,
             setSubmitForm: action.bound,
             setTableType: action.bound,
+            setTempContactInfo: action.bound,
+            setTempPaymentInfo: action.bound,
             setSelectedAdvert: action.bound,
             showAdvertiserPage: action.bound,
             showVerification: action.bound,
@@ -187,13 +196,41 @@ export default class BuySellStore extends BaseStore {
     }
 
     handleResponse = async order => {
-        const { sendbird_store, order_store, general_store } = this.root_store;
+        const { buy_sell_store, sendbird_store, order_store, general_store } = this.root_store;
         const { setErrorMessage, handleConfirm, handleClose } = this.form_props;
         const { error, p2p_order_create, p2p_order_info, subscription } = order || {};
 
         if (error) {
-            setErrorMessage(error.message);
-            this.setFormErrorCode(error.code);
+            const { code, message } = error;
+
+            if (code === api_error_codes.ORDER_CREATE_FAIL_RATE_SLIPPAGE) {
+                general_store.showModal({
+                    key: 'ErrorModal',
+                    props: {
+                        error_message:
+                            'We’re unable to create your order because the market rate has moved too much. Please try creating a new order.',
+                        error_modal_button_text: 'Create new order',
+                        error_modal_title: (
+                            <Text weight='bold'>
+                                <Localize i18n_default_text='Order unsuccessful' />
+                            </Text>
+                        ),
+                        has_close_icon: false,
+                        onClose: () => {
+                            general_store.showModal({
+                                key: 'BuySellModal',
+                            });
+                            buy_sell_store.payment_method_ids = [];
+                        },
+                        text_size: 'xs',
+                    },
+                });
+            } else {
+                if (!general_store.isCurrentModal('BuySellModal'))
+                    general_store.showModal({ key: 'BuySellModal', props: {} });
+                this.form_props.setErrorMessage(message);
+                this.setFormErrorCode(code);
+            }
         } else {
             if (subscription?.id && !this.is_create_order_subscribed) {
                 this.setIsCreateOrderSubscribed(true);
@@ -224,7 +261,7 @@ export default class BuySellStore extends BaseStore {
         const payload = {
             p2p_order_create: 1,
             advert_id: this.advert.id,
-            amount: values.amount,
+            amount: this.form_props.input_amount,
             payment_method_ids: this.payment_method_ids,
             ...(values.payment_info && this.is_sell_advert ? { payment_info: values.payment_info } : {}),
             // Validate extra information for sell adverts.
@@ -371,6 +408,14 @@ export default class BuySellStore extends BaseStore {
 
     setTableType(table_type) {
         this.table_type = table_type;
+    }
+
+    setTempContactInfo(temp_contact_info) {
+        this.temp_contact_info = temp_contact_info;
+    }
+
+    setTempPaymentInfo(temp_payment_info) {
+        this.temp_payment_info = temp_payment_info;
     }
 
     setSelectedAdvert(selected_advert) {

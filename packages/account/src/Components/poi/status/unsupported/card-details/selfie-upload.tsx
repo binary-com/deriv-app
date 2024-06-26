@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { Form, Formik, FormikProps, FormikValues } from 'formik';
 import { Localize, localize } from '@deriv/translations';
-import { isMobile } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import { Button, Text } from '@deriv/components';
 import Uploader from './uploader';
 import { setInitialValues, validateFields } from './utils';
@@ -18,10 +18,11 @@ type TSelfieUpload = {
 };
 
 const SelfieUpload = ({ initial_values, goBack, onConfirm, onFileDrop }: TSelfieUpload) => {
+    const { isDesktop } = useDevice();
     return (
         <div
             className={clsx(ROOT_CLASS, {
-                [`${ROOT_CLASS}--mobile`]: isMobile(),
+                [`${ROOT_CLASS}--mobile`]: !isDesktop,
             })}
         >
             <Formik
@@ -40,7 +41,7 @@ const SelfieUpload = ({ initial_values, goBack, onConfirm, onFileDrop }: TSelfie
 
                     return (
                         <Form className={`${ROOT_CLASS}__form`}>
-                            <FormBody className='form-body' scroll_offset={isMobile() ? '18rem' : '8rem'}>
+                            <FormBody className='form-body' scroll_offset={isDesktop ? '8rem' : '18rem'}>
                                 <div className={`${ROOT_CLASS}__fields-content`}>
                                     <Text as='h3' size='s' weight='bold' color='prominent'>
                                         <Localize i18n_default_text='Upload your selfie' />

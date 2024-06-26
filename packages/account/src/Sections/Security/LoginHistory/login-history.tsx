@@ -2,6 +2,7 @@ import React from 'react';
 import { Loading, ThemedScrollbars } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { WS, useIsMounted } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import LoadErrorMessage from '../../../Components/load-error-message';
 import LoginHistoryContent from './login-history-content';
 import { getLoginHistoryFormattedData } from '@deriv/utils';
@@ -9,9 +10,9 @@ import { getLoginHistoryFormattedData } from '@deriv/utils';
 type TLoginData = { id: number; date: string; action: string; browser: string; ip: string; status: string }[];
 
 const LoginHistory = observer(() => {
-    const { client, ui } = useStore();
+    const { client } = useStore();
+    const { isDesktop } = useDevice();
     const { is_switching } = client;
-    const { is_mobile } = ui;
     const [is_loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState('');
     const [data, setData] = React.useState<TLoginData>([]);
@@ -39,7 +40,7 @@ const LoginHistory = observer(() => {
     if (error) return <LoadErrorMessage error_message={error} />;
 
     return (
-        <ThemedScrollbars is_bypassed={is_mobile} className='login-history'>
+        <ThemedScrollbars is_bypassed={!isDesktop} className='login-history'>
             {data.length > 0 ? <LoginHistoryContent data={data} /> : null}
         </ThemedScrollbars>
     );

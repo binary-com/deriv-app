@@ -3,8 +3,8 @@ import QRCodeSVG from 'qrcode.react';
 import { ThemedScrollbars, Text, Timeline, Loading, Clipboard } from '@deriv/components';
 import TwoFactorAuthenticationArticle from './two-factor-authentication-article';
 import { Localize, localize } from '@deriv/translations';
+import { useDevice } from '@deriv-com/ui';
 import DigitForm from './digit-form';
-import { useStore } from '@deriv/stores';
 
 type TTwoFactorDisabled = {
     secret_key: string;
@@ -13,12 +13,11 @@ type TTwoFactorDisabled = {
 };
 
 const TwoFactorDisabled = ({ secret_key, qr_secret_key, is_qr_loading }: TTwoFactorDisabled) => {
-    const { ui } = useStore();
-    const { is_mobile, is_desktop } = ui;
+    const { isDesktop } = useDevice();
     return (
         <React.Fragment>
-            <ThemedScrollbars is_bypassed={is_mobile} autohide className='two-factor__scrollbars'>
-                {is_mobile && <TwoFactorAuthenticationArticle />}
+            <ThemedScrollbars is_bypassed={!isDesktop} autohide className='two-factor__scrollbars'>
+                {!isDesktop && <TwoFactorAuthenticationArticle />}
                 <Text as='h2' color='prominent' weight='bold' className='two-factor__title'>
                     <Localize i18n_default_text='How to set up 2FA for your Deriv account' />
                 </Text>
@@ -88,7 +87,7 @@ const TwoFactorDisabled = ({ secret_key, qr_secret_key, is_qr_loading }: TTwoFac
                     </Timeline.Item>
                 </Timeline>
             </ThemedScrollbars>
-            {is_desktop && <TwoFactorAuthenticationArticle />}
+            {isDesktop && <TwoFactorAuthenticationArticle />}
         </React.Fragment>
     );
 };

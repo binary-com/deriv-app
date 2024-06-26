@@ -23,9 +23,7 @@ import EffortlessLoginModal from '../EffortlessLoginModal';
 
 const TradingAssessmentExistingUser = React.lazy(() =>
     moduleLoader(() =>
-        import(
-            /* webpackChunkName: "trading-assessment-existing-user-modal" */ './trading-assessment-existing-user.jsx'
-        )
+        import(/* webpackChunkName: "trading-assessment-existing-user-modal" */ './trading-assessment-existing-user')
     )
 );
 

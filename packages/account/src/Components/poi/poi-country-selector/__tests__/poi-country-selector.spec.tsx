@@ -1,14 +1,14 @@
 import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { IDV_ERROR_STATUS, isDesktop, isMobile, POIContext, TPOIContext } from '@deriv/shared';
+import { IDV_ERROR_STATUS, POIContext, TPOIContext } from '@deriv/shared';
 import CountrySelector from '../poi-country-selector';
 import { APIProvider } from '@deriv/api';
 import { StoreProvider, mockStore } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 
-jest.mock('@deriv/shared', () => ({
-    ...jest.requireActual('@deriv/shared'),
-    isDesktop: jest.fn(() => true),
-    isMobile: jest.fn(() => false),
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isDesktop: true })),
 }));
 
 jest.mock('@deriv/api', () => ({
@@ -103,8 +103,7 @@ describe('<CountrySelector/>', () => {
     });
 
     it('should trigger selection functions and next button', async () => {
-        (isDesktop as jest.Mock).mockReturnValue(false);
-        (isMobile as jest.Mock).mockReturnValue(true);
+        (useDevice as jest.Mock).mockReturnValue({ isDesktop: false });
 
         const new_poi_context_config = {
             ...poi_context_config,

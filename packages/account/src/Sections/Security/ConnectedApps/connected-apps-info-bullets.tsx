@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { Text } from '@deriv/components';
-import { observer, useStore } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import { CONNECTED_APPS_INFO_BULLETS } from '../../../Constants/connected-apps-config';
 
 type TConnectedAppsInfoBulletsProps = {
@@ -8,11 +8,10 @@ type TConnectedAppsInfoBulletsProps = {
     text_color?: string;
 };
 
-const ConnectedAppsInfoBullets = observer(({ class_name, text_color }: TConnectedAppsInfoBulletsProps) => {
-    const { ui } = useStore();
-    const { is_mobile } = ui;
+const ConnectedAppsInfoBullets = ({ class_name, text_color }: TConnectedAppsInfoBulletsProps) => {
+    const { isDesktop } = useDevice();
 
-    const text_size = is_mobile ? 'xxxs' : 'xxs';
+    const text_size = isDesktop ? 'xxs' : 'xxxs';
 
     return (
         <Text as='ol' size={text_size} color={text_color} className={clsx('connected-apps__bullets--list', class_name)}>
@@ -21,6 +20,6 @@ const ConnectedAppsInfoBullets = observer(({ class_name, text_color }: TConnecte
             ))}
         </Text>
     );
-});
+};
 
 export default ConnectedAppsInfoBullets;

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Icon, Modal, Text, DesktopWrapper, MobileDialog, MobileWrapper } from '@deriv/components';
+import { Button, Icon, Modal, Text, MobileDialog } from '@deriv/components';
 import { localize } from '@deriv/translations';
+import { useDevice } from '@deriv-com/ui';
 
 type RiskToleranceWarningModalProps = {
     show_risk_modal: boolean;
@@ -19,9 +20,10 @@ const RiskToleranceWarningModal = ({
     body_content,
     has_sub_header = false,
 }: RiskToleranceWarningModalProps) => {
+    const { isDesktop } = useDevice();
     return (
         <React.Fragment>
-            <DesktopWrapper>
+            {isDesktop ? (
                 <Modal
                     width='44rem'
                     title={title}
@@ -47,8 +49,7 @@ const RiskToleranceWarningModal = ({
                         />
                     </Modal.Footer>
                 </Modal>
-            </DesktopWrapper>
-            <MobileWrapper>
+            ) : (
                 <MobileDialog
                     visible={show_risk_modal}
                     title={has_sub_header ? localize('Trading Experience Assessment') : title}
@@ -85,7 +86,7 @@ const RiskToleranceWarningModal = ({
                         />
                     </Modal.Footer>
                 </MobileDialog>
-            </MobileWrapper>
+            )}
         </React.Fragment>
     );
 };

@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { Formik, Form, Field, FormikErrors, FieldProps, FormikHelpers } from 'formik';
 import { ApiToken as TApitoken, APITokenResponse as TAPITokenResponse } from '@deriv/api-types';
 import { Timeline, Input, Button, ThemedScrollbars, Loading } from '@deriv/components';
+import { useDevice } from '@deriv-com/ui';
 import { getPropertyValue, WS } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
@@ -33,10 +34,10 @@ type TApiTokenForm = {
 };
 
 const ApiToken = observer(() => {
-    const { client, ui } = useStore();
+    const { client } = useStore();
     const { is_switching } = client;
-    const { is_desktop, is_mobile } = ui;
     const prev_is_switching = React.useRef(is_switching);
+    const { isDesktop } = useDevice();
 
     const [state, setState] = React.useReducer(
         (prev_state: Partial<AptTokenState>, value: Partial<AptTokenState>) => ({
@@ -190,8 +191,8 @@ const ApiToken = observer(() => {
         <ApiTokenContext.Provider value={context_value}>
             <section className='da-api-token'>
                 <div className='da-api-token__wrapper'>
-                    <ThemedScrollbars className='da-api-token__scrollbars' is_bypassed={is_mobile}>
-                        {is_mobile && <ApiTokenArticle />}
+                    <ThemedScrollbars className='da-api-token__scrollbars' is_bypassed={!isDesktop}>
+                        {!isDesktop && <ApiTokenArticle />}
                         <Formik initialValues={initial_form} onSubmit={handleSubmit} validate={validateFields}>
                             {({
                                 values,
@@ -297,7 +298,7 @@ const ApiToken = observer(() => {
                             )}
                         </Formik>
                     </ThemedScrollbars>
-                    {is_desktop && <ApiTokenArticle />}
+                    {isDesktop && <ApiTokenArticle />}
                 </div>
             </section>
         </ApiTokenContext.Provider>

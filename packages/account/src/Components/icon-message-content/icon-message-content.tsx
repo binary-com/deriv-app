@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Div100vhContainer, Text } from '@deriv/components';
-import { isDesktop } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 
 type TIconMessageContent = {
     className?: string;
@@ -20,57 +20,60 @@ const IconMessageContent = ({
     is_disabled_for_mobile = false,
     message,
     text,
-}: React.PropsWithChildren<TIconMessageContent>) => (
-    <Div100vhContainer
-        className={clsx('account-management__message-wrapper', {
-            'account-management__message-wrapper-full-width': full_width,
-        })}
-        is_disabled={isDesktop() || is_disabled_for_mobile}
-        height_offset='110px'
-    >
-        <div
-            className={clsx('account-management__message-content', {
-                [`${className}__message-content`]: className,
+}: React.PropsWithChildren<TIconMessageContent>) => {
+    const { isDesktop } = useDevice();
+
+    return (
+        <Div100vhContainer
+            className={clsx('account-management__message-wrapper', {
+                'account-management__message-wrapper-full-width': full_width,
             })}
+            is_disabled={isDesktop || is_disabled_for_mobile}
+            height_offset='110px'
         >
-            {icon && (
-                <div
-                    className={clsx('account-management__message-icon', {
-                        [`${className}__message-icon`]: className,
-                    })}
-                >
-                    {icon}
-                </div>
-            )}
-            <Text
-                as='div'
-                color='general'
-                weight='bold'
-                size='s'
-                align='center'
-                className={clsx('account-management__message', {
-                    [`${className}__message`]: className,
+            <div
+                className={clsx('account-management__message-content', {
+                    [`${className}__message-content`]: className,
                 })}
             >
-                {message}
-            </Text>
-            {text && (
-                <div className='account-management__text-container'>
-                    <Text
-                        className={clsx({
-                            [`${className}__text`]: className,
+                {icon && (
+                    <div
+                        className={clsx('account-management__message-icon', {
+                            [`${className}__message-icon`]: className,
                         })}
-                        as='p'
-                        size='xs'
-                        align='center'
                     >
-                        {text}
-                    </Text>
-                </div>
-            )}
-            {children}
-        </div>
-    </Div100vhContainer>
-);
+                        {icon}
+                    </div>
+                )}
+                <Text
+                    as='div'
+                    color='general'
+                    weight='bold'
+                    align='center'
+                    className={clsx('account-management__message', {
+                        [`${className}__message`]: className,
+                    })}
+                >
+                    {message}
+                </Text>
+                {text && (
+                    <div className='account-management__text-container'>
+                        <Text
+                            className={clsx({
+                                [`${className}__text`]: className,
+                            })}
+                            as='p'
+                            size='xs'
+                            align='center'
+                        >
+                            {text}
+                        </Text>
+                    </div>
+                )}
+                {children}
+            </div>
+        </Div100vhContainer>
+    );
+};
 
 export default IconMessageContent;

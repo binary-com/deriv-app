@@ -1,12 +1,15 @@
 import React from 'react';
 import { screen, render } from '@testing-library/react';
-import { StoreProvider, mockStore } from '@deriv/stores';
 import { APIProvider } from '@deriv/api';
+import { useDevice } from '@deriv-com/ui';
 import LoginHistoryListRow from '../login-history-list-row';
 
-describe('LoginHistoryListRow', () => {
-    let mock_store: ReturnType<typeof mockStore>;
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isDesktop: true })),
+}));
 
+describe('LoginHistoryListRow', () => {
     const mock_props: React.ComponentProps<typeof LoginHistoryListRow> = {
         id: 0,
         date: '2023-08-29 07:05:35 GMT',
@@ -17,21 +20,10 @@ describe('LoginHistoryListRow', () => {
     };
 
     const renderComponent = () => {
-        const wrapper = ({ children }: { children: JSX.Element }) => (
-            <APIProvider>
-                <StoreProvider store={mock_store}>{children}</StoreProvider>
-            </APIProvider>
-        );
+        const wrapper = ({ children }: { children: JSX.Element }) => <APIProvider>{children}</APIProvider>;
         render(<LoginHistoryListRow {...mock_props} />, { wrapper });
     };
 
-    beforeEach(() => {
-        mock_store = mockStore({
-            ui: {
-                is_desktop: true,
-            },
-        });
-    });
     it('should render LoginHistoryListRow Table Title', () => {
         const titles = [/date and time/i, /browser/i, /ip address/i, /action/i, /status/i];
         renderComponent();
@@ -55,7 +47,7 @@ describe('LoginHistoryListRow', () => {
     });
 
     it('should not render Status if is not desktop', () => {
-        mock_store.ui.is_desktop = false;
+        (useDevice as jest.Mock).mockReturnValueOnce({ isDesktop: false });
         renderComponent();
         expect(screen.queryByText('status')).not.toBeInTheDocument();
         expect(screen.queryByText('successful')).not.toBeInTheDocument();

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import { Localize } from '@deriv/translations';
 import { useStore } from '@deriv/stores';
 import { getExampleImagesConfig } from '../../../Configs/poa-common-mistake-examples-config';
@@ -36,12 +36,13 @@ const CommonMistakeExamplePartials = ({ description, image }: TCommonMistakeExam
  * @returns React.ReactElement
  */
 const CommonMistakeExamples = () => {
+    const { isDesktop } = useDevice();
     const { client } = useStore();
     const { is_eu } = client;
     const example_images = getExampleImagesConfig(is_eu);
     return (
         <React.Fragment>
-            <Text as='div' weight='bold' size={isMobile() ? 'xxs' : 'xs'} className='common-mistake-examples__title'>
+            <Text as='div' weight='bold' size={isDesktop ? 'xs' : 'xxs'} className='common-mistake-examples__title'>
                 <Localize i18n_default_text='Common mistakes' />
             </Text>
             <div className='common-mistake-examples__content'>

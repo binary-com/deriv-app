@@ -1,0 +1,210 @@
+.dc-modal__container {
+    &_real-account-signup-modal {
+        display: flex;
+        flex-direction: column;
+        transition: all 0.3s ease-in-out;
+        @include tablet-screen {
+            max-height: calc(100vh - 10.2rem) !important; // Header and footer
+        }
+        background-color: var(--general-main-1);
+
+        .dc-modal-header__title {
+            text-transform: none;
+            border-top-left-radius: 1rem;
+        }
+
+        & .dc-themed-scrollbars {
+            height: 100%;
+        }
+    }
+    &_center-risk-modal {
+        .dc-modal {
+            &-header {
+                border-bottom: 1px solid var(--general-section-1);
+            }
+            &-body {
+                text-align: center;
+                padding: 2.4rem 2.4rem 0rem;
+                @include mobile-or-tablet-screen {
+                    padding: 1.6rem 1.6rem 0rem;
+                }
+                .risk-acceptance__text {
+                    margin-top: 2.4rem;
+                }
+                .verified-account__text {
+                    margin-top: 2.4rem;
+                }
+            }
+            &-footer {
+                justify-content: center;
+            }
+        }
+    }
+}
+
+.dc-modal-header--real-account-signup-modal {
+    border-bottom: 1px solid var(--general-section-1);
+}
+
+.dc-mobile-dialog--enter-done .dc-mobile-dialog__content {
+    transform: none;
+}
+
+.trading-assessment {
+    display: flex;
+    flex-direction: column;
+
+    .dc-radio-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    @include mobile-or-tablet-screen {
+        height: calc(100vh - 16rem);
+        overflow: auto;
+    }
+
+    &--existing-user {
+        @include desktop-screen {
+            margin-top: 9.2rem;
+        }
+
+        @include mobile-or-tablet-screen {
+            height: calc(100vh - 12rem);
+            .trading-assessment__side-note {
+                padding: 2.2rem 1.6rem;
+            }
+        }
+    }
+
+    &__wrapper__dropdown--list--display {
+        height: 4rem;
+    }
+
+    &__side-note {
+        text-align: justify;
+        padding: 0 10rem;
+
+        @include mobile-or-tablet-screen {
+            padding: 0 1.6rem;
+        }
+    }
+
+    &__question-counter {
+        margin: 2.4rem 0 0;
+        padding-inline-start: 12rem;
+
+        @include mobile-or-tablet-screen {
+            padding-inline-start: 1.6rem;
+        }
+    }
+
+    &__form {
+        margin-top: 1.6rem;
+        display: grid;
+        grid-template-rows: 4.7fr 1fr;
+
+        &--existing_user {
+            grid-template-rows: 5.8fr 1fr;
+        }
+
+        &--layout {
+            grid-template-rows: 35rem 1fr !important;
+        }
+
+        &--fields {
+            display: flex;
+            padding: 0 10rem;
+
+            @include mobile-or-tablet-screen {
+                padding: 0 1.6rem;
+            }
+        }
+
+        .dc-themed-scrollbars {
+            width: 100%;
+        }
+
+        .dc-dropdown__display .dc-dropdown__display-placeholder-text-limit-fit {
+            max-width: initial;
+            padding-bottom: 0.5rem;
+            @include mobile-or-tablet-screen {
+                width: 90%;
+                white-space: normal;
+            }
+        }
+    }
+
+    &__wrapper__question {
+        .dc-field--error {
+            padding-inline-start: 0;
+            margin: 1.6rem 0;
+        }
+
+        @include desktop-screen {
+            padding: 0 2rem;
+        }
+        .dc-radio-group {
+            gap: 1.6rem;
+        }
+        @include mobile-or-tablet-screen {
+            .dc-radio-group__circle {
+                align-self: flex-start !important;
+            }
+        }
+    }
+
+    &__wrapper__dropdown {
+        gap: 2.4rem;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        @include desktop-screen {
+            padding: 0 3rem;
+        }
+    }
+
+    .disable-pointer {
+        cursor: not-allowed;
+    }
+
+    @include mobile-or-tablet-screen {
+        .dc-dropdown__display-placeholder {
+            width: 100%;
+            .trading-assessment__form .dc-dropdown__display .dc-dropdown__display-placeholder-text-limit-fit {
+                width: 90%;
+            }
+        }
+
+        .dc-dropdown__display-placeholder--is-left-text.dc-dropdown__display-placeholder--is-title {
+            white-space: normal !important;
+            line-height: 1.6rem;
+        }
+    }
+
+    &__existing_btn {
+        border-top: 2px solid var(--general-disabled);
+        display: flex;
+        justify-content: end;
+        padding: 1rem 2rem;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+    &__btn-group {
+        @include mobile-or-tablet-screen {
+            position: fixed;
+            bottom: 0;
+            padding: 1.6rem;
+            border-top: 2px solid var(--general-disabled);
+            width: 100%;
+            display: flex;
+            background: var(--general-main-1);
+
+            &--btn {
+                width: 100%;
+            }
+        }
+    }
+}
