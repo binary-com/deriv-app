@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Dialog, MobileWrapper } from '@deriv/components';
+import { Dialog } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
 import { DBOT_TABS } from 'Constants/bot-contents';
@@ -10,7 +10,7 @@ import './index.scss';
 
 const LocalComponent = observer(() => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_desktop } = ui;
     const { load_modal, dashboard } = useDBotStore();
     const { loadFileFromRecent, dashboard_strategies } = load_modal;
     const { setActiveTab, setPreviewOnDialog, has_mobile_preview_loaded } = dashboard;
@@ -46,21 +46,20 @@ const LocalComponent = observer(() => {
                 <div className='load-strategy__recent-preview'>
                     <div
                         className={classNames('load-strategy__title', 'load-strategy__recent-preview-title', {
-                            'load-strategy__title--listed': has_strategies && is_mobile,
+                            'load-strategy__title--listed': has_strategies && !is_desktop,
                         })}
                     >
-                        {!is_mobile && <Localize i18n_default_text='Preview' />}
+                        {is_desktop && <Localize i18n_default_text='Preview' />}
                     </div>
 
-                    {!is_mobile && (
+                    {is_desktop ? (
                         <>
                             <div className='load-strategy__preview-workspace'>
                                 <BotPreview id_ref={el_ref} />
                             </div>
                             <div className='load-strategy__button-group'>{renderOpenButton()}</div>
                         </>
-                    )}
-                    <MobileWrapper>
+                    ) : (
                         <Dialog
                             is_visible={has_mobile_preview_loaded}
                             onCancel={() => setPreviewOnDialog(false)}
@@ -73,7 +72,7 @@ const LocalComponent = observer(() => {
                             <BotPreview id_ref={el_ref} />
                             <div className='load-strategy__button-group'>{renderOpenButton()}</div>
                         </Dialog>
-                    </MobileWrapper>
+                    )}
                 </div>
             </div>
         </div>

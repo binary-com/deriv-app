@@ -1,8 +1,8 @@
 //kept sometihings commented beacuse of mobx to integrate popup functionality here
 import React from 'react';
 import classNames from 'classnames';
-import { DesktopWrapper, Dialog, Icon, MobileFullPageModal, MobileWrapper, Text } from '@deriv/components';
-import { observer } from '@deriv/stores';
+import { Dialog, Icon, MobileFullPageModal, Text } from '@deriv/components';
+import { observer, useStore } from '@deriv/stores';
 import { localize } from '@deriv/translations';
 import { NOTIFICATION_TYPE } from 'Components/bot-notification/bot-notification-utils';
 import { DBOT_TABS } from 'Constants/bot-contents';
@@ -25,6 +25,8 @@ type TCardArray = {
 
 const Cards = observer(({ is_mobile, has_dashboard_strategies }: TCardProps) => {
     const { dashboard, load_modal, quick_strategy } = useDBotStore();
+    const { ui } = useStore();
+    const { is_desktop } = ui;
     const {
         onCloseDialog,
         dialog_options,
@@ -137,7 +139,7 @@ const Cards = observer(({ is_mobile, has_dashboard_strategies }: TCardProps) => 
                             setOpenSettings(NOTIFICATION_TYPE.BOT_IMPORT);
                         }}
                     />
-                    <DesktopWrapper>
+                    {is_desktop ? (
                         <Dialog
                             title={dialog_options.title}
                             is_visible={is_dialog_open}
@@ -148,8 +150,7 @@ const Cards = observer(({ is_mobile, has_dashboard_strategies }: TCardProps) => 
                         >
                             <GoogleDrive />
                         </Dialog>
-                    </DesktopWrapper>
-                    <MobileWrapper>
+                    ) : (
                         <MobileFullPageModal
                             is_modal_open={is_dialog_open}
                             className='load-strategy__wrapper'
@@ -165,7 +166,7 @@ const Cards = observer(({ is_mobile, has_dashboard_strategies }: TCardProps) => 
                                 <GoogleDrive />
                             </div>
                         </MobileFullPageModal>
-                    </MobileWrapper>
+                    )}
                 </div>
                 <DashboardBotList is_file_supported={is_file_supported} />
             </div>

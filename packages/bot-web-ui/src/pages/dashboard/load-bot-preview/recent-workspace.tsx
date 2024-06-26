@@ -2,9 +2,8 @@ import React from 'react';
 import classnames from 'classnames';
 import { timeSince } from '@deriv/bot-skeleton';
 import { save_types } from '@deriv/bot-skeleton/src/constants/save-type';
-import { DesktopWrapper, Icon, MobileWrapper, Text } from '@deriv/components';
-import { isDesktop } from '@deriv/shared';
-import { observer } from '@deriv/stores';
+import { Icon, Text } from '@deriv/components';
+import { observer, useStore } from '@deriv/stores';
 import { DBOT_TABS } from 'Constants/bot-contents';
 import { useDBotStore } from 'Stores/useDBotStore';
 import { CONTEXT_MENU_MOBILE, MENU_DESKTOP, STRATEGY } from '../../../constants/dashboard';
@@ -18,6 +17,8 @@ type TRecentWorkspace = {
 };
 
 const RecentWorkspace = observer(({ workspace, index }: TRecentWorkspace) => {
+    const { ui } = useStore();
+    const { is_desktop } = ui;
     const { dashboard, load_modal, save_modal } = useDBotStore();
     const { setActiveTab } = dashboard;
     const { toggleSaveModal, updateBotName } = save_modal;
@@ -38,7 +39,6 @@ const RecentWorkspace = observer(({ workspace, index }: TRecentWorkspace) => {
     const is_div_triggered_once = React.useRef<boolean>(false);
     const visible = useComponentVisibility(toggle_ref);
     const { setDropdownVisibility, is_dropdown_visible } = visible;
-    const is_desktop = isDesktop();
 
     React.useEffect(() => {
         let timer: ReturnType<typeof setTimeout>;
@@ -137,7 +137,7 @@ const RecentWorkspace = observer(({ workspace, index }: TRecentWorkspace) => {
                     </Text>
                 </div>
             </div>
-            <DesktopWrapper>
+            {is_desktop ? (
                 <div className='bot-list__item__actions'>
                     {MENU_DESKTOP.map(item => (
                         <div
@@ -153,44 +153,44 @@ const RecentWorkspace = observer(({ workspace, index }: TRecentWorkspace) => {
                         </div>
                     ))}
                 </div>
-            </DesktopWrapper>
-            <MobileWrapper>
-                <div className='bot-list__item__actions'>
-                    <button ref={toggle_ref} onClick={onToggleDropdown} tabIndex={0}>
-                        <Icon icon='IcMenuDots' />
-                    </button>
-                </div>
-                <div
-                    className={classnames('bot-list__item__responsive', {
-                        'bot-list__item__responsive--active': is_active_mobile,
-                        'bot-list__item__responsive--min': dashboard_strategies.length <= 5,
-                    })}
-                >
-                    {CONTEXT_MENU_MOBILE.map(item => (
-                        <div
-                            data-testid={`dt_mobile_bot_list_action-${item.type}`}
-                            key={item.type}
-                            className='bot-list__item__responsive__menu'
-                            onClick={e => {
-                                e.stopPropagation();
-                                viewRecentStrategy(item.type);
-                            }}
-                        >
-                            <div>
-                                <Icon icon={item.icon} />
-                            </div>
-                            <Text
-                                color='prominent'
-                                className='bot-list__item__responsive__menu__item'
-                                as='p'
-                                size='xxs'
+            ) : (
+                <>
+                    <div className='bot-list__item__actions'>
+                        <button ref={toggle_ref} onClick={onToggleDropdown} tabIndex={0}>
+                            <Icon icon='IcMenuDots' />
+                        </button>
+                    </div>
+                    <div
+                        className={classnames('bot-list__item__responsive', {
+                            'bot-list__item__responsive--active': is_active_mobile,
+                            'bot-list__item__responsive--min': dashboard_strategies.length <= 5,
+                        })}
+                    >
+                        {CONTEXT_MENU_MOBILE.map(item => (
+                            <div
+                                key={item.type}
+                                className='bot-list__item__responsive__menu'
+                                onClick={e => {
+                                    e.stopPropagation();
+                                    viewRecentStrategy(item.type);
+                                }}
                             >
-                                {item.label}
-                            </Text>
-                        </div>
-                    ))}
-                </div>
-            </MobileWrapper>
+                                <div>
+                                    <Icon icon={item.icon} />
+                                </div>
+                                <Text
+                                    color='prominent'
+                                    className='bot-list__item__responsive__menu__item'
+                                    as='p'
+                                    size='xxs'
+                                >
+                                    {item.label}
+                                </Text>
+                            </div>
+                        ))}
+                    </div>
+                </>
+            )}
         </div>
     );
 });

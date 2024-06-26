@@ -9,7 +9,7 @@
     inset-inline-start: 23.2rem;
     background-color: var(--general-main-1);
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         height: 64px;
         position: absolute;
         overflow-y: auto;
@@ -33,7 +33,7 @@
             display: flex;
             justify-content: center;
             height: calc(5.6rem - 1.6rem) !important;
-            @include desktop {
+            @include desktop-screen {
                 width: 22rem;
                 margin-bottom: 1rem;
             }
@@ -52,7 +52,7 @@
     &__section {
         display: flex;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             flex-direction: row-reverse;
             height: 100%;
             column-gap: 1.6rem !important;
@@ -63,7 +63,7 @@
         }
 
         > * {
-            @include desktop {
+            @include desktop-screen {
                 align-self: center;
             }
         }
@@ -76,7 +76,7 @@
         width: 1.6rem;
         fill: var(--text-prominent);
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin: 1.2rem;
         }
     }
@@ -88,7 +88,7 @@
         &-btn {
             padding: 0 1.2rem;
             height: 4rem;
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 padding: 0;
                 height: fit-content;
                 flex-direction: column;
@@ -113,7 +113,7 @@
         }
     }
     &__wrapper {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             background-color: var(--general-main-1);
             position: absolute;
             top: 0;
@@ -140,7 +140,7 @@
     margin: 0.8rem;
     background-color: var(--border-normal);
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         transform: rotate(90deg);
         margin: 0;
     }

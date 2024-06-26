@@ -24,7 +24,7 @@ const BotBuilder = observer(() => {
     const { is_loading } = blockly_store;
     const is_blockly_listener_registered = React.useRef(false);
     const is_blockly_delete_listener_registered = React.useRef(false);
-    const { is_mobile } = ui;
+    const { is_desktop } = ui;
     const { onMount, onUnmount } = app;
     const el_ref = React.useRef<HTMLInputElement | null>(null);
     const isMounted = useIsMounted();
@@ -122,7 +122,7 @@ const BotBuilder = observer(() => {
                     </div>
                 )}
             </div>
-            {active_tab === 1 && <BotBuilderTourHandler is_mobile={is_mobile} />}
+            {active_tab === 1 && <BotBuilderTourHandler is_mobile={!is_desktop} />}
             {/* removed this outside from toolbar becuase it needs to loaded seperately without dependency */}
             <LoadModal />
             <SaveModal />

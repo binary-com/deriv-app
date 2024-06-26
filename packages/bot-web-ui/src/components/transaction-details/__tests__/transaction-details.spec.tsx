@@ -43,6 +43,7 @@ describe('TransactionDetails', () => {
         jest.resetModules();
     });
 
+    const mock_store = mockStore({});
     const wrapper = (mock_store: ReturnType<typeof mockStore>) => {
         const mock_DBot_store = mockDBotStore(mock_store, mock_ws);
 
@@ -58,17 +59,15 @@ describe('TransactionDetails', () => {
     };
 
     it('should render Desktop component based on Desktop', async () => {
-        const mock_store = mockStore({});
+        mock_store.ui.is_desktop = true;
+
         await waitFor(() => render(<TransactionDetails />, { wrapper: wrapper(mock_store) }));
         expect(screen.queryByText('Desktop Details')).toBeInTheDocument();
     });
 
     it('should render Mobile component on mobile', async () => {
-        const mock_store = mockStore({
-            ui: {
-                is_mobile: true,
-            },
-        });
+        mock_store.ui.is_desktop = false;
+
         await waitFor(() => render(<TransactionDetails />, { wrapper: wrapper(mock_store) }));
         expect(screen.getByText('Mobile Details')).toBeInTheDocument();
     });

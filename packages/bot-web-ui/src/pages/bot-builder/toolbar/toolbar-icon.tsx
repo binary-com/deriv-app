@@ -1,5 +1,6 @@
 import React from 'react';
-import { DesktopWrapper, Icon, MobileWrapper, Popover } from '@deriv/components';
+import { Icon, Popover } from '@deriv/components';
+import { useStore } from '@deriv/stores';
 import { popover_zindex } from 'Constants/z-indexes';
 
 type TToolbarIcon = {
@@ -12,6 +13,9 @@ type TToolbarIcon = {
 };
 
 const ToolbarIcon = ({ popover_message, icon, icon_id, icon_color, action, data_testid }: TToolbarIcon) => {
+    const { ui } = useStore();
+    const { is_desktop } = ui;
+
     const renderIcon = () => (
         <Icon
             icon={icon}
@@ -23,20 +27,17 @@ const ToolbarIcon = ({ popover_message, icon, icon_id, icon_color, action, data_
         />
     );
 
-    return (
-        <>
-            <MobileWrapper>{renderIcon()}</MobileWrapper>
-            <DesktopWrapper>
-                <Popover
-                    alignment='bottom'
-                    message={popover_message}
-                    zIndex={String(popover_zindex.TOOLBAR)}
-                    should_disable_pointer_events
-                >
-                    {renderIcon()}
-                </Popover>
-            </DesktopWrapper>
-        </>
+    return is_desktop ? (
+        <Popover
+            alignment='bottom'
+            message={popover_message}
+            zIndex={String(popover_zindex.TOOLBAR)}
+            should_disable_pointer_events
+        >
+            {renderIcon()}
+        </Popover>
+    ) : (
+        renderIcon()
     );
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { Field, Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
-import { Button, Div100vhContainer, FadeWrapper, Input, MobileWrapper, Modal, PageOverlay } from '@deriv/components';
+import { Button, Div100vhContainer, FadeWrapper, Input, Modal, PageOverlay } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { localize } from '@deriv/translations';
 import { useDBotStore } from 'Stores/useDBotStore';
@@ -191,7 +191,7 @@ const SelfExclusion = observer(({ onRunButtonClick }) => {
     const { ui, client } = useStore();
     const { is_restricted, resetSelfExclusion, initial_values, api_max_losses, run_limit, setRunLimit } =
         self_exclusion;
-    const { is_onscreen_keyboard_active, is_mobile } = ui;
+    const { is_onscreen_keyboard_active, is_desktop } = ui;
     const { is_logged_in, updateSelfExclusion, virtual_account_loginid } = client;
 
     const self_exclusion_form_props = {
@@ -205,19 +205,17 @@ const SelfExclusion = observer(({ onRunButtonClick }) => {
         setRunLimit,
         virtual_account_loginid,
         run_limit,
-        is_mobile,
+        is_desktop,
     };
 
     return (
         <>
-            {is_mobile ? (
+            {!is_desktop ? (
                 <FadeWrapper is_visible={is_restricted} className='limits__wrapper' keyname='limitis__wrapper'>
                     <PageOverlay header={localize('Limits')} onClickClose={resetSelfExclusion}>
-                        <MobileWrapper>
-                            <Div100vhContainer className='limits__wrapper--is-mobile'>
-                                <SelfExclusionForm {...self_exclusion_form_props} />
-                            </Div100vhContainer>
-                        </MobileWrapper>
+                        <Div100vhContainer className='limits__wrapper--is-mobile'>
+                            <SelfExclusionForm {...self_exclusion_form_props} />
+                        </Div100vhContainer>
                     </PageOverlay>
                 </FadeWrapper>
             ) : (

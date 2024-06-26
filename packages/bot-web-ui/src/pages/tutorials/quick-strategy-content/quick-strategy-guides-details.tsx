@@ -22,8 +22,8 @@ type TQuickStrategyGuides = {
 const QuickStrategyGuidesDetail = observer(
     ({ quick_strategy_tab_content, tutorial_selected_strategy, setTutorialSelectedStrategy }: TQuickStrategyGuides) => {
         const { ui } = useStore();
-        const { is_mobile } = ui;
-        const text_size = is_mobile ? 'xs' : 's';
+        const { is_desktop } = ui;
+        const text_size = is_desktop ? 's' : 'xs';
 
         return (
             <>

@@ -25,7 +25,7 @@ const Chart = observer(({ show_digits_stats }: { show_digits_stats: boolean }) =
         wsSubscribe,
     } = chart_store;
     const {
-        ui: { is_mobile, is_desktop },
+        ui: { is_desktop, is_mobile },
     } = useStore();
     const { is_drawer_open } = run_panel;
     const { is_chart_modal_visible } = dashboard;
@@ -42,8 +42,8 @@ const Chart = observer(({ show_digits_stats }: { show_digits_stats: boolean }) =
     return (
         <div
             className={classNames('dashboard__chart-wrapper', {
-                'dashboard__chart-wrapper--expanded': is_drawer_open && !is_mobile,
-                'dashboard__chart-wrapper--modal': is_chart_modal_visible && !is_mobile,
+                'dashboard__chart-wrapper--expanded': is_drawer_open && is_desktop,
+                'dashboard__chart-wrapper--modal': is_chart_modal_visible && is_desktop,
             })}
             dir='ltr'
         >
@@ -58,7 +58,7 @@ const Chart = observer(({ show_digits_stats }: { show_digits_stats: boolean }) =
                     <ToolbarWidgets
                         updateChartType={updateChartType}
                         updateGranularity={updateGranularity}
-                        position={is_mobile ? 'bottom' : null}
+                        position={is_desktop ? null : 'bottom'}
                     />
                 )}
                 chartType={chart_type}

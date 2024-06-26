@@ -5,14 +5,14 @@
     height: calc(100vh - 8.4rem);
     overflow: hidden;
 
-    @include mobile {
+    @include mobile-screen {
         height: calc(100vh - 3.4rem);
     }
 
     .toolbar__section {
         justify-content: end;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             column-gap: 1rem;
         }
     }
@@ -46,11 +46,11 @@
     }
 
     .dc-drawer--open {
-        @include desktop {
+        @include desktop-screen {
             transform: translateX(calc(0px)) !important;
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             transform: translateY(calc(-100% + 3.6rem));
         }
 
@@ -119,7 +119,7 @@
         &--tour-active {
             width: calc(100% - 36rem);
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 width: 100%;
             }
         }
@@ -127,14 +127,17 @@
             &--listed {
                 margin-bottom: 0.8rem;
             }
-            @include mobile {
+            @include mobile-screen {
                 height: auto;
                 margin-top: 0;
+            }
+            @include tablet-screen {
+                padding: 0.8rem;
             }
             .title {
                 text-align: center;
                 height: 7.2;
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     height: auto;
                 }
             }
@@ -144,9 +147,15 @@
                 &__has-list {
                     text-align: center;
                     margin-top: 0;
-                    @include mobile {
+                    @include mobile-screen {
                         text-align: start;
                         width: 85%;
+                    }
+
+                    @include tablet-screen {
+                        display: flex;
+                        justify-content: center;
+                        padding: 0.8rem 0;
                     }
                 }
             }
@@ -156,21 +165,26 @@
             display: flex;
             align-items: flex-start;
 
+            @include mobile-or-tablet-screen {
+                display: unset;
+            }
+
             height: var(--tab-content-height);
             flex-grow: 1;
             background: var(--general-main-1);
             overflow: hidden;
             position: relative;
 
-            @include desktop {
+            @include desktop-screen {
                 padding: 80px 216px 0;
             }
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 height: calc(100vh - 19rem);
                 align-items: flex-start;
                 padding: 1.6rem;
             }
+
             .quick-panel {
                 flex: 1 1 44%;
             }
@@ -179,7 +193,7 @@
                 flex: 1 1 56%;
                 &--active {
                     display: block;
-                    @include mobile {
+                    @include mobile-or-tablet-screen {
                         display: none;
                     }
                 }
@@ -200,11 +214,11 @@
         &__preview {
             height: calc(100% + 2rem);
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 display: none;
             }
 
-            @include tablet {
+            @include tablet-screen {
                 display: none;
             }
 
@@ -219,7 +233,7 @@
                     @include flex-center;
                     cursor: pointer;
 
-                    @include mobile {
+                    @include mobile-or-tablet-screen {
                         width: 3.2rem;
                         height: 3.2rem;
                         padding: 0.8rem;
@@ -269,7 +283,7 @@
         }
 
         &__description {
-            @include desktop {
+            @include desktop-screen {
                 text-align: center;
                 margin-bottom: 4rem;
             }
@@ -302,16 +316,16 @@
                 text-align: center;
                 padding: 3.2rem;
 
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     flex-wrap: wrap;
+                    padding: 2.4rem 0 0;
                 }
 
                 &--minimized {
                     align-items: flex-start;
 
-                    @include mobile-tablet-mix {
+                    @include mobile-or-tablet-screen {
                         display: flex;
-                        justify-content: space-around;
                         flex-flow: unset;
                         padding: 2.4rem 0 1.6rem;
                     }
@@ -329,7 +343,7 @@
                 flex-direction: column;
                 padding-inline-end: 4rem;
 
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     padding: 1rem;
                 }
 
@@ -341,14 +355,12 @@
                     width: 9.1rem;
                     word-wrap: break-word;
                     text-align: center;
-                    @include mobile {
+                    @include mobile-or-tablet-screen {
                         height: auto;
                     }
                 }
 
                 &--minimized {
-                    width: 6.4rem;
-
                     & .dc-text {
                         width: 8rem;
                         text-align: center;
@@ -363,7 +375,7 @@
                 padding: 1.6rem;
 
                 &--minimized {
-                    @include mobile {
+                    @include mobile-or-tablet-screen {
                         width: 6.4rem;
                         height: 6.4rem;
                         padding: 0.8rem;
@@ -380,7 +392,7 @@
     top: 1.8rem;
     z-index: 1;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         inset-inline-end: 1.6rem;
     }
 
@@ -392,7 +404,7 @@
         border-radius: 2.4rem;
         background-color: var(--general-section-1);
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             height: 3.2rem;
             width: 3.2rem;
             line-height: 3.6rem;
@@ -406,7 +418,7 @@
     &__icon {
         height: 24px;
         width: 24px;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             height: 16px;
             width: 16px;
         }

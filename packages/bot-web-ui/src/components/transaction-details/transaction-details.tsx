@@ -6,11 +6,11 @@ import TransactionDetailsMobile from './transaction-details-mobile';
 
 export const TransactionDetails = observer(() => {
     const {
-        ui: { is_mobile },
+        ui: { is_desktop },
     } = useStore();
     return (
         <Suspense fallback={<Loading />}>
-            {is_mobile ? <TransactionDetailsMobile /> : <TransactionDetailsDesktop />}
+            {is_desktop ? <TransactionDetailsDesktop /> : <TransactionDetailsMobile />}
         </Suspense>
     );
 });

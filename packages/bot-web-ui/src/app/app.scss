@@ -15,3 +15,14 @@
         background: var(--general-section-1);
     }
 }
+
+.dc-modal {
+    &__container {
+        &_accounts-switcher {
+            @include tablet-screen {
+                width: unset !important;
+                right: 0;
+            }
+        }
+    }
+}

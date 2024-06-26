@@ -49,7 +49,7 @@ describe('ToolbarWidgets', () => {
     });
 
     it('should render ToolbarWidgets in desktop', async () => {
-        (isDesktop as jest.Mock).mockReturnValueOnce(true);
+        mock_store.ui.is_desktop = true;
         render(
             <React.Suspense fallback={<div />}>
                 <ToolbarWidgets updateChartType={mockUpdateChartType} updateGranularity={mockUpdateGranularity} />

@@ -8,7 +8,7 @@ import './index.scss';
 
 const QuickStrategyGuides = () => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_desktop } = ui;
     const { dashboard } = useDBotStore();
     const { quick_strategy_tab_content } = dashboard;
     const [tutorial_selected_strategy, setTutorialSelectedStrategy] = React.useState('');
@@ -21,7 +21,7 @@ const QuickStrategyGuides = () => {
                     weight='bold'
                     color='prominent'
                     line_height='s'
-                    size={is_mobile ? 'xs' : 's'}
+                    size={is_desktop ? 's' : 'xs'}
                     as='div'
                 >
                     {localize('Quick strategy guides')}

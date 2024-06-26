@@ -4,9 +4,9 @@ import { render, screen } from '@testing-library/react';
 import { mock_ws } from 'Utils/mock';
 import RootStore from 'Stores/root-store';
 import { DBotStoreProvider, mockDBotStore } from 'Stores/useDBotStore';
-import AccordionStrategyGroup, { DescriptionContent } from '../accordion-strategy-group';
-import { TDescriptionItem, TStrategyDescription } from '../../types';
 import { quick_strategy_content } from '../../../../tutorials/constants';
+import { TDescriptionItem, TStrategyDescription } from '../../types';
+import AccordionStrategyGroup, { DescriptionContent } from '../accordion-strategy-group';
 
 jest.mock('@deriv/bot-skeleton/src/scratch/dbot', () => jest.fn());
 
@@ -102,6 +102,7 @@ describe('<AccordionStrategyGroup />', () => {
     });
 
     it('should render AccordionStrategyGroup component with s fontsize if it is a desktop version and tutorial_selected_strategy provided', () => {
+        mock_store.ui.is_desktop = true;
         const { container } = render(
             <AccordionStrategyGroup
                 {...mock_props}

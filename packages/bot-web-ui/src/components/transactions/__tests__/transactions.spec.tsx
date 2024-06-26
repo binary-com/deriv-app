@@ -129,7 +129,7 @@ describe('Transactions', () => {
     });
 
     it('should render transactions component on mobile', () => {
-        mock_store.ui.is_mobile = true;
+        mock_store.ui.is_desktop = false;
         render(<Transactions is_drawer_open />, { wrapper });
 
         expect(screen.getByText('There are no transactions to display')).toBeInTheDocument();

@@ -119,7 +119,7 @@ div.radio-group {
     top: 40px;
     z-index: 10;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         form {
             display: flex;
             flex-direction: column;

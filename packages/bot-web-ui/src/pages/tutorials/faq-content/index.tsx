@@ -44,7 +44,7 @@ const scrollToElement = (wrapper_element: HTMLElement, offset: number) => {
 
 const FAQContent = ({ faq_list, handleTabChange }: TFAQContent) => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_desktop } = ui;
     const { dashboard } = useDBotStore();
     const { faq_title, setFaqTitle } = dashboard;
 
@@ -103,13 +103,13 @@ const FAQContent = ({ faq_list, handleTabChange }: TFAQContent) => {
                     className='faq__title'
                     weight='bold'
                     key={title}
-                    size={is_mobile ? 'xs' : 's'}
+                    size={is_desktop ? 's' : 'xs'}
                 >
                     {title}
                 </Text>
             ),
             content: description?.map((item, index) => (
-                <FAQ {...item} is_mobile={is_mobile} key={`faq-description-item-${item?.content}-${index}`} />
+                <FAQ {...item} is_mobile={!is_desktop} key={`faq-description-item-${item?.content}-${index}`} />
             )),
         }));
     };
@@ -125,7 +125,7 @@ const FAQContent = ({ faq_list, handleTabChange }: TFAQContent) => {
                                 line_height='xl'
                                 className='faq__wrapper__header'
                                 weight='bold'
-                                size={is_mobile ? 'xs' : 's'}
+                                size={is_desktop ? 's' : 'xs'}
                             >
                                 <Localize i18n_default_text='FAQ' />
                             </Text>

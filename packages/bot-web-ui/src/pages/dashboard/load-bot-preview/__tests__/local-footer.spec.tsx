@@ -43,13 +43,13 @@ describe('LocalFooter', () => {
     });
 
     it('should render cancel button on mobile', () => {
-        mock_store.ui.is_mobile = true;
+        mock_store.ui.is_desktop = false;
         render(<LocalFooter />, { wrapper });
         expect(screen.getByText('Cancel')).toBeInTheDocument();
     });
 
     it('should reset local file on cancel button click', async () => {
-        mock_store.ui.is_mobile = true;
+        mock_store.ui.is_desktop = false;
         render(<LocalFooter />, { wrapper });
         const cancel_button = screen.getByText('Cancel');
         await userEvent.click(cancel_button);

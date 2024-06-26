@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
-import { MobileWrapper, Toast } from '@deriv/components';
+import { Toast } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 
 // TODO: Need to sanitize,
@@ -13,11 +13,12 @@ import { observer, useStore } from '@deriv/stores';
  */
 
 const NetworkStatusToastError = observer(({ should_open = false }: { should_open?: boolean }) => {
-    const { common } = useStore();
+    const { common, ui } = useStore();
     const { network_status } = common;
     const [is_open, setIsOpen] = React.useState(should_open);
     const { message, status } = network_status;
     const portal_el = document.getElementById('popup_root');
+    const { is_desktop } = ui;
 
     if (!portal_el || !message) return null;
 
@@ -30,7 +31,7 @@ const NetworkStatusToastError = observer(({ should_open = false }: { should_open
     }
 
     return ReactDOM.createPortal(
-        <MobileWrapper>
+        !is_desktop && (
             <Toast
                 className={classNames({
                     'dc-toast--blinker': status === 'blinker',
@@ -41,7 +42,7 @@ const NetworkStatusToastError = observer(({ should_open = false }: { should_open
             >
                 {message}
             </Toast>
-        </MobileWrapper>,
+        ),
         portal_el
     );
 });

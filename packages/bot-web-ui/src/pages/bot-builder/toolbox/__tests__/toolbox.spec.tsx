@@ -65,7 +65,7 @@ window.Blockly = {
 
 describe('Toolbox', () => {
     let wrapper: ({ children }: { children: JSX.Element }) => JSX.Element, mock_DBot_store: RootStore | undefined;
-    const mock_store = mockStore({});
+    const mock_store = mockStore({ ui: { is_desktop: true } });
 
     beforeEach(() => {
         mock_DBot_store = mockDBotStore(mock_store, mock_ws);
@@ -129,7 +129,7 @@ describe('Toolbox', () => {
     });
 
     it('should render without toolbox component on responsive device', () => {
-        mock_store.ui.is_mobile = true;
+        mock_store.ui.is_desktop = false;
         render(<Toolbox />, { wrapper });
 
         expect(screen.queryByTestId('db-toolbox__title')).not.toBeInTheDocument();

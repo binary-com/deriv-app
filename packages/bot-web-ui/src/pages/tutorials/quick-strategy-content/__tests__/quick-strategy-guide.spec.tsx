@@ -42,16 +42,16 @@ describe('<QuickStrategyGuides />', () => {
 
         const description = screen.getByText('Exploring the Martingale strategy in Deriv Bot');
         expect(description).toBeInTheDocument();
-        expect(description).toHaveStyle('--text-size: var(--text-size-s);');
+        expect(description).toHaveStyle('--text-size: var(--text-size-xs);');
     });
 
     it('should render the component with xs font when on mobile', () => {
-        mock_store.ui.is_mobile = true;
+        mock_store.ui.is_desktop = true;
         render(<QuickStrategyGuides />, {
             wrapper,
         });
 
         const title = screen.getByText('Quick strategy guides');
-        expect(title).toHaveStyle('--text-size: var(--text-size-xs);');
+        expect(title).toHaveStyle('--text-size: var(--text-size-s);');
     });
 });

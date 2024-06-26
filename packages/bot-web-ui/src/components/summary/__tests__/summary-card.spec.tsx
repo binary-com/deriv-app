@@ -51,7 +51,7 @@ describe('SummaryCard', () => {
     });
 
     it('when the contract is loading, the SummaryCard should render the inner component ContractCardLoader, for the mobile version the mobile style should be applied', () => {
-        mock_store.ui.is_mobile = true;
+        mock_store.ui.is_desktop = false;
         mock_DBot_store?.run_panel.setContractStage(1);
         mock_DBot_store?.summary_card.onBotContractEvent({ is_sold: 1 });
 

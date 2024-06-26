@@ -1,5 +1,5 @@
 import React from 'react';
-import { isDesktop } from '@deriv/shared';
+import { useStore } from '@deriv/stores';
 import { ChartMode, DrawTools, Share, StudyLegend, ToolbarWidget, Views } from './v1';
 
 type TToolbarWidgetsProps = {
@@ -9,10 +9,13 @@ type TToolbarWidgetsProps = {
 };
 
 const ToolbarWidgets = ({ updateChartType, updateGranularity, position }: TToolbarWidgetsProps) => {
+    const { ui } = useStore();
+    const { is_desktop } = ui;
+
     return (
         <ToolbarWidget position={position}>
             <ChartMode portalNodeId='modal_root' onChartType={updateChartType} onGranularity={updateGranularity} />
-            {isDesktop() && (
+            {is_desktop && (
                 <>
                     <StudyLegend portalNodeId='modal_root' searchInputClassName='data-hj-whitelist' />
                     <Views

@@ -43,6 +43,7 @@ describe('local', () => {
     });
 
     it('should render the open button to open bot builder tab', async () => {
+        mock_store.ui.is_desktop = true;
         render(<Local />, { wrapper });
 
         const open_button = screen.getByRole('button', { name: 'Open' });

@@ -11,7 +11,7 @@ import { ToolboxItems } from './toolbox-items';
 
 const Toolbox = observer(() => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_desktop } = ui;
     const { toolbox, flyout, quick_strategy } = useDBotStore();
     const {
         hasSubCategory,
@@ -46,7 +46,7 @@ const Toolbox = observer(() => {
         rudderStackSendQsOpenEvent({ subform_source: 'bot_builder' });
     };
 
-    if (!is_mobile) {
+    if (is_desktop) {
         return (
             <div className='db-toolbox' data-testid='dashboard__toolbox'>
                 <ToolbarButton

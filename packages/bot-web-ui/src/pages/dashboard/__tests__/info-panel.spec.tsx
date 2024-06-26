@@ -27,6 +27,7 @@ describe('InfoPanel', () => {
     });
 
     it('should render the InfoPanel component', () => {
+        mock_store.ui.is_desktop = true;
         const { container } = render(<InfoPanel />, {
             wrapper,
         });
@@ -51,7 +52,6 @@ describe('InfoPanel', () => {
     });
 
     it('should render the tutorial tab and FAQ tab', () => {
-        mock_store.ui.is_mobile = true;
         render(<InfoPanel />, { wrapper });
 
         const faq_tab = screen.getByText('What is Deriv Bot?');

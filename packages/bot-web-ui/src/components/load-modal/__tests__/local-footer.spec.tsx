@@ -60,7 +60,7 @@ describe('LocalFooter', () => {
     });
 
     it('should display Cancel button on mobile', async () => {
-        mock_store.ui.is_mobile = true;
+        mock_store.ui.is_desktop = false;
         render(<LocalFooter />, { wrapper });
         const cancel_button = screen.getByRole('button', { name: /cancel/i });
         expect(cancel_button).toBeInTheDocument();
@@ -71,7 +71,7 @@ describe('LocalFooter', () => {
     });
 
     it('should display Open button on desktop', async () => {
-        mock_store.ui.is_mobile = false;
+        mock_store.ui.is_desktop = true;
         render(<LocalFooter />, { wrapper });
         const open_button = screen.getByRole('button', { name: /open/i });
         expect(open_button).toBeInTheDocument();

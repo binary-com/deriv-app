@@ -228,7 +228,7 @@ const RunPanel = observer(() => {
     const { run_panel, dashboard, transactions } = useDBotStore();
     const {
         client,
-        ui: { is_mobile },
+        ui: { is_desktop },
     } = useStore();
     const { currency } = client;
     const {
@@ -255,7 +255,7 @@ const RunPanel = observer(() => {
     }, [onMount, onUnmount]);
 
     React.useEffect(() => {
-        if (is_mobile) {
+        if (!is_desktop) {
             toggleDrawer(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -266,7 +266,7 @@ const RunPanel = observer(() => {
             active_index={active_index}
             currency={currency}
             is_drawer_open={is_drawer_open}
-            is_mobile={is_mobile}
+            is_mobile={!is_desktop}
             lost_contracts={lost_contracts}
             number_of_runs={number_of_runs}
             setActiveTabIndex={setActiveTabIndex}
@@ -284,27 +284,27 @@ const RunPanel = observer(() => {
     const header = (
         <DrawerHeader
             is_clear_stat_disabled={is_clear_stat_disabled}
-            is_mobile={is_mobile}
+            is_mobile={!is_desktop}
             is_drawer_open={is_drawer_open}
             onClearStatClick={onClearStatClick}
         />
     );
 
     const show_run_panel = [BOT_BUILDER, CHART].includes(active_tab) || active_tour;
-    if ((!show_run_panel && !is_mobile) || active_tour === 'bot_builder') return null;
+    if ((!show_run_panel && is_desktop) || active_tour === 'bot_builder') return null;
 
     return (
         <>
-            <div className={is_mobile && is_drawer_open ? 'run-panel__container--mobile' : 'run-panel'}>
+            <div className={!is_desktop && is_drawer_open ? 'run-panel__container--mobile' : 'run-panel'}>
                 <Drawer
                     anchor='right'
                     className={classNames('run-panel', {
-                        'run-panel__container': !is_mobile,
-                        'run-panel__container--tour-active': !is_mobile && active_tour,
+                        'run-panel__container': is_desktop,
+                        'run-panel__container--tour-active': is_desktop && active_tour,
                     })}
                     contentClassName='run-panel__content'
                     header={header}
-                    footer={!is_mobile && footer}
+                    footer={is_desktop && footer}
                     is_open={is_drawer_open}
                     toggleDrawer={toggleDrawer}
                     width={366}
@@ -312,11 +312,11 @@ const RunPanel = observer(() => {
                 >
                     {content}
                 </Drawer>
-                {is_mobile && <MobileDrawerFooter />}
+                {!is_desktop && <MobileDrawerFooter />}
             </div>
             <SelfExclusion onRunButtonClick={onRunButtonClick} />
             <StatisticsInfoModal
-                is_mobile={is_mobile}
+                is_mobile={!is_desktop}
                 is_statistics_info_modal_open={is_statistics_info_modal_open}
                 toggleStatisticsInfoModal={toggleStatisticsInfoModal}
             />

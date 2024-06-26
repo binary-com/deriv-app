@@ -24,12 +24,12 @@ const Journal = observer(() => {
 
     const filtered_messages_length = Array.isArray(filtered_messages) && filtered_messages.length;
     const unfiltered_messages_length = Array.isArray(unfiltered_messages) && unfiltered_messages.length;
-    const { is_mobile } = ui;
+    const { is_desktop } = ui;
 
     return (
         <div
             className={classnames('journal run-panel-tab__content--no-stat', {
-                'run-panel-tab__content': !is_mobile,
+                'run-panel-tab__content': is_desktop,
             })}
             data-testid='dt_mock_journal'
         >
@@ -54,7 +54,7 @@ const Journal = observer(() => {
                         !!Object.keys(checked_filters as TCheckedFilters).length &&
                         !unfiltered_messages_length &&
                         is_stop_button_visible ? (
-                            <JournalLoader is_mobile={is_mobile} />
+                            <JournalLoader is_mobile={!is_desktop} />
                         ) : (
                             <div className='journal-empty'>
                                 <Icon icon='IcBox' className='journal-empty__icon' size={64} color='secondary' />

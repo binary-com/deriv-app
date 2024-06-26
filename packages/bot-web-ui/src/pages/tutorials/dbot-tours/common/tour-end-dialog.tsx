@@ -8,7 +8,7 @@ const TourEndDialog = observer(() => {
     const { ui } = useStore();
     const { dashboard } = useDBotStore();
     const { is_tour_dialog_visible, setTourDialogVisibility } = dashboard;
-    const { is_mobile } = ui;
+    const { is_desktop } = ui;
 
     const getTourContent = () => {
         return (
@@ -54,12 +54,12 @@ const TourEndDialog = observer(() => {
                 has_close_icon={false}
             >
                 <div className='dc-dialog__content__header'>
-                    <Text weight='bold' color='prominent' size={is_mobile ? 'xs' : 's'}>
+                    <Text weight='bold' color='prominent' size={is_desktop ? 's' : 'xs'}>
                         {localize('Congratulations')}
                     </Text>
                 </div>
                 <div className='dc-dialog__content__description'>
-                    <Text size={is_mobile ? 'xxs' : 'xs'} color='prominent'>
+                    <Text size={is_desktop ? 'xs' : 'xxs'} color='prominent'>
                         {getTourContent()}
                     </Text>
                 </div>

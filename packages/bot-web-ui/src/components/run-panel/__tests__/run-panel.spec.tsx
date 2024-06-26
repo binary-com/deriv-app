@@ -39,7 +39,7 @@ describe('RunPanel', () => {
     });
 
     it('should render RunPanel component with content when it is mobile version', () => {
-        mock_store.ui.is_mobile = true;
+        mock_store.ui.is_desktop = false;
         mock_DBot_store?.dashboard.setActiveTour('onboarding');
 
         const { container } = render(<RunPanel />, { wrapper });

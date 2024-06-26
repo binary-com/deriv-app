@@ -60,7 +60,7 @@ const Transactions = observer(({ is_drawer_open }: TTransactions) => {
     const { run_panel, transactions } = useDBotStore();
     const { contract_stage } = run_panel;
     const { transactions: transaction_list, toggleTransactionDetailsModal, recoverPendingContracts } = transactions;
-    const { is_mobile } = ui;
+    const { is_desktop } = ui;
 
     React.useEffect(() => {
         window.addEventListener('click', onClickOutsideTransaction);
@@ -100,8 +100,8 @@ const Transactions = observer(({ is_drawer_open }: TTransactions) => {
     return (
         <div
             className={classnames('transactions', {
-                'run-panel-tab__content': !is_mobile,
-                'run-panel-tab__content--mobile': is_mobile && is_drawer_open,
+                'run-panel-tab__content': is_desktop,
+                'run-panel-tab__content--mobile': !is_desktop && is_drawer_open,
             })}
         >
             <div className='download__container transaction-details__button-container'>
@@ -128,8 +128,8 @@ const Transactions = observer(({ is_drawer_open }: TTransactions) => {
             </div>
             <div
                 className={classnames({
-                    transactions__content: !is_mobile,
-                    'transactions__content--mobile': is_mobile,
+                    transactions__content: is_desktop,
+                    'transactions__content--mobile': !is_desktop,
                 })}
             >
                 <div className='transactions__scrollbar'>

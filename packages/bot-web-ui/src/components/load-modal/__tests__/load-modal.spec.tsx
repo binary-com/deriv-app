@@ -65,7 +65,7 @@ describe('LoadModal', () => {
     });
 
     it('should open full screen modal if opened on mobile', () => {
-        mock_store.ui.is_mobile = true;
+        mock_store.ui.is_desktop = false;
         render(<LoadModal />, { wrapper });
 
         expect(screen.getByText('Load strategy')).toBeInTheDocument();
@@ -75,7 +75,7 @@ describe('LoadModal', () => {
     });
 
     it('should render LocalFooter if there are recent strategies', () => {
-        mock_store.ui.is_mobile = false;
+        mock_store.ui.is_desktop = true;
         mock_DBot_store?.load_modal.setActiveTabIndex(1);
         mock_DBot_store?.load_modal.setLoadedLocalFile(new File([''], 'test-name', { type: 'text/xml' }));
         render(<LoadModal />, { wrapper });
@@ -83,7 +83,7 @@ describe('LoadModal', () => {
     });
 
     it('should render RecentFooter if there are recent strategies', () => {
-        mock_store.ui.is_mobile = false;
+        mock_store.ui.is_desktop = true;
         mock_DBot_store?.load_modal.setActiveTabIndex(0);
         mock_DBot_store?.load_modal.setRecentStrategies(recent_strategies);
         render(<LoadModal />, { wrapper });
@@ -91,7 +91,7 @@ describe('LoadModal', () => {
     });
 
     it('should render load modal preview on file upload and on click of close should close the preview', () => {
-        mock_store.ui.is_mobile = false;
+        mock_store.ui.is_desktop = true;
         render(<LoadModal />, { wrapper });
 
         mock_DBot_store?.load_modal.setActiveTabIndex(1);
@@ -106,7 +106,7 @@ describe('LoadModal', () => {
     });
 
     it('should upload file on the load modal preview when we drop a file on the dropzone', () => {
-        mock_store.ui.is_mobile = false;
+        mock_store.ui.is_desktop = true;
         render(<LoadModal />, { wrapper });
 
         mock_DBot_store?.load_modal.setActiveTabIndex(1);
@@ -121,7 +121,7 @@ describe('LoadModal', () => {
     });
 
     it('should open and upload a file when we select a file from local on load modal preview', () => {
-        mock_store.ui.is_mobile = false;
+        mock_store.ui.is_desktop = true;
         render(<LoadModal />, { wrapper });
 
         mock_DBot_store?.load_modal.setActiveTabIndex(1);
@@ -141,7 +141,7 @@ describe('LoadModal', () => {
 
     // [Important] Close Modal should be at the end
     it('should close preview if close is clicked', () => {
-        mock_store.ui.is_mobile = true;
+        mock_store.ui.is_desktop = false;
         render(<LoadModal />, { wrapper });
 
         const close_button = screen.getByTestId('dt_page_overlay_header_close');

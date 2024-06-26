@@ -11,11 +11,11 @@ const LocalFooter = observer(() => {
     const { is_open_button_loading, loadFileFromLocal, setLoadedLocalFile, toggleLoadModal } = load_modal;
     const { setPreviewOnPopup } = dashboard;
 
-    const { is_mobile } = ui;
-    const Wrapper = is_mobile ? Button.Group : React.Fragment;
+    const { is_desktop } = ui;
+    const Wrapper = is_desktop ? React.Fragment : Button.Group;
     return (
         <Wrapper>
-            {is_mobile && (
+            {!is_desktop && (
                 <Button text={localize('Cancel')} onClick={() => setLoadedLocalFile(null)} has_effect secondary large />
             )}
             <Button

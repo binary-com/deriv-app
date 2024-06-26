@@ -5,7 +5,7 @@ import dbot from '@deriv/bot-skeleton/src/scratch/dbot';
 import { initTrashCan } from '@deriv/bot-skeleton/src/scratch/hooks/trashcan';
 import { api_base } from '@deriv/bot-skeleton/src/services/api/api-base';
 import { isDbotRTL } from '@deriv/bot-skeleton/src/utils/workspace';
-import { DesktopWrapper, Dialog, MobileWrapper, Tabs } from '@deriv/components';
+import { Dialog, Tabs } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
 import TradingViewModal from 'Components/trading-view-chart/trading-view-modal';
@@ -40,7 +40,7 @@ const AppWrapper = observer(() => {
     const { DASHBOARD, BOT_BUILDER } = DBOT_TABS;
     const init_render = React.useRef(true);
     const { ui } = useStore();
-    const { url_hashed_values, is_mobile } = ui;
+    const { url_hashed_values, is_desktop } = ui;
     const hash = ['dashboard', 'bot_builder', 'chart', 'tutorial'];
 
     let tab_value: number | string = active_tab;
@@ -74,7 +74,7 @@ const AppWrapper = observer(() => {
 
         if (init_render.current) {
             setActiveTab(Number(active_hash_tab));
-            if (is_mobile) handleTabChange(Number(active_hash_tab));
+            if (!is_desktop) handleTabChange(Number(active_hash_tab));
             init_render.current = false;
         } else {
             window.location.hash = hash[active_tab] || hash[0];
@@ -133,7 +133,7 @@ const AppWrapper = observer(() => {
             <div className='main'>
                 <div
                     className={classNames('main__container', {
-                        'main__container--active': active_tour && active_tab === DASHBOARD && is_mobile,
+                        'main__container--active': active_tour && active_tab === DASHBOARD && !is_desktop,
                     })}
                 >
                     <Tabs
@@ -178,15 +178,18 @@ const AppWrapper = observer(() => {
                     </Tabs>
                 </div>
             </div>
-            <DesktopWrapper>
-                <div className='main__run-strategy-wrapper'>
-                    <RunStrategy />
-                    <RunPanel />
-                </div>
-                <ChartModal />
-                <TradingViewModal />
-            </DesktopWrapper>
-            <MobileWrapper>{!is_open && <RunPanel />}</MobileWrapper>
+            {is_desktop ? (
+                <>
+                    <div className='main__run-strategy-wrapper'>
+                        <RunStrategy />
+                        <RunPanel />
+                    </div>
+                    <ChartModal />
+                    <TradingViewModal />
+                </>
+            ) : (
+                !is_open && <RunPanel />
+            )}
             <Dialog
                 cancel_button_text={cancel_button_text || localize('Cancel')}
                 className='dc-dialog__wrapper--fixed'

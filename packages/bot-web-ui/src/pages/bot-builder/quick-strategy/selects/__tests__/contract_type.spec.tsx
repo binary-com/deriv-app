@@ -79,7 +79,7 @@ describe('<ContractType /> Responsive', () => {
     beforeEach(() => {
         const mock_store = mockStore({
             ui: {
-                is_mobile: true,
+                is_desktop: false,
             },
         });
         mock_DBot_store = mockDBotStore(mock_store, mock_ws);
@@ -139,7 +139,7 @@ describe('<ContractType /> Desktop', () => {
     beforeEach(() => {
         const mock_store = mockStore({
             ui: {
-                is_mobile: false,
+                is_desktop: true,
             },
         });
         mock_DBot_store = mockDBotStore(mock_store, mock_ws);

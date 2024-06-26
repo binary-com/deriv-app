@@ -24,9 +24,9 @@ const mockSetTradingViewModalVisibility = jest.fn();
 
 describe('WorkspaceGroup', () => {
     let wrapper: ({ children }: { children: JSX.Element }) => JSX.Element;
+    const mock_store = mockStore({});
 
     beforeAll(() => {
-        const mock_store = mockStore({});
         let mock_DBot_store = mockDBotStore(mock_store, mock_ws);
         mock_DBot_store = {
             ...mock_DBot_store,
@@ -118,6 +118,7 @@ describe('WorkspaceGroup', () => {
     });
 
     it('should call setChartModalVisibility function on clicking charts icon', () => {
+        mock_store.ui.is_desktop = true;
         render(<WorkspaceGroup />, {
             wrapper,
         });
@@ -127,6 +128,7 @@ describe('WorkspaceGroup', () => {
     });
 
     it('should call setTradingViewModalVisibility function on clicking tradingview chart icon', () => {
+        mock_store.ui.is_desktop = true;
         render(<WorkspaceGroup />, {
             wrapper,
         });

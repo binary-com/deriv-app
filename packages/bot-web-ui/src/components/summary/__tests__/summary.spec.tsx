@@ -28,7 +28,7 @@ describe('Summary', () => {
     });
 
     it('The Summary component must be rendered for mobile version with expected class', () => {
-        mock_store.ui.is_mobile = true;
+        mock_store.ui.is_desktop = false;
         render(<Summary is_drawer_open={true} />, { wrapper });
 
         const summary = screen.getByTestId('mock-summary');
@@ -38,7 +38,7 @@ describe('Summary', () => {
     });
 
     it('The Summary component must be rendered for desktop version with expected class', () => {
-        mock_store.ui.is_mobile = false;
+        mock_store.ui.is_desktop = true;
         render(<Summary is_drawer_open={false} />, { wrapper });
 
         const summary = screen.getByTestId('mock-summary');

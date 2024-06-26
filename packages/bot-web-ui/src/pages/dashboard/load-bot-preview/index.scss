@@ -11,7 +11,7 @@
         width: 100%;
 
         .dc-mobile-full-page-modal {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 width: 100%;
             }
 
@@ -24,7 +24,7 @@
         }
 
         & .dc-tabs {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 height: 100%;
                 display: unset;
                 flex: 1;
@@ -37,7 +37,7 @@
     }
 
     &__container {
-        @include desktop {
+        @include desktop-screen {
             height: calc(80vh - 15rem);
 
             &--has-footer {
@@ -50,7 +50,7 @@
             }
         }
 
-        @include tablet {
+        @include tablet-screen {
             height: calc(80vh - 15rem);
 
             &--has-footer {
@@ -63,7 +63,7 @@
             }
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             height: 100%;
             overflow: hidden;
             padding-inline-start: 0.5rem;
@@ -133,11 +133,11 @@
 
     &__local {
         &-dropzone {
-            @include desktop {
+            @include desktop-screen {
                 padding-top: 1.6rem;
             }
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 height: 100%;
                 padding: 1.6rem;
             }
@@ -171,7 +171,7 @@
             flex-direction: column;
             position: relative;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 padding: 1.6rem;
                 height: calc(100% - 7.4rem); // - footer height
                 &--active {
@@ -180,7 +180,7 @@
             }
 
             &--listed {
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     padding: 0;
                 }
             }
@@ -209,7 +209,7 @@
         @include flex-center;
         flex-direction: column;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             border: dashed 0.2rem var(--border-normal);
             border-radius: $BORDER_RADIUS;
             margin: 1.6rem;
@@ -257,21 +257,15 @@
         padding: 1%;
     }
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         height: 100%;
         width: 100%;
         top: 0;
     }
 }
 
-.dc-modal__container_load-strategy {
-    @include tablet {
-        width: calc(100vw - 4.8rem) !important;
-    }
-}
-
 .dc-dialog {
-    @include mobile {
+    @include mobile-or-tablet-screen {
         &__wrapper--preview {
             top: 6.5rem;
 
@@ -357,20 +351,27 @@
         display: flex;
         justify-content: center;
         width: 100%;
-        @include mobile {
+        @include mobile-screen {
             display: unset;
         }
     }
+
     &__wrapper {
         width: 623px;
-        @include mobile {
+
+        @include tablet-screen {
+            width: 600px;
+        }
+        @include mobile-screen {
             width: unset;
         }
     }
+
     &__table {
         height: calc(100vh - 57rem);
         overflow: auto;
     }
+
     &__title {
         font-size: var(--text-size-s);
         font-weight: 700;
@@ -381,39 +382,43 @@
             margin: 0 !important;
         }
     }
+
     &__header {
         @extend .flex-align-center;
         border-bottom: 1px solid var(--border-divider);
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 0.8rem 0;
         }
 
         &__label {
             padding: 0.8rem 1.6rem;
             width: 34%;
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 width: 40%;
                 padding: 0;
             }
         }
+
         &__time-stamp {
             width: 20%;
             padding: 0.8rem 1.6rem;
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 width: 25%;
                 padding: 0;
             }
         }
+
         &__load-type {
             width: 25%;
             padding: 0.8rem 1.6rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 padding: 0;
             }
         }
     }
+
     &__item {
         @extend .flex-align-center;
         border-bottom: 1px solid var(--border-divider);
@@ -436,7 +441,7 @@
                 word-break: break-all;
             }
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 width: 40%;
                 padding-inline-start: 0;
             }
@@ -445,7 +450,7 @@
         &__time-stamp {
             width: 20%;
             padding: 0.8rem 1.6rem;
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 width: 25%;
                 padding: 0;
             }
@@ -456,7 +461,7 @@
             width: 25%;
             padding: 0.8rem 1.6rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 padding: 0;
             }
 
@@ -476,7 +481,7 @@
                 }
             }
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 width: 10%;
                 padding: 0;
             }

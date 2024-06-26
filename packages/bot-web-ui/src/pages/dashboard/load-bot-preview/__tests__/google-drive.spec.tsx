@@ -54,6 +54,7 @@ describe('GoogleDrive', () => {
     });
 
     it('should render GoogleDrive component with svg element that has height and width equal 128, and should have text Google Drive, when is_authorised = false on desktop version', () => {
+        mock_store.ui.is_desktop = true;
         render(<GoogleDrive />, { wrapper });
         const google_drive_container = screen.getByTestId('dt_google_drive');
 
@@ -89,7 +90,7 @@ describe('GoogleDrive', () => {
         expect(container).toBeInTheDocument();
     });
     it('should render GoogleDrive component with with svg element that has height and width equal 96 when it is a mobile version', () => {
-        mock_store.ui.is_mobile = true;
+        mock_store.ui.is_desktop = false;
         const { container } = render(<GoogleDrive />, { wrapper });
 
         const google_drive_container = screen.getByTestId('dt_google_drive');

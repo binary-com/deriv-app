@@ -15,7 +15,7 @@ type TContractTypes = {
 
 const ContractTypes: React.FC<TContractTypes> = observer(({ name }) => {
     const { ui } = useStore();
-    const { is_mobile } = ui;
+    const { is_desktop } = ui;
     const [list, setList] = React.useState<TDropdownItems[]>([]);
     const { quick_strategy } = useDBotStore();
     const { setValue } = quick_strategy;
@@ -52,7 +52,7 @@ const ContractTypes: React.FC<TContractTypes> = observer(({ name }) => {
             <Field name={name} key={key} id={key}>
                 {({ field }: FieldProps) => {
                     const selected_item = list?.find(item => item?.value === field?.value);
-                    if (is_mobile) {
+                    if (!is_desktop) {
                         return (
                             <ul className='qs__form__field__list' data-testid='dt_qs_contract_types'>
                                 {list.map(item => {
