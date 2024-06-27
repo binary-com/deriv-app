@@ -306,7 +306,9 @@ export default class TradeStore extends BaseStore {
         Analytics.trackEvent('ce_contracts_set_up_form', payload);
     }, 2000);
     debouncedSetChartStatus = debounce((status: boolean) => {
-        this.is_chart_loading = status;
+        runInAction(() => {
+            this.is_chart_loading = status;
+        });
     }); // no time is needed here, the only goal is to put the call into macrotasks queue
     debouncedProposal = debounce(this.requestProposal, 500);
     proposal_requests: Record<string, Partial<PriceProposalRequest>> = {};
@@ -911,8 +913,10 @@ export default class TradeStore extends BaseStore {
     processPurchase(proposal_id: string, price: string | number, type: string, isMobile: boolean) {
         if (!this.is_purchase_enabled) return;
         if (proposal_id) {
-            this.is_purchase_enabled = false;
-            this.is_purchasing_contract = true;
+            runInAction(() => {
+                this.is_purchase_enabled = false;
+                this.is_purchasing_contract = true;
+            });
             const is_tick_contract = this.duration_unit === 't';
             processPurchase(proposal_id, price).then(
                 action((response: TResponse<Buy, BuyContractResponse, 'buy'>) => {
@@ -1293,16 +1297,20 @@ export default class TradeStore extends BaseStore {
     requestProposal() {
         const requests = createProposalRequests(this);
         if (Object.values(this.validation_errors).some(e => e.length)) {
-            this.proposal_info = {};
-            this.purchase_info = {};
+            runInAction(() => {
+                this.proposal_info = {};
+                this.purchase_info = {};
+            });
             this.forgetAllProposal();
             if (this.is_accumulator) this.resetAccumulatorData();
             return;
         }
 
         if (!isEmptyObject(requests)) {
-            this.proposal_requests = requests as Record<string, Partial<PriceProposalRequest>>;
-            this.purchase_info = {};
+            runInAction(() => {
+                this.proposal_requests = requests as Record<string, Partial<PriceProposalRequest>>;
+                this.purchase_info = {};
+            });
             Object.keys(this.proposal_requests).forEach(type => {
                 WS.subscribeProposal(this.proposal_requests[type], this.onProposalResponse);
             });
