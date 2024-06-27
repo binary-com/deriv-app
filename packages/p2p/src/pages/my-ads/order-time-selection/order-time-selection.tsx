@@ -4,6 +4,8 @@ import { Dropdown, Icon, Popover, Text } from '@deriv/components';
 import { Localize, localize } from 'Components/i18next';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
 import { useStore } from '@deriv/stores';
+import { useP2PSettings } from '@deriv/hooks';
+import { formatTime } from 'Utils/orders';
 
 type TFormikContext = {
     handleChange: FormikHandlers['handleChange'];
@@ -23,28 +25,31 @@ const OrderTimeSelection = ({
     ...field
 }: TOrderTimeSelectionProps) => {
     const { values, handleChange }: TFormikContext = useFormikContext<TFormikContext>();
+    const { order_completion_time } = values;
     const { showModal } = useModalManagerContext();
+    const { p2p_settings } = useP2PSettings();
+    const { order_expiry_options } = p2p_settings ?? {};
     const { ui } = useStore();
     const { is_mobile } = ui;
     const order_time_info_message = localize('Orders will expire if they aren’t completed within this time.');
-    const order_completion_time_list = [
-        {
-            text: localize('1 hour'),
-            value: '3600',
-        },
-        {
-            text: localize('45 minutes'),
-            value: '2700',
-        },
-        {
-            text: localize('30 minutes'),
-            value: '1800',
-        },
-        {
-            text: localize('15 minutes'),
-            value: '900',
-        },
-    ];
+
+    const getOrderExpiryOptions = (
+        order_expiry_options: NonNullable<
+            NonNullable<ReturnType<typeof useP2PSettings>>['p2p_settings']
+        >['order_expiry_options']
+    ) => {
+        const options = order_expiry_options?.map(option => ({
+            text: formatTime(option / 60),
+            value: `${option}`,
+        }));
+        if (options?.some(option => option.value === order_completion_time)) return options;
+        return (
+            options?.concat({
+                text: formatTime(Number(order_completion_time) / 60),
+                value: order_completion_time,
+            }) ?? []
+        );
+    };
 
     return (
         <div className='order-time-selection'>
@@ -75,7 +80,7 @@ const OrderTimeSelection = ({
                 classNameDisplay={classNameDisplay}
                 classNameIcon={classNameIcon}
                 is_align_text_left
-                list={order_completion_time_list}
+                list={getOrderExpiryOptions(order_expiry_options)}
                 onChange={handleChange}
                 value={values.order_completion_time}
             />
