@@ -9,6 +9,7 @@ export const DEFAULT_DATE_FORMATTING_CONFIG = {
 } as Record<string, string>;
 
 export const filterPositions = (positions: (TPortfolioPosition | TClosedPosition)[], filter: string[]) => {
+    if (!filter.length) return positions;
     // Split contract type names with '/' (e.g. Rise/Fall)
     const splittedFilter = filter.map(option => (option.includes('/') ? option.split('/') : option)).flat();
 

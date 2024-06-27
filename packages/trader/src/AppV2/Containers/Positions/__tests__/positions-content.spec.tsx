@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { mockStore } from '@deriv/stores';
 import { ReportsStoreProvider } from '../../../../../../reports/src/Stores/useReportsStores';
 import TraderProviders from '../../../../trader-providers';
@@ -48,33 +48,7 @@ jest.mock('@deriv/shared', () => ({
         time: jest.fn(),
         tradingTimes: jest.fn(),
         wait: jest.fn(),
-        profitTable: jest.fn().mockReturnValue({
-            profit_table: {
-                transactions: [
-                    {
-                        contract_info: {
-                            app_id: 16929,
-                            buy_price: 10,
-                            contract_id: 243705193508,
-                            contract_type: 'TURBOSLONG',
-                            duration_type: 'minutes',
-                            longcode:
-                                'You will receive a payout at expiry if the spot price never breaches the barrier. The payout is equal to the payout per point multiplied by the distance between the final price and the barrier.',
-                            payout: 0,
-                            purchase_time: '28 May 2024 10:18:24',
-                            sell_price: 0,
-                            sell_time: '28 May 2024 10:21:08',
-                            shortcode: 'TURBOSLONG_1HZ100V_10.00_1716891504_1716891900_S-255P_3.692058_1716891504',
-                            transaction_id: 486048790368,
-                            underlying_symbol: '1HZ100V',
-                            profit_loss: '-10.00',
-                            display_name: '',
-                            purchase_time_unix: 1716891504,
-                        },
-                    },
-                ],
-            },
-        }),
+        profitTable: jest.fn().mockReturnValue({ profit_table: { transactions: [] } }),
     },
 }));
 
@@ -310,10 +284,12 @@ describe('PositionsContent', () => {
         expect(screen.getByText(emptyPositions)).toBeInTheDocument();
     });
 
-    it('should render EmptyPositions if data has loaded but user has no closed positions', () => {
+    it('should render EmptyPositions if data has loaded but user has no closed positions', async () => {
         render(mockPositionsContent(true));
 
-        expect(screen.getByText(emptyPositions)).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getByText(emptyPositions)).toBeInTheDocument();
+        });
     });
 
     it('should render contract type filter, total profit/loss and contract card list for open positions if they exist', () => {

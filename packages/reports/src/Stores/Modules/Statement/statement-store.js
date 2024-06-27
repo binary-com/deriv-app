@@ -11,7 +11,7 @@ const delay_on_scroll_time = 150; // fetch debounce delay on scroll
 
 export default class StatementStore extends BaseStore {
     data = [];
-    is_loading = false;
+    is_loading = true;
     has_loaded_all = false;
     date_from = null;
     date_to = toMoment().startOf('day').add(1, 'd').subtract(1, 's').unix();
@@ -179,14 +179,14 @@ export default class StatementStore extends BaseStore {
     }
 
     networkStatusChangeListener(is_online) {
-        this.is_loading = !is_online;
+        this.is_loading = this.is_loading || !is_online;
     }
 
     async onMount() {
         this.assertHasValidCache(
             this.client_loginid,
             this.clearDateFilter,
-            this.clearTable,
+            this.client_loginid ? this.clearTable : () => null,
             WS.forgetAll.bind(null, 'proposal')
         );
         this.client_loginid = this.root_store.client.loginid;
