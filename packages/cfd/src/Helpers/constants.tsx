@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     OSDetect,
     getPlatformFromUrl,
@@ -7,6 +8,7 @@ import {
     validMT5Password,
     mobileOSDetectAsync,
 } from '@deriv/shared';
+import { StandaloneHuaweiAppGalleryIcon, StandaloneAndroidIcon, StandaloneAppStoreIcon } from '@deriv/quill-icons';
 import { localize } from '@deriv/translations';
 import { TCFDsPlatformType, TDetailsOfEachMT5Loginid, TMobilePlatforms } from 'Components/props.types';
 import { CFD_PLATFORMS, MOBILE_PLATFORMS, DESKTOP_PLATFORMS, CATEGORY } from './cfd-config';
@@ -191,15 +193,15 @@ const getDesktopDownloadOptions = ({ mt5_trade_account }: { mt5_trade_account: T
 const getMobileDownloadOptions = ({ mt5_trade_account }: { mt5_trade_account: TDetailsOfEachMT5Loginid }) => [
     {
         href: mt5_trade_account?.white_label_links?.ios,
-        icon: 'IcInstallationApple',
+        icon: <StandaloneAppStoreIcon width={135} height={40} />,
     },
     {
         href: mt5_trade_account?.white_label_links?.android,
-        icon: 'IcInstallationGoogle',
+        icon: <StandaloneAndroidIcon width={135} height={40} />,
     },
     {
         href: getPlatformMt5DownloadLink('huawei'),
-        icon: 'IcInstallationHuawei',
+        icon: <StandaloneHuaweiAppGalleryIcon width={135} height={40} />,
     },
 ];
 

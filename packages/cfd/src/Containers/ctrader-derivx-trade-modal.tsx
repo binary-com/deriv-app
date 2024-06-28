@@ -4,6 +4,7 @@ import { localize, Localize } from '@deriv/translations';
 import { getCFDAccountKey, isMobile } from '@deriv/shared';
 import { DetailsOfEachMT5Loginid } from '@deriv/api-types';
 import { Icon, Money, Text, ExpansionPanel, Button } from '@deriv/components';
+import { StandaloneHuaweiAppGalleryIcon, StandaloneAndroidIcon, StandaloneAppStoreIcon } from '@deriv/quill-icons';
 import SpecBox from '../Components/specbox';
 import { CFD_PLATFORMS } from '../Helpers/cfd-config';
 import PasswordBox from '../Components/passwordbox';
@@ -397,16 +398,16 @@ const CTraderDerivXTradeModal = ({
                 <div className='cfd-trade-modal__download-center-options--mobile-links'>
                     <div className='cfd-trade-modal__download-center-options--mobile-links--apple'>
                         <a href={mobileDownloadLink(platform, 'ios')} target='_blank' rel='noopener noreferrer'>
-                            <Icon icon='IcInstallationApple' width={isMobile() ? '160' : '130'} height={40} />
+                            <StandaloneAppStoreIcon width={isMobile() ? '160' : '130'} height={40} />
                         </a>
                     </div>
                     <a href={mobileDownloadLink(platform, 'android')} target='_blank' rel='noopener noreferrer'>
-                        <Icon icon='IcInstallationGoogle' width={135} height={40} />
+                        <StandaloneAndroidIcon width={135} height={40} />
                     </a>
 
                     {platform !== CFD_PLATFORMS.CTRADER && (
                         <a href={mobileDownloadLink(platform, 'huawei')} target='_blank' rel='noopener noreferrer'>
-                            <Icon icon='IcInstallationHuawei' width={135} height={40} />
+                            <StandaloneHuaweiAppGalleryIcon width={135} height={40} />
                         </a>
                     )}
                 </div>

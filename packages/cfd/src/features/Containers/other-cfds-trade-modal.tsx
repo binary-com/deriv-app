@@ -4,6 +4,7 @@ import { TTradingPlatformAccounts, TCFDDashboardContainer, TCFDsPlatformType } f
 import { DetailsOfEachMT5Loginid } from '@deriv/api-types';
 import { getCFDAccountKey, isMobile, mobileOSDetect } from '@deriv/shared';
 import { localize, Localize } from '@deriv/translations';
+import { StandaloneHuaweiAppGalleryIcon, StandaloneAndroidIcon, StandaloneAppStoreIcon } from '@deriv/quill-icons';
 import { getPlatformQRCode, PlatformsDesktopDownload, mobileDownloadLink } from '../../Helpers/config';
 import { getTitle, platformsText, CTRADER_DESKTOP_WINDOWS_DOWNLOAD } from '../../Helpers/constants';
 import { CFD_PLATFORMS, MOBILE_PLATFORMS } from '../../Helpers/cfd-config';
@@ -281,7 +282,7 @@ const OtherCFDsTradeModal = ({
                                 target='_blank'
                                 rel='noopener noreferrer'
                             >
-                                <Icon icon='IcInstallationApple' width={isMobile() ? '160' : '130'} height={40} />
+                                <StandaloneAppStoreIcon width={isMobile() ? '160' : '130'} height={40} />
                             </a>
                         </div>
                     )}
@@ -291,7 +292,7 @@ const OtherCFDsTradeModal = ({
                             target='_blank'
                             rel='noopener noreferrer'
                         >
-                            <Icon icon='IcInstallationGoogle' width={135} height={40} />
+                            <StandaloneAndroidIcon width={135} height={40} />
                         </a>
                     )}
                     {platform !== CFD_PLATFORMS.CTRADER && (
@@ -301,7 +302,7 @@ const OtherCFDsTradeModal = ({
                                 target='_blank'
                                 rel='noopener noreferrer'
                             >
-                                <Icon icon='IcInstallationGoogle' width={135} height={40} />
+                                <StandaloneAndroidIcon width={135} height={40} />
                             </a>
 
                             <a
@@ -309,7 +310,7 @@ const OtherCFDsTradeModal = ({
                                 target='_blank'
                                 rel='noopener noreferrer'
                             >
-                                <Icon icon='IcInstallationHuawei' width={135} height={40} />
+                                <StandaloneHuaweiAppGalleryIcon width={135} height={40} />
                             </a>
                         </React.Fragment>
                     )}

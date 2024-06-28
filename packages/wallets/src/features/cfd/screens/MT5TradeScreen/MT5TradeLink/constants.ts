@@ -29,21 +29,6 @@ export const getMobileAppInstallerURL = async ({ mt5TradeAccount }: { mt5TradeAc
     return mt5TradeAccount?.white_label_links?.android;
 };
 
-export const getMobileDownloadOptions = ({ mt5TradeAccount }: { mt5TradeAccount: THooks.MT5AccountsList }) => [
-    {
-        href: mt5TradeAccount?.white_label_links?.ios,
-        icon: 'IcInstallationApple',
-    },
-    {
-        href: mt5TradeAccount?.white_label_links?.android,
-        icon: 'IcInstallationGoogle',
-    },
-    {
-        href: getPlatformMt5DownloadLink('huawei'),
-        icon: 'IcInstallationHuawei',
-    },
-];
-
 export const getWebtraderUrl = ({ mt5TradeAccount }: { mt5TradeAccount: THooks.MT5AccountsList }) => {
     return `${mt5TradeAccount?.white_label_links?.webtrader_url}?login=${mt5TradeAccount?.display_login}&server=${mt5TradeAccount?.server_info?.environment}`;
 };

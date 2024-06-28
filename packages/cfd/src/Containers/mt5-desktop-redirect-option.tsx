@@ -50,8 +50,8 @@ const MT5DesktopRedirectOption = ({ account_title, mt5_trade_account }: TMT5Desk
             <div className='cfd-trade-modal__download-center-options'>
                 <div className='cfd-trade-modal__download-center-options--mobile-links'>
                     {mobileDownloadOptions.map(({ href, icon }) => (
-                        <a key={icon} href={href} target='_blank' rel='noopener noreferrer'>
-                            <Icon icon={icon} width={135} height={40} />
+                        <a key={href} href={href} target='_blank' rel='noopener noreferrer'>
+                            {icon}
                         </a>
                     ))}
                 </div>

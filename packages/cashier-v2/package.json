@@ -18,7 +18,7 @@
         "@deriv-com/utils": "^0.0.25",
         "@deriv/api-v2": "^1.0.0",
         "@deriv/integration": "^1.0.0",
-        "@deriv/quill-icons": "^1.22.10",
+        "@deriv/quill-icons": "^1.22.11",
         "@deriv/utils": "^1.0.0",
         "clsx": "^2.1.1",
         "formik": "^2.1.4",
