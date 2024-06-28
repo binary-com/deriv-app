@@ -4,13 +4,10 @@ import { render, screen } from '@testing-library/react';
 import { mock_ws } from 'Utils/mock';
 import { DBotStoreProvider, mockDBotStore } from 'Stores/useDBotStore';
 import ContractCardLoader from '../contract-card-loading';
+import { contract_stages } from 'Constants/contract-stage';
+import { message_running_bot } from '../contract-card-running-bot';
 
-jest.mock('@deriv/bot-skeleton/src/scratch/blockly', () => jest.fn());
-jest.mock('@deriv/bot-skeleton/src/scratch/dbot', () => ({
-    saveRecentWorkspace: jest.fn(),
-    unHighlightAllBlocks: jest.fn(),
-}));
-jest.mock('@deriv/bot-skeleton/src/scratch/hooks/block_svg', () => jest.fn());
+jest.mock('@deriv/bot-skeleton/src/scratch/dbot', () => ({}));
 
 describe('ContractCardLoader', () => {
     let wrapper: ({ children }: { children: JSX.Element }) => JSX.Element;
@@ -52,5 +49,13 @@ describe('ContractCardLoader', () => {
         // eslint-disable-next-line testing-library/no-node-access
         const stopElement = svgElement.querySelector('animate'); // accessing the node directly to test the animation duration
         expect(stopElement).toHaveAttribute('dur', '5s');
+    });
+
+    it('should render ContractCardLoader with the Text component when contract stage is running bot', () => {
+        render(<ContractCardLoader contract_stage={contract_stages.RUNNING} />, {
+            wrapper,
+        });
+        const text = screen.getByText(message_running_bot);
+        expect(text).toBeInTheDocument();
     });
 });

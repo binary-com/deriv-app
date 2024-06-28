@@ -19,4 +19,5 @@ export type TContractInfo = Omit<
 export interface TSummaryCardProps {
     contract_info?: ProposalOpenContract | null;
     is_contract_loading: boolean;
+    is_bot_running: boolean;
 }

@@ -2,13 +2,19 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    background-color: var(--general-section-2);
+    // justify-content: center;
+    background: linear-gradient(180deg, #f2f3f4 0%, rgba(242, 243, 244, 0) 80%);
+
     @include desktop {
         height: inherit;
     }
 
     &--loading {
         width: 100%;
+    }
+
+    &--delayed-loading {
+        justify-content: center;
     }
 
     &__tiles {
@@ -36,12 +42,14 @@
             margin-bottom: 4px;
             @include typeface(--small-center-bold-black, none);
         }
+
         &-content {
             height: 18px;
             margin-bottom: 4px;
             @include typeface(--small-center-normal-black, none);
         }
     }
+
     &__amount {
         @include typeface(--small-center-normal-black, none);
 
@@ -49,6 +57,7 @@
             font-weight: bold;
             color: var(--text-profit-success);
         }
+
         &--negative {
             font-weight: bold;
             color: var(--text-loss-danger);

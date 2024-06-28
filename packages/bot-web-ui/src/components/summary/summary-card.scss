@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
+
     @include desktop {
         width: 100%;
     }
@@ -16,14 +17,12 @@
         text-align: center;
         line-height: 2rem;
         padding: 0 3rem;
+
         & .dc-text {
             text-align: center;
         }
     }
-    &--is-loading {
-        background-color: inherit;
-        border: 1px solid var(--general-main-1);
-    }
+
     &--completed {
         border: 1px solid var(--general-main-1);
 
@@ -31,25 +30,54 @@
             border: 1px solid var(--border-disabled);
         }
     }
+
+    &--delayed-loading {
+        align-items: center;
+    }
+
     .dc-contract-card {
         padding: 1.6rem 1.6rem 0.8rem;
+
+        &-message {
+            margin: 0 3rem;
+        }
     }
+
     .dc-contract-card__grid-underlying-trade {
         grid-template-columns: 1.5fr 1fr;
     }
+
     .dc-contract-card-items-wrapper {
         grid-template-columns: 1.5fr 1fr;
         margin-top: 0.8rem;
     }
+
     &--mobile {
         .dc-contract-card {
             padding: 1.5rem 3.4rem;
         }
+
         .dc-contract-card__grid-underlying-trade--mobile {
             grid-template-columns: 1fr 1.25fr;
         }
+
         .dc-contract-card-items-wrapper {
             grid-template-columns: 1fr 1fr;
         }
+    }
+
+    @keyframes rotate {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    #rotate-icon {
+        margin: 0 0 2rem;
+        animation: rotate 2s linear infinite;
     }
 }

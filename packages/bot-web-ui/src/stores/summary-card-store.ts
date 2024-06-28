@@ -41,6 +41,7 @@ export default class SummaryCardStore {
     contract_id?: string | null = null;
     profit?: number = 0;
     indicative?: number = 0;
+    is_bot_running?: boolean = false;
 
     constructor(root_store: RootStore, core: TStores) {
         makeObservable(this, {
@@ -53,6 +54,7 @@ export default class SummaryCardStore {
             contract_update_stop_loss: observable,
             has_contract_update_take_profit: observable,
             has_contract_update_stop_loss: observable,
+            is_bot_running: observable,
             contract_update_config: observable,
             contract_id: observable,
             profit: observable,
@@ -68,6 +70,7 @@ export default class SummaryCardStore {
             onChange: action.bound,
             populateContractUpdateConfig: action.bound,
             setContractUpdateConfig: action.bound,
+            setIsBotRunning: action.bound,
             updateLimitOrder: action.bound,
             setValidationErrorMessages: action,
             validateProperty: action,
@@ -202,6 +205,26 @@ export default class SummaryCardStore {
                 : null;
             this.contract_update_stop_loss = this.has_contract_update_stop_loss ? +contract_update_stop_loss : null;
         }
+    }
+
+    /**
+     * Sets the bot's running state based on whether the contract is still loading
+     */
+    setIsBotRunning() {
+        if (!this.is_contract_loading) {
+            this.is_bot_running = false;
+            return;
+        }
+
+        const onTimeout = () => {
+            if (this.is_contract_loading) {
+                this.is_bot_running = true;
+                this.root_store.run_panel.setContractStage(contract_stages.RUNNING);
+            }
+        };
+
+        const timeout = setTimeout(onTimeout, 5000);
+        return () => clearTimeout(timeout);
     }
 
     updateLimitOrder() {
