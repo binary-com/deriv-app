@@ -11,14 +11,14 @@ import {
     WS,
 } from '@deriv/shared';
 import { localize } from '@deriv/translations';
-import DemoMessage from 'Components/demo-message';
-import 'Components/self-exclusion/self-exclusion.scss';
-import LoadErrorMessage from 'Components/load-error-message';
-import SelfExclusionArticleContent from 'Components/self-exclusion/self-exclusion-article-content';
-import SelfExclusionContext from 'Components/self-exclusion/self-exclusion-context';
-import SelfExclusionModal from 'Components/self-exclusion/self-exclusion-modal';
-import SelfExclusionWrapper from 'Components/self-exclusion/self-exclusion-wrapper';
-import SelfExclusionForm from 'Components/self-exclusion/self-exclusion-form';
+import DemoMessage from '../../../Components/demo-message';
+import '../../../Components/self-exclusion/self-exclusion.scss';
+import LoadErrorMessage from '../../../Components/load-error-message';
+import SelfExclusionArticleContent from '../../../Components/self-exclusion/self-exclusion-article-content';
+import SelfExclusionContext from '../../../Components/self-exclusion/self-exclusion-context';
+import SelfExclusionModal from '../../../Components/self-exclusion/self-exclusion-modal';
+import SelfExclusionWrapper from '../../../Components/self-exclusion/self-exclusion-wrapper';
+import SelfExclusionForm from '../../../Components/self-exclusion/self-exclusion-form';
 import { FormikHelpers, FormikValues } from 'formik';
 import { observer, useStore } from '@deriv/stores';
 

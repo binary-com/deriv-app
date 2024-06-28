@@ -3,7 +3,7 @@ import { Button, Icon, Modal, Text, Popover } from '@deriv/components';
 import { isDesktop, useIsMounted } from '@deriv/shared';
 import { Localize } from '@deriv/translations';
 import ApiTokenContext from './api-token-context';
-import { TPopoverAlignment, TFormattedToken, TApiContext } from 'Types';
+import { TPopoverAlignment, TFormattedToken, TApiContext } from '../../Types';
 
 type TApiTokenDeleteButton = {
     popover_alignment?: TPopoverAlignment;

@@ -2,7 +2,7 @@ import ApiTokenDeleteButton from './api-token-delete-button';
 import ApiTokenTableRowCell from './api-token-table-row-cell';
 import ApiTokenTableRowScopesCell from './api-token-table-row-scopes-cell';
 import ApiTokenTableRowTokenCell from './api-token-table-row-token-cell';
-import { TFormattedToken } from 'Types';
+import { TFormattedToken } from '../../Types';
 
 type TApiTokenTableRow = {
     token: TFormattedToken;

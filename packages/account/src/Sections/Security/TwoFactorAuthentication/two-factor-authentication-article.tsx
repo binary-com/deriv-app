@@ -1,6 +1,6 @@
 import React from 'react';
 import { localize, Localize } from '@deriv/translations';
-import AccountArticle from 'Components/article';
+import AccountArticle from '../../../Components/article';
 
 const TwoFactorAuthenticationArticle = () => (
     <AccountArticle

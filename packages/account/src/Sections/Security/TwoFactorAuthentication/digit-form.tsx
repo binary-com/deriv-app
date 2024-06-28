@@ -87,7 +87,7 @@ const DigitForm = observer(() => {
                                     className='two-factor__input'
                                     label={localize('Authentication code')}
                                     value={values.digit_code}
-                                    onChange={e => {
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                         handleChange(e);
                                         setReadyForVerification(false);
                                     }}

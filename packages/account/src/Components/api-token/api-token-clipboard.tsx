@@ -2,7 +2,7 @@ import React from 'react';
 import { useIsMounted } from '@deriv/shared';
 import { Button, Icon, Modal, Text, Popover, useCopyToClipboard } from '@deriv/components';
 import { Localize } from '@deriv/translations';
-import { TPopoverAlignment } from 'Types';
+import { TPopoverAlignment } from '../../Types';
 
 type TApiTokenClipboard = {
     scopes?: string[];
