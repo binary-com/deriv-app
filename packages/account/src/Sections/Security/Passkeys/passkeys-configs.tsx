@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { TSocketError } from '@deriv/api/types';
 import { getOSNameWithUAParser } from '@deriv/shared';
 import { localize } from '@deriv/translations';
-import { Analytics } from '@deriv-com/analytics';
+import { Analytics, TEvents } from '@deriv-com/analytics';
 import { TServerError } from '../../../Types';
 
 export const PASSKEY_STATUS_CODES = {
@@ -38,11 +38,10 @@ export const clearTimeOut = (timeout_ref: React.MutableRefObject<NodeJS.Timeout 
 };
 
 export const passkeysMenuActionEventTrack = (
-    action: string,
+    action: TEvents['ce_passkey_account_settings_form']['action'],
     additional_data: { error_message?: string; subform_name?: string } = {}
 ) => {
     Analytics.trackEvent('ce_passkey_account_settings_form', {
-        //@ts-expect-error [TODO] type not found in @deriv-analytics
         action,
         form_name: 'ce_passkey_account_settings_form',
         operating_system: getOSNameWithUAParser(),

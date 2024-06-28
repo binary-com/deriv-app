@@ -598,9 +598,9 @@ type TClientStore = {
     is_wallet_migration_request_is_in_progress: boolean;
     is_passkey_supported: boolean;
     setIsPasskeySupported: (value: boolean) => void;
-    should_show_effortless_login_modal: boolean;
-    setShouldShowEffortlessLoginModal: (value: boolean) => void;
-    fetchShouldShowEffortlessLoginModal: () => void;
+    should_show_passkey_notification: boolean;
+    setShouldShowPasskeyNotification: (value: boolean) => void;
+    fetchShouldShowPasskeyNotification: () => void;
     exchange_rates: Record<string, Record<string, number>>;
     getExchangeRate: (base_currency: string, target_currency: string) => number;
     subscribeToExchangeRate: (base_currency: string, target_currency: string) => Promise<void>;

@@ -1,9 +1,10 @@
 import classNames from 'classnames';
 import React from 'react';
 import { Button, Icon, Text } from '@deriv/components';
-import { BinaryLink } from 'App/Components/Routes';
 import { isEmptyObject, toTitleCase } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
+import { Analytics } from '@deriv-com/analytics';
+import { BinaryLink } from 'App/Components/Routes';
 
 type TActionProps = ReturnType<typeof useStore>['notifications']['notifications'][0]['action'];
 type TNotificationMessage = ReturnType<typeof useStore>['notifications']['notifications'][0];
@@ -40,6 +41,14 @@ const NotificationsList = observer(() => {
         }
     };
 
+    const onActionTrackEvent = (key: string) => {
+        Analytics.trackEvent('ce_notification_form', {
+            action: 'click_cta',
+            form_name: 'ce_notification_form',
+            notification_key: key,
+        });
+    };
+
     return (
         <React.Fragment>
             {notifications_array.map(item => (
@@ -61,7 +70,10 @@ const NotificationsList = observer(() => {
                             <React.Fragment>
                                 {getButtonSettings(item)?.route ? (
                                     <BinaryLink
-                                        onClick={toggleNotificationsModal}
+                                        onClick={() => {
+                                            toggleNotificationsModal();
+                                            onActionTrackEvent(item.key);
+                                        }}
                                         active_class='notifications-item'
                                         className={classNames(
                                             'dc-btn',
@@ -77,7 +89,10 @@ const NotificationsList = observer(() => {
                                 ) : (
                                     <Button
                                         className={classNames('dc-btn--secondary', 'notifications-item__cta-button')}
-                                        onClick={getButtonSettings(item)?.onClick}
+                                        onClick={() => {
+                                            getButtonSettings(item)?.onClick();
+                                            onActionTrackEvent(item.key);
+                                        }}
                                     >
                                         <Text weight='bold' size='xxs'>
                                             {getButtonSettings(item)?.text}

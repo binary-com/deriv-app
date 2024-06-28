@@ -1,11 +1,12 @@
 import React from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { MobileDialog, useOnClickOutside } from '@deriv/components';
+import { Analytics } from '@deriv-com/analytics';
 import { LocalStore } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
-import NotificationListWrapper from './notification-list-wrapper';
 import { useDevice } from '@deriv-com/ui';
+import NotificationListWrapper from './notification-list-wrapper';
 
 const NotificationsDialog = observer(() => {
     const { client, notifications } = useStore();
@@ -41,6 +42,12 @@ const NotificationsDialog = observer(() => {
             p2p_settings[loginid].is_notifications_visible = false;
         }
         LocalStore.setObject('p2p_settings', p2p_settings);
+
+        Analytics.trackEvent('ce_notification_form', {
+            action: 'clear_all',
+            form_name: 'ce_notification_form',
+            notification_num: notifications_array.length,
+        });
 
         notifications_array.forEach(({ key, should_show_again }) => {
             removeNotificationMessageByKey({ key });
