@@ -54,13 +54,26 @@
         }
     }
     &__pic {
+        @include rtl {
+            -webkit-transform: scaleX(-1);
+            -moz-transform: scaleX(-1);
+            -o-transform: scaleX(-1);
+            transform: scaleX(-1);
+        }
+
         @include desktop {
             position: absolute;
             right: -3rem;
             bottom: 1rem;
             height: 12.8rem;
             width: 23.5rem;
+
+            @include rtl {
+                right: unset;
+                left: -3rem;
+            }
         }
+
         @include mobile {
             position: relative;
             width: 100%;

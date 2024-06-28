@@ -30,6 +30,13 @@
         right: -8rem;
         top: 0;
 
+        @include desktop {
+            @include rtl {
+                right: unset;
+                left: -8rem;
+            }
+        }
+
         @include mobile {
             position: relative;
             right: 0;

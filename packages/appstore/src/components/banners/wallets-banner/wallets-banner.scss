@@ -49,9 +49,19 @@
             top: 0;
             right: 8rem;
 
+            @include rtl {
+                right: unset;
+                left: 8rem;
+            }
+
             @include mobile {
                 top: -2.6rem;
                 right: -5.35rem;
+
+                @include rtl {
+                    right: unset;
+                    left: -5.35rem;
+                }
             }
         }
     }
@@ -119,9 +129,19 @@
             top: 0;
             right: 8rem;
 
+            @include rtl {
+                right: unset;
+                left: 8rem;
+            }
+
             @include mobile {
                 top: -2.6rem;
                 right: -5.35rem;
+
+                @include rtl {
+                    right: unset;
+                    left: -5.35rem;
+                }
             }
         }
     }
@@ -147,8 +167,23 @@
             right: 7.5rem;
             top: 0;
 
+            @include rtl {
+                right: unset;
+                left: 7.5rem;
+
+                -webkit-transform: scaleX(-1);
+                -moz-transform: scaleX(-1);
+                -o-transform: scaleX(-1);
+                transform: scaleX(-1);
+            }
+
             @include mobile {
                 right: -3rem;
+
+                @include rtl {
+                    right: unset;
+                    left: -3rem;
+                }
             }
         }
     }
