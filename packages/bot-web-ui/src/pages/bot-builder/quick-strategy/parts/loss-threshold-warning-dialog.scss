@@ -13,21 +13,23 @@
                 max-width: 90%;
             }
         }
+
         &__footer {
             @include mobile {
                 display: flex;
                 width: 100%;
-                flex-wrap: unset;
             }
         }
-        &__button:not(:last-child) {
-            @include mobile {
-                margin-right: 6px;
-            }
-        }
+
         &__button {
             @include mobile {
-                margin-left: 6px;
+                margin-inline-start: 0;
+            }
+        }
+
+        &__dialog {
+            .dc-checkbox__box {
+                margin: 0 8px 0 0;
             }
         }
     }
