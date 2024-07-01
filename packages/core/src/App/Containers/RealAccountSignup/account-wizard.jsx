@@ -296,7 +296,6 @@ const AccountWizard = observer(props => {
         delete clone?.agreed_tnc;
         delete clone?.agreed_tos;
         delete clone?.confirmation_checkbox;
-        delete clone?.crs_confirmation;
 
         if (is_residence_self_declaration_required && clone?.resident_self_declaration)
             clone.resident_self_declaration = 1;

@@ -22,6 +22,7 @@ module.exports = function (env) {
             'terms-of-use-config': 'Configs/terms-of-use-config',
             'trading-assessment-config': 'Configs/trading-assessment-config',
             'test-warning-modal': 'Components/trading-assessment/test-warning-modal',
+            'employment-tax-info-config':'Configs/employment-tax-info-config',
         },
         mode: IS_RELEASE ? 'production' : 'development',
         module: {
