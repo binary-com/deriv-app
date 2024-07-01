@@ -1,7 +1,7 @@
 import React, { FC, lazy, Suspense } from 'react';
 import { usePOA, usePOI } from '@deriv/api-v2';
+import { Loader } from '@deriv-com/ui';
 import { WalletButton, WalletText } from '../../../../components/Base';
-import { Loader } from '../../../../components/Loader';
 import { useModal } from '../../../../components/ModalProvider';
 import useDevice from '../../../../hooks/useDevice';
 import { THooks } from '../../../../types';

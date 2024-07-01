@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDepositCryptoAddress } from '@deriv/api-v2';
-import { Loader } from '../../../../components';
+import { Loader } from '@deriv-com/ui';
 import { Divider } from '../../../../components/Base';
 import { isServerError } from '../../../../utils/utils';
 import { DepositErrorScreen } from '../../screens';

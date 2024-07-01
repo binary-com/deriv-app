@@ -8,6 +8,10 @@ jest.mock('@deriv/api-v2', () => ({
     useCashierFiatAddress: jest.fn(),
 }));
 
+jest.mock('@deriv-com/ui', () => ({
+    Loader: jest.fn(() => <div>Loading...</div>),
+}));
+
 jest.mock('../../../screens', () => ({
     DepositErrorScreen: jest.fn(({ error }) => <div>MockedDepositErrorScreen - {error.message}</div>),
 }));
@@ -26,7 +30,7 @@ describe('DepositFiat', () => {
 
         render(<DepositFiat />);
 
-        expect(screen.getByTestId('dt_wallets_loader')).toBeInTheDocument();
+        expect(screen.getByText('Loading...')).toBeInTheDocument();
     });
 
     it('should render error screen for fiat deposit error', () => {
@@ -48,7 +52,7 @@ describe('DepositFiat', () => {
         });
         render(<DepositFiat />);
 
-        expect(screen.getByTestId('dt_wallets_loader')).toBeInTheDocument();
+        expect(screen.getByText('Loading...')).toBeInTheDocument();
         expect(screen.queryByTestId('dt_deposit-fiat-iframe')).not.toBeInTheDocument();
     });
 

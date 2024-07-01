@@ -100,7 +100,7 @@
         "@deriv-com/quill-tokens": "^2.0.4",
         "@deriv-com/quill-ui": "^1.10.19",
         "@deriv-com/translations": "^1.3.3",
-        "@deriv-com/ui": "^1.28.1",
+        "@deriv-com/ui": "^1.28.3",
         "@deriv-com/utils": "^0.0.25",
         "@deriv/account": "^1.0.0",
         "@deriv/api": "^1.0.0",

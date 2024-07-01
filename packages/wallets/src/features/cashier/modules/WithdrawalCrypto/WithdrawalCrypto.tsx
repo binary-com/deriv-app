@@ -1,5 +1,6 @@
 import React from 'react';
-import { Loader, WalletText } from '../../../../components';
+import { Loader } from '@deriv-com/ui';
+import { WalletText } from '../../../../components';
 import { isServerError } from '../../../../utils/utils';
 import { WithdrawalErrorScreen } from '../../screens';
 import { TransactionStatus } from '../TransactionStatus';

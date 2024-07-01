@@ -1,6 +1,7 @@
 import React from 'react';
 import { useCtraderAccountsList } from '@deriv/api-v2';
-import { Loader, ModalStepWrapper, ModalWrapper } from '../../../../components';
+import { Loader } from '@deriv-com/ui';
+import { ModalStepWrapper, ModalWrapper } from '../../../../components';
 import { useModal } from '../../../../components/ModalProvider';
 import useDevice from '../../../../hooks/useDevice';
 import { THooks } from '../../../../types';

@@ -9,7 +9,8 @@ import {
     useCryptoConfig,
     useCurrencyConfig,
 } from '@deriv/api-v2';
-import { Loader, WalletsActionScreen } from '../../../../components';
+import { Loader } from '@deriv-com/ui';
+import { WalletsActionScreen } from '../../../../components';
 import getWithdrawalLockedDesc, { getWithdrawalLimitReachedDesc } from './WithdrawalLockedContent';
 import './WithdrawalLocked.scss';
 

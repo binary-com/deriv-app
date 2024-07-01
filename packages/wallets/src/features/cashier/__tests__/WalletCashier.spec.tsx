@@ -8,6 +8,10 @@ jest.mock('@deriv/api-v2', () => ({
     useActiveWalletAccount: jest.fn(),
 }));
 
+jest.mock('@deriv-com/ui', () => ({
+    Loader: jest.fn(() => <div>Loading...</div>),
+}));
+
 jest.mock('../components/', () => ({
     ...jest.requireActual('../components/'),
     WalletCashierContent: jest.fn(() => (
@@ -28,7 +32,7 @@ describe('<WalletCashier />', () => {
         });
 
         render(<WalletCashier />);
-        expect(screen.getByTestId('dt_wallets_loader')).toBeInTheDocument();
+        expect(screen.getByText('Loading...')).toBeInTheDocument();
     });
 
     it('should render the WalletCashierContent', () => {

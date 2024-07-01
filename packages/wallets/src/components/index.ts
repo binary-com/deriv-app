@@ -8,7 +8,6 @@ export * from './Dropzone';
 export * from './FadedAnimatedList';
 export * from './FlowField';
 export * from './FlowProvider';
-export * from './Loader';
 export * from './OptionsAndMultipliersListing';
 export * from './SentEmailContent';
 export * from './SkeletonLoader';

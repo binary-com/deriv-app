@@ -1,6 +1,6 @@
 import React, { lazy } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Loader } from '../components/Loader';
+import { Loader } from '@deriv-com/ui';
 import { Page404 } from '../components/Page404';
 
 const LazyWalletsListingRoute = lazy(

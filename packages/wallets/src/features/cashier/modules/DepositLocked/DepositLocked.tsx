@@ -8,7 +8,8 @@ import {
     useSettings,
     useWebsiteStatus,
 } from '@deriv/api-v2';
-import { Loader, WalletsActionScreen } from '../../../../components';
+import { Loader } from '@deriv-com/ui';
+import { WalletsActionScreen } from '../../../../components';
 import getDepositLockedDesc from './DepositLockedContent';
 import './DepositLocked.scss';
 

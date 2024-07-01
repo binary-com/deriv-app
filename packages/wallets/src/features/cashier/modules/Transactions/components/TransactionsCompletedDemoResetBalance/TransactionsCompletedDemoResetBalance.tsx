@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import moment from 'moment';
 import { useActiveWalletAccount, useAllAccountsList, useTransactions } from '@deriv/api-v2';
-import { Loader } from '../../../../../../components';
+import { Loader } from '@deriv-com/ui';
 import { WalletText } from '../../../../../../components/Base';
 import { TransactionsCompletedRow } from '../TransactionsCompletedRow';
 import { TransactionsNoDataState } from '../TransactionsNoDataState';

@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import Loader from '../../Loader/Loader';
+import { Loader } from '@deriv-com/ui';
 import { WalletTextFieldProps } from '../WalletTextField/WalletTextField';
 
 export interface WalletPasswordFieldProps extends WalletTextFieldProps {

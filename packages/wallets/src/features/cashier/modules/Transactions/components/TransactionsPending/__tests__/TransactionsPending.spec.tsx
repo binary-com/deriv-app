@@ -18,7 +18,7 @@ jest.mock('@deriv/api-v2', () => ({
     })),
 }));
 
-jest.mock('../../../../../../../components', () => ({
+jest.mock('@deriv-com/ui', () => ({
     Loader: jest.fn(() => <div>Loading...</div>),
 }));
 

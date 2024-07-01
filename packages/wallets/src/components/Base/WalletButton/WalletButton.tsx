@@ -1,7 +1,7 @@
 import React, { ComponentProps, CSSProperties, FC, PropsWithChildren, ReactElement } from 'react';
 import classNames from 'classnames';
+import { Loader } from '@deriv-com/ui';
 import { TGenericSizes } from '../../../types';
-import { Loader } from '../../Loader';
 import { WalletText } from '../WalletText';
 import './WalletButton.scss';
 

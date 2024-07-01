@@ -1,7 +1,8 @@
 import React from 'react';
 import { Trans } from 'react-i18next';
 import { useAccountStatus, useActiveWalletAccount, useAuthentication, useCashierValidation } from '@deriv/api-v2';
-import { Loader, WalletsActionScreen } from '../../../../components';
+import { Loader } from '@deriv-com/ui';
+import { WalletsActionScreen } from '../../../../components';
 import getCashierLockedDesc, { getSystemMaintenanceContent } from './CashierLockedContent';
 import './CashierLocked.scss';
 

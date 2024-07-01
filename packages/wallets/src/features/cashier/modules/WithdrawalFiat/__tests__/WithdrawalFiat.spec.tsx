@@ -7,6 +7,10 @@ jest.mock('@deriv/api-v2', () => ({
     useCashierFiatAddress: jest.fn(),
 }));
 
+jest.mock('@deriv-com/ui', () => ({
+    Loader: jest.fn(() => <div>Loading...</div>),
+}));
+
 jest.mock('../../../screens', () => ({
     WithdrawalErrorScreen: jest.fn(({ error }) => <div>MockedWithdrawalErrorScreen - {error.message}</div>),
 }));
@@ -26,7 +30,7 @@ describe('<WithdrawalFiat />', () => {
 
         render(<WithdrawalFiat verificationCode={verificationCode} />);
 
-        expect(screen.getByTestId('dt_wallets_loader')).toBeInTheDocument();
+        expect(screen.getByText('Loading...')).toBeInTheDocument();
     });
 
     it('should render error screen for fiat withdrawal error', () => {
@@ -48,7 +52,7 @@ describe('<WithdrawalFiat />', () => {
 
         render(<WithdrawalFiat verificationCode={verificationCode} />);
 
-        expect(screen.getByTestId('dt_wallets_loader')).toBeInTheDocument();
+        expect(screen.getByText('Loading...')).toBeInTheDocument();
     });
 
     it('should render the iframe with the withdrawal url from API response', () => {

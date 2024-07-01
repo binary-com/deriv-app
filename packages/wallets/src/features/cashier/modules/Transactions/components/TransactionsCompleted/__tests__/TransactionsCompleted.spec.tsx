@@ -13,10 +13,8 @@ jest.mock('@deriv/api-v2', () => ({
     })),
 }));
 
-jest.mock('../../../../../../../components', () => ({
-    __esModule: true,
+jest.mock('@deriv-com/ui', () => ({
     Loader: jest.fn(() => <div>Loading...</div>),
-    WalletText: jest.fn(({ children }) => <span>{children}</span>),
 }));
 
 jest.mock('../../TransactionsCompletedRow', () => ({

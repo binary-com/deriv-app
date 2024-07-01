@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useActiveWalletAccount } from '@deriv/api-v2';
-import { Loader } from '../../components';
+import { Loader } from '@deriv-com/ui';
 import { WalletCashierContent, WalletCashierHeader } from './components';
 import { CashierScrollContext } from './context';
 import './WalletCashier.scss';

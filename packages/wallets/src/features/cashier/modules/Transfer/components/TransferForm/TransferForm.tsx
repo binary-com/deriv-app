@@ -1,6 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import { Formik } from 'formik';
-import { Loader, WalletButton } from '../../../../../../components';
+import { Loader } from '@deriv-com/ui';
+import { WalletButton } from '../../../../../../components';
 import useDevice from '../../../../../../hooks/useDevice';
 import { useTransfer } from '../../provider';
 import type { TInitialTransferFormValues } from '../../types';

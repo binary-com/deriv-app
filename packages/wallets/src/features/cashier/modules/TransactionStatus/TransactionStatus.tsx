@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useActiveWalletAccount, useCryptoTransactions } from '@deriv/api-v2';
 import { LegacyWarningIcon } from '@deriv/quill-icons';
-import { Loader } from '../../../../components';
+import { Loader } from '@deriv-com/ui';
 import { Divider, WalletText } from '../../../../components/Base';
 import { THooks } from '../../../../types';
 import { TransactionStatusError } from './components/TransactionStatusError';

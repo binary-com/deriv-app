@@ -9,6 +9,10 @@ import TransferForm from '../TransferForm';
 const mockAccounts = ['CR1', 'CR2'];
 let mockFormikValues: unknown;
 
+jest.mock('@deriv-com/ui', () => ({
+    Loader: jest.fn(() => <div>Loading...</div>),
+}));
+
 jest.mock('../../../../../../../hooks/useDevice', () => jest.fn());
 
 jest.mock('../../../provider', () => ({
@@ -57,7 +61,7 @@ describe('<TransferForm />', () => {
 
         render(<TransferForm />, { wrapper });
 
-        expect(screen.getByTestId('dt_wallets_loader')).toBeInTheDocument();
+        expect(screen.getByText('Loading...')).toBeInTheDocument();
     });
 
     it('should test that transfer button is disabled when fromAmount is 0', async () => {

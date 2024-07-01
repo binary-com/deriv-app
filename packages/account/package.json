@@ -33,7 +33,7 @@
         "@deriv-com/analytics": "1.5.9",
         "@deriv-com/translations": "^1.3.3",
         "@deriv-com/utils": "^0.0.25",
-        "@deriv-com/ui": "^1.28.1",
+        "@deriv-com/ui": "^1.28.3",
         "@deriv/api": "^1.0.0",
         "@deriv/components": "^1.0.0",
         "@deriv/hooks": "^1.0.0",

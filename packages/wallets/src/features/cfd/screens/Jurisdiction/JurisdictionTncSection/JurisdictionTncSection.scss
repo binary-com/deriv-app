@@ -24,6 +24,11 @@
         gap: 0.8rem;
         justify-content: center;
 
+        &-input {
+            all: revert;
+            accent-color: #ff444f;
+        }
+
         &__link {
             color: var(--brand-coral, #ff444f);
         }

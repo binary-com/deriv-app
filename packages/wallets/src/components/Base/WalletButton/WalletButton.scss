@@ -98,7 +98,8 @@ $size-map: (
     }
 
     &__loader {
-        .wallets-loader {
+        /* stylelint-disable-next-line selector-class-pattern */
+        .derivs-loader {
             width: 5rem;
             height: 1.2rem;
 

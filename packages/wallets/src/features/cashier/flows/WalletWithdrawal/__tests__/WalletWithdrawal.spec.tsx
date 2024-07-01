@@ -31,9 +31,8 @@ jest.mock('../../../screens', () => ({
     WithdrawalNoBalance: jest.fn(() => <div>WithdrawalNoBalance</div>),
 }));
 
-jest.mock('../../../../../components', () => ({
-    ...jest.requireActual('../../../../../components'),
-    Loader: jest.fn(() => <div>Loading</div>),
+jest.mock('@deriv-com/ui', () => ({
+    Loader: jest.fn(() => <div>Loading...</div>),
 }));
 
 const mockSwitchAccount = jest.fn();
@@ -171,7 +170,7 @@ describe('WalletWithdrawal', () => {
         });
 
         render(<WalletWithdrawal />, { wrapper });
-        expect(screen.getByText('Loading')).toBeInTheDocument();
+        expect(screen.getByText('Loading...')).toBeInTheDocument();
     });
 
     it('should test if WithdrawalNoBalance screen is rendered if the wallet balance has zero balance', () => {

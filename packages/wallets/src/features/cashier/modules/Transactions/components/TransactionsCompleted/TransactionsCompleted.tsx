@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import moment from 'moment';
 import { useActiveWalletAccount, useAllAccountsList, useInfiniteTransactions } from '@deriv/api-v2';
 import { TSocketRequestPayload } from '@deriv/api-v2/types';
-import { Loader } from '../../../../../../components';
+import { Loader } from '@deriv-com/ui';
 import { WalletText } from '../../../../../../components/Base';
 import { useCashierScroll } from '../../../../context';
 import { TransactionsCompletedRow } from '../TransactionsCompletedRow';
