@@ -1,11 +1,11 @@
-import InstrumentsIcons from '../../../../public/images/tradingInstruments';
+import getInstrumentsIcons from '../../../../public/images/tradingInstruments';
 import { THooks, TPlatforms } from '../../../../types';
 import { CFD_PLATFORMS, MARKET_TYPE } from '../../constants';
 import { JURISDICTION, MARKET_TYPE_SHORTCODE } from './constants';
 
 type THighlightedIconLabel = {
     highlighted: boolean;
-    icon: keyof typeof InstrumentsIcons;
+    icon: keyof ReturnType<typeof getInstrumentsIcons>;
     isAsterisk?: boolean;
     text: string;
 };

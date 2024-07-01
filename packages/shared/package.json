@@ -47,7 +47,7 @@
     },
     "dependencies": {
         "@deriv-com/analytics": "1.5.9",
-        "@deriv/quill-icons": "^1.22.10",
+        "@deriv/quill-icons": "^1.22.12",
         "@deriv/api-types": "1.0.172",
         "@deriv/translations": "^1.0.0",
         "@types/js-cookie": "^3.0.1",

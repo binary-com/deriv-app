@@ -116,7 +116,7 @@
         "@deriv/p2p": "^0.7.3",
         "@deriv/p2p-v2": "^1.0.0",
         "@deriv/quill-design": "^1.3.2",
-        "@deriv/quill-icons": "^1.22.10",
+        "@deriv/quill-icons": "^1.22.12",
         "@deriv/reports": "^1.0.0",
         "@deriv/shared": "^1.0.0",
         "@deriv/stores": "^1.0.0",
