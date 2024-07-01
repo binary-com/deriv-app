@@ -150,6 +150,7 @@ export default class RunPanelStore {
         let timer_counter = 1;
         if (window.sendRequestsStatistic) {
             performance.clearMeasures();
+            performance.mark('bot-start');
             // Log is sent every 10 seconds for 5 minutes
             this.timer = setInterval(() => {
                 window.sendRequestsStatistic(true);
