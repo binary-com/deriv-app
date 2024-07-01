@@ -6,6 +6,7 @@ import { MobileFullPageModal, Modal } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { localize } from '@deriv/translations';
 import { useDBotStore } from 'Stores/useDBotStore';
+import { DBOT_TABS } from 'Constants/bot-contents';
 import { rudderStackSendQsCloseEvent } from '../../../analytics/rudderstack-quick-strategy';
 import DesktopFormWrapper from './form-wrappers/desktop-form-wrapper';
 import MobileFormWrapper from './form-wrappers/mobile-form-wrapper';
@@ -37,12 +38,22 @@ const getErrorMessage = (dir: 'MIN' | 'MAX', value: number, type = 'DEFAULT') =>
     return errors[type][dir];
 };
 
-const FormikWrapper: React.FC<TFormikWrapper> = observer(({ children }) => {
-    const { quick_strategy } = useDBotStore();
-    const { selected_strategy, form_data, current_duration_min_max, initializeLossThresholdWarningData } =
-        quick_strategy;
+export const FormikWrapper: React.FC<TFormikWrapper> = observer(({ children }) => {
+    const { client } = useStore();
+    const { quick_strategy, dashboard, server_bot } = useDBotStore();
+    const {
+        selected_strategy,
+        form_data,
+        current_duration_min_max,
+        initializeLossThresholdWarningData,
+        onSubmit,
+        setValue,
+    } = quick_strategy;
+    const { active_tab } = dashboard;
+    const { setValueServerBot, createBot, setFormValues } = server_bot;
     const config: TConfigItem[][] = STRATEGIES[selected_strategy]?.fields;
     const [dynamic_schema, setDynamicSchema] = useState(Yup.object().shape({}));
+    const { SERVER_BOT } = DBOT_TABS;
     const is_mounted = useRef(true);
 
     let initial_value: TFormData | null = null;
@@ -50,7 +61,13 @@ const FormikWrapper: React.FC<TFormikWrapper> = observer(({ children }) => {
     const getSavedValues = () => {
         let data: TFormData | null = null;
         try {
-            data = JSON.parse(localStorage.getItem('qs-fields') ?? '{}');
+            const data = JSON.parse(
+                localStorage.getItem(active_tab === SERVER_BOT ? 'server-form-fields' : 'qs-fields') || '{}'
+            );
+            Object.keys(data).forEach(key => {
+                initial_value[key as keyof TFormData] = data[key];
+                setValue(key, data[key]);
+            });
         } catch {
             data = null;
         }
@@ -174,8 +191,16 @@ const FormikWrapper: React.FC<TFormikWrapper> = observer(({ children }) => {
     };
 
     const handleSubmit = (form_data: TFormData) => {
-        getErrors(form_data);
-        localStorage?.setItem('qs-fields', JSON.stringify(form_data));
+        const is_server_qs_form = active_tab === SERVER_BOT;
+        if (is_server_qs_form) {
+            localStorage?.setItem('server-form-fields', JSON.stringify(form_data));
+            setValueServerBot(form_data);
+            setFormValues(client?.currency);
+            createBot();
+        } else {
+            getErrors(form_data);
+            localStorage?.setItem('qs-fields', JSON.stringify(form_data));
+        }
         return form_data;
     };
 
