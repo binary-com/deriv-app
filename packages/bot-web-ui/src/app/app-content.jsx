@@ -52,6 +52,7 @@ const AppContent = observer(() => {
 
     function checkIfApiInitialized() {
         init_api_interval.current = setInterval(() => {
+            console.warn('test api', api_base?.api);
             if (api_base?.api) {
                 clearInterval(init_api_interval.current);
                 // Listen for proposal open contract messages to check
