@@ -1,4 +1,11 @@
 .wallets-list-card-dropdown {
+    &__balance {
+        &-loader {
+            width: 14.1rem;
+            height: 2rem;
+        }
+    }
+
     &__item {
         display: flex;
         gap: 1.6rem;

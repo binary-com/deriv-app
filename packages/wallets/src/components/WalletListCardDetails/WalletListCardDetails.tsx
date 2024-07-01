@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Trans } from 'react-i18next';
 import { useActiveWalletAccount } from '@deriv/api-v2';
-import { TSubscribedBalance } from '../../types';
 import { WalletText } from '../Base';
 import WalletListCardActions from '../WalletListCardActions/WalletListCardActions';
 import { WalletListCardBalance } from '../WalletListCardBalance';
 import WalletListCardDropdown from '../WalletListCardDropdown/WalletListCardDropdown';
 import './WalletListCardDetails.scss';
 
-const WalletListCardDetails: React.FC<TSubscribedBalance> = ({ balance }) => {
+const WalletListCardDetails = () => {
     const { data: activeWallet } = useActiveWalletAccount();
     const [isDemo, setIsDemo] = useState<boolean>(activeWallet?.is_virtual ?? false);
 
@@ -27,10 +26,10 @@ const WalletListCardDetails: React.FC<TSubscribedBalance> = ({ balance }) => {
                     <Trans defaults='USD Demo Wallet' />
                 </WalletText>
             ) : (
-                <WalletListCardDropdown balance={balance} />
+                <WalletListCardDropdown />
             )}
             <div className='wallets-list-details__content'>
-                <WalletListCardBalance balance={balance} />
+                <WalletListCardBalance />
                 <WalletListCardActions />
             </div>
         </div>

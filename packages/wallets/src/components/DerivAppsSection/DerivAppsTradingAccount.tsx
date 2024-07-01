@@ -4,18 +4,19 @@ import { useActiveLinkedToTradingAccount, useActiveWalletAccount, useAuthorize }
 import { displayMoney } from '@deriv/api-v2/src/utils';
 import { LabelPairedArrowUpArrowDownSmBoldIcon } from '@deriv/quill-icons';
 import useDevice from '../../hooks/useDevice';
-import { TSubscribedBalance } from '../../types';
+import useSubscribedBalance from '../../hooks/useSubscribedBalance';
 import { WalletText } from '../Base';
 import { WalletListCardBadge } from '../WalletListCardBadge';
 import { WalletMarketIcon } from '../WalletMarketIcon';
 
-const DerivAppsTradingAccount: React.FC<TSubscribedBalance> = ({ balance }) => {
+const DerivAppsTradingAccount = () => {
     const { isMobile } = useDevice();
     const history = useHistory();
     const { data: authorizeData } = useAuthorize();
-    const { data: balanceData, isLoading } = balance;
+    const { data: balanceData, isLoading: isBalanceLoading } = useSubscribedBalance();
     const { data: activeWallet } = useActiveWalletAccount();
     const { data: activeLinkedToTradingAccount } = useActiveLinkedToTradingAccount();
+    const balance = balanceData?.[activeLinkedToTradingAccount?.loginid ?? '']?.balance;
 
     return (
         <div className='wallets-deriv-apps-section wallets-deriv-apps-section__border'>
@@ -27,12 +28,12 @@ const DerivAppsTradingAccount: React.FC<TSubscribedBalance> = ({ balance }) => {
                     <WalletText size='sm'>Options</WalletText>
                     <WalletListCardBadge isDemo={activeWallet?.is_virtual} label={activeWallet?.landing_company_name} />
                 </div>
-                {isLoading ? (
+                {isBalanceLoading ? (
                     <div className='wallets-skeleton wallets-deriv-apps-balance-loader' />
                 ) : (
                     <WalletText size='sm' weight='bold'>
                         {displayMoney(
-                            balanceData?.accounts?.[activeLinkedToTradingAccount?.loginid ?? '']?.balance || 0,
+                            balance ?? 0,
                             activeLinkedToTradingAccount?.currency_config?.display_code || 'USD',
                             {
                                 fractional_digits: activeLinkedToTradingAccount?.currency_config?.fractional_digits,

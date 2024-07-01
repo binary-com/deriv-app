@@ -1,7 +1,6 @@
 import React from 'react';
 import { useActiveWalletAccount } from '@deriv/api-v2';
 import { render, screen } from '@testing-library/react';
-import { TSubscribedBalance } from '../../../types';
 import WalletListCardDetails from '../WalletListCardDetails';
 
 jest.mock('@deriv/api-v2', () => ({
@@ -28,43 +27,13 @@ jest.mock('../../WalletListCardDropdown/WalletListCardDropdown', () => ({
     default: jest.fn(() => <div>Mocked WalletListCardDropdown</div>),
 }));
 
-const mockBalanceData: TSubscribedBalance['balance'] = {
-    data: {
-        accounts: {
-            1234567: {
-                balance: 1000.0,
-                converted_amount: 1000.0,
-                currency: 'USD',
-                demo_account: 0,
-                status: 1,
-                type: 'deriv',
-            },
-            7654321: {
-                balance: 1.0,
-                converted_amount: 1.0,
-                currency: 'BTC',
-                demo_account: 1,
-                status: 1,
-                type: 'deriv',
-            },
-        },
-        balance: 9990,
-        currency: 'USD',
-        loginid: 'CRW1314',
-    },
-    error: undefined,
-    isIdle: false,
-    isLoading: false,
-    isSubscribed: false,
-};
-
 describe('WalletListCardDetails', () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
     it('should render with default components correctly for real account', () => {
-        render(<WalletListCardDetails balance={mockBalanceData} />);
+        render(<WalletListCardDetails />);
 
         expect(screen.getByText('Mocked WalletListCardActions')).toBeInTheDocument();
         expect(screen.getByText('Mocked WalletListCardBalance')).toBeInTheDocument();
@@ -77,7 +46,7 @@ describe('WalletListCardDetails', () => {
                 is_virtual: true,
             },
         });
-        render(<WalletListCardDetails balance={mockBalanceData} />);
+        render(<WalletListCardDetails />);
 
         expect(screen.getByText('Mocked WalletListCardActions')).toBeInTheDocument();
         expect(screen.getByText('Mocked WalletListCardBalance')).toBeInTheDocument();

@@ -24,18 +24,6 @@ jest.mock('../../WalletCurrencyCard', () => ({
     WalletCurrencyCard: jest.fn(() => <div>Mocked WalletCurrencyCard</div>),
 }));
 
-const mockedData = {
-    data: {
-        accounts: {},
-        balance: 1000,
-        currency: 'USD',
-    },
-    error: undefined,
-    isIdle: false,
-    isLoading: false,
-    isSubscribed: false,
-};
-
 describe('WalletListCard', () => {
     beforeEach(() => {
         mockedUseDevice.mockReturnValue({ isDesktop: true, isMobile: false, isTablet: false });
@@ -46,7 +34,7 @@ describe('WalletListCard', () => {
     });
 
     it('should render with components correctly', () => {
-        render(<WalletListCard balance={mockedData} />);
+        render(<WalletListCard />);
 
         expect(screen.getByText('Mocked WalletCurrencyCard')).toBeInTheDocument();
         expect(screen.getByText('Mocked WalletListCardDetails')).toBeInTheDocument();
@@ -58,7 +46,7 @@ describe('WalletListCard', () => {
                 is_virtual: true,
             },
         });
-        render(<WalletListCard balance={mockedData} />);
+        render(<WalletListCard />);
 
         expect(screen.getByText('Mocked WalletCurrencyCard')).toBeInTheDocument();
         expect(screen.getByText('Mocked WalletListCardDetails')).toBeInTheDocument();

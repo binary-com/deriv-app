@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useActiveWalletAccount, useBalanceSubscription } from '@deriv/api-v2';
+import { useActiveWalletAccount } from '@deriv/api-v2';
 import { displayMoney } from '@deriv/api-v2/src/utils';
 import {
     LegacyClose2pxIcon,
@@ -14,6 +14,7 @@ import {
 import { WalletCurrencyIcon, WalletGradientBackground, WalletText } from '../../../../components';
 import { WalletListCardBadge } from '../../../../components/WalletListCardBadge';
 import useDevice from '../../../../hooks/useDevice';
+import useSubscribedBalance from '../../../../hooks/useSubscribedBalance';
 import i18n from '../../../../translations/i18n';
 import './WalletCashierHeader.scss';
 
@@ -64,28 +65,20 @@ const virtualAccountTabs = [
 
 const WalletCashierHeader: React.FC<TProps> = ({ hideWalletDetails }) => {
     const { data: activeWallet } = useActiveWalletAccount();
-    const { data: balanceData, isLoading, subscribe, unsubscribe } = useBalanceSubscription();
+    const { data: balanceData, isLoading: isBalanceLoading } = useSubscribedBalance();
     const { isMobile } = useDevice();
     const activeTabRef = useRef<HTMLButtonElement>(null);
     const history = useHistory();
     const location = useLocation();
 
     const tabs = activeWallet?.is_virtual ? virtualAccountTabs : realAccountTabs;
+    const balance = balanceData?.[activeWallet?.loginid ?? '']?.balance;
 
     useEffect(() => {
         if (isMobile && activeTabRef.current) {
             activeTabRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'center' });
         }
     }, [location.pathname, isMobile]);
-
-    useEffect(() => {
-        subscribe({
-            loginid: activeWallet?.loginid,
-        });
-        return () => {
-            unsubscribe();
-        };
-    }, [activeWallet?.loginid, subscribe, unsubscribe]);
 
     return (
         <WalletGradientBackground
@@ -116,11 +109,14 @@ const WalletCashierHeader: React.FC<TProps> = ({ hideWalletDetails }) => {
                                 />
                             )}
                         </div>
-                        {isLoading ? (
-                            <div className='wallets-skeleton wallets-cashier-header__loader' />
+                        {isBalanceLoading ? (
+                            <div
+                                className='wallets-skeleton wallets-cashier-header__loader'
+                                data-testid='dt_wallets_cashier_header_balance_loader'
+                            />
                         ) : (
                             <WalletText color={activeWallet?.is_virtual ? 'white' : 'general'} size='xl' weight='bold'>
-                                {displayMoney?.(balanceData?.balance ?? 0, activeWallet?.currency || '', {
+                                {displayMoney?.(balance ?? 0, activeWallet?.currency || '', {
                                     fractional_digits: activeWallet?.currency_config?.fractional_digits,
                                 })}
                             </WalletText>

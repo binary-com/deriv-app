@@ -1,8 +1,7 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { CFDPlatformsList } from '../../features';
 import useDevice from '../../hooks/useDevice';
-import { TSubscribedBalance } from '../../types';
 import { OptionsAndMultipliersListing } from '../OptionsAndMultipliersListing';
 import {
     WalletsPrimaryTabList,
@@ -12,7 +11,7 @@ import {
 } from '../WalletsPrimaryTabs';
 import './AccountsList.scss';
 
-const AccountsList: FC<TSubscribedBalance> = ({ balance }) => {
+const AccountsList = () => {
     const { isMobile } = useDevice();
     const { t } = useTranslation();
 
@@ -25,7 +24,7 @@ const AccountsList: FC<TSubscribedBalance> = ({ balance }) => {
                         <CFDPlatformsList />
                     </WalletsPrimaryTabPanel>
                     <WalletsPrimaryTabPanel>
-                        <OptionsAndMultipliersListing balance={balance} />
+                        <OptionsAndMultipliersListing />
                     </WalletsPrimaryTabPanel>
                 </WalletsPrimaryTabPanels>
             </WalletsPrimaryTabs>
@@ -36,7 +35,7 @@ const AccountsList: FC<TSubscribedBalance> = ({ balance }) => {
         <div className='wallets-accounts-list' data-testid='dt_desktop_accounts_list'>
             <div className='wallets-accounts-list__content'>
                 <CFDPlatformsList />
-                <OptionsAndMultipliersListing balance={balance} />
+                <OptionsAndMultipliersListing />
             </div>
         </div>
     );

@@ -1,14 +1,15 @@
 import React from 'react';
 import { useActiveWalletAccount } from '@deriv/api-v2';
 import { displayMoney } from '@deriv/api-v2/src/utils';
-import { TSubscribedBalance } from '../../types';
+import useSubscribedBalance from '../../hooks/useSubscribedBalance';
 import { WalletText } from '../Base';
 import './WalletListCardBalance.scss';
 
-const WalletListCardBalance: React.FC<TSubscribedBalance> = ({ balance }) => {
-    const { data: activeWallet, isInitializing: isActiveWalletInitializing } = useActiveWalletAccount();
-    const { data: balanceData, isLoading: isBalanceLoading } = balance;
-    const showLoader = isBalanceLoading || isActiveWalletInitializing;
+const WalletListCardBalance = () => {
+    const { data: activeWallet, isInitializing: isActiveWalletInitializing, isLoading } = useActiveWalletAccount();
+    const { data: balanceData, isLoading: isBalanceLoading } = useSubscribedBalance();
+    const balance = balanceData?.[activeWallet?.loginid ?? '']?.balance;
+    const showLoader = isBalanceLoading || isActiveWalletInitializing || isLoading;
 
     return (
         <div className='wallets-balance__container'>
@@ -19,13 +20,9 @@ const WalletListCardBalance: React.FC<TSubscribedBalance> = ({ balance }) => {
                 />
             ) : (
                 <WalletText align='right' size='xl' weight='bold'>
-                    {displayMoney?.(
-                        balanceData?.accounts?.[activeWallet?.loginid ?? '']?.balance ?? 0,
-                        activeWallet?.currency ?? '',
-                        {
-                            fractional_digits: activeWallet?.currency_config?.fractional_digits,
-                        }
-                    )}
+                    {displayMoney?.(balance ?? 0, activeWallet?.currency ?? '', {
+                        fractional_digits: activeWallet?.currency_config?.fractional_digits,
+                    })}
                 </WalletText>
             )}
         </div>

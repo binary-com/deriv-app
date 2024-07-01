@@ -6,14 +6,13 @@ import { LabelPairedChevronRightCaptionRegularIcon } from '@deriv/quill-icons';
 import { optionsAndMultipliersContent } from '../../constants/constants';
 import useDevice from '../../hooks/useDevice';
 import { TRoute } from '../../routes/Router';
-import { TSubscribedBalance } from '../../types';
 import { WalletLink, WalletText } from '../Base';
 import { DerivAppsSection } from '../DerivAppsSection';
 import { TradingAccountCard } from '../TradingAccountCard';
 import LinkTitle from './LinkTitle';
 import './OptionsAndMultipliersListing.scss';
 
-const OptionsAndMultipliersListing: React.FC<TSubscribedBalance> = ({ balance }) => {
+const OptionsAndMultipliersListing = () => {
     const { isMobile } = useDevice();
     const history = useHistory();
     const { data: activeLinkedToTradingAccount } = useActiveLinkedToTradingAccount();
@@ -36,7 +35,7 @@ const OptionsAndMultipliersListing: React.FC<TSubscribedBalance> = ({ balance })
                         />
                     </WalletText>
                 </div>
-                <DerivAppsSection balance={balance} />
+                <DerivAppsSection />
             </section>
             <div className='wallets-options-and-multipliers-listing__content'>
                 {optionsAndMultipliersContent.map(account => {

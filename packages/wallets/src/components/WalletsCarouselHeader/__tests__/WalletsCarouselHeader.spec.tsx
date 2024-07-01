@@ -33,7 +33,7 @@ describe('WalletsCarouselHeader', () => {
     });
 
     it('should display loader when balance is loading', () => {
-        render(<WalletsCarouselHeader balance='100.00' currency='USD' isLoading />);
+        render(<WalletsCarouselHeader currency='USD' isBalanceLoading />);
 
         expect(screen.getByTestId('dt_wallets_carousel_header_balance_loader')).toBeInTheDocument();
     });

@@ -1,7 +1,8 @@
 import React from 'react';
-import { APIProvider, useActiveWalletAccount, useBalanceSubscription } from '@deriv/api-v2';
-import { render, screen, waitFor } from '@testing-library/react';
+import { APIProvider, useActiveWalletAccount } from '@deriv/api-v2';
+import { render, screen } from '@testing-library/react';
 import WalletsAuthProvider from '../../../../../AuthProvider';
+import useSubscribedBalance from '../../../../../hooks/useSubscribedBalance';
 import WalletCashierHeader from '../WalletCashierHeader';
 
 jest.mock('@deriv/api-v2', () => ({
@@ -9,6 +10,8 @@ jest.mock('@deriv/api-v2', () => ({
     useActiveWalletAccount: jest.fn(),
     useBalanceSubscription: jest.fn(),
 }));
+
+jest.mock('../../../../../hooks/useSubscribedBalance', () => jest.fn());
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
@@ -30,12 +33,13 @@ describe('<WalletCashierHeader/>', () => {
                 loginid: 'CR1',
             },
         });
-        (useBalanceSubscription as jest.Mock).mockReturnValue({
+        (useSubscribedBalance as jest.Mock).mockReturnValue({
             data: {
-                balance: 10,
+                CR1: {
+                    balance: 10,
+                },
             },
-            subscribe: jest.fn(),
-            unsubscribe: jest.fn(),
+            setBalanceData: jest.fn(),
         });
     });
 
@@ -51,41 +55,6 @@ describe('<WalletCashierHeader/>', () => {
 
         const balanceElement = screen.getByText('10.00 USD');
         expect(balanceElement).toBeInTheDocument();
-    });
-
-    it('should subscribe to the balance call when the header mounts', () => {
-        const mockSubscribe = jest.fn();
-
-        (useBalanceSubscription as jest.Mock).mockReturnValue({
-            data: {
-                balance: 10,
-            },
-            subscribe: mockSubscribe,
-            unsubscribe: jest.fn(),
-        });
-
-        render(<WalletCashierHeader hideWalletDetails={false} />, { wrapper });
-
-        expect(mockSubscribe).toBeCalledWith({ loginid: 'CR1' });
-    });
-
-    it('should unsubscribe from the balance call when the header unmounts', async () => {
-        const mockUnsubscribe = jest.fn();
-
-        (useBalanceSubscription as jest.Mock).mockReturnValue({
-            data: {
-                balance: 10,
-            },
-            subscribe: jest.fn(),
-            unsubscribe: mockUnsubscribe,
-        });
-
-        const { unmount } = render(<WalletCashierHeader hideWalletDetails={false} />, { wrapper });
-
-        unmount();
-        await waitFor(() => {
-            expect(mockUnsubscribe).toBeCalled();
-        });
     });
 
     it('should display real transfer tabs - Deposit, Withdraw, Transfer, Transaction', () => {

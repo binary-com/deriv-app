@@ -1,5 +1,4 @@
-import React, { lazy, useEffect } from 'react';
-import { useAuthorize, useBalanceSubscription } from '@deriv/api-v2';
+import React, { lazy } from 'react';
 import {
     WalletListHeader,
     WalletsAddMoreCarousel,
@@ -16,28 +15,16 @@ const LazyDesktopWalletsList = lazy(() => import('../../components/DesktopWallet
 
 const WalletsListingRoute: React.FC = () => {
     const { isMobile } = useDevice();
-    const { subscribe, unsubscribe, ...rest } = useBalanceSubscription();
-    const { isSuccess } = useAuthorize();
-    useEffect(() => {
-        if (!isSuccess) return;
-        subscribe({
-            account: 'all',
-        });
-        return () => {
-            unsubscribe();
-        };
-    }, [isSuccess, subscribe, unsubscribe]);
-
     return (
         <div className='wallets-listing-route'>
             <WalletListHeader />
             {isMobile ? (
                 <React.Suspense fallback={<WalletsResponsiveLoader />}>
-                    <LazyWalletsCarousel balance={{ ...rest }} />
+                    <LazyWalletsCarousel />
                 </React.Suspense>
             ) : (
                 <React.Suspense fallback={<WalletsCardLoader />}>
-                    <LazyDesktopWalletsList balance={{ ...rest }} />
+                    <LazyDesktopWalletsList />
                 </React.Suspense>
             )}
             <WalletsAddMoreCarousel />

@@ -1,13 +1,12 @@
 import React from 'react';
 import { useActiveWalletAccount } from '@deriv/api-v2';
-import { TSubscribedBalance } from '../../types';
 import { AccountsList } from '../AccountsList';
 import { WalletsCardLoader } from '../SkeletonLoader';
 import { WalletListCard } from '../WalletListCard';
 import { WalletsContainer } from '../WalletsContainer';
 import './DesktopWalletsList.scss';
 
-const DesktopWalletsList: React.FC<TSubscribedBalance> = ({ balance }) => {
+const DesktopWalletsList = () => {
     const { data: activeWallet, isInitializing } = useActiveWalletAccount();
 
     return (
@@ -16,9 +15,9 @@ const DesktopWalletsList: React.FC<TSubscribedBalance> = ({ balance }) => {
             {!isInitializing && (
                 <WalletsContainer
                     key={activeWallet && `wallets-card-${activeWallet?.loginid}`}
-                    renderHeader={() => <WalletListCard balance={balance} />}
+                    renderHeader={() => <WalletListCard />}
                 >
-                    <AccountsList balance={balance} />
+                    <AccountsList />
                 </WalletsContainer>
             )}
         </div>

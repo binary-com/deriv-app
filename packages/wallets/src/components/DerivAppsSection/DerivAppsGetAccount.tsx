@@ -3,8 +3,8 @@ import {
     useActiveLinkedToTradingAccount,
     useActiveWalletAccount,
     useCreateNewRealAccount,
-    useSettings,
     useInvalidateQuery,
+    useSettings,
 } from '@deriv/api-v2';
 import { toMoment } from '@deriv/utils';
 import { CFDSuccess } from '../../features/cfd/screens/CFDSuccess';
