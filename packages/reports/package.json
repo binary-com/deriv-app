@@ -78,7 +78,7 @@
     },
     "dependencies": {
         "@deriv-com/analytics": "1.5.9",
-        "@deriv-com/ui": "^1.28.1",
+        "@deriv-com/ui": "^1.28.3",
         "@deriv/components": "^1.0.0",
         "@deriv/deriv-api": "^1.0.15",
         "@deriv/api-types": "1.0.172",

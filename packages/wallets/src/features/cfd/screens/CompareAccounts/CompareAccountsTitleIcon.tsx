@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { useHover } from 'usehooks-ts';
+import { Divider } from '@deriv-com/ui';
 import { Tooltip, WalletText } from '../../../../components';
 import useDevice from '../../../../hooks/useDevice';
 import InfoIcon from '../../../../public/images/ic-info-outline.svg';
@@ -90,7 +91,7 @@ const CompareAccountsTitleIcon = ({ isDemo, marketType, platform, shortCode }: T
                     )}
                 </div>
             </div>
-            <hr className='wallets-compare-accounts-underline' />
+            <Divider color='var(--general-main-3)' height={0.5} margin='0.4rem 2.8rem' />
         </React.Fragment>
     );
 };

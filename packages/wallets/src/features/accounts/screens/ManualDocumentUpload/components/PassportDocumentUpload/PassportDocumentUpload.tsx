@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
-import { DatePicker, Dropzone, FlowTextField, useFlow } from '../../../../../../components';
-import { Divider, WalletText } from '../../../../../../components/Base';
+import { Divider } from '@deriv-com/ui';
+import { DatePicker, Dropzone, FlowTextField, useFlow, WalletText } from '../../../../../../components';
 import PassportPlaceholder from '../../../../../../public/images/accounts/passport-placeholder.svg';
 import { documentRequiredValidator, expiryDateValidator } from '../../../../validations';
 import { DocumentRuleHints } from '../DocumentRuleHints';
@@ -33,7 +33,7 @@ const PassportDocumentUpload = () => {
                     validationSchema={expiryDateValidator}
                 />
             </div>
-            <Divider />
+            <Divider color='var(--border-divider)' height={2} />
             <div className='wallets-passport-document-upload__document-upload'>
                 <WalletText>Next, upload the page of your passport that contains your photo.</WalletText>
                 <Dropzone

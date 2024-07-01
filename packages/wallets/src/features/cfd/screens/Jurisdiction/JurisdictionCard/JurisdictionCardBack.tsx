@@ -1,5 +1,6 @@
 import React, { Dispatch, FC, SetStateAction } from 'react';
 import { LegacyArrowLeft2pxIcon } from '@deriv/quill-icons';
+import { Divider } from '@deriv-com/ui';
 import { WalletText } from '../../../../../components/Base/WalletText';
 import IdCardIcon from '../../../../../public/images/ic-id-card.svg';
 import DocumentIcon from '../../../../../public/images/ic-id-number.svg';
@@ -59,6 +60,7 @@ const JurisdictionCardBack: FC<TJurisdictionCardBackProps> = ({ setIsFlipped, ve
                         </div>
                     );
                 })}
+                <Divider color='var(--wallets-banner-border-color)' height={2} />
                 <div className='wallets-jurisdiction-card-back__border' />
                 {verificationContents.statusReferences.map((statusReference, i) => {
                     return (

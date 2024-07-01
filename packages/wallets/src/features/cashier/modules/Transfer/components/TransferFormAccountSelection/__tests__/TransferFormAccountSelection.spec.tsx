@@ -4,6 +4,10 @@ import { useModal } from '../../../../../../../components/ModalProvider';
 import useDevice from '../../../../../../../hooks/useDevice';
 import TransferFormAccountSelection from '../TransferFormAccountSelection';
 
+jest.mock('@deriv-com/ui', () => ({
+    Divider: jest.fn(() => <div data-testid='wallets-divider' />),
+}));
+
 jest.mock('../../../../../../../hooks/useDevice', () => jest.fn());
 
 jest.mock('../../../../../../../components/ModalProvider', () => ({
@@ -167,8 +171,7 @@ describe('TransferFormAccountSelection', () => {
 
         const groups = screen.getAllByTestId('dt_wallets_transfer_form_account_selection_accounts_group');
         expect(groups).toHaveLength(2);
-        expect(groups[0]).toHaveClass('wallets-transfer-form-account-selection__accounts-group--divider');
-        expect(groups[1]).not.toHaveClass('wallets-transfer-form-account-selection__accounts-group--divider');
+        expect(screen.queryByTestId('wallets-divider')).toBeInTheDocument();
     });
 
     it('should not render dividers when there is only one group of accounts', () => {
@@ -184,8 +187,7 @@ describe('TransferFormAccountSelection', () => {
             <TransferFormAccountSelection {...singleGroupProps} />
         );
 
-        const groups = screen.getAllByTestId('dt_wallets_transfer_form_account_selection_accounts_group');
-        expect(groups[0]).not.toHaveClass('wallets-transfer-form-account-selection__accounts-group--divider');
+        expect(screen.queryByTestId('wallets-divider')).not.toBeInTheDocument();
         expect(screen.queryByText('Trading accounts linked with USD Wallet')).toBeInTheDocument();
         expect(screen.queryByText('Wallets')).not.toBeInTheDocument();
     });

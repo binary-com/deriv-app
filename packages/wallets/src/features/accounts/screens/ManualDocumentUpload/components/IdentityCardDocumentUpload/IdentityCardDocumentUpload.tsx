@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
-import { DatePicker, Divider, Dropzone, FlowTextField, useFlow, WalletText } from '../../../../../../components';
+import { Divider } from '@deriv-com/ui';
+import { DatePicker, Dropzone, FlowTextField, useFlow, WalletText } from '../../../../../../components';
 import IdentityCardBack from '../../../../../../public/images/accounts/document-back.svg';
 import IdentityCardFront from '../../../../../../public/images/accounts/identity-card-front.svg';
 import { documentRequiredValidator, expiryDateValidator } from '../../../../validations';
@@ -33,7 +34,7 @@ const IdentityCardDocumentUpload = () => {
                     validationSchema={expiryDateValidator}
                 />
             </div>
-            <Divider />
+            <Divider color='var(--border-divider)' height={2} />
             <div className='wallets-identity-card-document-upload__document-upload'>
                 <WalletText>Next, upload the front and back of your identity card.</WalletText>
                 <div className='wallets-identity-card-document-upload__dropzone'>

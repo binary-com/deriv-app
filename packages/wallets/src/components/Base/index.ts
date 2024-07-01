@@ -1,6 +1,5 @@
 export * from '../WalletsPrimaryTabs';
 export * from './ATMAmountInput';
-export * from './Divider';
 export * from './IconButton';
 export * from './InlineMessage';
 export * from './ModalStepWrapper';

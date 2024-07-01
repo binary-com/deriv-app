@@ -1,5 +1,6 @@
 import React from 'react';
-import { Divider, Dropzone, FlowTextField, useFlow, WalletText } from '../../../../../../components';
+import { Divider } from '@deriv-com/ui';
+import { Dropzone, FlowTextField, useFlow, WalletText } from '../../../../../../components';
 import NIMCSlipFront from '../../../../../../public/images/accounts/nimc-slip-front.svg';
 import ProofOfAgeIcon from '../../../../../../public/images/accounts/proof-of-age.svg';
 import { documentRequiredValidator } from '../../../../validations';
@@ -18,7 +19,7 @@ const NIMCSlipDocumentUpload = () => {
                 name='nimcNumber'
                 validationSchema={documentRequiredValidator('NIMC slip number')}
             />
-            <Divider />
+            <Divider color='var(--border-divider)' height={2} />
             <div className='wallets-nimc-slip-document-upload__document-section'>
                 <WalletText>Next, upload both of the following documents.</WalletText>
                 <div className='wallets-nimc-slip-document-upload__dropzones'>

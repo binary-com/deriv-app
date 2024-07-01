@@ -14,7 +14,7 @@
         "start": "rimraf dist && npm run test && npm run serve"
     },
     "dependencies": {
-        "@deriv-com/ui": "^1.28.1",
+        "@deriv-com/ui": "^1.28.3",
         "@deriv-com/utils": "^0.0.25",
         "@deriv/api-v2": "^1.0.0",
         "@deriv/integration": "^1.0.0",

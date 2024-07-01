@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
-import { DatePicker, Divider, Dropzone, FlowTextField, useFlow, WalletText } from '../../../../../../components';
+import { Divider } from '@deriv-com/ui';
+import { DatePicker, Dropzone, FlowTextField, useFlow, WalletText } from '../../../../../../components';
 import DrivingLicenseCardBack from '../../../../../../public/images/accounts/document-back.svg';
 import DrivingLicenseCardFront from '../../../../../../public/images/accounts/driving-license-front.svg';
 import { documentRequiredValidator, expiryDateValidator } from '../../../../validations';
@@ -34,7 +35,7 @@ const DrivingLicenseDocumentUpload = () => {
                     validationSchema={expiryDateValidator}
                 />
             </div>
-            <Divider />
+            <Divider color='var(--border-divider)' height={2} />
             <div className='wallets-driving-license-document-upload__document-upload'>
                 <WalletText>Next, upload the front and back of your driving licence.</WalletText>
                 <div className='wallets-driving-license-document-upload__dropzone'>

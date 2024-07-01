@@ -2,13 +2,11 @@
     width: 100%;
     height: 100%;
     padding-top: 2.4rem;
-    border-top: 0.2rem solid var(--system-light-7-secondary-background, #f2f3f4);
 
     @include mobile {
         padding-top: unset;
         margin-bottom: 0.8rem;
         border-top: unset;
-        border-bottom: 1px solid var(--system-light-6-hover-background, #e6e9e9);
     }
 
     &__header {

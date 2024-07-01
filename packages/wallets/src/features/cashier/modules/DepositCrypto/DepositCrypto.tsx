@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDepositCryptoAddress } from '@deriv/api-v2';
+import { Divider } from '@deriv-com/ui';
 import { Loader } from '../../../../components';
-import { Divider } from '../../../../components/Base';
 import { isServerError } from '../../../../utils/utils';
 import { DepositErrorScreen } from '../../screens';
 import { TransactionStatus } from '../TransactionStatus';
@@ -28,7 +28,7 @@ const DepositCrypto = () => {
                 <DepositCryptoCurrencyDetails />
                 <DepositCryptoAddress depositCryptoAddress={depositCryptoAddress} />
                 <DepositCryptoDisclaimers />
-                <Divider />
+                <Divider color='var(--border-divider)' height={2} />
                 <DepositCryptoTryFiatOnRamp />
             </div>
             <div className='wallets-deposit-crypto__side-pane'>

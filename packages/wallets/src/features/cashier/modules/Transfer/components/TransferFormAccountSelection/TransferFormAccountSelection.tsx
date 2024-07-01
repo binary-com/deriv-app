@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import { LegacyClose2pxIcon } from '@deriv/quill-icons';
+import { Divider } from '@deriv-com/ui';
 import { WalletText } from '../../../../../../components';
 import { useModal } from '../../../../../../components/ModalProvider';
 import useDevice from '../../../../../../hooks/useDevice';
@@ -78,38 +79,38 @@ const TransferFormAccountSelection: React.FC<TProps> = ({
                     const shouldShowDivider = !isMobile && !isSingleAccountsGroup && !isLastAccountsGroup;
 
                     return (
-                        <div
-                            className={classNames('wallets-transfer-form-account-selection__accounts-group', {
-                                'wallets-transfer-form-account-selection__accounts-group--divider': shouldShowDivider,
-                            })}
-                            data-testid='dt_wallets_transfer_form_account_selection_accounts_group'
-                            key={accountsGroupName}
-                        >
-                            <div className='wallets-transfer-form-account-selection__accounts-group-title'>
-                                <WalletText size='sm' weight='bold'>
-                                    {groupTitle}
-                                </WalletText>
-                                {isMobile && <TitleLine />}
+                        <React.Fragment key={accountsGroupName}>
+                            <div
+                                className='wallets-transfer-form-account-selection__accounts-group'
+                                data-testid='dt_wallets_transfer_form_account_selection_accounts_group'
+                            >
+                                <div className='wallets-transfer-form-account-selection__accounts-group-title'>
+                                    <WalletText size='sm' weight='bold'>
+                                        {groupTitle}
+                                    </WalletText>
+                                    {isMobile && <TitleLine />}
+                                </div>
+                                <div className='wallets-transfer-form-account-selection__grouped-accounts'>
+                                    {accounts.map(account => (
+                                        <button
+                                            className={classNames('wallets-transfer-form-account-selection__account', {
+                                                'wallets-transfer-form-account-selection__account--selected':
+                                                    account?.loginid === selectedAccount?.loginid,
+                                            })}
+                                            data-testid='dt_wallets_transfer_form_account_selection_account'
+                                            key={`account-selection-${account?.loginid}`}
+                                            onClick={() => {
+                                                onSelect(account);
+                                                modal.hide();
+                                            }}
+                                        >
+                                            <TransferFormAccountCard account={account} activeWallet={activeWallet} />
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
-                            <div className='wallets-transfer-form-account-selection__grouped-accounts'>
-                                {accounts.map(account => (
-                                    <button
-                                        className={classNames('wallets-transfer-form-account-selection__account', {
-                                            'wallets-transfer-form-account-selection__account--selected':
-                                                account?.loginid === selectedAccount?.loginid,
-                                        })}
-                                        data-testid='dt_wallets_transfer_form_account_selection_account'
-                                        key={`account-selection-${account?.loginid}`}
-                                        onClick={() => {
-                                            onSelect(account);
-                                            modal.hide();
-                                        }}
-                                    >
-                                        <TransferFormAccountCard account={account} activeWallet={activeWallet} />
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
+                            {shouldShowDivider && <Divider color='var(--border-divider)' height={4} />}
+                        </React.Fragment>
                     );
                 })}
                 {transferToHint && (
