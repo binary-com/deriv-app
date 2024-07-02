@@ -10,7 +10,7 @@ export default Engine =>
         observeBalance() {
             if (!api_base.api) return;
             const subscription = api_base.api.onMessage().subscribe(({ data }) => {
-                if (data.msg_type === 'balance') {
+                if (data?.msg_type === 'balance' && data?.balance) {
                     const {
                         balance: { balance: b, currency },
                     } = data;
