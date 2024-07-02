@@ -1,0 +1,14 @@
+{
+    "routes": [
+        {
+            "handle": "filesystem"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/index.html"
+        }
+    ],
+    "outputDirectory": "packages/core/dist",
+    "buildCommand": "echo ✅  Skipping build to use existing built files",
+    "installCommand": "echo ✅  Skipping install as we are using existing files"
+}

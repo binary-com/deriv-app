@@ -1,0 +1,60 @@
+name: Deriv App Vercel DR Workflow
+on:
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  build_test_and_publish:
+    name: Build, Test and Publish to Vercel Staging
+    runs-on: Runner_16cores_Deriv-app
+    environment: Staging
+    steps:
+    - name: Checkout
+      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+    - name: Setup Node
+      uses: "./.github/actions/setup_node"
+    - name: Install Dependencies
+      uses: "./.github/actions/npm_install_from_cache"
+    - name: Download Remote Config Backup File
+      uses: ./.github/actions/download_remote_config_backup
+      with:
+        REMOTE_CONFIG_URL: ${{ vars.REMOTE_CONFIG_URL }}
+    - name: Replace vercel.json with the Vercel Disaster Recovery config
+      run: cp vercel_DR.json vercel.json
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        NODE_ENV: production
+        CROWDIN_WALLETS_API_KEY: ${{ secrets.CROWDIN_WALLETS_API_KEY }}
+        IS_GROWTHBOOK_ENABLED: ${{ vars.IS_GROWTHBOOK_ENABLED }}
+        DATADOG_APPLICATION_ID: ${{ vars.DATADOG_APPLICATION_ID }}
+        DATADOG_CLIENT_TOKEN: ${{ vars.DATADOG_CLIENT_TOKEN }}
+        DATADOG_CLIENT_TOKEN_LOGS: ${{ vars.DATADOG_CLIENT_TOKEN_LOGS }}
+        DATADOG_SESSION_REPLAY_SAMPLE_RATE: ${{ vars.DATADOG_SESSION_REPLAY_SAMPLE_RATE }}
+        DATADOG_SESSION_SAMPLE_RATE: ${{ vars.DATADOG_SESSION_SAMPLE_RATE }}
+        DATADOG_SESSION_SAMPLE_RATE_LOGS: ${{ vars.DATADOG_SESSION_SAMPLE_RATE_LOGS }}
+        GD_API_KEY: ${{ secrets.GD_API_KEY }}
+        GD_APP_ID: ${{ secrets.GD_APP_ID }}
+        GD_CLIENT_ID: ${{ secrets.GD_CLIENT_ID }}
+        RUDDERSTACK_KEY: ${{ vars.RUDDERSTACK_KEY }}
+        GROWTHBOOK_CLIENT_KEY: ${{ vars.GROWTHBOOK_CLIENT_KEY }}
+        GROWTHBOOK_DECRYPTION_KEY: ${{ vars.GROWTHBOOK_DECRYPTION_KEY }}
+        REF_NAME: ${{ github.ref_name }}
+        REMOTE_CONFIG_URL: ${{ vars.REMOTE_CONFIG_URL }}
+        TRUSTPILOT_API_KEY: ${{ secrets.TRUSTPILOT_API_KEY }}
+    - name: Run tests
+      run: npm test
+    - name: Versioning
+      uses: "./.github/actions/versioning"
+      with:
+        release_type: staging
+    - name: Upload to vercel
+      uses: "deriv-com/shared-actions/.github/actions/vercel_DR_publish@master"
+      with:
+        VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+        VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        VERCEL_TOKEN: ${{ secrets.VERCEL_API_TOKEN }}
+        ENVIRONMENT: Staging
+        ALIAS_DOMAIN_URL: staging-app.binary.sx
+        VERCEL_SCOPE: deriv
