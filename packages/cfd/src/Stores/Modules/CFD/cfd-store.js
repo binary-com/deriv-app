@@ -468,7 +468,9 @@ export default class CFDStore extends BaseStore {
                     : { product: 'zero_spread' }
                 : {}),
             ...(values.server ? { server: values.server } : {}),
-            ...(this.jurisdiction_selected_shortcode ? { company: this.jurisdiction_selected_shortcode } : {}),
+            ...(this.jurisdiction_selected_shortcode && this.account_type.category === 'real'
+                ? { company: this.jurisdiction_selected_shortcode }
+                : {}),
             ...(this.jurisdiction_selected_shortcode !== Jurisdiction.LABUAN
                 ? type_request
                 : {
