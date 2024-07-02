@@ -1,12 +1,12 @@
 import React from 'react';
 import { Text } from '@deriv/components';
-import { AUTH_STATUS_CODES, MT5_ACCOUNT_STATUS, routes } from '@deriv/shared';
+import { AUTH_STATUS_CODES, MT5_ACCOUNT_STATUS, TRADING_PLATFORM_STATUS, routes } from '@deriv/shared';
 import { Localize } from '@deriv/translations';
 import { TAuthStatusCodes, TMT5AccountStatus } from '../Types/common.type';
 import { Link } from 'react-router-dom';
 
 const getStatusBadgeConfig = (
-    mt5_account_status: TMT5AccountStatus,
+    mt5_account_status: TMT5AccountStatus, // TODO: rename to be more generic for ctrader and dxtrade
     openFailedVerificationModal?: (selected_account_type: string) => void,
     selected_account_type?: string,
     setIsVerificationModalVisible?: (value: boolean) => void,
@@ -78,6 +78,16 @@ const getStatusBadgeConfig = (
         case MT5_ACCOUNT_STATUS.MIGRATED_WITHOUT_POSITION:
             return {
                 text: <Localize i18n_default_text='<0>Account closed</0>' components={[BadgeTextComponent]} />,
+                icon: 'IcAlertWarning',
+            };
+        case MT5_ACCOUNT_STATUS.UNDER_MAINTENANCE:
+            return {
+                text: <Localize i18n_default_text='<0>Server maintenance</0>' components={[BadgeTextComponent]} />,
+                icon: 'IcAlertWarning',
+            };
+        case TRADING_PLATFORM_STATUS.UNAVAILABLE:
+            return {
+                text: <Localize i18n_default_text='<0>Unavailable</0>' components={[BadgeTextComponent]} />,
                 icon: 'IcAlertWarning',
             };
         default:

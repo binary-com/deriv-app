@@ -14,7 +14,9 @@
 
         &--migrated_with_position,
         &--migrated_without_position,
-        &--pending {
+        &--pending,
+        &--under_maintenance,
+        &--unavailable {
             border-color: var(--status-warning);
             color: var(--status-warning);
         }

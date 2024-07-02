@@ -6,12 +6,14 @@ import {
     getAuthenticationStatusInfo,
     Jurisdiction,
     MT5_ACCOUNT_STATUS,
+    TRADING_PLATFORM_STATUS,
     makeLazyLoader,
     moduleLoader,
     setPerformanceValue,
+    WS,
 } from '@deriv/shared';
 import { useDevice } from '@deriv-com/ui';
-import { localize, Localize } from '@deriv/translations';
+import { localize } from '@deriv/translations';
 import { Analytics } from '@deriv-com/analytics';
 import ListingContainer from 'Components/containers/listing-container';
 import AddOptionsAccount from 'Components/add-options-account';
@@ -67,7 +69,13 @@ const CFDsListing = observer(() => {
         financial_restricted_countries,
     } = traders_hub;
 
-    const { setAccountType, toggleCTraderTransferModal, setProduct } = cfd;
+    const {
+        setAccountType,
+        toggleCTraderTransferModal,
+        setAccountUnavailableModal,
+        setServerMaintenanceModal,
+        setProduct,
+    } = cfd;
     const {
         account_status,
         is_landing_company_loaded,
@@ -90,6 +98,22 @@ const CFDsListing = observer(() => {
 
     const { has_svg_accounts_to_migrate } = useMT5SVGEligibleToMigrate();
     const getAuthStatus = (status_list: boolean[]) => status_list.some(status => status);
+
+    const getTradingPlatformStatus = async (platform?: string) => {
+        const { trading_platform_status: tradingPlatformStatus } = await WS.send({ trading_platform_status: 1 });
+        const status = tradingPlatformStatus.find((p: { platform: string }) => p.platform === platform)?.status;
+
+        switch (status) {
+            case TRADING_PLATFORM_STATUS.MAINTENANCE:
+                return setServerMaintenanceModal(true);
+            case TRADING_PLATFORM_STATUS.UNAVAILABLE:
+                return setAccountUnavailableModal(true);
+            case TRADING_PLATFORM_STATUS.ACTIVE:
+                return getAccount();
+            default:
+                break;
+        }
+    };
 
     const getMT5AccountAuthStatus = (current_acc_status?: string | null, jurisdiction?: string) => {
         if (jurisdiction) {
@@ -144,11 +168,15 @@ const CFDsListing = observer(() => {
                         return MT5_ACCOUNT_STATUS.MIGRATED_WITH_POSITION;
                     } else if (current_acc_status === 'migrated_without_position') {
                         return MT5_ACCOUNT_STATUS.MIGRATED_WITHOUT_POSITION;
+                    } else if (current_acc_status === 'under_maintenance') {
+                        return MT5_ACCOUNT_STATUS.UNDER_MAINTENANCE;
+                    } else if (current_acc_status === 'unavailable') {
+                        return TRADING_PLATFORM_STATUS.UNAVAILABLE;
                     }
                     return null;
             }
         }
-        return null;
+        return '';
     };
 
     const no_real_mf_account_eu_regulator = no_MF_account && is_eu_user && is_real;
@@ -212,14 +240,13 @@ const CFDsListing = observer(() => {
                         const list_size = combined_cfd_mt5_accounts.length;
 
                         const track_account_subtitle = existing_account.tracking_name;
-
                         const has_mt5_account_status =
                             existing_account?.status || is_idv_revoked
                                 ? getMT5AccountAuthStatus(
                                       existing_account?.status,
                                       existing_account?.landing_company_short
                                   )
-                                : null;
+                                : '';
                         return (
                             <TradingAppCard
                                 action_type={existing_account.action_type}
@@ -253,7 +280,7 @@ const CFDsListing = observer(() => {
                                             });
                                             setProduct(existing_account.product);
                                             setAppstorePlatform(existing_account.platform);
-                                            getAccount();
+                                            getTradingPlatformStatus(existing_account.platform);
                                         }
                                     } else if (existing_account.action_type === 'multi-action') {
                                         const button_name = e?.currentTarget?.name;
@@ -393,7 +420,7 @@ const CFDsListing = observer(() => {
                                                 type: account.market_type,
                                             });
                                             setAppstorePlatform(account.platform);
-                                            getAccount();
+                                            getTradingPlatformStatus(account.platform);
                                         }
                                     }}
                                     key={`trading_app_card_${account.name}`}
@@ -479,7 +506,7 @@ const CFDsListing = observer(() => {
                                     name={account.name}
                                     platform={account.platform}
                                     description={account.description}
-                                    onAction={() => {
+                                    onAction={async () => {
                                         Analytics.trackEvent('ce_tradershub_dashboard_form', {
                                             action: 'account_get',
                                             form_name: 'traders_hub_default',
@@ -494,7 +521,7 @@ const CFDsListing = observer(() => {
                                                 type: account.market_type,
                                             });
                                             setAppstorePlatform(account.platform);
-                                            getAccount();
+                                            getTradingPlatformStatus(account.platform);
                                         }
                                     }}
                                     key={`trading_app_card_${account.name}`}

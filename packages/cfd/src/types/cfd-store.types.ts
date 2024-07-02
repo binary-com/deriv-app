@@ -103,4 +103,8 @@ export type TCFDStore = {
     setIsMt5PasswordInvalidFormatModalVisible: (value: boolean) => void;
     is_mt5_password_changed_modal_visible: boolean;
     setIsMt5PasswordChangedModalVisible: (value: boolean) => void;
+    setServerMaintenanceModal: (value: boolean) => void;
+    setAccountUnavailableModal: (value: boolean) => void;
+    is_server_maintenance_modal_visible: boolean;
+    is_account_unavailable_modal_visible: boolean;
 };

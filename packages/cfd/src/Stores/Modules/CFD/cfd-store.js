@@ -41,6 +41,8 @@ export default class CFDStore extends BaseStore {
     is_mt5_password_invalid_format_modal_visible = false;
     is_mt5_password_changed_modal_visible = false;
     is_from_mt5_migration_modal = false;
+    is_server_maintenance_modal_visible = false;
+    is_account_unavailable_modal_visible = false;
     mt5_migration_error = '';
     current_account = undefined; // this is a tmp value, don't rely on it, unless you set it first.
 
@@ -95,6 +97,8 @@ export default class CFDStore extends BaseStore {
             is_mt5_password_invalid_format_modal_visible: observable,
             is_mt5_password_changed_modal_visible: observable,
             is_from_mt5_migration_modal: observable,
+            is_server_maintenance_modal_visible: observable,
+            is_account_unavailable_modal_visible: observable,
             account_title: computed,
             current_list: computed,
             has_created_account_for_selected_jurisdiction: computed,
@@ -126,6 +130,8 @@ export default class CFDStore extends BaseStore {
             setMigratedMT5Accounts: action.bound,
             setSentEmailModalStatus: action.bound,
             setIsFromMt5MigrationModal: action.bound,
+            setServerMaintenanceModal: action.bound,
+            setAccountUnavailableModal: action.bound,
             getAccountStatus: action.bound,
             creatMT5Password: action.bound,
             submitMt5Password: action.bound,
@@ -875,5 +881,13 @@ export default class CFDStore extends BaseStore {
 
     setIsFromMt5MigrationModal(is_from_mt5_migration_modal) {
         this.is_from_mt5_migration_modal = is_from_mt5_migration_modal;
+    }
+
+    setServerMaintenanceModal(is_server_maintenance_modal_visible) {
+        this.is_server_maintenance_modal_visible = is_server_maintenance_modal_visible;
+    }
+
+    setAccountUnavailableModal(is_account_unavailable_modal_visible) {
+        this.is_account_unavailable_modal_visible = is_account_unavailable_modal_visible;
     }
 }
