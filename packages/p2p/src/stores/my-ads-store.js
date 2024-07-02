@@ -419,12 +419,13 @@ export default class MyAdsStore extends BaseStore {
         const { general_store } = this.root_store;
         return new Promise(resolve => {
             requestWS({
-                p2p_advertiser_adverts: 1,
+                p2p_advert_list: 1,
+                advertiser_id: general_store.advertiser_id,
                 offset: startIndex,
                 limit: general_store.list_item_limit,
             }).then(response => {
                 if (!response.error) {
-                    const { list } = response.p2p_advertiser_adverts;
+                    const { list } = response.p2p_advert_list;
                     const is_first_page = startIndex === 0;
                     const adverts_list = is_first_page ? list : [...this.adverts, ...list];
                     this.setHasMoreItemsToLoad(list.length >= general_store.list_item_limit);
