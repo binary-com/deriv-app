@@ -21,6 +21,8 @@ const PreferredCountriesModal = ({ country_list, eligible_countries, onApply }: 
         hideModal();
     };
 
+    const onClear = () => setSelectedCountries([]);
+
     return (
         <React.Fragment>
             <DesktopWrapper>
@@ -46,9 +48,7 @@ const PreferredCountriesModal = ({ country_list, eligible_countries, onApply }: 
                         <Modal.Footer className='preferred-countries-modal__footer' has_separator>
                             <PreferredCountriesModalFooter
                                 eligible_countries={eligible_countries}
-                                onClear={() => {
-                                    setSelectedCountries(eligible_countries);
-                                }}
+                                onClear={onClear}
                                 onApply={onApplySelectedCountries}
                                 selected_countries={selected_countries}
                             />
@@ -72,9 +72,7 @@ const PreferredCountriesModal = ({ country_list, eligible_countries, onApply }: 
                     renderPageFooterChildren={() => (
                         <PreferredCountriesModalFooter
                             eligible_countries={eligible_countries}
-                            onClear={() => {
-                                setSelectedCountries(eligible_countries);
-                            }}
+                            onClear={onClear}
                             onApply={onApplySelectedCountries}
                             selected_countries={selected_countries}
                         />
