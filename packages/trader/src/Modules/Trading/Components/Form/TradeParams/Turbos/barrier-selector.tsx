@@ -6,6 +6,7 @@ import { Localize, localize } from '@deriv/translations';
 import { observer } from '@deriv/stores';
 import { useTraderStore } from 'Stores/useTraderStores';
 import { useDevice } from '@deriv-com/ui';
+import PayoutPerPoint from 'Modules/Trading/Components/Elements/payout-per-point';
 
 const BarrierSelector = observer(() => {
     const { barrier_1, onChange, setHoveredBarrier, barrier_choices } = useTraderStore();
@@ -86,6 +87,11 @@ const BarrierSelector = observer(() => {
 
     return (
         <React.Fragment>
+            <PayoutPerPoint
+                barriersList={barrier_choices}
+                onBarrierClick={onBarrierClick}
+                selectedBarrier={selected_barrier}
+            />
             <Fieldset
                 className='trade-container__fieldset trade-container__barriers'
                 header={localize('Barrier')}

@@ -1,0 +1,37 @@
+.wheel-picker {
+    background: var(--general-main-1);
+    width: 100%;
+    height: 76px;
+    padding: 8px;
+    margin-top: 8px;
+    display: flex;
+    .digits {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        margin: auto;
+        overflow: hidden;
+        height: 68px;
+        animation: slide 0.3s ease;
+    }
+    .actions {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .icons {
+            width: 32px;
+            padding-left: 22px;
+            background: var(--general-section-1);
+        }
+        .chevron-up {
+            transform: rotate(180deg);
+        }
+    }
+    .digits > p {
+        transition: transform 0.3s ease, font-size 0.3s ease;
+    }
+
+    .selected-value {
+        transition: transform 0.3s ease, font-size 0.3s ease;
+    }
+}
