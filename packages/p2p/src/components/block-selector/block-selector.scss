@@ -11,7 +11,7 @@
         display: flex;
         column-gap: 1rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             justify-content: space-between;
         }
     }

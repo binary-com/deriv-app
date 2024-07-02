@@ -4,9 +4,10 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import { Icon, Table, Text } from '@deriv/components';
-import { isMobile, routes } from '@deriv/shared';
+import { routes } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { useP2PExchangeRate } from '@deriv/hooks';
+import { useDevice } from '@deriv-com/ui';
 
 import { Localize } from 'Components/i18next';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
@@ -42,8 +43,8 @@ const BuySellRow = ({ row: advert }) => {
     const { showModal } = useModalManagerContext();
     const {
         client: { currency },
-        ui: { is_desktop },
     } = useStore();
+    const { isDesktop } = useDevice();
     const history = useHistory();
     const exchange_rate = useP2PExchangeRate(local_currency);
 
@@ -96,7 +97,7 @@ const BuySellRow = ({ row: advert }) => {
                 key: 'NicknameModal',
                 props: {
                     onConfirm: () => buy_sell_store.setSelectedAdvert(advert),
-                    should_hide_close_btn: is_desktop,
+                    should_hide_close_btn: isDesktop,
                 },
             });
         } else {
@@ -104,7 +105,7 @@ const BuySellRow = ({ row: advert }) => {
         }
     };
 
-    if (isMobile()) {
+    if (!isDesktop) {
         return (
             <div className='buy-sell-row'>
                 <div className='buy-sell-row__advertiser' onClick={() => onClickRow()}>
@@ -124,7 +125,7 @@ const BuySellRow = ({ row: advert }) => {
                         <div className='buy-sell-row__rating'>
                             {!!rating_count && !!rating_average ? (
                                 <div className='buy-sell-row__rating--row'>
-                                    <Text color='less-prominent' size={isMobile() ? 'xxxs' : 'xxs'}>
+                                    <Text color='less-prominent' size={isDesktop ? 'xxs' : 'xxxs'}>
                                         {rating_average_decimal}
                                     </Text>
                                     <StarRating
@@ -138,7 +139,7 @@ const BuySellRow = ({ row: advert }) => {
                                         should_allow_hover_effect={false}
                                         star_size={14}
                                     />
-                                    <Text color='less-prominent' size={isMobile() ? 'xxxs' : 'xxs'}>
+                                    <Text color='less-prominent' size={isDesktop ? 'xxs' : 'xxxs'}>
                                         ({rating_count})
                                     </Text>
                                 </div>
@@ -231,7 +232,7 @@ const BuySellRow = ({ row: advert }) => {
                         <div className='buy-sell-row__rating'>
                             {!!rating_count && !!rating_average ? (
                                 <div className='buy-sell-row__rating--row'>
-                                    <Text color='less-prominent' size={isMobile() ? 'xxxs' : 'xxs'}>
+                                    <Text color='less-prominent' size={isDesktop ? 'xxs' : 'xxxs'}>
                                         {rating_average_decimal}
                                     </Text>
                                     <StarRating
@@ -245,12 +246,12 @@ const BuySellRow = ({ row: advert }) => {
                                         should_allow_hover_effect={false}
                                         star_size={14}
                                     />
-                                    <Text color='less-prominent' size={isMobile() ? 'xxxs' : 'xxs'}>
+                                    <Text color='less-prominent' size={isDesktop ? 'xxs' : 'xxxs'}>
                                         ({rating_count})
                                     </Text>
                                 </div>
                             ) : (
-                                <Text color='less-prominent' size={isMobile() ? 'xxxs' : 'xxs'}>
+                                <Text color='less-prominent' size={isDesktop ? 'xxs' : 'xxxs'}>
                                     <Localize i18n_default_text='Not rated yet' />
                                 </Text>
                             )}

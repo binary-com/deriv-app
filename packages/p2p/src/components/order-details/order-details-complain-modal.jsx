@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, MobileFullPageModal, Modal, Text } from '@deriv/components';
-import { isMobile, useIsMounted } from '@deriv/shared';
+import { useIsMounted } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import { localize, Localize } from 'Components/i18next';
 import { requestWS } from 'Utils/websocket';
 import FormError from 'Components/section-error';
@@ -36,6 +37,7 @@ const OrderDetailsComplainModal = ({
     hideComplainOrderModal,
     should_show_complain_modal,
 }) => {
+    const { isDesktop } = useDevice();
     const isMounted = useIsMounted();
     const [dispute_reason, setDisputeReason] = React.useState('');
     const [error_message, setErrorMessage] = React.useState('');
@@ -57,7 +59,7 @@ const OrderDetailsComplainModal = ({
 
     const onCheckboxChange = reason => setDisputeReason(reason);
 
-    if (isMobile()) {
+    if (!isDesktop) {
         return (
             <MobileFullPageModal
                 body_className='order-details-complain-modal__body'

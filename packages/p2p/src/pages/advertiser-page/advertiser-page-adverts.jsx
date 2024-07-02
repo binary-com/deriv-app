@@ -1,8 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 import { InfiniteDataList, Loading, Table, Tabs, Text } from '@deriv/components';
-import { isDesktop, isMobile } from '@deriv/shared';
 import { useStore, observer } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import { localize, Localize } from 'Components/i18next';
 import { useP2PAdvertiserAdverts } from 'Hooks';
 import { useStores } from 'Stores';
@@ -20,6 +20,7 @@ const AdvertiserPageAdverts = () => {
     const {
         client: { currency },
     } = useStore();
+    const { isDesktop } = useDevice();
 
     const { advertiser_page_store } = useStores();
     const { adverts, has_more_adverts_to_load, isLoading, loadMoreAdvertiserAdverts } = useP2PAdvertiserAdverts();
@@ -33,7 +34,7 @@ const AdvertiserPageAdverts = () => {
             <Tabs
                 active_index={advertiser_page_store.active_index}
                 className='advertiser-page-adverts__tabs'
-                is_full_width={isMobile()}
+                is_full_width={!isDesktop}
                 onTabItemClick={advertiser_page_store.handleTabItemClick}
                 header_fit_content
                 top
@@ -49,7 +50,7 @@ const AdvertiserPageAdverts = () => {
                 <React.Fragment>
                     {adverts.length ? (
                         <Table className='advertiser-page-adverts__table'>
-                            {isDesktop() && (
+                            {isDesktop && (
                                 <Table.Header>
                                     <Table.Row className='advertiser-page-adverts__table-row'>
                                         <Table.Head>{localize('Limits')}</Table.Head>
@@ -79,7 +80,7 @@ const AdvertiserPageAdverts = () => {
                         </Table>
                     ) : (
                         <P2pEmpty
-                            className={classNames('', { 'advertiser-page-empty': isMobile() })}
+                            className={classNames('', { 'advertiser-page-empty': !isDesktop })}
                             icon='IcNoData'
                             title={<EmptyAdsMessage />}
                         />

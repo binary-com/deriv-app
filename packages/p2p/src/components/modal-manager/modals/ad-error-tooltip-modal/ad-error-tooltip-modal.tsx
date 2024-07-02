@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button, Modal, Text, ThemedScrollbars } from '@deriv/components';
+import { useDevice } from '@deriv-com/ui';
 import { useP2PSettings } from '@deriv/hooks';
-import { observer, useStore } from '@deriv/stores';
+import { observer } from '@deriv/stores';
 import { localize, Localize } from 'Components/i18next';
 import { useStores } from 'Stores';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
@@ -22,10 +23,8 @@ const AdErrorTooltipModal = ({
     remaining_amount,
     advert_type,
 }: TAdErrorTooltipModal) => {
+    const { isDesktop } = useDevice();
     const { general_store } = useStores();
-    const {
-        ui: { is_mobile },
-    } = useStore();
     const { hideModal, is_modal_open } = useModalManagerContext();
     const { advertiser_buy_limit, advertiser_sell_limit } = general_store;
 
@@ -108,8 +107,8 @@ const AdErrorTooltipModal = ({
                     <Text
                         as='div'
                         color='prominent'
-                        size={is_mobile ? 'xxs' : 'xs'}
-                        line_height={is_mobile ? 'l' : 'xl'}
+                        size={isDesktop ? 'xs' : 'xxs'}
+                        line_height={isDesktop ? 'xl' : 'l'}
                     >
                         {visibility_status.length === 1 ? (
                             getAdErrorMessage(visibility_status[0])

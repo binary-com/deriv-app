@@ -4,12 +4,12 @@
     margin-bottom: 2.4rem;
     width: 100%;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         margin: 0 0 2.4rem;
     }
 
     &__avatar {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             align-self: flex-start;
             margin: 0 0 1;
         }
@@ -24,7 +24,7 @@
         padding-inline-start: 0.8rem;
         width: 100%;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: unset;
         }
     }
@@ -41,7 +41,7 @@
         flex-direction: row;
         padding: 0.8rem 0;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 1rem 0;
             flex-flow: row wrap;
         }
@@ -56,7 +56,7 @@
             &:first-child {
                 padding-inline-start: unset;
 
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     .block-user-count {
                         margin-inline-start: unset;
                     }
@@ -77,7 +77,7 @@
         display: flex;
         flex-direction: row;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 0.5rem 0;
         }
     }

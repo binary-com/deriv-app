@@ -1,7 +1,8 @@
 import React from 'react';
 import debounce from 'lodash.debounce';
 import { Loading, SearchBox, Text } from '@deriv/components';
-import { observer, useStore } from '@deriv/stores';
+import { observer } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import { Localize, localize } from 'Components/i18next';
 import { api_error_codes } from 'Constants/api-error-codes';
 import { useStores } from 'Stores';
@@ -11,9 +12,7 @@ import BlockUserTableError from '../block-user-table/block-user-table-error';
 
 const BlockUserList = observer(() => {
     const { general_store, my_profile_store } = useStores();
-    const {
-        ui: { is_mobile },
-    } = useStore();
+    const { isDesktop } = useDevice();
 
     const debouncedGetSearchedTradePartners = debounce((search: string) => {
         my_profile_store.setSearchTerm(search.trim());
@@ -37,7 +36,7 @@ const BlockUserList = observer(() => {
     }
 
     if (my_profile_store.is_loading) {
-        return <Loading is_fullscreen={is_mobile} />;
+        return <Loading is_fullscreen={!isDesktop} />;
     }
 
     return (

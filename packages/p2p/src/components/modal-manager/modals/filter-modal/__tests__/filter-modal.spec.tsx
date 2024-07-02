@@ -60,16 +60,12 @@ describe('<FilterModal />', () => {
     });
 
     it('should render the component', () => {
-        render(<FilterModal />, {
-            wrapper: ({ children }) => <StoreProvider store={mockStore({})}>{children}</StoreProvider>,
-        });
+        render(<FilterModal />);
         expect(mock_store.my_profile_store.getPaymentMethodsList).toHaveBeenCalledTimes(1);
         expect(screen.getByText('Filter')).toBeInTheDocument();
     });
     it('should clear the search results and search term on unmount', () => {
-        const { unmount } = render(<FilterModal />, {
-            wrapper: ({ children }) => <StoreProvider store={mockStore({})}>{children}</StoreProvider>,
-        });
+        const { unmount } = render(<FilterModal />);
         unmount();
         expect(mock_store.my_profile_store.setSearchResults).toHaveBeenCalledWith([]);
         expect(mock_store.my_profile_store.setSearchTerm).toHaveBeenCalledWith('');
@@ -79,9 +75,7 @@ describe('<FilterModal />', () => {
             .mockReturnValueOnce([false, mock_fn])
             .mockReturnValueOnce([[], mock_fn])
             .mockReturnValueOnce([false, mock_fn]);
-        render(<FilterModal />, {
-            wrapper: ({ children }) => <StoreProvider store={mockStore({})}>{children}</StoreProvider>,
-        });
+        render(<FilterModal />);
         const close_icon = screen.getByTestId('dt_modal_close_icon');
         userEvent.click(close_icon);
         expect(mock_modal_manager.hideModal).toHaveBeenCalledTimes(1);
@@ -94,11 +88,7 @@ describe('<FilterModal />', () => {
             ...mock_modal_manager,
             useSavedState: jest.fn(() => [['skrill'], mock_fn]),
         };
-        render(<FilterModal />, {
-            wrapper: ({ children }) => (
-                <StoreProvider store={mockStore({ ui: { is_mobile: true } })}>{children}</StoreProvider>
-            ),
-        });
+        render(<FilterModal />);
         const close_icon = screen.getByTestId('dt_modal_close_icon');
         userEvent.click(close_icon);
         expect(mock_modal_manager.showModal).toHaveBeenCalledTimes(1);
@@ -106,17 +96,13 @@ describe('<FilterModal />', () => {
         expect(mock_modal_manager.hideModal).toHaveBeenCalledTimes(1);
     });
     it('should handle clicking reset button', () => {
-        render(<FilterModal />, {
-            wrapper: ({ children }) => <StoreProvider store={mockStore({})}>{children}</StoreProvider>,
-        });
+        render(<FilterModal />);
         const reset_button = screen.getByRole('button', { name: 'Reset' });
         userEvent.click(reset_button);
         expect(mock_store.buy_sell_store.setShouldUseClientLimits).toHaveBeenCalledWith(true);
     });
     it('should handle clicking apply button', () => {
-        render(<FilterModal />, {
-            wrapper: ({ children }) => <StoreProvider store={mockStore({})}>{children}</StoreProvider>,
-        });
+        render(<FilterModal />);
         const apply_button = screen.getByRole('button', { name: 'Apply' });
         userEvent.click(apply_button);
         expect(mock_store.buy_sell_store.onClickApply).toHaveBeenCalledTimes(1);
@@ -129,9 +115,7 @@ describe('<FilterModal />', () => {
                 show_filter_payment_methods: true,
             },
         });
-        render(<FilterModal />, {
-            wrapper: ({ children }) => <StoreProvider store={mockStore({})}>{children}</StoreProvider>,
-        });
+        render(<FilterModal />);
         const confirm_button = screen.getByRole('button', { name: 'Confirm' });
         userEvent.click(confirm_button);
         expect(mock_store.buy_sell_store.setShowFilterPaymentMethods).toHaveBeenCalledWith(false);
@@ -139,17 +123,13 @@ describe('<FilterModal />', () => {
         expect(mock_store.my_profile_store.setSearchTerm).toHaveBeenCalledWith('');
     });
     it('should handle clicking clear button', () => {
-        render(<FilterModal />, {
-            wrapper: ({ children }) => <StoreProvider store={mockStore({})}>{children}</StoreProvider>,
-        });
+        render(<FilterModal />);
         const clear_button = screen.getByRole('button', { name: 'Clear' });
         userEvent.click(clear_button);
         expect(mock_fn).toHaveBeenCalledTimes(2);
     });
     it('should close the payment methods section on clicking back from there', async () => {
-        render(<FilterModal />, {
-            wrapper: ({ children }) => <StoreProvider store={mockStore({})}>{children}</StoreProvider>,
-        });
+        render(<FilterModal />);
         const back_icon = screen.getByTestId('dt_page_return_icon');
         userEvent.click(back_icon);
         expect(mock_store.buy_sell_store.setShowFilterPaymentMethods).toHaveBeenCalledWith(false);

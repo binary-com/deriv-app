@@ -1,14 +1,14 @@
 import React from 'react';
 import { Text } from '@deriv/components';
-import { useStore } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 
 type TCopyAdvertFormTrailingIcon = { label: string };
 
 const CopyAdvertFormTrailingIcon = ({ label }: TCopyAdvertFormTrailingIcon) => {
-    const { ui: is_desktop } = useStore();
+    const { isDesktop } = useDevice();
 
     return (
-        <Text color={is_desktop ? 'less-prominent' : 'prominent'} size={is_desktop ? 'xxs' : 's'}>
+        <Text color={isDesktop ? 'less-prominent' : 'prominent'} size={isDesktop ? 'xxs' : 's'}>
             {label}
         </Text>
     );

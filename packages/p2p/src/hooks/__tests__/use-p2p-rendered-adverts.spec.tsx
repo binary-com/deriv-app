@@ -1,8 +1,7 @@
 import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
-import { mockStore, StoreProvider } from '@deriv/stores';
+import { StoreProvider } from '@deriv/stores';
 import { TCoreStores } from '@deriv/stores/types';
-import { useStores } from 'Stores/index';
 import useP2PRenderedAdverts from '../use-p2p-rendered-adverts';
 
 jest.mock('@deriv/hooks', () => ({
@@ -37,14 +36,9 @@ jest.mock('Stores', () => ({
     useStores: jest.fn().mockReturnValue({}),
 }));
 
-const mockUseStores = useStores as jest.MockedFunction<typeof useStores>;
-
 const renderHookWithConfig = (config: Record<string, object>, mock?: TCoreStores) => {
-    const mock_store = mock || mockStore({ ui: { is_mobile: false } });
-    mockUseStores.mockReturnValueOnce(config);
-    const wrapper = ({ children }: { children: JSX.Element }) => (
-        <StoreProvider store={mock_store}>{children}</StoreProvider>
-    );
+    config;
+    const wrapper = ({ children }: { children: JSX.Element }) => <StoreProvider store={mock}>{children}</StoreProvider>;
     const { result } = renderHook(() => useP2PRenderedAdverts(), { wrapper });
     return result.current.rendered_adverts;
 };
@@ -294,7 +288,7 @@ describe('useP2PRenderedAdverts', () => {
             },
             advertiser_page_store: { counterparty_type: 'buy' },
         };
-        const view = renderHookWithConfig(config, mockStore({ ui: { is_mobile: true } }));
+        const view = renderHookWithConfig(config);
 
         expect(view).toHaveLength(2);
         expect(view[1]?.country).toBe('id');
@@ -316,7 +310,7 @@ describe('useP2PRenderedAdverts', () => {
             },
             advertiser_page_store: { counterparty_type: 'buy' },
         };
-        const view = renderHookWithConfig(config, mockStore({ ui: { is_mobile: true } }));
+        const view = renderHookWithConfig(config);
 
         expect(view).toHaveLength(2);
         expect(view[1]?.country).toBe('id');

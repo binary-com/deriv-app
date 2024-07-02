@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button, Modal, Text } from '@deriv/components';
 import { useP2PSettings } from '@deriv/hooks';
-import { observer, useStore } from '@deriv/stores';
+import { observer } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import { Localize } from 'Components/i18next';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
 import { ad_type } from 'Constants/floating-rate';
@@ -12,9 +13,7 @@ type TMyAdsFloatingRateSwitchModalProps = {
 };
 
 const MyAdsFloatingRateSwitchModal = ({ onSwitch }: TMyAdsFloatingRateSwitchModalProps) => {
-    const {
-        ui: { is_desktop },
-    } = useStore();
+    const { isDesktop } = useDevice();
     const { my_ads_store } = useStores();
     const { hideModal, is_modal_open } = useModalManagerContext();
     const { selected_ad_type, toggleMyAdsRateSwitchModal } = my_ads_store;
@@ -24,7 +23,7 @@ const MyAdsFloatingRateSwitchModal = ({ onSwitch }: TMyAdsFloatingRateSwitchModa
     return (
         <Modal is_open={is_modal_open} toggleModal={hideModal} small className='my-ads-floating-rate-switch-modal'>
             <Modal.Body>
-                <Text size={is_desktop ? 's' : 'xs'}>
+                <Text size={isDesktop ? 's' : 'xs'}>
                     {is_float_rate ? (
                         <Localize i18n_default_text='Set a floating rate for your ad.' />
                     ) : (

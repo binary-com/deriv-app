@@ -10,7 +10,7 @@
         flex-direction: column;
         padding: 1rem 2rem 2.4rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding-bottom: 1rem;
         }
     }
@@ -25,7 +25,7 @@
     }
 
     &__footer {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             justify-content: center;
         }
     }
@@ -45,7 +45,7 @@
         cursor: pointer;
         margin: 2rem 0 0.6rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin: 3rem 0 2.6rem;
         }
     }

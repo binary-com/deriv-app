@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Dropdown, Icon, Popover, ProgressIndicator, Table, Text } from '@deriv/components';
-import { isMobile, formatMoney } from '@deriv/shared';
-import { observer, useStore } from '@deriv/stores';
+import { formatMoney } from '@deriv/shared';
+import { observer } from '@deriv/stores';
 import { useP2PExchangeRate, useP2PSettings } from '@deriv/hooks';
+import { useDevice } from '@deriv-com/ui';
 import { Localize, localize } from 'Components/i18next';
 import { buy_sell } from 'Constants/buy-sell';
 import { ad_type } from 'Constants/floating-rate';
@@ -62,9 +63,7 @@ const MyAdsRowDropdown = ({
 };
 
 const MyAdsRowRenderer = observer(({ country_list, row: advert, table_ref }) => {
-    const {
-        ui: { is_desktop },
-    } = useStore();
+    const { isDesktop } = useDevice();
     const { general_store, my_ads_store, my_profile_store } = useStores();
     const { hideModal, showModal } = useModalManagerContext();
     const { p2p_settings } = useP2PSettings();
@@ -136,14 +135,14 @@ const MyAdsRowRenderer = observer(({ country_list, row: advert, table_ref }) => 
     };
     const onClickCopy = () => {
         if (p2p_settings.rate_type === rate_type) {
-            my_ads_store.onClickCopy(country_list, id, is_desktop);
+            my_ads_store.onClickCopy(country_list, id, isDesktop);
         } else {
             general_store.showModal({
                 key: 'MyAdsFloatingRateSwitchModal',
                 props: {
                     onSwitch: () => {
                         hideModal();
-                        my_ads_store.onClickCopy(country_list, id, is_desktop);
+                        my_ads_store.onClickCopy(country_list, id, isDesktop);
                     },
                 },
             });
@@ -224,7 +223,7 @@ const MyAdsRowRenderer = observer(({ country_list, row: advert, table_ref }) => 
         setIsAdvertMenuVisible(false);
     };
 
-    if (isMobile()) {
+    if (!isDesktop) {
         return (
             <Table.Row
                 className={classNames('my-ads-table__row', {

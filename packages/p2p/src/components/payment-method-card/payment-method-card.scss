@@ -4,7 +4,7 @@
     margin: 1.6rem 0;
     overflow-wrap: break-word;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         margin: 1rem;
         min-height: 8.8rem;
         min-width: 13.6rem;

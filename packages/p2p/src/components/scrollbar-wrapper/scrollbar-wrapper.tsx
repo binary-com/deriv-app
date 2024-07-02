@@ -1,17 +1,15 @@
 import React, { PropsWithChildren } from 'react';
-import { useStore } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 
 type TScrollbarWrapper = {
     height?: string;
 };
 
 const ScrollbarWrapper = ({ children, height }: PropsWithChildren<TScrollbarWrapper>) => {
-    const {
-        ui: { is_mobile },
-    } = useStore();
+    const { isDesktop } = useDevice();
 
     return (
-        <div className='scrollbar-wrapper' style={{ height: is_mobile ? '100%' : height }}>
+        <div className='scrollbar-wrapper' style={{ height: isDesktop ? height : '100%' }}>
             {children}
         </div>
     );

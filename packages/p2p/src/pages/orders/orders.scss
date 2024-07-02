@@ -3,17 +3,17 @@
     display: flex;
     flex-direction: column;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         overflow: hidden;
     }
 
     & .initial-loader {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             height: 80%;
         }
     }
     & .p2p-empty {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 4rem 1.6rem;
             margin: 0rem;
         }

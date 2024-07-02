@@ -6,7 +6,7 @@
     &:hover {
         background-color: var(--general-hover);
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             background-color: inherit;
         }
     }
@@ -22,7 +22,7 @@
 
         &__unblock-button {
             // Needed to override sticky hover in mobile
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 &:hover {
                     background: transparent !important;
                 }
@@ -31,7 +31,7 @@
 
         &__block-button {
             // Needed to override sticky hover in mobile
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 &:hover {
                     background: transparent !important;
                 }

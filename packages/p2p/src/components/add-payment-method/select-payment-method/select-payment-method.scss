@@ -1,7 +1,7 @@
 .select-payment-method {
     height: 30vh;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         height: 100%;
     }
 

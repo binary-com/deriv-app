@@ -3,8 +3,9 @@ import classNames from 'classnames';
 import { setDecimalPlaces, removeTrailingZeros, percentOf, roundOffDecimal } from 'Utils/format-value';
 import { InputField, Text } from '@deriv/components';
 import { useP2PExchangeRate, useP2PSettings } from '@deriv/hooks';
-import { formatMoney, isMobile, mobileOSDetect } from '@deriv/shared';
+import { formatMoney, mobileOSDetect } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import { localize } from 'Components/i18next';
 
 type TFloatingRate = {
@@ -35,6 +36,7 @@ const FloatingRate = ({
     const {
         ui: { current_focus, setCurrentFocus },
     } = useStore();
+    const { isDesktop, isMobile } = useDevice();
     const exchange_rate = useP2PExchangeRate(local_currency);
 
     const { p2p_settings } = useP2PSettings();
@@ -61,7 +63,7 @@ const FloatingRate = ({
 
     return (
         <div className={classNames(className, 'floating-rate')}>
-            <section className={classNames('floating-rate__field', { 'mobile-layout': isMobile() })}>
+            <section className={classNames('floating-rate__field', { 'mobile-layout': !isDesktop })}>
                 <Text as='div' line_height='xs' className='floating-rate__field--prefix'>
                     {localize('at')}
                 </Text>
@@ -88,7 +90,7 @@ const FloatingRate = ({
                     onChange={change_handler}
                     required={required}
                     setCurrentFocus={setCurrentFocus}
-                    type={isMobile() && os !== 'iOS' ? 'tel' : 'number'}
+                    type={isMobile && os !== 'iOS' ? 'tel' : 'number'}
                     value={value ?? ''}
                 />
                 <div className='floating-rate__mkt-rate'>

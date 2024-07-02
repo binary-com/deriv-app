@@ -2,9 +2,9 @@ import React from 'react';
 import classNames from 'classnames';
 import { Field, Form, FormikBag, FormikValues } from 'formik';
 import { Button, Icon, Input, Loading, Text } from '@deriv/components';
+import { useDevice } from '@deriv-com/ui';
 import { useP2PAdvertiserPaymentMethods } from '@deriv/hooks';
-import { isDesktop } from '@deriv/shared';
-import { observer, useStore } from '@deriv/stores';
+import { observer } from '@deriv/stores';
 import { useStores } from 'Stores';
 import { Localize } from 'Components/i18next';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
@@ -20,15 +20,13 @@ const AddPaymentMethodForm = ({ should_show_separated_footer = false }: TAddPaym
     const { create, mutation } = useP2PAdvertiserPaymentMethods();
     const { general_store, my_ads_store, my_profile_store } = useStores();
     const {
-        ui: { is_mobile },
-    } = useStore();
-    const {
         payment_method_value,
         selected_payment_method,
         selected_payment_method_display_name,
         selected_payment_method_fields,
     } = my_profile_store;
     const { error: mutation_error, status: mutation_status } = mutation;
+    const { isDesktop } = useDevice();
 
     React.useEffect(() => {
         my_profile_store.getPaymentMethodsList();
@@ -149,9 +147,9 @@ const AddPaymentMethodForm = ({ should_show_separated_footer = false }: TAddPaym
                         <div
                             className={classNames('add-payment-method-form__buttons', {
                                 'add-payment-method-form__buttons--separated-footer':
-                                    (should_show_separated_footer && is_mobile) || general_store.active_index !== 3,
+                                    (should_show_separated_footer && !isDesktop) || general_store.active_index !== 3,
                                 'add-payment-method-form__buttons--separated-footer-profile':
-                                    general_store.active_index === 3 && isDesktop(),
+                                    general_store.active_index === 3 && isDesktop,
                             })}
                         >
                             <Button

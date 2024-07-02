@@ -2,7 +2,6 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { APIProvider } from '@deriv/api';
-import { isDesktop, isMobile } from '@deriv/shared';
 import { mockStore, StoreProvider } from '@deriv/stores';
 import { useStores } from 'Stores';
 import { TModalManagerContext } from 'Types';
@@ -28,12 +27,6 @@ let mock_store: ReturnType<typeof useStores>;
 jest.mock('Stores', () => ({
     ...jest.requireActual('Stores'),
     useStores: () => mock_store,
-}));
-
-jest.mock('@deriv/shared', () => ({
-    ...jest.requireActual('@deriv/shared'),
-    isDesktop: jest.fn(() => true),
-    isMobile: jest.fn(() => false),
 }));
 
 describe('<CreateAdAddPaymentMethodModal />', () => {
@@ -99,8 +92,6 @@ describe('<CreateAdAddPaymentMethodModal />', () => {
     });
 
     it('should render CreateAdAddPaymentMethodModal component in mobile view', () => {
-        (isDesktop as jest.Mock).mockReturnValue(false);
-        (isMobile as jest.Mock).mockReturnValue(true);
         render(<CreateAdAddPaymentMethodModal />, { wrapper });
         expect(screen.getByTestId('dt_div_100_vh')).toBeInTheDocument();
         expect(screen.getByText('Add payment method')).toBeInTheDocument();

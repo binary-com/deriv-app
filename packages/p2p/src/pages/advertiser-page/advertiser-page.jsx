@@ -5,8 +5,9 @@ import { useP2PAdvertiserAdverts } from 'Hooks';
 import { useHistory, useLocation } from 'react-router-dom';
 import { DesktopWrapper, Loading, MobileWrapper, Text } from '@deriv/components';
 import { useP2PAdvertInfo } from '@deriv/hooks';
-import { daysSince, isDesktop, isEmptyObject, isMobile, routes } from '@deriv/shared';
+import { daysSince, isEmptyObject, routes } from '@deriv/shared';
 import { observer } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 
 import { Localize, localize } from 'Components/i18next';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
@@ -27,6 +28,7 @@ import AdvertiserPageStats from './advertiser-page-stats.jsx';
 import BlockUserOverlay from './block-user/block-user-overlay';
 
 const AdvertiserPage = () => {
+    const { isDesktop } = useDevice();
     const { advertiser_page_store, buy_sell_store, general_store, my_profile_store } = useStores();
     const {
         advertiser_id,
@@ -94,7 +96,7 @@ const AdvertiserPage = () => {
                 onClose: () => {
                     hideModal({ should_hide_all_modals: true });
                 },
-                width: isMobile() ? '90vw' : '',
+                width: isDesktop ? '' : '90vw',
             },
         });
     };
@@ -278,11 +280,7 @@ const AdvertiserPage = () => {
             >
                 <div className='advertiser-page-details-container'>
                     <div className='advertiser-page__header-details'>
-                        <UserAvatar
-                            nickname={nickname}
-                            size={isMobile() ? 32 : 64}
-                            text_size={isMobile() ? 's' : 'sm'}
-                        />
+                        <UserAvatar nickname={nickname} size={isDesktop ? 64 : 32} text_size={isDesktop ? 'sm' : 's'} />
                         <div className='advertiser-page__header-name--column'>
                             <div className='advertiser-page__header-name'>
                                 <Text color='prominent' weight='bold'>
@@ -350,7 +348,7 @@ const AdvertiserPage = () => {
                                     {rating_average ? (
                                         <React.Fragment>
                                             <div className='advertiser-page__rating--row'>
-                                                <Text color='prominent' size={isMobile() ? 'xxxs' : 'xs'}>
+                                                <Text color='prominent' size={isDesktop ? 'xs' : 'xxxs'}>
                                                     {rating_average_decimal}
                                                 </Text>
                                                 <StarRating
@@ -362,10 +360,10 @@ const AdvertiserPage = () => {
                                                     is_readonly
                                                     number_of_stars={5}
                                                     should_allow_hover_effect={false}
-                                                    star_size={isMobile() ? 17 : 20}
+                                                    star_size={isDesktop ? 20 : 17}
                                                 />
                                                 <div className='advertiser-page__rating--text'>
-                                                    <Text color='less-prominent' size={isMobile() ? 'xxxs' : 'xs'}>
+                                                    <Text color='less-prominent' size={isDesktop ? 'xs' : 'xxxs'}>
                                                         {rating_count === 1 ? (
                                                             <Localize
                                                                 i18n_default_text='({{number_of_ratings}} rating)'
@@ -389,7 +387,7 @@ const AdvertiserPage = () => {
                                         </React.Fragment>
                                     ) : (
                                         <div className='advertiser-page__rating--row'>
-                                            <Text color='less-prominent' size={isMobile() ? 'xxxs' : 'xs'}>
+                                            <Text color='less-prominent' size={isDesktop ? 'xs' : 'xxxs'}>
                                                 <Localize i18n_default_text='Not rated yet' />
                                             </Text>
                                         </div>

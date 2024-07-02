@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button, InlineMessage, Modal, Text } from '@deriv/components';
 import { formatMoney } from '@deriv/shared';
-import { observer, useStore } from '@deriv/stores';
+import { observer } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import FormError from 'Components/section-error';
 import FileUploaderComponent from 'Components/file-uploader-component';
 import { Localize, localize } from 'Components/i18next';
@@ -18,10 +19,9 @@ type TDocumentFile = {
 };
 
 const OrderDetailsConfirmModal = () => {
+    const { isDesktop } = useDevice();
     const { hideModal, is_modal_open } = useModalManagerContext();
     const { order_details_store, order_store, sendbird_store } = useStores();
-    const { ui } = useStore();
-    const { is_mobile } = ui;
     const { error_message } = order_details_store;
     const { confirmOrderRequest, order_information } = order_store;
     const { sendFile } = sendbird_store;
@@ -55,8 +55,8 @@ const OrderDetailsConfirmModal = () => {
                 renderTitle={() => (
                     <Text
                         color='prominent'
-                        line-height={is_mobile ? 'xl' : 'xxl'}
-                        size={is_mobile ? 'xs' : 's'}
+                        line-height={isDesktop ? 'xxl' : 'xl'}
+                        size={isDesktop ? 's' : 'xs'}
                         weight='bold'
                     >
                         <Localize i18n_default_text='Payment confirmation' />
@@ -65,7 +65,7 @@ const OrderDetailsConfirmModal = () => {
                 width='44rem'
             >
                 <Modal.Body className='order-details-confirm-modal__body'>
-                    <Text color='general' line-height='xl' size={is_mobile ? 'xxs' : 'xs'}>
+                    <Text color='general' line-height='xl' size={isDesktop ? 'xs' : 'xxs'}>
                         <Localize
                             i18n_default_text="Please make sure that you've paid {{amount}} {{currency}} to {{other_user_name}}, and upload the receipt as proof of your payment"
                             values={{
@@ -78,7 +78,7 @@ const OrderDetailsConfirmModal = () => {
                     <Text
                         color='less-prominent'
                         line-height='xl'
-                        size={is_mobile ? 'xxs' : 'xs'}
+                        size={isDesktop ? 'xs' : 'xxs'}
                         as='div'
                         className='order-details-confirm-modal__file_format'
                     >

@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import { Input, Text, Tooltip } from '@deriv/components';
 import { useP2PAdvertiserPaymentMethods, useP2PExchangeRate } from '@deriv/hooks';
-import { getDecimalPlaces, isDesktop, isMobile } from '@deriv/shared';
+import { getDecimalPlaces } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import { reaction } from 'mobx';
 import { observer, Observer } from 'mobx-react-lite';
 import { localize, Localize } from 'Components/i18next';
@@ -21,6 +22,7 @@ import PaymentMethodIcon from 'Components/payment-method-icon';
 import './buy-sell-form.scss';
 
 const BuySellForm = props => {
+    const { isDesktop, isMobile } = useDevice();
     const { advertiser_page_store, buy_sell_store, general_store, my_profile_store } = useStores();
     const [selected_methods, setSelectedMethods] = React.useState([]);
     const { data: p2p_advertiser_payment_methods } = useP2PAdvertiserPaymentMethods();
@@ -87,7 +89,7 @@ const BuySellForm = props => {
             const disposeReceiveAmountReaction = reaction(
                 () => buy_sell_store.receive_amount,
                 () => {
-                    if (isMobile() && typeof setPageFooterParent === 'function') {
+                    if (!isDesktop && typeof setPageFooterParent === 'function') {
                         setPageFooterParent(<BuySellFormReceiveAmount />);
                     }
                 }
@@ -117,7 +119,7 @@ const BuySellForm = props => {
     // changes the rate. This is to ensure that the rate is not changed when the user is in the middle of placing an order.
     React.useEffect(() => {
         if (
-            isMobile() &&
+            isMobile &&
             has_rate_changed &&
             current_effective_rate !== effective_rate &&
             stacked_modal?.key !== 'MarketRateChangeErrorModal'
@@ -440,7 +442,7 @@ const BuySellForm = props => {
                                 value={input_amount}
                                 disabled={should_disable_field}
                             />
-                            {isDesktop() && (
+                            {isDesktop && (
                                 <div
                                     className={classNames('buy-sell-form__field', {
                                         'buy-sell-form__field--disable': should_disable_field,

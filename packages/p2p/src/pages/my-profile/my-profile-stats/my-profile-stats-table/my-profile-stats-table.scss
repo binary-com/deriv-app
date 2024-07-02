@@ -4,7 +4,7 @@
     grid-template-columns: repeat(4, 1fr);
     margin: 1.4rem 0;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         border-bottom: none;
         grid-template-columns: repeat(2, 1fr);
         height: 6.8rem;
@@ -38,7 +38,7 @@
             }
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding-left: 1.6rem;
 
             &:nth-child(odd) {

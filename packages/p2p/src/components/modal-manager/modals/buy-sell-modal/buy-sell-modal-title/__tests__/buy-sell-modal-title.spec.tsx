@@ -1,6 +1,5 @@
 import React from 'react';
 import { screen, render } from '@testing-library/react';
-import { isDesktop } from '@deriv/shared';
 import { useStores } from 'Stores';
 import BuySellModalTitle from '../buy-sell-modal-title';
 import userEvent from '@testing-library/user-event';
@@ -20,11 +19,6 @@ const mock_store: DeepPartial<ReturnType<typeof useStores>> = {
         setShouldShowAddPaymentMethodForm: jest.fn(),
     },
 };
-
-jest.mock('@deriv/shared', () => ({
-    ...jest.requireActual('@deriv/shared'),
-    isDesktop: jest.fn(() => false),
-}));
 
 jest.mock('Stores', () => ({
     ...jest.requireActual('Stores'),

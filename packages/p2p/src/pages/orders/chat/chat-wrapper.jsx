@@ -1,6 +1,6 @@
 import React from 'react';
 import { MobileFullPageModal } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import { observer } from 'mobx-react-lite';
 import PropTypes from 'prop-types';
 import { useStores } from 'Stores';
@@ -8,8 +8,9 @@ import ChatHeader from './chat-header.jsx';
 
 const ChatWrapper = observer(({ children, is_modal_open }) => {
     const { sendbird_store, order_store } = useStores();
+    const { isDesktop } = useDevice();
 
-    return isMobile() ? (
+    return !isDesktop ? (
         <MobileFullPageModal
             className='chat'
             height_offset='80px'

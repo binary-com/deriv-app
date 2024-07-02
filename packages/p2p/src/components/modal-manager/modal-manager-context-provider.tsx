@@ -1,7 +1,7 @@
 import React from 'react';
 import { useStores } from 'Stores/index';
 import { ModalManagerContext } from './modal-manager-context';
-import { isDesktop } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import type {
     TModal,
     TModalKeys,
@@ -20,6 +20,7 @@ type TModalState = {
 };
 
 const ModalManagerContextProvider = (props: React.PropsWithChildren<{ mock?: TModalManagerContext }>) => {
+    const { isDesktop } = useDevice();
     const [modal, setModal] = React.useState<TModalState>({
         active_modal: null,
         previous_modal: null,
@@ -125,7 +126,7 @@ const ModalManagerContextProvider = (props: React.PropsWithChildren<{ mock?: TMo
     const showModal = <T extends TModalKeys>(modal_to_show: TModal<T>, opts?: TShowModalOptions) => {
         const options = opts ?? { should_stack_modal: false };
 
-        if (isDesktop() || options.should_stack_modal) {
+        if (isDesktop || options.should_stack_modal) {
             setModalState({
                 active_modal: modal_to_show,
                 previous_modal: modal.active_modal,
@@ -171,7 +172,7 @@ const ModalManagerContextProvider = (props: React.PropsWithChildren<{ mock?: TMo
 
         if (!should_restore_local_state) persisted_states.current = {};
 
-        if (isDesktop()) {
+        if (isDesktop) {
             if (should_hide_all_modals || modal.previous_modal) {
                 setModalState({
                     active_modal: should_hide_all_modals ? null : modal.previous_modal,

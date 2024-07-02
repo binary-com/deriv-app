@@ -1,9 +1,4 @@
-import { isMobile } from '@deriv/shared';
 import { getErrorMessage, getErrorModalTitle, getWidth } from 'Utils/block-user';
-
-jest.mock('@deriv/shared', () => ({
-    isMobile: jest.fn(() => false),
-}));
 
 describe('getErrorMessage', () => {
     it('should return default message if is_invalid_advertiser_id is false', () => {
@@ -33,7 +28,6 @@ describe('getWidth', () => {
     });
 
     it('should return 90rem if isMobile is true', () => {
-        (isMobile as jest.Mock).mockImplementation(() => true);
         expect(getWidth()).toEqual('90rem');
     });
 });

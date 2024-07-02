@@ -15,7 +15,7 @@
             }
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin-bottom: 2rem;
         }
     }

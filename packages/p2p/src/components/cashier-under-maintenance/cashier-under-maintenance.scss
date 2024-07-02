@@ -4,7 +4,7 @@
     flex-direction: column;
     max-width: 65rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         padding: 1.6rem;
     }
 

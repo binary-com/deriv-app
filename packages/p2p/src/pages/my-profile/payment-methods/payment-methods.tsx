@@ -1,7 +1,8 @@
 import React from 'react';
 import { Loading } from '@deriv/components';
 import { useP2PAdvertiserPaymentMethods } from '@deriv/hooks';
-import { observer, useStore } from '@deriv/stores';
+import { observer } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import { useStores } from 'Stores';
 import AddPaymentMethod from 'Components/add-payment-method';
 import EditPaymentMethodForm from './edit-payment-method-form';
@@ -10,9 +11,8 @@ import PaymentMethodsList from './payment-methods-list';
 
 const PaymentMethods = () => {
     const { my_profile_store } = useStores();
-    const {
-        ui: { is_mobile },
-    } = useStore();
+    const { isDesktop } = useDevice();
+
     const { data: p2p_advertiser_payment_methods, isRefetching } = useP2PAdvertiserPaymentMethods();
 
     React.useEffect(() => {
@@ -25,7 +25,7 @@ const PaymentMethods = () => {
     }, []);
 
     if (my_profile_store.is_loading) {
-        return <Loading is_fullscreen={is_mobile} />;
+        return <Loading is_fullscreen={!isDesktop} />;
     } else if (my_profile_store.should_show_add_payment_method_form) {
         return <AddPaymentMethod />;
     } else if (!p2p_advertiser_payment_methods?.length && !isRefetching) {

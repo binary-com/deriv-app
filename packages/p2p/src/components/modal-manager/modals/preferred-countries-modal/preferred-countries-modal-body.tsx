@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { Checkbox, Icon, Input, Text, ThemedScrollbars } from '@deriv/components';
-import { useStore } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import { localize, Localize } from 'Components/i18next';
 
 type TPreferredCountriesModalBodyProps = {
@@ -21,9 +21,7 @@ const PreferredCountriesModalBody = ({
     selected_countries,
     setSelectedCountries,
 }: TPreferredCountriesModalBodyProps) => {
-    const {
-        ui: { is_desktop },
-    } = useStore();
+    const { isDesktop } = useDevice();
     const [search_results, setSearchResults] = React.useState([
         ...country_list.filter(item => eligible_countries.includes(item.value)),
         ...country_list.filter(item => !eligible_countries.includes(item.value)),
@@ -63,7 +61,7 @@ const PreferredCountriesModalBody = ({
                 type='text'
                 value={search_value}
             />
-            <ThemedScrollbars height={is_desktop ? '48rem' : 'auto'}>
+            <ThemedScrollbars height={isDesktop ? '48rem' : 'auto'}>
                 {search_results?.length > 0 ? (
                     <>
                         <Checkbox

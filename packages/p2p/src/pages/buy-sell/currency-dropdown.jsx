@@ -2,8 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 import { Dropdown, useOnClickOutside } from '@deriv/components';
 import { useP2PSettings } from '@deriv/hooks';
-import { isMobile } from '@deriv/shared';
 import { observer } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import { localize } from 'Components/i18next';
 import { useStores } from 'Stores';
 import { CurrencySelector } from 'Pages/buy-sell/currency-selector';
@@ -19,6 +19,7 @@ const CurrencyDropdown = () => {
     const {
         p2p_settings: { currency_list },
     } = useP2PSettings();
+    const { isDesktop } = useDevice();
 
     const local_currencies_list = currency_list.map(currency => ({
         ...currency,
@@ -47,7 +48,7 @@ const CurrencyDropdown = () => {
                 is_align_text_left
                 list={local_currencies_list}
                 onClick={() => {
-                    if (isMobile()) showModal({ key: 'CurrencySelectorModal' });
+                    if (!isDesktop) showModal({ key: 'CurrencySelectorModal' });
                     else setIsListVisible(!is_list_visible);
                 }}
                 placeholder={localize('Currency')}

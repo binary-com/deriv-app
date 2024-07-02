@@ -2,7 +2,7 @@
     &__separator {
         margin: 1.6rem 0;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin: 1.6rem -1.6rem;
             width: 100vw;
         }

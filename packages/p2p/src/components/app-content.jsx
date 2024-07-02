@@ -5,8 +5,8 @@ import { observer } from 'mobx-react-lite';
 
 import { Loading, Tabs } from '@deriv/components';
 import { useIsSystemMaintenance, useP2PNotificationCount } from '@deriv/hooks';
-import { isMobile } from '@deriv/shared';
 import { useStore } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
 import TemporarilyBarredHint from 'Components/temporarily-barred-hint';
@@ -15,6 +15,7 @@ import { useStores } from 'Stores';
 import { localize } from './i18next';
 
 const AppContent = ({ order_id }) => {
+    const { isDesktop } = useDevice();
     const { buy_sell_store, general_store } = useStores();
     const { showModal, hideModal } = useModalManagerContext();
     const {
@@ -64,8 +65,8 @@ const AppContent = ({ order_id }) => {
     return (
         <Tabs
             active_index={general_store.active_index}
-            header_fit_content={!isMobile()}
-            is_100vw={isMobile()}
+            header_fit_content={isDesktop}
+            is_100vw={!isDesktop}
             is_scrollable
             is_overflow_hidden
             onTabItemClick={active_tab_index => {

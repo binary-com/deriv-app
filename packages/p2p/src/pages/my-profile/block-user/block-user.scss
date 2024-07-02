@@ -1,6 +1,6 @@
 .block-user {
     &__modal {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             display: flex;
             flex-direction: column;
             grid-template-rows: 1fr 8rem;

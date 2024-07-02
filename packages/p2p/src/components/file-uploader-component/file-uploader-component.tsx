@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon, Text } from '@deriv/components';
-import { useStore } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import { localize } from 'Components/i18next';
 import FileDropzone from 'Components/file-dropzone';
 
@@ -29,20 +29,17 @@ const FileUploaderComponent = ({
     validation_error_message,
     value,
 }: TFileUploaderComponentProps) => {
-    const {
-        ui: { is_mobile },
-    } = useStore();
-
+    const { isDesktop } = useDevice();
     const getUploadMessage = React.useCallback(() => {
         return (
             <>
                 <Icon icon='IcCloudUpload' size={50} />
-                <Text as='div' line-height={is_mobile ? 'xl' : 'l'} size={is_mobile ? 'xxs' : 'xs'} weight='bold'>
+                <Text as='div' line-height={isDesktop ? 'l' : 'xl'} size={isDesktop ? 'xs' : 'xxs'} weight='bold'>
                     {upload_message}
                 </Text>
             </>
         );
-    }, [is_mobile, upload_message]);
+    }, [isDesktop, upload_message]);
 
     return (
         <div className='file-uploader-component'>

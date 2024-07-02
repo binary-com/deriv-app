@@ -4,7 +4,7 @@
     margin-top: auto;
     padding: 1.6rem 2.4rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 100%;
         padding: unset;
     }

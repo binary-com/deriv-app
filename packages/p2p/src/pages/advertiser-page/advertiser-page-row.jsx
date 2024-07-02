@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Text } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { useP2PExchangeRate } from '@deriv/hooks';
+import { useDevice } from '@deriv-com/ui';
 import { useStores } from 'Stores';
 import { buy_sell } from 'Constants/buy-sell';
 import { Localize } from 'Components/i18next';
@@ -19,8 +19,8 @@ const AdvertiserPageRow = ({ row: advert }) => {
     } = advertiser_page_store;
     const {
         client: { currency },
-        ui: { is_desktop },
     } = useStore();
+    const { isDesktop } = useDevice();
     const {
         effective_rate,
         eligibility_status,
@@ -64,7 +64,7 @@ const AdvertiserPageRow = ({ row: advert }) => {
                 key: 'NicknameModal',
                 props: {
                     onConfirm: showBuySellForm,
-                    should_hide_close_btn: is_desktop,
+                    should_hide_close_btn: isDesktop,
                 },
             });
         }
@@ -78,7 +78,7 @@ const AdvertiserPageRow = ({ row: advert }) => {
         };
     }, []);
 
-    if (isMobile()) {
+    if (!isDesktop) {
         return (
             <Table.Row className='advertiser-page-adverts__table-row'>
                 <Table.Cell className='advertiser-page__cell'>

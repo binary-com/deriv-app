@@ -6,6 +6,7 @@ import { useP2PCompletedOrdersNotification, useFeatureFlags, useP2PSettings } fr
 import { isEmptyObject, routes, WS } from '@deriv/shared';
 import { useStore, observer } from '@deriv/stores';
 import { getLanguage } from '@deriv/translations';
+import { useDevice } from '@deriv-com/ui';
 import { URLConstants } from '@deriv-com/utils';
 import { init } from 'Utils/server_time';
 import { waitWS } from 'Utils/websocket';
@@ -21,8 +22,8 @@ const App = () => {
     const { notifications, client, ui, common, modules } = useStore();
     const { balance, is_logging_in } = client;
     const { setOnRemount } = modules?.cashier?.general_store;
+    const { isDesktop } = useDevice();
 
-    const { is_mobile } = ui;
     const { setP2POrderProps, setP2PRedirectTo } = notifications;
 
     const history = useHistory();
@@ -163,14 +164,14 @@ const App = () => {
 
         setActionParam(url_params.get('action'));
 
-        if (is_mobile) {
-            setCodeParam(localStorage.getItem('verification_code.p2p_order_confirm'));
-        } else if (!code_param) {
+        if (isDesktop) {
             if (url_params.has('code')) {
                 setCodeParam(url_params.get('code'));
             } else if (localStorage.getItem('verification_code.p2p_order_confirm')) {
                 setCodeParam(localStorage.getItem('verification_code.p2p_order_confirm'));
             }
+        } else if (!code_param) {
+            setCodeParam(localStorage.getItem('verification_code.p2p_order_confirm'));
         }
 
         // Different emails give us different params (order / order_id),
@@ -194,7 +195,7 @@ const App = () => {
         input_order_id => {
             const current_query_params = new URLSearchParams(location.search);
 
-            if (is_mobile) {
+            if (!isDesktop) {
                 current_query_params.delete('action');
                 current_query_params.delete('code');
             }

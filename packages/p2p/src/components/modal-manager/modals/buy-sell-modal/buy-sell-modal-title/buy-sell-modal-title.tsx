@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon, Text } from '@deriv/components';
 import { observer } from '@deriv/stores';
-import { isDesktop } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import { useStores } from 'Stores';
 import { Localize } from 'Components/i18next';
 
@@ -11,6 +11,7 @@ type TBuySellModalTitleProps = {
 };
 
 const BuySellModalTitle = ({ is_buy = false, onReturn }: TBuySellModalTitleProps) => {
+    const { isDesktop } = useDevice();
     const { buy_sell_store, my_profile_store } = useStores();
     const { selected_ad_state } = buy_sell_store;
 
@@ -18,7 +19,7 @@ const BuySellModalTitle = ({ is_buy = false, onReturn }: TBuySellModalTitleProps
 
     const getModalTitle = () => {
         if (my_profile_store.should_show_add_payment_method_form) {
-            if (isDesktop()) {
+            if (isDesktop) {
                 return (
                     <div className='buy-sell-modal-title'>
                         <Icon

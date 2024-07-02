@@ -39,11 +39,6 @@ jest.mock('@deriv/components', () => ({
     Loading: () => <div>Loading</div>,
 }));
 
-jest.mock('@deriv/shared', () => ({
-    ...jest.requireActual('@deriv/shared'),
-    isMobile: jest.fn(() => false),
-}));
-
 // jest.mock('Components/dp2p-blocked', () => jest.fn(() => 'Dp2pBlocked'));
 jest.mock('Components/verification/verification', () => jest.fn(() => 'Verification'));
 jest.mock('Pages/my-ads/my-ads', () => jest.fn(() => 'MyAds'));

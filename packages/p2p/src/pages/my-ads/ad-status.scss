@@ -25,7 +25,7 @@
 
         width: fit-content;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 0.2rem 1rem;
         }
     }

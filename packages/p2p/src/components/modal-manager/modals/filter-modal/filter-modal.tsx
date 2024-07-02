@@ -1,6 +1,7 @@
 import React from 'react';
-import { observer, useStore } from '@deriv/stores';
+import { observer } from '@deriv/stores';
 import { DesktopWrapper, MobileFullPageModal, MobileWrapper, Modal } from '@deriv/components';
+import { useDevice } from '@deriv-com/ui';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
 import { useStores } from 'Stores';
 import { getListDifference } from 'Utils/helper';
@@ -15,9 +16,8 @@ export type TPaymentMethod = {
 
 const FilterModal = () => {
     const { buy_sell_store, my_profile_store } = useStores();
-    const {
-        ui: { is_mobile },
-    } = useStore();
+    const { isMobile } = useDevice();
+
     const { hideModal, is_modal_open, showModal, useSavedState } = useModalManagerContext();
     const {
         onClickApply: onClickApplyFilter,
@@ -82,7 +82,7 @@ const FilterModal = () => {
                 key: 'LeavePageModal',
                 props: {
                     onLeavePage: () => {
-                        if (is_mobile) {
+                        if (isMobile) {
                             setSelectedMethods(
                                 selected_methods.filter((selected_method: string) =>
                                     selected_payment_method_value.includes(selected_method)

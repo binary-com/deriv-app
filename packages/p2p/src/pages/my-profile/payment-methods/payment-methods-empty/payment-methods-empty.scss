@@ -10,7 +10,7 @@
     &__icon {
         margin: 2rem auto 0;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin: 11.2rem auto 0;
         }
     }

@@ -4,7 +4,7 @@
     padding-bottom: 1.6rem;
     margin-bottom: 1.1rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         gap: 20vw;
         width: 100vw;
         border-bottom: none;
@@ -20,7 +20,7 @@
         height: 4rem;
         margin-top: 1rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             border-right: unset;
         }
 
@@ -28,7 +28,7 @@
             border-right: unset;
             padding-left: 2.4rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 padding-left: unset;
             }
         }
@@ -40,7 +40,7 @@
         width: 29.2rem;
         border: none;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             flex-direction: column;
             width: unset;
         }

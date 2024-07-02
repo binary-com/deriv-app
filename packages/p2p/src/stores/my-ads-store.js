@@ -1,5 +1,6 @@
 import { action, observable, makeObservable, computed } from 'mobx';
-import { getDecimalPlaces, isMobile } from '@deriv/shared';
+import { getDecimalPlaces } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import { localize } from 'Components/i18next';
 import { buy_sell } from 'Constants/buy-sell';
 import { ad_type } from 'Constants/floating-rate';
@@ -254,6 +255,7 @@ export default class MyAdsStore extends BaseStore {
             requestWS({ p2p_advert_update: 1, id, is_active: is_ad_active ? 0 : 1 }).then(response => {
                 if (response) {
                     if (response.error) {
+                        const { isDesktop } = useDevice();
                         this.setApiErrorCode(response.error.code);
                         this.root_store.general_store.showModal({
                             key: 'ErrorModal',
@@ -261,7 +263,7 @@ export default class MyAdsStore extends BaseStore {
                                 has_close_icon: false,
                                 error_message: response.error.message,
                                 error_modal_title: generateErrorDialogTitle(this.error_code),
-                                width: isMobile() ? '90rem' : '40rem',
+                                width: isDesktop ? '40rem' : '90rem',
                             },
                         });
                     } else {
@@ -396,6 +398,7 @@ export default class MyAdsStore extends BaseStore {
                 this.loadMoreAds({ startIndex: 0 });
                 this.hideQuickAddModal();
             } else {
+                const { isDesktop } = useDevice();
                 this.root_store.general_store.hideModal();
                 this.root_store.general_store.showModal({
                     key: 'ErrorModal',
@@ -403,7 +406,7 @@ export default class MyAdsStore extends BaseStore {
                         has_close_icon: false,
                         error_message: response.error.message,
                         error_modal_title: generateErrorDialogTitle(this.error_code),
-                        width: isMobile() ? '90rem' : '40rem',
+                        width: isDesktop ? '40rem' : '90rem',
                     },
                 });
             }

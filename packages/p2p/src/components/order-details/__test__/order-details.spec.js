@@ -97,11 +97,6 @@ jest.mock('Components/modal-manager/modal-manager-context', () => ({
     })),
 }));
 
-jest.mock('@deriv/shared', () => ({
-    ...jest.requireActual('@deriv/shared'),
-    isDesktop: jest.fn(() => true),
-}));
-
 jest.mock('Components/order-details/order-details-footer.jsx', () => jest.fn(() => <div>Order details footer</div>));
 
 jest.mock('Components/order-details/order-info-block.jsx', () => jest.fn(() => <div>Order Info Block</div>));

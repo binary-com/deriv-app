@@ -1,15 +1,9 @@
 import React from 'react';
-import { isMobile } from '@deriv/shared';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { requestWS } from 'Utils/websocket';
 import OrderDetailsComplainModal from '../order-details-complain-modal.jsx';
 
 const el_modal = document.createElement('div');
-
-jest.mock('@deriv/shared', () => ({
-    ...jest.requireActual('@deriv/shared'),
-    isMobile: jest.fn(),
-}));
 
 jest.mock('Utils/websocket', () => ({
     ...jest.requireActual('Utils/websocket'),
@@ -68,7 +62,6 @@ describe('<OrderDetailsComplainModal/>', () => {
     });
 
     it('should show Complaint header in mobile view', () => {
-        isMobile.mockReturnValue(true);
         render(<OrderDetailsComplainModal should_show_complain_modal is_buy_order_for_user />);
 
         expect(screen.getByText('Complaint')).toBeInTheDocument();

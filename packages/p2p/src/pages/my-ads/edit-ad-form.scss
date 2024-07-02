@@ -1,5 +1,5 @@
 .edit-ad-form {
-    @include mobile {
+    @include mobile-or-tablet-screen {
         .dc-input__footer {
             justify-content: space-between;
             width: 86vw;
@@ -11,7 +11,7 @@
     }
 
     .dc-input__wrapper {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             max-width: 90vw;
 
             .edit-ad-form__field {
@@ -54,7 +54,7 @@
             }
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 0.5rem 0;
         }
     }
@@ -69,7 +69,7 @@
         }
 
         &-container {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 width: 90vw;
                 margin: 0 1.6rem;
 
@@ -85,7 +85,7 @@
             }
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             height: fit-content;
             position: unset;
             width: 100%;
@@ -113,7 +113,7 @@
             }
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             flex-direction: column;
             height: unset;
             width: unset;
@@ -132,14 +132,14 @@
         margin-left: 0;
         width: 32.4rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: inherit;
         }
 
         &--contact-details {
             margin-bottom: 5.9rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-bottom: 3.7rem;
             }
         }
@@ -151,7 +151,7 @@
             margin-bottom: 0;
             width: 67.2rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 height: 9.8rem;
                 width: 90vw;
             }
@@ -165,7 +165,7 @@
                     top: 9.7rem;
                     right: 0rem;
 
-                    @include mobile {
+                    @include mobile-or-tablet-screen {
                         display: flex;
                         right: 0;
                     }
@@ -193,7 +193,7 @@
         display: flex;
         justify-content: flex-end;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             border-top: 2px solid var(--general-section-1);
             flex-direction: row;
             padding: 1.6rem;

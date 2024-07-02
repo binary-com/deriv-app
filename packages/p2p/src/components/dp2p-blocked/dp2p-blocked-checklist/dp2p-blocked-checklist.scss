@@ -6,7 +6,7 @@
     .dc-checklist__item {
         width: 40rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 100%;
         }
     }

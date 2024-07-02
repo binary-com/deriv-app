@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Formik, Form } from 'formik';
 import { Div100vhContainer, ThemedScrollbars } from '@deriv/components';
 import { useP2PSettings } from '@deriv/hooks';
-import { isMobile } from '@deriv/shared';
 import { observer } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import { localize } from 'Components/i18next';
 import { buy_sell } from 'Constants/buy-sell';
 import { ad_type } from 'Constants/floating-rate';
@@ -13,13 +13,17 @@ import AdWizard from './ad-wizard';
 import './create-ad-form.scss';
 
 const CreateAdFormWrapper = ({ children }) => {
-    if (isMobile()) {
-        return <Div100vhContainer height_offset='auto'>{children}</Div100vhContainer>;
+    const { isDesktop } = useDevice();
+
+    if (isDesktop) {
+        return children;
     }
-    return children;
+
+    return <Div100vhContainer height_offset='auto'>{children}</Div100vhContainer>;
 };
 
 const CreateAdForm = ({ country_list }) => {
+    const { isDesktop } = useDevice();
     const { buy_sell_store, general_store, my_ads_store, my_profile_store } = useStores();
     const {
         p2p_settings: {
@@ -97,7 +101,7 @@ const CreateAdForm = ({ country_list }) => {
                             <Form noValidate>
                                 <ThemedScrollbars
                                     className='create-ad-form__scrollbar'
-                                    is_scrollbar_hidden={isMobile()}
+                                    is_scrollbar_hidden={!isDesktop}
                                 >
                                     <CreateAdFormWrapper>
                                         <AdWizard

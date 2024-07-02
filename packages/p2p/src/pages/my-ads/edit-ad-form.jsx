@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Formik, Form } from 'formik';
 import { Div100vhContainer, ThemedScrollbars } from '@deriv/components';
 import { useP2PSettings } from '@deriv/hooks';
-import { isMobile } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import { observer } from 'mobx-react-lite';
 import { buy_sell } from 'Constants/buy-sell';
 import { useStores } from 'Stores';
@@ -12,14 +12,17 @@ import AdWizard from './ad-wizard';
 import './edit-ad-form.scss';
 
 const EditAdFormWrapper = ({ children }) => {
-    if (isMobile()) {
-        return <Div100vhContainer height_offset='auto'>{children}</Div100vhContainer>;
+    const { isDesktop } = useDevice();
+
+    if (isDesktop) {
+        return children;
     }
 
-    return children;
+    return <Div100vhContainer height_offset='auto'>{children}</Div100vhContainer>;
 };
 
 const EditAdForm = ({ country_list }) => {
+    const { isDesktop } = useDevice();
     const { my_ads_store, my_profile_store } = useStores();
     const steps = [
         { header: { title: 'Edit ad type and amount' } },
@@ -125,7 +128,7 @@ const EditAdForm = ({ country_list }) => {
                     return (
                         <div className='edit-ad-form'>
                             <Form noValidate>
-                                <ThemedScrollbars className='edit-ad-form__scrollbar' is_scrollbar_hidden={isMobile()}>
+                                <ThemedScrollbars className='edit-ad-form__scrollbar' is_scrollbar_hidden={!isDesktop}>
                                     <EditAdFormWrapper>
                                         <AdWizard
                                             action='edit'

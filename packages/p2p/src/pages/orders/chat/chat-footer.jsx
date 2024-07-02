@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { Input, Text } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 import { localize, Localize } from 'Components/i18next';
@@ -11,6 +11,7 @@ import ChatMessage from 'Utils/chat-message';
 import './chat-footer.scss';
 
 const ChatFooter = observer(() => {
+    const { isDesktop } = useDevice();
     const { order_store, sendbird_store } = useStores();
     const file_input_ref = React.useRef(null);
     const text_input_ref = React.useRef(null);
@@ -21,7 +22,7 @@ const ChatFooter = observer(() => {
     };
 
     const handleKeyDown = event => {
-        if (event.key === 'Enter' && !isMobile()) {
+        if (event.key === 'Enter' && isDesktop) {
             if (event.ctrlKey || event.metaKey) {
                 const { target: element } = event;
                 const { value } = element;

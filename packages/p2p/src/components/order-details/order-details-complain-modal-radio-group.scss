@@ -1,7 +1,7 @@
 .order-details-complain-modal-radio-group:not(.dc-radio-group__item) {
     display: inline;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         margin-top: 0;
 
         .dc-radio-group__item-wrapper {

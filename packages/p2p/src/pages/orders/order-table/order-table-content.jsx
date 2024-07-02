@@ -3,8 +3,9 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Loading, Button, InfiniteDataList, Div100vhContainer, Text } from '@deriv/components';
 import { reaction } from 'mobx';
-import { isMobile, routes } from '@deriv/shared';
+import { routes } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import { Localize } from 'Components/i18next';
 import TableError from 'Components/section-error';
 import P2pEmpty from 'Components/p2p-empty';
@@ -14,10 +15,13 @@ import { useStores } from 'Stores';
 import { createExtendedOrderDetails } from 'Utils/orders';
 
 const ContentWrapper = ({ children }) => {
-    if (isMobile()) {
-        return <Div100vhContainer height_offset='21rem'>{children}</Div100vhContainer>;
+    const { isDesktop } = useDevice();
+
+    if (isDesktop) {
+        return <OrderTableHeader>{children}</OrderTableHeader>;
     }
-    return <OrderTableHeader>{children}</OrderTableHeader>;
+
+    return <Div100vhContainer height_offset='21rem'>{children}</Div100vhContainer>;
 };
 
 const OrderTableContent = () => {

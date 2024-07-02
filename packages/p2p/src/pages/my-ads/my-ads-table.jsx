@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import React from 'react';
 import { Button, InfiniteDataList, Loading, Table } from '@deriv/components';
-import { isDesktop, isMobile } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import { localize } from 'Components/i18next';
 import ToggleAds from 'Pages/my-ads/toggle-ads.jsx';
 import { useStores } from 'Stores';
@@ -21,6 +21,7 @@ const getHeaders = offered_currency => [
 ];
 
 const MyAdsTable = ({ country_list, table_ref }) => {
+    const { isDesktop } = useDevice();
     const { general_store, my_ads_store } = useStores();
     const {
         client: { currency },
@@ -46,7 +47,7 @@ const MyAdsTable = ({ country_list, table_ref }) => {
         return (
             <React.Fragment>
                 <div className='my-ads__header'>
-                    {isDesktop() && (
+                    {isDesktop && (
                         <Button
                             is_disabled={general_store.is_barred}
                             large
@@ -63,7 +64,7 @@ const MyAdsTable = ({ country_list, table_ref }) => {
                         'my-ads-table--disabled': !general_store.is_listed || general_store.is_barred,
                     })}
                 >
-                    {isDesktop() && (
+                    {isDesktop && (
                         <Table.Header>
                             <Table.Row className='my-ads-table__row'>
                                 {getHeaders(currency).map(header => (
@@ -85,7 +86,7 @@ const MyAdsTable = ({ country_list, table_ref }) => {
                         />
                     </Table.Body>
                 </Table>
-                {isMobile() && (
+                {!isDesktop && (
                     <div className='my-ads__create-container'>
                         <Button
                             className='my-ads__create'

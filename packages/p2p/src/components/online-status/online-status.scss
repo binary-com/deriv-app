@@ -5,7 +5,7 @@
         margin: auto 0.5rem auto 0;
         border-radius: 50%;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 0.8rem;
             height: 0.8rem;
         }

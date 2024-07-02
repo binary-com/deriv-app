@@ -1,5 +1,5 @@
 .my-profile-form {
-    @include mobile {
+    @include mobile-or-tablet-screen {
         overflow: hidden;
     }
 
@@ -29,7 +29,7 @@
             }
         }
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin: 0 1vw;
             width: 96vw;
 
@@ -40,12 +40,12 @@
     }
 
     &__form {
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 96vw;
         }
 
         > :nth-child(2) {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 padding-bottom: 7.4rem;
             }
         }
@@ -65,7 +65,7 @@
         background-color: var(--general-main-1);
         text-align: right;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             width: 100vw;
             padding: 1.6rem;
             position: fixed;
@@ -79,7 +79,7 @@
         }
 
         &-button {
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 width: 93vw;
             }
         }

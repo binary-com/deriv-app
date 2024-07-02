@@ -1,7 +1,7 @@
 .edit-ad-summary {
     margin-bottom: 0.6rem;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         margin: 0.6rem 0;
     }
 }

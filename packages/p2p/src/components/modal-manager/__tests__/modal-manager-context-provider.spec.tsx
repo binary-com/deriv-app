@@ -3,7 +3,6 @@ import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ModalManagerContextProvider from '../modal-manager-context-provider';
 import ModalManager from '../modal-manager';
-import { isDesktop } from '@deriv/shared';
 import { useStores } from 'Stores/index';
 import {
     MockBuySellModal,
@@ -11,11 +10,6 @@ import {
     MockAdCancelModal,
     MockPage,
 } from '../__mocks__/mock-modal-manager-context-provider';
-
-jest.mock('@deriv/shared', () => ({
-    ...jest.requireActual('@deriv/shared'),
-    isDesktop: jest.fn(() => true),
-}));
 
 const mock_store: DeepPartial<ReturnType<typeof useStores>> = {
     general_store: {

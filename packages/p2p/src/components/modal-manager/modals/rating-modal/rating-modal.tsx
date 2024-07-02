@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Modal } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
 import { observer } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import { localize, Localize } from 'Components/i18next';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
 import StarRating from 'Components/star-rating';
@@ -22,6 +22,7 @@ const RatingModal = ({
     onClickDone,
     onClickSkip,
 }: TRatingModalProps) => {
+    const { isDesktop } = useDevice();
     const { order_store } = useStores();
     const { is_modal_open } = useModalManagerContext();
     const { handleRating, rating_value, setIsRecommended } = order_store;
@@ -36,7 +37,7 @@ const RatingModal = ({
             is_open={is_modal_open}
             title={localize('How would you rate this transaction?')}
             toggleModal={onClickSkip}
-            width={isMobile() ? '90vw' : ''}
+            width={isDesktop ? '' : '90vw'}
         >
             <Modal.Body className='rating-modal__body'>
                 <div className='rating-modal__body__star'>

@@ -36,7 +36,7 @@
         display: flex;
         justify-content: flex-end;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin-bottom: 1.6rem;
         }
     }

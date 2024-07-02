@@ -3,7 +3,7 @@ import { Formik, Field } from 'formik';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { Autocomplete, Icon, Text, useOnClickOutside } from '@deriv/components';
-import { isDesktop, isMobile } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import { useStores } from 'Stores';
 import { localize, Localize } from 'Components/i18next';
 import PaymentMethodIcon from 'Components/payment-method-icon';
@@ -18,6 +18,7 @@ const BuyAdPaymentMethodsList = ({
     should_show_hint,
     touched,
 }) => {
+    const { isDesktop } = useDevice();
     const { my_ads_store, my_profile_store } = useStores();
     const [selected_edit_method, setSelectedEditMethod] = React.useState();
     const [payment_methods_list, setPaymentMethodsList] = React.useState([]);
@@ -230,15 +231,15 @@ const BuyAdPaymentMethodsList = ({
                                                             }
                                                             onTouchStart={e => {
                                                                 e.preventDefault();
-                                                                if (isMobile())
+                                                                if (!isDesktop)
                                                                     onClickIcon(payment_method, key, setFieldValue);
                                                             }}
                                                             onMouseDown={() => {
-                                                                if (isDesktop() && my_ads_store.show_ad_form)
+                                                                if (isDesktop && my_ads_store.show_ad_form)
                                                                     onClickIcon(payment_method, key, setFieldValue);
                                                             }}
                                                             onClick={() => {
-                                                                if (isDesktop() && !my_ads_store.show_ad_form) {
+                                                                if (isDesktop && !my_ads_store.show_ad_form) {
                                                                     onClickIcon(payment_method, key, setFieldValue);
                                                                 }
                                                             }}

@@ -1,12 +1,13 @@
 import React from 'react';
 import { Dropdown, Icon } from '@deriv/components';
-import { isDesktop } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import { observer } from 'mobx-react-lite';
 import { localize } from 'Components/i18next';
 import { useStores } from 'Stores';
 import 'Pages/buy-sell/sort-dropdown.scss';
 
 const SortDropdown = () => {
+    const { isDesktop } = useDevice();
     const { buy_sell_store } = useStores();
 
     const sort_list = [
@@ -14,7 +15,7 @@ const SortDropdown = () => {
         { text: localize('User rating'), value: 'rating' },
     ];
 
-    if (isDesktop()) {
+    if (isDesktop) {
         return (
             <Dropdown
                 className='sort-dropdown'

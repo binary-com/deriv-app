@@ -1,12 +1,7 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mockStore, StoreProvider } from '@deriv/stores';
 import FileUploaderComponent from '../file-uploader-component';
-
-const wrapper = ({ children }: { children: JSX.Element }) => (
-    <StoreProvider store={mockStore({ ui: { is_mobile: false } })}>{children}</StoreProvider>
-);
 
 jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
@@ -32,14 +27,14 @@ describe('<FileUploaderComponent />', () => {
     };
 
     it('should render FileUploaderComponent component in desktop mode', async () => {
-        render(<FileUploaderComponent {...props} />, { wrapper });
+        render(<FileUploaderComponent {...props} />);
         expect(screen.getByText('upload here')).toBeInTheDocument();
     });
 
     it('should upload supported file', async () => {
         props.value = [file];
 
-        render(<FileUploaderComponent {...props} />, { wrapper });
+        render(<FileUploaderComponent {...props} />);
 
         const input = screen.getByTestId('dt_file_upload_input') as HTMLInputElement;
         userEvent.upload(input, file);
@@ -57,7 +52,7 @@ describe('<FileUploaderComponent />', () => {
     it('should show validation_error_message when unsupported file is uploaded', async () => {
         props.validation_error_message = 'error';
 
-        render(<FileUploaderComponent {...props} />, { wrapper });
+        render(<FileUploaderComponent {...props} />);
 
         const unsupported_file = new File(['hello'], 'hello.html', { type: 'html' });
         const input = screen.getByTestId('dt_file_upload_input');
@@ -71,7 +66,7 @@ describe('<FileUploaderComponent />', () => {
     it('should render validation error message if validation_error_message is passed as a function', () => {
         props.validation_error_message = () => 'error';
 
-        render(<FileUploaderComponent {...props} />, { wrapper });
+        render(<FileUploaderComponent {...props} />);
 
         expect(screen.getByText('error')).toBeInTheDocument();
     });
@@ -82,7 +77,7 @@ describe('<FileUploaderComponent />', () => {
         props.value = [file, file_bye];
         props.validation_error_message = '';
 
-        render(<FileUploaderComponent {...props} />, { wrapper });
+        render(<FileUploaderComponent {...props} />);
 
         const input = screen.getByTestId('dt_file_upload_input') as HTMLInputElement;
         userEvent.upload(input, file);

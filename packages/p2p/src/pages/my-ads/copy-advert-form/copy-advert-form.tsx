@@ -3,6 +3,7 @@ import { Formik, Field, FieldProps, Form } from 'formik';
 import { Button, InlineMessage, Input, Text, ThemedScrollbars } from '@deriv/components';
 import { useP2PSettings } from '@deriv/hooks';
 import { observer, useStore } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import FloatingRate from 'Components/floating-rate';
 import { Localize, localize } from 'Components/i18next';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
@@ -24,8 +25,8 @@ const CopyAdvertForm = ({ advert, country_list, onCancel }: TCopyAdvertFormProps
     const { showModal } = useModalManagerContext();
     const {
         client: { currency, local_currency_config },
-        ui: { is_desktop },
     } = useStore();
+    const { isDesktop } = useDevice();
     const local_currency = local_currency_config.currency;
     const { general_store, my_ads_store, my_profile_store } = useStores();
     const {
@@ -154,7 +155,7 @@ const CopyAdvertForm = ({ advert, country_list, onCancel }: TCopyAdvertFormProps
                         <Form noValidate>
                             <ThemedScrollbars
                                 className='copy-advert-form__scrollbar'
-                                height={is_desktop ? 'calc(100vh - 15rem)' : '100%'}
+                                height={isDesktop ? 'calc(100vh - 15rem)' : '100%'}
                             >
                                 <InlineMessage
                                     message={

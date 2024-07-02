@@ -4,7 +4,8 @@ import { Field, Form, FormikValues } from 'formik';
 import { Button, DesktopWrapper, Input, Loading, Text } from '@deriv/components';
 import { useP2PAdvertiserPaymentMethods } from '@deriv/hooks';
 import { isEmptyObject } from '@deriv/shared';
-import { observer, useStore } from '@deriv/stores';
+import { observer } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import { useStores } from 'Stores';
 import { Localize, localize } from 'Components/i18next';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
@@ -14,9 +15,7 @@ import { TPaymentMethod } from 'Types/my-profile.types';
 
 const EditPaymentMethodForm = () => {
     const { general_store, my_profile_store } = useStores();
-    const {
-        ui: { is_desktop, is_mobile },
-    } = useStore();
+    const { isDesktop } = useDevice();
     const { showModal } = useModalManagerContext();
     const { mutation, update } = useP2PAdvertiserPaymentMethods();
     const { error: mutation_error, reset, status: mutation_status } = mutation;
@@ -154,9 +153,9 @@ const EditPaymentMethodForm = () => {
                             <div
                                 className={classNames('edit-payment-method-form__buttons', {
                                     'edit-payment-method-form__buttons--separated-footer':
-                                        general_store.active_index === 3 && is_mobile,
+                                        general_store.active_index === 3 && !isDesktop,
                                     'edit-payment-method-form__buttons--separated-footer-profile':
-                                        general_store.active_index === 3 && is_desktop,
+                                        general_store.active_index === 3 && isDesktop,
                                 })}
                             >
                                 <Button

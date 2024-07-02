@@ -7,7 +7,7 @@
     padding: 2rem;
     position: relative;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 90%;
     }
 
@@ -16,7 +16,7 @@
         width: max-content;
         margin: 1rem 0 3rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin-top: 0;
         }
     }
@@ -47,7 +47,7 @@
         justify-content: center;
         margin-top: 2rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             margin-top: 1rem;
         }
 
@@ -70,7 +70,7 @@
         &-text {
             margin: 1.5rem 0 2rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin-bottom: 0;
             }
         }

@@ -7,7 +7,7 @@
         .barspinner {
             margin: 0.8rem auto -2.4rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 margin: 0 auto -2rem;
             }
         }

@@ -1,12 +1,13 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { Button, Icon, MobileWrapper, Modal, Popover, Text } from '@deriv/components';
+import { useDevice } from '@deriv-com/ui';
 import { localize } from 'Components/i18next';
 import { useStores } from 'Stores';
-import { isDesktop } from '@deriv/shared';
 import './block-user-count.scss';
 
 const BlockUserCount = () => {
+    const { isDesktop } = useDevice();
     const { general_store } = useStores();
     const { user_blocked_count } = general_store;
 
@@ -49,7 +50,7 @@ const BlockUserCount = () => {
                     </Modal.Footer>
                 </Modal>
             </MobileWrapper>
-            <div onClick={!isDesktop() ? () => setIsBlockUserCountModalOpen(true) : null}>
+            <div onClick={!isDesktop ? () => setIsBlockUserCountModalOpen(true) : null}>
                 <Popover
                     alignment='top'
                     className='block-user-count'
@@ -57,7 +58,7 @@ const BlockUserCount = () => {
                     message={getMessage()}
                 >
                     <Icon className='block-user-count__container--icon' icon='IcUserBlockedOutline' size={16} />
-                    <Text color='less-prominent' size={isDesktop() ? 'xs' : 14}>
+                    <Text color='less-prominent' size={isDesktop ? 'xs' : 14}>
                         {user_blocked_count}
                     </Text>
                 </Popover>

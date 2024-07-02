@@ -6,7 +6,7 @@
         height: 5.2rem;
     }
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         padding: 0.8rem 1rem;
         min-width: 25rem;
 
@@ -40,7 +40,7 @@
                 margin-left: 1.2rem;
                 width: unset;
 
-                @include mobile {
+                @include mobile-or-tablet-screen {
                     padding: 0 2.8rem 0 0.4rem;
                 }
             }

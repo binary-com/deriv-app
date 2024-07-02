@@ -1,7 +1,7 @@
 .scrollbar-wrapper {
     overflow: visible;
 
-    @include mobile {
+    @include mobile-or-tablet-screen {
         overflow: unset;
     }
 

@@ -1,6 +1,6 @@
 .dc-modal__container_order-details-confirm-modal {
     min-height: 41.2rem;
-    @include mobile {
+    @include mobile-or-tablet-screen {
         width: 32.8rem;
         min-height: 36.8rem;
     }
@@ -10,7 +10,7 @@
         &__title {
             padding: 2.4rem;
 
-            @include mobile {
+            @include mobile-or-tablet-screen {
                 padding: 1.6rem;
             }
         }
@@ -19,7 +19,7 @@
     .dc-modal-body {
         padding: 0 2.4rem;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 0 1.6rem;
         }
         .order-details-confirm-modal__file_format {
@@ -32,7 +32,7 @@
     }
     .dc-modal-footer {
         padding: 2.4rem;
-        @include mobile {
+        @include mobile-or-tablet-screen {
             padding: 1.6rem;
         }
     }

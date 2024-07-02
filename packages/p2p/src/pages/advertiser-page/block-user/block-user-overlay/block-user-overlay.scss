@@ -18,7 +18,7 @@
         width: 100%;
         z-index: 9999;
 
-        @include mobile {
+        @include mobile-or-tablet-screen {
             border: none;
             border-radius: unset;
             flex-flow: column;

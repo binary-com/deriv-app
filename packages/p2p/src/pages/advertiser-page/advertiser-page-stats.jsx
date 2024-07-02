@@ -1,7 +1,7 @@
 import React from 'react';
 import { Money, Table, Text } from '@deriv/components';
-import { isMobile } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import { localize, Localize } from 'Components/i18next';
 import { useStores } from 'Stores';
 import './advertiser-page-stats.scss';
@@ -11,6 +11,7 @@ const AdvertiserPageStats = () => {
     const {
         client: { currency },
     } = useStore();
+    const { isDesktop } = useDevice();
 
     const is_my_advert = advertiser_page_store.advertiser_details_id === general_store.advertiser_id;
     // Use general_store.advertiser_info since resubscribing to the same id from advertiser page returns error
@@ -30,7 +31,7 @@ const AdvertiserPageStats = () => {
     const avg_buy_time_in_minutes = buy_time_avg > 60 ? Math.round(buy_time_avg / 60) : '< 1';
     const avg_release_time_in_minutes = release_time_avg > 60 ? Math.round(release_time_avg / 60) : '< 1';
 
-    if (isMobile()) {
+    if (!isDesktop) {
         return (
             <React.Fragment>
                 <Table className='advertiser-page-stats__wrapper'>

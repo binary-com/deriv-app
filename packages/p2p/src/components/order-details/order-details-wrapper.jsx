@@ -2,12 +2,14 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Icon, MobileFullPageModal, ThemedScrollbars } from '@deriv/components';
-import { isMobile, routes } from '@deriv/shared';
+import { routes } from '@deriv/shared';
+import { useDevice } from '@deriv-com/ui';
 import PageReturn from 'Components/page-return';
 import { useStores } from 'Stores';
 import OrderDetailsFooter from 'Components/order-details/order-details-footer.jsx';
 
 const OrderDetailsWrapper = ({ children, page_title }) => {
+    const { isDesktop } = useDevice();
     const { order_store, sendbird_store } = useStores();
     const history = useHistory();
 
@@ -20,7 +22,12 @@ const OrderDetailsWrapper = ({ children, page_title }) => {
         }
     };
 
-    return isMobile() ? (
+    return isDesktop ? (
+        <React.Fragment>
+            <PageReturn onClick={pageHeaderReturnHandler} page_title={page_title} />
+            <ThemedScrollbars height='70vh'>{children}</ThemedScrollbars>
+        </React.Fragment>
+    ) : (
         <div data-testid='order-details-wrapper-mobile'>
             <MobileFullPageModal
                 className='order-details'
@@ -48,11 +55,6 @@ const OrderDetailsWrapper = ({ children, page_title }) => {
                 {children}
             </MobileFullPageModal>
         </div>
-    ) : (
-        <React.Fragment>
-            <PageReturn onClick={pageHeaderReturnHandler} page_title={page_title} />
-            <ThemedScrollbars height='70vh'>{children}</ThemedScrollbars>
-        </React.Fragment>
     );
 };
 

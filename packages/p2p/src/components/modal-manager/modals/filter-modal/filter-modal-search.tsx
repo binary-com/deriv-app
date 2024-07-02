@@ -2,8 +2,8 @@ import React from 'react';
 import { Field as FormField, Formik, Form, FormikValues } from 'formik';
 import debounce from 'lodash.debounce';
 import { Icon, Input } from '@deriv/components';
-import { isDesktop } from '@deriv/shared';
 import { observer } from '@deriv/stores';
+import { useDevice } from '@deriv-com/ui';
 import { localize } from 'Components/i18next';
 import { useStores } from 'Stores';
 import './filter-modal-search.scss';
@@ -13,6 +13,7 @@ const FilterModalSearch = () => {
     const { buy_sell_store, my_profile_store } = useStores();
     const { setIsFilterModalLoading } = buy_sell_store;
     const { getPaymentMethodsList, setSearchResults, setSearchTerm } = my_profile_store;
+    const { isDesktop } = useDevice();
 
     const returnedFunction = debounce(() => {
         getPaymentMethodsList();
@@ -59,7 +60,7 @@ const FilterModalSearch = () => {
                                     name='search'
                                     onFocus={submitForm}
                                     onKeyUp={() => onSearchKeyUp(submitForm)}
-                                    placeholder={isDesktop() ? localize('Search payment method') : localize('Search')}
+                                    placeholder={isDesktop ? localize('Search payment method') : localize('Search')}
                                     trailing_icon={
                                         search ? (
                                             <Icon
