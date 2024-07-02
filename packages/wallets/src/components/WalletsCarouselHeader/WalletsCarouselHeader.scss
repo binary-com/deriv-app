@@ -3,8 +3,9 @@
 .wallets-carousel-header {
     background: var(--system-light-8-primary-background, #fff);
     border-bottom: 1px solid var(--general-section-1, #f2f3f4);
-    display: flex;
     height: 6.1rem;
+    display: flex;
+    align-items: center;
     justify-content: space-between;
     padding: 1rem 1.6rem 1rem 0.8rem;
     position: absolute;
@@ -34,5 +35,10 @@
     &__details {
         display: flex;
         flex-direction: column;
+    }
+
+    &__button {
+        border-radius: 1.2rem;
+        border: 0.1rem solid var(--text-general, #333333);
     }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { useHistory } from 'react-router-dom';
-import { LegacyTransferIcon } from '@deriv/quill-icons';
+import { LabelPairedArrowUpArrowDownSmBoldIcon } from '@deriv/quill-icons';
 import { IconButton, WalletText } from '../Base';
 import { WalletCurrencyCard } from '../WalletCurrencyCard';
 import './WalletsCarouselHeader.scss';
@@ -38,14 +38,13 @@ const WalletsCarouselHeader: React.FC<TProps> = ({ balance, currency, hidden, is
                 </div>
             </div>
             <IconButton
-                color='transparent'
+                aria-label='Transfer'
+                className='wallets-carousel-header__button'
+                color='white'
                 data-testid='dt_wallets_carousel_header_button'
-                icon={<LegacyTransferIcon iconSize='xs' />}
-                iconSize='lg'
-                onClick={() => {
-                    history.push('/wallet/account-transfer');
-                }}
-                size='lg'
+                icon={<LabelPairedArrowUpArrowDownSmBoldIcon />}
+                onClick={() => history.push('/wallet/account-transfer')}
+                size='md'
             />
         </div>
     );
