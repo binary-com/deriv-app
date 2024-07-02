@@ -7,6 +7,7 @@ import getRoutesConfig from 'Constants/routes-config';
 import Cashier from '../cashier';
 import { P2PSettingsProvider, mockStore } from '@deriv/stores';
 import CashierProviders from '../../../cashier-providers';
+import { APIProvider } from '@deriv/api';
 
 jest.mock('@deriv/hooks', () => {
     return {
@@ -58,9 +59,11 @@ describe('<Cashier />', () => {
         return {
             ...render(<Router history={history}>{component}</Router>, {
                 wrapper: ({ children }) => (
-                    <CashierProviders store={mock_root_store}>
-                        <P2PSettingsProvider>{children}</P2PSettingsProvider>
-                    </CashierProviders>
+                    <APIProvider>
+                        <CashierProviders store={mock_root_store}>
+                            <P2PSettingsProvider>{children}</P2PSettingsProvider>
+                        </CashierProviders>
+                    </APIProvider>
                 ),
             }),
         };

@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import EmailVerificationEmptyState from '../email-verification-empty-state';
 import { mockStore } from '@deriv/stores';
+import { APIProvider } from '@deriv/api';
 import CashierProviders from '../../../cashier-providers';
 
 const mock_store = mockStore({
@@ -13,7 +14,11 @@ const mock_store = mockStore({
 describe('EmailVerificationEmptyState', () => {
     test('should disable resend button after sending the request', () => {
         render(<EmailVerificationEmptyState type='reset_password' />, {
-            wrapper: ({ children }) => <CashierProviders store={mock_store}>{children}</CashierProviders>,
+            wrapper: ({ children }) => (
+                <APIProvider>
+                    <CashierProviders store={mock_store}>{children}</CashierProviders>
+                </APIProvider>
+            ),
         });
 
         expect(screen.queryByTestId('dt_empty_state_action')).toBeInTheDocument();

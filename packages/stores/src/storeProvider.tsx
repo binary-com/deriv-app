@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo } from 'react';
-import { APIProvider } from '@deriv/api';
 import StoreContext from './storeContext';
 import { FeatureFlagsStore } from './stores';
 import type { TCoreStores, TStores } from '../types';
@@ -24,11 +23,7 @@ const StoreProvider = ({ children, store }: React.PropsWithChildren<{ store: TCo
         };
     }, [memoizedValue]);
 
-    return (
-        <APIProvider>
-            <StoreContext.Provider value={memoizedValue}>{children}</StoreContext.Provider>
-        </APIProvider>
-    );
+    return <StoreContext.Provider value={memoizedValue}>{children}</StoreContext.Provider>;
 };
 
 export default StoreProvider;

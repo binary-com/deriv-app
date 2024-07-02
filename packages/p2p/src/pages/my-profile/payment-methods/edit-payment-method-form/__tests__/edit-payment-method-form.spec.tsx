@@ -1,6 +1,7 @@
 import React from 'react';
 import { screen, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { APIProvider } from '@deriv/api';
 import { mockStore, StoreProvider } from '@deriv/stores';
 import { useStores } from 'Stores/index';
 import { useModalManagerContext } from 'Components/modal-manager/modal-manager-context';
@@ -14,7 +15,9 @@ const mock_modal_manager: DeepPartial<ReturnType<typeof useModalManagerContext>>
 };
 
 const wrapper = ({ children }: { children: JSX.Element }) => (
-    <StoreProvider store={mockStore({})}>{children}</StoreProvider>
+    <APIProvider>
+        <StoreProvider store={mockStore({})}>{children}</StoreProvider>
+    </APIProvider>
 );
 
 jest.mock('Stores', () => ({

@@ -5,6 +5,7 @@ import { createBrowserHistory } from 'history';
 import Withdrawal from '../withdrawal';
 import CashierProviders from '../../../cashier-providers';
 import { mockStore } from '@deriv/stores';
+import { APIProvider } from '@deriv/api';
 
 jest.mock('@deriv/api', () => ({
     ...jest.requireActual('@deriv/api'),
@@ -63,11 +64,13 @@ const cashier_mock = {
 describe('<Withdrawal />', () => {
     const mockWithdrawal = (mock_root_store: ReturnType<typeof mockStore>) => {
         return (
-            <CashierProviders store={mock_root_store}>
-                <Router history={createBrowserHistory()}>
-                    <Withdrawal />
-                </Router>
-            </CashierProviders>
+            <APIProvider>
+                <CashierProviders store={mock_root_store}>
+                    <Router history={createBrowserHistory()}>
+                        <Withdrawal />
+                    </Router>
+                </CashierProviders>
+            </APIProvider>
         );
     };
 

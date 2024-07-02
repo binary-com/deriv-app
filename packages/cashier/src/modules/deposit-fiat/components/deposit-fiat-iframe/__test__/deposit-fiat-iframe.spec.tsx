@@ -3,6 +3,7 @@ import { mockStore } from '@deriv/stores';
 import { render, screen } from '@testing-library/react';
 import CashierProviders from '../../../../../cashier-providers';
 import DepositFiatIframe from '../deposit-fiat-iframe';
+import { APIProvider } from '@deriv/api';
 
 jest.mock('@deriv/api', () => ({
     ...jest.requireActual('@deriv/api'),
@@ -17,7 +18,9 @@ describe('<DepositFiatIframe />', () => {
         const mock = mockStore({});
 
         const wrapper = ({ children }: { children: JSX.Element }) => (
-            <CashierProviders store={mock}>{children}</CashierProviders>
+            <APIProvider>
+                <CashierProviders store={mock}>{children}</CashierProviders>
+            </APIProvider>
         );
         render(<DepositFiatIframe />, { wrapper });
 
@@ -28,7 +31,9 @@ describe('<DepositFiatIframe />', () => {
         const mock = mockStore({});
 
         const wrapper = ({ children }: { children: JSX.Element }) => (
-            <CashierProviders store={mock}>{children}</CashierProviders>
+            <APIProvider>
+                <CashierProviders store={mock}>{children}</CashierProviders>
+            </APIProvider>
         );
         render(<DepositFiatIframe />, { wrapper });
 

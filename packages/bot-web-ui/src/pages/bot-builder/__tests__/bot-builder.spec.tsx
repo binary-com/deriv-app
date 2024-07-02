@@ -1,6 +1,7 @@
 import React from 'react';
 import { unmountComponentAtNode } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { APIProvider } from '@deriv/api';
 import { mockStore, StoreProvider } from '@deriv/stores';
 import { render, screen, waitFor } from '@testing-library/react';
 import { notification_message } from 'Components/bot-notification/bot-notification-utils';
@@ -74,11 +75,13 @@ describe('BotBuilder', () => {
         mock_DBot_store = mockDBotStore(mock_store, mock_ws);
         wrapper = ({ children }: { children: JSX.Element }) => (
             <BrowserRouter>
-                <StoreProvider store={mock_store}>
-                    <DBotStoreProvider ws={mock_ws} mock={mock_DBot_store}>
-                        {children}
-                    </DBotStoreProvider>
-                </StoreProvider>
+                <APIProvider>
+                    <StoreProvider store={mock_store}>
+                        <DBotStoreProvider ws={mock_ws} mock={mock_DBot_store}>
+                            {children}
+                        </DBotStoreProvider>
+                    </StoreProvider>
+                </APIProvider>
             </BrowserRouter>
         );
     });

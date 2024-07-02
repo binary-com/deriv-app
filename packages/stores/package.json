@@ -3,6 +3,7 @@
     "private": true,
     "version": "1.0.0",
     "main": "src/index.ts",
+    "sideEffects": false,
     "dependencies": {
         "@deriv/api": "1.0.0",
         "lodash.merge": "^4.6.2",

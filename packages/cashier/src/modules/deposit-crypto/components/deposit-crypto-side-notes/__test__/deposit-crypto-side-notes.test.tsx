@@ -3,6 +3,7 @@ import { mockStore } from '@deriv/stores';
 import { render, screen } from '@testing-library/react';
 import CashierProviders from '../../../../../cashier-providers';
 import DepositCryptoSideNotes from '../deposit-crypto-side-notes';
+import { APIProvider } from '@deriv/api';
 
 jest.mock('@deriv/api', () => ({
     ...jest.requireActual('@deriv/api'),
@@ -27,7 +28,9 @@ describe('DepositCryptoSideNotes', () => {
         });
 
         const wrapper = ({ children }: { children: JSX.Element }) => (
-            <CashierProviders store={mock}>{children}</CashierProviders>
+            <APIProvider>
+                <CashierProviders store={mock}>{children}</CashierProviders>
+            </APIProvider>
         );
         render(<DepositCryptoSideNotes />, { wrapper });
 
@@ -41,7 +44,9 @@ describe('DepositCryptoSideNotes', () => {
         });
 
         const wrapper = ({ children }: { children: JSX.Element }) => (
-            <CashierProviders store={mock}>{children}</CashierProviders>
+            <APIProvider>
+                <CashierProviders store={mock}>{children}</CashierProviders>
+            </APIProvider>
         );
         render(<DepositCryptoSideNotes />, { wrapper });
 
