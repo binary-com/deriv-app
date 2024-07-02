@@ -14,7 +14,11 @@ const AvailableDxtradeAccountsList: React.FC = () => {
 
     return (
         <TradingAccountCard
-            leading={<div className='wallets-available-dxtrade__icon'>{PlatformDetails.dxtrade.icon}</div>}
+            leading={
+                <div className='wallets-available-dxtrade__icon' data-testid='dt_icon_dxtrade'>
+                    {PlatformDetails.dxtrade.icon}
+                </div>
+            }
             onClick={() => show(<DxtradeEnterPasswordModal />)}
             trailing={
                 <div className='wallets-available-dxtrade__icon'>
