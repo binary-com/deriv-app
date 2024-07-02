@@ -514,15 +514,18 @@ export default class RunPanelStore {
         if (this.error_type === ErrorTypes.RECOVERABLE_ERRORS) {
             // Bot should indicate it started in below cases:
             // - When error happens it's a recoverable error
-            const { shouldRestartOnError, timeMachineEnabled } = this.dbot.interpreter.bot.tradeEngine.options;
-            const is_bot_recoverable = shouldRestartOnError || timeMachineEnabled;
+            const trade_engine_options = this.dbot?.interpreter?.bot?.tradeEngine?.options;
+            if (trade_engine_options) {
+                const { shouldRestartOnError, timeMachineEnabled } = trade_engine_options;
+                const is_bot_recoverable = shouldRestartOnError || timeMachineEnabled;
 
-            if (is_bot_recoverable) {
-                this.error_type = undefined;
-                this.setContractStage(contract_stages.PURCHASE_SENT);
-            } else {
-                this.setIsRunning(false);
-                indicateBotStopped();
+                if (is_bot_recoverable) {
+                    this.error_type = undefined;
+                    this.setContractStage(contract_stages.PURCHASE_SENT);
+                } else {
+                    this.setIsRunning(false);
+                    indicateBotStopped();
+                }
             }
         } else if (this.error_type === ErrorTypes.UNRECOVERABLE_ERRORS) {
             // Bot should indicate it stopped in below cases:
