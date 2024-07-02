@@ -14,7 +14,6 @@ const mock_store: DeepPartial<ReturnType<typeof useStores>> = {
         is_barred: false,
     },
     my_profile_store: {
-        getCounterpartyAdvertiserInfo: jest.fn(),
         onClickUnblock: jest.fn(),
     },
 };
@@ -55,7 +54,6 @@ describe('<BlockUserRow/>', () => {
 
         userEvent.click(advertiserName);
 
-        expect(mock_store.my_profile_store.getCounterpartyAdvertiserInfo).toBeCalledWith(id);
         expect(mock_store.buy_sell_store.setSelectedAdState).toBeCalledWith({ advertiser_details: { id, name } });
     });
 

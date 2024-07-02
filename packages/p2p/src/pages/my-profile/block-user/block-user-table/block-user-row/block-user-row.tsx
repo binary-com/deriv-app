@@ -31,7 +31,6 @@ const BlockUserRow = ({ row: advertiser }: TBlockUserRowProps) => {
                     })}
                     onClick={() => {
                         if (!general_store.is_barred) {
-                            my_profile_store.getCounterpartyAdvertiserInfo(id);
                             buy_sell_store.setSelectedAdState({
                                 advertiser_details: { id, name },
                             });

@@ -90,7 +90,6 @@ export default class MyProfileStore extends BaseStore {
             rendered_trade_partners_list: computed,
             trade_partner_dropdown_list: computed,
             getAdvertiserPaymentMethods: action.bound,
-            getCounterpartyAdvertiserInfo: action.bound,
             getPaymentMethodsList: action.bound,
             getPaymentMethodDisplayName: action.bound,
             getPaymentMethodValue: action.bound,
@@ -272,31 +271,6 @@ export default class MyProfileStore extends BaseStore {
                 this.setAdvertiserPaymentMethods(response?.p2p_advertiser_payment_methods);
             }
             this.setIsLoading(false);
-        });
-    }
-
-    getCounterpartyAdvertiserInfo(advertiser_id) {
-        const { advertiser_page_store, buy_sell_store, general_store } = this.root_store;
-        requestWS({
-            p2p_advertiser_info: 1,
-            id: advertiser_id,
-        }).then(response => {
-            if (response) {
-                if (!response.error) {
-                    advertiser_page_store.setCounterpartyAdvertiserInfo(response.p2p_advertiser_info);
-                    buy_sell_store.setShowAdvertiserPage(true);
-                } else if (!general_store.is_barred) {
-                    general_store.showModal({
-                        key: 'ErrorModal',
-                        props: {
-                            error_message: response.error.message,
-                            error_modal_title: 'Unable to block advertiser',
-                            has_close_icon: false,
-                        },
-                    });
-                }
-            }
-            advertiser_page_store.setIsLoading(false);
         });
     }
 
