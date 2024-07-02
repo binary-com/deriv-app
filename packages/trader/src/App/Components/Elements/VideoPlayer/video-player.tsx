@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import { Stream, StreamPlayerApi } from '@cloudflare/stream-react';
 import { isSafariBrowser, mobileOSDetect } from '@deriv/shared';
 import debounce from 'lodash.debounce';
@@ -6,12 +7,14 @@ import VideoOverlay from './video-overlay';
 import VideoControls from './video-controls';
 
 type TVideoPlayerProps = {
-    src: string;
-    is_mobile?: boolean;
+    className?: string;
     data_testid?: string;
+    height?: string;
+    is_mobile?: boolean;
+    src: string;
 };
 
-const VideoPlayer = ({ src, is_mobile, data_testid }: TVideoPlayerProps) => {
+const VideoPlayer = ({ className, data_testid, height, is_mobile, src }: TVideoPlayerProps) => {
     const should_autoplay =
         (!isSafariBrowser() || (is_mobile && mobileOSDetect() !== 'iOS' && mobileOSDetect() !== 'unknown')) ?? true;
 
@@ -259,14 +262,14 @@ const VideoPlayer = ({ src, is_mobile, data_testid }: TVideoPlayerProps) => {
 
     return (
         <div
-            className='player__wrapper'
+            className={classNames(className, 'player__wrapper')}
             onMouseOver={is_mobile ? undefined : () => setShowControls(true)}
             onMouseLeave={is_mobile ? undefined : () => setShowControls(false)}
             data-testid={data_testid}
         >
             <Stream
-                autoplay={should_autoplay}
-                height={is_mobile ? '184.5px' : '270px'}
+                autoplay={should_autoplay && !is_dragging.current}
+                height={height ?? (is_mobile ? '184.5px' : '270px')}
                 letterboxColor='transparent'
                 muted={is_muted}
                 preload='auto'

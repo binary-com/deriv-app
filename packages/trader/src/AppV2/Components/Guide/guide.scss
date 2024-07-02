@@ -1,0 +1,165 @@
+.guide {
+    &__title {
+        margin-block-end: var(--component-actionSheet-spacing-padding-lg);
+    }
+
+    &__menu {
+        padding-inline-end: var(--component-actionSheet-spacing-padding-lg);
+        margin-block-end: var(--component-actionSheet-spacing-padding-md);
+        display: flex;
+        gap: var(--core-spacing-400);
+        overflow-x: auto;
+        min-height: var(--core-spacing-1600);
+        white-space: nowrap;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    &__wrapper {
+        padding: var(--component-actionSheet-spacing-padding-lg) var(--component-actionSheet-spacing-padding-lg) 0;
+    }
+
+    &__contract-description {
+        overflow-y: auto;
+        height: calc(90vh - 23rem);
+    }
+
+    &__button {
+        padding: var(--component-actionSheet-spacing-padding-lg);
+    }
+
+    &-video {
+        position: relative;
+        border-radius: var(--core-borderRadius-400);
+
+        &__preview {
+            position: relative;
+            border-radius: var(--core-borderRadius-400);
+
+            &__icon {
+                position: absolute;
+                top: 50%;
+                left: 53%;
+                transform: translate(-50%, -53%);
+                fill: var(--core-color-solid-slate-50);
+
+                &__wrapper {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background-color: var(--core-color-solid-slate-700);
+                    border-radius: 50%;
+                    width: 3.4rem;
+                    height: 3.4rem;
+                }
+            }
+        }
+
+        iframe {
+            border-radius: var(--core-borderRadius-400);
+        }
+
+        &:before {
+            content: '';
+            display: block;
+            height: 7.3rem;
+            width: 11.2rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: var(--core-borderRadius-400);
+            background-color: var(--core-color-opacity-black-200);
+        }
+
+        &__wrapper {
+            border-top: var(--core-spacing-75) solid var(--core-color-opacity-black-100);
+            padding-block-start: var(--component-actionSheet-spacing-padding-md);
+            margin-block-start: var(--component-actionSheet-spacing-padding-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--component-actionSheet-spacing-padding-sm);
+        }
+
+        &__description {
+            flex-grow: 1;
+        }
+    }
+}
+
+.description {
+    &__paragraph {
+        padding-block-end: var(--component-actionSheet-spacing-padding-sm);
+    }
+
+    &__general {
+        padding-block-end: var(--component-actionSheet-spacing-padding-md);
+    }
+
+    &__heading {
+        padding-block-end: var(--component-actionSheet-spacing-padding-sm);
+    }
+
+    &__content {
+        &--definition {
+            color: var(--core-color-solid-coral-700);
+        }
+        &--bold {
+            font-weight: var(--core-fontWeight-bold);
+        }
+    }
+}
+
+.definition {
+    &__title {
+        margin-block-end: var(--component-actionSheet-spacing-padding-lg);
+    }
+
+    &__wrapper {
+        padding: var(--component-actionSheet-spacing-padding-lg);
+    }
+
+    &__paragraph {
+        padding-block-end: var(--component-actionSheet-spacing-padding-md);
+    }
+
+    &__button {
+        padding: var(--component-actionSheet-spacing-padding-lg);
+    }
+}
+
+.video-fragment {
+    // TODO: temporary, waiting for real video
+    width: 248px;
+    height: 161px;
+    object-fit: initial;
+
+    &__wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-block-end: var(--component-actionSheet-spacing-padding-md);
+
+        &--accumulator {
+            margin-block-end: var(--component-actionSheet-spacing-padding-sm);
+        }
+    }
+}
+
+.modal-player {
+    position: fixed;
+    padding: 0;
+    border: unset;
+    overflow: hidden;
+
+    &::backdrop {
+        background-color: var(--core-color-opacity-black-600);
+    }
+
+    &__wrapper {
+        .player__controls__wrapper {
+            bottom: 0;
+        }
+    }
+}
