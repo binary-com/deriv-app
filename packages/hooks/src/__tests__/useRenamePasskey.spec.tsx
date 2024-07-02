@@ -1,4 +1,3 @@
-import React from 'react';
 import { renderHook, act } from '@testing-library/react-hooks';
 import APIProvider from '@deriv/api/src/APIProvider';
 import { WS } from '@deriv/shared';
@@ -22,15 +21,20 @@ describe('useRenamePasskey', () => {
         id: 123,
         name: 'test name',
     };
+    const mockOnSuccess = jest.fn();
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
 
     const wrapper = ({ children }: { children: JSX.Element }) => <APIProvider>{children}</APIProvider>;
 
     it('should rename passkey', async () => {
         (WS.send as jest.Mock).mockResolvedValue({ passkeys_rename: 1 });
 
-        const { result } = renderHook(() => useRenamePasskey(), { wrapper });
+        const { result } = renderHook(() => useRenamePasskey({ onSuccess: mockOnSuccess }), { wrapper });
 
-        expect(result.current.is_passkey_renamed).toBe(false);
+        expect(mockOnSuccess).not.toHaveBeenCalled();
 
         await act(async () => {
             await result.current.renamePasskey(test_passkey_data.id, test_passkey_data.name);
@@ -38,13 +42,15 @@ describe('useRenamePasskey', () => {
 
         expect(WS.send).toHaveBeenCalledWith({ passkeys_rename: 1, ...test_passkey_data });
         expect(mockInvalidate).toHaveBeenCalled();
-        expect(result.current.is_passkey_renamed).toBe(true);
+        expect(mockOnSuccess).toHaveBeenCalled();
     });
 
-    it('should handle passkey registration error', async () => {
+    it('should throw passkey renaming error', async () => {
         (WS.send as jest.Mock).mockRejectedValue(ws_error);
 
-        const { result } = renderHook(() => useRenamePasskey(), { wrapper });
+        const { result } = renderHook(() => useRenamePasskey({ onSuccess: mockOnSuccess }), { wrapper });
+
+        expect(mockOnSuccess).not.toHaveBeenCalled();
 
         await act(async () => {
             await result.current.renamePasskey(test_passkey_data.id, test_passkey_data.name);
@@ -52,6 +58,6 @@ describe('useRenamePasskey', () => {
 
         expect(WS.send).toHaveBeenCalledWith({ passkeys_rename: 1, ...test_passkey_data });
         expect(result.current.passkey_renaming_error).toBe(ws_error);
-        expect(result.current.is_passkey_renamed).toBe(false);
+        expect(mockOnSuccess).not.toHaveBeenCalled();
     });
 });

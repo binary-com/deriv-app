@@ -1,4 +1,4 @@
-import React from 'react';
+import { ComponentProps } from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { PasskeyRename } from '../passkey-rename';
@@ -7,9 +7,11 @@ import { PasskeysStatusContainer } from '../passkeys-status-container';
 describe('PasskeyRename', () => {
     const init_passkey_name = 'init passkey_name';
     const new_passkey_name = 'new passkey name';
-    const mock_current_managed_passkey: React.ComponentProps<
-        typeof PasskeysStatusContainer
-    >['current_managed_passkey'] = { id: 777, name: init_passkey_name };
+    const mock_current_managed_passkey: ComponentProps<typeof PasskeysStatusContainer>['current_managed_passkey'] = {
+        id: 777,
+        name: init_passkey_name,
+        passkey_id: 'test_passkey_id',
+    };
     const validation_error = 'Only 3-30 characters allowed.';
     const mockOnPrimaryButtonClick = jest.fn();
     const mockOnSecondaryButtonClick = jest.fn();

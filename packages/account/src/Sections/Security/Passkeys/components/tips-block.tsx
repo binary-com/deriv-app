@@ -1,6 +1,5 @@
 import { Icon, Text } from '@deriv/components';
 import { Localize } from '@deriv/translations';
-import React from 'react';
 
 const getPasskeysTips = () =>
     [

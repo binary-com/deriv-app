@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment, PropsWithChildren, ReactElement, ReactNode } from 'react';
 import clsx from 'clsx';
 import { Button, Text } from '@deriv/components';
 import { TCurrentManagedPasskey } from '../passkeys';
@@ -12,14 +12,14 @@ export type TPasskeysButtonOnClicks = {
 
 type TPasskeysStatusLayout = {
     className?: string;
-    description?: React.ReactNode;
-    icon?: React.ReactElement;
+    description?: ReactNode;
+    icon?: ReactElement;
     primary_button_disabled?: boolean;
-    primary_button_text: React.ReactElement;
+    primary_button_text: ReactElement;
     primary_button_type?: 'button' | 'submit';
     scroll_offset?: string;
-    secondary_button_text?: React.ReactElement;
-    title?: React.ReactElement;
+    secondary_button_text?: ReactElement;
+    title?: ReactElement;
 } & TPasskeysButtonOnClicks;
 
 export const PasskeysStatusLayout = ({
@@ -35,7 +35,7 @@ export const PasskeysStatusLayout = ({
     scroll_offset = '22rem',
     secondary_button_text,
     title,
-}: React.PropsWithChildren<TPasskeysStatusLayout>) => (
+}: PropsWithChildren<TPasskeysStatusLayout>) => (
     <Fragment>
         <FormBody scroll_offset={scroll_offset} className={clsx('passkeys-status__wrapper', className)}>
             {icon}

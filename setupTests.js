@@ -23,3 +23,10 @@ import 'jest-chain';
  * Setup Global mocks
  */
 import './__mocks__/globals';
+
+/**
+ * This allows to remove import React in tests
+ */
+import React from 'react';
+
+global.React = React;

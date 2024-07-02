@@ -1,4 +1,3 @@
-import React from 'react';
 import { Form, Formik } from 'formik';
 import { localize, Localize } from '@deriv/translations';
 import { DerivLightIcEditPasskeyIcon } from '@deriv/quill-icons';

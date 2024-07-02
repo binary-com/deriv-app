@@ -12,6 +12,7 @@ export const PASSKEY_STATUS_CODES = {
     LIST: '',
     NO_PASSKEY: 'no_passkey',
     REMOVED: 'removed',
+    REMOVING: 'removing',
     RENAMING: 'renaming',
     VERIFYING: 'verifying',
 } as const;
@@ -33,9 +34,16 @@ export const getPasskeyRenameValidationSchema = () =>
             .matches(/^[A-Za-z0-9][A-Za-z0-9\s-]*$/, localize('Only letters, numbers, space, and hyphen are allowed.')),
     });
 
-export const clearTimeOut = (timeout_ref: React.MutableRefObject<NodeJS.Timeout | null>) => {
+export const clearRefTimeOut = (timeout_ref: React.MutableRefObject<NodeJS.Timeout | null>) => {
     if (timeout_ref.current) clearTimeout(timeout_ref.current);
 };
+
+export const isNotExistedPasskey = (error: TServerError) => error?.code === 'UserNotFound';
+export const isNotSupportedError = (error: TServerError) => error?.name === 'NotSupportedError';
+
+// the errors are connected with terminating the registration process or setting up the unlock method from user side
+export const excluded_error_names = ['NotAllowedError', 'AbortError', 'NotReadableError', 'UnknownError'];
+export const excluded_error_codes = ['ERROR_AUTHENTICATOR_PREVIOUSLY_REGISTERED'];
 
 export const passkeysMenuActionEventTrack = (
     action: string,

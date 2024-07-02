@@ -1,7 +1,7 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { InlineMessage, Loading } from '@deriv/components';
-import { useGetPasskeysList, useRegisterPasskey, useRenamePasskey } from '@deriv/hooks';
+import { useGetPasskeysList, useRegisterPasskey, useRemovePasskey, useRenamePasskey } from '@deriv/hooks';
 import { routes } from '@deriv/shared';
 import { useDevice } from '@deriv-com/ui';
 import { observer, useStore } from '@deriv/stores';
@@ -9,8 +9,17 @@ import { Localize } from '@deriv/translations';
 import { PasskeyErrorModal } from './components/passkey-error-modal';
 import { PasskeyReminderModal } from './components/passkey-reminder-modal';
 import { PasskeysStatusContainer } from './components/passkeys-status-container';
-import { clearTimeOut, PASSKEY_STATUS_CODES, passkeysMenuActionEventTrack, TPasskeysStatus } from './passkeys-configs';
+import {
+    clearRefTimeOut,
+    excluded_error_codes,
+    excluded_error_names,
+    isNotExistedPasskey,
+    PASSKEY_STATUS_CODES,
+    passkeysMenuActionEventTrack,
+    TPasskeysStatus,
+} from './passkeys-configs';
 import './passkeys.scss';
+import { TServerError } from '../../../Types';
 
 export type TPasskey = {
     id: number;
@@ -18,7 +27,7 @@ export type TPasskey = {
     last_used: number;
     created_at?: number;
     stored_on?: string;
-    passkey_id?: string;
+    passkey_id: string;
     icon?: string;
 };
 export type TOnPasskeyMenuClick = (
@@ -27,6 +36,7 @@ export type TOnPasskeyMenuClick = (
 ) => void;
 export type TCurrentManagedPasskey = {
     id: TPasskey['id'];
+    passkey_id: TPasskey['passkey_id'];
     name: TPasskey['name'];
 };
 
@@ -38,19 +48,9 @@ const Passkeys = observer(() => {
 
     const error_modal_timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
     const snackbar_timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const prev_passkey_status = React.useRef<TPasskeysStatus>(PASSKEY_STATUS_CODES.LIST);
+    const prev_passkey_status = useRef<TPasskeysStatus>(PASSKEY_STATUS_CODES.LIST);
 
     const history = useHistory();
-
-    const { passkeys_list, is_passkeys_list_loading, passkeys_list_error } = useGetPasskeysList();
-    const {
-        createPasskey,
-        clearPasskeyRegistrationError,
-        startPasskeyRegistration,
-        is_passkey_registered,
-        passkey_registration_error,
-    } = useRegisterPasskey();
-    const { is_passkey_renamed, passkey_renaming_error, renamePasskey } = useRenamePasskey();
 
     const [passkey_status, setPasskeyStatus] = useState<TPasskeysStatus>(PASSKEY_STATUS_CODES.LIST);
     const [is_reminder_modal_open, setIsReminderModalOpen] = useState(false);
@@ -58,64 +58,87 @@ const Passkeys = observer(() => {
     const [is_snackbar_open, setIsSnackbarOpen] = useState(false);
     const [current_managed_passkey, setCurrentManagedPasskey] = useState<TCurrentManagedPasskey>({
         id: 0,
+        passkey_id: '',
         name: '',
     });
 
+    const onSuccessPasskeyRegister = () => {
+        passkeysMenuActionEventTrack('create_passkey_finished');
+        setPasskeyStatus(PASSKEY_STATUS_CODES.CREATED);
+    };
+
+    const onSuccessPasskeyRemove = () => {
+        setPasskeyStatus(PASSKEY_STATUS_CODES.REMOVED);
+        // TODO: add tracking events
+    };
+
+    const onSuccessPasskeyRename = () => {
+        setPasskeyStatus(PASSKEY_STATUS_CODES.LIST);
+        setIsSnackbarOpen(true);
+        passkeysMenuActionEventTrack('passkey_rename_success');
+        clearRefTimeOut(snackbar_timeout);
+        snackbar_timeout.current = setTimeout(() => {
+            setIsSnackbarOpen(false);
+        }, 5000);
+    };
+
+    const { passkeys_list, is_passkeys_list_loading, passkeys_list_error } = useGetPasskeysList();
+    const { passkey_removing_error, removePasskey } = useRemovePasskey({ onSuccess: onSuccessPasskeyRemove });
+    const { passkey_renaming_error, renamePasskey } = useRenamePasskey({ onSuccess: onSuccessPasskeyRename });
+    const { createPasskey, startPasskeyRegistration, passkey_registration_error } = useRegisterPasskey({
+        onSuccess: onSuccessPasskeyRegister,
+    });
+
     const should_show_passkeys = is_passkey_supported && isMobile;
-    const error = passkeys_list_error || passkey_registration_error || passkey_renaming_error;
+    const error = passkeys_list_error || passkey_registration_error || passkey_renaming_error || passkey_removing_error;
 
     useEffect(() => {
-        if (is_passkeys_list_loading || passkey_status === PASSKEY_STATUS_CODES.CREATED) return;
+        if (
+            is_passkeys_list_loading ||
+            passkey_status === PASSKEY_STATUS_CODES.CREATED ||
+            passkey_status === PASSKEY_STATUS_CODES.REMOVED ||
+            passkey_status === PASSKEY_STATUS_CODES.VERIFYING
+        )
+            return;
         if (!passkeys_list?.length) {
             setPasskeyStatus(PASSKEY_STATUS_CODES.NO_PASSKEY);
         } else {
             setPasskeyStatus(PASSKEY_STATUS_CODES.LIST);
         }
+        return () => clearRefTimeOut(snackbar_timeout);
     }, [is_passkeys_list_loading, passkeys_list?.length]);
 
     useEffect(() => {
-        if (is_passkey_renamed) {
-            setPasskeyStatus(PASSKEY_STATUS_CODES.LIST);
-            setIsSnackbarOpen(true);
-            passkeysMenuActionEventTrack('passkey_rename_success');
-            clearTimeOut(snackbar_timeout);
-            snackbar_timeout.current = setTimeout(() => {
-                setIsSnackbarOpen(false);
-            }, 5000);
-        }
-        return () => {
-            clearTimeOut(snackbar_timeout);
-        };
-    }, [is_passkey_renamed]);
-
-    useEffect(() => {
-        if (is_passkey_registered) {
-            passkeysMenuActionEventTrack('create_passkey_finished');
-            setPasskeyStatus(PASSKEY_STATUS_CODES.CREATED);
-        }
-    }, [is_passkey_registered]);
-
-    useEffect(() => {
         if (error) {
+            passkeysMenuActionEventTrack('error', { error_message: (error as TServerError)?.message });
+
+            const should_hide_error =
+                excluded_error_names.some(name => name === (error as TServerError).name) ||
+                excluded_error_codes.some(code => code === (error as TServerError).code);
+
+            if (should_hide_error) return;
+
+            if (isNotExistedPasskey(error as TServerError)) {
+                setPasskeyStatus(PASSKEY_STATUS_CODES.VERIFYING);
+                return;
+            }
+
             is_reminder_modal_open && setIsReminderModalOpen(false);
-            clearTimeOut(error_modal_timeout);
+            clearRefTimeOut(error_modal_timeout);
             error_modal_timeout.current = setTimeout(() => setIsErrorModalOpen(true), 500);
         }
-        return () => clearTimeOut(error_modal_timeout);
+        return () => clearRefTimeOut(error_modal_timeout);
     }, [error, is_reminder_modal_open]);
-
-    if (should_show_passkeys && (is_passkeys_list_loading || !is_network_on)) {
-        return <Loading is_fullscreen={false} className='account__initial-loader' />;
-    }
 
     if (!should_show_passkeys) {
         return <Redirect to={routes.traders_hub} />;
     }
 
+    if ((is_passkeys_list_loading && passkey_status === PASSKEY_STATUS_CODES.LIST) || !is_network_on) {
+        return <Loading is_fullscreen={false} className='account__initial-loader' />;
+    }
+
     const onCloseErrorModal = () => {
-        if (passkey_registration_error) {
-            clearPasskeyRegistrationError();
-        }
         history.push(routes.traders_hub);
     };
 
@@ -132,6 +155,13 @@ const Passkeys = observer(() => {
     };
 
     const onPasskeyMenuClick = (passkey_managing_status: TPasskeysStatus, passkey_data: TCurrentManagedPasskey) => {
+        if (passkey_managing_status === PASSKEY_STATUS_CODES.REMOVING) {
+            removePasskey(passkey_data.id, passkey_data.passkey_id);
+            return;
+        }
+        if (passkey_managing_status !== PASSKEY_STATUS_CODES.LIST && is_snackbar_open) {
+            setIsSnackbarOpen(false);
+        }
         setCurrentManagedPasskey(passkey_data);
         setPasskeyStatus(passkey_managing_status);
     };
@@ -155,7 +185,13 @@ const Passkeys = observer(() => {
             renamePasskey(current_managed_passkey.id, passkey_data?.name ?? current_managed_passkey.name);
         }
         if (passkey_status === PASSKEY_STATUS_CODES.REMOVED) {
-            // TODO: add the logic for revoking and tracking events
+            setPasskeyStatus(PASSKEY_STATUS_CODES.LIST);
+            // TODO: add tracking events
+        }
+        if (passkey_status === PASSKEY_STATUS_CODES.VERIFYING) {
+            // TODO: add the logic for removing with email and tracking events
+            // TODO: remove redirecting to passkeys list
+            setPasskeyStatus(PASSKEY_STATUS_CODES.LIST);
         }
     };
 

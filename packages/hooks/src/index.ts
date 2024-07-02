@@ -67,6 +67,7 @@ export { default as usePlatformDemoAccount } from './usePlatformDemoAccount';
 export { default as usePlatformRealAccounts } from './usePlatformRealAccounts';
 export { default as useRealSTPAccount } from './useRealSTPAccount';
 export { default as useRegisterPasskey } from './useRegisterPasskey';
+export { default as useRemovePasskey } from './useRemovePasskey';
 export { default as useRenamePasskey } from './useRenamePasskey';
 export { default as useServiceToken } from './useServiceToken';
 export { default as useStatesList } from './useStatesList';

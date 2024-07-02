@@ -1,4 +1,3 @@
-import React from 'react';
 import { Dropdown, Icon, Text } from '@deriv/components';
 import { getLongDate } from '@deriv/shared';
 import { localize, Localize } from '@deriv/translations';
@@ -7,15 +6,14 @@ import { PASSKEY_STATUS_CODES, passkeysMenuActionEventTrack } from '../passkeys-
 
 type TPasskeyCard = TPasskey & { onPasskeyMenuClick: TOnPasskeyMenuClick };
 
-export const PasskeyCard = ({ name, last_used, stored_on, id, icon, onPasskeyMenuClick }: TPasskeyCard) => {
+export const PasskeyCard = ({ name, last_used, stored_on, id, icon, passkey_id, onPasskeyMenuClick }: TPasskeyCard) => {
+    const current_passkey_data = { id, name, passkey_id };
     const handleManagePasskey = (event: { target: { value: string } }) => {
         if (event.target.value === 'rename') {
-            onPasskeyMenuClick(PASSKEY_STATUS_CODES.RENAMING, {
-                id,
-                name,
-            });
+            onPasskeyMenuClick(PASSKEY_STATUS_CODES.RENAMING, current_passkey_data);
             passkeysMenuActionEventTrack('passkey_rename_open');
-        } else if (event.target.value === 'revoke') {
+        } else if (event.target.value === 'remove') {
+            onPasskeyMenuClick(PASSKEY_STATUS_CODES.REMOVING, current_passkey_data);
             // TODO: add action for revoke passkey
         }
     };
@@ -50,15 +48,9 @@ export const PasskeyCard = ({ name, last_used, stored_on, id, icon, onPasskeyMen
                         value: 'rename',
                     },
                     {
-                        text: localize(''),
-                        value: '',
-                        disabled: true,
+                        text: localize('Remove'),
+                        value: 'remove',
                     },
-                    // TODO: remove empty option when 'revoke' is implemented. Empty option is needed for proper working dropdown
-                    // {
-                    //     text: localize('Revoke'),
-                    //     value: 'revoke',
-                    // },
                 ]}
                 onChange={handleManagePasskey}
                 suffix_icon='IcMenuDots'

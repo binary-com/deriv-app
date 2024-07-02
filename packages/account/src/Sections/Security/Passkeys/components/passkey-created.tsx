@@ -1,4 +1,3 @@
-import React from 'react';
 import { Localize } from '@deriv/translations';
 import { DerivLightIcSuccessPasskeyIcon } from '@deriv/quill-icons';
 import { PasskeysStatusLayout, TPasskeysButtonOnClicks } from './passkeys-status-layout';

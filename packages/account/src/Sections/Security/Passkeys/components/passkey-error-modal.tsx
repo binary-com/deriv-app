@@ -1,7 +1,6 @@
-import React from 'react';
 import { Button, Modal, Text } from '@deriv/components';
 import { Localize } from '@deriv/translations';
-import { TPasskeyError } from '../passkeys-configs';
+import { isNotSupportedError, TPasskeyError } from '../passkeys-configs';
 import { TServerError } from '../../../../Types';
 
 type TPasskeyErrorModal = {
@@ -11,8 +10,6 @@ type TPasskeyErrorModal = {
 };
 
 const getErrorModalContent = (error: TPasskeyError) => {
-    const isNotSupportedError = (error: TServerError) => error?.name === 'NotSupportedError';
-
     const error_message_header = (
         <Text size='xs' weight='bold'>
             {isNotSupportedError(error as TServerError) ? (

@@ -1,4 +1,3 @@
-import React from 'react';
 import { renderHook, act } from '@testing-library/react-hooks';
 import APIProvider from '@deriv/api/src/APIProvider';
 import { WS } from '@deriv/shared';
@@ -26,17 +25,19 @@ describe('useRegisterPasskey', () => {
 
     const ws_error = { message: 'Test connection error' };
     const authenticator_error = { message: 'Test authenticator error' };
+    const mockOnSuccess = jest.fn();
 
     beforeEach(() => {
+        jest.clearAllMocks();
         (WS.send as jest.Mock).mockResolvedValue({
             passkeys_register_options: { publicKey: { name: 'test publicKey' } },
         });
     });
 
     it('should start passkey registration and create passkey', async () => {
-        const { result } = renderHook(() => useRegisterPasskey(), { wrapper });
+        const { result } = renderHook(() => useRegisterPasskey({ onSuccess: mockOnSuccess }), { wrapper });
 
-        expect(result.current.is_passkey_registered).toBe(false);
+        expect(mockOnSuccess).not.toHaveBeenCalled();
 
         await act(async () => {
             await result.current.startPasskeyRegistration();
@@ -56,29 +57,24 @@ describe('useRegisterPasskey', () => {
         });
 
         expect(mockInvalidate).toHaveBeenCalled();
-        expect(result.current.is_passkey_registered).toBe(true);
+        expect(mockOnSuccess).toHaveBeenCalledTimes(1);
     });
 
-    it('should handle passkey registration error', async () => {
+    it('should throw passkey registration error', async () => {
         (WS.send as jest.Mock).mockRejectedValue(ws_error);
 
-        const { result } = renderHook(() => useRegisterPasskey(), { wrapper });
+        const { result } = renderHook(() => useRegisterPasskey({ onSuccess: mockOnSuccess }), { wrapper });
 
         await act(async () => {
             await result.current.startPasskeyRegistration();
         });
 
         expect(result.current.passkey_registration_error).toBe(ws_error);
-
-        await act(async () => {
-            result.current.clearPasskeyRegistrationError();
-        });
-
-        expect(result.current.passkey_registration_error).toBe(null);
+        expect(mockOnSuccess).not.toHaveBeenCalled();
     });
 
-    it('should handle passkey creation error', async () => {
-        const { result } = renderHook(() => useRegisterPasskey(), { wrapper });
+    it('should throw passkey creation error', async () => {
+        const { result } = renderHook(() => useRegisterPasskey({ onSuccess: mockOnSuccess }), { wrapper });
 
         await act(async () => {
             await result.current.startPasskeyRegistration();
@@ -95,16 +91,11 @@ describe('useRegisterPasskey', () => {
         });
 
         expect(result.current.passkey_registration_error).toBe(ws_error);
-
-        await act(async () => {
-            result.current.clearPasskeyRegistrationError();
-        });
-
-        expect(result.current.passkey_registration_error).toBe(null);
+        expect(mockOnSuccess).not.toHaveBeenCalled();
     });
 
-    it('should handle passkey creation authenticator error', async () => {
-        const { result } = renderHook(() => useRegisterPasskey(), { wrapper });
+    it('should throw passkey creation authenticator error', async () => {
+        const { result } = renderHook(() => useRegisterPasskey({ onSuccess: mockOnSuccess }), { wrapper });
 
         await act(async () => {
             await result.current.startPasskeyRegistration();
@@ -121,11 +112,6 @@ describe('useRegisterPasskey', () => {
         });
 
         expect(result.current.passkey_registration_error).toBe(authenticator_error);
-
-        await act(async () => {
-            result.current.clearPasskeyRegistrationError();
-        });
-
-        expect(result.current.passkey_registration_error).toBe(null);
+        expect(mockOnSuccess).not.toHaveBeenCalled();
     });
 });

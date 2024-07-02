@@ -1,10 +1,9 @@
-import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { WS } from '@deriv/shared';
 import { StoreProvider, mockStore } from '@deriv/stores';
-import ProofOfIncome from 'Sections/Verification/ProofOfIncome';
-import { income_status_codes } from 'Sections/Verification/ProofOfIncome/proof-of-income-utils';
+import ProofOfIncome from '../proof-of-income';
+import { income_status_codes } from '../proof-of-income-utils';
 
 const mocked_account_status = {
     authentication: {

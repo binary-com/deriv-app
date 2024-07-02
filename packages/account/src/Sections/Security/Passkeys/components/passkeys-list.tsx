@@ -1,4 +1,3 @@
-import React from 'react';
 import { Localize } from '@deriv/translations';
 import { TOnPasskeyMenuClick, TPasskey } from '../passkeys';
 import { PasskeyCard } from './passkey-card';
