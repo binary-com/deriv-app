@@ -703,16 +703,15 @@ export default class TradersHubStore extends BaseStore {
     }
 
     getServerName = account => {
-        if (account) {
-            const server_region = account.server_info?.geolocation?.region;
-            if (server_region) {
-                return `${server_region} ${
-                    account?.server_info?.geolocation?.sequence === 1 ? '' : account?.server_info?.geolocation?.sequence
-                }`;
-            }
+        const server_region = account.server_info?.geolocation?.region;
+
+        if (server_region) {
+            return `${server_region} ${
+                account?.server_info?.geolocation?.sequence === 1 ? '' : account?.server_info?.geolocation?.sequence
+            }`;
         }
-        return '';
     };
+
     hasMultipleSVGAccounts = () => {
         const all_svg_acc = [];
         this.combined_cfd_mt5_accounts.map(acc => {
@@ -727,25 +726,25 @@ export default class TradersHubStore extends BaseStore {
                 }
             }
         });
-        return all_svg_acc.length > 1;
+        return all_svg_acc.length > 0;
     };
+
     getShortCodeAndRegion(account) {
         let short_code_and_region;
-        if (this.is_real && !this.is_eu_user) {
-            const short_code =
-                account.landing_company_short &&
-                account.landing_company_short !== 'svg' &&
-                account.landing_company_short !== 'bvi'
-                    ? account.landing_company_short?.charAt(0).toUpperCase() + account.landing_company_short?.slice(1)
-                    : account.landing_company_short?.toUpperCase();
 
-            let region = '';
-            if (this.hasMultipleSVGAccounts()) {
-                region =
-                    account.market_type !== 'financial' && account.landing_company_short !== 'bvi'
-                        ? ` - ${this.getServerName(account)}`
-                        : '';
-            }
+        const existing_derived_mt5_accounts = this.getExistingAccounts(CFD_PLATFORMS.MT5, 'synthetic');
+        const existing_derived_mt5_svg_accounts = existing_derived_mt5_accounts.filter(
+            account => account.landing_company_short === 'svg'
+        );
+
+        if (this.is_real && !this.is_eu_user && account.landing_company_short) {
+            const short_code =
+                account.landing_company_short === 'svg' || account.landing_company_short === 'bvi'
+                    ? account.landing_company_short.toUpperCase()
+                    : account.landing_company_short.charAt(0).toUpperCase() + account.landing_company_short.slice(1);
+
+            const region = existing_derived_mt5_svg_accounts.length > 1 ? ` - ${this.getServerName(account)}` : '';
+
             short_code_and_region = `${short_code}${region}`;
         }
         return short_code_and_region;
