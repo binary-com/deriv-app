@@ -158,11 +158,31 @@
         &__title {
             margin: 1.5rem;
         }
+
+        &__section_message {
+            margin-top: -16px;
+            margin-bottom: 8px;
+        }
     }
 
     .load-strategy__preview-workspace {
         min-height: unset;
         height: unset;
         margin: 0;
+    }
+}
+
+.load-strategy__section_message {
+    @include mobile-or-tablet-screen {
+        margin-top: -8px;
+        margin-bottom: 8px;
+        margin-inline: -1.6rem;
+        border-radius: 0px;
+    }
+}
+.load-strategy__section_message + .load-strategy__local-dropzone-area {
+    height: calc(100% - 68px);
+    @include mobile-or-tablet-screen {
+        height: calc(100% - 76px);
     }
 }

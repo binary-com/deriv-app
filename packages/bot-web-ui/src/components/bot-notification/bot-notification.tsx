@@ -27,7 +27,11 @@ export const NotificationContent: React.FC<TNotificationContent> = ({ message, p
     );
 };
 
-export const botNotification = (message: string, primary_action?: TAction, custom_style?: TNotificationStyle) => {
+export const botNotification = (
+    message: string,
+    primary_action?: TAction,
+    custom_style?: Partial<TNotificationStyle>
+) => {
     return toast(
         ({ closeToast }) => (
             <NotificationContent message={message} primary_action={primary_action} closeToast={closeToast} />
@@ -40,6 +44,7 @@ export const botNotification = (message: string, primary_action?: TAction, custo
             closeOnClick: custom_style?.closeOnClick ?? notification_style.closeOnClick,
             pauseOnHover: custom_style?.pauseOnHover ?? notification_style.pauseOnHover,
             pauseOnFocusLoss: custom_style?.pauseOnFocusLoss ?? notification_style.pauseOnFocusLoss,
+            closeButton: custom_style?.closeButton ?? true,
         }
     );
 };

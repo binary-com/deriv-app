@@ -1,21 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { Button, Icon } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
+import { SectionMessage } from '@deriv-com/quill-ui';
+import { botNotification } from 'Components/bot-notification/bot-notification';
+import { notification_message } from 'Components/bot-notification/bot-notification-utils';
 import { useDBotStore } from 'Stores/useDBotStore';
 import LocalFooter from './local-footer';
 import WorkspaceControl from './workspace-control';
 
 const LocalComponent = observer(() => {
     const { ui } = useStore();
-    const { dashboard, load_modal } = useDBotStore();
+    const { dashboard, load_modal, blockly_store } = useDBotStore();
     const { active_tab, active_tour } = dashboard;
-    const { handleFileChange, loaded_local_file, setLoadedLocalFile } = load_modal;
+    const { handleFileChange, loaded_local_file, setLoadedLocalFile, imported_strategy_type, is_open_button_loading } =
+        load_modal;
 
     const file_input_ref = React.useRef<HTMLInputElement>(null);
     const [is_file_supported, setIsFileSupported] = React.useState(true);
     const { is_desktop } = ui;
+    const { is_loading } = blockly_store;
+
+    useEffect(() => {
+        if (loaded_local_file && is_file_supported && imported_strategy_type !== 'pending' && !is_loading) {
+            if (imported_strategy_type === 'old') {
+                botNotification(notification_message.strategy_conversion, undefined, {
+                    closeButton: false,
+                });
+            }
+        }
+    }, [loaded_local_file, is_file_supported, imported_strategy_type, is_open_button_loading, is_loading]);
 
     if (loaded_local_file && is_file_supported) {
         return (
@@ -61,6 +76,17 @@ const LocalComponent = observer(() => {
                     onChange={e => setIsFileSupported(handleFileChange(e, false))}
                     data-testid='dt-load-strategy-file-input'
                 />
+
+                <SectionMessage
+                    message={localize(
+                        'Importing XML files from Binary Bot and other third-party platforms may take longer.'
+                    )}
+                    size='sm'
+                    status='warning'
+                    title=''
+                    className='load-strategy__section_message'
+                />
+
                 <div
                     data-testid='dt__local-dropzone-area'
                     className='load-strategy__local-dropzone-area'

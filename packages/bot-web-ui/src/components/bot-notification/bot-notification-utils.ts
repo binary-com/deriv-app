@@ -26,7 +26,8 @@ export type TNotificationStyle = {
     hideProgressBar: boolean;
     closeOnClick: boolean;
     pauseOnHover: boolean;
-    pauseOnFocusLoss?: boolean;
+    pauseOnFocusLoss: boolean;
+    closeButton: boolean;
 };
 
 export enum NOTIFICATION_TYPE {
@@ -40,6 +41,7 @@ export const notification_message = {
     block_delete: localize('You’ve just deleted a block.'),
     [NOTIFICATION_TYPE.BOT_IMPORT]: localize('You’ve successfully imported a bot.'),
     [NOTIFICATION_TYPE.BOT_DELETE]: localize('You’ve successfully deleted a bot.'),
+    strategy_conversion: localize('Save this strategy as an XML file from Deriv Bot for faster re-imports.'),
 };
 
 export const notification_style = {

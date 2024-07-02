@@ -607,6 +607,9 @@
             outline: none;
             cursor: pointer;
             margin-inline-end: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             &.default {
                 background: transparent;
