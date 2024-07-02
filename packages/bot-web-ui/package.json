@@ -76,7 +76,7 @@
         "@deriv/api-types": "1.0.172",
         "@deriv/bot-skeleton": "^1.0.0",
         "@deriv/components": "^1.0.0",
-        "@deriv/deriv-charts": "^2.1.22",
+        "@deriv/deriv-charts": "^2.1.23",
         "@deriv/shared": "^1.0.0",
         "@deriv/stores": "^1.0.0",
         "@deriv/translations": "^1.0.0",
