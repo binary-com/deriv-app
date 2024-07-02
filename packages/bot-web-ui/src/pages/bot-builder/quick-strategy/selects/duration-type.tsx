@@ -13,6 +13,8 @@ type TDurationUnit = {
 
 const DurationUnit: React.FC<TDurationUnit> = ({ attached }: TDurationUnit) => {
     const [list, setList] = React.useState<TDurationUnitItem[]>([]);
+    const [prevSymbol, setPrevSymbol] = React.useState('');
+    const [prevTradeType, setPrevTradeType] = React.useState('');
     const { quick_strategy } = useDBotStore();
     const { setValue, setCurrentDurationMinMax } = quick_strategy;
     const { setFieldValue, validateForm, values } = useFormikContext<TFormData>();
@@ -32,15 +34,17 @@ const DurationUnit: React.FC<TDurationUnit> = ({ attached }: TDurationUnit) => {
                 setList(duration_units);
                 const selected = values?.durationtype;
                 const has_selected = duration_units?.some(duration => duration.value === selected);
-                if (!has_selected) {
-                    setFieldValue?.('durationtype', durations?.[0]?.unit);
-                    setFieldValue?.('duration', durations?.[0]?.min);
-                    setValue('durationtype', durations?.[0]?.unit ?? '');
+                if (!has_selected || prevSymbol !== symbol || prevTradeType !== tradetype) {
                     setCurrentDurationMinMax(durations?.[0]?.min, durations?.[0]?.max);
+                    setFieldValue?.('durationtype', durations?.[0]?.unit, true);
+                    setFieldValue?.('duration', durations?.[0]?.min, true);
+                    setValue('durationtype', durations?.[0]?.unit ?? '');
                 } else {
                     const duration = duration_units?.find((duration: TDurationUnitItem) => duration.value === selected);
                     setCurrentDurationMinMax(duration?.min, duration?.max);
                 }
+                setPrevSymbol(symbol as string);
+                setPrevTradeType(tradetype as string);
             };
             getDurationUnits();
         }
