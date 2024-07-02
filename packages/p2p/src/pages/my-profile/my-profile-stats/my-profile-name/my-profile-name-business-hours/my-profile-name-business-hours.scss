@@ -1,0 +1,18 @@
+.my-profile-name-business-hours {
+    .dc-tooltip[data-tooltip]:before {
+        width: max-content;
+        color: var(--text-general);
+    }
+
+    &__tooltip {
+        display: flex !important;
+        align-items: center;
+        gap: 0.5rem;
+        position: relative;
+
+        &-text {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+}

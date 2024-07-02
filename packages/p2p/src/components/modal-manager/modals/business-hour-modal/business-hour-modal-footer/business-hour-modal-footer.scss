@@ -1,0 +1,18 @@
+.business-hour-modal-footer {
+    &__buttons {
+        padding-top: 2.4rem;
+
+        @include mobile {
+            padding: 0;
+            display: flex;
+            width: 100%;
+            gap: 0.8rem;
+        }
+    }
+
+    &__button {
+        @include mobile {
+            width: 100%;
+        }
+    }
+}

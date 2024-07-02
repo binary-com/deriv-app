@@ -1,0 +1,139 @@
+.business-hour-modal-edit {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+
+    &__days {
+        display: flex;
+        gap: 0.8rem;
+
+        &-circle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 3.2rem;
+            min-width: 3.2rem;
+            border-radius: 50%;
+            background-color: #5c616d;
+            border: none;
+            cursor: pointer;
+
+            &--unselected {
+                background-color: transparent;
+                border: 1px solid rgba(0, 0, 0, 0.08);
+            }
+        }
+    }
+
+    &__selector {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+
+        &-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+
+            &-text {
+                width: 9rem;
+            }
+
+            &__dropdown {
+                background-color: var(--general-section-1);
+                padding: 0.8rem 1.6rem;
+                border-radius: 4px;
+                width: 22rem;
+                display: flex;
+                justify-content: center;
+
+                .dc-dropdown {
+                    &-container {
+                        min-width: fit-content;
+                    }
+
+                    &__container {
+                        display: flex;
+                        gap: 0.8rem;
+                        align-items: center;
+                    }
+
+                    &__display {
+                        height: unset;
+                        background: transparent;
+                        border: none;
+
+                        &-text {
+                            font-size: 1.2rem;
+                            padding: 0;
+                            margin-right: 2rem;
+                        }
+                    }
+
+                    &__select-arrow {
+                        right: 2px;
+                    }
+
+                    &--has-suffix-icon {
+                        margin-left: 0;
+
+                        .suffix-icon {
+                            left: unset;
+                            right: 2px;
+                        }
+                    }
+                }
+
+                .dc-list {
+                    width: 20rem;
+                    left: -12rem;
+                }
+
+                &-group {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 1.6rem;
+
+                    &--bold {
+                        .dc-dropdown__display-text {
+                            font-weight: bold;
+                        }
+                    }
+                }
+
+                &--single {
+                    display: flex;
+                    justify-content: center;
+
+                    .dc-dropdown-container {
+                        width: 10rem;
+                    }
+                }
+
+                &__open-text {
+                    display: flex;
+                    gap: 0.2rem;
+                }
+            }
+
+            &__icon {
+                cursor: pointer;
+
+                &--disabled {
+                    opacity: 0.4;
+                    cursor: not-allowed;
+                }
+            }
+
+            .dc-tooltip[data-tooltip] {
+                position: relative;
+
+                &:before {
+                    width: fit-content;
+                    color: var(--text-general);
+                }
+            }
+        }
+    }
+}

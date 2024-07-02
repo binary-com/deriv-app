@@ -317,4 +317,10 @@
 .suffix-icon {
     position: absolute;
     left: 20px;
+    transition: transform 0.2s ease;
+    transform: rotate(0deg);
+
+    &--flip {
+        transform: rotate(-180deg);
+    }
 }

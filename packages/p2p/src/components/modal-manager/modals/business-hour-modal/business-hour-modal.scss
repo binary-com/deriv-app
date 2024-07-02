@@ -1,0 +1,30 @@
+.business-hour-modal {
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: 1.6rem;
+        padding-top: 0;
+
+        @include mobile {
+            padding: 1.6rem;
+            height: calc(100vh - 21rem);
+        }
+    }
+
+    &__footer {
+        padding: 0 2.4rem 2.4rem;
+    }
+}
+
+.dc-modal-header__title {
+    padding: 2.4rem;
+}
+
+.dc-modal__container {
+    overflow: unset;
+}
+
+.separator-container-line {
+    flex: unset;
+    margin: 0;
+}

@@ -43,6 +43,10 @@ export const Modals = {
     BlockUserModal: React.lazy(
         () => import(/* webpackChunkName: "block-user-modal" */ 'Components/modal-manager/modals/block-user-modal')
     ),
+    BusinessHourModal: React.lazy(
+        () =>
+            import(/* webpackChunkName: "business-hour-modal" */ 'Components/modal-manager/modals/business-hour-modal')
+    ),
     CancelAddPaymentMethodModal: React.lazy(
         () =>
             import(

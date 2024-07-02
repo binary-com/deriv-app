@@ -43,6 +43,7 @@ type TDropdown = {
     onChange?: (e: { target: { name: string; value: string } }) => void;
     onClick?: () => void;
     placeholder?: string;
+    should_animate_suffix_icon?: boolean;
     suffix_icon?: string;
     suffix_icon_size?: number;
     should_open_on_hover?: boolean;
@@ -279,6 +280,7 @@ const Dropdown = ({
     onClick,
     placeholder,
     suffix_icon,
+    should_animate_suffix_icon = false,
     suffix_icon_size = 16,
     should_open_on_hover = false,
     should_scroll_to_selected,
@@ -491,7 +493,15 @@ const Dropdown = ({
                         id='dropdown-display'
                         ref={dropdown_ref}
                     >
-                        {!!suffix_icon && <Icon className='suffix-icon' icon={suffix_icon} size={suffix_icon_size} />}
+                        {!!suffix_icon && (
+                            <Icon
+                                className={classNames('suffix-icon', {
+                                    'suffix-icon--flip': is_list_visible && should_animate_suffix_icon,
+                                })}
+                                icon={suffix_icon}
+                                size={suffix_icon_size}
+                            />
+                        )}
                         <DisplayText
                             className={classNames({
                                 'dc-dropdown__display--has-suffix-icon-text': suffix_icon,

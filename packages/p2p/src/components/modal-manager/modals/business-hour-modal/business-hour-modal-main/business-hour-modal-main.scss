@@ -1,0 +1,19 @@
+.business-hour-modal-main {
+    &__days {
+        display: flex;
+        flex-direction: column;
+        gap: 1.6rem;
+
+        &__hours {
+            display: flex;
+
+            &-text {
+                width: 12rem;
+            }
+        }
+    }
+
+    &__hint {
+        margin-top: auto;
+    }
+}
