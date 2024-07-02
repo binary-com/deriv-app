@@ -46,8 +46,6 @@ const TransferFormDropdown: React.FC<TProps> = ({ fieldName, mobileAccountsListR
     const selectedAccount = isFromAccountDropdown ? fromAccount : toAccount;
     const accountsList = isFromAccountDropdown ? fromAccountList : toAccountList;
     const label = isFromAccountDropdown ? 'Transfer from' : 'Transfer to';
-    const badgeLabel = selectedAccount?.demo_account ? 'virtual' : selectedAccount?.landingCompanyName;
-
     const { location } = useHistory();
     const toAccountLoginId =
         location.pathname === '/wallet/account-transfer' ? location.state?.toAccountLoginId : undefined;
@@ -149,11 +147,11 @@ const TransferFormDropdown: React.FC<TProps> = ({ fieldName, mobileAccountsListR
 
             {!isMobile && (
                 <>
-                    {selectedAccount && (
+                    {selectedAccount?.demo_account ? (
                         <div className='wallets-transfer-form-dropdown__badge'>
-                            <WalletListCardBadge isDemo={Boolean(selectedAccount?.demo_account)} label={badgeLabel} />
+                            <WalletListCardBadge isDemo={Boolean(selectedAccount?.demo_account)} label='virtual' />
                         </div>
-                    )}
+                    ) : null}
                     <LegacyChevronDown2pxIcon className='wallets-transfer-form-dropdown__icon-dropdown' iconSize='xs' />
                 </>
             )}

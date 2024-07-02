@@ -22,7 +22,6 @@ const TransferFormAccountCard: React.FC<TProps> = ({ account, activeWallet, type
     const { isMobile } = useDevice();
     const isInput = type === 'input';
     const isModal = type === 'modal';
-    const badgeLabel = account?.demo_account ? 'virtual' : account?.landingCompanyName;
     const appIcon = getTradingAppIcon(
         account?.account_type ?? '',
         activeWallet?.landingCompanyName as TWalletLandingCompanyName,
@@ -53,8 +52,8 @@ const TransferFormAccountCard: React.FC<TProps> = ({ account, activeWallet, type
                         />
                     )}
                 </div>
-                {isInput && isMobile && (
-                    <WalletListCardBadge isDemo={Boolean(account?.demo_account)} label={badgeLabel} />
+                {isInput && isMobile && !!account?.demo_account && (
+                    <WalletListCardBadge isDemo={Boolean(account?.demo_account)} label='virtual' />
                 )}
             </div>
 
@@ -65,9 +64,9 @@ const TransferFormAccountCard: React.FC<TProps> = ({ account, activeWallet, type
                 <WalletText size={isInput ? '2xs' : 'xs'}>Balance: {account?.displayBalance}</WalletText>
             </div>
 
-            {isModal && (
+            {isModal && !!account?.demo_account && (
                 <div className='wallets-transfer-form-account-card__modal-badge'>
-                    <WalletListCardBadge isDemo={Boolean(account?.demo_account)} label={badgeLabel} />
+                    <WalletListCardBadge isDemo={Boolean(account?.demo_account)} label='virtual' />
                 </div>
             )}
         </div>

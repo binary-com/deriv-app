@@ -24,7 +24,6 @@ const TransactionsCompletedRowTransferAccountDetails: React.FC<TProps> = ({ acco
     if (transferAccount) {
         const derivAccountType = transferAccount === wallet ? 'wallet' : 'standard';
         const accountType = transferAccount?.platform !== 'deriv' ? transferAccount.platform : derivAccountType;
-        const mt5LandingCompanyName = transferAccount === mt5Account ? mt5Account.landing_company_name : undefined;
         const displayAccountName = getAccountName({
             accountCategory: transferAccount === wallet ? 'wallet' : 'trading',
             //@ts-expect-error this needs backend typing
@@ -43,9 +42,7 @@ const TransactionsCompletedRowTransferAccountDetails: React.FC<TProps> = ({ acco
                 displayActionType={`Transfer ${direction}`}
                 isDemo={Boolean(transferAccount.is_virtual)}
                 isInterWallet={transferAccount === wallet}
-                landingCompanyName={activeWallet?.landing_company_name as TWalletLandingCompanyName}
                 mt5Group={transferAccount === mt5Account ? mt5Account.group : undefined}
-                mt5LandingCompanyName={mt5LandingCompanyName}
             />
         );
     }
