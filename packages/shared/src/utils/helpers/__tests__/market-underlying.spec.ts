@@ -30,6 +30,18 @@ describe('market-underlying', () => {
     describe('getMarketInformation', () => {
         it('should return an object with correct data about contract_type and symbol when shortcode is provided', () => {
             expect(getMarketInformation(position.shortcode)).toMatchObject({ category: 'call', underlying: '1HZ100V' });
+            expect(getMarketInformation('MULTUP_CRASH1000_100.00_100_1719905471_4873564799_0_0.00_N1')).toMatchObject({
+                category: 'multup',
+                underlying: 'CRASH1000',
+            });
+            expect(getMarketInformation('MULTUP_STPRNG_10.00_100_1716797490_4870454399_0_0.00_N1')).toMatchObject({
+                category: 'multup',
+                underlying: 'STPRNG',
+            });
+            expect(getMarketInformation('MULTUP_STPRNG2_10.00_100_1716797490_4870454399_0_0.00_N1')).toMatchObject({
+                category: 'multup',
+                underlying: 'STPRNG2',
+            });
         });
         it('should return an object with empty values when shortcode is not provided', () => {
             expect(getMarketInformation('')).toMatchObject({ category: '', underlying: '' });

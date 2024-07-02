@@ -41,7 +41,7 @@ export const getMarketInformation = (shortcode: string): TMarketInfo => {
     };
 
     const pattern = new RegExp(
-        '^([A-Z]+)_((1HZ[0-9-V]+)|((CRASH|BOOM)[0-9\\d]+[A-Z]?)|(OTC_[A-Z0-9]+)|R_[\\d]{2,3}|[A-Z]+)'
+        '^([A-Z]+)_((1HZ[0-9-V]+)|((CRASH|BOOM|STPRNG)[0-9\\d]+[A-Z]?)|(OTC_[A-Z0-9]+)|R_[\\d]{2,3}|[A-Z]+)'
     );
     const extracted = pattern.exec(shortcode);
     if (extracted !== null) {

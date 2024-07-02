@@ -23,7 +23,7 @@ type TInfoFromShortcode = Record<
 
 // category_underlying_amount
 const base_pattern =
-    '^([A-Z]+)_((?:1HZ[0-9-V]+)|(?:(?:CRASH|BOOM)[0-9\\d]+[A-Z]?)|(?:cry_[A-Z]+)|(?:JD[0-9]+)|(?:OTC_[A-Z0-9]+)|R_[\\d]{2,3}|[A-Z]+)_([\\d.]+)';
+    '^([A-Z]+)_((?:1HZ[0-9-V]+)|(?:(?:CRASH|BOOM|STPRNG)[0-9\\d]+[A-Z]?)|(?:cry_[A-Z]+)|(?:JD[0-9]+)|(?:OTC_[A-Z0-9]+)|R_[\\d]{2,3}|[A-Z]+)_([\\d.]+)';
 
 // category_underlying_amount_payouttick_growthrate_growthfrequency_ticksizebarrier_starttime
 const accumulators_regex = new RegExp(`${base_pattern}_(\\d+)_(\\d*\\.?\\d*)_(\\d+)_(\\d*\\.?\\d*)_(\\d+)`);
