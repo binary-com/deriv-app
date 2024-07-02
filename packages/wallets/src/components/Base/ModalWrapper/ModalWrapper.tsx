@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, Fragment } from 'react';
 import classNames from 'classnames';
 import { useEventListener } from 'usehooks-ts';
+import useDevice from '../../../hooks/useDevice';
 import CloseIcon from '../../../public/images/ic-close-dark.svg';
 import { useModal } from '../../ModalProvider';
 import './ModalWrapper.scss';
@@ -18,6 +19,7 @@ const ModalWrapper: FC<React.PropsWithChildren<TProps>> = ({
     shouldPreventCloseOnEscape = false,
 }) => {
     const { hide } = useModal();
+    const { isMobile } = useDevice();
 
     useEventListener('keydown', (event: KeyboardEvent) => {
         if (!shouldPreventCloseOnEscape && event.key === 'Escape') {
@@ -25,15 +27,37 @@ const ModalWrapper: FC<React.PropsWithChildren<TProps>> = ({
         }
     });
 
+    const onClickOverlay = () => {
+        isMobile && hide();
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (!shouldPreventCloseOnEscape && event.key === 'Space') {
+            event.preventDefault();
+            onClickOverlay();
+        }
+    };
+
     return (
-        <div
-            className={classNames('wallets-modal-wrapper', {
-                'wallets-modal-wrapper--fullscreen': isFullscreen,
-            })}
-        >
-            {!hideCloseButton && <CloseIcon className='wallets-modal-wrapper__close-icon' onClick={hide} />}
-            {children}
-        </div>
+        <Fragment>
+            <div className='wallets-modal-overlay' />
+            <div
+                className={classNames('wallets-modal-wrapper', {
+                    'wallets-modal-wrapper--fullscreen': isFullscreen,
+                })}
+                onClick={onClickOverlay}
+                onKeyDown={handleKeyDown}
+            >
+                <div
+                    className='wallets-modal-body'
+                    onClick={e => e.stopPropagation()}
+                    onKeyDown={e => e.stopPropagation()}
+                >
+                    {!hideCloseButton && <CloseIcon className='wallets-modal-wrapper__close-icon' onClick={hide} />}
+                    {children}
+                </div>
+            </div>
+        </Fragment>
     );
 };
 
