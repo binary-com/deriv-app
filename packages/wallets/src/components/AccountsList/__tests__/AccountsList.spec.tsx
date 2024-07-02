@@ -71,9 +71,6 @@ describe('AccountsList', () => {
             isTablet: false,
         });
         render(<AccountsList balance={mockBalanceData} />, { wrapper });
-        expect(screen.getByTestId('dt_tabs')).toBeInTheDocument();
-        expect(screen.getByTestId('dt_tab_list')).toBeInTheDocument();
-        expect(screen.getByTestId('dt_tab_panels')).toBeInTheDocument();
         expect(screen.getByText('CFDs')).toBeInTheDocument();
         expect(screen.getByText('Options')).toBeInTheDocument();
         expect(screen.getByText('Compare accounts')).toBeInTheDocument();
@@ -86,7 +83,6 @@ describe('AccountsList', () => {
             isTablet: false,
         });
         render(<AccountsList balance={mockBalanceData} />, { wrapper });
-        expect(screen.getByTestId('dt_tab_panels')).toBeInTheDocument();
         expect(screen.getByText('CFDs')).toBeInTheDocument();
         expect(screen.getAllByText('Options')[0]).toBeInTheDocument();
 

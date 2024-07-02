@@ -14,6 +14,15 @@
         padding: 1.6rem;
         width: 100%;
         height: auto;
-        background: #ffffff;
+    }
+
+    &__tabs {
+        height: 5rem;
+        padding: 0.4rem;
+        border-radius: 6px;
+    }
+
+    &__tab {
+        border-radius: 4px;
     }
 }

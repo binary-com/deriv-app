@@ -1,15 +1,10 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Tab, Tabs } from '@deriv-com/ui';
 import { CFDPlatformsList } from '../../features';
 import useDevice from '../../hooks/useDevice';
 import { TSubscribedBalance } from '../../types';
 import { OptionsAndMultipliersListing } from '../OptionsAndMultipliersListing';
-import {
-    WalletsPrimaryTabList,
-    WalletsPrimaryTabPanel,
-    WalletsPrimaryTabPanels,
-    WalletsPrimaryTabs,
-} from '../WalletsPrimaryTabs';
 import './AccountsList.scss';
 
 const AccountsList: FC<TSubscribedBalance> = ({ balance }) => {
@@ -18,17 +13,14 @@ const AccountsList: FC<TSubscribedBalance> = ({ balance }) => {
 
     if (isMobile) {
         return (
-            <WalletsPrimaryTabs className='wallets-accounts-list'>
-                <WalletsPrimaryTabList list={[t('CFDs'), t('Options')]} />
-                <WalletsPrimaryTabPanels>
-                    <WalletsPrimaryTabPanel>
-                        <CFDPlatformsList />
-                    </WalletsPrimaryTabPanel>
-                    <WalletsPrimaryTabPanel>
-                        <OptionsAndMultipliersListing balance={balance} />
-                    </WalletsPrimaryTabPanel>
-                </WalletsPrimaryTabPanels>
-            </WalletsPrimaryTabs>
+            <Tabs activeTab='CFDs' className='wallets-accounts-list__tabs' wrapperClassName='wallets-accounts-list'>
+                <Tab className='wallets-accounts-list__tab' title={t('CFDs')}>
+                    <CFDPlatformsList />
+                </Tab>
+                <Tab className='wallets-accounts-list__tab' title={t('Options')}>
+                    <OptionsAndMultipliersListing balance={balance} />
+                </Tab>
+            </Tabs>
         );
     }
 
