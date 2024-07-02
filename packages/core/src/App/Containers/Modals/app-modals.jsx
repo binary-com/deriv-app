@@ -91,7 +91,7 @@ const AppModals = observer(() => {
         mt5_login_list,
         should_show_effortless_login_modal,
     } = client;
-    const { content_flag } = traders_hub;
+    const { content_flag, is_setup_real_account_or_go_to_demo_modal_visible } = traders_hub;
     const { is_from_derivgo } = common;
     const {
         is_account_needed_modal_on,
@@ -149,7 +149,8 @@ const AppModals = observer(() => {
         !should_show_appropriateness_warning_modal &&
         !should_show_risk_warning_modal &&
         !is_from_signup_account &&
-        !is_real_acc_signup_on;
+        !is_real_acc_signup_on &&
+        !is_setup_real_account_or_go_to_demo_modal_visible;
 
     if (temp_session_signup_params && is_onboarding) {
         toggleAccountSignupModal(true);

@@ -1,0 +1,43 @@
+.setup-real-account-or-go-to-demo-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.4rem;
+
+    @include mobile-screen {
+        padding: 1.6rem;
+        width: 100%;
+    }
+
+    &__responsive-header {
+        border-bottom: unset;
+    }
+
+    &__title {
+        font-family: 'Ubuntu', sans-serif;
+        margin-block-start: 2.4rem;
+
+        @include mobile-screen {
+            margin-block-start: 1.6rem;
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        margin-block-start: 2.4rem;
+        width: 100%;
+
+        @include mobile-screen {
+            margin-block-start: 4rem;
+        }
+    }
+}
+
+.dc-mobile-dialog__setup-real-account-or-go-to-demo-modal__responsive-wrapper {
+    height: calc(100% - 2 * $MOBILE_HEADER_HEIGHT) !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

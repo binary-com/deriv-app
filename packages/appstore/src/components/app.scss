@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap');
+
 .dashboard {
     @include desktop-screen {
         height: calc(100vh - #{$HEADER_HEIGHT} - #{$FOOTER_HEIGHT});
