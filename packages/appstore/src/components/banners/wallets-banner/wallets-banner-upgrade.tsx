@@ -3,10 +3,14 @@ import { Button, Icon, Text } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
 
-const WalletsBannerUpgrade = observer(() => {
+type TProps = {
+    is_upgrading: boolean;
+};
+
+const WalletsBannerUpgrade: React.FC<TProps> = observer(({ is_upgrading }) => {
     const { traders_hub, ui } = useStore();
-    const { is_mobile } = ui;
     const { toggleWalletsUpgrade } = traders_hub;
+    const { is_mobile } = ui;
 
     return (
         <div className='wallets-banner__container wallets-banner-upgrade'>
@@ -22,6 +26,7 @@ const WalletsBannerUpgrade = observer(() => {
                 </div>
                 <Button
                     className='wallets-banner-upgrade__button'
+                    is_disabled={is_upgrading}
                     text={localize("Let's go")}
                     primary
                     large

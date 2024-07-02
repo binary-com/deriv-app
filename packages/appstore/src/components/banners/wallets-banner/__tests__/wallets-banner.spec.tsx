@@ -17,7 +17,7 @@ describe('<WalletsBanner />', () => {
         const mobile_test_id = 'dt_wallets_upgrade_coins';
 
         it('Should render upgrade now button', async () => {
-            render(<WalletsBannerUpgrade />, {
+            render(<WalletsBannerUpgrade is_upgrading={false} />, {
                 wrapper: ({ children }) => <StoreProvider store={mockRootStore}>{children}</StoreProvider>,
             });
             const btn = screen.getByRole('button', { name: /Let's go/i });
@@ -26,7 +26,7 @@ describe('<WalletsBanner />', () => {
 
         it('Should render image properly for desktop', () => {
             mockRootStore.ui.is_mobile = false;
-            render(<WalletsBannerUpgrade />, {
+            render(<WalletsBannerUpgrade is_upgrading={false} />, {
                 wrapper: ({ children }) => <StoreProvider store={mockRootStore}>{children}</StoreProvider>,
             });
             const desktop_image = screen.queryByTestId(desktop_test_id);
@@ -38,7 +38,7 @@ describe('<WalletsBanner />', () => {
 
         it('Should render image properly for mobile', () => {
             mockRootStore.ui.is_mobile = true;
-            render(<WalletsBannerUpgrade />, {
+            render(<WalletsBannerUpgrade is_upgrading={false} />, {
                 wrapper: ({ children }) => <StoreProvider store={mockRootStore}>{children}</StoreProvider>,
             });
             const desktop_image = screen.queryByTestId(desktop_test_id);
@@ -46,6 +46,15 @@ describe('<WalletsBanner />', () => {
 
             expect(mobile_image).toBeInTheDocument();
             expect(desktop_image).not.toBeInTheDocument();
+        });
+
+        it('disables "Let`s go" button when is_upgrading equals to true', () => {
+            render(<WalletsBannerUpgrade is_upgrading />, {
+                wrapper: ({ children }) => <StoreProvider store={mockRootStore}>{children}</StoreProvider>,
+            });
+
+            const btn = screen.getByRole('button', { name: /Let's go/i });
+            expect(btn).toBeDisabled();
         });
     });
 
