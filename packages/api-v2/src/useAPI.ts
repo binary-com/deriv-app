@@ -9,23 +9,26 @@ import type {
 } from '../types';
 import { useAPIContext } from './APIProvider';
 
+type UnsubscribeFunction = () => Promise<void> | undefined;
+
 const useAPI = () => {
-    const { derivAPI } = useAPIContext();
+    const { wsClient, connection } = useAPIContext();
 
     const send = useCallback(
         async <T extends TSocketEndpointNames | TSocketPaginateableEndpointNames = TSocketEndpointNames>(
             name: T,
             payload?: TSocketRequestPayload<T>['payload']
         ): Promise<TSocketResponseData<T>> => {
-            const response = await derivAPI?.send({ [name]: 1, ...(payload || {}) });
-
-            if (response.error) {
-                throw response.error;
+            // casting needed as there is genuine type mismatch which have been there already
+            // so it needs to be fixed in one of the layers,
+            // potentially will make this consistent in upcoming PRs
+            try {
+                return wsClient?.request<T>(name, payload as unknown as TSocketRequestPayload<T>['payload']);
+            } catch (e) {
+                return e as TSocketResponseData<T>;
             }
-
-            return response;
         },
-        [derivAPI]
+        [wsClient]
     );
 
     const subscribe = useCallback(
@@ -42,15 +45,28 @@ const useAPI = () => {
                 onError: (response: any) => void
             ) => { unsubscribe?: VoidFunction };
         } => {
-            return derivAPI?.subscribe({ [name]: 1, subscribe: 1, ...(payload || {}) });
+            const subscribeHandler = (onData: (response: any) => void): { unsubscribe?: UnsubscribeFunction } => {
+                // Start the subscription and keep the promise.
+                const subscriptionPromise = wsClient?.subscribe(name, payload, onData);
+
+                // Define unsubscribe function, which will be returned inside the object from subscribeHandler.
+                const unsubscribe: UnsubscribeFunction = async () => {
+                    const subscribeResponse = await subscriptionPromise;
+                    return subscribeResponse?.unsubscribe?.();
+                };
+
+                return { unsubscribe };
+            };
+
+            return { subscribe: subscribeHandler };
         },
-        [derivAPI]
+        [wsClient]
     );
 
     return {
         send,
         subscribe,
-        derivAPI,
+        connection,
     };
 };
 

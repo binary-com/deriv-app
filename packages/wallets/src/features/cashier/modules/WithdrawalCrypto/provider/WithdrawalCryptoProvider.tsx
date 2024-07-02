@@ -117,8 +117,8 @@ const WithdrawalCryptoProvider: React.FC<React.PropsWithChildren<TWithdrawalCryp
     useEffect(() => {
         if (verificationCode) {
             mutateAsync({ dry_run: 1, verification_code: verificationCode })
-                .catch((error: TSocketError<'cashier'> | null) => {
-                    if (error?.error.code === 'InvalidToken') setError(error?.error);
+                .catch((response: TSocketError<'cashier'> | null) => {
+                    if (response?.error?.code === 'InvalidToken') setError(response?.error);
                 })
                 .finally(() => setIsTokenValidationLoading(false));
         }

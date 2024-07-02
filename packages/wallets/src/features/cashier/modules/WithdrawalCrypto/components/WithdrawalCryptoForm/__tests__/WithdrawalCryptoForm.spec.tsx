@@ -10,11 +10,6 @@ jest.mock('../../../provider', () => ({
     useWithdrawalCryptoContext: jest.fn().mockReturnValue([]),
 }));
 
-jest.mock('@deriv/api-v2', () => ({
-    ...jest.requireActual('@deriv/api-v2'),
-    useGrowthbookIsOn: jest.fn(),
-}));
-
 jest.mock('../../../utils', () => ({
     ...jest.requireActual('../../../utils'),
     validateCryptoAddress: jest.fn(),
@@ -25,6 +20,14 @@ jest.mock('../../../utils', () => ({
 jest.mock('../components/WithdrawalCryptoPercentageSelector', () => ({
     ...jest.requireActual('../components'),
     WithdrawalCryptoPercentageSelector: jest.fn(() => <div>WithdrawalCryptoPercentageSelector</div>),
+}));
+
+jest.mock('@deriv/api-v2', () => ({
+    ...jest.requireActual('@deriv/api-v2'),
+    useCryptoWithdrawal: jest.fn().mockReturnValue({
+        mutateAsync: jest.fn().mockResolvedValue({}),
+    }),
+    useGrowthbookIsOn: jest.fn(),
 }));
 
 const mockUseWithdrawalCryptoContext = useWithdrawalCryptoContext as jest.MockedFunction<

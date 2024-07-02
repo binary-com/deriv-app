@@ -92,6 +92,18 @@ export function mockBalance(context: Context) {
         return;
     }
 
+    // when both subscribe and all account requested
+    if (context.request.subscribe === 1 && context.request.account === 'all') {
+        context.response = {
+            balance: TEMP_DATA,
+            echo_req: context.request,
+            msg_type: 'balance',
+            req_id: context.req_id,
+            subscription: { id: '88790cc1-7281-6a55-936e-c3de3d67c022' },
+        };
+        return;
+    }
+
     if (context.request.account === 'all') {
         context.response = {
             balance: TEMP_DATA,

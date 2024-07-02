@@ -21,7 +21,7 @@ const useDocumentUpload = () => {
     } = useMutation('document_upload');
     const [isDocumentUploaded, setIsDocumentUploaded] = useState(false);
 
-    const { derivAPI } = useAPI();
+    const { connection } = useAPI();
 
     const isLoading = _isLoading || (!isDocumentUploaded && status === 'success');
     const isSuccess = _isSuccess && isDocumentUploaded;
@@ -57,12 +57,12 @@ const useDocumentUpload = () => {
                 chunks.forEach(chunk => {
                     const size = numToUint8Array(chunk.length);
                     const payload = new Uint8Array([...type, ...id, ...size, ...chunk]);
-                    derivAPI?.connection?.send(payload);
+                    connection?.send(payload);
                 });
                 setIsDocumentUploaded(true);
             });
         },
-        [derivAPI, derivAPI.connection, mutateAsync]
+        [connection, mutateAsync]
     );
 
     const modified_response = useMemo(() => ({ ...data?.document_upload }), [data?.document_upload]);

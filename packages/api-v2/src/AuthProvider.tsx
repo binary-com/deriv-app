@@ -23,14 +23,12 @@ type AuthContextType = {
     subscribe: <T extends TSocketSubscribableEndpointNames>(
         name: T,
         payload?: TSocketRequestPayload<T>
-    ) =>
-        | {
-              subscribe: (
-                  onData: (response: any) => void,
-                  onError: (response: any) => void
-              ) => { unsubscribe?: VoidFunction };
-          }
-        | undefined;
+    ) => {
+        subscribe: (
+            onData: (response: any) => void,
+            onError: (response: any) => void
+        ) => Promise<{ unsubscribe: () => Promise<void> }>;
+    };
 };
 
 type LoginToken = {
@@ -109,7 +107,7 @@ const AuthProvider = ({ loginIDKey, children, cookieTimeout, selectDefaultAccoun
 
     const { mutateAsync } = useMutation('authorize');
 
-    const { queryClient, setOnReconnected, setOnConnected, derivAPI } = useAPIContext();
+    const { queryClient, setOnReconnected, setOnConnected, wsClient } = useAPIContext();
 
     const [isLoading, setIsLoading] = useState(true);
     const [isSwitching, setIsSwitching] = useState(false);
@@ -124,26 +122,14 @@ const AuthProvider = ({ loginIDKey, children, cookieTimeout, selectDefaultAccoun
     const { subscribe: _subscribe } = useAPI();
 
     const subscribe = useCallback(
-        <T extends TSocketSubscribableEndpointNames>(
-            name: T,
-            payload?: TSocketRequestPayload<T>
-        ):
-            | {
-                  subscribe: (
-                      // The type will be handled by the `useSubscription` hook.
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      onData: (response: any) => void,
-                      // The type will be handled by the `useSubscription` hook.
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      onError: (response: any) => void
-                  ) => { unsubscribe?: VoidFunction };
-              }
-            | undefined => {
-            if (isAuthorized && derivAPI.connection.readyState == 1) {
-                return derivAPI?.subscribe({ [name]: 1, subscribe: 1, ...(payload || {}) });
-            }
+        <T extends TSocketSubscribableEndpointNames>(name: T, payload?: TSocketRequestPayload<T>) => {
+            return {
+                subscribe: (onData: (response: any) => void) => {
+                    return wsClient?.subscribe(name, payload, onData);
+                },
+            };
         },
-        [derivAPI, isAuthorized]
+        [wsClient, isAuthorized]
     );
 
     const processAuthorizeResponse = useCallback(
