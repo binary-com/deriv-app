@@ -7,14 +7,14 @@
  * @return {boolean} True if a block is being dragged from the flyout.
  * @private
  */
-Blockly.Gesture.prototype.updateIsDraggingFromFlyout_ = function () {
+Blockly.Gesture.prototype.updateIsDraggingFromFlyout = function () {
     // Disabled blocks may not be dragged from the flyout.
-    if (this.targetBlock_.disabled) {
+    if (this.targetBlock.disabled) {
         return false;
     }
 
-    if (!this.flyout_.isScrollable() || this.flyout_.isDragTowardWorkspace(this.currentDragDeltaXY_)) {
-        this.startWorkspace_ = this.flyout_.targetWorkspace_;
+    if (!this.flyout.isScrollable() || this.flyout.isDragTowardWorkspace(this.currentDragDeltaXY)) {
+        this.startWorkspace_ = this.flyout.targetWorkspace;
         this.startWorkspace_.updateScreenCalculationsIfScrolled();
 
         // Start the event group now, so that the same event group is used for block
@@ -24,9 +24,9 @@ Blockly.Gesture.prototype.updateIsDraggingFromFlyout_ = function () {
         }
 
         // The start block is no longer relevant, because this is a drag.
-        this.startBlock_ = null;
-        this.targetBlock_ = this.flyout_.createBlock(this.mostRecentEvent_, this.targetBlock_);
-        this.targetBlock_.select();
+        this.startBlock = null;
+        this.targetBlock = this.flyout.createBlock(this.mostRecentEvent, this.targetBlock);
+        this.targetBlock.select();
         return true;
     }
     return false;

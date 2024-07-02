@@ -1,6 +1,6 @@
 import { localize } from '@deriv/translations';
 import { plusIconLight } from '../../images';
-import { isDarkRgbColour } from '../../../utils';
+import { removeExtraInput } from '../../../utils';
 
 Blockly.Blocks.procedures_defnoreturn = {
     init() {
@@ -8,8 +8,11 @@ Blockly.Blocks.procedures_defnoreturn = {
         this.argument_var_models = [];
         this.is_adding = false;
         this.timeout_id;
-
         this.jsonInit(this.definition());
+
+        if (Blockly.Msg.PROCEDURES_DEFNORETURN_COMMENT) {
+            this.setCommentText(Blockly.Msg.PROCEDURES_DEFNORETURN_COMMENT);
+        }
 
         // Enforce unique procedure names
         const nameField = this.getField('NAME');
@@ -18,9 +21,7 @@ Blockly.Blocks.procedures_defnoreturn = {
         // Render a ➕-icon for adding parameters
         const fieldImage = new Blockly.FieldImage(plusIconLight, 24, 24, '+', () => this.onAddClick());
 
-        const dropdown_path =
-            this.workspace.options.pathToMedia +
-            (isDarkRgbColour(this.getColour()) ? 'dropdown-arrow.svg' : 'dropdown-arrow-dark.svg');
+        const dropdown_path = `${this.workspace.options.pathToMedia}dropdown-arrow.svg`;
         // Render a v-icon for adding parameters
         const fieldImageCollapse = new Blockly.FieldImage(
             dropdown_path,
@@ -54,6 +55,7 @@ Blockly.Blocks.procedures_defnoreturn = {
                     text: '',
                 },
             ],
+            inputsInline: true,
             colour: Blockly.Colours.Special2.colour,
             colourSecondary: Blockly.Colours.Special2.colourSecondary,
             colourTertiary: Blockly.Colours.Special2.colourTertiary,
@@ -77,17 +79,18 @@ Blockly.Blocks.procedures_defnoreturn = {
      */
     onchange(event) {
         const allowedEvents = [Blockly.Events.BLOCK_DELETE, Blockly.Events.BLOCK_CREATE, Blockly.Events.BLOCK_CHANGE];
-        if (!this.workspace || this.workspace.isFlyout || !allowedEvents.includes(event.type)) {
+
+        if (!this.workspace || Blockly.derivWorkspace.isFlyout_ || !allowedEvents.includes(event.type)) {
             return;
         }
-
-        if (event.type === Blockly.Events.BLOCK_CHANGE) {
+        if (event.type === Blockly.Events.BLOCK_CREATE || Blockly.Events.BLOCK_CHANGE) {
             // Sync names between definition- and execution-block
             if (event.blockId === this.id && event.name === 'NAME') {
                 this.getProcedureCallers().forEach(block => {
                     block.setFieldValue(event.newValue, 'NAME');
                 });
             }
+            removeExtraInput(this);
         }
     },
     /**
@@ -95,7 +98,7 @@ Blockly.Blocks.procedures_defnoreturn = {
      * @this Blockly.Block
      */
     onAddClick() {
-        if (this.is_adding || this.workspace.options.readOnly || this.isInFlyout) {
+        if (this.is_adding || this.workspace.options.readOnly || Blockly.derivWorkspace.isFlyout_) {
             return;
         }
 
@@ -105,7 +108,7 @@ Blockly.Blocks.procedures_defnoreturn = {
         // Wrap in setTimeout so block doesn't stick to mouse (Blockly.Events.END_DRAG event isn't blocked).
         this.timeout_id = setTimeout(() => {
             const promptMessage = localize('Specify a parameter name:');
-            Blockly.prompt(promptMessage, '', paramName => {
+            Blockly.dialog.prompt(promptMessage, '', paramName => {
                 if (paramName) {
                     const variable = Blockly.Variables.getOrCreateVariablePackage(this.workspace, null, paramName, '');
                     if (variable) {
@@ -118,7 +121,7 @@ Blockly.Blocks.procedures_defnoreturn = {
                         this.getProcedureCallers().forEach(block => {
                             block.setProcedureParameters(this.arguments);
                             block.initSvg();
-                            block.render(false);
+                            block.renderEfficiently();
                         });
                     }
                 }
@@ -184,7 +187,6 @@ Blockly.Blocks.procedures_defnoreturn = {
 
         this.argument_var_models.forEach((arg, i) => {
             const parameter = document.createElement('arg');
-
             parameter.setAttribute('name', arg.name);
             parameter.setAttribute('varid', arg.getId());
 
@@ -275,7 +277,7 @@ Blockly.Blocks.procedures_defnoreturn = {
      * @this Blockly.Block
      */
     customContextMenu(options) {
-        if (this.isInFlyout) {
+        if (Blockly.derivWorkspace.isFlyout_) {
             return;
         }
         // Add option to create caller.
@@ -319,14 +321,14 @@ Blockly.Blocks.procedures_defnoreturn = {
     callType: 'procedures_callnoreturn',
 };
 
-Blockly.JavaScript.procedures_defnoreturn = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.procedures_defnoreturn = block => {
     // eslint-disable-next-line no-underscore-dangle
     const functionName = Blockly.JavaScript.variableDB_.getName(
         block.getFieldValue('NAME'),
-        Blockly.Procedures.NAME_TYPE
+        Blockly.Procedures.CATEGORY_NAME
     );
 
-    let branch = Blockly.JavaScript.statementToCode(block, 'STACK');
+    let branch = Blockly.JavaScript.javascriptGenerator.statementToCode(block, 'STACK');
 
     if (Blockly.JavaScript.STATEMENT_PREFIX) {
         const id = block.id.replace(/\$/g, '$$$$'); // Issue 251.
@@ -342,17 +344,22 @@ Blockly.JavaScript.procedures_defnoreturn = block => {
         branch = Blockly.JavaScript.INFINITE_LOOP_TRAP.replace(/%1/g, `'${block.id}'`) + branch;
     }
 
-    let returnValue = Blockly.JavaScript.valueToCode(block, 'RETURN', Blockly.JavaScript.ORDER_NONE) || '';
+    let returnValue =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'RETURN',
+            Blockly.JavaScript.javascriptGenerator.ORDER_NONE
+        ) || '';
     if (returnValue) {
         returnValue = `${Blockly.JavaScript.INDENT}return ${returnValue};\n`;
     }
 
     const args = block.arguments.map(
-        argumentName => Blockly.JavaScript.variableDB_.getName(argumentName, Blockly.Variables.NAME_TYPE) // eslint-disable-line no-underscore-dangle
+        argumentName => Blockly.JavaScript.variableDB_.getName(argumentName, Blockly.Variables.CATEGORY_NAME) // eslint-disable-line no-underscore-dangle
     );
 
     // eslint-disable-next-line no-underscore-dangle
-    const code = Blockly.JavaScript.scrub_(
+    const code = Blockly.JavaScript.javascriptGenerator.scrub_(
         block,
         `
     function ${functionName}(${args.join(', ')}) {
@@ -363,6 +370,6 @@ Blockly.JavaScript.procedures_defnoreturn = block => {
 
     // Add % so as not to collide with helper functions in definitions list.
     // eslint-disable-next-line no-underscore-dangle
-    Blockly.JavaScript.definitions_[`%${functionName}`] = code;
+    Blockly.JavaScript.javascriptGenerator.definitions_[`%${functionName}`] = code;
     return null;
 };

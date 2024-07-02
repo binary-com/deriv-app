@@ -53,13 +53,21 @@ Blockly.Blocks.controls_forEach = {
     },
 };
 
-Blockly.JavaScript.controls_forEach = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.controls_forEach = block => {
     // eslint-disable-next-line no-underscore-dangle
-    const variable0 = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('VAR'), Blockly.Variables.NAME_TYPE);
-    const argument0 = Blockly.JavaScript.valueToCode(block, 'LIST', Blockly.JavaScript.ORDER_ASSIGNMENT) || '[]';
+    const variable0 = Blockly.JavaScript.variableDB_.getName(
+        block.getFieldValue('VAR'),
+        Blockly.Variables.CATEGORY_NAME
+    );
+    const argument0 =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'LIST',
+            Blockly.JavaScript.javascriptGenerator.ORDER_ASSIGNMENT
+        ) || '[]';
 
-    let branch = Blockly.JavaScript.statementToCode(block, 'DO');
-    branch = Blockly.JavaScript.addLoopTrap(branch, block.id);
+    let branch = Blockly.JavaScript.javascriptGenerator.statementToCode(block, 'DO');
+    branch = Blockly.JavaScript.javascriptGenerator.addLoopTrap(branch, block.id);
 
     let code = '';
 
@@ -67,12 +75,15 @@ Blockly.JavaScript.controls_forEach = block => {
     let listVar = argument0;
     if (!argument0.match(/^\w+$/)) {
         // eslint-disable-next-line no-underscore-dangle
-        listVar = Blockly.JavaScript.variableDB_.getDistinctName(`${variable0}_list`, Blockly.Variables.NAME_TYPE);
+        listVar = Blockly.JavaScript.variableDB_.getDistinctName(`${variable0}_list`, Blockly.Variables.CATEGORY_NAME);
         code = `var ${listVar} = ${argument0};\n`;
     }
 
     // eslint-disable-next-line no-underscore-dangle
-    const indexVar = Blockly.JavaScript.variableDB_.getDistinctName(`${variable0}_list`, Blockly.Variables.NAME_TYPE);
+    const indexVar = Blockly.JavaScript.variableDB_.getDistinctName(
+        `${variable0}_list`,
+        Blockly.Variables.CATEGORY_NAME
+    );
 
     code += `
     for (var ${indexVar} in ${listVar}) {

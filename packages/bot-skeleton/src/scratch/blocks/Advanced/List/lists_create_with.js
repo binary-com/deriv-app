@@ -28,6 +28,7 @@ Blockly.Blocks.lists_create_with = {
                     name: 'STACK',
                 },
             ],
+            inputsInline: true,
             colour: Blockly.Colours.Base.colour,
             colourSecondary: Blockly.Colours.Base.colourSecondary,
             colourTertiary: Blockly.Colours.Base.colourTertiary,
@@ -44,7 +45,7 @@ Blockly.Blocks.lists_create_with = {
         };
     },
     onIconClick() {
-        if (this.workspace.options.readOnly || this.isInFlyout) {
+        if (this.workspace.options.readOnly || Blockly.derivWorkspace.isFlyout_) {
             return;
         }
 
@@ -53,18 +54,18 @@ Blockly.Blocks.lists_create_with = {
             statement_block.required_parent_id = this.id;
             statement_block.setMovable(false);
             statement_block.initSvg();
-            statement_block.render();
+            statement_block.renderEfficiently();
 
             const connection = this.getLastConnectionInStatement('STACK');
             connection.connect(statement_block.previousConnection);
         });
     },
     onchange(event) {
-        if (!this.workspace || this.isInFlyout || this.workspace.isDragging()) {
+        if (!this.workspace || Blockly.derivWorkspace.isFlyout_ || this.workspace.isDragging()) {
             return;
         }
 
-        if (event.type === Blockly.Events.END_DRAG) {
+        if (event.type === Blockly.Events.BLOCK_DRAG && !event.isStart) {
             // Only allow "text_statement" type blocks
             const blocks_in_stack = this.getBlocksInStatement('STACK');
             blocks_in_stack.forEach(block => {
@@ -79,15 +80,15 @@ Blockly.Blocks.lists_create_with = {
 };
 
 // Head's up! This is also the code generation for the "text_join" block.
-Blockly.JavaScript.lists_create_with = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.lists_create_with = block => {
     // eslint-disable-next-line no-underscore-dangle
     const var_name = Blockly.JavaScript.variableDB_.getName(
         block.getFieldValue('VARIABLE'),
-        Blockly.Variables.NAME_TYPE
+        Blockly.Variables.CATEGORY_NAME
     );
     const blocks_in_stack = block.getBlocksInStatement('STACK');
     const elements = blocks_in_stack.map(b => {
-        const value = Blockly.JavaScript[b.type](b);
+        const value = Blockly.JavaScript.javascriptGenerator.forBlock[b.type](b);
         return Array.isArray(value) ? value[0] : value;
     });
 

@@ -1,5 +1,5 @@
 import { localize } from '@deriv/translations';
-import { emptyTextValidator } from '../../../../utils';
+import { emptyTextValidator, modifyContextMenu } from '../../../../utils';
 import { config } from '../../../../../constants/config';
 
 Blockly.Blocks.notify = {
@@ -42,6 +42,11 @@ Blockly.Blocks.notify = {
             category: Blockly.Categories.Miscellaneous,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     meta() {
         return {
             display_name: localize('Notify'),
@@ -57,7 +62,7 @@ Blockly.Blocks.notify = {
     },
 };
 
-Blockly.JavaScript.notify = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.notify = block => {
     const notificationType = block.getFieldValue('NOTIFICATION_TYPE');
     const sound = block.getFieldValue('NOTIFICATION_SOUND');
     const message_block = block.getInputTargetBlock('MESSAGE');
@@ -69,8 +74,11 @@ Blockly.JavaScript.notify = block => {
     }
 
     const message =
-        Blockly.JavaScript.valueToCode(block, 'MESSAGE', Blockly.JavaScript.ORDER_ATOMIC) ||
-        `"${localize('<empty message>')}"`;
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'MESSAGE',
+            Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC
+        ) || `"${localize('<empty message>')}"`;
 
     const code = `Bot.notify({ className: 'journal__text--${notificationType}', message: ${message}, sound: '${sound}', block_id: '${block.id}', variable_name: '${variable_name}' });\n`;
     return code;

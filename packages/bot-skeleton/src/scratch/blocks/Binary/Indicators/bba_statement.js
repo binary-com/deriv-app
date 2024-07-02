@@ -1,5 +1,6 @@
 import { localize } from '@deriv/translations';
 import { config } from '../../../../constants/config';
+import { modifyContextMenu } from '../../../utils';
 
 Blockly.Blocks.bba_statement = {
     protected_statements: ['STATEMENT'],
@@ -54,14 +55,19 @@ Blockly.Blocks.bba_statement = {
             ),
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     onchange: Blockly.Blocks.bb_statement.onchange,
 };
 
-Blockly.JavaScript.bba_statement = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.bba_statement = block => {
     // eslint-disable-next-line no-underscore-dangle
     const var_name = Blockly.JavaScript.variableDB_.getName(
         block.getFieldValue('VARIABLE'),
-        Blockly.Variables.NAME_TYPE
+        Blockly.Variables.CATEGORY_NAME
     );
     const bb_result = block.getFieldValue('BBRESULT_LIST');
     const input = block.childValueToCode('input_list', 'INPUT_LIST');

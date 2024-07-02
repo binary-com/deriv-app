@@ -1,6 +1,7 @@
 import { localize } from '@deriv/translations';
 import { getCurrencyDisplayCode } from '@deriv/shared';
 import { config } from '../../../../constants/config';
+import { modifyContextMenu } from '../../../utils';
 
 const description = localize(
     'Your contract is closed automatically when your profit is more than or equals to this amount. This block can only be used with the multipliers trade type.'
@@ -37,6 +38,11 @@ Blockly.Blocks.multiplier_take_profit = {
             category: Blockly.Categories.Trade_Definition,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     meta() {
         return {
             display_name: localize('Take Profit (Multiplier)'),
@@ -44,12 +50,12 @@ Blockly.Blocks.multiplier_take_profit = {
         };
     },
     onchange(event) {
-        if (!this.workspace || this.isInFlyout || this.workspace.isDragging()) {
+        if (!this.workspace || Blockly.derivWorkspace.isFlyout_ || this.workspace.isDragging()) {
             return;
         }
         if (
             (event.type === Blockly.Events.BLOCK_CREATE && event.ids.includes(this.id)) ||
-            event.type === Blockly.Events.END_DRAG
+            (event.type === Blockly.Events.BLOCK_DRAG && !event.isStart)
         ) {
             this.setCurrency();
         }
@@ -71,4 +77,4 @@ Blockly.Blocks.multiplier_take_profit = {
     },
 };
 
-Blockly.JavaScript.multiplier_take_profit = () => {};
+Blockly.JavaScript.javascriptGenerator.forBlock.multiplier_take_profit = () => {};

@@ -1,5 +1,6 @@
 import { localize } from '@deriv/translations';
 import { config } from '../../../../../constants/config';
+import { modifyContextMenu } from '../../../../utils';
 
 // This block is a remnant of a very old Binary Bot version.
 // needs to be here for backward compatibility.
@@ -23,6 +24,11 @@ Blockly.Blocks.barrier_offset = {
             category: Blockly.Categories.Miscellaneous,
         });
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
 };
 
-Blockly.JavaScript.barrier_offset = () => {};
+Blockly.JavaScript.javascriptGenerator.forBlock.barrier_offset = () => {};

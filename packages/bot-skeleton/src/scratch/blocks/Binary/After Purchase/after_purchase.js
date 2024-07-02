@@ -1,5 +1,6 @@
 import { localize } from '@deriv/translations';
 import { finishSign } from '../../images';
+import { modifyContextMenu, removeExtraInput } from '../../../utils';
 
 Blockly.Blocks.after_purchase = {
     init() {
@@ -9,6 +10,7 @@ Blockly.Blocks.after_purchase = {
         return {
             message0: '%1 %2 %3',
             message1: '%1',
+            message2: '%1',
             args0: [
                 {
                     type: 'field_image',
@@ -33,6 +35,14 @@ Blockly.Blocks.after_purchase = {
                     check: 'TradeAgain',
                 },
             ],
+            args2: [
+                {
+                    type: 'field_image',
+                    src: ' ', // this is here to add extra padding
+                    width: 380,
+                    height: 10,
+                },
+            ],
             colour: Blockly.Colours.RootBlock.colour,
             colourSecondary: Blockly.Colours.RootBlock.colourSecondary,
             colourTertiary: Blockly.Colours.RootBlock.colourTertiary,
@@ -46,10 +56,23 @@ Blockly.Blocks.after_purchase = {
             description: localize('Here is where you can decide if your bot should continue trading.'),
         };
     },
+    onchange(event) {
+        if (
+            event.type === Blockly.Events.BLOCK_CHANGE ||
+            (event.type === Blockly.Events.BLOCK_DRAG && !event.isStart)
+        ) {
+            removeExtraInput(this);
+        }
+    },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
 };
 
-Blockly.JavaScript.after_purchase = block => {
-    const stack = Blockly.JavaScript.statementToCode(block, 'AFTERPURCHASE_STACK');
+Blockly.JavaScript.javascriptGenerator.forBlock.after_purchase = block => {
+    const stack = Blockly.JavaScript.javascriptGenerator.statementToCode(block, 'AFTERPURCHASE_STACK');
     const code = `
     BinaryBotPrivateAfterPurchase = function BinaryBotPrivateAfterPurchase() {
         Bot.highlightBlock('${block.id}');

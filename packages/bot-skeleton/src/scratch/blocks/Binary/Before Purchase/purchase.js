@@ -1,5 +1,10 @@
 import { localize } from '@deriv/translations';
 import { getContractTypeOptions } from '../../../shared';
+import { modifyContextMenu } from '../../../utils';
+
+Blockly.Workspace.prototype.getTradeDefinitionBlock = function () {
+    return this.getAllBlocks(true).find(b => b.type === 'trade_definition');
+};
 
 Blockly.Blocks.purchase = {
     init() {
@@ -36,7 +41,7 @@ Blockly.Blocks.purchase = {
         };
     },
     onchange(event) {
-        if (!this.workspace || this.isInFlyout || this.workspace.isDragging()) {
+        if (!this.workspace || Blockly.derivWorkspace.isFlyout_ || this.workspace.isDragging()) {
             return;
         }
 
@@ -46,7 +51,7 @@ Blockly.Blocks.purchase = {
             if (event.name === 'TYPE_LIST' || event.name === 'TRADETYPE_LIST') {
                 this.populatePurchaseList(event);
             }
-        } else if (event.type === Blockly.Events.END_DRAG && event.blockId === this.id) {
+        } else if (event.type === Blockly.Events.BLOCK_DRAG && !event.isStart && event.blockId === this.id) {
             const purchase_type_list = this.getField('PURCHASE_LIST');
             const purchase_options = purchase_type_list.menuGenerator_; // eslint-disable-line
 
@@ -74,10 +79,15 @@ Blockly.Blocks.purchase = {
             });
         }
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     restricted_parents: ['before_purchase'],
 };
 
-Blockly.JavaScript.purchase = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.purchase = block => {
     const purchaseList = block.getFieldValue('PURCHASE_LIST');
 
     const code = `Bot.purchase('${purchaseList}');\n`;

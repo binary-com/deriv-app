@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../../utils';
 
 Blockly.Blocks.lastDigitList = {
     init() {
@@ -22,6 +23,14 @@ Blockly.Blocks.lastDigitList = {
             description: localize('This block gives you a list of the last digits of the last 1000 tick values.'),
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
 };
 
-Blockly.JavaScript.lastDigitList = () => ['Bot.getLastDigitList()', Blockly.JavaScript.ORDER_ATOMIC];
+Blockly.JavaScript.javascriptGenerator.forBlock.lastDigitList = () => [
+    'Bot.getLastDigitList()',
+    Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC,
+];

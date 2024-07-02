@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../../../utils';
 
 Blockly.Blocks.block_holder = {
     init() {
@@ -29,6 +30,11 @@ Blockly.Blocks.block_holder = {
             category: Blockly.Categories.Miscellaneous,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     meta() {
         return {
             display_name: localize('Ignore'),
@@ -39,4 +45,4 @@ Blockly.Blocks.block_holder = {
     },
 };
 
-Blockly.JavaScript.block_holder = () => '';
+Blockly.JavaScript.javascriptGenerator.forBlock.block_holder = () => '';

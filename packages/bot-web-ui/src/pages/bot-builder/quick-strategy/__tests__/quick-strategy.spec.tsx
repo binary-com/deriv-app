@@ -93,6 +93,9 @@ window.Blockly = {
         textToDom: jest.fn(),
         domToText: jest.fn(),
     },
+    utils: {
+        xml: { textToDom: jest.fn() },
+    },
 };
 
 jest.mock('../config', () => ({

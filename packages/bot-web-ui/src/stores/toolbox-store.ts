@@ -49,7 +49,7 @@ export default class ToolboxStore {
     onMount = (toolbox_ref: React.RefObject<HTMLDivElement>) => {
         this.adjustWorkspace();
 
-        this.toolbox_dom = window.Blockly.Xml.textToDom(toolbox_ref?.current);
+        this.toolbox_dom = window.Blockly.utils.xml.textToDom(toolbox_ref?.current);
         const el = [...(this.toolbox_dom?.childNodes ?? [])].find(
             el => el instanceof HTMLElement && el.tagName === 'examples'
         );
@@ -102,11 +102,12 @@ export default class ToolboxStore {
     // eslint-disable-next-line class-methods-use-this
     adjustWorkspace() {
         // NOTE: added this load modal open check to prevent scroll when load modal is open
-        if (!this.is_workspace_scroll_adjusted && !this.root_store.load_modal.is_load_modal_open) {
+        const workspace = this.root_store.load_modal.is_load_modal_open
+            ? window.Blockly.getMainWorkspace()
+            : window.Blockly.derivWorkspace;
+        if (!this.is_workspace_scroll_adjusted && workspace) {
             this.is_workspace_scroll_adjusted = true;
-
             setTimeout(() => {
-                const workspace = window.Blockly.derivWorkspace;
                 const toolbox_width = document.getElementById('gtm-toolbox')?.getBoundingClientRect().width || 0;
                 const block_canvas_rect = workspace.svgBlockCanvas_?.getBoundingClientRect(); // eslint-disable-line
 
@@ -168,7 +169,12 @@ export default class ToolboxStore {
 
         // Dynamic categories
         if (typeof dynamic === 'string') {
-            const fnToApply = workspace.getToolboxCategoryCallback(dynamic);
+            let fnToApply = workspace.getToolboxCategoryCallback(dynamic);
+            //we needed to add this check since we are not using
+            //blocky way of defining vaiables
+            if (dynamic === 'VARIABLE') {
+                fnToApply = Blockly.DataCategory;
+            }
             xml_list = fnToApply(workspace);
         }
         return xml_list;

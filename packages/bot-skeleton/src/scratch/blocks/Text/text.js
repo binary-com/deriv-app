@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../utils';
 
 Blockly.Blocks.text = {
     init() {
@@ -13,6 +14,7 @@ Blockly.Blocks.text = {
                     name: 'TEXT',
                 },
             ],
+            inputsInline: true,
             output: 'String',
             outputShape: Blockly.OUTPUT_SHAPE_ROUND,
             colour: Blockly.Colours.Base.colour,
@@ -22,6 +24,11 @@ Blockly.Blocks.text = {
             category: Blockly.Categories.Text,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     meta() {
         return {
             display_name: localize('Text'),
@@ -30,8 +37,8 @@ Blockly.Blocks.text = {
     },
 };
 
-Blockly.JavaScript.text = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.text = block => {
     // eslint-disable-next-line no-underscore-dangle
-    const code = Blockly.JavaScript.quote_(block.getFieldValue('TEXT'));
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    const code = Blockly.JavaScript.javascriptGenerator.quote_(block.getFieldValue('TEXT'));
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC];
 };

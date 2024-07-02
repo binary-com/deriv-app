@@ -33,6 +33,7 @@ Blockly.Blocks.lists_sort = {
                     name: 'LIST',
                 },
             ],
+            inputsInline: true,
             output: 'Array',
             outputShape: Blockly.OUTPUT_SHAPE_ROUND,
             colour: Blockly.Colours.Base.colour,
@@ -57,12 +58,17 @@ Blockly.Blocks.lists_sort = {
     },
 };
 
-Blockly.JavaScript.lists_sort = block => {
-    const list = Blockly.JavaScript.valueToCode(block, 'LIST', Blockly.JavaScript.ORDER_FUNCTION_CALL) || '[]';
+Blockly.JavaScript.javascriptGenerator.forBlock.lists_sort = block => {
+    const list =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'LIST',
+            Blockly.JavaScript.javascriptGenerator.ORDER_FUNCTION_CALL
+        ) || '[]';
     const direction = block.getFieldValue('DIRECTION') === '1' ? 1 : -1;
     const type = block.getFieldValue('TYPE');
     // eslint-disable-next-line no-underscore-dangle
-    const getCompareFunctionName = Blockly.JavaScript.provideFunction_('listsGetSortCompare', [
+    const getCompareFunctionName = Blockly.JavaScript.javascriptGenerator.provideFunction_('listsGetSortCompare', [
         // eslint-disable-next-line no-underscore-dangle
         `function ${Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_}(type, direction) {
             var compareFuncs = {
@@ -81,5 +87,5 @@ Blockly.JavaScript.lists_sort = block => {
     ]);
 
     const code = `${list}.sort().slice(0).sort(${getCompareFunctionName}("${type}", ${direction}))`;
-    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_FUNCTION_CALL];
 };

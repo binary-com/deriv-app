@@ -1,5 +1,5 @@
 import { localize } from '@deriv/translations';
-import { emptyTextValidator } from '../../utils';
+import { emptyTextValidator, modifyContextMenu } from '../../utils';
 
 Blockly.Blocks.text_changeCase = {
     init() {
@@ -35,6 +35,11 @@ Blockly.Blocks.text_changeCase = {
             category: Blockly.Categories.Text,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     meta() {
         return {
             display_name: localize('Change text case'),
@@ -50,15 +55,17 @@ Blockly.Blocks.text_changeCase = {
     },
 };
 
-Blockly.JavaScript.text_changeCase = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.text_changeCase = block => {
     const operators = {
         UPPERCASE: '.toUpperCase()',
         LOWERCASE: '.toLowerCase()',
         TITLECASE: null,
     };
     const operator = operators[block.getFieldValue('CASE')];
-    const textOrder = operator ? Blockly.JavaScript.ORDER_MEMBER : Blockly.JavaScript.ORDER_NONE;
-    const text = Blockly.JavaScript.valueToCode(block, 'TEXT', textOrder) || "''";
+    const textOrder = operator
+        ? Blockly.JavaScript.javascriptGenerator.ORDER_MEMBER
+        : Blockly.JavaScript.javascriptGenerator.ORDER_NONE;
+    const text = Blockly.JavaScript.javascriptGenerator.valueToCode(block, 'TEXT', textOrder) || "''";
 
     let code;
 
@@ -66,7 +73,7 @@ Blockly.JavaScript.text_changeCase = block => {
         code = `${text}${operator}`;
     } else {
         // eslint-disable-next-line no-underscore-dangle
-        const functionName = Blockly.JavaScript.provideFunction_('textToTitleCase', [
+        const functionName = Blockly.JavaScript.javascriptGenerator.provideFunction_('textToTitleCase', [
             // eslint-disable-next-line no-underscore-dangle
             `function ${Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_}(str) {
                 return str.toLowerCase().split(' ').map(function(word) {
@@ -77,5 +84,5 @@ Blockly.JavaScript.text_changeCase = block => {
         code = `${functionName}(${text})`;
     }
 
-    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_FUNCTION_CALL];
 };

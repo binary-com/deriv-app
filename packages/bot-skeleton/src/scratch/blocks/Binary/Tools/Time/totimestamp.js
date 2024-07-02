@@ -1,5 +1,5 @@
 import { localize } from '@deriv/translations';
-import { emptyTextValidator } from '../../../../utils';
+import { emptyTextValidator, modifyContextMenu } from '../../../../utils';
 
 Blockly.Blocks.totimestamp = {
     init() {
@@ -37,6 +37,11 @@ Blockly.Blocks.totimestamp = {
             ),
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     getRequiredValueInputs() {
         return {
             DATETIME: emptyTextValidator,
@@ -44,8 +49,12 @@ Blockly.Blocks.totimestamp = {
     },
 };
 
-Blockly.JavaScript.totimestamp = block => {
-    const datetime_string = Blockly.JavaScript.valueToCode(block, 'DATETIME', Blockly.JavaScript.ORDER_ATOMIC);
+Blockly.JavaScript.javascriptGenerator.forBlock.totimestamp = block => {
+    const datetime_string = Blockly.JavaScript.javascriptGenerator.valueToCode(
+        block,
+        'DATETIME',
+        Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC
+    );
     const code = `Bot.dateTimeStringToTimestamp(${datetime_string})`;
-    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_FUNCTION_CALL];
 };

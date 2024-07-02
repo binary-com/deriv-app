@@ -8,7 +8,7 @@ Blockly.Blocks.trade_definition_restartbuysell = {
             }),
             args0: [
                 {
-                    type: 'field_image_checkbox',
+                    type: 'field_checkbox',
                     name: 'TIME_MACHINE_ENABLED',
                     checked: false,
                 },
@@ -28,9 +28,18 @@ Blockly.Blocks.trade_definition_restartbuysell = {
                 next_block?.unplug(true);
             }
         });
+        this.inputList.forEach(input_list => {
+            input_list.fieldRow.forEach(fieldRow => {
+                setTimeout(() => {
+                    if (fieldRow?.borderRect_) {
+                        Blockly.utils.dom.addClass(fieldRow?.borderRect_, 'blocklyCheckbox');
+                    }
+                }, 0);
+            });
+        });
     },
     onchange(/* event */) {
-        if (!this.workspace || this.isInFlyout || this.workspace.isDragging()) {
+        if (!this.workspace || Blockly.derivWorkspace.isFlyout_ || this.workspace.isDragging()) {
             return;
         }
 
@@ -39,4 +48,4 @@ Blockly.Blocks.trade_definition_restartbuysell = {
     enforceLimitations: Blockly.Blocks.trade_definition_market.enforceLimitations,
     required_inputs: ['TIME_MACHINE_ENABLED'],
 };
-Blockly.JavaScript.trade_definition_restartbuysell = () => {};
+Blockly.JavaScript.javascriptGenerator.forBlock.trade_definition_restartbuysell = () => {};

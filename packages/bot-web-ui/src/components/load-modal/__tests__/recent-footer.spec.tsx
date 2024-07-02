@@ -17,6 +17,9 @@ jest.mock('@deriv/bot-skeleton/src/scratch/hooks/block_svg', () => jest.fn());
 
 window.Blockly = {
     derivWorkspace: { asyncClear: () => ({}) },
+    utils: {
+        xml: { textToDom: jest.fn() },
+    },
     Xml: { domToWorkspace: () => ({}), textToDom: () => ({}) },
 };
 

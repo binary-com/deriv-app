@@ -20,12 +20,9 @@ Blockly.Blocks.lists_split = {
         this.setOutput(true, 'Array');
         this.setOutputShape(Blockly.OUTPUT_SHAPE_ROUND);
 
+        this.setColour(Blockly.Colours.Base.colour);
         // eslint-disable-next-line no-underscore-dangle
-        this.setColourFromRawValues_(
-            Blockly.Colours.Base.colour,
-            Blockly.Colours.Base.colourSecondary,
-            Blockly.Colours.Base.colourTertiary
-        );
+
         this.setTooltip(
             localize(
                 'This block creates a list from a given string of text, splitting it with the given delimiter. It can also join items in a list into a string of text.'
@@ -71,13 +68,23 @@ Blockly.Blocks.lists_split = {
         }
 
         this.initSvg();
-        this.render(false);
+        // kept this commented to fix backward compatibility issue
+        //this.render(false);
     },
 };
 
-Blockly.JavaScript.lists_split = block => {
-    const input = Blockly.JavaScript.valueToCode(block, 'INPUT', Blockly.JavaScript.ORDER_MEMBER);
-    const delimiter = Blockly.JavaScript.valueToCode(block, 'DELIM', Blockly.JavaScript.ORDER_NONE) || "''";
+Blockly.JavaScript.javascriptGenerator.forBlock.lists_split = block => {
+    const input = Blockly.JavaScript.javascriptGenerator.valueToCode(
+        block,
+        'INPUT',
+        Blockly.JavaScript.javascriptGenerator.ORDER_MEMBER
+    );
+    const delimiter =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'DELIM',
+            Blockly.JavaScript.javascriptGenerator.ORDER_NONE
+        ) || "''";
     const mode = block.getFieldValue('MODE');
 
     let code;
@@ -88,5 +95,5 @@ Blockly.JavaScript.lists_split = block => {
         code = `${input || '[]'}.join(${delimiter})`;
     }
 
-    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_FUNCTION_CALL];
 };

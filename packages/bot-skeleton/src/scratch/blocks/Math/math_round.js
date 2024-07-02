@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../utils';
 
 // https://github.com/google/blockly/blob/master/generators/javascript/math.js
 Blockly.Blocks.math_round = {
@@ -37,6 +38,11 @@ Blockly.Blocks.math_round = {
             category: Blockly.Categories.Mathematical,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     meta() {
         return {
             display_name: localize('Rounding operation'),
@@ -52,9 +58,14 @@ Blockly.Blocks.math_round = {
     },
 };
 
-Blockly.JavaScript.math_round = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.math_round = block => {
     const operation = block.getFieldValue('OP');
-    const argument0 = Blockly.JavaScript.valueToCode(block, 'NUM', Blockly.JavaScript.ORDER_ATOMIC) || '0';
+    const argument0 =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'NUM',
+            Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC
+        ) || '0';
 
     let code;
 
@@ -66,5 +77,5 @@ Blockly.JavaScript.math_round = block => {
         code = `Math.floor(${argument0})`;
     }
 
-    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_FUNCTION_CALL];
 };

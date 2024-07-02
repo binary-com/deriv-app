@@ -1,14 +1,29 @@
-/* eslint import/no-webpack-loader-syntax: 0 */
-const {
-    goog,
-    Blockly,
-} = require('imports-loader?this=>window!exports-loader?goog&Blockly!scratch-blocks/blockly_compressed_vertical');
-
-Blockly.JavaScript = require('blockly/javascript');
+import goog from './goog.js';
+import * as BlocklyJavaScript from 'blockly/javascript';
+import { setColors } from './hooks/colours.js';
 
 window.goog = goog;
-window.Blockly = Blockly;
 
-require('imports-loader!scratch-blocks/msg/messages');
-require('./blocks');
-require('./hooks');
+export const loadBlockly = async isDarkMode => {
+    const BlocklyModule = await import('blockly');
+    window.Blockly = BlocklyModule.default;
+    window.Blockly.Colours = {};
+    const BlocklyGenerator = new Blockly.Generator('code');
+    const BlocklyJavaScriptGenerator = {
+        ...BlocklyJavaScript,
+        ...BlocklyGenerator,
+    };
+    window.Blockly.JavaScript = BlocklyJavaScriptGenerator;
+    window.Blockly.Themes.zelos_renderer = Blockly.Theme.defineTheme('zelos_renderer', {
+        base: Blockly.Themes.Zelos,
+        componentStyles: {},
+    });
+    const exclude_item = ['blockInline'];
+    exclude_item.forEach(item_id => {
+        const option = Blockly.ContextMenuRegistry.registry.getItem(item_id);
+        option.preconditionFn = () => 'hidden';
+    });
+    setColors(isDarkMode);
+    await import('./hooks');
+    await import('./blocks');
+};

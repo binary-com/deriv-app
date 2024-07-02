@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../utils';
 
 Blockly.Blocks.logic_boolean = {
     init() {
@@ -17,6 +18,7 @@ Blockly.Blocks.logic_boolean = {
                     ],
                 },
             ],
+            inputsInline: true,
             output: 'Boolean',
             outputShape: Blockly.OUTPUT_SHAPE_ROUND,
             colour: Blockly.Colours.Base.colour,
@@ -32,9 +34,14 @@ Blockly.Blocks.logic_boolean = {
             description: localize('This is a single block that returns a boolean value, either true or false.'),
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
 };
 
-Blockly.JavaScript.logic_boolean = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.logic_boolean = block => {
     const code = block.getFieldValue('BOOL') === 'TRUE' ? 'true' : 'false';
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC];
 };

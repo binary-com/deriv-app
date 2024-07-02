@@ -20,7 +20,7 @@ const WorkspaceWrapper = observer(() => {
 
     if (is_loading) return null;
 
-    if (Blockly?.derivWorkspace)
+    if (window.Blockly?.derivWorkspace)
         return (
             <React.Fragment>
                 <Toolbox />

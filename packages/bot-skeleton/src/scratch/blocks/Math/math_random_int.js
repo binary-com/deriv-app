@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../utils';
 
 Blockly.Blocks.math_random_int = {
     init() {
@@ -22,6 +23,7 @@ Blockly.Blocks.math_random_int = {
                     check: 'Number',
                 },
             ],
+            inputsInline: true,
             output: 'Number',
             outputShape: Blockly.OUTPUT_SHAPE_ROUND,
             colour: Blockly.Colours.Base.colour,
@@ -30,6 +32,11 @@ Blockly.Blocks.math_random_int = {
             tooltip: localize('This block gives you a random number from within a set range'),
             category: Blockly.Categories.Mathematical,
         };
+    },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
     },
     meta() {
         return {
@@ -45,12 +52,22 @@ Blockly.Blocks.math_random_int = {
     },
 };
 
-Blockly.JavaScript.math_random_int = block => {
-    const argument0 = Blockly.JavaScript.valueToCode(block, 'FROM', Blockly.JavaScript.ORDER_COMMA) || '0';
-    const argument1 = Blockly.JavaScript.valueToCode(block, 'TO', Blockly.JavaScript.ORDER_COMMA) || '0';
+Blockly.JavaScript.javascriptGenerator.forBlock.math_random_int = block => {
+    const argument0 =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'FROM',
+            Blockly.JavaScript.javascriptGenerator.ORDER_COMMA
+        ) || '0';
+    const argument1 =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'TO',
+            Blockly.JavaScript.javascriptGenerator.ORDER_COMMA
+        ) || '0';
 
     // eslint-disable-next-line no-underscore-dangle
-    const functionName = Blockly.JavaScript.provideFunction_('mathRandomInt', [
+    const functionName = Blockly.JavaScript.javascriptGenerator.provideFunction_('mathRandomInt', [
         // eslint-disable-next-line no-underscore-dangle
         `function ${Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_}(a, b) {
             if (a > b) {
@@ -64,5 +81,5 @@ Blockly.JavaScript.math_random_int = block => {
     ]);
 
     const code = `${functionName}(${argument0}, ${argument1})`;
-    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_FUNCTION_CALL];
 };

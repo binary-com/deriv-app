@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../utils';
 
 Blockly.Blocks.math_constant = {
     init() {
@@ -30,6 +31,11 @@ Blockly.Blocks.math_constant = {
             category: Blockly.Categories.Mathematical,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     meta() {
         return {
             display_name: localize('Mathematical constants'),
@@ -38,29 +44,29 @@ Blockly.Blocks.math_constant = {
     },
 };
 
-Blockly.JavaScript.math_constant = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.math_constant = block => {
     const constant = block.getFieldValue('CONSTANT');
 
     let code, order;
 
     if (constant === 'PI') {
         code = 'Math.PI';
-        order = Blockly.JavaScript.ORDER_MEMBER;
+        order = Blockly.JavaScript.javascriptGenerator.ORDER_MEMBER;
     } else if (constant === 'E') {
         code = 'Math.E';
-        order = Blockly.JavaScript.ORDER_MEMBER;
+        order = Blockly.JavaScript.javascriptGenerator.ORDER_MEMBER;
     } else if (constant === 'GOLDEN_RATIO') {
         code = '(1 + Math.sqrt(5)) / 2';
-        order = Blockly.JavaScript.ORDER_DIVISION;
+        order = Blockly.JavaScript.javascriptGenerator.ORDER_DIVISION;
     } else if (constant === 'SQRT2') {
         code = 'Math.SQRT2';
-        order = Blockly.JavaScript.ORDER_MEMBER;
+        order = Blockly.JavaScript.javascriptGenerator.ORDER_MEMBER;
     } else if (constant === 'SQRT1_2') {
         code = 'Math.SQRT1_2';
-        order = Blockly.JavaScript.ORDER_MEMBER;
+        order = Blockly.JavaScript.javascriptGenerator.ORDER_MEMBER;
     } else if (constant === 'INFINITY') {
         code = 'Infinity';
-        order = Blockly.JavaScript.ORDER_ATOMIC;
+        order = Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC;
     }
 
     return [code, order];

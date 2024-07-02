@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../../utils';
 
 Blockly.Blocks.sell_price = {
     init() {
@@ -24,10 +25,15 @@ Blockly.Blocks.sell_price = {
             ),
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     restricted_parents: ['during_purchase'],
 };
 
-Blockly.JavaScript.sell_price = () => {
+Blockly.JavaScript.javascriptGenerator.forBlock.sell_price = () => {
     const code = 'Bot.getSellPrice()';
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC];
 };

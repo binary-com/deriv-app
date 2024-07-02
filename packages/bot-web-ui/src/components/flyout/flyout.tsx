@@ -84,14 +84,15 @@ const FlyoutContent = (props: TFlyoutContent) => {
                 ) : (
                     flyout_content.map((node, index) => {
                         const tag_name = node.tagName.toUpperCase();
-
                         switch (tag_name) {
                             case Blockly.Xml.NODE_BLOCK: {
                                 const block_type = (node.getAttribute('type') || '') as string;
 
                                 return (
                                     <FlyoutBlockGroup
-                                        key={`${node.getAttribute('type')}${window.Blockly.utils.genUid()}`}
+                                        key={`${node.getAttribute(
+                                            'type'
+                                        )}${window?.Blockly?.utils?.idGenerator?.genUid()}`}
                                         id={`flyout__item-workspace--${index}`}
                                         block_node={node}
                                         should_hide_display_name={
@@ -191,6 +192,7 @@ const Flyout = observer(() => {
         selected_category,
         first_get_variable_block_index,
     } = flyout;
+
     const { pushDataLayer } = gtm;
 
     React.useEffect(() => {

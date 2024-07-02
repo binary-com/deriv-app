@@ -1,3 +1,5 @@
+import './index.scss';
+
 export {
     load,
     save,

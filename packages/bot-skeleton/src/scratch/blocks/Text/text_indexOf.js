@@ -1,5 +1,5 @@
 import { localize } from '@deriv/translations';
-import { emptyTextValidator } from '../../utils';
+import { emptyTextValidator, modifyContextMenu } from '../../utils';
 
 Blockly.Blocks.text_indexOf = {
     init() {
@@ -33,6 +33,7 @@ Blockly.Blocks.text_indexOf = {
                     name: 'FIND',
                 },
             ],
+            inputsInline: true,
             output: 'String',
             outputShape: Blockly.OUTPUT_SHAPE_ROUND,
             colour: Blockly.Colours.Base.colour,
@@ -50,6 +51,11 @@ Blockly.Blocks.text_indexOf = {
             ),
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     getRequiredValueInputs() {
         return {
             VALUE: emptyTextValidator,
@@ -58,14 +64,24 @@ Blockly.Blocks.text_indexOf = {
     },
 };
 
-Blockly.JavaScript.text_indexOf = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.text_indexOf = block => {
     const functionName = block.getFieldValue('END') === 'FIRST' ? 'indexOf' : 'lastIndexOf';
-    const substring = Blockly.JavaScript.valueToCode(block, 'FIND', Blockly.JavaScript.ORDER_NONE) || "''";
-    const text = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_MEMBER) || "''";
+    const substring =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'FIND',
+            Blockly.JavaScript.javascriptGenerator.ORDER_NONE
+        ) || "''";
+    const text =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'VALUE',
+            Blockly.JavaScript.javascriptGenerator.ORDER_MEMBER
+        ) || "''";
 
     const code = `${text}.${functionName}(${substring})`;
     if (block.workspace.options.oneBasedIndex) {
-        return [`${code} + 1`, Blockly.JavaScript.ORDER_ADDITION];
+        return [`${code} + 1`, Blockly.JavaScript.javascriptGenerator.ORDER_ADDITION];
     }
-    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_FUNCTION_CALL];
 };

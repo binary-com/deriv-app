@@ -1,5 +1,5 @@
 import { localize } from '@deriv/translations';
-import { emptyTextValidator } from '../../utils';
+import { emptyTextValidator, modifyContextMenu } from '../../utils';
 
 Blockly.Blocks.text_prompt_ext = {
     init() {
@@ -12,9 +12,15 @@ Blockly.Blocks.text_prompt_ext = {
                 this.setOutput(true, 'Number');
             }
             this.initSvg();
-            this.render(false);
+            //commented this line breaks the backward compatibility
+            //this.render(false);
             return undefined;
         });
+    },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
     },
     definition() {
         return {
@@ -61,16 +67,21 @@ Blockly.Blocks.text_prompt_ext = {
     },
 };
 
-Blockly.JavaScript.text_prompt_ext = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.text_prompt_ext = block => {
     let msg, code;
 
     if (block.getField('TEXT')) {
         // Internal message
         // eslint-disable-next-line no-underscore-dangle
-        msg = Blockly.JavaScript.quote_(block.getFieldValue('TEXT'));
+        msg = Blockly.JavaScript.javascriptGenerator.quote_(block.getFieldValue('TEXT'));
     } else {
         // External message
-        msg = Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_NONE) || "''";
+        msg =
+            Blockly.JavaScript.javascriptGenerator.valueToCode(
+                block,
+                'TEXT',
+                Blockly.JavaScript.javascriptGenerator.ORDER_NONE
+            ) || "''";
     }
 
     if (block.getFieldValue('TYPE') === 'NUMBER') {
@@ -79,5 +90,5 @@ Blockly.JavaScript.text_prompt_ext = block => {
         code = `window.prompt(${msg})`;
     }
 
-    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_FUNCTION_CALL];
 };

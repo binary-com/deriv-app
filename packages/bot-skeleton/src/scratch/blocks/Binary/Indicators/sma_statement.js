@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../../utils';
 
 Blockly.Blocks.sma_statement = {
     protected_statements: ['STATEMENT'],
@@ -39,6 +40,11 @@ Blockly.Blocks.sma_statement = {
             category: Blockly.Categories.Indicators,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     meta() {
         return {
             display_name: localize('Simple Moving Average (SMA)'),
@@ -50,11 +56,11 @@ Blockly.Blocks.sma_statement = {
     onchange: Blockly.Blocks.bb_statement.onchange,
 };
 
-Blockly.JavaScript.sma_statement = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.sma_statement = block => {
     // eslint-disable-next-line no-underscore-dangle
     const var_name = Blockly.JavaScript.variableDB_.getName(
         block.getFieldValue('VARIABLE'),
-        Blockly.Variables.NAME_TYPE
+        Blockly.Variables.CATEGORY_NAME
     );
     const input = block.childValueToCode('input_list', 'INPUT_LIST');
     const period = block.childValueToCode('period', 'PERIOD');

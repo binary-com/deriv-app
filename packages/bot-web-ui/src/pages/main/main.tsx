@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { updateWorkspaceName } from '@deriv/bot-skeleton';
 import dbot from '@deriv/bot-skeleton/src/scratch/dbot';
-import { initTrashCan } from '@deriv/bot-skeleton/src/scratch/hooks/trashcan';
 import { api_base } from '@deriv/bot-skeleton/src/services/api/api-base';
 import { isDbotRTL } from '@deriv/bot-skeleton/src/utils/workspace';
 import { Dialog, Tabs } from '@deriv/components';
@@ -86,17 +85,23 @@ const AppWrapper = observer(() => {
     }, [active_tab]);
 
     React.useEffect(() => {
-        if (active_tab === BOT_BUILDER) {
-            if (is_drawer_open) {
-                isDbotRTL() ? initTrashCan(140, -260) : initTrashCan(400, -748);
-            } else {
-                initTrashCan(isDbotRTL() ? -200 : 20);
+        const trashcan_init_id = setTimeout(() => {
+            if (active_tab === BOT_BUILDER && Blockly?.derivWorkspace?.trashcan) {
+                const trashcanY = window.innerHeight - 250;
+                let trashcanX;
+                if (is_drawer_open) {
+                    trashcanX = isDbotRTL() ? 380 : window.innerWidth - 460;
+                } else {
+                    trashcanX = isDbotRTL() ? 20 : window.innerWidth - 100;
+                }
+                Blockly?.derivWorkspace?.trashcan?.setTrashcanPosition(trashcanX, trashcanY);
             }
-            setTimeout(() => {
-                window.dispatchEvent(new Event('resize')); // make the trash can work again after resize
-            }, 500);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, 100);
+
+        return () => {
+            clearTimeout(trashcan_init_id); // Clear the timeout on unmount
+        };
+        //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [active_tab, is_drawer_open]);
 
     useEffect(() => {

@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../../../utils';
 
 Blockly.Blocks.total_runs = {
     init() {
@@ -16,6 +17,11 @@ Blockly.Blocks.total_runs = {
             category: Blockly.Categories.Miscellaneous,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     meta() {
         return {
             display_name: localize('Number of runs'),
@@ -27,4 +33,7 @@ Blockly.Blocks.total_runs = {
     onchange: Blockly.Blocks.total_profit.onchange,
 };
 
-Blockly.JavaScript.total_runs = () => ['Bot.getTotalRuns()', Blockly.JavaScript.ORDER_ATOMIC];
+Blockly.JavaScript.javascriptGenerator.forBlock.total_runs = () => [
+    'Bot.getTotalRuns()',
+    Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC,
+];

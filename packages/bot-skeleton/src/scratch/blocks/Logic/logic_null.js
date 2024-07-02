@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../utils';
 
 Blockly.Blocks.logic_null = {
     init() {
@@ -6,6 +7,7 @@ Blockly.Blocks.logic_null = {
     },
     definition() {
         return {
+            inputsInline: true,
             message0: 'null',
             output: null,
             outputShape: Blockly.OUTPUT_SHAPE_ROUND,
@@ -16,6 +18,11 @@ Blockly.Blocks.logic_null = {
             category: Blockly.Categories.Logic,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     meta() {
         return {
             display_name: localize('Null'),
@@ -23,4 +30,7 @@ Blockly.Blocks.logic_null = {
         };
     },
 };
-Blockly.JavaScript.logic_null = () => ['null', Blockly.JavaScript.ORDER_ATOMIC];
+Blockly.JavaScript.javascriptGenerator.forBlock.logic_null = () => [
+    'null',
+    Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC,
+];

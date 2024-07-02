@@ -1,5 +1,5 @@
 import { localize } from '@deriv/translations';
-import { emptyTextValidator } from '../../utils';
+import { emptyTextValidator, modifyContextMenu } from '../../utils';
 
 Blockly.Blocks.text_charAt = {
     init() {
@@ -17,6 +17,11 @@ Blockly.Blocks.text_charAt = {
         });
 
         this.updateAt(true);
+    },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
     },
     definition() {
         return {
@@ -38,6 +43,7 @@ Blockly.Blocks.text_charAt = {
                     ],
                 },
             ],
+            inputsInline: true,
             output: 'String',
             outputShape: Blockly.OUTPUT_SHAPE_ROUND,
             colour: Blockly.Colours.Base.colour,
@@ -72,7 +78,8 @@ Blockly.Blocks.text_charAt = {
 
         this.isAt = isAt;
         this.initSvg();
-        this.render(false);
+        //commented this line breaks the backward compatibility
+        //this.render(false);
     },
     getRequiredValueInputs() {
         return {
@@ -82,19 +89,22 @@ Blockly.Blocks.text_charAt = {
     },
 };
 
-Blockly.JavaScript.text_charAt = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.text_charAt = block => {
     const where = block.getFieldValue('WHERE') || 'FROM_START';
-    const textOrder = where === 'RANDOM' ? Blockly.JavaScript.ORDER_NONE : Blockly.JavaScript.ORDER_MEMBER;
-    const text = Blockly.JavaScript.valueToCode(block, 'VALUE', textOrder) || "''";
+    const textOrder =
+        where === 'RANDOM'
+            ? Blockly.JavaScript.javascriptGenerator.ORDER_NONE
+            : Blockly.JavaScript.javascriptGenerator.ORDER_MEMBER;
+    const text = Blockly.JavaScript.javascriptGenerator.valueToCode(block, 'VALUE', textOrder) || "''";
 
     let code;
 
     if (where === 'FROM_START') {
-        const at = Blockly.JavaScript.getAdjusted(block, 'AT');
+        const at = Blockly.JavaScript.javascriptGenerator.getAdjusted(block, 'AT');
         // Adjust index if using one-based indices
         code = `${text}.charAt(${at})`;
     } else if (where === 'FROM_END') {
-        const at = Blockly.JavaScript.getAdjusted(block, 'AT', 1, true);
+        const at = Blockly.JavaScript.javascriptGenerator.getAdjusted(block, 'AT', 1, true);
         code = `${text}.slice(${at}).charAt(0)`;
     } else if (where === 'FIRST') {
         code = `${text}.charAt(0)`;
@@ -102,7 +112,7 @@ Blockly.JavaScript.text_charAt = block => {
         code = `${text}.slice(-1)`;
     } else if (where === 'RANDOM') {
         // eslint-disable-next-line no-underscore-dangle
-        const functionName = Blockly.JavaScript.provideFunction_('textRandomLetter', [
+        const functionName = Blockly.JavaScript.javascriptGenerator.provideFunction_('textRandomLetter', [
             // eslint-disable-next-line no-underscore-dangle
             `function ${Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_}(text) {
                 var x = Math.floor(Math.random() * text.length);
@@ -111,5 +121,5 @@ Blockly.JavaScript.text_charAt = block => {
         ]);
         code = `${functionName}(${text})`;
     }
-    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_FUNCTION_CALL];
 };

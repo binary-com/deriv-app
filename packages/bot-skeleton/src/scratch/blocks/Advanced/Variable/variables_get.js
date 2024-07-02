@@ -3,6 +3,17 @@ import { localize } from '@deriv/translations';
 Blockly.Blocks.variables_get = {
     init() {
         this.jsonInit(this.definition());
+
+        this.inputList.forEach(input_list => {
+            input_list.fieldRow.forEach(fieldRow => {
+                setTimeout(() => {
+                    if (fieldRow?.borderRect_ || fieldRow.clickTarget_) {
+                        const target_block = fieldRow?.borderRect_ || fieldRow.clickTarget_;
+                        Blockly.utils.dom.addClass(target_block, 'blocklyVariableGet');
+                    }
+                }, 0);
+            });
+        });
     },
     definition() {
         return {
@@ -56,8 +67,8 @@ Blockly.Blocks.variables_get = {
     },
 };
 
-Blockly.JavaScript.variables_get = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.variables_get = block => {
     // eslint-disable-next-line no-underscore-dangle
-    const code = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('VAR'), Blockly.Variables.NAME_TYPE);
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    const code = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('VAR'), Blockly.Variables.CATEGORY_NAME);
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC];
 };

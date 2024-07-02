@@ -1,6 +1,6 @@
 import { localize } from '@deriv/translations';
 import { plusIconDark } from '../images';
-import { runGroupedEvents } from '../../utils';
+import { runGroupedEvents, modifyContextMenu } from '../../utils';
 
 Blockly.Blocks.text_join = {
     protected_statements: ['STACK'],
@@ -28,6 +28,7 @@ Blockly.Blocks.text_join = {
                     name: 'STACK',
                 },
             ],
+            inputsInline: true,
             colour: Blockly.Colours.Base.colour,
             colourSecondary: Blockly.Colours.Base.colourSecondary,
             colourTertiary: Blockly.Colours.Base.colourTertiary,
@@ -36,6 +37,11 @@ Blockly.Blocks.text_join = {
             tooltip: localize('Text join'),
             category: Blockly.Categories.Text,
         };
+    },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
     },
     meta() {
         return {
@@ -46,7 +52,7 @@ Blockly.Blocks.text_join = {
         };
     },
     onIconClick() {
-        if (this.workspace.options.readOnly || this.isInFlyout) {
+        if (this.workspace.options.readOnly || Blockly.derivWorkspace.isFlyout_) {
             return;
         }
 
@@ -55,13 +61,15 @@ Blockly.Blocks.text_join = {
             text_block.required_parent_id = this.id;
             text_block.setMovable(true);
             text_block.initSvg();
-            text_block.render();
+            // kept this commented to fix backward compatibility issue
+            text_block?.renderEfficiently();
 
             const shadow_block = this.workspace.newBlock('text');
             shadow_block.setShadow(true);
             shadow_block.setFieldValue('', 'TEXT');
             shadow_block.initSvg();
-            shadow_block.render();
+            // kept this commented to fix backward compatibility issue
+            shadow_block?.renderEfficiently();
 
             const text_input = text_block.getInput('TEXT');
             text_input.connection.connect(shadow_block.outputConnection);
@@ -78,15 +86,15 @@ Blockly.Blocks.text_join = {
 };
 
 // Blockly.JavaScript.text_join = Blockly.JavaScript.lists_create_with;
-Blockly.JavaScript.text_join = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.text_join = block => {
     // eslint-disable-next-line no-underscore-dangle
     const var_name = Blockly.JavaScript.variableDB_.getName(
         block.getFieldValue('VARIABLE'),
-        Blockly.Variables.NAME_TYPE
+        Blockly.Variables.CATEGORY_NAME
     );
     const blocks_in_stack = block.getBlocksInStatement('STACK');
     const elements = blocks_in_stack.map(b => {
-        const value = Blockly.JavaScript[b.type](b);
+        const value = Blockly.JavaScript.javascriptGenerator.forBlock[b.type](b);
         return Array.isArray(value) ? value[0] : value;
     });
 

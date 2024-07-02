@@ -1,5 +1,5 @@
 import { localize } from '@deriv/translations';
-import { emptyTextValidator } from '../../../../utils';
+import { emptyTextValidator , modifyContextMenu } from '../../../../utils';
 
 Blockly.Blocks.console = {
     init() {
@@ -50,13 +50,21 @@ Blockly.Blocks.console = {
             MESSAGE: emptyTextValidator,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
 };
 
-Blockly.JavaScript.console = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.console = block => {
     const console_type = block.getFieldValue('CONSOLE_TYPE') || 'log';
     const message =
-        Blockly.JavaScript.valueToCode(block, 'MESSAGE', Blockly.JavaScript.ORDER_ATOMIC) ||
-        `"${localize('<empty message>')}"`;
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'MESSAGE',
+            Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC
+        ) || `"${localize('<empty message>')}"`;
 
     const code = `Bot.console({ type: '${console_type}', message: ${message}});\n`;
     return code;

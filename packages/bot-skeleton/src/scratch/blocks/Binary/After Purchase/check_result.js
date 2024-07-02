@@ -1,5 +1,6 @@
 import { localize } from '@deriv/translations';
 import { config } from '../../../../constants/config';
+import { modifyContextMenu } from '../../../utils';
 
 Blockly.Blocks.contract_check_result = {
     init() {
@@ -31,11 +32,14 @@ Blockly.Blocks.contract_check_result = {
         };
     },
     onchange(event) {
-        if (!this.workspace || this.isInFlyout || this.workspace.isDragging()) {
+        if (!this.workspace || Blockly.derivWorkspace.isFlyout_ || this.workspace.isDragging()) {
             return;
         }
 
-        if (event.type === Blockly.Events.BLOCK_CREATE || event.type === Blockly.Events.END_DRAG) {
+        if (
+            event.type === Blockly.Events.BLOCK_CREATE ||
+            (event.type === Blockly.Events.BLOCK_DRAG && !event.isStart)
+        ) {
             const top_parent = this.getTopParent();
 
             if (top_parent) {
@@ -47,11 +51,16 @@ Blockly.Blocks.contract_check_result = {
             }
         }
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
 };
 
-Blockly.JavaScript.contract_check_result = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.contract_check_result = block => {
     const checkWith = block.getFieldValue('CHECK_RESULT');
 
     const code = `Bot.isResult('${checkWith}')`;
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC];
 };

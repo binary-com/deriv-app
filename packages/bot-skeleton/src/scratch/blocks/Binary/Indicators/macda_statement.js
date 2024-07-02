@@ -1,5 +1,6 @@
 import { localize } from '@deriv/translations';
 import { config } from '../../../../constants/config';
+import { modifyContextMenu } from '../../../utils';
 
 Blockly.Blocks.macda_statement = {
     protected_statements: ['STATEMENT'],
@@ -46,6 +47,11 @@ Blockly.Blocks.macda_statement = {
             category: Blockly.Categories.Indicators,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     meta() {
         return {
             display_name: localize('Moving Average Convergence Divergence'),
@@ -58,11 +64,11 @@ Blockly.Blocks.macda_statement = {
     onchange: Blockly.Blocks.bb_statement.onchange,
 };
 
-Blockly.JavaScript.macda_statement = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.macda_statement = block => {
     // eslint-disable-next-line no-underscore-dangle
     const var_name = Blockly.JavaScript.variableDB_.getName(
         block.getFieldValue('VARIABLE'),
-        Blockly.Variables.NAME_TYPE
+        Blockly.Variables.CATEGORY_NAME
     );
     const macd_field = block.getFieldValue('MACDFIELDS_LIST');
     const input = block.childValueToCode('input_list', 'INPUT_LIST');

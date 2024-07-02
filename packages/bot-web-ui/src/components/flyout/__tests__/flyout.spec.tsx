@@ -65,6 +65,7 @@ window.Blockly = {
     utils: {
         genUid: jest.fn(() => Date.now()),
     },
+    Options: jest.fn(),
 };
 
 const mockPushDataLayer = jest.fn();

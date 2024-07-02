@@ -7,7 +7,6 @@ import { localize } from '@deriv/translations';
 Blockly.Blocks.procedures_ifreturn = {
     init() {
         this.hasReturnValue = true;
-
         this.jsonInit(this.definition());
     },
     definition() {
@@ -23,6 +22,7 @@ Blockly.Blocks.procedures_ifreturn = {
                     name: 'VALUE',
                 },
             ],
+            inputsInline: true,
             colour: Blockly.Colours.Special2.colour,
             colourSecondary: Blockly.Colours.Special2.colourSecondary,
             colourTertiary: Blockly.Colours.Special2.colourTertiary,
@@ -63,7 +63,7 @@ Blockly.Blocks.procedures_ifreturn = {
             this.removeInput('VALUE');
             this.appendDummyInput('VALUE').appendField(localize('return'));
             this.initSvg();
-            this.render();
+            this.renderEfficiently();
         }
     },
     /**
@@ -92,7 +92,7 @@ Blockly.Blocks.procedures_ifreturn = {
         if (legal) {
             const rerender = () => {
                 this.initSvg();
-                this.render();
+                this.renderEfficiently();
             };
 
             // If needed, toggle whether this block has a return value.
@@ -108,10 +108,10 @@ Blockly.Blocks.procedures_ifreturn = {
                 this.hasReturnValue = true;
             }
 
-            if (!this.isInFlyout) {
+            if (!Blockly.derivWorkspace.isFlyout_) {
                 this.setDisabled(false);
             }
-        } else if (!this.isInFlyout && !this.getInheritedDisabled()) {
+        } else if (!Blockly.derivWorkspace.isFlyout_ && !this.getInheritedDisabled()) {
             this.setDisabled(true);
         }
     },
@@ -123,12 +123,22 @@ Blockly.Blocks.procedures_ifreturn = {
     FUNCTION_TYPES: ['procedures_defnoreturn', 'procedures_defreturn'],
 };
 
-Blockly.JavaScript.procedures_ifreturn = block => {
-    const condition = Blockly.JavaScript.valueToCode(block, 'CONDITION', Blockly.JavaScript.ORDER_NONE) || 'false';
+Blockly.JavaScript.javascriptGenerator.forBlock.procedures_ifreturn = block => {
+    const condition =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'CONDITION',
+            Blockly.JavaScript.javascriptGenerator.ORDER_NONE
+        ) || 'false';
 
     let branch;
     if (block.hasReturnValue) {
-        const value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_NONE) || 'null';
+        const value =
+            Blockly.JavaScript.javascriptGenerator.valueToCode(
+                block,
+                'VALUE',
+                Blockly.JavaScript.javascriptGenerator.ORDER_NONE
+            ) || 'null';
         branch = `return ${value};\n`;
     } else {
         branch = 'return;\n';

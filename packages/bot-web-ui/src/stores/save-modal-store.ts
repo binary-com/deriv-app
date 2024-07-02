@@ -139,16 +139,16 @@ export default class SaveModalStore implements ISaveModalStore {
         let xml;
         let main_strategy = null;
         if (active_tab === 1) {
-            xml = Blockly?.Xml?.workspaceToDom(Blockly?.derivWorkspace);
+            xml = window.Blockly?.Xml?.workspaceToDom(window.Blockly?.derivWorkspace);
         } else {
             const recent_files = await getSavedWorkspaces();
             main_strategy = recent_files.filter((strategy: TStrategy) => strategy.id === selected_strategy.id)?.[0];
             main_strategy.name = bot_name;
             main_strategy.save_type = is_local ? save_types.LOCAL : save_types.GOOGLE_DRIVE;
-            xml = Blockly?.Xml?.textToDom(main_strategy.xml);
+            xml = window.Blockly.utils.xml.textToDom(main_strategy.xml);
         }
-        xml?.setAttribute('is_dbot', 'true');
-        xml?.setAttribute('collection', save_as_collection ? 'true' : 'false');
+        xml.setAttribute('is_dbot', 'true');
+        xml.setAttribute('collection', save_as_collection ? 'true' : 'false');
 
         if (is_local) {
             save(bot_name, save_as_collection, xml);

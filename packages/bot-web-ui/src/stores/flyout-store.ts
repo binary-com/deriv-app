@@ -46,10 +46,12 @@ export default class FlyoutStore implements IFlyoutStore {
     block_workspaces = [];
     flyout_min_width = 440;
     options = {
+        renderer: 'zelos',
         media: `${__webpack_public_path__}media/`,
         move: { scrollbars: false, drag: true, wheel: false },
         zoom: { startScale: config.workspaces.flyoutWorkspacesStartScale },
         sounds: false,
+        theme: window?.Blockly?.Themes?.zelos_renderer,
     };
 
     is_help_content = false;
@@ -102,30 +104,30 @@ export default class FlyoutStore implements IFlyoutStore {
 
     initFlyout() {
         const workspace = window.Blockly.derivWorkspace;
-        const options = {
+
+        const flyoutWorkspaceOptions = new Blockly.Options({
             parentWorkspace: workspace,
-            RTL: workspace.RTL,
-            horizontalLayout: workspace.horizontalLayout,
-        };
+            rtl: workspace.RTL,
+            horizontalLayout: true,
+            theme: window?.Blockly?.Themes?.zelos_renderer,
+        });
 
         if (workspace.horizontalLayout) {
-            this.flyout = new window.Blockly.HorizontalFlyout(options);
+            this.flyout = new window.Blockly.HorizontalFlyout(flyoutWorkspaceOptions);
         } else {
-            this.flyout = new window.Blockly.VerticalFlyout(options);
+            this.flyout = new window.Blockly.VerticalFlyout(flyoutWorkspaceOptions);
         }
 
-        this.flyout.targetWorkspace_ = workspace;
+        this.flyout.targetWorkspace = workspace;
         this.flyout.workspace_.targetWorkspace = workspace;
 
         // A flyout connected to a workspace doesn't have its own current gesture.
-        this.flyout.workspace_.getGesture = this.flyout.targetWorkspace_.getGesture.bind(this.flyout.targetWorkspace_);
+        this.flyout.workspace_.getGesture = this.flyout.targetWorkspace.getGesture.bind(this.flyout.targetWorkspace_);
 
         // Get variables from the main workspace rather than the target workspace.
-        workspace.variableMap_ = this.flyout.targetWorkspace_.getVariableMap();
+        workspace.VariableMap = this.flyout.targetWorkspace.getVariableMap();
 
         this.flyout.workspace_.createPotentialVariableMap();
-
-        workspace.flyout_ = this.flyout;
     }
 
     /**
@@ -137,7 +139,6 @@ export default class FlyoutStore implements IFlyoutStore {
     initBlockWorkspace(el_block_workspace: HTMLElement, block_node: Node) {
         const workspace = window.Blockly.inject(el_block_workspace, this.options);
 
-        workspace.isFlyout = true;
         workspace.targetWorkspace = window.Blockly.derivWorkspace;
 
         const block = window.Blockly.Xml.domToBlock(block_node, workspace);
@@ -156,16 +157,15 @@ export default class FlyoutStore implements IFlyoutStore {
         const block_svg_root = block.getSvgRoot();
 
         this.block_listeners.push(
-            window.Blockly.bindEventWithChecks_(block_svg_root, 'mousedown', null, (event: Event) => {
+            window?.Blockly?.browserEvents?.conditionalBind(block_svg_root, 'mousedown', null, event => {
                 GTM.pushDataLayer({
                     event: 'dbot_drag_block',
                     block_type: block.type,
                 });
-                this.flyout.blockMouseDown_(block)(event);
+                this.flyout.blockMouseDown(block)(event as Blockly.Events.UiBase);
             }),
-
-            window.Blockly.bindEvent_(block_svg_root, 'mouseout', block, block.removeSelect),
-            window.Blockly.bindEvent_(block_svg_root, 'mouseover', block, block.addSelect)
+            window?.Blockly?.browserEvents?.bind(block_svg_root, 'mouseout', block, block.removeSelect),
+            window?.Blockly?.browserEvents?.bind(block_svg_root, 'mouseover', block, block.addSelect)
         );
 
         this.block_workspaces.push(workspace);
@@ -187,7 +187,7 @@ export default class FlyoutStore implements IFlyoutStore {
         const text_limit = 20;
         const processed_xml = xml_list;
 
-        this.block_listeners.forEach(listener => window.Blockly.unbindEvent_(listener));
+        this.block_listeners.forEach(listener => window.Blockly.browserEvents.unbind(listener));
         this.block_workspaces.forEach(workspace => workspace.dispose());
         this.block_listeners = [];
         this.block_workspaces = [];
@@ -243,6 +243,8 @@ export default class FlyoutStore implements IFlyoutStore {
             this.setSelectedCategory(null);
             this.flyout_content = [];
         }
+
+        window.Blockly.derivWorkspace.isFlyout_ = is_visible;
     }
 
     /**

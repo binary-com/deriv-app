@@ -7,6 +7,7 @@ import { localize } from '@deriv/translations';
 import { isCustomJournalMessage } from '../utils/journal-notifications';
 import { getStoredItemsByKey, getStoredItemsByUser, setStoredItemsByKey } from '../utils/session-storage';
 import { getSetting, storeSetting } from '../utils/settings';
+import { v4 as uuidv4 } from 'uuid';
 import RootStore from './root-store';
 
 type TExtra = {
@@ -170,7 +171,7 @@ export default class JournalStore {
 
         const date = formatDate(this.getServerTime());
         const time = formatDate(this.getServerTime(), 'HH:mm:ss [GMT]');
-        const unique_id = window.Blockly.utils.genUid();
+        const unique_id = uuidv4();
 
         this.unfiltered_messages.unshift({ date, time, message, message_type, className, unique_id, extra });
         this.unfiltered_messages = this.unfiltered_messages.slice(); // force array update

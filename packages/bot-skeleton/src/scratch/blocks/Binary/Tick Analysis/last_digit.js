@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../../utils';
 
 Blockly.Blocks.last_digit = {
     init() {
@@ -22,6 +23,14 @@ Blockly.Blocks.last_digit = {
             description: localize('This block gives you the last digit of the latest tick value.'),
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
 };
 
-Blockly.JavaScript.last_digit = () => ['Bot.getLastDigit()', Blockly.JavaScript.ORDER_ATOMIC];
+Blockly.JavaScript.javascriptGenerator.forBlock.last_digit = () => [
+    'Bot.getLastDigit()',
+    Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC,
+];

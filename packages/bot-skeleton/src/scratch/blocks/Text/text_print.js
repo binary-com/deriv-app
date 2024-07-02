@@ -1,5 +1,5 @@
 import { localize } from '@deriv/translations';
-import { emptyTextValidator } from '../../utils';
+import { emptyTextValidator, modifyContextMenu } from '../../utils';
 
 Blockly.Blocks.text_print = {
     init() {
@@ -23,6 +23,11 @@ Blockly.Blocks.text_print = {
             category: Blockly.Categories.Text,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     meta() {
         return {
             display_name: localize('Print'),
@@ -38,8 +43,13 @@ Blockly.Blocks.text_print = {
     },
 };
 
-Blockly.JavaScript.text_print = block => {
-    const msg = Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_NONE) || "''";
+Blockly.JavaScript.javascriptGenerator.forBlock.text_print = block => {
+    const msg =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'TEXT',
+            Blockly.JavaScript.javascriptGenerator.ORDER_NONE
+        ) || "''";
     const code = `window.alert(${msg});\n`;
     return code;
 };

@@ -1,5 +1,6 @@
 import { localize } from '@deriv/translations';
 import { config } from '../../../../constants/config';
+import { modifyContextMenu } from '../../../utils';
 
 Blockly.Blocks.read_details = {
     init() {
@@ -30,12 +31,17 @@ Blockly.Blocks.read_details = {
             description: localize('This block gives you information about your last contract.'),
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     restricted_parents: ['after_purchase'],
 };
 
-Blockly.JavaScript.read_details = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.read_details = block => {
     const detailIndex = block.getFieldValue('DETAIL_INDEX');
 
     const code = `Bot.readDetails(${detailIndex})`;
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC];
 };

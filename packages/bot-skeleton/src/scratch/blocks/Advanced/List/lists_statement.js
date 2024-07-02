@@ -19,6 +19,7 @@ Blockly.Blocks.lists_statement = {
                     name: 'VALUE',
                 },
             ],
+            inputsInline: true,
             colour: Blockly.Colours.Base.colour,
             colourSecondary: Blockly.Colours.Base.colourSecondary,
             colourTertiary: Blockly.Colours.Base.colourTertiary,
@@ -34,7 +35,7 @@ Blockly.Blocks.lists_statement = {
         };
     },
     onIconClick() {
-        if (this.workspace.options.readOnly || this.isInFlyout) {
+        if (this.workspace.options.readOnly || Blockly.derivWorkspace.isFlyout_) {
             return;
         }
 
@@ -44,11 +45,11 @@ Blockly.Blocks.lists_statement = {
         });
     },
     onchange(event) {
-        if (!this.workspace || this.isInFlyout || this.workspace.isDragging()) {
+        if (!this.workspace || Blockly.derivWorkspace.isFlyout_ || this.workspace.isDragging()) {
             return;
         }
 
-        if (event.type === Blockly.Events.END_DRAG) {
+        if (event.type === Blockly.Events.BLOCK_DRAG && !event.isStart) {
             const surround_parent = this.getSurroundParent();
 
             if (!surround_parent) {
@@ -83,7 +84,12 @@ Blockly.Blocks.lists_statement = {
     },
 };
 
-Blockly.JavaScript.lists_statement = block => {
-    const code = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC) || 'null';
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+Blockly.JavaScript.javascriptGenerator.forBlock.lists_statement = block => {
+    const code =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'VALUE',
+            Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC
+        ) || 'null';
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC];
 };

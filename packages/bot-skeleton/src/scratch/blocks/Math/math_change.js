@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../utils';
 
 Blockly.Blocks.math_change = {
     /**
@@ -58,13 +59,23 @@ Blockly.Blocks.math_change = {
             DELTA: null,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
 };
 
-Blockly.JavaScript.math_change = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.math_change = block => {
     const variable = block.getFieldValue('VAR');
     // eslint-disable-next-line no-underscore-dangle
-    const argument0 = Blockly.JavaScript.variableDB_.getName(variable, Blockly.Variables.NAME_TYPE);
-    const argument1 = Blockly.JavaScript.valueToCode(block, 'DELTA', Blockly.JavaScript.ORDER_ADDITION) || '0';
+    const argument0 = Blockly.JavaScript.variableDB_.getName(variable, Blockly.Variables.CATEGORY_NAME);
+    const argument1 =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'DELTA',
+            Blockly.JavaScript.javascriptGenerator.ORDER_ADDITION
+        ) || '0';
     const code = `${argument0} = (typeof ${argument0} === 'number' ? ${argument0} : 0) + ${argument1};`;
 
     return code;

@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../../../utils';
 
 Blockly.Blocks.epoch = {
     init() {
@@ -22,6 +23,14 @@ Blockly.Blocks.epoch = {
             description: localize('This block returns the number of seconds since January 1st, 1970.'),
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
 };
 
-Blockly.JavaScript.epoch = () => ['Bot.getTime()', Blockly.JavaScript.ORDER_ATOMIC];
+Blockly.JavaScript.javascriptGenerator.forBlock.epoch = () => [
+    'Bot.getTime()',
+    Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC,
+];

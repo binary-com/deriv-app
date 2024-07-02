@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../../utils';
 
 Blockly.Blocks.payout = {
     init() {
@@ -31,14 +32,19 @@ Blockly.Blocks.payout = {
             ),
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     onchange: Blockly.Blocks.purchase.onchange,
     populatePurchaseList: Blockly.Blocks.purchase.populatePurchaseList,
     enforceLimitations: Blockly.Blocks.purchase.enforceLimitations,
 };
 
-Blockly.JavaScript.payout = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.payout = block => {
     const purchaseList = block.getFieldValue('PURCHASE_LIST');
 
     const code = `Bot.getPayout('${purchaseList}')`;
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC];
 };

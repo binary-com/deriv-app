@@ -8,7 +8,7 @@ Blockly.Blocks.trade_definition_restartonerror = {
             }),
             args0: [
                 {
-                    type: 'field_image_checkbox',
+                    type: 'field_checkbox',
                     name: 'RESTARTONERROR',
                     checked: true,
                 },
@@ -23,9 +23,18 @@ Blockly.Blocks.trade_definition_restartonerror = {
         this.setNextStatement(false);
         this.setMovable(false);
         this.setDeletable(false);
+        this.inputList.forEach(input_list => {
+            input_list.fieldRow.forEach(fieldRow => {
+                setTimeout(() => {
+                    if (fieldRow?.borderRect_) {
+                        Blockly.utils.dom.addClass(fieldRow?.borderRect_, 'blocklyCheckbox');
+                    }
+                }, 0);
+            });
+        });
     },
     onchange(/* event */) {
-        if (!this.workspace || this.isInFlyout || this.workspace.isDragging()) {
+        if (!this.workspace || Blockly.derivWorkspace.isFlyout_ || this.workspace.isDragging()) {
             return;
         }
 
@@ -34,4 +43,5 @@ Blockly.Blocks.trade_definition_restartonerror = {
     enforceLimitations: Blockly.Blocks.trade_definition_market.enforceLimitations,
     required_inputs: ['RESTARTONERROR'],
 };
-Blockly.JavaScript.trade_definition_restartonerror = () => {};
+
+Blockly.JavaScript.javascriptGenerator.forBlock.trade_definition_restartonerror = () => {};

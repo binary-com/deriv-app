@@ -15,8 +15,11 @@ const mockTextToDom = jest.fn(() => {
 });
 
 window.Blockly = {
-    Xml: {
-        textToDom: mockTextToDom,
+    utils: {
+        Xml: {
+            textToDom: mockTextToDom,
+        },
+        xml: { textToDom: jest.fn() },
     },
     derivWorkspace: {
         options: {},
@@ -28,6 +31,7 @@ window.Blockly = {
             createPotentialVariableMap: jest.fn(),
         },
     })),
+    Options: jest.fn(),
 };
 
 describe('WorkspaceWrapper', () => {

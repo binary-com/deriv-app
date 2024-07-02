@@ -23,7 +23,7 @@ Blockly.Blocks.trade_definition_candleinterval = {
         this.setDeletable(false);
     },
     onchange(/* event */) {
-        if (!this.workspace || this.isInFlyout || this.workspace.isDragging()) {
+        if (!this.workspace || Blockly.derivWorkspace.isFlyout_ || this.workspace.isDragging()) {
             return;
         }
 
@@ -31,4 +31,4 @@ Blockly.Blocks.trade_definition_candleinterval = {
     },
     enforceLimitations: Blockly.Blocks.trade_definition_market.enforceLimitations,
 };
-Blockly.JavaScript.trade_definition_candleinterval = () => {};
+Blockly.JavaScript.javascriptGenerator.forBlock.trade_definition_candleinterval = () => {};

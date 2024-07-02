@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../../utils';
 
 Blockly.Blocks.tick_analysis = {
     init() {
@@ -11,7 +12,7 @@ Blockly.Blocks.tick_analysis = {
                 {
                     type: 'field_label',
                     text: localize('The content of this block is called on every tick'),
-                    class: 'blocklyTextRootBlockHeader',
+                    class: 'blocklyTextTickAnalysis',
                 },
                 {
                     type: 'input_dummy',
@@ -33,14 +34,19 @@ Blockly.Blocks.tick_analysis = {
         return {
             display_name: localize('Run on every tick'),
             description: localize(
-                'The content of this block is called on every tick. Place this block outside of any root block.'
+                'check The content of this block is called on every tick. Place this block outside of any root block.'
             ),
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
 };
 
-Blockly.JavaScript.tick_analysis = block => {
-    const stack = Blockly.JavaScript.statementToCode(block, 'TICKANALYSIS_STACK') || '';
+Blockly.JavaScript.javascriptGenerator.forBlock.tick_analysis = block => {
+    const stack = Blockly.JavaScript.javascriptGenerator.statementToCode(block, 'TICKANALYSIS_STACK') || '';
     const code = `
     BinaryBotPrivateTickAnalysisList.push(function BinaryBotPrivateTickAnalysis() {
         ${stack}

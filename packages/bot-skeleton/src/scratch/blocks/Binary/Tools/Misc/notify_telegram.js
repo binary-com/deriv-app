@@ -1,5 +1,5 @@
 import { localize } from '@deriv/translations';
-import { emptyTextValidator } from '../../../../utils';
+import { emptyTextValidator , modifyContextMenu } from '../../../../utils';
 
 Blockly.Blocks.notify_telegram = {
     init() {
@@ -7,15 +7,7 @@ Blockly.Blocks.notify_telegram = {
     },
     definition() {
         return {
-            message0: localize(
-                'Notify Telegram {{ dummy }} Access Token: {{ input_access_token }} Chat ID: {{ input_chat_id }} Message: {{ input_message }}',
-                {
-                    dummy: '%1',
-                    input_access_token: '%2',
-                    input_chat_id: '%3',
-                    input_message: '%4',
-                }
-            ),
+            message0: localize('Notify Telegram %1 Access Token: %2 Chat ID: %3 Message: %4'),
             args0: [
                 {
                     type: 'input_dummy',
@@ -33,6 +25,7 @@ Blockly.Blocks.notify_telegram = {
                     name: 'TELEGRAM_MESSAGE',
                 },
             ],
+            inputsInline: true,
             colour: Blockly.Colours.Special3.colour,
             colourSecondary: Blockly.Colours.Special3.colourSecondary,
             colourTertiary: Blockly.Colours.Special3.colourTertiary,
@@ -41,6 +34,11 @@ Blockly.Blocks.notify_telegram = {
             tooltip: localize('Sends a message to Telegram'),
             category: Blockly.Categories.Miscellaneous,
         };
+    },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
     },
     meta() {
         return {
@@ -57,11 +55,25 @@ Blockly.Blocks.notify_telegram = {
     },
 };
 
-Blockly.JavaScript.notify_telegram = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.notify_telegram = block => {
     const access_token =
-        Blockly.JavaScript.valueToCode(block, 'TELEGRAM_ACCESS_TOKEN', Blockly.JavaScript.ORDER_ATOMIC) || '';
-    const chat_id = Blockly.JavaScript.valueToCode(block, 'TELEGRAM_CHAT_ID', Blockly.JavaScript.ORDER_ATOMIC) || '';
-    const message = Blockly.JavaScript.valueToCode(block, 'TELEGRAM_MESSAGE', Blockly.JavaScript.ORDER_ATOMIC) || '';
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'TELEGRAM_ACCESS_TOKEN',
+            Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC
+        ) || '';
+    const chat_id =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'TELEGRAM_CHAT_ID',
+            Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC
+        ) || '';
+    const message =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'TELEGRAM_MESSAGE',
+            Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC
+        ) || '';
 
     if (!access_token || !chat_id || !message) {
         return '';

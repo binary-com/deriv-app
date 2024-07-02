@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../utils';
 
 Blockly.Blocks.math_on_list = {
     init() {
@@ -40,6 +41,11 @@ Blockly.Blocks.math_on_list = {
             category: Blockly.Categories.Mathematical,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     meta() {
         return {
             display_name: localize('Aggregate operations'),
@@ -70,13 +76,13 @@ Blockly.Blocks.math_on_list = {
 };
 
 /* eslint-disable no-underscore-dangle */
-Blockly.JavaScript.math_on_list = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.math_on_list = block => {
     const operation = block.getFieldValue('OP');
 
     let code, list;
 
     if (operation === 'SUM') {
-        const functionName = Blockly.JavaScript.provideFunction_('mathMean', [
+        const functionName = Blockly.JavaScript.javascriptGenerator.provideFunction_('mathMean', [
             `function ${Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_}(myList) {
                 var final_list = [];
                 return recursiveList(myList, final_list).reduce(function(x, y) {
@@ -84,28 +90,43 @@ Blockly.JavaScript.math_on_list = block => {
                 },0);
             }`,
         ]);
-        list = Blockly.JavaScript.valueToCode(block, 'LIST', Blockly.JavaScript.ORDER_NONE) || '[]';
+        list =
+            Blockly.JavaScript.javascriptGenerator.valueToCode(
+                block,
+                'LIST',
+                Blockly.JavaScript.javascriptGenerator.ORDER_NONE
+            ) || '[]';
         code = `${functionName}((${list} || [0]))`;
     } else if (operation === 'MIN') {
-        const functionName = Blockly.JavaScript.provideFunction_('mathMean', [
+        const functionName = Blockly.JavaScript.javascriptGenerator.provideFunction_('mathMean', [
             `function ${Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_}(myList) {
                 var final_list = [];
                 return Math.min.apply(null, (recursiveList(myList, final_list) || [0]));
             }`,
         ]);
-        list = Blockly.JavaScript.valueToCode(block, 'LIST', Blockly.JavaScript.ORDER_COMMA) || '[]';
+        list =
+            Blockly.JavaScript.javascriptGenerator.valueToCode(
+                block,
+                'LIST',
+                Blockly.JavaScript.javascriptGenerator.ORDER_COMMA
+            ) || '[]';
         code = `${functionName}((${list} || [0]))`;
     } else if (operation === 'MAX') {
-        const functionName = Blockly.JavaScript.provideFunction_('mathMean', [
+        const functionName = Blockly.JavaScript.javascriptGenerator.provideFunction_('mathMean', [
             `function ${Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_}(myList) {
                 var final_list = [];
                 return Math.max.apply(null, (recursiveList(myList, final_list) || [0]));
             }`,
         ]);
-        list = Blockly.JavaScript.valueToCode(block, 'LIST', Blockly.JavaScript.ORDER_COMMA) || '[]';
+        list =
+            Blockly.JavaScript.javascriptGenerator.valueToCode(
+                block,
+                'LIST',
+                Blockly.JavaScript.javascriptGenerator.ORDER_COMMA
+            ) || '[]';
         code = `${functionName}((${list} || [0]))`;
     } else if (operation === 'AVERAGE') {
-        const functionName = Blockly.JavaScript.provideFunction_('mathMean', [
+        const functionName = Blockly.JavaScript.javascriptGenerator.provideFunction_('mathMean', [
             `function ${Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_}(myList) {
                 var final_list = [];
                 return recursiveList(myList, final_list).reduce(function(x, y) {
@@ -114,10 +135,15 @@ Blockly.JavaScript.math_on_list = block => {
             }`,
         ]);
 
-        list = Blockly.JavaScript.valueToCode(block, 'LIST', Blockly.JavaScript.ORDER_NONE) || '[]';
+        list =
+            Blockly.JavaScript.javascriptGenerator.valueToCode(
+                block,
+                'LIST',
+                Blockly.JavaScript.javascriptGenerator.ORDER_NONE
+            ) || '[]';
         code = `${functionName}((${list} || [0]))`;
     } else if (operation === 'MEDIAN') {
-        const functionName = Blockly.JavaScript.provideFunction_('mathMedian', [
+        const functionName = Blockly.JavaScript.javascriptGenerator.provideFunction_('mathMedian', [
             `
             Array.prototype.swap = function (x,y) {
                 var b = this[x];
@@ -175,10 +201,15 @@ Blockly.JavaScript.math_on_list = block => {
             }`,
         ]);
 
-        list = Blockly.JavaScript.valueToCode(block, 'LIST', Blockly.JavaScript.ORDER_NONE) || '[]';
+        list =
+            Blockly.JavaScript.javascriptGenerator.valueToCode(
+                block,
+                'LIST',
+                Blockly.JavaScript.javascriptGenerator.ORDER_NONE
+            ) || '[]';
         code = `${functionName}((${list} || [0]))`;
     } else if (operation === 'MODE') {
-        const functionName = Blockly.JavaScript.provideFunction_('mathModes', [
+        const functionName = Blockly.JavaScript.javascriptGenerator.provideFunction_('mathModes', [
             `
             function calculateMathMode(values){
                 var modes = [];
@@ -220,10 +251,15 @@ Blockly.JavaScript.math_on_list = block => {
             }`,
         ]);
 
-        list = Blockly.JavaScript.valueToCode(block, 'LIST', Blockly.JavaScript.ORDER_NONE) || '[]';
+        list =
+            Blockly.JavaScript.javascriptGenerator.valueToCode(
+                block,
+                'LIST',
+                Blockly.JavaScript.javascriptGenerator.ORDER_NONE
+            ) || '[]';
         code = `${functionName}((${list} || [0]))`;
     } else if (operation === 'ANTIMODE') {
-        const functionName = Blockly.JavaScript.provideFunction_('mathAntiMode', [
+        const functionName = Blockly.JavaScript.javascriptGenerator.provideFunction_('mathAntiMode', [
             `
             function calculateMathAntiMode(values){
                 var antiMode = [];
@@ -269,10 +305,15 @@ Blockly.JavaScript.math_on_list = block => {
             }`,
         ]);
 
-        list = Blockly.JavaScript.valueToCode(block, 'LIST', Blockly.JavaScript.ORDER_NONE) || '[]';
+        list =
+            Blockly.JavaScript.javascriptGenerator.valueToCode(
+                block,
+                'LIST',
+                Blockly.JavaScript.javascriptGenerator.ORDER_NONE
+            ) || '[]';
         code = `${functionName}((${list} || [0]))`;
     } else if (operation === 'STD_DEV') {
-        const functionName = Blockly.JavaScript.provideFunction_('mathStandardDeviation', [
+        const functionName = Blockly.JavaScript.javascriptGenerator.provideFunction_('mathStandardDeviation', [
             `
             function calculateMathStandardDeviation(numbers){
                 var n = numbers.length;
@@ -298,10 +339,15 @@ Blockly.JavaScript.math_on_list = block => {
             }`,
         ]);
 
-        list = Blockly.JavaScript.valueToCode(block, 'LIST', Blockly.JavaScript.ORDER_NONE) || '[]';
+        list =
+            Blockly.JavaScript.javascriptGenerator.valueToCode(
+                block,
+                'LIST',
+                Blockly.JavaScript.javascriptGenerator.ORDER_NONE
+            ) || '[]';
         code = `${functionName}((${list} || [0]))`;
     } else if (operation === 'RANDOM') {
-        const functionName = Blockly.JavaScript.provideFunction_('mathRandomList', [
+        const functionName = Blockly.JavaScript.javascriptGenerator.provideFunction_('mathRandomList', [
             `function ${Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_}(list) {
                 var final_list = [];
                 var final_list = recursiveList(list, final_list);
@@ -310,9 +356,14 @@ Blockly.JavaScript.math_on_list = block => {
             }`,
         ]);
 
-        list = Blockly.JavaScript.valueToCode(block, 'LIST', Blockly.JavaScript.ORDER_NONE) || '[]';
+        list =
+            Blockly.JavaScript.javascriptGenerator.valueToCode(
+                block,
+                'LIST',
+                Blockly.JavaScript.javascriptGenerator.ORDER_NONE
+            ) || '[]';
         code = `${functionName}((${list} || [0]))`;
     }
 
-    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_FUNCTION_CALL];
 };

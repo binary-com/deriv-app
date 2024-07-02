@@ -123,6 +123,7 @@ export default class AppStore {
     onMount = () => {
         const { blockly_store, run_panel } = this.root_store;
         const { client, ui, traders_hub } = this.core;
+        const { is_dark_mode_on } = ui;
         this.showDigitalOptionsMaltainvestError();
 
         let timer_counter = 1;
@@ -140,7 +141,13 @@ export default class AppStore {
         }, 10000);
 
         blockly_store.setLoading(true);
-        DBot.initWorkspace(__webpack_public_path__, this.dbot_store, this.api_helpers_store, ui.is_mobile).then(() => {
+        DBot.initWorkspace(
+            __webpack_public_path__,
+            this.dbot_store,
+            this.api_helpers_store,
+            ui.is_mobile,
+            is_dark_mode_on
+        ).then(() => {
             blockly_store.setContainerSize();
             blockly_store.setLoading(false);
         });
@@ -266,7 +273,7 @@ export default class AppStore {
                                 .filter(block => block.type === 'trade_definition_market')
                                 .forEach(block => {
                                     runIrreversibleEvents(() => {
-                                        const fake_create_event = new Blockly.Events.Create(block);
+                                        const fake_create_event = new Blockly.Events.BlockCreate(this);
                                         Blockly.Events.fire(fake_create_event);
                                     });
                                 });
@@ -336,7 +343,7 @@ export default class AppStore {
             );
 
             if (is_click_outside_blockly) {
-                Blockly?.hideChaff(/* allowToolbox */ false);
+                window.Blockly?.hideChaff(/* allowToolbox */ false);
             }
         }
     };

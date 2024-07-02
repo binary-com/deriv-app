@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../utils';
 
 Blockly.Blocks.logic_negate = {
     init() {
@@ -13,6 +14,7 @@ Blockly.Blocks.logic_negate = {
                     name: 'BOOL',
                 },
             ],
+            inputsInline: true,
             output: 'Boolean',
             outputShape: Blockly.OUTPUT_SHAPE_ROUND,
             colour: Blockly.Colours.Base.colour,
@@ -21,6 +23,11 @@ Blockly.Blocks.logic_negate = {
             tooltip: localize('Converts a given True or False to the opposite value'),
             category: Blockly.Categories.Logic,
         };
+    },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
     },
     meta() {
         return {
@@ -35,9 +42,9 @@ Blockly.Blocks.logic_negate = {
     },
 };
 
-Blockly.JavaScript.logic_negate = block => {
-    const order = Blockly.JavaScript.ORDER_LOGICAL_NOT;
-    const argument0 = Blockly.JavaScript.valueToCode(block, 'BOOL', order) || 'true';
+Blockly.JavaScript.javascriptGenerator.forBlock.logic_negate = block => {
+    const order = Blockly.JavaScript.javascriptGenerator.ORDER_LOGICAL_NOT;
+    const argument0 = Blockly.JavaScript.javascriptGenerator.valueToCode(block, 'BOOL', order) || 'true';
 
     const code = `!${argument0}`;
     return [code, order];

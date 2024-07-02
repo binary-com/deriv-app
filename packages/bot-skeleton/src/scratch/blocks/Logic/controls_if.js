@@ -1,5 +1,6 @@
 import { localize } from '@deriv/translations';
 import { plusIconDark, minusIconDark } from '../images';
+import { modifyContextMenu } from '../../utils';
 
 Blockly.Blocks.controls_if = {
     init() {
@@ -8,7 +9,6 @@ Blockly.Blocks.controls_if = {
         this.else_statement_connection = null;
         this.else_if_count = 0;
         this.else_count = 0;
-
         this.jsonInit(this.definition());
         this.updateShape();
     },
@@ -16,6 +16,7 @@ Blockly.Blocks.controls_if = {
         return {
             message0: localize('if {{ condition }} then', { condition: '%1' }),
             message1: '%1',
+            message2: '%1',
             args0: [
                 {
                     type: 'input_value',
@@ -25,10 +26,20 @@ Blockly.Blocks.controls_if = {
             ],
             args1: [
                 {
+                    type: 'field_image',
+                    src: ' ', // this is here to add extra padding
+                    width: 150,
+                    height: 1,
+                },
+            ],
+            args2: [
+                {
                     type: 'input_statement',
                     name: 'DO0',
                 },
             ],
+            inputsInline: true,
+            outputShape: Blockly.OUTPUT_SHAPE_ROUND,
             colour: Blockly.Colours.Base.colour,
             colourSecondary: Blockly.Colours.Base.colourSecondary,
             colourTertiary: Blockly.Colours.Base.colourTertiary,
@@ -37,6 +48,11 @@ Blockly.Blocks.controls_if = {
             tooltip: localize('Conditional block'),
             category: Blockly.Categories.Logic,
         };
+    },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
     },
     meta() {
         return {
@@ -126,13 +142,13 @@ Blockly.Blocks.controls_if = {
 
             setTimeout(() => {
                 Blockly.Events.setGroup(group);
-                this.bumpNeighbours_();
+                this.bumpNeighbours();
                 Blockly.Events.setGroup(false);
             }, Blockly.BUMP_DELAY);
         }
 
         if (this.rendered) {
-            this.render();
+            this.renderEfficiently();
         }
 
         Blockly.Events.setGroup(false);
@@ -209,7 +225,9 @@ Blockly.Blocks.controls_if = {
         );
 
         this.initSvg();
-        this.render();
+        // kept this commented to fix backward compatibility issue
+        // need to fix this for mutliplier block
+        this.queueRender();
     },
     storeConnections(arg = 0) {
         this.value_connections = [null];
@@ -291,19 +309,24 @@ Blockly.Blocks.controls_if = {
     },
 };
 
-Blockly.JavaScript.controls_if = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.controls_if = block => {
     // If/elseif/else condition.
     let n = 0;
     let code = '';
 
     do {
-        const condition = Blockly.JavaScript.valueToCode(block, `IF${n}`, Blockly.JavaScript.ORDER_NONE) || 'false';
+        const condition =
+            Blockly.JavaScript.javascriptGenerator.valueToCode(
+                block,
+                `IF${n}`,
+                Blockly.JavaScript.javascriptGenerator.ORDER_NONE
+            ) || 'false';
 
         // i.e. (else)? if { // code }
         const keyword = n > 0 ? 'else if' : 'if';
         code += `
         ${keyword} (${condition}) {
-            ${Blockly.JavaScript.statementToCode(block, `DO${n}`)}
+            ${Blockly.JavaScript.javascriptGenerator.statementToCode(block, `DO${n}`)}
         }`;
         n++;
     } while (block.getInput(`IF${n}`));
@@ -311,7 +334,7 @@ Blockly.JavaScript.controls_if = block => {
     if (block.getInput('ELSE')) {
         code += `
         else {
-            ${Blockly.JavaScript.statementToCode(block, 'ELSE')}
+            ${Blockly.JavaScript.javascriptGenerator.statementToCode(block, 'ELSE')}
         }`;
     }
 

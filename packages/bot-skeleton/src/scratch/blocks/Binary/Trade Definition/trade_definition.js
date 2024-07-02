@@ -1,7 +1,7 @@
 import { localize } from '@deriv/translations';
 import { defineContract } from '../../images';
 import DBotStore from '../../../dbot-store';
-import { runIrreversibleEvents } from '../../../utils';
+import { runIrreversibleEvents, removeExtraInput, modifyContextMenu } from '../../../utils';
 import { removeErrorHandlingEventListener, initErrorHandlingListener } from '../../../../utils';
 import { config } from '../../../../constants/config';
 
@@ -19,6 +19,7 @@ Blockly.Blocks.trade_definition = {
             message3: '%1',
             message4: '%1 %2 %3',
             message5: '%1',
+            message6: '%1',
             args0: [
                 {
                     type: 'field_image',
@@ -45,7 +46,7 @@ Blockly.Blocks.trade_definition = {
             args2: [
                 {
                     type: 'field_image',
-                    src: '', // this is here to add extra padding
+                    src: ' ', // this is here to add extra padding
                     width: 4,
                     height: 25,
                 },
@@ -68,7 +69,7 @@ Blockly.Blocks.trade_definition = {
             args4: [
                 {
                     type: 'field_image',
-                    src: '', // this is here to add extra padding
+                    src: ' ', // this is here to add extra padding
                     width: 4,
                     height: 25,
                 },
@@ -87,6 +88,14 @@ Blockly.Blocks.trade_definition = {
                     name: 'SUBMARKET',
                 },
             ],
+            args6: [
+                {
+                    type: 'field_image',
+                    src: ' ', // this is here to add extra padding
+                    width: 380,
+                    height: 10,
+                },
+            ],
             colour: Blockly.Colours.RootBlock.colour,
             colourSecondary: Blockly.Colours.RootBlock.colourSecondary,
             colourTertiary: Blockly.Colours.RootBlock.colourTertiary,
@@ -101,19 +110,29 @@ Blockly.Blocks.trade_definition = {
             key_words: localize('market, trade type, contract type'),
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     onchange(event) {
-        if (event.type === 'ui' && !this.isInit) {
+        // modifyContextMenu(event, 'trade_definition', this);
+
+        if (event.type === Blockly.Events.SELECTED && !this.isInit) {
             this.isInit = true;
             initErrorHandlingListener('keydown');
-        } else if (Blockly.selected === null && this.isInit) {
+        } else if (Blockly.getSelected() === null && this.isInit) {
             this.isInit = false;
             removeErrorHandlingEventListener('keydown');
         }
-        if (!this.workspace || this.workspace.isDragging() || this.isInFlyout) {
+        if (!this.workspace || this.workspace.isDragging() || Blockly.derivWorkspace.isFlyout_) {
             return;
         }
 
-        if (event.type === Blockly.Events.BLOCK_CHANGE || event.type === Blockly.Events.END_DRAG) {
+        if (
+            event.type === Blockly.Events.BLOCK_CHANGE ||
+            (event.type === Blockly.Events.BLOCK_DRAG && !event.isStart)
+        ) {
             // Enforce only trade_definition_<type> blocks in TRADE_OPTIONS statement.
             const blocks_in_trade_options = this.getBlocksInStatement('TRADE_OPTIONS');
 
@@ -131,10 +150,11 @@ Blockly.Blocks.trade_definition = {
                 });
             }
         }
+        removeExtraInput(this);
     },
 };
 
-Blockly.JavaScript.trade_definition = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.trade_definition = block => {
     const { client } = DBotStore.instance;
 
     if (!client || !client.is_logged_in) {
@@ -163,8 +183,8 @@ Blockly.JavaScript.trade_definition = block => {
             ? opposites[trade_type.toUpperCase()].map(opposite => Object.keys(opposite)[0])
             : [contract_type];
 
-    const initialization = Blockly.JavaScript.statementToCode(block, 'INITIALIZATION');
-    const trade_options_statement = Blockly.JavaScript.statementToCode(block, 'SUBMARKET');
+    const initialization = Blockly.JavaScript.javascriptGenerator.statementToCode(block, 'INITIALIZATION');
+    const trade_options_statement = Blockly.JavaScript.javascriptGenerator.statementToCode(block, 'SUBMARKET');
 
     const code = `  
     BinaryBotPrivateInit = function BinaryBotPrivateInit() {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
-import { api_base, ApiHelpers, ServerTime, setColors } from '@deriv/bot-skeleton';
+import { api_base, ApiHelpers, ServerTime } from '@deriv/bot-skeleton';
 import { Loading } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import TransactionDetailsModal from 'Components/transaction-details';
@@ -21,11 +21,7 @@ import '../components/bot-notification/bot-notification.scss';
 const AppContent = observer(() => {
     const [is_loading, setIsLoading] = React.useState(true);
     const RootStore = useStore();
-    const {
-        common,
-        client,
-        ui: { is_dark_mode_on },
-    } = RootStore;
+    const { common, client } = RootStore;
     const DBotStores = useDBotStore();
     const { app, transactions } = DBotStores;
     const { showDigitalOptionsMaltainvestError } = app;
@@ -75,11 +71,6 @@ const AppContent = observer(() => {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    //Do not remove this is for the bot-skeleton package to load blockly with the theme
-    React.useEffect(() => {
-        setColors(is_dark_mode_on);
-    }, [is_dark_mode_on]);
 
     React.useEffect(() => {
         showDigitalOptionsMaltainvestError(client, common);

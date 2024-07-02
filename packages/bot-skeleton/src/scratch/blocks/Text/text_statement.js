@@ -1,6 +1,6 @@
 import { localize } from '@deriv/translations';
 import { minusIconDark } from '../images';
-import { runIrreversibleEvents } from '../../utils';
+import { runIrreversibleEvents, modifyContextMenu } from '../../utils';
 
 Blockly.Blocks.text_statement = {
     required_parent_type: 'text_join',
@@ -27,6 +27,11 @@ Blockly.Blocks.text_statement = {
             category: Blockly.Categories.Text,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     meta() {
         return {
             display_name: localize('Text Statement'),
@@ -34,7 +39,7 @@ Blockly.Blocks.text_statement = {
         };
     },
     onchange(event) {
-        if (!this.workspace || this.isInFlyout || this.workspace.isDragging()) {
+        if (!this.workspace || Blockly.derivWorkspace.isFlyout_ || this.workspace.isDragging()) {
             return;
         }
 
@@ -47,7 +52,7 @@ Blockly.Blocks.text_statement = {
             }
         }
 
-        if (event.type === Blockly.Events.END_DRAG) {
+        if (event.type === Blockly.Events.BLOCK_DRAG && !event.isStart) {
             const stack_blocks = Blockly.getMainWorkspace().getBlockById(event.blockId);
 
             if (this.required_parent_id && (!surround_parent || surround_parent.id !== this.required_parent_id)) {
@@ -73,7 +78,11 @@ Blockly.Blocks.text_statement = {
     onIconClick: Blockly.Blocks.lists_statement.onIconClick,
 };
 
-Blockly.JavaScript.text_statement = block => {
-    const code = `String(${Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_ATOMIC)})`;
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+Blockly.JavaScript.javascriptGenerator.forBlock.text_statement = block => {
+    const code = `String(${Blockly.JavaScript.javascriptGenerator.valueToCode(
+        block,
+        'TEXT',
+        Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC
+    )})`;
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC];
 };

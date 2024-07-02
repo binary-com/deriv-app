@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../utils';
 
 Blockly.Blocks.math_constrain = {
     init() {
@@ -28,6 +29,7 @@ Blockly.Blocks.math_constrain = {
                     check: 'Number',
                 },
             ],
+            inputsInline: true,
             output: 'Number',
             outputShape: Blockly.OUTPUT_SHAPE_ROUND,
             colour: Blockly.Colours.Base.colour,
@@ -50,13 +52,33 @@ Blockly.Blocks.math_constrain = {
             HIGH: null,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
 };
 
-Blockly.JavaScript.math_constrain = block => {
-    const argument0 = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_COMMA) || '0';
-    const argument1 = Blockly.JavaScript.valueToCode(block, 'LOW', Blockly.JavaScript.ORDER_COMMA) || '0';
-    const argument2 = Blockly.JavaScript.valueToCode(block, 'HIGH', Blockly.JavaScript.ORDER_COMMA) || '0';
+Blockly.JavaScript.javascriptGenerator.forBlock.math_constrain = block => {
+    const argument0 =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'VALUE',
+            Blockly.JavaScript.javascriptGenerator.ORDER_COMMA
+        ) || '0';
+    const argument1 =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'LOW',
+            Blockly.JavaScript.javascriptGenerator.ORDER_COMMA
+        ) || '0';
+    const argument2 =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'HIGH',
+            Blockly.JavaScript.javascriptGenerator.ORDER_COMMA
+        ) || '0';
 
     const code = `Math.min(Math.max(${argument0}, ${argument1}), ${argument2})`;
-    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_FUNCTION_CALL];
 };

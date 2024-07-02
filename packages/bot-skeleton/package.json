@@ -7,7 +7,7 @@
     "scripts": {
         "start": "npm run test && npm run serve",
         "build": "shx rm -rf ./dist/ && shx mkdir -p ./dist/media && npm run build:copy",
-        "build:copy": "shx cp -r ../../node_modules/scratch-blocks/media/. ./dist/media/ &&  shx cp -r ./src/assets/images/. ./dist/media/ &&  shx cp -r ./src/scratch/sounds/. ./dist/media/",
+        "build:copy": "shx cp -r ../../node_modules/blockly/media/. ./dist/media/ && shx cp -r ./src/assets/images/. ./dist/media/ && shx cp -r ./src/scratch/sounds/. ./dist/media/",
         "build:travis": "echo \"No build:travis specified\"",
         "test:eslint": "eslint \"./src/**/*.?(js|jsx|ts|tsx)\"",
         "test:stylelint": "echo \"No test:stylelint specified\"",
@@ -35,7 +35,7 @@
         "typescript": "^4.6.3"
     },
     "dependencies": {
-        "blockly": "3.20191014.4",
+        "blockly": "^10.4.3",
         "@deriv/deriv-api": "^1.0.15",
         "@deriv/indicators": "^1.0.0",
         "@deriv/js-interpreter": "^3.0.0",
@@ -50,7 +50,6 @@
         "mobx-react": "^7.5.1",
         "redux": "^4.0.1",
         "redux-thunk": "^2.2.0",
-        "scratch-blocks": "^1.0.7",
         "shx": "^0.3.2"
     }
 }

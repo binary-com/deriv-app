@@ -19,12 +19,10 @@ Blockly.Blocks.lists_setIndex = {
         this.appendDummyInput('AT');
         this.appendValueInput('TO').appendField(localize('as'));
 
-        // eslint-disable-next-line no-underscore-dangle
-        this.setColourFromRawValues_(
-            Blockly.Colours.Base.colour,
-            Blockly.Colours.Base.colourSecondary,
-            Blockly.Colours.Base.colourTertiary
-        );
+        const block_color =
+            Blockly.Colours.Base.colour || Blockly.Colours.Base.colourSecondary || Blockly.Colours.Base.colourTertiary;
+        this.setColour(block_color);
+
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setTooltip(
@@ -76,16 +74,27 @@ Blockly.Blocks.lists_setIndex = {
         this.moveInputBefore('AT', 'TO');
         this.getInput('AT').appendField(menu, 'WHERE');
         this.initSvg();
-        this.render(false);
+        // kept this commented to fix backward compatibility issue
+        //this.render(false);
     },
 };
 
-Blockly.JavaScript.lists_setIndex = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.lists_setIndex = block => {
     const mode = block.getFieldValue('MODE') || 'SET';
     const where = block.getFieldValue('WHERE') || 'FIRST';
-    const value = Blockly.JavaScript.valueToCode(block, 'TO', Blockly.JavaScript.ORDER_ASSIGNMENT) || 'null';
+    const value =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'TO',
+            Blockly.JavaScript.javascriptGenerator.ORDER_ASSIGNMENT
+        ) || 'null';
 
-    let list = Blockly.JavaScript.valueToCode(block, 'LIST', Blockly.JavaScript.ORDER_MEMBER) || '[]';
+    let list =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'LIST',
+            Blockly.JavaScript.javascriptGenerator.ORDER_MEMBER
+        ) || '[]';
 
     const cacheList = () => {
         if (list.match(/^\w+$/)) {
@@ -93,7 +102,7 @@ Blockly.JavaScript.lists_setIndex = block => {
         }
 
         // eslint-disable-next-line no-underscore-dangle
-        const listVar = Blockly.JavaScript.variableDB_.getDistinctName('tmpList', Blockly.Variables.NAME_TYPE);
+        const listVar = Blockly.JavaScript.variableDB_.getDistinctName('tmpList', Blockly.Variables.CATEGORY_NAME);
         const code = `var ${listVar} = ${list};\n`;
 
         list = listVar;
@@ -116,14 +125,20 @@ Blockly.JavaScript.lists_setIndex = block => {
             code = `${list}.push(${value});\n`;
         }
     } else if (where === 'FROM_START') {
-        const at = Blockly.JavaScript.getAdjusted(block, 'AT');
+        const at = Blockly.JavaScript.javascriptGenerator.getAdjusted(block, 'AT');
         if (mode === 'SET') {
             code = `${list}[${at}] = ${value};\n`;
         } else if (mode === 'INSERT') {
             code = `${list}.splice(${at}, 0, ${value});\n`;
         }
     } else if (where === 'FROM_END') {
-        const at = Blockly.JavaScript.getAdjusted(block, 'AT', 1, false, Blockly.JavaScript.ORDER_SUBTRACTION);
+        const at = Blockly.JavaScript.javascriptGenerator.getAdjusted(
+            block,
+            'AT',
+            1,
+            false,
+            Blockly.JavaScript.javascriptGenerator.ORDER_SUBTRACTION
+        );
         code = cacheList();
         if (mode === 'SET') {
             code = `${list}[${list}.length - ${at}] = ${value};\n`;
@@ -134,7 +149,7 @@ Blockly.JavaScript.lists_setIndex = block => {
         code = cacheList();
 
         // eslint-disable-next-line no-underscore-dangle
-        const xVar = Blockly.JavaScript.variableDB_.getDistinctName('tmpX', Blockly.Variables.NAME_TYPE);
+        const xVar = Blockly.JavaScript.variableDB_.getDistinctName('tmpX', Blockly.Variables.CATEGORY_NAME);
 
         code += `var ${xVar} = Math.floor(Math.random() * ${list}.length);\n`;
 

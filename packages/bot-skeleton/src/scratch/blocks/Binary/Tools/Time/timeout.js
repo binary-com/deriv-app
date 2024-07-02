@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../../../utils';
 
 Blockly.Blocks.timeout = {
     init() {
@@ -41,6 +42,11 @@ Blockly.Blocks.timeout = {
             ),
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     getRequiredValueInputs() {
         return {
             SECONDS: null,
@@ -48,9 +54,14 @@ Blockly.Blocks.timeout = {
     },
 };
 
-Blockly.JavaScript.timeout = block => {
-    const stack = Blockly.JavaScript.statementToCode(block, 'TIMEOUTSTACK');
-    const seconds = Blockly.JavaScript.valueToCode(block, 'SECONDS', Blockly.JavaScript.ORDER_ATOMIC) || '1';
+Blockly.JavaScript.javascriptGenerator.forBlock.timeout = block => {
+    const stack = Blockly.JavaScript.javascriptGenerator.statementToCode(block, 'TIMEOUTSTACK');
+    const seconds =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'SECONDS',
+            Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC
+        ) || '1';
 
     const code = `sleep(${seconds});\n${stack}\n`;
     return code;

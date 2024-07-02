@@ -39,11 +39,11 @@ Blockly.Blocks.trade_definition_market = {
         this.setDeletable(false);
     },
     onchange(event) {
-        const allowed_events = ['BLOCK_CREATE', 'BLOCK_CHANGE', 'END_DRAG'];
+        const allowed_events = ['BLOCK_CREATE', 'BLOCK_CHANGE', 'BLOCK_DRAG'];
         const is_allowed_event =
             allowed_events.findIndex(event_name => event.type === Blockly.Events[event_name]) !== -1;
 
-        if (!this.workspace || this.isInFlyout || this.workspace.isDragging() || !is_allowed_event) {
+        if (!this.workspace || Blockly.derivWorkspace.isFlyout_ || this.workspace.isDragging() || !is_allowed_event) {
             return;
         }
 
@@ -64,7 +64,7 @@ Blockly.Blocks.trade_definition_market = {
             .filter(option => option[1] !== 'cryptocurrency');
 
         const populateMarketDropdown = () => {
-            market_dropdown.updateOptions(market_options, {
+            market_dropdown?.updateOptions(market_options, {
                 default_value: market,
                 should_pretend_empty: true,
                 event_group: event.group,
@@ -87,7 +87,11 @@ Blockly.Blocks.trade_definition_market = {
                     event_group: event.group,
                 });
             }
-        } else if (event.type === Blockly.Events.END_DRAG && event.blockId === this.getRootBlock().id) {
+        } else if (
+            event.type === Blockly.Events.BLOCK_DRAG &&
+            !event.isStart &&
+            event.blockId === this.getRootBlock().id
+        ) {
             if (market_dropdown.isEmpty() || submarket_dropdown.isEmpty() || symbol_dropdown.isEmpty()) {
                 populateMarketDropdown();
             }
@@ -117,4 +121,4 @@ Blockly.Blocks.trade_definition_market = {
     },
 };
 
-Blockly.JavaScript.trade_definition_market = () => {};
+Blockly.JavaScript.javascriptGenerator.forBlock.trade_definition_market = () => {};

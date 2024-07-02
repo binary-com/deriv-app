@@ -1,5 +1,6 @@
 import { localize } from '@deriv/translations';
 import { config } from '../../../../../constants/config';
+import { modifyContextMenu } from '../../../../utils';
 
 Blockly.Blocks.balance = {
     init() {
@@ -12,7 +13,8 @@ Blockly.Blocks.balance = {
                 this.setOutput(true, 'Number');
             }
             this.initSvg();
-            this.render(false);
+            // kept this commented to fix backward compatibility issue
+            //this.render(false);
             return undefined;
         });
     },
@@ -43,11 +45,16 @@ Blockly.Blocks.balance = {
             ),
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
 };
 
-Blockly.JavaScript.balance = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.balance = block => {
     const balanceType = block.getFieldValue('BALANCE_TYPE');
 
     const code = `Bot.getBalance('${balanceType}')`;
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC];
 };

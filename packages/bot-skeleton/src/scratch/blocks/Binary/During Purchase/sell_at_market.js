@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../../utils';
 
 Blockly.Blocks.sell_at_market = {
     init() {
@@ -22,7 +23,12 @@ Blockly.Blocks.sell_at_market = {
             description: localize('Use this block to sell your contract at the market price.'),
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     restricted_parents: ['during_purchase'],
 };
 
-Blockly.JavaScript.sell_at_market = () => 'Bot.sellAtMarket();\n';
+Blockly.JavaScript.javascriptGenerator.forBlock.sell_at_market = () => 'Bot.sellAtMarket();\n';

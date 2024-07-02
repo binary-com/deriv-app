@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../utils';
 
 Blockly.Blocks.math_single = {
     init() {
@@ -46,28 +47,48 @@ Blockly.Blocks.math_single = {
             NUM: null,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
 };
 
-Blockly.JavaScript.math_single = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.math_single = block => {
     const operator = block.getFieldValue('OP');
 
     let code, arg;
 
     if (operator === 'NEG') {
         // Negation is a special case given its different operator precedence.
-        arg = Blockly.JavaScript.valueToCode(block, 'NUM', Blockly.JavaScript.ORDER_UNARY_NEGATION) || '0';
+        arg =
+            Blockly.JavaScript.javascriptGenerator.valueToCode(
+                block,
+                'NUM',
+                Blockly.JavaScript.javascriptGenerator.ORDER_UNARY_NEGATION
+            ) || '0';
         if (arg[0] === '-') {
             // --3 is not legal in JS
             arg = ` ${arg}`;
         }
         code = `-${arg}`;
-        return [code, Blockly.JavaScript.ORDER_UNARY_NEGATION];
+        return [code, Blockly.JavaScript.javascriptGenerator.ORDER_UNARY_NEGATION];
     }
 
     if (['SIN', 'COS', 'TAN'].includes(operator)) {
-        arg = Blockly.JavaScript.valueToCode(block, 'NUM', Blockly.JavaScript.ORDER_DIVISION) || '0';
+        arg =
+            Blockly.JavaScript.javascriptGenerator.valueToCode(
+                block,
+                'NUM',
+                Blockly.JavaScript.javascriptGenerator.ORDER_DIVISION
+            ) || '0';
     } else {
-        arg = Blockly.JavaScript.valueToCode(block, 'NUM', Blockly.JavaScript.ORDER_NONE) || '0';
+        arg =
+            Blockly.JavaScript.javascriptGenerator.valueToCode(
+                block,
+                'NUM',
+                Blockly.JavaScript.javascriptGenerator.ORDER_NONE
+            ) || '0';
     }
 
     // First, handle cases which generate values that don't need parentheses
@@ -97,7 +118,7 @@ Blockly.JavaScript.math_single = block => {
     }
 
     if (code) {
-        return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+        return [code, Blockly.JavaScript.javascriptGenerator.ORDER_FUNCTION_CALL];
     }
 
     // Second, handle cases which generate values that may need parentheses
@@ -112,5 +133,5 @@ Blockly.JavaScript.math_single = block => {
         code = `Math.atan(${arg}) / Math.PI * 180`;
     }
 
-    return [code, Blockly.JavaScript.ORDER_DIVISION];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_DIVISION];
 };

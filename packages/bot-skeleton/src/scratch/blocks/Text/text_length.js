@@ -1,5 +1,5 @@
 import { localize } from '@deriv/translations';
-import { emptyTextValidator } from '../../utils';
+import { emptyTextValidator, modifyContextMenu } from '../../utils';
 
 Blockly.Blocks.text_length = {
     init() {
@@ -23,6 +23,11 @@ Blockly.Blocks.text_length = {
             category: Blockly.Categories.Text,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     meta() {
         return {
             display_name: localize('Text String Length'),
@@ -38,9 +43,14 @@ Blockly.Blocks.text_length = {
     },
 };
 
-Blockly.JavaScript.text_length = block => {
-    const text = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_FUNCTION_CALL) || "''";
+Blockly.JavaScript.javascriptGenerator.forBlock.text_length = block => {
+    const text =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'VALUE',
+            Blockly.JavaScript.javascriptGenerator.ORDER_FUNCTION_CALL
+        ) || "''";
 
     const code = `${text}.length`;
-    return [code, Blockly.JavaScript.ORDER_MEMBER];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_MEMBER];
 };

@@ -10,6 +10,9 @@ import Local from '../local';
 
 window.Blockly = {
     derivWorkspace: { asyncClear: () => ({}) },
+    utils: {
+        xml: { textToDom: jest.fn() },
+    },
     Xml: { domToWorkspace: () => ({}), textToDom: () => ({}) },
 };
 

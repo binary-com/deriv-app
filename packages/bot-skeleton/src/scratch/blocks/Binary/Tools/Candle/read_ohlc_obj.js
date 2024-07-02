@@ -1,5 +1,6 @@
 import { localize } from '@deriv/translations';
 import { config } from '../../../../../constants/config';
+import { modifyContextMenu } from '../../../../utils';
 
 Blockly.Blocks.read_ohlc_obj = {
     init() {
@@ -42,12 +43,22 @@ Blockly.Blocks.read_ohlc_obj = {
             OHLCOBJ: null,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
 };
 
-Blockly.JavaScript.read_ohlc_obj = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.read_ohlc_obj = block => {
     const ohlcField = block.getFieldValue('OHLCFIELD_LIST');
-    const ohlcObj = Blockly.JavaScript.valueToCode(block, 'OHLCOBJ', Blockly.JavaScript.ORDER_ATOMIC) || '{}';
+    const ohlcObj =
+        Blockly.JavaScript.javascriptGenerator.valueToCode(
+            block,
+            'OHLCOBJ',
+            Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC
+        ) || '{}';
 
     const code = `Bot.candleField(${ohlcObj}, '${ohlcField}')`;
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC];
 };

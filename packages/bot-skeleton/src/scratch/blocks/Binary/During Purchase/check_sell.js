@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../../utils';
 
 Blockly.Blocks.check_sell = {
     init() {
@@ -24,10 +25,15 @@ Blockly.Blocks.check_sell = {
             ),
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
     restricted_parents: ['during_purchase'],
 };
 
-Blockly.JavaScript.check_sell = () => {
+Blockly.JavaScript.javascriptGenerator.forBlock.check_sell = () => {
     const code = 'Bot.isSellAvailable()';
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    return [code, Blockly.JavaScript.javascriptGenerator.ORDER_ATOMIC];
 };

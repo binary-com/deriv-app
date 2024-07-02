@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../../utils';
 
 Blockly.Blocks.emaa_statement = {
     protected_statements: ['STATEMENT'],
@@ -48,13 +49,18 @@ Blockly.Blocks.emaa_statement = {
         };
     },
     onchange: Blockly.Blocks.bb_statement.onchange,
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
 };
 
-Blockly.JavaScript.emaa_statement = block => {
+Blockly.JavaScript.javascriptGenerator.forBlock.emaa_statement = block => {
     // eslint-disable-next-line no-underscore-dangle
     const var_name = Blockly.JavaScript.variableDB_.getName(
         block.getFieldValue('VARIABLE'),
-        Blockly.Variables.NAME_TYPE
+        Blockly.Variables.CATEGORY_NAME
     );
     const input = block.childValueToCode('input_list', 'INPUT_LIST');
     const period = block.childValueToCode('period', 'PERIOD');

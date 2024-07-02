@@ -1,4 +1,5 @@
 import { localize } from '@deriv/translations';
+import { modifyContextMenu } from '../../../../utils';
 
 Blockly.Blocks.slow_ema_period = {
     init() {
@@ -28,6 +29,11 @@ Blockly.Blocks.slow_ema_period = {
             SLOW_EMA_PERIOD: null,
         };
     },
+    customContextMenu(menu) {
+        const exclude_item = [];
+        const include_items = ['Download Block'];
+        modifyContextMenu(menu, exclude_item, include_items);
+    },
 };
 
-Blockly.JavaScript.slow_ema_period = () => {};
+Blockly.JavaScript.javascriptGenerator.forBlock.slow_ema_period = () => {};
