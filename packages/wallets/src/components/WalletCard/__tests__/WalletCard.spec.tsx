@@ -17,7 +17,6 @@ describe('WalletCard', () => {
         balance: '100 USD',
         currency: 'USD',
         iconSize: 'lg',
-        landingCompanyName: 'SVG',
     };
     beforeEach(() => {
         jest.clearAllMocks();
@@ -25,7 +24,6 @@ describe('WalletCard', () => {
             balance: '100 USD',
             currency: 'USD',
             iconSize: 'lg',
-            landingCompanyName: 'SVG',
         };
     });
 
@@ -50,7 +48,6 @@ describe('WalletCard', () => {
         mockProps = {
             balance: '100 BTC',
             currency: 'BTC',
-            landingCompanyName: 'Deriv',
         };
         render(
             <APIProvider>
@@ -69,7 +66,6 @@ describe('WalletCard', () => {
             balance: '100 BTC',
             currency: 'BTC',
             isCarouselContent: true,
-            landingCompanyName: 'Deriv',
         };
         render(
             <APIProvider>
@@ -90,7 +86,6 @@ describe('WalletCard', () => {
             balance: '100 USD',
             currency: 'USD',
             isDemo: true,
-            landingCompanyName: 'Deriv',
         };
         render(
             <APIProvider>
@@ -133,17 +128,6 @@ describe('WalletCard', () => {
             </APIProvider>
         );
         expect(screen.getByText('100 USD')).toBeInTheDocument();
-    });
-
-    it('should show the landing company name when provided', () => {
-        render(
-            <APIProvider>
-                <WalletsAuthProvider>
-                    <WalletCard {...mockProps} />
-                </WalletsAuthProvider>
-            </APIProvider>
-        );
-        expect(screen.getByText('SVG')).toBeInTheDocument();
     });
 
     it('should show the icon with the correct size', () => {

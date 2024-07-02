@@ -8,7 +8,6 @@ import { WalletSuccess } from '../WalletSuccess';
 type TWalletAddedSuccessProps = {
     currency: THooks.CreateWallet['currency'];
     displayBalance: THooks.CreateWallet['display_balance'];
-    landingCompany: THooks.CreateWallet['landing_company_shortcode'];
     onPrimaryButtonClick: () => void;
     onSecondaryButtonClick: () => void;
 };
@@ -16,7 +15,6 @@ type TWalletAddedSuccessProps = {
 const WalletAddedSuccess: React.FC<TWalletAddedSuccessProps> = ({
     currency,
     displayBalance,
-    landingCompany,
     onPrimaryButtonClick,
     onSecondaryButtonClick,
 }) => {
@@ -39,10 +37,10 @@ const WalletAddedSuccess: React.FC<TWalletAddedSuccessProps> = ({
     const renderIcon = useCallback(
         () => (
             <div className='wallets-add-more__success-card'>
-                <WalletCard balance={displayBalance} currency={currency || 'USD'} landingCompanyName={landingCompany} />
+                <WalletCard balance={displayBalance} currency={currency || 'USD'} />
             </div>
         ),
-        [currency, displayBalance, landingCompany]
+        [currency, displayBalance]
     );
 
     if (isMobile)

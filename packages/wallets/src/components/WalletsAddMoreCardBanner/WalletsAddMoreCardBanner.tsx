@@ -36,7 +36,6 @@ const WalletsAddMoreCardBanner: React.FC<TWalletCarouselItem> = ({
                     <WalletAddedSuccess
                         currency={data?.currency}
                         displayBalance={data?.display_balance ?? `0.00 ${data?.currency}`}
-                        landingCompany={data?.landing_company_shortcode}
                         onPrimaryButtonClick={() => {
                             history.push('/wallet/deposit');
                             modal.hide();

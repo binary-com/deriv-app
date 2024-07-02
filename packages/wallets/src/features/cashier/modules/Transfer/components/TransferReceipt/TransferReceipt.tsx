@@ -45,7 +45,6 @@ const ReceiptCard: React.FC<TReceiptCardProps> = ({ account, activeWallet, balan
                 currency={account.currency ?? ''}
                 iconSize='md'
                 isDemo={Boolean(account?.demo_account)}
-                landingCompanyName={account?.landingCompanyName}
             />
         );
 

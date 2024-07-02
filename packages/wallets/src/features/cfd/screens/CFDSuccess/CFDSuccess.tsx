@@ -4,7 +4,7 @@ import { useActiveWalletAccount } from '@deriv/api-v2';
 import { WalletMarketCurrencyIcon, WalletSuccess, WalletText } from '../../../../components';
 import { WalletGradientBackground } from '../../../../components/WalletGradientBackground';
 import useDevice from '../../../../hooks/useDevice';
-import { TDisplayBalance, THooks, TMarketTypes, TPlatforms } from '../../../../types';
+import { TDisplayBalance, TMarketTypes, TPlatforms } from '../../../../types';
 import { CFD_PLATFORMS, MARKET_TYPE, MarketTypeDetails, PlatformDetails } from '../../constants';
 import './CFDSuccess.scss';
 
@@ -14,7 +14,6 @@ type TSuccessProps = {
         | TDisplayBalance.CtraderAccountsList
         | TDisplayBalance.DxtradeAccountsList
         | TDisplayBalance.MT5AccountsList;
-    landingCompany?: THooks.AvailableMT5Accounts['shortcode'];
     marketType?: TMarketTypes.SortedMT5Accounts;
     platform?: TPlatforms.All;
     renderButton?: ComponentProps<typeof WalletSuccess>['renderButtons'];
@@ -24,7 +23,6 @@ type TSuccessProps = {
 const CFDSuccess: React.FC<TSuccessProps> = ({
     description,
     displayBalance,
-    landingCompany = 'svg',
     marketType,
     platform,
     renderButton,
@@ -33,7 +31,6 @@ const CFDSuccess: React.FC<TSuccessProps> = ({
     const { data } = useActiveWalletAccount();
     const { isDesktop } = useDevice();
     const isDemo = data?.is_virtual;
-    const landingCompanyName = landingCompany.toUpperCase();
 
     const isDxtradeOrCtrader =
         marketType === MARKET_TYPE.ALL &&
@@ -85,8 +82,7 @@ const CFDSuccess: React.FC<TSuccessProps> = ({
                             </div>
                             <div className='wallets-cfd-success__info'>
                                 <WalletText size='2xs'>
-                                    {platformTitlePrefix} {marketTypeTitle}{' '}
-                                    {!isDemo && !isDxtradeOrCtrader && `(${landingCompanyName})`}
+                                    {platformTitlePrefix} {marketTypeTitle}
                                 </WalletText>
                                 <WalletText color='primary' size='2xs'>
                                     {data?.currency} Wallet
