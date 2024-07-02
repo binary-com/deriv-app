@@ -99,7 +99,7 @@
         "@deriv-com/analytics": "1.5.9",
         "@deriv-com/quill-tokens": "^2.0.4",
         "@deriv-com/quill-ui": "^1.11.4",
-        "@deriv-com/translations": "^1.3.3",
+        "@deriv-com/translations": "^1.3.4",
         "@deriv-com/ui": "^1.28.1",
         "@deriv-com/utils": "^0.0.25",
         "@deriv/account": "^1.0.0",

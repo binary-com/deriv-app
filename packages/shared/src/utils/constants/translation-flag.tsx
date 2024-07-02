@@ -2,6 +2,7 @@ import React from 'react';
 import {
     FlagArabLeagueIcon,
     FlagBangladeshIcon,
+    FlagCambodiaIcon,
     FlagChinaSimplifiedIcon,
     FlagChinaTraditionalIcon,
     FlagFranceIcon,
@@ -30,6 +31,7 @@ const flagComponents = {
     FR: FlagFranceIcon,
     ID: FlagIndonesiaIcon,
     IT: FlagItalyIcon,
+    KM: FlagCambodiaIcon,
     // KO: ,
     MN: FlagMongoliaIcon,
     PL: FlagPolandIcon,

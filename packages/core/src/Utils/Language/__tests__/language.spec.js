@@ -9,6 +9,7 @@ const languages = {
     FR: 'Français',
     ID: 'Indonesian',
     IT: 'Italiano',
+    KM: 'ខ្មែរ',
     KO: '한국어',
     MN: 'Монгол',
     PL: 'Polish',
