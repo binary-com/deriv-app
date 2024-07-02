@@ -19,7 +19,7 @@ jest.mock('@deriv/api-v2', () => ({
     })),
 }));
 
-jest.mock('.../../../hooks/useDevice');
+jest.mock('../../../hooks/useDevice');
 const mockedUseDevice = useDevice as jest.MockedFunction<typeof useDevice>;
 
 const history = createMemoryHistory();
@@ -145,5 +145,55 @@ describe('WalletListCardActions', () => {
         render(<WalletListCardActions />, { wrapper });
         screen.getByRole('button', { name: 'reset-balance' }).click();
         expect(history.location.pathname).toBe('/wallet/reset-balance');
+    });
+
+    it('passes `accountsActiveTabIndex` in history state, when we redirect the user to the new page in mobile view for REAL wallet', () => {
+        const realWalletButtons = ['deposit', 'withdrawal', 'account-transfer'];
+        (useActiveWalletAccount as jest.Mock).mockReturnValue({
+            data: {
+                currency: 'USD',
+                display_login: 'CRW123456',
+                email: '',
+                is_active: true,
+                is_virtual: false,
+                loginid: 'CRW123456',
+            },
+        });
+        mockedUseDevice.mockReturnValue({ isDesktop: false, isMobile: true, isTablet: false });
+
+        render(<WalletListCardActions accountsActiveTabIndex={1} />, {
+            wrapper,
+        });
+
+        realWalletButtons.forEach(button => {
+            screen.getByRole('button', { name: button }).click();
+            expect(history.location.pathname).toBe(`/wallet/${button}`);
+            expect(history.location.state).toStrictEqual({ accountsActiveTabIndex: 1 });
+        });
+    });
+
+    it('passes `accountsActiveTabIndex` in history state, when we redirect the user to the new page in mobile view for DEMO wallet', () => {
+        const demoWalletButtons = ['reset-balance', 'account-transfer'];
+        (useActiveWalletAccount as jest.Mock).mockReturnValue({
+            data: {
+                currency: 'USD',
+                display_login: 'VRW123456',
+                email: '',
+                is_active: true,
+                is_virtual: true,
+                loginid: 'VRW123456',
+            },
+        });
+        mockedUseDevice.mockReturnValue({ isDesktop: false, isMobile: true, isTablet: false });
+
+        render(<WalletListCardActions accountsActiveTabIndex={1} />, {
+            wrapper,
+        });
+
+        demoWalletButtons.forEach(button => {
+            screen.getByRole('button', { name: button }).click();
+            expect(history.location.pathname).toBe(`/wallet/${button}`);
+            expect(history.location.state).toStrictEqual({ accountsActiveTabIndex: 1 });
+        });
     });
 });

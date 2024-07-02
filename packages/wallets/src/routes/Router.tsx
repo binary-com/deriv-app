@@ -28,8 +28,20 @@ export type TRoute = '/endpoint' | `?${string}` | `${TWalletsRoute}`;
 
 // wallets routes which have their states
 interface WalletsRouteState {
-    '/wallet/account-transfer': { shouldSelectDefaultWallet: boolean; toAccountLoginId: string };
-    '/wallet/transactions': { showPending: boolean; transactionType: 'deposit' | 'withdrawal' };
+    '/': { accountsActiveTabIndex: number };
+    '/wallet/account-transfer': {
+        accountsActiveTabIndex: number;
+        shouldSelectDefaultWallet: boolean;
+        toAccountLoginId: string;
+    };
+    '/wallet/deposit': { accountsActiveTabIndex: number };
+    '/wallet/reset-balance': { accountsActiveTabIndex: number };
+    '/wallet/transactions': {
+        accountsActiveTabIndex: number;
+        showPending: boolean;
+        transactionType: 'deposit' | 'withdrawal';
+    };
+    '/wallet/withdrawal': { accountsActiveTabIndex: number };
 }
 
 type TStatefulRoute = TRoute & `${keyof WalletsRouteState}`;

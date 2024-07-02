@@ -7,7 +7,12 @@ type WalletPrimaryTabListProps = {
 };
 
 const WalletsPrimaryTabList = ({ list }: WalletPrimaryTabListProps) => {
-    const { activeTabIndex, setActiveTabIndex } = useTabs();
+    const { activeTabIndex, onChangeTabHandler, setActiveTabIndex } = useTabs();
+
+    const onTabClickHandler = (activeTabIndex: number) => {
+        setActiveTabIndex(activeTabIndex);
+        onChangeTabHandler?.(activeTabIndex);
+    };
 
     return (
         <div className='wallets-tabs-list' data-list-count={list.length} data-testid='dt_tab_list'>
@@ -17,7 +22,7 @@ const WalletsPrimaryTabList = ({ list }: WalletPrimaryTabListProps) => {
                         i === activeTabIndex ? 'active' : 'disabled'
                     }`}
                     key={i}
-                    onClick={() => setActiveTabIndex(i)}
+                    onClick={() => onTabClickHandler(i)}
                 >
                     {tab}
                 </button>

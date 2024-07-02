@@ -1,6 +1,7 @@
 import React from 'react';
 import { APIProvider, useActiveWalletAccount, useBalanceSubscription } from '@deriv/api-v2';
 import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import WalletsAuthProvider from '../../../../../AuthProvider';
 import WalletCashierHeader from '../WalletCashierHeader';
 
@@ -10,9 +11,11 @@ jest.mock('@deriv/api-v2', () => ({
     useBalanceSubscription: jest.fn(),
 }));
 
+const mockPush = jest.fn();
+
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
-    useHistory: () => ({ history: {} }),
+    useHistory: () => ({ push: mockPush }),
     useLocation: () => ({ pathname: '/' }),
 }));
 
@@ -127,5 +130,14 @@ describe('<WalletCashierHeader/>', () => {
         expect(screen.getByText('Reset Balance')).toBeInTheDocument();
         expect(screen.getByText('Transfer')).toBeInTheDocument();
         expect(screen.getByText('Transactions')).toBeInTheDocument();
+    });
+
+    it('redirects to the root route with `accountsActiveTabIndex` history state, when the user closes cashier overlay', () => {
+        render(<WalletCashierHeader hideWalletDetails={false} />, { wrapper });
+
+        const closeBtn = screen.getByTestId('dt_close_btn');
+        userEvent.click(closeBtn);
+
+        expect(mockPush).toHaveBeenCalledWith('/', { accountsActiveTabIndex: 0 });
     });
 });

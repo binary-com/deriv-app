@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useActiveWalletAccount } from '@deriv/api-v2';
 import { displayMoney } from '@deriv/api-v2/src/utils';
 import { TSubscribedBalance } from '../../types';
@@ -11,6 +12,8 @@ const WalletsCarousel: React.FC<TSubscribedBalance> = ({ balance }) => {
     const { data: activeWallet, isLoading: isActiveWalletLoading } = useActiveWalletAccount();
     const [hideWalletsCarouselHeader, setHideWalletsCarouselHeader] = useState(true);
     const contentRef = useRef(null);
+    const location = useLocation();
+    const [accountsActiveTabIndex, setAccountsActiveTabIndex] = useState(location.state?.accountsActiveTabIndex ?? 0);
 
     const { data: balanceData, isLoading: isBalanceLoading } = balance;
 
@@ -62,10 +65,14 @@ const WalletsCarousel: React.FC<TSubscribedBalance> = ({ balance }) => {
                     />
                 )}
                 <div ref={contentRef}>
-                    <WalletsCarouselContent />
+                    <WalletsCarouselContent accountsActiveTabIndex={accountsActiveTabIndex} />
                 </div>
             </div>
-            <AccountsList balance={balance} />
+            <AccountsList
+                accountsActiveTabIndex={accountsActiveTabIndex}
+                balance={balance}
+                onTabClickHandler={setAccountsActiveTabIndex}
+            />
         </div>
     );
 };

@@ -16,6 +16,10 @@ import { WalletCard } from '../WalletCard';
 import { WalletListCardActions } from '../WalletListCardActions';
 import './WalletsCarouselContent.scss';
 
+type TProps = {
+    accountsActiveTabIndex: number;
+};
+
 const numberWithinRange = (number: number, min: number, max: number): number => Math.min(Math.max(number, min), max);
 
 // scale based on the width difference between active wallet (288px) and inactive wallets + padding (240px + 16px)
@@ -27,7 +31,7 @@ const TRANSITION_FACTOR_SCALE = 1 - 25.6 / 28.8;
  * - Embla is the SINGLE SOURCE OF TRUTH for current active card, so the state flow / data flow is simple
  * - everything else gets in sync with Embla eventually
  */
-const WalletsCarouselContent: React.FC = () => {
+const WalletsCarouselContent: React.FC<TProps> = ({ accountsActiveTabIndex }) => {
     const switchWalletAccount = useWalletAccountSwitcher();
     const history = useHistory();
 
@@ -125,9 +129,11 @@ const WalletsCarouselContent: React.FC = () => {
             walletsCarouselEmblaApi?.scrollTo(index);
             walletAccountsList && setSelectedLoginId(walletAccountsList[index].loginid);
             account.is_active &&
-                (account.is_virtual ? history.push('/wallet/reset-balance') : history.push('/wallet/deposit'));
+                (account.is_virtual
+                    ? history.push('/wallet/reset-balance', { accountsActiveTabIndex })
+                    : history.push('/wallet/deposit', { accountsActiveTabIndex }));
         },
-        [walletsCarouselEmblaApi, walletAccountsList, history]
+        [walletsCarouselEmblaApi, walletAccountsList, history, accountsActiveTabIndex]
     );
 
     useEffect(() => {
@@ -279,7 +285,7 @@ const WalletsCarouselContent: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <WalletListCardActions />
+            <WalletListCardActions accountsActiveTabIndex={accountsActiveTabIndex} />
         </div>
     );
 };

@@ -70,7 +70,9 @@ describe('AccountsList', () => {
             isMobile: true,
             isTablet: false,
         });
-        render(<AccountsList balance={mockBalanceData} />, { wrapper });
+        render(<AccountsList accountsActiveTabIndex={0} balance={mockBalanceData} onTabClickHandler={jest.fn()} />, {
+            wrapper,
+        });
         expect(screen.getByTestId('dt_tabs')).toBeInTheDocument();
         expect(screen.getByTestId('dt_tab_list')).toBeInTheDocument();
         expect(screen.getByTestId('dt_tab_panels')).toBeInTheDocument();
@@ -85,7 +87,9 @@ describe('AccountsList', () => {
             isMobile: true,
             isTablet: false,
         });
-        render(<AccountsList balance={mockBalanceData} />, { wrapper });
+        render(<AccountsList accountsActiveTabIndex={0} balance={mockBalanceData} onTabClickHandler={jest.fn()} />, {
+            wrapper,
+        });
         expect(screen.getByTestId('dt_tab_panels')).toBeInTheDocument();
         expect(screen.getByText('CFDs')).toBeInTheDocument();
         expect(screen.getAllByText('Options')[0]).toBeInTheDocument();
@@ -97,6 +101,24 @@ describe('AccountsList', () => {
         expect(screen.getByText('SmartTrader')).toBeInTheDocument();
         expect(screen.getByText('Binary Bot')).toBeInTheDocument();
         expect(screen.getByText('Deriv GO')).toBeInTheDocument();
+    });
+
+    it('should trigger `onTabClickHandler` with proper tab index when the user switches the tab', () => {
+        const onTabClickHandler = jest.fn();
+        mockUseDevice.mockReturnValue({
+            isDesktop: false,
+            isMobile: true,
+            isTablet: false,
+        });
+        render(
+            <AccountsList accountsActiveTabIndex={0} balance={mockBalanceData} onTabClickHandler={onTabClickHandler} />,
+            {
+                wrapper,
+            }
+        );
+
+        screen.getAllByText('Options')[0].click();
+        expect(onTabClickHandler).toHaveBeenCalledWith(1);
     });
 
     it('should render account list in desktop view', () => {
@@ -118,7 +140,9 @@ describe('AccountsList', () => {
             isMobile: true,
             isTablet: false,
         });
-        render(<AccountsList balance={mockBalanceData} />, { wrapper });
+        render(<AccountsList accountsActiveTabIndex={0} balance={mockBalanceData} onTabClickHandler={jest.fn()} />, {
+            wrapper,
+        });
         expect(mockWalletTourGuide);
     });
 
@@ -128,7 +152,9 @@ describe('AccountsList', () => {
             isMobile: true,
             isTablet: false,
         });
-        render(<AccountsList balance={mockBalanceData} />, { wrapper });
+        render(<AccountsList accountsActiveTabIndex={0} balance={mockBalanceData} onTabClickHandler={jest.fn()} />, {
+            wrapper,
+        });
         expect(mockWalletTourGuide);
     });
 });

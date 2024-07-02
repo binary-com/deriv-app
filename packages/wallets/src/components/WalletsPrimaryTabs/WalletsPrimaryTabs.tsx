@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from 'react';
 
 type TTabContext = {
     activeTabIndex: number;
+    onChangeTabHandler?: (activeTab: number) => void;
     setActiveTabIndex: React.Dispatch<React.SetStateAction<number>>;
 };
 
@@ -19,13 +20,20 @@ export const useTabs = () => {
 
 type TTabsProps = {
     className?: string;
+    initialActiveTabIndex?: number;
+    onChangeTabHandler?: (activeTabIndex: number) => void;
 };
 
-export const WalletsPrimaryTabs = ({ children, className }: React.PropsWithChildren<TTabsProps>) => {
-    const [activeTabIndex, setActiveTabIndex] = useState(0);
+export const WalletsPrimaryTabs = ({
+    children,
+    className,
+    initialActiveTabIndex,
+    onChangeTabHandler,
+}: React.PropsWithChildren<TTabsProps>) => {
+    const [activeTabIndex, setActiveTabIndex] = useState(initialActiveTabIndex ?? 0);
 
     return (
-        <TabsContext.Provider value={{ activeTabIndex, setActiveTabIndex }}>
+        <TabsContext.Provider value={{ activeTabIndex, onChangeTabHandler, setActiveTabIndex }}>
             <div className={className} data-testid='dt_tabs'>
                 {children}
             </div>
