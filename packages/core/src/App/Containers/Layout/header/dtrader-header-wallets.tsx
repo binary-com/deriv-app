@@ -71,12 +71,8 @@ const MenuRight = observer(() => {
     const currency = active_account?.currency ?? '';
 
     return (
-        <div
-            className={classNames('header__menu-right', {
-                'header__menu-right--hidden': is_mobile && is_logging_in,
-            })}
-        >
-            {(is_logging_in || is_switching) && (
+        <div className='header__menu-right'>
+            {is_logging_in || is_switching ? (
                 <div
                     id='dt_core_header_acc-info-preloader'
                     className={classNames('acc-info__preloader__dtrader acc-info__preloader__dtrader--wallets', {
@@ -86,10 +82,11 @@ const MenuRight = observer(() => {
                 >
                     <AccountsInfoLoaderWallets is_logged_in={is_logged_in} is_mobile={is_mobile} speed={3} />
                 </div>
+            ) : (
+                <div id={'dt_core_header_acc-info-container'} className='acc-info__container'>
+                    <AccountActionsWallets />
+                </div>
             )}
-            <div id={'dt_core_header_acc-info-container'} className='acc-info__container'>
-                <AccountActionsWallets />
-            </div>
         </div>
     );
 });
