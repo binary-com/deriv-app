@@ -20,7 +20,11 @@ jest.mock('Assets/SvgComponents/settings/dark/interval-enabled.svg', () =>
 describe('<ChartSettings/>', () => {
     let default_mock_store: ReturnType<typeof mockStore>;
     beforeEach(() => {
-        default_mock_store = mockStore({});
+        default_mock_store = mockStore({
+            contract_trade: {
+                granularity: 60,
+            },
+        });
     });
 
     const mockChartSettings = () => {
@@ -44,5 +48,12 @@ describe('<ChartSettings/>', () => {
         userEvent.click(screen.getByRole('checkbox'));
 
         expect(default_mock_store.ui.setChartCountdown).toBeCalled();
+    });
+    it('should display Unavailable message and disable checkbox if chart granularity === 0 (1 Tick interval)', () => {
+        default_mock_store.contract_trade.granularity = 0;
+        render(mockChartSettings());
+
+        expect(screen.getByText(/This feature is unavailable for tick intervals/)).toBeInTheDocument();
+        expect(screen.getByRole('checkbox')).toBeDisabled();
     });
 });

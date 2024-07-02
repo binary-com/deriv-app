@@ -6,6 +6,10 @@
         color: var(--text-prominent);
         margin: 0 0 16px;
         text-transform: none;
+
+        .inline-message {
+            margin-top: 1.6rem;
+        }
     }
     &__icon {
         height: 120px;

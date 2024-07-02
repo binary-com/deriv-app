@@ -1,6 +1,6 @@
 import React from 'react';
-import { Checkbox } from '@deriv/components';
-import { localize, Localize } from '@deriv/translations';
+import { Checkbox, InlineMessage } from '@deriv/components';
+import { Localize } from '@deriv/translations';
 import MediaItem, { MediaHeading, MediaIcon, MediaDescription } from 'App/Components/Elements/Media';
 import { observer, useStore } from '@deriv/stores';
 
@@ -16,18 +16,27 @@ import IntervalDurationDisabledLightIcon from 'Assets/SvgComponents/settings/int
 import IntervalDurationEnabledLightIcon from 'Assets/SvgComponents/settings/interval-enabled.svg';
 
 const ChartSettings = observer(() => {
-    const { ui } = useStore();
+    const { contract_trade, ui } = useStore();
     const {
         is_chart_countdown_visible: is_countdown_visible,
         is_dark_mode_on: is_dark_mode,
         setChartCountdown: setCountdown,
     } = ui;
+    const { granularity } = contract_trade;
 
     return (
         <div className='settings-chart'>
             <MediaItem>
                 <MediaHeading>
                     <Localize i18n_default_text='Interval duration' />
+                    {granularity === 0 && (
+                        <InlineMessage
+                            type='information'
+                            message={
+                                <Localize i18n_default_text='This feature is unavailable for tick intervals. Switch to minutes, hours, or days.' />
+                            }
+                        />
+                    )}
                 </MediaHeading>
                 <MediaDescription>
                     <MediaIcon
@@ -40,7 +49,8 @@ const ChartSettings = observer(() => {
                         <Checkbox
                             id='dt_settings_interval_checkbox'
                             defaultChecked={is_countdown_visible}
-                            label={localize('Display remaining time for each interval')}
+                            disabled={granularity === 0}
+                            label={<Localize i18n_default_text='Display remaining time for each interval' />}
                             onChange={e => {
                                 if ('checked' in e.target) {
                                     setCountdown(e.target.checked);
