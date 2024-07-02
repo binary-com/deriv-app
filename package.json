@@ -98,7 +98,7 @@
     },
     "dependencies": {
         "@babel/preset-typescript": "^7.16.5",
-        "@deriv-com/analytics": "1.5.9",
+        "@deriv-com/analytics": "1.8.0",
         "@sendbird/chat": "^4.9.7",
         "@types/react-transition-group": "^4.4.4",
         "babel-jest": "^27.3.1",

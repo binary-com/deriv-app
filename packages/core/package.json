@@ -96,9 +96,9 @@
     "dependencies": {
         "@babel/polyfill": "^7.4.4",
         "@datadog/browser-rum": "^5.11.0",
-        "@deriv-com/analytics": "1.5.9",
-        "@deriv-com/quill-tokens": "^2.0.4",
-        "@deriv-com/quill-ui": "^1.11.4",
+        "@deriv-com/analytics": "1.8.0",
+        "@deriv-com/quill-tokens": "2.0.4",
+        "@deriv-com/quill-ui": "1.11.4",
         "@deriv-com/translations": "^1.3.3",
         "@deriv-com/ui": "^1.28.1",
         "@deriv-com/utils": "^0.0.25",

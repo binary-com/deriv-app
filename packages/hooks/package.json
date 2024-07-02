@@ -6,7 +6,7 @@
     "sideEffects": false,
     "dependencies": {
         "@binary-com/binary-document-uploader": "^2.4.8",
-        "@deriv-com/analytics": "1.5.9",
+        "@deriv-com/analytics": "1.8.0",
         "@deriv/api": "^1.0.0",
         "@deriv/stores": "^1.0.0",
         "@deriv/utils": "^1.0.0",
