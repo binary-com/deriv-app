@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, Popover } from '@deriv/components';
-import { localize } from '@deriv/translations';
+import { Localize } from '@deriv/translations';
 import { useDevice } from '@deriv-com/ui';
 import BalanceText from 'Components/elements/text/balance-text';
 import { observer, useStore } from '@deriv/stores';
@@ -42,9 +42,11 @@ const AssetSummary = observer(() => {
     const eu_account = is_eu_user && !no_MF_account;
     const cr_account = !is_eu_user && !no_CR_account;
 
-    const eu_mt5_allowed_total_assets = is_mt5_allowed
-        ? localize('Total assets in your Deriv Apps and Deriv MT5 CFDs demo account.')
-        : localize('Total assets in your account.');
+    const eu_mt5_allowed_total_assets = is_mt5_allowed ? (
+        <Localize i18n_default_text='Total assets in your Deriv Apps and Deriv MT5 CFDs demo account.' />
+    ) : (
+        <Localize i18n_default_text='Total assets in your account.' />
+    );
 
     const should_show_loader =
         ((is_switching || is_logging_in) && (eu_account || cr_account)) ||
@@ -69,13 +71,17 @@ const AssetSummary = observer(() => {
                 <React.Fragment>
                     {isDesktop ? (
                         <Text align='right' key={`asset-summary--key-${current_language}`} size='xs' line_height='s'>
-                            {localize('Total assets')}
+                            <Localize i18n_default_text='Total assets' />
                         </Text>
                     ) : null}
                     <Popover
                         alignment={isDesktop ? 'left' : 'top'}
                         message={
-                            is_eu_user ? eu_mt5_allowed_total_assets : localize('Total assets in all your accounts')
+                            is_eu_user ? (
+                                eu_mt5_allowed_total_assets
+                            ) : (
+                                <Localize i18n_default_text='Total assets in all your accounts' />
+                            )
                         }
                         zIndex={9999}
                         is_bubble_hover_enabled

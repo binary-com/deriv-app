@@ -1,5 +1,5 @@
 import { Button } from '@deriv/components';
-import { localize } from '@deriv/translations';
+import { Localize } from '@deriv/translations';
 import { Actions } from 'Components/containers/trading-app-card-actions';
 import TradeButton from 'Components/trade-button';
 import React from 'react';
@@ -25,7 +25,7 @@ const MultiActionButtonGroup = ({
                 onClick={onAction}
                 is_disabled={is_buttons_disabled}
             >
-                {is_real ? localize('Transfer') : localize('Top up')}
+                {is_real ? <Localize i18n_default_text='Transfer' /> : <Localize i18n_default_text='Top up' />}
             </Button>
             <TradeButton link_to={link_to} onAction={onAction} is_buttons_disabled={is_buttons_disabled} />
         </div>

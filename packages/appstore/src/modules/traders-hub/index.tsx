@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { ButtonToggle, Div100vhContainer, Text } from '@deriv/components';
 import { routes, checkServerMaintenance, startPerformanceEventTimer } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
-import { Localize, localize } from '@deriv/translations';
+import { Localize, useLocalize } from '@deriv/translations';
 import { useDevice } from '@deriv-com/ui';
 import CFDsListing from 'Components/cfds-listing';
 import ModalManager from 'Components/modals/modal-manager';
@@ -41,6 +41,7 @@ const OrderedPlatformSections = observer(
 );
 
 const TradersHub = observer(() => {
+    const { localize } = useLocalize();
     const { isDesktop } = useDevice();
     const { traders_hub, client, ui } = useStore();
     const {

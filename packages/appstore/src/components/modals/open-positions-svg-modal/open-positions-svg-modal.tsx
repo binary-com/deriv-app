@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Modal, Text } from '@deriv/components';
 import { Jurisdiction, MT5_ACCOUNT_STATUS, getMT5AccountTitle } from '@deriv/shared';
 import { useStore } from '@deriv/stores';
-import { Localize, localize } from '@deriv/translations';
+import { Localize, useLocalize } from '@deriv/translations';
 import { TTradingPlatformAvailableAccount } from '../account-type-modal/types';
 import { TMarketType } from '../../../types/common.types';
 
@@ -14,6 +14,7 @@ type TOpenPositionsSVGModal = {
 };
 
 const OpenPositionsSVGModal = ({ market_type, status, is_modal_open, setModalOpen }: TOpenPositionsSVGModal) => {
+    const { localize } = useLocalize();
     const { client } = useStore();
     const { mt5_login_list } = client;
     const eligible_accounts = mt5_login_list?.filter(

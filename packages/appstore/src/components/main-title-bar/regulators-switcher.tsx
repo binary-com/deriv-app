@@ -1,7 +1,7 @@
 import React, { HTMLAttributes } from 'react';
 import classNames from 'classnames';
 import { Icon, Text } from '@deriv/components';
-import { localize } from '@deriv/translations';
+import { Localize } from '@deriv/translations';
 import { region_availability } from 'Constants/platform-config';
 import RegulationsSwitcherLoader from 'Components/pre-loader/regulations-switcher-loader';
 import { useStore, observer } from '@deriv/stores';
@@ -30,7 +30,9 @@ const RegulatorSwitcher = observer(() => {
     return (
         <div className='regulators-switcher__container'>
             <div className='regulators-switcher--text'>
-                <Text>{localize('Regulation:')}</Text>
+                <Text>
+                    <Localize i18n_default_text='Regulation:' />
+                </Text>
                 <div
                     data-testid='dt_regulators-switcher-icon'
                     className='regulators-switcher--icon'
@@ -48,7 +50,7 @@ const RegulatorSwitcher = observer(() => {
                                 is_selected={region === traders_hub.selected_region}
                                 onClick={() => traders_hub.selectRegion(region)}
                             >
-                                {region}
+                                <Localize i18n_default_text={region} />
                             </SwitcherItem>
                         );
                     })}

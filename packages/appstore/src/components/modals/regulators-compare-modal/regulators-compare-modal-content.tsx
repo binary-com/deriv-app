@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, Div100vhContainer, Text, ThemedScrollbars } from '@deriv/components';
-import { localize } from '@deriv/translations';
+import { Localize } from '@deriv/translations';
 import { isDesktop, isMobile } from '@deriv/shared';
 import {
     getCFDContents,
@@ -64,10 +64,10 @@ const RegulatorsCompareModalContent = () => {
                             <Table.Row className={'regulators-compare-table__table-header'}>
                                 <Table.Head fixed className='regulators-compare-table__table-empty-cell' />
                                 <Table.Head className='regulators-compare-table__table-header-item'>
-                                    {localize('Non-EU regulation')}
+                                    <Localize i18n_default_text='Non-EU regulation' />
                                 </Table.Head>
                                 <Table.Head className='regulators-compare-table__table-header-item'>
-                                    {localize('EU regulation')}
+                                    <Localize i18n_default_text='EU regulation' />
                                 </Table.Head>
                             </Table.Row>
                         </Table.Header>

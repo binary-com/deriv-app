@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDevice } from '@deriv-com/ui';
-import { getLanguage, Localize, localize } from '@deriv/translations';
+import { getLanguage, Localize } from '@deriv/translations';
 import { Button, Text, Icon } from '@deriv/components';
 import { useStore, observer } from '@deriv/stores';
 import { redirectToLogin } from '@deriv/shared';
@@ -26,11 +26,12 @@ const GetStartedTradingBanner = observer(() => {
                     </Text>
                     <Button
                         className='get-started-trading-banner__button'
-                        text={localize('Get Started')}
                         black
                         large
                         onClick={() => redirectToLogin(false, getLanguage())}
-                    />
+                    >
+                        <Localize i18n_default_text='Get Started' />
+                    </Button>
                 </div>
                 <Icon
                     icon={`IcAppstoreLoggedOut${is_eu_user ? 'Eu' : 'NonEu'}Coins${

@@ -11,7 +11,7 @@ import {
     setPerformanceValue,
 } from '@deriv/shared';
 import { useDevice } from '@deriv-com/ui';
-import { localize, Localize } from '@deriv/translations';
+import { Localize } from '@deriv/translations';
 import { Analytics } from '@deriv-com/analytics';
 import ListingContainer from 'Components/containers/listing-container';
 import AddOptionsAccount from 'Components/add-options-account';
@@ -79,7 +79,11 @@ const CFDsListing = observer(() => {
     const { openDerivRealAccountNeededModal, setShouldShowCooldownModal, setIsMT5VerificationFailedModal } = ui;
     const has_no_real_account = !has_any_real_account;
     const accounts_sub_text =
-        !is_eu_user || is_demo_low_risk ? localize('Compare accounts') : localize('Account Information');
+        !is_eu_user || is_demo_low_risk ? (
+            <Localize i18n_default_text='Compare accounts' />
+        ) : (
+            <Localize i18n_default_text='Account Information' />
+        );
 
     const {
         poi_pending_for_bvi_labuan_vanuatu,
@@ -190,7 +194,7 @@ const CFDsListing = observer(() => {
                 isDesktop && (
                     <div className='cfd-accounts__title'>
                         <Text size='sm' weight='bold' color='prominent'>
-                            {localize('CFDs')}
+                            <Localize i18n_default_text='CFDs' />
                         </Text>
                         <CompareAccount accounts_sub_text={accounts_sub_text} is_desktop />
                     </div>
@@ -202,7 +206,7 @@ const CFDsListing = observer(() => {
             <AddDerivAccount />
             <div className='cfd-full-row' style={{ paddingTop: '2rem' }}>
                 <Text line_height='m' weight='bold' color='prominent'>
-                    {localize('Deriv MT5')}
+                    <Localize i18n_default_text='Deriv MT5' />
                 </Text>
             </div>
             {has_svg_accounts_to_migrate && <MigrationBanner />}
@@ -315,7 +319,9 @@ const CFDsListing = observer(() => {
                         <hr className='divider' />
                     </div>
                     <div className='cfd-full-row' style={{ paddingTop: '2rem' }}>
-                        <Text weight='bold'>{localize('Deriv cTrader')}</Text>
+                        <Text weight='bold'>
+                            <Localize i18n_default_text='Deriv cTrader' />
+                        </Text>
                     </div>
                     {is_landing_company_loaded ? (
                         available_ctrader_accounts.map(account => {
@@ -411,7 +417,7 @@ const CFDsListing = observer(() => {
 
                         <div className='cfd-full-row'>
                             <Text line_height='m' weight='bold' color='prominent'>
-                                {localize('Deriv X')}
+                                <Localize i18n_default_text='Deriv X' />
                             </Text>
                         </div>
                     </React.Fragment>

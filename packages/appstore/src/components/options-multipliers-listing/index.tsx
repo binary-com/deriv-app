@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { Text, StaticUrl } from '@deriv/components';
 import { ContentFlag, setPerformanceValue } from '@deriv/shared';
 import { useStore } from '@deriv/stores';
-import { Localize, localize } from '@deriv/translations';
+import { Localize, useLocalize } from '@deriv/translations';
 import { useDevice } from '@deriv-com/ui';
 import ListingContainer from 'Components/containers/listing-container';
 import TradingAppCard from 'Components/containers/trading-app-card';
@@ -14,6 +14,7 @@ import PlatformLoader from 'Components/pre-loader/platform-loader';
 import OptionsDescription from 'Components/elements/options-description';
 
 const OptionsAndMultipliersListing = observer(() => {
+    const { localize } = useLocalize();
     const { isDesktop } = useDevice();
     const { traders_hub, client, ui } = useStore();
     const {

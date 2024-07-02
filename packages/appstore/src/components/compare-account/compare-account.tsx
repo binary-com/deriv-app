@@ -1,13 +1,12 @@
 import React from 'react';
 import { Text } from '@deriv/components';
-import { Localize } from '@deriv/translations';
 import { Analytics } from '@deriv-com/analytics';
 import { useHistory } from 'react-router-dom';
 import { routes } from '@deriv/shared';
 import { useStore, observer } from '@deriv/stores';
 
 type TCompareAccount = {
-    accounts_sub_text: string;
+    accounts_sub_text: React.ReactNode;
     is_desktop?: boolean;
 };
 
@@ -34,7 +33,7 @@ const CompareAccount = observer(({ accounts_sub_text, is_desktop }: TCompareAcco
                 line_height='s'
                 styles={is_desktop ? { marginInlineStart: '1rem' } : ''}
             >
-                <Localize i18n_default_text={accounts_sub_text} />
+                {accounts_sub_text}
             </Text>
         </div>
     );

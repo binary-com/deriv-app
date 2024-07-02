@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
-import { localize } from '@deriv/translations';
+import { Localize } from '@deriv/translations';
 import { Actions } from 'Components/containers/trading-app-card-actions';
 
 const TradeButton = observer(
@@ -24,25 +24,31 @@ const TradeButton = observer(
                 if (new_tab) {
                     return (
                         <a href={link_to} target='_blank' rel='noopener noreferrer'>
-                            <Button primary>{localize('Open')}</Button>
+                            <Button primary>
+                                <Localize i18n_default_text='Open' />
+                            </Button>
                         </a>
                     );
                 }
                 return (
                     <a href={link_to}>
-                        <Button primary>{localize('Open')}</Button>
+                        <Button primary>
+                            <Localize i18n_default_text='Open' />
+                        </Button>
                     </a>
                 );
             }
             return (
                 <Link to={link_to}>
-                    <Button primary>{localize('Open')}</Button>
+                    <Button primary>
+                        <Localize i18n_default_text='Open' />
+                    </Button>
                 </Link>
             );
         } else if (onAction) {
             return (
                 <Button primary className='trade-button' onClick={() => onAction()} is_disabled={is_buttons_disabled}>
-                    {localize('Open')}
+                    <Localize i18n_default_text='Open' />
                 </Button>
             );
         }
@@ -58,7 +64,7 @@ const TradeButton = observer(
                 rel='noopener noreferrer'
             >
                 <Button primary className='trade-button'>
-                    {localize('Open')}
+                    <Localize i18n_default_text='Open' />
                 </Button>
             </a>
         );

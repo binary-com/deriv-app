@@ -1,17 +1,22 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
-const Localize = ({ i18n_default_text, values, components, options, i18n, shouldUnescape }) => (
-    <Trans
-        i18n={i18n}
-        defaults={i18n_default_text}
-        values={values}
-        components={components}
-        tOptions={options}
-        shouldUnescape={shouldUnescape}
-    />
-);
+const Localize = ({ i18n_default_text, values, components, options, i18n, shouldUnescape }) => {
+    const { t } = useTranslation();
+
+    return (
+        <Trans
+            t={t}
+            i18n={i18n}
+            defaults={i18n_default_text}
+            values={values}
+            components={components}
+            tOptions={options}
+            shouldUnescape={shouldUnescape}
+        />
+    );
+};
 
 // Trans needs to have the i18n instance in scope
 // eslint-disable-next-line react/display-name

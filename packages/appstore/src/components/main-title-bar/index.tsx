@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, Tabs, Icon, Loading } from '@deriv/components';
 import { ContentFlag, makeLazyLoader, moduleLoader } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
-import { Localize, localize } from '@deriv/translations';
+import { Localize, useLocalize } from '@deriv/translations';
 import { useDevice } from '@deriv-com/ui';
 import { useWalletMigration } from '@deriv/hooks';
 import RegulationsSwitcherLoader from 'Components/pre-loader/regulations-switcher-loader';
@@ -26,6 +26,7 @@ const MainTitleBar = () => {
     const { is_landing_company_loaded, is_switching, has_maltainvest_account } = client;
     const { state: wallet_migration_state } = useWalletMigration();
     const { selected_region, handleTabItemClick, toggleRegulatorsCompareModal, content_flag } = traders_hub;
+    const { localize } = useLocalize();
 
     const is_low_risk_cr_real_account =
         content_flag === ContentFlag.LOW_RISK_CR_NON_EU || content_flag === ContentFlag.LOW_RISK_CR_EU;

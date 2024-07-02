@@ -1,5 +1,5 @@
 import { Button } from '@deriv/components';
-import { localize } from '@deriv/translations';
+import { Localize } from '@deriv/translations';
 import TradeButton from 'Components/trade-button/trade-button';
 import React from 'react';
 import { observer } from 'mobx-react-lite';
@@ -33,7 +33,7 @@ const TradingAppCardActions = ({
         case 'get':
             return (
                 <Button disabled={is_account_being_created} primary_light onClick={() => onAction?.()}>
-                    {localize('Get')}
+                    <Localize i18n_default_text='Get' />
                 </Button>
             );
         case 'trade':
