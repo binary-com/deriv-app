@@ -4,6 +4,10 @@ import { Button, Icon, StaticUrl } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
 import { useDBotStore } from 'Stores/useDBotStore';
+import {
+    rudderStackSendGoogleDriveConnectEvent,
+    rudderStackSendGoogleDriveDisconnectEvent,
+} from '../../../analytics/rudderstack-common-events';
 
 const GoogleDrive = observer(() => {
     const { ui } = useStore();
@@ -31,7 +35,16 @@ const GoogleDrive = observer(() => {
                 </div>
                 {is_authorised ? (
                     <Button.Group>
-                        <Button text={localize('Disconnect')} onClick={onDriveConnect} has_effect secondary large />
+                        <Button
+                            text={localize('Disconnect')}
+                            onClick={() => {
+                                onDriveConnect();
+                                rudderStackSendGoogleDriveDisconnectEvent();
+                            }}
+                            has_effect
+                            secondary
+                            large
+                        />
                         <Button
                             text={localize('Open')}
                             onClick={() => {
@@ -63,7 +76,16 @@ const GoogleDrive = observer(() => {
                                 />
                             </div>
                         </div>
-                        <Button text={localize('Sign in')} onClick={onDriveConnect} has_effect primary large />
+                        <Button
+                            text={localize('Sign in')}
+                            onClick={() => {
+                                onDriveConnect();
+                                rudderStackSendGoogleDriveConnectEvent();
+                            }}
+                            has_effect
+                            primary
+                            large
+                        />
                     </React.Fragment>
                 )}
             </div>

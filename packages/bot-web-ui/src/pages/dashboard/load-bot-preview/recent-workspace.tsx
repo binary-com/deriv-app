@@ -6,6 +6,7 @@ import { Icon, Text } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { DBOT_TABS } from 'Constants/bot-contents';
 import { useDBotStore } from 'Stores/useDBotStore';
+import { rudderStackSendDashboardClickEvent } from '../../../analytics/rudderstack-dashboard';
 import { CONTEXT_MENU_MOBILE, MENU_DESKTOP, STRATEGY } from '../../../constants/dashboard';
 import { useComponentVisibility } from '../../../hooks';
 import './index.scss';
@@ -65,11 +66,13 @@ const RecentWorkspace = observer(({ workspace, index }: TRecentWorkspace) => {
     const handleOpen = async () => {
         await loadFileFromRecent();
         setActiveTab(DBOT_TABS.BOT_BUILDER);
+        rudderStackSendDashboardClickEvent({ dashboard_click_name: 'open' });
     };
 
     const handleSave = () => {
         updateBotName(workspace?.name);
         toggleSaveModal();
+        rudderStackSendDashboardClickEvent({ dashboard_click_name: 'save' });
     };
 
     const viewRecentStrategy = async (type: string) => {
@@ -86,6 +89,7 @@ const RecentWorkspace = observer(({ workspace, index }: TRecentWorkspace) => {
 
             case STRATEGY.DELETE:
                 onToggleDeleteDialog(true);
+                rudderStackSendDashboardClickEvent({ dashboard_click_name: 'delete' });
                 break;
 
             default:

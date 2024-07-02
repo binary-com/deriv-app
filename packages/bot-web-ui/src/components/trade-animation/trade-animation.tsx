@@ -6,7 +6,7 @@ import { localize } from '@deriv/translations';
 import ContractResultOverlay from 'Components/contract-result-overlay';
 import { contract_stages } from 'Constants/contract-stage';
 import { useDBotStore } from 'Stores/useDBotStore';
-import { rudderStackSendRunBotEvent } from '../../analytics/rudderstack-quick-strategy';
+import { rudderStackSendRunBotEvent } from '../../analytics/rudderstack-common-events';
 import CircularWrapper from './circular-wrapper';
 import ContractStageText from './contract-stage-text';
 

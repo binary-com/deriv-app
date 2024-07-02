@@ -4,6 +4,7 @@ import { observer, useStore } from '@deriv/stores';
 import { localize } from '@deriv/translations';
 import { tabs_title } from 'Constants/load-modal';
 import { useDBotStore } from 'Stores/useDBotStore';
+import { rudderStackSendCloseEvent } from '../../analytics/rudderstack-common-events';
 import GoogleDrive from '../../pages/dashboard/load-bot-preview/google-drive';
 import Local from './local';
 import LocalFooter from './local-footer';
@@ -36,6 +37,7 @@ const LoadModal = observer(() => {
                 onClickClose={() => {
                     setPreviewOnPopup(false);
                     toggleLoadModal();
+                    rudderStackSendCloseEvent({ subform_source: 'bot_builder', subform_name: 'load_strategy' });
                 }}
                 height_offset='80px'
                 page_overlay
@@ -62,7 +64,10 @@ const LoadModal = observer(() => {
             width='1000px'
             height='80vh'
             is_open={is_load_modal_open}
-            toggleModal={toggleLoadModal}
+            toggleModal={() => {
+                toggleLoadModal();
+                rudderStackSendCloseEvent({ subform_source: 'bot_builder', subform_name: 'load_strategy' });
+            }}
             onEntered={onEntered}
             elements_to_ignore={[document.querySelector('.injectionDiv')]}
         >

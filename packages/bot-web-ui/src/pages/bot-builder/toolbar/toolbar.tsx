@@ -3,7 +3,7 @@ import { Dialog } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
 import { useDBotStore } from 'Stores/useDBotStore';
-import { rudderStackSendQsOpenEvent } from '../../../analytics/rudderstack-quick-strategy';
+import { rudderStackSendOpenEvent } from '../../../analytics/rudderstack-common-events';
 import ToolbarButton from './toolbar-button';
 import WorkspaceGroup from './workspace-group';
 
@@ -20,7 +20,7 @@ const Toolbar = observer(() => {
     const handleQuickStrategyOpen = () => {
         setFormVisibility(true);
         // send to rs if quick strategy is opened from bot builder (mobile)
-        rudderStackSendQsOpenEvent({ subform_source: 'bot_builder' });
+        rudderStackSendOpenEvent({ subform_source: 'bot_builder', subform_name: 'quick_strategy' });
     };
     return (
         <React.Fragment>

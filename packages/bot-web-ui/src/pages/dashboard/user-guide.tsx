@@ -2,6 +2,7 @@ import React from 'react';
 import { Icon, Text } from '@deriv/components';
 import { localize } from '@deriv/translations';
 import { DBOT_TABS } from 'Constants/bot-contents';
+import { rudderStackSendDashboardClickEvent } from '../../analytics/rudderstack-dashboard';
 
 type TUserGuide = {
     is_mobile?: boolean;
@@ -17,6 +18,7 @@ const UserGuide: React.FC<TUserGuide> = ({ is_mobile, handleTabChange, setActive
                 onClick={() => {
                     handleTabChange(DBOT_TABS.TUTORIAL);
                     setActiveTabTutorial(0);
+                    rudderStackSendDashboardClickEvent({ dashboard_click_name: 'user_guide' });
                 }}
                 data-testid='btn-user-guide'
             >

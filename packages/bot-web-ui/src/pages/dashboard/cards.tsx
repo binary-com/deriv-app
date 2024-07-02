@@ -1,4 +1,3 @@
-//kept sometihings commented beacuse of mobx to integrate popup functionality here
 import React from 'react';
 import classNames from 'classnames';
 import { Dialog, Icon, MobileFullPageModal, Text } from '@deriv/components';
@@ -7,7 +6,8 @@ import { localize } from '@deriv/translations';
 import { NOTIFICATION_TYPE } from 'Components/bot-notification/bot-notification-utils';
 import { DBOT_TABS } from 'Constants/bot-contents';
 import { useDBotStore } from 'Stores/useDBotStore';
-import { rudderStackSendQsOpenEvent } from '../../analytics/rudderstack-quick-strategy';
+import { rudderStackSendOpenEvent } from '../../analytics/rudderstack-common-events';
+import { rudderStackSendDashboardClickEvent } from '../../analytics/rudderstack-dashboard';
 import DashboardBotList from './load-bot-preview/dashboard-bot-list';
 import GoogleDrive from './load-bot-preview/google-drive';
 
@@ -58,13 +58,19 @@ const Cards = observer(({ is_mobile, has_dashboard_strategies }: TCardProps) => 
             type: 'my-computer',
             icon: is_mobile ? 'IcLocal' : 'IcMyComputer',
             content: is_mobile ? localize('Local') : localize('My computer'),
-            method: openFileLoader,
+            method: () => {
+                openFileLoader();
+                rudderStackSendDashboardClickEvent({ dashboard_click_name: 'my_computer' });
+            },
         },
         {
             type: 'google-drive',
             icon: 'IcGoogleDriveDbot',
             content: localize('Google Drive'),
-            method: openGoogleDriveDialog,
+            method: () => {
+                openGoogleDriveDialog();
+                rudderStackSendDashboardClickEvent({ dashboard_click_name: 'google_drive' });
+            },
         },
         {
             type: 'bot-builder',
@@ -72,6 +78,7 @@ const Cards = observer(({ is_mobile, has_dashboard_strategies }: TCardProps) => 
             content: localize('Bot Builder'),
             method: () => {
                 setActiveTab(DBOT_TABS.BOT_BUILDER);
+                rudderStackSendDashboardClickEvent({ dashboard_click_name: 'bot_builder' });
             },
         },
         {
@@ -82,7 +89,8 @@ const Cards = observer(({ is_mobile, has_dashboard_strategies }: TCardProps) => 
                 setActiveTab(DBOT_TABS.BOT_BUILDER);
                 setFormVisibility(true);
                 // send to rs if quick strategy is opened from dashbaord
-                rudderStackSendQsOpenEvent({ subform_source: 'dashboard' });
+                rudderStackSendOpenEvent({ subform_source: 'dashboard', subform_name: 'quick_strategy' });
+                rudderStackSendDashboardClickEvent({ dashboard_click_name: 'quick_strategy' });
             },
         },
     ];

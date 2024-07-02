@@ -2,6 +2,7 @@ import React from 'react';
 import { observer, useStore } from '@deriv/stores';
 import { localize } from '@deriv/translations';
 import { useDBotStore } from 'Stores/useDBotStore';
+import { rudderStackSendOpenEvent } from '../../../analytics/rudderstack-common-events';
 import ToolbarIcon from './toolbar-icon';
 
 const WorkspaceGroup = observer(() => {
@@ -31,6 +32,7 @@ const WorkspaceGroup = observer(() => {
                     action={() => {
                         setPreviewOnPopup(true);
                         toggleLoadModal();
+                        rudderStackSendOpenEvent({ subform_source: 'bot_builder', subform_name: 'load_strategy' });
                     }}
                 />
                 <ToolbarIcon

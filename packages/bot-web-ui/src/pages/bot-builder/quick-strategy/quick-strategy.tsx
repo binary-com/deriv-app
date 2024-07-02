@@ -6,7 +6,7 @@ import { MobileFullPageModal, Modal } from '@deriv/components';
 import { observer, useStore } from '@deriv/stores';
 import { localize } from '@deriv/translations';
 import { useDBotStore } from 'Stores/useDBotStore';
-import { rudderStackSendQsCloseEvent } from '../../../analytics/rudderstack-quick-strategy';
+import { rudderStackSendCloseEvent } from '../../../analytics/rudderstack-common-events';
 import DesktopFormWrapper from './form-wrappers/desktop-form-wrapper';
 import MobileFormWrapper from './form-wrappers/mobile-form-wrapper';
 import LossThresholdWarningDialog from './parts/loss-threshold-warning-dialog';
@@ -205,7 +205,8 @@ const QuickStrategy = observer(() => {
             active_tab_ref.current?.querySelector('.active')?.textContent?.toLowerCase() === 'learn more'
                 ? 'learn more'
                 : 'trade parameters';
-        rudderStackSendQsCloseEvent({
+        rudderStackSendCloseEvent({
+            subform_name: 'quick_strategy',
             quick_strategy_tab: active_tab,
             selected_strategy,
             form_values: form_data as TFormValues,

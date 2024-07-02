@@ -11,6 +11,13 @@ export enum ACTION {
     EDIT_QUICK_STRATEGY = 'edit_quick_strategy',
     SELECT_QUICK_STRATEGY_GUIDE = 'select_quick_strategy_guide',
     SWITCH_QUICK_STRATEGY_TAB = 'switch_quick_strategy_tab',
+    DASHBOARD_CLICK = 'dashboard_click',
+    UPLOAD_STRATEGY_START = 'upload_strategy_start',
+    UPLOAD_STRATEGY_COMPLETED = 'upload_strategy_completed',
+    UPLOAD_STRATEGY_FAILED = 'upload_strategy_failed',
+    GOOGLE_DRIVE_CONNECT = 'google_drive_connect',
+    GOOGLE_DRIVE_DISCONNECT = 'google_drive_disconnect',
+    SWITCH_LOAD_STRATEGY_TAB = 'switch_load_strategy_tab',
 }
 
 export type TFormStrategy = {

@@ -128,6 +128,9 @@ export const load = async ({
         setLoading(false);
         const error_message = localize('XML file contains unsupported elements. Please check or modify file.');
         globalObserver.emit('ui.log.error', error_message);
+        return {
+            error: error_message,
+        };
     };
 
     // Check if XML can be parsed correctly.

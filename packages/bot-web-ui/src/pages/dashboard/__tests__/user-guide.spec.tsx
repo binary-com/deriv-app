@@ -3,6 +3,9 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import UserGuide from '../user-guide';
 
+jest.mock('@deriv/bot-skeleton/src/scratch/xml/main.xml', () => '<xml>sample</xml>');
+jest.mock('@deriv/bot-skeleton/src/scratch/dbot', () => jest.fn());
+
 const mocked_props = {
     active_tab: '3',
     is_tour_dialog_visible: true,
