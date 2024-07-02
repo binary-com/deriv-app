@@ -25,6 +25,13 @@ const QuickStrategyGuidesDetail = observer(
         const { is_desktop } = ui;
         const text_size = is_desktop ? 's' : 'xs';
 
+        const scrollToTop = () => {
+            const qs_guide = document.querySelector('.tutorials-mobile__qs-guide');
+            if (qs_guide) {
+                qs_guide.scrollTop = 0;
+            }
+        };
+
         return (
             <>
                 {tutorial_selected_strategy === '' ? (
@@ -36,6 +43,7 @@ const QuickStrategyGuidesDetail = observer(
                                 onClick={() => {
                                     setTutorialSelectedStrategy(qs_name);
                                     rudderStackSendSelectQsStrategyGuideEvent({ selected_strategy: qs_name });
+                                    scrollToTop();
                                 }}
                                 tabIndex={index}
                                 data-testid={'dt_quick_strategy_guides_details'}

@@ -21,6 +21,7 @@ const TutorialsTabMobile = observer(({ tutorial_tabs, prev_active_tutorials }: T
     const initialSelectedTab: TTutorialsTabItem = { label: '', content: undefined };
     const [selectedTab, setSelectedTab] = React.useState(initialSelectedTab);
     const [showSearchBar, setShowSearchBar] = React.useState(false);
+    const scroll_ref = React.useRef<HTMLDivElement & SVGSVGElement>(null);
 
     React.useEffect(() => {
         if (search) setShowSearchBar(true);
@@ -29,6 +30,12 @@ const TutorialsTabMobile = observer(({ tutorial_tabs, prev_active_tutorials }: T
     }, [tutorial_tabs]);
 
     const onFocusSearch = () => setActiveTabTutorial(3);
+
+    const scrollToTop = () => {
+        if (scroll_ref.current) {
+            scroll_ref.current.scrollTop = 0;
+        }
+    };
 
     const onChangeHandle = React.useCallback(
         ({ target }: React.ChangeEvent<HTMLSelectElement>) =>
@@ -109,7 +116,10 @@ const TutorialsTabMobile = observer(({ tutorial_tabs, prev_active_tutorials }: T
                     value={selectedTab.label}
                     label=''
                     should_show_empty_option={false}
-                    onChange={onChangeHandle}
+                    onChange={e => {
+                        onChangeHandle(e);
+                        scrollToTop();
+                    }}
                 />
                 <Icon onClick={onHandleChangeMobile} className='search-icon' icon='IcSearch' />
             </div>
@@ -120,6 +130,7 @@ const TutorialsTabMobile = observer(({ tutorial_tabs, prev_active_tutorials }: T
                     'tutorials-mobile__qs-guide': active_tab_tutorials === 2,
                     'tutorials-mobile__search': active_tab_tutorials === 3,
                 })}
+                ref={scroll_ref}
             >
                 {selectedTab.content}
             </div>
