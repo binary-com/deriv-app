@@ -3,7 +3,11 @@ import { observer, useStore } from '@deriv/stores';
 import AccountActionsDTraderV2 from './account-actions-dtrader-v2';
 import { getAccountTitle } from './Utils/account-switcher-dtrader-v2-utils';
 
-const HeaderAccountActionsDTraderV2 = observer(() => {
+type THeaderAccountActionsDTraderV2Props = {
+    has_notifications_icon?: boolean;
+};
+
+const HeaderAccountActionsDTraderV2 = observer(({ has_notifications_icon }: THeaderAccountActionsDTraderV2Props) => {
     const { client, ui, notifications } = useStore();
     const { account_type, balance, currency, is_eu, is_virtual, loginid } = client;
     const {
@@ -22,6 +26,7 @@ const HeaderAccountActionsDTraderV2 = observer(() => {
                 account_type={account_type}
                 balance={balance}
                 currency={currency}
+                has_notifications_icon={has_notifications_icon}
                 is_acc_switcher_on={is_accounts_switcher_on}
                 is_acc_switcher_disabled={is_account_switcher_disabled}
                 is_eu={is_eu}

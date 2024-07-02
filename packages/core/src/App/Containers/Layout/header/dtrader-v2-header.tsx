@@ -35,7 +35,7 @@ const DTraderV2Header = observer(() => {
         >
             <React.Suspense fallback={<div />}>
                 {show_banner && <RealSignupBannerDTraderV2 openRealAccount={openRealAccount} is_eu={is_eu} />}
-                <HeaderAccountActionsDTraderV2 />
+                <HeaderAccountActionsDTraderV2 has_notifications_icon={pathname !== routes.trader_positions} />
                 {is_real_acc_signup_on && <RealAccountSignup />}
                 <SetAccountCurrencyModal />
             </React.Suspense>

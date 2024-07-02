@@ -9,9 +9,11 @@ $TABS_HEIGHT: var(--core-size-2400);
         display: block;
         justify-content: unset;
         background-color: var(--core-color-solid-slate-50);
+        height: $TABS_HEIGHT;
 
         button {
             width: 50%;
+            padding: 1.05rem 0;
         }
     }
     &__tabs {

@@ -97,6 +97,7 @@ export { default as ProgressSliderMobile } from './components/progress-slider-mo
 export { default as RadioGroup } from './components/radio-group';
 export { default as ReadMore } from './components/read-more';
 export { default as RouteWithSubroutes } from './components/route-with-subroutes';
+export * from './components/skeleton';
 export { default as SelectNative } from './components/select-native';
 export { default as StaticUrl } from './components/static-url';
 export { default as SendEmailTemplate } from './components/send-email-template';

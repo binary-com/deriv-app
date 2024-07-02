@@ -58,3 +58,172 @@
         }
     }
 }
+
+.trade-loader,
+.positions-loader,
+.contract-details-loader {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.trade-loader {
+    background-color: var(--core-color-opacity-black-75);
+    padding: 0 var(--core-spacing-400);
+    gap: var(--semantic-spacing-general-sm);
+    position: relative;
+
+    .skeleton-box,
+    .skeleton-box__trade-types,
+    .skeleton-box__trade-params,
+    .skeleton-box__chart {
+        display: flex;
+        flex-direction: column;
+        border-radius: var(--semantic-borderRadius-md);
+        background-color: var(--component-modal-bg);
+
+        &__trade-types {
+            position: relative;
+            inset-inline-start: calc(-1 * var(--semantic-spacing-general-sm));
+            width: 100vw;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            border-radius: unset;
+            padding: var(--semantic-spacing-general-sm) var(--semantic-spacing-general-md);
+            gap: var(--semantic-spacing-general-sm);
+
+            .skeleton {
+                flex-shrink: 0;
+            }
+        }
+        &__market {
+            padding: 0 var(--semantic-spacing-general-sm);
+        }
+        &__trade-params {
+            padding: var(--semantic-spacing-general-md);
+            gap: var(--semantic-spacing-general-md);
+
+            &-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            &-column {
+                display: flex;
+                flex-direction: column;
+                gap: var(--semantic-spacing-general-sm);
+            }
+        }
+        &__chart {
+            min-height: 400px;
+            padding: var(--semantic-spacing-general-sm);
+        }
+    }
+}
+
+.positions-loader {
+    width: 100%;
+    background-color: var(--core-color-solid-slate-75);
+
+    .skeleton-box {
+        &__filters,
+        &__total-pnl-or-date {
+            display: flex;
+            gap: var(--semantic-spacing-gap-md);
+            margin: var(--semantic-spacing-gap-md) 0;
+            padding: 0 var(--semantic-spacing-gap-md);
+        }
+        &__tabs {
+            display: flex;
+            background-color: var(--component-modal-bg);
+            width: 100%;
+            justify-content: space-around;
+            padding: 1.3rem 0;
+        }
+        &__total-pnl-or-date {
+            justify-content: space-between;
+        }
+        &__contract-cards {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: var(--semantic-spacing-gap-md);
+            padding: 0 var(--semantic-spacing-gap-md);
+        }
+    }
+}
+
+.contract-details-loader {
+    background-color: var(--core-color-solid-slate-75);
+    padding: var(--core-spacing-400);
+    gap: var(--semantic-spacing-general-sm);
+
+    .skeleton-box,
+    .skeleton-box__chart,
+    .skeleton-box__details {
+        display: flex;
+        flex-direction: column;
+        border-radius: var(--semantic-borderRadius-md);
+        background-color: var(--component-modal-bg);
+
+        &__chart {
+            min-height: 360px;
+            padding: var(--semantic-spacing-general-sm);
+        }
+        &__details {
+            padding: var(--semantic-spacing-general-md);
+            gap: var(--semantic-spacing-general-md);
+
+            &-row {
+                display: flex;
+                justify-content: space-between;
+                padding-top: var(--semantic-spacing-general-sm);
+
+                &:first-child {
+                    padding-top: unset;
+                }
+                &:not(:last-child) {
+                    border-bottom: 1px solid var(--core-color-solid-slate-75);
+                    padding-bottom: var(--semantic-spacing-general-sm);
+                }
+            }
+            &-column {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: var(--semantic-spacing-general-2xs);
+            }
+        }
+    }
+    .contract-card-loader {
+        width: 100%;
+        height: 10.4rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: var(--semantic-spacing-gap-md);
+        flex-shrink: 0;
+        padding: var(--semantic-spacing-general-md);
+        border-radius: var(--semantic-borderRadius-md);
+        background-color: var(--component-modal-bg);
+
+        .details,
+        .status-and-profit {
+            display: flex;
+            gap: var(--core-spacing-400);
+            align-items: center;
+        }
+        .status-and-profit {
+            justify-content: space-between;
+        }
+        .title {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            gap: var(--semantic-spacing-general-xs);
+        }
+        .stake {
+            align-self: flex-end;
+        }
+    }
+}

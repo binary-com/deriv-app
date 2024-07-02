@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { Localize } from '@deriv/translations';
+import { Skeleton } from '@deriv/components';
 import { getCurrencyDisplayCode } from '@deriv/shared';
 import { LabelPairedChevronDownCaptionRegularIcon, LabelPairedLockCaptionRegularIcon } from '@deriv/quill-icons';
 import { CaptionText, Heading, ActionSheet } from '@deriv-com/quill-ui';
@@ -19,8 +20,6 @@ const AccountInfoDTraderV2 = ({
     is_disabled,
     toggleDialog,
 }: TAccountInfoDTraderV2) => {
-    const temporary_loader = <div className='header-v2__acc-info--loader' />;
-
     const action_icon = is_disabled ? (
         <LabelPairedLockCaptionRegularIcon />
     ) : (
@@ -45,27 +44,27 @@ const AccountInfoDTraderV2 = ({
                 is_mobile
                 is_dtrader_v2
             >
-                <button
-                    className='header-v2__acc-info__wrapper'
-                    onClick={is_disabled ? undefined : () => toggleDialog()}
-                >
-                    {getAccountIcon({ currency, is_virtual, size: 'md' })}
-                    <div className='header-v2__acc-info'>
-                        {account_switcher_title ? (
+                {account_switcher_title ? (
+                    <button
+                        className='header-v2__acc-info__wrapper'
+                        onClick={is_disabled ? undefined : () => toggleDialog()}
+                    >
+                        {getAccountIcon({ currency, is_virtual, size: 'md' })}
+                        <div className='header-v2__acc-info'>
                             <div className='header-v2__acc-info__name'>
                                 <CaptionText color='quill-typography__color--default'>
                                     {account_switcher_title}
                                 </CaptionText>
                                 {action_icon}
                             </div>
-                        ) : (
-                            temporary_loader
-                        )}
-                        {(balance ?? !currency) && (
-                            <Heading.H5 className='header-v2__acc-info__balance'>{account_balance}</Heading.H5>
-                        )}
-                    </div>
-                </button>
+                            {(balance ?? !currency) && (
+                                <Heading.H5 className='header-v2__acc-info__balance'>{account_balance}</Heading.H5>
+                            )}
+                        </div>
+                    </button>
+                ) : (
+                    <Skeleton width={144} height={36} />
+                )}
             </AccountInfoWrapper>
             <ActionSheet.Root isOpen={is_dialog_on} onClose={() => toggleDialog(false)} position='left'>
                 <ActionSheet.Portal shouldCloseOnDrag>

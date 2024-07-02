@@ -79,6 +79,7 @@
         "@deriv/translations": "^1.0.0",
         "@types/react-virtualized": "^9.21.21",
         "classnames": "^2.2.6",
+        "clsx": "^2.1.1",
         "embla-carousel-react": "8.0.0-rc12",
         "framer-motion": "^6.5.1",
         "gh-pages": "^2.1.1",

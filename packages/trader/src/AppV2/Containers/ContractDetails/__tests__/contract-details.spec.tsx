@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import ContractDetails from '../contract-details';
 import useContractDetails from 'AppV2/Hooks/useContractDetails';
 import useOrderDetails from 'AppV2/Hooks/useOrderDetails';
@@ -82,6 +82,7 @@ jest.mock('AppV2/Components/OrderDetails', () => {
 });
 
 jest.mock('@deriv/shared', () => ({
+    ...jest.requireActual('@deriv/shared'),
     isValidToSell: jest.fn(),
     isMultiplierContract: jest.fn(),
     isValidToCancel: jest.fn(),
@@ -173,52 +174,38 @@ describe('ContractDetails', () => {
     };
 
     it('should render the ContractCard component', async () => {
-        await act(async () => {
-            renderContractDetails();
-        });
+        await waitFor(() => renderContractDetails());
         expect(screen.getByText('ContractCard')).toBeInTheDocument();
     });
 
     it('should render the ChartPlaceholder component', async () => {
-        await act(async () => {
-            renderContractDetails();
-        });
+        await waitFor(() => renderContractDetails());
         expect(screen.getByText('Placeholder Chart')).toBeInTheDocument();
     });
 
     it('should render the DealCancellation component', async () => {
-        await act(async () => {
-            renderContractDetails();
-        });
+        await waitFor(() => renderContractDetails());
         expect(screen.getByText('Deal Cancellation')).toBeInTheDocument();
     });
 
     it('should render the TakeProfit and StopLoss components if conditions are met', async () => {
-        await act(async () => {
-            renderContractDetails();
-        });
+        await waitFor(() => renderContractDetails());
         expect(screen.getByTestId('take-profit')).toBeInTheDocument();
         expect(screen.getByTestId('stop-loss')).toBeInTheDocument();
     });
 
     it('should render the OrderDetails component', async () => {
-        await act(async () => {
-            renderContractDetails();
-        });
+        await waitFor(() => renderContractDetails());
         expect(screen.getByText('Order Details Placeholder')).toBeInTheDocument();
     });
 
     it('should render the PayoutInfo component', async () => {
-        await act(async () => {
-            renderContractDetails();
-        });
+        await waitFor(() => renderContractDetails());
         expect(screen.getByText('Payout Info Placeholder')).toBeInTheDocument();
     });
 
     it('should render the EntryExitDetails component', async () => {
-        await act(async () => {
-            renderContractDetails();
-        });
+        await waitFor(() => renderContractDetails());
         expect(screen.getByText('Entry Exit Details Placeholder')).toBeInTheDocument();
     });
 
@@ -230,27 +217,30 @@ describe('ContractDetails', () => {
                 },
             ],
         });
-        await act(async () => {
-            renderContractDetails();
-        });
         await waitFor(() => {
+            renderContractDetails();
             expect(screen.getByText('Take Profit History Placeholder')).toBeInTheDocument();
         });
     });
 
     it('should render the ContractDetailsFooter component if conditions are met', async () => {
-        await act(async () => {
-            renderContractDetails();
-        });
+        await waitFor(() => renderContractDetails());
         expect(screen.getByText('Contract Details Footer Placeholder')).toBeInTheDocument();
     });
 
     it('should not render the ContractDetailsFooter component if conditions are not met', async () => {
         (hasContractEntered as jest.Mock).mockReturnValue(false);
         (isForwardStarting as jest.Mock).mockReturnValue(false);
-        await act(async () => {
-            renderContractDetails();
-        });
+        await waitFor(() => renderContractDetails());
         expect(screen.queryByText('Contract Details Footer Placeholder')).not.toBeInTheDocument();
+    });
+
+    it('should render loader if is_loading === true', async () => {
+        (useContractDetails as jest.Mock).mockReturnValue({
+            contract_info: mockContractInfo,
+            is_loading: true,
+        });
+        await waitFor(() => renderContractDetails());
+        expect(screen.getByTestId('dt_contract_details_loader')).toBeInTheDocument();
     });
 });

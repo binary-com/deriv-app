@@ -406,13 +406,6 @@
         justify-content: center;
         flex-direction: column;
 
-        &--loader {
-            background-color: var(--core-color-solid-slate-75);
-            width: var(--core-size-3400);
-            height: var(--core-spacing-900);
-            border-radius: var(--core-borderRadius-400);
-        }
-
         &__name {
             display: flex;
             align-items: center;
@@ -457,6 +450,7 @@
 
     .badge__position-top-sm {
         top: calc(-1 * var(--temp-static-spacing-7));
+        inset-inline-end: calc(-1 * var(--temp-static-spacing-7));
     }
 }
 

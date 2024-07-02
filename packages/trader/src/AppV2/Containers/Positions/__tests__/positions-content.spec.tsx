@@ -11,7 +11,7 @@ import { TPortfolioPosition } from '@deriv/stores/types';
 const contractTypeFilter = 'Filter by trade types';
 const contractCardList = 'ContractCardList';
 const emptyPositions = 'EmptyPositions';
-const loaderTestId = 'dt_initial_loader';
+const loaderTestId = 'dt_positions_loader';
 const totalProfitLoss = 'Total profit/loss:';
 
 const mediaQueryList = {

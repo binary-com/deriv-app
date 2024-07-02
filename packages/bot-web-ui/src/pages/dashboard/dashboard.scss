@@ -330,6 +330,7 @@
                     @include mobile-or-tablet-screen {
                         display: flex;
                         flex-flow: unset;
+                        justify-content: space-around;
                         padding: 2.4rem 0 1.6rem;
                     }
                     @include mobile-screen {

@@ -1,0 +1,21 @@
+.skeleton {
+    background-color: var(--core-color-opacity-black-75);
+    border-radius: var(--semantic-borderRadius-md);
+
+    &.animated {
+        animation: var(--motion-duration-moderate) ease-out alternate infinite pulsate;
+
+        @keyframes pulsate {
+            to {
+                background-color: var(--core-color-opacity-black-100);
+            }
+        }
+    }
+    &.text {
+        border-radius: unset;
+    }
+    &-paragraph {
+        display: flex;
+        flex-direction: column;
+    }
+}
