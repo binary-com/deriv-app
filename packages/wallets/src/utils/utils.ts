@@ -1,10 +1,15 @@
 import moment from 'moment';
 
-export default function unixToDateString(date: Date, format = 'YYYY-MM-DD') {
+/**
+ * A utility function which return date string after converting and formatting date objects/strings.
+ * @param date the date object or string which needs to be converted/formatted.
+ * @param format (optional) the format of the returned date. Default format is  'YYYY-MM-DD' (ISO 8601).
+ */
+export const getFormattedDateString = (date: Date | string, format = 'YYYY-MM-DD') => {
     const formattedDate = moment(date).format(format);
 
     return formattedDate;
-}
+};
 
 type TServerError = {
     code: string;

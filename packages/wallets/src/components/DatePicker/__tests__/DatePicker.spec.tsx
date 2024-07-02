@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { FlowTextField } from '../../FlowField';
 import { FlowProvider } from '../../FlowProvider';
+import { FormField } from '../../FormField';
 import DatePicker from '../DatePicker';
 
 jest.mock('react-calendar/dist/Calendar.css', () => '');
@@ -32,7 +32,7 @@ describe('DatePicker', () => {
                     test: 'default',
                 }}
                 screens={{
-                    test: <FlowTextField name='test' />,
+                    test: <FormField name='test' />,
                 }}
             >
                 {() => <DatePicker name='Test Component' onDateChange={mockOnDateChange} />}
@@ -50,7 +50,7 @@ describe('DatePicker', () => {
                     test: 'default',
                 }}
                 screens={{
-                    test: <FlowTextField name='test' />,
+                    test: <FormField name='test' />,
                 }}
             >
                 {() => <DatePicker name='Test Component' onDateChange={mockOnDateChange} />}
@@ -73,7 +73,7 @@ describe('DatePicker', () => {
                     test: 'default',
                 }}
                 screens={{
-                    test: <FlowTextField name='test' />,
+                    test: <FormField name='test' />,
                 }}
             >
                 {() => <DatePicker mobileAlignment='above' name='Test Component' onDateChange={mockOnDateChange} />}
@@ -96,7 +96,7 @@ describe('DatePicker', () => {
                     test: 'default',
                 }}
                 screens={{
-                    test: <FlowTextField name='test' />,
+                    test: <FormField name='test' />,
                 }}
             >
                 {() => <DatePicker name='Test Component' onDateChange={mockOnDateChange} />}
@@ -119,7 +119,7 @@ describe('DatePicker', () => {
                     test: 'default',
                 }}
                 screens={{
-                    test: <FlowTextField name='test' />,
+                    test: <FormField name='test' />,
                 }}
             >
                 {() => <DatePicker name='Test Component' onDateChange={mockOnDateChange} />}

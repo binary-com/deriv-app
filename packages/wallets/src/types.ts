@@ -24,6 +24,8 @@ import type {
     useMT5AccountsList,
     usePOA,
     usePOI,
+    useResidenceList,
+    useSettings,
     useSortedMT5Accounts,
     useTransactions,
     useTransferBetweenAccounts,
@@ -34,6 +36,7 @@ import { IconTypes } from '@deriv/quill-icons';
 // eslint-disable-next-line  @typescript-eslint/no-namespace
 export namespace THooks {
     export type AccountLimits = NonNullable<ReturnType<typeof useAccountLimits>['data']>;
+    export type AccountSettings = NonNullable<ReturnType<typeof useSettings>['data']>;
     export type Authentication = NonNullable<ReturnType<typeof useAuthentication>['data']>;
     export type AvailableMT5Accounts = NonNullable<ReturnType<typeof useAvailableMT5Accounts>['data']>[number];
     export type Authorize = NonNullable<ReturnType<typeof useAuthorize>['data']>;
@@ -64,6 +67,7 @@ export namespace THooks {
     export type TransferAccount = NonNullable<
         NonNullable<ReturnType<typeof useTransferBetweenAccounts>['data']>['accounts']
     >[number];
+    export type ResidenceList = NonNullable<ReturnType<typeof useResidenceList>['data']>;
 }
 // eslint-disable-next-line  @typescript-eslint/no-namespace
 export namespace TPlatforms {
