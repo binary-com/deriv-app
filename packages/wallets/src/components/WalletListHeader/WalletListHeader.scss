@@ -27,9 +27,7 @@
         border-radius: 0.8rem;
 
         &-input {
-            width: 0;
-            height: 0;
-            opacity: 0;
+            visibility: hidden;
         }
 
         &:hover {
