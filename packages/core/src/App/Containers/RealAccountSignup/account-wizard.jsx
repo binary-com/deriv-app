@@ -401,13 +401,8 @@ const AccountWizard = observer(props => {
                     user_choice: JSON.stringify(response?.echo_req),
                 });
                 modifiedProps.setIsRiskWarningVisible(false);
-                if (modifiedProps.real_account_signup_target === 'maltainvest') {
-                    modifiedProps.onOpenDepositModal();
-                } else if (modifiedProps.real_account_signup_target === 'samoa') {
-                    modifiedProps.onOpenWelcomeModal(response.new_account_samoa.currency.toLowerCase());
-                } else {
-                    modifiedProps.onFinishSuccess(response.new_account_real.currency.toLowerCase());
-                }
+                modifiedProps.onOpenDepositModal();
+
                 const country_code = modifiedProps.account_settings.citizen || modifiedProps.residence;
                 /**
                  * If IDV details are present, then submit IDV details

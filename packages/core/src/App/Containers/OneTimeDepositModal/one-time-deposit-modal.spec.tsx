@@ -60,7 +60,7 @@ describe('<OneTimeDepositModal />', () => {
             }
         );
         expect(screen.getByText('Deposit')).toBeInTheDocument();
-        expect(screen.getByText('Account created. Select payment method for deposit.')).toBeInTheDocument();
+        expect(screen.getByText(/select a payment method to make a deposit into your account/i)).toBeInTheDocument();
         expect(screen.getByTestId('dt_deposit_fiat_iframe_iframe')).toBeInTheDocument();
     });
 
