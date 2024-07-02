@@ -1,7 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { TooltipRenderProps } from 'react-joyride';
 import { LegacyClose2pxIcon } from '@deriv/quill-icons';
-import { THooks } from '../../types';
 import { WalletButton, WalletText } from '../Base';
 import './WalletTourGuide.scss';
 
@@ -48,7 +47,3 @@ export const SpotLightHeader = ({ children }: PropsWithChildren) => (
         {children}
     </WalletText>
 );
-
-export const getFiatWalletLoginId = (wallets?: THooks.WalletAccountsList[]) => {
-    return wallets?.find(wallet => typeof wallet.is_crypto === 'boolean' && !wallet.is_crypto)?.loginid;
-};
