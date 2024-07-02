@@ -154,6 +154,7 @@ const mock = (): TStores & { is_mock: boolean } => {
             is_proof_of_ownership_enabled: false,
             is_poa_expired: false,
             is_populating_dxtrade_account_list: false,
+            is_populating_ctrader_account_list: false,
             is_social_signup: false,
             is_single_currency: false,
             is_switching: false,

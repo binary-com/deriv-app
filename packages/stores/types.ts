@@ -472,6 +472,7 @@ type TClientStore = {
     is_proof_of_ownership_enabled: boolean;
     is_poa_expired: boolean;
     is_populating_dxtrade_account_list: boolean;
+    is_populating_ctrader_account_list: boolean;
     is_switching: boolean;
     is_tnc_needed: boolean;
     is_high_risk: boolean;

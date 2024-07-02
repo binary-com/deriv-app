@@ -73,6 +73,7 @@ export default class ClientStore extends BaseStore {
     is_populating_account_list = false;
     is_populating_mt5_account_list = true;
     is_populating_dxtrade_account_list = true;
+    is_populating_ctrader_account_list = true;
     website_status = {};
     account_settings = {};
     account_status = {};
@@ -192,6 +193,7 @@ export default class ClientStore extends BaseStore {
             is_populating_account_list: observable,
             is_populating_mt5_account_list: observable,
             is_populating_dxtrade_account_list: observable,
+            is_populating_ctrader_account_list: observable,
             website_status: observable,
             account_settings: observable,
             account_status: observable,
