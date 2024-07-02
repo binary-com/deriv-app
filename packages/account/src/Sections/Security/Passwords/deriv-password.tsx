@@ -6,7 +6,7 @@ import { getBrandWebsiteName, getPlatformSettings, toTitleCase } from '@deriv/sh
 import { observer, useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
 
-import DerivComLogo from 'Assets/ic-brand-deriv-red.svg';
+import { BrandDerivLogoCoralIcon } from '@deriv/quill-icons';
 import FormSubHeader from '../../../Components/form-sub-header';
 import SentEmailModal from '../../../Components/sent-email-modal';
 
@@ -70,7 +70,7 @@ const DerivPassword = observer(() => {
                         />
                     </Text>
                     <div className='passwords-platform__logo-container'>
-                        <DerivComLogo />
+                        <BrandDerivLogoCoralIcon />
                         <Text line_height='l' size='xs' weight='bold'>
                             {brand_website_name}
                         </Text>

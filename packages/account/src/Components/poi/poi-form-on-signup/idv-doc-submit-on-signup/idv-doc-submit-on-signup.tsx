@@ -9,7 +9,7 @@ import {
     getIDVNotApplicableOption,
 } from '@deriv/shared';
 import { useTranslations, Localize } from '@deriv-com/translations';
-import PoiNameDobExample from '../../../../Assets/ic-poi-name-dob-example.svg';
+import { DerivLightNameDobPoiIcon } from '@deriv/quill-icons';
 import FormSubHeader from '../../../form-sub-header';
 import IDVForm from '../../../forms/idv-form';
 import PersonalDetailsForm from '../../../forms/personal-details-form.jsx';
@@ -44,7 +44,7 @@ export const IdvDocSubmitOnSignup = ({
     residence_list,
 }: TIdvDocSubmitOnSignup) => {
     const { localize } = useTranslations();
-    const side_note_image = <PoiNameDobExample />;
+    const side_note_image = <DerivLightNameDobPoiIcon height='195px' width='285px' />;
     const validateFields = (values: TIDVDocFormType) => {
         const errors: FormikErrors<Omit<TIDVDocFormType, 'document_type'> & { document_type?: string }> = {};
         const { document_type, document_number, document_additional } = values;

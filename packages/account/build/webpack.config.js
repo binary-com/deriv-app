@@ -49,13 +49,6 @@ module.exports = function (env) {
                         priority: -10,
                         test: /[\\/]node_modules[\\/]/,
                     },
-                    assets: {
-                        chunks: 'all',
-                        name: 'assets',
-                        test: /[\\/]Assets[\\/]/,
-                        reuseExistingChunk: true,
-                        idHint: 'assets',
-                    },
                 },
                 chunks: 'all',
                 maxAsyncRequests: 30,

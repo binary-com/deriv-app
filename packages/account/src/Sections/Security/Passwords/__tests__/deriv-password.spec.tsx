@@ -4,7 +4,10 @@ import DerivPassword from '../deriv-password';
 import { APIProvider, useVerifyEmail } from '@deriv/api';
 import { mockStore, StoreProvider } from '@deriv/stores';
 
-jest.mock('Assets/ic-brand-deriv-red.svg', () => () => 'BrandDerivRed');
+jest.mock('@deriv/quill-icons', () => ({
+    ...jest.requireActual('@deriv/quill-icons'),
+    BrandDerivLogoCoralIcon: () => 'BrandDerivLogoCoralIcon',
+}));
 
 jest.mock('@deriv/api', () => ({
     ...jest.requireActual('@deriv/api'),
@@ -48,7 +51,7 @@ describe('<DerivPassword />', () => {
                 /use the to log in to deriv\.com, deriv go, deriv trader, smarttrader, deriv bot and deriv ctrader\./i
             )
         ).toBeInTheDocument();
-        expect(screen.queryByText(/BrandDerivRed/i)).toBeInTheDocument();
+        expect(screen.queryByText(/BrandDerivLogoCoralIcon/i)).toBeInTheDocument();
         expect(screen.getByRole('button', { name: /change password/i })).toBeInTheDocument();
         expect(screen.queryByText(/unlink from/i)).not.toBeInTheDocument();
 

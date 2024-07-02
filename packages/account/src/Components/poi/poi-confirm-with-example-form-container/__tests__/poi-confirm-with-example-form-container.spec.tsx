@@ -4,7 +4,10 @@ import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import PoiConfirmWithExampleFormContainer from '../poi-confirm-with-example-form-container';
 
-jest.mock('Assets/ic-poi-name-dob-example.svg', () => jest.fn(() => 'PoiNameDobExampleImage'));
+jest.mock('@deriv/quill-icons', () => ({
+    ...jest.requireActual('@deriv/quill-icons'),
+    DerivLightNameDobPoiIcon: () => 'DerivLightNameDobPoiIcon',
+}));
 
 jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
@@ -56,7 +59,7 @@ describe('<PoiConfirmWithExampleFormContainer/>', () => {
     it('should render PersonalDetailsForm with image and checkbox', async () => {
         render(<PoiConfirmWithExampleFormContainer {...mock_props} />);
 
-        expect(await screen.findByText('PoiNameDobExampleImage')).toBeInTheDocument();
+        expect(await screen.findByText('DerivLightNameDobPoiIcon')).toBeInTheDocument();
         expect(screen.getByText(clarification_message)).toBeInTheDocument();
         const checkbox_el: HTMLInputElement = screen.getByRole('checkbox');
         expect(checkbox_el.checked).toBeFalsy();

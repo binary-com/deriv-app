@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Text } from '@deriv/components';
 import { localize } from '@deriv/translations';
-import IdvDocumentRejected from '../../../../Assets/ic-idv-document-rejected.svg';
+import { DerivLightExclamationPoiIcon } from '@deriv/quill-icons';
 import { POIContext } from '@deriv/shared';
 import { submission_status_code } from '../../../../Sections/Verification/ProofOfIdentity/proof-of-identity-utils';
 
@@ -14,7 +14,7 @@ const IdvLimited = ({ handleRequireSubmission }: TIdvLimited) => {
 
     return (
         <div className='proof-of-identity__container'>
-            <IdvDocumentRejected className='icon' />
+            <DerivLightExclamationPoiIcon className='icon' />
             <Text className='proof-of-identity__text btm-spacer' align='center' weight='bold'>
                 {localize('ID verification failed')}
             </Text>

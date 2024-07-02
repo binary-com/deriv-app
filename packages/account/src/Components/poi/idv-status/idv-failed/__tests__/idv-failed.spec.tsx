@@ -26,9 +26,13 @@ jest.mock('@deriv/shared', () => ({
 
 jest.mock('Components/forms/personal-details-form', () => jest.fn(() => <div>PersonalDetailsForm</div>));
 jest.mock('Components/forms/idv-form', () => jest.fn(() => <div>IDVForm</div>));
-jest.mock('Assets/ic-poi-name-example.svg', () => jest.fn(() => 'PoiNameExample'));
-jest.mock('Assets/ic-poi-dob-example.svg', () => jest.fn(() => 'PoiDobExample'));
-jest.mock('Assets/ic-poi-name-dob-example.svg', () => jest.fn(() => 'PoiNameDobExample'));
+
+jest.mock('@deriv/quill-icons', () => ({
+    ...jest.requireActual('@deriv/quill-icons'),
+    DerivLightNamePoiIcon: () => 'DerivLightNamePoiIcon',
+    DerivLightNameDobPoiIcon: () => 'DerivLightNameDobPoiIcon',
+    DerivLightDobPoiIcon: () => 'DerivLightDobPoiIcon',
+}));
 
 describe('<IdvFailed/>', () => {
     const mock_props: React.ComponentProps<typeof IdvFailed> = {

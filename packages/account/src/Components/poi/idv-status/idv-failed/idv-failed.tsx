@@ -15,7 +15,7 @@ import {
 } from '@deriv/shared';
 import { useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
-import PoiNameDobExample from '../../../../Assets/ic-poi-name-dob-example.svg';
+import { DerivLightNameDobPoiIcon } from '@deriv/quill-icons';
 import FormBody from '../../../form-body';
 import IDVForm from '../../../forms/idv-form';
 import FormFooter from '../../../form-footer';
@@ -87,7 +87,7 @@ const IdvFailed = ({
 
     const [idv_failure, setIdvFailure] = React.useState<TIDVFailureConfig>({
         required_fields: [],
-        side_note_image: <PoiNameDobExample />,
+        side_note_image: <DerivLightNameDobPoiIcon height='195px' width='285px' />,
         failure_message: null,
         inline_note_text: null,
     });

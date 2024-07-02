@@ -4,7 +4,7 @@ import { useDevice } from '@deriv-com/ui';
 import { Localize } from '@deriv/translations';
 import { useStore } from '@deriv/stores';
 import { getExampleImagesConfig } from '../../../Configs/poa-common-mistake-examples-config';
-import IcErrorBadge from '../../../Assets/ic-error-badge.svg';
+import { LegacyLossIcon } from '@deriv/quill-icons';
 import './common-mistake-examples.scss';
 
 type TCommonMistakeExamplePartialsProps = {
@@ -23,7 +23,7 @@ const CommonMistakeExamplePartials = ({ description, image }: TCommonMistakeExam
     <div className='common-mistake-examples__content-layout'>
         {image}
         <div className='common-mistake-examples__content-description'>
-            <IcErrorBadge />
+            <LegacyLossIcon iconSize='xs' />
             <Text size='xxxs' line_height='s' role='document'>
                 {description}
             </Text>

@@ -5,7 +5,10 @@ import { IDV_ERROR_STATUS } from '@deriv/shared';
 import IdvSubmitComplete from '../idv-submit-complete';
 import { StoreProvider, mockStore } from '@deriv/stores';
 
-jest.mock('../../../../../Assets/ic-idv-document-pending.svg', () => jest.fn(() => 'IdvDocumentPending'));
+jest.mock('@deriv/quill-icons', () => ({
+    ...jest.requireActual('@deriv/quill-icons'),
+    DerivLightWaitingPoiIcon: () => 'DerivLightWaitingPoiIcon',
+}));
 
 type TIdvSubmitCompleteProps = React.ComponentProps<typeof IdvSubmitComplete>;
 
@@ -46,7 +49,7 @@ describe('<IdvSubmitComplete/>', () => {
         };
         renderComponent({ props: new_props });
 
-        expect(screen.getByText('IdvDocumentPending')).toBeInTheDocument();
+        expect(screen.getByText('DerivLightWaitingPoiIcon')).toBeInTheDocument();
         expect(screen.getByText('Mock Redirect Button')).toBeInTheDocument();
         expect(screen.getByText('Your documents were submitted successfully')).toBeInTheDocument();
         expect(
@@ -70,7 +73,7 @@ describe('<IdvSubmitComplete/>', () => {
 
         renderComponent({ props: new_props });
 
-        expect(screen.getByText('IdvDocumentPending')).toBeInTheDocument();
+        expect(screen.getByText('DerivLightWaitingPoiIcon')).toBeInTheDocument();
         expect(screen.getByText('Your documents were submitted successfully')).toBeInTheDocument();
         expect(screen.getByText('Submit proof of address')).toBeInTheDocument();
         expect(screen.getByText("Next, we'll need your proof of address.")).toBeInTheDocument();
@@ -96,7 +99,7 @@ describe('<IdvSubmitComplete/>', () => {
         };
         renderComponent({ props: new_props, store_config: new_store });
 
-        expect(screen.getByText('IdvDocumentPending')).toBeInTheDocument();
+        expect(screen.getByText('DerivLightWaitingPoiIcon')).toBeInTheDocument();
         expect(screen.getByText('Your profile is updated')).toBeInTheDocument();
         expect(
             screen.getByText(
@@ -124,7 +127,7 @@ describe('<IdvSubmitComplete/>', () => {
         };
         renderComponent({ props: new_props, store_config: new_store });
 
-        expect(screen.getByText('IdvDocumentPending')).toBeInTheDocument();
+        expect(screen.getByText('DerivLightWaitingPoiIcon')).toBeInTheDocument();
         expect(screen.getByText('Your document has been submitted')).toBeInTheDocument();
         expect(
             screen.getByText(

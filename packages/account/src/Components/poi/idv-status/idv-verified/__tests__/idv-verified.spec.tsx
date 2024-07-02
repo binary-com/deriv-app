@@ -10,8 +10,10 @@ jest.mock('@deriv/shared', () => ({
     isMobile: jest.fn(() => false),
 }));
 
-jest.mock('../../../../../Assets/ic-idv-verified.svg', () => jest.fn(() => 'mockedSVGIcon'));
-
+jest.mock('@deriv/quill-icons', () => ({
+    ...jest.requireActual('@deriv/quill-icons'),
+    DerivLightApprovedPoiIcon: () => 'DerivLightApprovedPoiIcon',
+}));
 describe('<IdvVerified />', () => {
     const needs_poa_header = /your id is verified\. you will also need to submit proof of your address\./i;
     const idv_passed_header = /id verification passed/i;
@@ -25,7 +27,7 @@ describe('<IdvVerified />', () => {
     it('should render the IdvVerified component when needs_poa is true and is_from_external is false in desktop', () => {
         renderWithRouter(<IdvVerified needs_poa />);
         expect(screen.getByTestId('poi_idv_verified_container')).toBeInTheDocument();
-        expect(screen.getByText(/mockedsvgicon/i)).toBeInTheDocument();
+        expect(screen.getByText(/DerivLightApprovedPoiIcon/i)).toBeInTheDocument();
         expect(screen.getByText(needs_poa_header)).toBeInTheDocument();
         expect(screen.getByText(needs_poa_text)).toBeInTheDocument();
         expect(screen.getByText(submit_text)).toBeInTheDocument();
@@ -39,7 +41,7 @@ describe('<IdvVerified />', () => {
         (isMobile as jest.Mock).mockReturnValue(true);
         renderWithRouter(<IdvVerified is_from_external />);
         expect(screen.getByTestId('poi_idv_verified_container')).toBeInTheDocument();
-        expect(screen.getByText(/mockedsvgicon/i)).toBeInTheDocument();
+        expect(screen.getByText(/DerivLightApprovedPoiIcon/i)).toBeInTheDocument();
         expect(screen.getByText(idv_passed_header)).toBeInTheDocument();
         expect(screen.queryByText(needs_poa_text)).not.toBeInTheDocument();
         expect(screen.queryByText(submit_text)).not.toBeInTheDocument();

@@ -3,7 +3,10 @@ import { render, screen } from '@testing-library/react';
 import { StoreProvider, mockStore } from '@deriv/stores';
 import CommonMistakeExamples from '../common-mistake-examples';
 
-jest.mock('Assets/ic-error-badge.svg', () => jest.fn(() => 'ErrorIcon'));
+jest.mock('@deriv/quill-icons', () => ({
+    ...jest.requireActual('@deriv/quill-icons'),
+    LegacyLossIcon: () => 'LegacyLossIcon',
+}));
 
 describe('CommonMistakeExamples', () => {
     it('should render the component with 6 mistake descriptions', () => {

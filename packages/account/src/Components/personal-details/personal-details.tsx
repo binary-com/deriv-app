@@ -246,7 +246,7 @@ const PersonalDetails = observer(
                                                 is_virtual={is_virtual}
                                                 is_svg={is_svg}
                                                 is_eu_user={is_eu_user}
-                                                side_note={<DerivLightNameDobPoiIcon height='200px' />}
+                                                side_note={<DerivLightNameDobPoiIcon height='195px' width='285px' />}
                                                 is_rendered_for_idv={is_rendered_for_idv}
                                                 editable_fields={getEditableFields(
                                                     values?.confirmation_checkbox,

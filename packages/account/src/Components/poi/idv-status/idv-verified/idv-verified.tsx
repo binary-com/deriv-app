@@ -4,7 +4,7 @@ import { Text } from '@deriv/components';
 import { useDevice } from '@deriv-com/ui';
 import { Localize } from '@deriv/translations';
 import { ContinueTradingButton } from '../../../poa/continue-trading-button/continue-trading-button';
-import IdvDocumentVerified from '../../../../Assets/ic-idv-verified.svg';
+import { DerivLightApprovedPoiIcon } from '@deriv/quill-icons';
 import PoaButton from '../../../poa/poa-button/poa-button';
 
 type TIdvVerified = {
@@ -25,7 +25,7 @@ const IdvVerified = ({ needs_poa, is_from_external, redirect_button }: Partial<T
             className={clsx('proof-of-identity__container', 'proof-of-identity__container--status')}
             data-testid='poi_idv_verified_container'
         >
-            <IdvDocumentVerified className='icon' />
+            <DerivLightApprovedPoiIcon className='icon' />
             <Text className='proof-of-identity__text btm-spacer' align='center' weight='bold'>
                 {header_Text}
             </Text>

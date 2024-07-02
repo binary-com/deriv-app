@@ -2,9 +2,7 @@ import React from 'react';
 import { GetAccountStatus, ResidenceList } from '@deriv/api-types';
 import { IDV_ERROR_STATUS, getIDVError } from '@deriv/shared';
 import { Localize } from '@deriv/translations';
-import PoiNameDobExample from '../Assets/ic-poi-name-dob-example.svg';
-import PoiNameExample from '../Assets/ic-poi-name-example.svg';
-import PoiDobExample from '../Assets/ic-poi-dob-example.svg';
+import { DerivLightNameDobPoiIcon, DerivLightDobPoiIcon, DerivLightNamePoiIcon } from '@deriv/quill-icons';
 import { getIDVDocumentType } from '../Helpers/utils';
 
 const handleOnClick = () => window.LC_API.open_chat_window();
@@ -41,7 +39,7 @@ export const generateIDVError = (
         case IDV_ERROR_STATUS.NameMismatch.code:
             return {
                 required_fields: ['first_name', 'last_name'],
-                side_note_image: <PoiNameExample />,
+                side_note_image: <DerivLightNamePoiIcon height='195px' width='285px' />,
                 inline_note_text: (
                     <Localize
                         i18n_default_text='To avoid delays, enter your <0>name</0> exactly as it appears on your {{document_name}}.'
@@ -54,7 +52,7 @@ export const generateIDVError = (
         case IDV_ERROR_STATUS.DobMismatch.code:
             return {
                 required_fields: ['date_of_birth'],
-                side_note_image: <PoiDobExample />,
+                side_note_image: <DerivLightDobPoiIcon height='195px' width='285px' />,
                 inline_note_text: (
                     <Localize
                         i18n_default_text='To avoid delays, enter your <0>date of birth</0> exactly as it appears on your {{document_name}}.'
@@ -67,7 +65,7 @@ export const generateIDVError = (
         default:
             return {
                 required_fields: ['first_name', 'last_name', 'date_of_birth'],
-                side_note_image: <PoiNameDobExample />,
+                side_note_image: <DerivLightNameDobPoiIcon height='195px' width='285px' />,
                 inline_note_text: (
                     <Localize
                         i18n_default_text='To avoid delays, enter your <0>name</0> and <0>date of birth</0> exactly as they appear on your {{document_name}}.'

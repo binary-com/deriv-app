@@ -274,7 +274,8 @@
         width: 100%;
 
         &:not(.cfd-personal-details-modal__form *):not(.trade-container__multiplier-dropdown):not(
-                .dc-dropdown--left):not(.contract-type-info__dropdown) {
+                .dc-dropdown--left
+            ):not(.contract-type-info__dropdown) {
             margin-top: unset;
         }
 

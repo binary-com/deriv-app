@@ -4,7 +4,7 @@ import { Text } from '@deriv/components';
 import { TIDVErrorStatus, IDV_ERROR_STATUS } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
-import IdvDocumentPending from '../../../../Assets/ic-idv-document-pending.svg';
+import { DerivLightWaitingPoiIcon } from '@deriv/quill-icons';
 import PoaButton from '../../../poa/poa-button';
 
 type TIdvSubmitComplete = {
@@ -52,7 +52,7 @@ const IdvSubmitComplete = observer(
 
         return (
             <div className={clsx('proof-of-identity__container', 'proof-of-identity__container--status')}>
-                <IdvDocumentPending className='icon' />
+                <DerivLightWaitingPoiIcon className='icon' />
                 <Text className='proof-of-identity__text btm-spacer' align='center' weight='bold'>
                     {getHeaderText()}
                 </Text>
