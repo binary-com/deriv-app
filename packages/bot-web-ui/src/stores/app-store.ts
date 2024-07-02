@@ -49,15 +49,35 @@ export default class AppStore {
         link: localize('Switch to another account'),
     });
 
-    getErrorForEuClients = (is_logged_in = false) => {
+    getErrorForEuClients = (is_logged_in = false, country: string | undefined = undefined) => {
         return {
             text: ' ',
             title: is_logged_in
-                ? localize('Deriv Bot is not available for EU clients')
-                : localize('Deriv Bot is unavailable in the EU'),
+                ? localize(`Deriv Bot is not available for ${country || 'EU'} clients`)
+                : localize(`Deriv Bot is unavailable in ${country || 'the EU'}`),
             link: is_logged_in ? localize("Back to Trader's Hub") : '',
             route: routes.traders_hub,
         };
+    };
+
+    throwErrorForExceptionCountries = (client_country: string) => {
+        const { client, common } = this.core;
+
+        const not_allowed_clients_country: { [key: string]: string } = {
+            au: 'Australian',
+            no: 'Norwegian',
+            jp: 'Japanese',
+            sg: 'Singaporean',
+        };
+
+        const country_name = not_allowed_clients_country[client_country];
+
+        if (country_name) {
+            return showDigitalOptionsUnavailableError(
+                common.showError,
+                this.getErrorForEuClients(client.is_logged_in, country_name)
+            );
+        }
     };
 
     handleErrorForEu = (show_default_error = false) => {
@@ -69,6 +89,7 @@ export default class AppStore {
                 window.location.href = routes.traders_hub;
             }
 
+            this.throwErrorForExceptionCountries(client?.clients_country);
             return showDigitalOptionsUnavailableError(common.showError, this.getErrorForEuClients());
         }
 
@@ -77,6 +98,7 @@ export default class AppStore {
         }
 
         if (window.location.pathname.includes(routes.bot)) {
+            this.throwErrorForExceptionCountries(client?.account_settings?.country_code as string);
             if (client.should_show_eu_error) {
                 return showDigitalOptionsUnavailableError(
                     common.showError,
