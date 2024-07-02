@@ -106,6 +106,8 @@ export type TWalletCarouselItem = Omit<THooks.AllWalletAccounts, 'landing_compan
 
 export type TIconTypes = Record<string, IconTypes>;
 
+export type TCurrencyIconTypes = Record<THooks.WalletAccountsList['wallet_currency_type'], IconTypes>;
+
 export type TSubscribedBalance = {
     balance: Omit<ReturnType<typeof useBalanceSubscription>, 'subscribe' | 'unsubscribe'>;
 };

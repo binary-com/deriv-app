@@ -3,23 +3,29 @@
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
-    border-radius: 0.4rem;
 
-    &--lg {
+    &--xl {
         width: 12.8rem;
         height: 8rem;
-        padding: 1rem 1.6rem;
+    }
+
+    &--lg {
+        width: 8.4rem;
+        height: 5.2rem;
     }
 
     &--md {
         width: 6.4rem;
         height: 4rem;
-        padding: 0.5rem 0.8rem;
     }
 
     &--sm {
         width: 4rem;
         height: 2.4rem;
-        padding: 0.2rem 0.4rem;
+    }
+
+    &--xs {
+        width: 2.4rem;
+        height: 1.4rem;
     }
 }

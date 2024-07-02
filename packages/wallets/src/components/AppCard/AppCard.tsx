@@ -3,28 +3,30 @@ import type { TGenericSizes, THooks } from '../../types';
 import { AppCardBadge } from '../AppCardBadge';
 import { WalletText } from '../Base';
 import { WalletGradientBackground } from '../WalletGradientBackground';
-import { WalletsAppLinkedWithWalletIcon } from '../WalletsAppLinkedWithWalletIcon';
+import { WalletMarketCurrencyIcon } from '../WalletMarketCurrencyIcon';
 import './AppCard.scss';
 
 type TProps = {
     activeWalletCurrency?: THooks.ActiveWalletAccount['currency'];
-    appIcon: React.ComponentProps<typeof WalletsAppLinkedWithWalletIcon>['appIcon'];
     appName?: string;
     balance?: string;
     cardSize: Extract<TGenericSizes, 'lg' | 'md' | 'sm'>;
     device: 'desktop' | 'mobile';
     isDemoWallet?: THooks.ActiveWalletAccount['is_virtual'];
+    marketType?: React.ComponentProps<typeof WalletMarketCurrencyIcon>['marketType'];
+    platform?: React.ComponentProps<typeof WalletMarketCurrencyIcon>['platform'];
     walletName?: string;
 };
 
 const AppCard: React.FC<TProps> = ({
     activeWalletCurrency,
-    appIcon,
     appName,
     balance,
     cardSize = 'md',
     device = 'desktop',
     isDemoWallet = false,
+    marketType,
+    platform,
     walletName,
 }) => {
     return (
@@ -40,11 +42,11 @@ const AppCard: React.FC<TProps> = ({
                 )}
                 <div className={`wallets-app-card__content wallets-app-card__content--${device}--${cardSize}`}>
                     <div className='wallets-app-card__top'>
-                        <WalletsAppLinkedWithWalletIcon
-                            appIcon={appIcon}
+                        <WalletMarketCurrencyIcon
                             currency={activeWalletCurrency ?? ''}
                             isDemo={isDemoWallet}
-                            size='small'
+                            marketType={marketType}
+                            platform={platform}
                         />
                     </div>
                     {cardSize !== 'sm' && (

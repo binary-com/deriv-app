@@ -26,26 +26,6 @@ export const getLandingCompanyNameOfMT5Account = (mt5Group?: string) => {
     return LandingCompanyDetails.svg.name;
 };
 
-export const getTradingAppIcon = (
-    accountType: string,
-    landingCompanyName: TWalletLandingCompanyName,
-    mt5Group?: string
-) => {
-    const marketType = getMarketType(mt5Group);
-    const mt5Platform = PlatformDetails.mt5;
-
-    if (accountType === mt5Platform.name) {
-        if (marketType === mt5Platform.marketType.financial.name) {
-            return mt5Platform.marketType.financial.landingCompany?.[landingCompanyName].icon.light;
-        } else if (marketType === mt5Platform.marketType.synthetic.name) {
-            return mt5Platform.marketType.synthetic.icon?.light;
-        }
-        return mt5Platform.marketType.all.icon?.light;
-    }
-    //@ts-expect-error needs backend typing
-    return PlatformDetails[accountType]?.icon.light;
-};
-
 export const getAccountName = ({
     accountCategory,
     accountType,

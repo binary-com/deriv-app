@@ -7,12 +7,28 @@
     &--is-input {
         .wallets-transfer-form-account-card__icon {
             margin-right: 0.8rem;
+
+            .wallets-market-currency-icon {
+                margin-bottom: 0.4rem;
+
+                &__currency-icon {
+                    transform: translate(-0.3rem, 0.7rem);
+                }
+            }
         }
     }
 
     &--is-modal {
         .wallets-transfer-form-account-card__icon {
             margin-right: 1.6rem;
+
+            .wallets-market-currency-icon {
+                margin-bottom: 0.4rem;
+
+                &__currency-icon {
+                    transform: translate(-0.3rem, 0.7rem);
+                }
+            }
         }
     }
 
@@ -52,7 +68,7 @@
         margin-left: 1rem;
     }
 
-    .wallets-app-linked-with-wallet-icon {
+    .wallets-market-currency-icon {
         .wallets-gradient {
             border-radius: 0.15rem;
         }

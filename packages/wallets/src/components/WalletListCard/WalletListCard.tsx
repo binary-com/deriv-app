@@ -15,7 +15,7 @@ const WalletListCard: React.FC<TSubscribedBalance> = ({ balance }) => {
         <div className='wallets-list-card'>
             <div className='wallets-list-card__container'>
                 <div className='wallets-list-card__details'>
-                    <WalletCurrencyCard currency={isDemo ? 'Demo' : currency} isDemo={isDemo} size='lg' />
+                    <WalletCurrencyCard currency={isDemo ? 'Demo' : currency} isDemo={isDemo} size='xl' />
                     <WalletListCardDetails balance={balance} />
                 </div>
             </div>

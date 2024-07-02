@@ -8,6 +8,7 @@
     /* Shadows/xxxl */
     box-shadow: 0rem 3.2rem 6.4rem 0rem rgba(14, 14, 14, 0.14);
     max-height: 52.8rem;
+    z-index: 9999;
 
     @include mobile {
         position: absolute;

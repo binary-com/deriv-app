@@ -3,8 +3,7 @@ import classNames from 'classnames';
 import { LegacyArrowRight2pxIcon } from '@deriv/quill-icons';
 import { AppCard, WalletButton, WalletCard, WalletText } from '../../../../../../components';
 import useDevice from '../../../../../../hooks/useDevice';
-import type { TWalletLandingCompanyName } from '../../../../../../types';
-import { getTradingAppIcon } from '../../../../helpers';
+import { TPlatforms } from '../../../../../../types';
 import { useTransfer } from '../../provider';
 import './TransferReceipt.scss';
 
@@ -18,22 +17,18 @@ const ReceiptCard: React.FC<TReceiptCardProps> = ({ account, activeWallet, balan
     const { isMobile } = useDevice();
     const isTradingApp = account?.account_category === 'trading';
     const isWallet = account?.account_category === 'wallet';
-    const appIcon = getTradingAppIcon(
-        account?.account_type ?? '',
-        activeWallet?.landingCompanyName as TWalletLandingCompanyName,
-        account?.mt5_group
-    );
 
     if (isTradingApp)
         return (
             <AppCard
                 activeWalletCurrency={activeWallet?.currency}
-                appIcon={appIcon}
-                appName={account.accountName}
+                appName={account?.accountName}
                 balance={balance}
                 cardSize='md'
                 device={isMobile ? 'mobile' : 'desktop'}
                 isDemoWallet={Boolean(activeWallet?.demo_account)}
+                marketType={account?.market_type}
+                platform={account?.account_type as TPlatforms.All}
                 walletName={activeWallet?.accountName}
             />
         );

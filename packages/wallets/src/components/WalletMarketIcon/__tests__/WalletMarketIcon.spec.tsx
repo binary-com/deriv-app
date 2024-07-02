@@ -4,7 +4,7 @@ import WalletMarketIcon from '../WalletMarketIcon';
 
 describe('<WalletMarketIcon/>', () => {
     it('render svg properly', () => {
-        render(<WalletMarketIcon icon='IcWalletOptionsLight' />);
+        render(<WalletMarketIcon icon='standard' />);
 
         const svgElement = screen.getByTestId('dt_wallet_icon');
 
@@ -12,7 +12,7 @@ describe('<WalletMarketIcon/>', () => {
     });
 
     it('render if its inside the defined Icon object', () => {
-        render(<WalletMarketIcon icon='IcWalletMt5All' />);
+        render(<WalletMarketIcon icon='all' />);
 
         const svgElement = screen.getByTestId('dt_wallet_icon');
 
@@ -26,7 +26,7 @@ describe('<WalletMarketIcon/>', () => {
     });
 
     it('render correct size when passed', () => {
-        render(<WalletMarketIcon icon='IcWalletMt5All' size='sm' />);
+        render(<WalletMarketIcon icon='all' size='sm' />);
 
         const svgElement = screen.getByTestId('dt_wallet_icon');
         expect(svgElement).toHaveAttribute('width', '24');
@@ -34,7 +34,7 @@ describe('<WalletMarketIcon/>', () => {
     });
 
     it('render correct width and height when passed', () => {
-        render(<WalletMarketIcon height={12} icon='IcWalletMt5All' width={12} />);
+        render(<WalletMarketIcon height={12} icon='all' width={12} />);
 
         const svgElement = screen.getByTestId('dt_wallet_icon');
         expect(svgElement).toHaveAttribute('width', '12');

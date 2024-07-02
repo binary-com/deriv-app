@@ -17,12 +17,13 @@ describe('AppCard', () => {
     beforeEach(() => {
         mockProps = {
             activeWalletCurrency: 'USD',
-            appIcon: 'IcWalletMt5All',
             appName: 'MT5 Financial',
             balance: '+10.00 USD',
             cardSize: 'md',
             device: 'desktop',
             isDemoWallet: false,
+            marketType: 'financial',
+            platform: 'mt5',
             walletName: 'USD Wallet',
         };
     });
