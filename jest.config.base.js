@@ -16,7 +16,7 @@ module.exports = {
     testRegex: '(/__tests__/.*|(\\.)(test|spec))\\.(js|jsx|tsx|ts)?$',
     // This is needed to transform es modules imported from node_modules of the target component.
     transformIgnorePatterns: [
-        '/node_modules/(?!(@enykeev/react-virtualized|@simplewebauthn/browser|@deriv-com/ui|@deriv-com/quill-ui|@sendbird/chat)).+\\.js$',
+        '/node_modules/(?!(@enykeev/react-virtualized|@simplewebauthn/browser|@deriv-com/ui|@deriv-com/quill-ui|@sendbird/chat|@deriv-com/translations)).+\\.js$',
     ],
     setupFiles: ['<rootDir>/../../jest.setup.js'],
     setupFilesAfterEnv: ['<rootDir>/../../setupTests.js'],

@@ -29,6 +29,7 @@ import { getEmploymentStatusList } from 'Sections/Assessment/FinancialAssessment
 import InputGroup from './input-group';
 import { getPersonalDetailsInitialValues, getPersonalDetailsValidationSchema, makeSettingsRequest } from './validation';
 import FormSelectField from 'Components/forms/form-select-field';
+import { VerifyButton } from './verify-button';
 import { useInvalidateQuery } from '@deriv/api';
 import { useStatesList, useResidenceList } from '@deriv/hooks';
 
@@ -360,15 +361,24 @@ const PersonalDetailsForm = observer(() => {
                                             name='phone'
                                             id={'phone'}
                                             label={localize('Phone number*')}
+                                            className={
+                                                account_settings?.phone_number_verification?.verified
+                                                    ? 'account-form__fieldset--phone'
+                                                    : ''
+                                            }
                                             //@ts-expect-error type of residence should not be null: needs to be updated in GetSettings type
                                             value={values.phone}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
                                             required
                                             error={errors.phone}
-                                            disabled={isFieldDisabled('phone')}
+                                            disabled={
+                                                isFieldDisabled('phone') ||
+                                                account_settings?.phone_number_verification?.verified
+                                            }
                                             data-testid='dt_phone'
                                         />
+                                        <VerifyButton />
                                     </fieldset>
                                 )}
                                 <Fragment>

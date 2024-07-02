@@ -321,6 +321,13 @@ $MIN_HEIGHT_FLOATING: calc(
         &__fieldset {
             position: relative;
             max-width: 400px;
+
+            &--phone {
+                @include mobile {
+                    padding-inline-end: 2.5rem;
+                }
+            }
+
             @include mobile-or-tablet-screen {
                 max-width: 100%;
                 width: 100%;
@@ -451,6 +458,42 @@ $MIN_HEIGHT_FLOATING: calc(
                 .dc-form-submit-error-message {
                     width: 100%;
                     justify-content: center;
+                }
+            }
+        }
+        &__phone-verification-btn {
+            position: absolute;
+            inset-inline-end: 0;
+            top: 0.4rem;
+
+            &--not-verified {
+                display: flex;
+                padding-top: 0.6rem;
+                padding-inline-end: 1.2rem;
+                cursor: pointer;
+            }
+
+            &--verified {
+                display: flex;
+                padding-top: 0.6rem;
+                padding-inline-end: 1.2rem;
+                color: var(--text-profit-success);
+
+                @include mobile {
+                    padding-inline-end: 4rem;
+                }
+
+                > :first-child {
+                    padding-inline-end: 0.4rem;
+                }
+
+                .phone-verification__popover {
+                    position: absolute;
+                    inset-inline-end: -3rem;
+
+                    @include mobile {
+                        inset-inline-end: 0rem;
+                    }
                 }
             }
         }

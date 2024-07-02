@@ -186,6 +186,7 @@ const mock = (): TStores & { is_mock: boolean } => {
             verification_code: {
                 payment_agent_withdraw: '',
                 payment_withdraw: '',
+                phone_number_verification: '',
                 request_email: '',
                 reset_password: '',
                 signup: '',
@@ -365,7 +366,9 @@ const mock = (): TStores & { is_mock: boolean } => {
             is_reset_email_modal_visible: false,
             is_route_modal_on: false,
             is_services_error_visible: false,
+            should_show_phone_number_otp: false,
             is_trading_assessment_for_existing_user_enabled: false,
+            setShouldShowPhoneNumberOTP: jest.fn(),
             disableApp: jest.fn(),
             enableApp: jest.fn(),
             setCurrentFocus: jest.fn(),

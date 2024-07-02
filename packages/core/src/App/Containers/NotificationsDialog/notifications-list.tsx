@@ -61,7 +61,7 @@ const NotificationsList = observer(() => {
                             <React.Fragment>
                                 {getButtonSettings(item)?.route ? (
                                     <BinaryLink
-                                        onClick={toggleNotificationsModal}
+                                        onClick={getButtonSettings(item)?.onClick || toggleNotificationsModal}
                                         active_class='notifications-item'
                                         className={classNames(
                                             'dc-btn',

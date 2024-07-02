@@ -136,6 +136,11 @@ const Redirect = observer(() => {
             setResetTradingPasswordModalOpen(true);
             break;
         }
+        case 'phone_number_verification': {
+            history.push(routes.phone_verification);
+            redirected_to_route = true;
+            break;
+        }
         case 'payment_deposit': {
             if (has_wallet) {
                 history.push(routes.wallets_deposit);

@@ -115,6 +115,7 @@ export default class ClientStore extends BaseStore {
         reset_password: '',
         payment_withdraw: '',
         payment_agent_withdraw: '',
+        phone_number_verification: '',
         trading_platform_mt5_password_reset: '',
         trading_platform_dxtrade_password_reset: '',
         request_email: '',

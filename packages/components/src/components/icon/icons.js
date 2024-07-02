@@ -722,7 +722,6 @@ import './dxtrade/ic-dxtrade-financial-platform.svg';
 import './dxtrade/ic-dxtrade-financial.svg';
 import './dxtrade/ic-dxtrade-one-password.svg';
 import './dxtrade/ic-dxtrade-synthetic-platform.svg';
-//TODO: remove this once korean flag is added in quill-icons
 import './flag/ic-flag-ko.svg';
 import './mt5/ic-mt5-bvi-derived.svg';
 import './mt5/ic-mt5-bvi-financial.svg';

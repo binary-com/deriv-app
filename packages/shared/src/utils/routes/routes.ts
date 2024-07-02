@@ -32,6 +32,7 @@ export const routes = {
     proof_of_income: '/account/proof-of-income',
     passwords: '/account/passwords',
     passkeys: '/account/passkeys',
+    phone_verification: '/account/personal-details/phone-verification',
     closing_account: '/account/closing-account',
     deactivate_account: '/account/deactivate-account', // TODO: Remove once mobile team has changed this link
     account_closed: '/account-closed',

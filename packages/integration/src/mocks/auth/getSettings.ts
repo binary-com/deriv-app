@@ -33,6 +33,10 @@ export default function mockGetSettings(context: Context) {
                 last_name: 'Smith',
                 non_pep_declaration: 1,
                 phone: '+66111111111',
+                phone_number_verification: {
+                    next_attempt: 0,
+                    verified: 0,
+                },
                 place_of_birth: 'Thailand',
                 preferred_language: 'EN',
                 request_professional_status: 0,

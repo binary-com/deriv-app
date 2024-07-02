@@ -12,6 +12,7 @@ import SelfExclusion from 'Sections/Security/SelfExclusion';
 import Account from 'Containers/Account/account';
 import ClosingAccount from 'Sections/Security/ClosingAccount';
 import DeactivateAccount from 'Sections/Security/DeactivateAccount'; // TODO: Remove once mobile team has changed this link
+import PhoneVerificationPage from 'Sections/Profile/PhoneVerification';
 
 export {
     Passkeys,
@@ -23,6 +24,7 @@ export {
     ProofOfAddress,
     ProofOfOwnership,
     ProofOfIncome,
+    PhoneVerificationPage,
     TwoFactorAuthentication,
     ApiToken,
     SelfExclusion,
