@@ -291,19 +291,6 @@
                 }
             }
 
-            .dc-list {
-                right: 0;
-
-                @include rtl {
-                    left: 0;
-                    right: unset;
-                }
-
-                @include desktop {
-                    margin-top: 4.5rem;
-                }
-            }
-
             .suffix-icon {
                 top: 0.8rem;
                 left: 0.8rem;
@@ -341,6 +328,27 @@
             &__bar {
                 background-color: var(--general-disabled);
             }
+        }
+    }
+
+    .dc-list {
+        right: 0;
+
+        @include desktop {
+            position: absolute !important;
+            top: 6.2rem !important;
+            right: 2rem !important;
+        }
+
+        @include rtl {
+            left: 0;
+            right: unset;
+        }
+    }
+
+    .dc-dropdown__list {
+        @include desktop {
+            width: 100% !important;
         }
     }
 }
