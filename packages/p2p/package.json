@@ -36,7 +36,7 @@
         "@deriv-com/ui": "1.29.10",
         "@deriv-com/utils": "^0.0.25",
         "@deriv/api": "^1.0.0",
-        "@deriv/api-types": "1.0.172",
+        "@deriv/api-types": "1.0.1797",
         "@deriv/components": "^1.0.0",
         "@deriv/hooks": "^1.0.0",
         "@deriv/shared": "^1.0.0",

@@ -29,7 +29,7 @@ const MultiplierOptions = observer(({ toggleModal }: TMultiplierOptions) => {
                 Number(echo_req.amount) === amount
             ) {
                 setCommission(proposal.commission);
-                proposal.limit_order?.stop_out && setStopOut(proposal.limit_order.stop_out?.order_amount);
+                proposal.limit_order?.stop_out && setStopOut(proposal.limit_order.stop_out?.order_amount as number);
             } else if (subscription?.id) {
                 WS.forget(subscription.id);
             }

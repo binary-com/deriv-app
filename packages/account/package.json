@@ -59,7 +59,7 @@
         "@babel/preset-env": "^7.12.11",
         "@babel/preset-react": "^7.16.7",
         "@babel/preset-typescript": "^7.16.5",
-        "@deriv/api-types": "1.0.172",
+        "@deriv/api-types": "1.0.1797",
         "@jest/globals": "^26.5.3",
         "@playwright/test": "^1.37.1",
         "@testing-library/react": "^12.0.0",

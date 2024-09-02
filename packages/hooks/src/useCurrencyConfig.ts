@@ -1,11 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { useFetch } from '@deriv/api';
 
-type TPlatform = {
-    cashier: ('doughflow' | 'crypto')[];
-    ramp: string[] | [];
-};
-
 /** @deprecated Use `useCurrencyConfig` from `@deriv/api` package instead. */
 const useCurrencyConfig = () => {
     const { data: website_status_data, ...rest } = useFetch('website_status');
@@ -69,9 +64,7 @@ const useCurrencyConfig = () => {
                 /** Local asset name for the currency icon. ex: `IcCurrencyUsd` for `USD` */
                 icon: `IcCurrency${currency[0].toUpperCase() + currency.slice(1).toLowerCase()}`,
                 /** Platforms with providers */
-                //TODO: Remove `as TPlatform` after updating `@deriv/api-types` library
-                //@ts-expect-error need to update `@deriv/api-types` library to the latest version
-                platform: currency_config?.platform as TPlatform,
+                platform: currency_config?.platform,
             };
         });
 

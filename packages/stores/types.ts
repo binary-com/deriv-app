@@ -1,5 +1,6 @@
 import type { RouteComponentProps } from 'react-router';
 import type { Moment } from 'moment';
+import type { LandingCompany, StatesList } from '@deriv/api';
 
 import type {
     AccountLimitsResponse,
@@ -11,14 +12,12 @@ import type {
     GetAccountStatus,
     GetLimits,
     GetSettings,
-    LandingCompany,
     LogOutResponse,
     Portfolio1,
     ProposalOpenContract,
     ResidenceList,
     SetFinancialAssessmentRequest,
     SetFinancialAssessmentResponse,
-    StatesList,
     Transaction,
     P2PAdvertiserInformationResponse,
     P2POrderListResponse,

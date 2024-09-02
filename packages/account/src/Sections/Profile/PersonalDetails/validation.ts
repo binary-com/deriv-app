@@ -1,7 +1,8 @@
 import { localize } from '@deriv/translations';
 import * as Yup from 'yup';
 import { address_permitted_special_characters_message, getLocation, toMoment } from '@deriv/shared';
-import { GetSettings, ResidenceList, StatesList } from '@deriv/api-types';
+import type { GetSettings, ResidenceList } from '@deriv/api-types';
+import type { StatesList } from '@deriv/api';
 
 const getBaseSchema = () =>
     Yup.object().shape({

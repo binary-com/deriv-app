@@ -40,7 +40,7 @@
         "@deriv-com/analytics": "1.12.1",
         "@deriv-com/ui": "1.29.10",
         "@deriv/api": "^1.0.0",
-        "@deriv/api-types": "1.0.172",
+        "@deriv/api-types": "1.0.1797",
         "@deriv/components": "^1.0.0",
         "@deriv/deriv-api": "^1.0.15",
         "@deriv/hooks": "^1.0.0",

@@ -1,4 +1,5 @@
-import { StatesList } from '@deriv/api-types';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import type { StatesList } from '@deriv/api';
 
 export const getLocation = (location_list: StatesList, value: string, type: keyof StatesList[number]) => {
     if (!value || !location_list.length) return '';

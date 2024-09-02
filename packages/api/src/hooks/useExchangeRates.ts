@@ -58,7 +58,7 @@ const useExchangeRates = <T extends TCurrencyPayload>() => {
 
     const getExchangeRate = (base: string, target: string) => {
         if (data) {
-            return data?.[base]?.[target] ?? 1;
+            return (data?.[base]?.[target] as number) ?? 1;
         }
         return 1;
     };

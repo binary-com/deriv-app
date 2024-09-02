@@ -81,7 +81,7 @@
         "@deriv-com/ui": "1.29.10",
         "@deriv/components": "^1.0.0",
         "@deriv/deriv-api": "^1.0.15",
-        "@deriv/api-types": "1.0.172",
+        "@deriv/api-types": "1.0.1797",
         "@deriv/hooks": "^1.0.0",
         "@deriv/shared": "^1.0.0",
         "@deriv/stores": "^1.0.0",

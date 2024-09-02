@@ -1,4 +1,6 @@
-import { DetailsOfEachMT5Loginid, GetAccountStatus, LandingCompany } from '@deriv/api-types';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import type { LandingCompany } from '@deriv/api';
+import { DetailsOfEachMT5Loginid, GetAccountStatus } from '@deriv/api-types';
 import { localize } from '@deriv/translations';
 import { CFD_PLATFORMS } from '../platform';
 import { AUTH_STATUS_CODES, Jurisdiction, JURISDICTION_MARKET_TYPES } from '../constants';

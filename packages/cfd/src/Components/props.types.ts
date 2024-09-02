@@ -282,10 +282,10 @@ export type TJurisdictionData = {
 export type TDetailsOfEachMT5Loginid = DetailsOfEachMT5Loginid & {
     display_login?: string;
     white_label_links?: {
-        webtrader_url: string;
-        android: string;
-        ios: string;
-        windows: string;
+        webtrader_url?: string;
+        android?: string;
+        ios?: string;
+        windows?: string;
     };
     landing_company_short?: TShortcode;
     short_code_and_region?: string;

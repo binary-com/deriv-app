@@ -6,8 +6,6 @@ import { TSocketRequestQueryOptions } from '@deriv/api/types';
  */
 const useStatesList = (country: string, options?: TSocketRequestQueryOptions<'states_list'>) => {
     const { data, ...rest } = useQuery('states_list', {
-        // @ts-expect-error The `states_list` type from `@deriv/api-types` is not correct.
-        // The type should be `string`, but it's an alias to string type.
         payload: { states_list: country },
         options: {
             enabled: !!country,

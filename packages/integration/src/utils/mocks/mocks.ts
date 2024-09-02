@@ -228,8 +228,6 @@ import type {
     UpdateContractHistoryResponse,
     UpdateContractRequest,
     UpdateContractResponse,
-    VerifyEmailCellxpertRequest,
-    VerifyEmailCellxpertResponse,
     VerifyEmailRequest,
     VerifyEmailResponse,
 } from '@deriv/api-types';
@@ -346,7 +344,6 @@ type Request =
     | UnsubscribeEmailRequest
     | UpdateContractHistoryRequest
     | UpdateContractRequest
-    | VerifyEmailCellxpertRequest
     | VerifyEmailRequest;
 
 type Response =
@@ -461,7 +458,6 @@ type Response =
     | UnsubscribeEmailResponse
     | UpdateContractHistoryResponse
     | UpdateContractResponse
-    | VerifyEmailCellxpertResponse
     | VerifyEmailResponse;
 
 export interface Context {
@@ -556,7 +552,7 @@ async function setupMocks({ baseURL, page, state, mocks }: SetupMocksOptions) {
         throw new Error('baseURL is required');
     }
 
-    const oauthLoginUrl = generateOauthLoginFromAccounts(baseURL, state?.accounts);
+    const oauthLoginUrl = generateOauthLoginFromAccounts(baseURL, (state as { accounts: [] })?.accounts);
     const query = Object.fromEntries(oauthLoginUrl.searchParams);
     const mockServer = await createMockServer(state || {}, query, mocks);
 

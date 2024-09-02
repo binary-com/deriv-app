@@ -1,5 +1,6 @@
 import React from 'react';
-import { GetSettings, StatesList } from '@deriv/api-types';
+import type { GetSettings } from '@deriv/api-types';
+import type { StatesList } from '@deriv/api';
 import {
     generateValidationFunction,
     getDefaultFields,
