@@ -29,10 +29,7 @@ const BinarySocketBase = (() => {
         is_down: false,
     };
 
-    const getSocketUrl = (language, is_mock_server = false) => {
-        if (is_mock_server) {
-            return 'ws://127.0.0.1:42069';
-        }
+    const getSocketUrl = language => {
         return `wss://${getSocketURL()}/websockets/v3?app_id=${getAppId()}&l=${language}&brand=${website_name.toLowerCase()}`;
     };
 
@@ -46,10 +43,10 @@ const BinarySocketBase = (() => {
         binary_socket.close();
     };
 
-    const closeAndOpenNewConnection = (language = getLanguage(), session_id = '') => {
+    const closeAndOpenNewConnection = (language = getLanguage()) => {
         close();
         is_switching_socket = true;
-        openNewConnection(language, session_id);
+        openNewConnection(language);
     };
 
     const hasReadyState = (...states) => binary_socket && states.some(s => binary_socket.readyState === s);
@@ -61,32 +58,19 @@ const BinarySocketBase = (() => {
         client_store = client;
     };
 
-    const getMockServerConfig = () => {
-        const mock_server_config = localStorage.getItem('mock_server_data');
-        return mock_server_config
-            ? JSON.parse(mock_server_config)
-            : {
-                  session_id: '',
-                  is_mockserver_enabled: false,
-              };
-    };
-
     const openNewConnection = (language = getLanguage()) => {
-        const mock_server_config = getMockServerConfig();
-        const session_id = mock_server_config?.session_id || '';
-
         if (wrong_app_id === getAppId()) return;
 
         if (!is_switching_socket) config.wsEvent('init');
 
         if (isClose()) {
             is_disconnect_called = false;
-            binary_socket = new WebSocket(getSocketUrl(language, session_id));
+            binary_socket = new WebSocket(getSocketUrl(language));
 
             deriv_api = new DerivAPIBasic({
                 connection: binary_socket,
                 storage: SocketCache,
-                middleware: new APIMiddleware(config, session_id),
+                middleware: new APIMiddleware(config),
             });
         }
 
