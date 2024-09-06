@@ -11,6 +11,8 @@ import Transactions from 'Components/transactions';
 import { DBOT_TABS } from 'Constants/bot-contents';
 import { popover_zindex } from 'Constants/z-indexes';
 import { useDBotStore } from 'Stores/useDBotStore';
+import useNotification from '../../hooks/use-notification';
+import useWakeLock from '../../hooks/use-wake-lock';
 
 type TStatisticsTile = {
     content: React.ElementType | string;
@@ -249,6 +251,11 @@ const RunPanel = observer(() => {
     const { total_payout, total_profit, total_stake, won_contracts, lost_contracts, number_of_runs } = statistics;
     const { BOT_BUILDER, CHART } = DBOT_TABS;
 
+    const { is_running } = run_panel;
+    useWakeLock(is_running);
+    const { showNotification } = useNotification();
+    const [prev_bot_running, setPrevBotRunning] = React.useState(is_running);
+
     React.useEffect(() => {
         onMount();
         return () => onUnmount();
@@ -260,6 +267,16 @@ const RunPanel = observer(() => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    React.useEffect(() => {
+        if (!is_running && prev_bot_running) {
+            showNotification(localize('Bot Stopped'), {
+                body: localize('The bot has stopped'),
+            });
+        }
+        setPrevBotRunning(is_running);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [is_running]);
 
     const content = (
         <DrawerContent

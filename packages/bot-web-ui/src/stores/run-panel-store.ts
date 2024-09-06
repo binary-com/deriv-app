@@ -1,7 +1,7 @@
 import { action, computed, makeObservable, observable, reaction, runInAction } from 'mobx';
 import { Buy, ProposalOpenContract } from '@deriv/api-types';
 import { ErrorTypes, MessageTypes, observer, unrecoverable_errors } from '@deriv/bot-skeleton';
-import { isSafari, mobileOSDetect, routes } from '@deriv/shared';
+import { isSafari, mobileOSDetect, reset, routes } from '@deriv/shared';
 import { TStores } from '@deriv/stores/types';
 import { localize } from '@deriv/translations';
 import { botNotification } from 'Components/bot-notification/bot-notification';
