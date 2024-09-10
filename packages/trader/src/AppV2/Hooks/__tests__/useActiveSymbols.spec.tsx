@@ -22,15 +22,24 @@ jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
     WS: {
         authorized: {
-            activeSymbols: jest.fn(() => Promise.resolve({ active_symbols: logged_in_active_symbols, error: null })),
+            send: jest.fn(() => Promise.resolve({ active_symbols: logged_in_active_symbols, error: null })),
         },
-        activeSymbols: jest.fn(() => Promise.resolve({ active_symbols: not_logged_in_active_symbols, error: null })),
+        send: jest.fn(() => Promise.resolve({ active_symbols: not_logged_in_active_symbols, error: null })),
     },
     pickDefaultSymbol: jest.fn(() => Promise.resolve('EURUSD')),
 }));
 
 jest.mock('@deriv/components', () => ({
     usePrevious: jest.fn(),
+}));
+
+jest.mock('AppV2/Hooks/useContractsForCompany', () => ({
+    ...jest.requireActual('AppV2/Hooks/useContractsForCompany'),
+    __esModule: true,
+    default: jest.fn(() => ({
+        available_contract_types: [{ contract_type: 'type_1' }, { contract_type: 'type_2' }],
+        is_fetching_ref: { current: false },
+    })),
 }));
 
 describe('useActiveSymbols', () => {
@@ -96,7 +105,7 @@ describe('useActiveSymbols', () => {
             });
         });
     });
-    it('should set correct default_symbol', async () => {
+    it('should set correct default_symbol based on the symbol availability', async () => {
         (usePrevious as jest.Mock).mockReturnValueOnce(true).mockReturnValueOnce(TRADE_TYPES.RISE_FALL);
         mocked_store.modules.trade.symbol = 'test';
         const { result } = renderHook(() => useActiveSymbols(), {
@@ -104,7 +113,7 @@ describe('useActiveSymbols', () => {
         });
 
         await waitFor(() => {
-            expect(result.current.default_symbol).toEqual('test');
+            expect(result.current.default_symbol).toEqual('EURUSD');
         });
     });
     it('should set active symbols from store when is_logged_in and contract_type are unchanged', async () => {
@@ -122,7 +131,7 @@ describe('useActiveSymbols', () => {
     it('should call active_symbols API for Vanillas if previous contract is not Vanillas', async () => {
         (usePrevious as jest.Mock).mockReturnValueOnce(false).mockReturnValueOnce(TRADE_TYPES.TURBOS.LONG);
         mocked_store.modules.trade.is_vanilla = true;
-        const active_symbols_call_spy = jest.spyOn(WS, 'activeSymbols');
+        const active_symbols_call_spy = jest.spyOn(WS.authorized, 'send');
         renderHook(() => useActiveSymbols(), { wrapper });
 
         await waitFor(() => {
@@ -135,7 +144,7 @@ describe('useActiveSymbols', () => {
     it('should not call active_symbols API for Vanillas if previous contract is Vanillas', async () => {
         (usePrevious as jest.Mock).mockReturnValueOnce(false).mockReturnValueOnce(TRADE_TYPES.VANILLA.CALL);
         mocked_store.modules.trade.is_vanilla = true;
-        const active_symbols_call_spy = jest.spyOn(WS, 'activeSymbols');
+        const active_symbols_call_spy = jest.spyOn(WS.authorized, 'send');
         renderHook(() => useActiveSymbols(), { wrapper });
 
         await waitFor(() => {
@@ -145,7 +154,7 @@ describe('useActiveSymbols', () => {
     it('should call active_symbols API for Turbos if previous contract is not Turbos', async () => {
         (usePrevious as jest.Mock).mockReturnValueOnce(false).mockReturnValueOnce(TRADE_TYPES.VANILLA.CALL);
         mocked_store.modules.trade.is_turbos = true;
-        const active_symbols_call_spy = jest.spyOn(WS, 'activeSymbols');
+        const active_symbols_call_spy = jest.spyOn(WS.authorized, 'send');
         renderHook(() => useActiveSymbols(), { wrapper });
 
         await waitFor(() => {
@@ -158,7 +167,7 @@ describe('useActiveSymbols', () => {
     it('should not call active_symbols API for Turbos if previous contract is Turbos', async () => {
         (usePrevious as jest.Mock).mockReturnValueOnce(false).mockReturnValueOnce(TRADE_TYPES.TURBOS.LONG);
         mocked_store.modules.trade.is_turbos = true;
-        const active_symbols_call_spy = jest.spyOn(WS, 'activeSymbols');
+        const active_symbols_call_spy = jest.spyOn(WS, 'send');
         renderHook(() => useActiveSymbols(), { wrapper });
 
         await waitFor(() => {

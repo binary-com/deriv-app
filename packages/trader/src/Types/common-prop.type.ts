@@ -23,6 +23,12 @@ import ModulesStore from 'Stores/Modules';
 import { useTraderStore } from 'Stores/useTraderStores';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
 import { TSocketEndpointNames, TSocketResponse } from '../../../api/types';
+import {
+    buildBarriersConfig,
+    buildDurationConfig,
+    buildForwardStartingConfig,
+    getContractTypesConfig,
+} from '@deriv/shared';
 
 export type TRootStore = {
     client: TCoreStores['client'];
@@ -138,4 +144,24 @@ export type TWebSocket = {
     time: () => Promise<ServerTimeResponse>;
     tradingTimes: (date: string) => Promise<TradingTimesResponse>;
     wait: <T extends TSocketEndpointNames>(value: T) => Promise<TSocketResponse<T>>;
+};
+
+export type TContractTypesList = {
+    [key: string]: {
+        name: string;
+        categories: TTextValueStrings[];
+    };
+};
+
+export type TConfig = ReturnType<typeof getContractTypesConfig>[string]['config'] & {
+    has_spot?: boolean;
+    durations?: ReturnType<typeof buildDurationConfig>;
+    trade_types?: { [key: string]: string };
+    barrier_category?: string;
+    barriers?: ReturnType<typeof buildBarriersConfig>;
+    forward_starting_dates?: ReturnType<typeof buildForwardStartingConfig>;
+    growth_rate_range?: number[];
+    multiplier_range?: number[];
+    cancellation_range?: string[];
+    barrier_choices?: string[];
 };

@@ -25,7 +25,7 @@ import ServerTime from '_common/base/server_time';
 import { localize } from '@deriv/translations';
 import { isSessionAvailable } from './start-date';
 import { ContractsFor, ContractsForSymbolResponse, TradingTimes, TradingTimesResponse } from '@deriv/api-types';
-import { TTradeStore } from '../../../../Types/common-prop.type';
+import { TConfig, TTradeStore } from 'Types';
 
 type TBarriers = Record<
     keyof TTradeStore['duration_min_max'],
@@ -37,18 +37,7 @@ type TBarriers = Record<
 > & {
     count: number;
 };
-type TConfig = ReturnType<typeof getContractTypesConfig>[string]['config'] & {
-    has_spot?: boolean;
-    durations?: ReturnType<typeof buildDurationConfig>;
-    trade_types?: { [key: string]: string };
-    barrier_category?: string;
-    barriers?: ReturnType<typeof buildBarriersConfig>;
-    forward_starting_dates?: ReturnType<typeof buildForwardStartingConfig>;
-    growth_rate_range?: number[];
-    multiplier_range?: number[];
-    cancellation_range?: string[];
-    barrier_choices?: string[];
-};
+
 type TNonAvailableContractsList = Record<'contract_category' | 'contract_display_name' | 'contract_type', string>[];
 type TTextValueStrings = {
     text: string;
@@ -273,7 +262,7 @@ export const ContractType = (() => {
     };
 
     const getComponents = (c_type: string) => {
-        const check = ['duration', 'amount', ...contract_types[c_type].components].filter(
+        const check = ['duration', 'amount', ...contract_types[c_type]?.components].filter(
             component =>
                 !(
                     component === 'duration' &&

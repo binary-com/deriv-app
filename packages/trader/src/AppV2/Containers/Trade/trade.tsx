@@ -9,14 +9,13 @@ import { useTraderStore } from 'Stores/useTraderStores';
 import BottomNav from 'AppV2/Components/BottomNav';
 import PurchaseButton from 'AppV2/Components/PurchaseButton';
 import { HEIGHT } from 'AppV2/Utils/layout-utils';
-import { getTradeTypesList } from 'AppV2/Utils/trade-types-utils';
 import { TradeParametersContainer, TradeParameters } from 'AppV2/Components/TradeParameters';
 import CurrentSpot from 'AppV2/Components/CurrentSpot';
 import { TradeChart } from '../Chart';
 import { isDigitTradeType } from 'Modules/Trading/Helpers/digits';
 import TradeTypes from './trade-types';
 import MarketSelector from 'AppV2/Components/MarketSelector';
-import useContractsForCompany, { TContractTypesList } from 'AppV2/Hooks/useContractsForCompany';
+import useContractsForCompany from 'AppV2/Hooks/useContractsForCompany';
 import AccumulatorStats from 'AppV2/Components/AccumulatorStats';
 import OnboardingGuide from 'AppV2/Components/OnboardingGuide';
 
@@ -27,14 +26,8 @@ const Trade = observer(() => {
         client: { is_logged_in },
     } = useStore();
     const { active_symbols, contract_type, onMount, onChange, onUnmount } = useTraderStore();
-    const { contract_types_list } = useContractsForCompany();
+    const { trade_types } = useContractsForCompany();
     const [guide_dtrader_v2] = useLocalStorageData<boolean>('guide_dtrader_v2_trade_page', false);
-
-    const trade_types = React.useMemo(() => {
-        return Array.isArray(contract_types_list) && contract_types_list.length === 0
-            ? []
-            : getTradeTypesList(contract_types_list as TContractTypesList);
-    }, [contract_types_list]);
 
     const symbols = React.useMemo(
         () =>

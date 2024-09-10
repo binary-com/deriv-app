@@ -122,6 +122,7 @@ export const findFirstOpenMarket = async (
 const isSymbolOpen = (symbol?: TIsSymbolOpen) => symbol?.exchange_is_open === 1;
 
 const isSymbolOffered = async (symbol?: string) => {
+    if (!symbol) return false;
     const r = await WS.storage.contractsFor(symbol);
     return !['InvalidSymbol', 'InputValidationFailed'].includes(r.error?.code);
 };

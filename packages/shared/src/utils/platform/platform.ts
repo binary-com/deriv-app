@@ -162,3 +162,13 @@ export const isNavigationFromExternalPlatform = (routing_history: TRoutingHistor
 
     return false;
 };
+
+export const isDtraderV2Enabled = (is_mobile: boolean) => {
+    const is_dtrader_v2 = JSON.parse(localStorage.getItem('FeatureFlagsStore') ?? '{}')?.data?.dtrader_v2;
+
+    return (
+        is_dtrader_v2 &&
+        is_mobile &&
+        (window.location.pathname.startsWith(routes.trade) || window.location.pathname.startsWith('/contract/'))
+    );
+};

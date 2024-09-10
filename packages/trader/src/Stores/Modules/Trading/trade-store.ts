@@ -41,6 +41,7 @@ import {
     formatMoney,
     getContractPath,
     routes,
+    isDtraderV2Enabled,
 } from '@deriv/shared';
 import { Analytics } from '@deriv-com/analytics';
 import type { TEvents } from '@deriv-com/analytics';
@@ -56,7 +57,7 @@ import { action, computed, makeObservable, observable, override, reaction, runIn
 import { createProposalRequests, getProposalErrorField, getProposalInfo } from './Helpers/proposal';
 import { getHoveredColor } from './Helpers/barrier-utils';
 import BaseStore from '../../base-store';
-import { TRootStore, TTextValueNumber, TTextValueStrings } from 'Types';
+import { TContractTypesList, TRootStore, TTextValueNumber, TTextValueStrings } from 'Types';
 import debounce from 'lodash.debounce';
 import {
     ActiveSymbols,
@@ -176,12 +177,7 @@ type TPrevChartLayout =
           is_used?: boolean;
       })
     | null;
-type TContractTypesList = {
-    [key: string]: {
-        name: string;
-        categories: TTextValueStrings[];
-    };
-};
+
 type TDurationMinMax = {
     [key: string]: { min: number; max: number };
 };
@@ -804,6 +800,10 @@ export default class TradeStore extends BaseStore {
     }
 
     async setContractTypes() {
+        if (this.is_dtrader_v2_enabled) {
+            return;
+        }
+
         let contractType: string | undefined = '';
         if (this.symbol && this.is_symbol_in_active_symbols) {
             await Symbol.onChangeSymbolAsync(this.symbol);
@@ -1367,13 +1367,7 @@ export default class TradeStore extends BaseStore {
     }
 
     get is_dtrader_v2_enabled() {
-        const is_dtrader_v2 = JSON.parse(localStorage.getItem('FeatureFlagsStore') ?? '{}')?.data?.dtrader_v2;
-
-        return (
-            is_dtrader_v2 &&
-            this.root_store.ui.is_mobile &&
-            (window.location.pathname.startsWith(routes.trade) || window.location.pathname.startsWith('/contract/'))
-        );
+        return isDtraderV2Enabled(this.root_store.ui.is_mobile);
     }
 
     get is_synthetics_available() {

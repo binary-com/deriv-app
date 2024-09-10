@@ -1,17 +1,22 @@
 import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react-hooks';
 import { mockStore } from '@deriv/stores';
 import TraderProviders from '../../../trader-providers';
-import { WS, getContractCategoriesConfig, getContractTypesConfig } from '@deriv/shared';
+import { WS, getContractCategoriesConfig, getContractTypesConfig, cloneObject } from '@deriv/shared';
 import useContractsForCompany from '../useContractsForCompany';
 import { waitFor } from '@testing-library/react';
+import { invalidateDTraderCache } from '../useDtraderQuery';
 
 jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
     getContractCategoriesConfig: jest.fn(),
     getContractTypesConfig: jest.fn(),
+    cloneObject: jest.fn(),
     WS: {
-        contractsForCompany: jest.fn(),
+        send: jest.fn(),
+        authorized: {
+            send: jest.fn(),
+        },
     },
 }));
 
@@ -28,10 +33,12 @@ describe('useContractsForCompany', () => {
             client: {
                 ...mockStore({}).client,
                 landing_company_shortcode: 'maltainvest',
+                loginid: 'CR1234',
             },
             modules: {
                 trade: {
                     setContractTypesListV2: jest.fn(),
+                    onChange: jest.fn(),
                 },
             },
         };
@@ -46,11 +53,15 @@ describe('useContractsForCompany', () => {
             type_2: { trade_types: ['type_2'], title: 'Type 2', barrier_count: 1 },
         });
 
+        invalidateDTraderCache(['contracts_for_company']);
+
+        (cloneObject as jest.Mock).mockImplementation(obj => JSON.parse(JSON.stringify(obj)));
+
         jest.clearAllMocks();
     });
 
     it('should fetch and set contract types for the company successfully', async () => {
-        WS.contractsForCompany.mockResolvedValue({
+        WS.authorized.send.mockResolvedValue({
             contracts_for_company: {
                 available: [{ contract_type: 'type_1' }, { contract_type: 'type_2' }],
             },
@@ -71,7 +82,7 @@ describe('useContractsForCompany', () => {
     });
 
     it('should handle API errors gracefully', async () => {
-        WS.contractsForCompany.mockResolvedValue({
+        WS.authorized.send.mockResolvedValue({
             error: { message: 'Some error' },
         });
 
@@ -84,7 +95,7 @@ describe('useContractsForCompany', () => {
     });
 
     it('should not set unsupported contract types', async () => {
-        WS.contractsForCompany.mockResolvedValue({
+        WS.authorized.send.mockResolvedValue({
             contracts_for_company: {
                 available: [{ contract_type: 'unsupported_type' }],
             },
