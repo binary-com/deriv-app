@@ -2,9 +2,11 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { POILimited } from '../limited';
 
-window.LC_API = {
-    open_chat_window: jest.fn(),
-    on_chat_ended: jest.fn(),
+window.LiveChatWidget = {
+    call: jest.fn(),
+    get: jest.fn(),
+    init: jest.fn(),
+    on: jest.fn(),
 };
 
 describe('<POILimited/>', () => {
@@ -16,6 +18,7 @@ describe('<POILimited/>', () => {
         const live_chat_text = screen.getByText(/live chat/i);
         expect(live_chat_text).toBeInTheDocument();
         fireEvent.click(live_chat_text);
-        expect(window.LC_API.open_chat_window).toHaveBeenCalledTimes(1);
+        expect(window.LiveChatWidget.call).toHaveBeenCalledTimes(1);
+        expect(window.LiveChatWidget.call).toHaveBeenCalledWith('maximize');
     });
 });

@@ -10,7 +10,11 @@ export const POILimited = () => (
             <Localize
                 i18n_default_text='Please contact us via <0>live chat</0>.'
                 components={[
-                    <span key={0} className='link link--orange' onClick={() => window.LC_API.open_chat_window()} />,
+                    <span
+                        key={0}
+                        className='link link--orange'
+                        onClick={() => window.LiveChatWidget.call('maximize')}
+                    />,
                 ]}
             />
         }

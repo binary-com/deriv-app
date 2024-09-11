@@ -62,10 +62,6 @@ const AppWithoutTranslation = ({ root_store }) => {
 
         const loadExternalScripts = async () => {
             const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-            await delay(3000);
-            window.LiveChatWidget.init();
-
             await delay(2000);
             initHotjar(root_store.client);
         };

@@ -18,6 +18,13 @@ jest.mock(
     () => jest.fn(() => <div>CryptoWallet</div>)
 );
 
+window.LiveChatWidget = {
+    call: jest.fn(),
+    get: jest.fn(),
+    init: jest.fn(),
+    on: jest.fn(),
+};
+
 describe('<OneTimeDepositModalContent />', () => {
     const mockDefault = mockStore({});
 

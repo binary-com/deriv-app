@@ -466,6 +466,7 @@ export type TClientStore = {
     is_landing_company_loaded: boolean;
     is_logged_in: boolean;
     is_logging_in: boolean;
+    is_client_initialized: boolean;
     is_low_risk: boolean;
     is_mt5_password_not_set: boolean;
     is_mt5_account_list_updated: boolean;
@@ -505,6 +506,7 @@ export type TClientStore = {
     setBalanceOtherAccounts: (balance: number) => void;
     selectCurrency: (currency: string) => void;
     setInitialized: (status?: boolean) => void;
+    setIsClientInitialized: () => void;
     setLogout: (status?: boolean) => void;
     setP2pAdvertiserInfo: () => void;
     setPreSwitchAccount: (status?: boolean) => void;
@@ -620,6 +622,10 @@ export type TClientStore = {
     setTradersHubTracking: (value: boolean) => void;
     account_time_of_closure?: number;
     is_account_to_be_closed_by_residence: boolean;
+    freshworks_token: string;
+    getFreshworksToken: (extra_fields: Record<string, string>) => Promise<string>;
+    setFreshworksToken: (token: string) => void;
+    user_id: string;
 };
 
 type TCommonStoreError = {

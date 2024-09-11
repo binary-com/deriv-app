@@ -50,7 +50,7 @@
         "@deriv/quill-icons": "1.23.3",
         "@deriv/api-types": "1.0.172",
         "@deriv/translations": "^1.0.0",
-        "@types/js-cookie": "^2.2.1",
+        "@types/js-cookie": "^3.0.1",
         "@types/react-loadable": "^5.5.6",
         "canvas-toBlob": "^1.0.0",
         "extend": "^3.0.2",

@@ -50,7 +50,11 @@ const Message = ({ code, message, details }) => {
                     <Localize
                         i18n_default_text='Your details match an existing account. If you need help, contact us via <0>live chat</0>.'
                         components={[
-                            <span className='chat-inline' key={0} onClick={() => window.LC_API.open_chat_window()} />,
+                            <span
+                                className='chat-inline'
+                                key={0}
+                                onClick={() => window.LiveChatWidget.call('maximize')}
+                            />,
                         ]}
                     />
                 </p>
@@ -100,7 +104,9 @@ const ErrorCTA = ({ code, onConfirm }) => {
         case 'CurrencyTypeNotAllowed':
             return <TryAgain text={localize('Try a different currency')} onConfirm={onConfirm} />;
         case 'DuplicateAccount':
-            return <TryAgain text={localize('Go to live chat')} onConfirm={() => window.LC_API.open_chat_window()} />;
+            return (
+                <TryAgain text={localize('Go to live chat')} onConfirm={() => window.LiveChatWidget.call('maximize')} />
+            );
         case 'InputValidationFailed':
         case 'PoBoxInAddress':
         case 'InvalidPhone':

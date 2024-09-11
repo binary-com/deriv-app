@@ -140,7 +140,7 @@ const getCashierLockedDesc = ({
                         <button
                             className='wallets-link wallets-link__variant--bold'
                             key={0}
-                            onClick={() => window.LC_API.open_chat_window()}
+                            onClick={() => window.LiveChatWidget.call('maximize')}
                         />,
                     ]}
                     i18n_default_text='Please contact us via <0>live chat</0> to enable deposits and withdrawals again.'

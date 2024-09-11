@@ -400,13 +400,14 @@ const BinarySocketBase = (() => {
             name: 'test real labuan financial stp',
         });
 
-    const getServiceToken = (platform, server) => {
+    const getServiceToken = (platform, server, extra_fields) => {
         const temp_service = platform;
 
         return deriv_api.send({
             service_token: 1,
             service: temp_service,
             server,
+            ...extra_fields,
         });
     };
 

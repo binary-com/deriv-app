@@ -22,8 +22,11 @@ jest.mock('@deriv/shared', () => ({
     isMobile: jest.fn(),
 }));
 
-global.window.LC_API = {
-    open_chat_window: jest.fn(),
+window.LiveChatWidget = {
+    call: jest.fn(),
+    get: jest.fn(),
+    init: jest.fn(),
+    on: jest.fn(),
 };
 
 describe('<CFDPersonalDetailsForm />', () => {
@@ -358,6 +361,6 @@ describe('<CFDPersonalDetailsForm />', () => {
         const linkElement = screen.getByText(/live chat/i);
         expect(linkElement).toBeInTheDocument();
         fireEvent.click(linkElement);
-        expect(window.LC_API.open_chat_window).toHaveBeenCalled();
+        expect(window.LiveChatWidget.call).toHaveBeenCalledWith('maximize');
     });
 });

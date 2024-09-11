@@ -11,7 +11,7 @@ const DepositFiat: React.FC = observer(() => {
     const { common, traders_hub } = useStore();
     const { is_from_derivgo } = common;
     const { is_low_risk_cr_eu_real } = traders_hub;
-    const onClickHandler = () => window.LC_API?.open_chat_window?.();
+    const onClickHandler = () => window.LiveChatWidget.call('maximize');
 
     return (
         <PageContainer

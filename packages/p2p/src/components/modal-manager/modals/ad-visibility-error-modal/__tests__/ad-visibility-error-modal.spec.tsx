@@ -24,6 +24,13 @@ jest.mock('Components/modal-manager/modal-manager-context', () => ({
     useModalManagerContext: () => mock_modal_manager_context,
 }));
 
+window.LiveChatWidget = {
+    call: jest.fn(),
+    get: jest.fn(),
+    init: jest.fn(),
+    on: jest.fn(),
+};
+
 describe('<AdVisibilityErrorModal/>', () => {
     let modal_root_el: HTMLElement;
     beforeAll(() => {
@@ -47,11 +54,6 @@ describe('<AdVisibilityErrorModal/>', () => {
     });
 
     it('should render ad exceeds daily limit error modal and can open live chat', () => {
-        window.LC_API = {
-            open_chat_window: jest.fn(),
-            on_chat_ended: jest.fn(),
-        };
-
         render(<AdVisibilityErrorModal error_code={api_error_codes.AD_EXCEEDS_DAILY_LIMIT} />);
 
         expect(screen.getByText('Your ad exceeds the daily limit')).toBeInTheDocument();
@@ -61,7 +63,8 @@ describe('<AdVisibilityErrorModal/>', () => {
         const live_chat_text = screen.getByText(/live chat/i);
         expect(live_chat_text).toBeInTheDocument();
         live_chat_text.click();
-        expect(window.LC_API.open_chat_window).toHaveBeenCalledTimes(1);
+        expect(window.LiveChatWidget.call).toHaveBeenCalledTimes(1);
+        expect(window.LiveChatWidget.call).toHaveBeenCalledWith('maximize');
     });
 
     it('should render default error message', () => {

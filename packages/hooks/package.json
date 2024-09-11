@@ -15,7 +15,10 @@
         "react-i18next": "^11.11.0",
         "@simplewebauthn/browser": "^8.3.4",
         "@simplewebauthn/typescript-types": "^8.3.4",
-        "react": "^17.0.2"
+        "react": "^17.0.2",
+        "@types/js-cookie": "^3.0.1",
+        "js-cookie": "^2.2.1",
+        "@deriv-com/utils": "^0.0.25"
     },
     "devDependencies": {
         "typescript": "^4.6.3",

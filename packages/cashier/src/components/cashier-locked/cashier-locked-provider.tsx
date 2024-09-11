@@ -130,7 +130,7 @@ const getMessage = ({
                             <span
                                 key={0}
                                 className='link link--orange'
-                                onClick={() => window.LC_API.open_chat_window()}
+                                onClick={() => window.LiveChatWidget.call('maximize')}
                             />,
                         ]}
                     />
@@ -147,7 +147,7 @@ const getMessage = ({
                             <span
                                 key={0}
                                 className='link link--orange'
-                                onClick={() => window.LC_API.open_chat_window()}
+                                onClick={() => window.LiveChatWidget.call('maximize')}
                             />,
                         ]}
                     />
@@ -378,7 +378,7 @@ const getMessage = ({
                             <span
                                 key={0}
                                 className='link link--orange'
-                                onClick={() => window.LC_API.open_chat_window()}
+                                onClick={() => window.LiveChatWidget.call('maximize')}
                             />,
                         ]}
                     />
@@ -395,7 +395,7 @@ const getMessage = ({
                             <span
                                 key={0}
                                 className='link link--orange'
-                                onClick={() => window.LC_API.open_chat_window()}
+                                onClick={() => window.LiveChatWidget.call('maximize')}
                             />,
                         ]}
                     />
@@ -471,7 +471,7 @@ const getMessage = ({
                             <span
                                 key={0}
                                 className='link link--orange'
-                                onClick={() => window.LC_API.open_chat_window()}
+                                onClick={() => window.LiveChatWidget.call('maximize')}
                             />,
                         ]}
                     />
@@ -488,7 +488,7 @@ const getMessage = ({
                             <span
                                 key={0}
                                 className='link link--orange'
-                                onClick={() => window.LC_API.open_chat_window()}
+                                onClick={() => window.LiveChatWidget.call('maximize')}
                             />,
                         ]}
                     />
@@ -505,7 +505,7 @@ const getMessage = ({
                             <span
                                 key={0}
                                 className='link link--orange'
-                                onClick={() => window.LC_API.open_chat_window()}
+                                onClick={() => window.LiveChatWidget.call('maximize')}
                             />,
                         ]}
                     />
@@ -528,7 +528,11 @@ const getMessage = ({
             <Localize
                 i18n_default_text='Your cashier is currently locked. Please contact us via <0>live chat</0> to find out how to unlock it.'
                 components={[
-                    <span key={0} className='link link--orange' onClick={() => window.LC_API.open_chat_window()} />,
+                    <span
+                        key={0}
+                        className='link link--orange'
+                        onClick={() => window.LiveChatWidget.call('maximize')}
+                    />,
                 ]}
             />
         ),

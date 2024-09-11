@@ -122,7 +122,6 @@
         "@deriv/translations": "^1.0.0",
         "@deriv/utils": "^1.0.0",
         "@deriv/wallets": "^1.0.0",
-        "@livechat/customer-sdk": "^2.0.4",
         "acorn": "^6.1.1",
         "babel-polyfill": "^6.26.0",
         "canvas-toBlob": "^1.0.0",
