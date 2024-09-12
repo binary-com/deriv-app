@@ -74,13 +74,19 @@ const AccountOption = ({
                 </Text>
             );
         } else if (is_server_maintenance) {
-            return <StatusBadge account_status='under_maintenance' icon='IcAlertWarning' text='Server Maintenance' />;
+            return (
+                <StatusBadge
+                    account_status='under_maintenance'
+                    icon='IcAlertWarning'
+                    text={<Localize i18n_default_text='Server maintenance' />}
+                />
+            );
         } else if (is_account_unavailable) {
             return (
                 <StatusBadge
                     account_status={TRADING_PLATFORM_STATUS.UNAVAILABLE}
                     icon='IcAlertWarning'
-                    text='Unavailable'
+                    text={<Localize i18n_default_text='Unavailable' />}
                 />
             );
         }
