@@ -22,16 +22,18 @@ const PreferredCountriesModalBody = ({
     setSelectedCountries,
 }: TPreferredCountriesModalBodyProps) => {
     const { isDesktop } = useDevice();
-    const [search_results, setSearchResults] = React.useState([
+    const countries_list = [
         ...country_list.filter(item => eligible_countries.includes(item.value)),
         ...country_list.filter(item => !eligible_countries.includes(item.value)),
-    ]);
+    ];
+    const [search_results, setSearchResults] = React.useState(countries_list);
 
     const onClearSearch = () => {
+        const unselected_countries = countries_list.filter(item => !selected_countries.includes(item.value)).sort();
         setSearchValue('');
         setSearchResults([
-            ...country_list.filter(item => eligible_countries.includes(item.value)),
-            ...country_list.filter(item => !eligible_countries.includes(item.value)),
+            ...countries_list.filter(item => selected_countries.includes(item.value)).sort(),
+            ...unselected_countries,
         ]);
     };
 
