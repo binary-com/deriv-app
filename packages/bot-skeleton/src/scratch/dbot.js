@@ -12,6 +12,8 @@ import DBotStore from './dbot-store';
 import { isAllRequiredBlocksEnabled, updateDisabledBlocks, validateErrorOnBlockDelete } from './utils';
 
 import { loadBlockly } from './blockly';
+// commented code for stats bar
+// import Accumulators from '../services/api/accumlators';
 
 class DBot {
     constructor() {
@@ -20,6 +22,58 @@ class DBot {
         this.before_run_funcs = [];
         this.symbol = null;
         this.is_bot_running = false;
+        this.accumlators = null;
+        this.proposal_requested = false;
+        this.debounceWait = 300;
+        this.debouncedHandleBlockChange = this.debounce(
+            this.handleProposalForAccumulators.bind(this),
+            this.debounceWait
+        );
+    }
+
+    /* eslint-disable class-methods-use-this */
+    debounce(func, wait) {
+        let timeout;
+        return function (...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), wait);
+        };
+    }
+
+    async handleProposalForAccumulators(event, block_instance) {
+        if (event.type === Blockly.Events.BLOCK_CHANGE) {
+            const trade_type_accumulators = block_instance.getFieldValue('TRADETYPE_LIST');
+            const is_accumulator = trade_type_accumulators === 'accumulator';
+
+            if (is_accumulator && !this.proposal_requested && !this.interpreter.bot.tradeEngine.subscription_accu) {
+                this.proposal_requested = true;
+
+                const amount = window.Blockly.selected_current_amount || 1;
+                const { currency } = DBotStore.instance.client;
+                const top_parent_block = block_instance.getTopParent();
+                const market_block = top_parent_block.getChildByType('trade_definition_market');
+                const symbol = market_block.getFieldValue('SYMBOL_LIST');
+                const growth_rate = window.Blockly.selected_growth_rate;
+
+                const request = {
+                    amount,
+                    basis: 'stake',
+                    contract_type: 'ACCU',
+                    currency,
+                    symbol,
+                    growth_rate,
+                    proposal: 1,
+                    subscribe: 1,
+                };
+                window.Blockly.selected_accumulators_amount = request;
+            }
+            if (!this.is_bot_running) {
+                await api_base?.api?.send({ forget_all: 'proposal' });
+                this.subscription_id = null;
+                this.proposal_requested = false;
+                this.interpreter.bot.tradeEngine.subscription_accu = null;
+            }
+        }
     }
 
     /**
@@ -31,6 +85,10 @@ class DBot {
         api_base.init();
         this.interpreter = Interpreter();
         const that = this;
+        // commented code for stats bar
+        // const accumlators = new Accumulators();
+        // this.accumlators = accumlators;
+
         Blockly.Blocks.trade_definition_tradetype.onchange = function (event) {
             if (!this.workspace || Blockly.derivWorkspace.isFlyoutVisible || this.workspace.isDragging()) {
                 return;
@@ -39,8 +97,8 @@ class DBot {
             this.enforceLimitations();
 
             const { name, type } = event;
-
             if (type === Blockly.Events.BLOCK_CHANGE) {
+                that.debouncedHandleBlockChange(event, this);
                 const is_symbol_list_change = name === 'SYMBOL_LIST';
                 const is_trade_type_cat_list_change = name === 'TRADETYPECAT_LIST';
 
@@ -367,6 +425,8 @@ class DBot {
         this.interpreter = null;
         this.interpreter = Interpreter();
         await this.interpreter.bot.tradeEngine.watchTicks(this.symbol);
+        await api_base?.api?.send({ forget_all: 'proposal' });
+        this.interpreter.bot.tradeEngine.subscription_accu = null;
     }
 
     /**

@@ -40,44 +40,46 @@ const Chart = observer(({ show_digits_stats }: { show_digits_stats: boolean }) =
     };
 
     return (
-        <div
-            className={classNames('dashboard__chart-wrapper', {
-                'dashboard__chart-wrapper--expanded': is_drawer_open && is_desktop,
-                'dashboard__chart-wrapper--modal': is_chart_modal_visible && is_desktop,
-            })}
-            dir='ltr'
-        >
-            <SmartChart
-                id='dbot'
-                barriers={barriers}
-                showLastDigitStats={show_digits_stats}
-                chartControlsWidgets={null}
-                enabledChartFooter={false}
-                chartStatusListener={(v: boolean) => setChartStatus(!v)}
-                toolbarWidget={() => (
-                    <ToolbarWidgets
-                        updateChartType={updateChartType}
-                        updateGranularity={updateGranularity}
-                        position={is_desktop ? null : 'bottom'}
-                    />
-                )}
-                chartType={chart_type}
-                isMobile={is_mobile}
-                enabledNavigationWidget={is_desktop}
-                granularity={granularity}
-                requestAPI={wsSendRequest}
-                requestForget={wsForget}
-                requestForgetStream={wsForgetStream}
-                requestSubscribe={wsSubscribe}
-                settings={settings}
-                symbol={symbol}
-                topWidgets={() => <ChartTitle onChange={onSymbolChange} />}
-                isConnectionOpened={is_socket_opened}
-                getMarketsOrder={getMarketsOrder}
-                isLive
-                leftMargin={80}
-            />
-        </div>
+        <>
+            <div
+                className={classNames('dashboard__chart-wrapper', {
+                    'dashboard__chart-wrapper--expanded': is_drawer_open && is_desktop,
+                    'dashboard__chart-wrapper--modal': is_chart_modal_visible && is_desktop,
+                })}
+                dir='ltr'
+            >
+                <SmartChart
+                    id='dbot'
+                    barriers={barriers}
+                    showLastDigitStats={show_digits_stats}
+                    chartControlsWidgets={null}
+                    enabledChartFooter={false}
+                    chartStatusListener={(v: boolean) => setChartStatus(!v)}
+                    toolbarWidget={() => (
+                        <ToolbarWidgets
+                            updateChartType={updateChartType}
+                            updateGranularity={updateGranularity}
+                            position={is_desktop ? null : 'bottom'}
+                        />
+                    )}
+                    chartType={chart_type}
+                    isMobile={is_mobile}
+                    enabledNavigationWidget={is_desktop}
+                    granularity={granularity}
+                    requestAPI={wsSendRequest}
+                    requestForget={wsForget}
+                    requestForgetStream={wsForgetStream}
+                    requestSubscribe={wsSubscribe}
+                    settings={settings}
+                    symbol={symbol}
+                    topWidgets={() => <ChartTitle onChange={onSymbolChange} />}
+                    isConnectionOpened={is_socket_opened}
+                    getMarketsOrder={getMarketsOrder}
+                    isLive
+                    leftMargin={80}
+                />
+            </div>
+        </>
     );
 });
 

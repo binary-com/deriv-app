@@ -121,6 +121,9 @@ Blockly.Blocks.trade_definition_accumulator = {
         this.selected_trade_type_category = trade_type_block.getFieldValue('TRADETYPECAT_LIST');
         this.selected_trade_type = trade_type_block.getFieldValue('TRADETYPE_LIST');
         this.selected_growth_rate = this.getFieldValue('GROWTHRATE_LIST');
+        window.Blockly.selected_growth_rate = this.selected_growth_rate;
+        window.Blockly.selected_current_amount =
+            Number(this?.getInput('AMOUNT')?.sourceBlock?.childBlocks_?.[0]?.svgGroup_?.textContent) || 1;
 
         const is_load_event = /^dbot-load/.test(event.group);
 

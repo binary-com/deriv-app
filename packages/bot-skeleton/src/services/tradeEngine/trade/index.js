@@ -66,6 +66,7 @@ export default class TradeEngine extends Balance(Purchase(Sell(OpenContract(Prop
     constructor($scope) {
         super();
         this.observer = $scope.observer;
+        this.subscription_accu = null;
         this.$scope = $scope;
         this.observe();
         this.data = {
@@ -100,6 +101,8 @@ export default class TradeEngine extends Balance(Purchase(Sell(OpenContract(Prop
         this.checkLimits(validated_trade_options);
 
         this.makeDirectPurchaseDecision();
+        // console.log('function called')
+        // this.makeProposoalCallForAccumlators();
     }
 
     loginAndGetBalance(token) {
@@ -150,6 +153,7 @@ export default class TradeEngine extends Balance(Purchase(Sell(OpenContract(Prop
     }
 
     makeDirectPurchaseDecision() {
+        // console.log('function called')
         const { has_payout_block, is_basis_payout } = checkBlocksForProposalRequest();
         this.is_proposal_subscription_required = has_payout_block || is_basis_payout;
 
@@ -160,4 +164,16 @@ export default class TradeEngine extends Balance(Purchase(Sell(OpenContract(Prop
             this.store.dispatch(proposalsReady());
         }
     }
+
+    // makeProposoalCallForAccumlators() {
+    //     console.log('function called')
+    //     const contract_type = this.options.contractTypes?.[0];
+    //     console.log(contract_type)
+    //     console.log(this.subscription);
+    //     if (contract_type === 'ACCU' && !this.subscription) {
+    //         console.log(contract_type, this.tradeOptions, this)
+
+    //         this.subscription = true;
+    //     }
+    // }
 }

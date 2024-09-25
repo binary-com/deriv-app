@@ -119,6 +119,7 @@ Blockly.Block.getDimensions = function (block_node) {
         media: `${__webpack_public_path__}media/`,
         renderer: 'zelos',
         theme: Blockly.Themes.zelos_renderer,
+        zoom: { wheel: true },
     });
     const el_injection_div = document.createElement('div');
 

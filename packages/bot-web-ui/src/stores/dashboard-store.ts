@@ -119,6 +119,8 @@ export default class DashboardStore implements IDashboardStore {
             setShowMobileTourDialog: action.bound,
             is_chart_modal_visible: observable,
             is_trading_view_modal_visible: observable,
+            // accumulated_stats: observable,
+            // setAccumulatedStats: action.bound,
         });
         this.root_store = root_store;
         this.core = core;
@@ -204,6 +206,12 @@ export default class DashboardStore implements IDashboardStore {
     is_chart_modal_visible = false;
     is_trading_view_modal_visible = false;
     faq_title = '';
+    // TODO : commented code for stats bar
+    // accumulated_stats = [];
+
+    // setAccumulatedStats = (accumulated_stats: any) => {
+    //     this.accumulated_stats = accumulated_stats;
+    // };
 
     setFaqTitle = (faq_title: string) => {
         this.faq_title = faq_title;
