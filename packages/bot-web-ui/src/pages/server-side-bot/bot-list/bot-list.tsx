@@ -42,6 +42,11 @@ const BotList: React.FC<TBotList> = observer(({ setFormVisibility }) => {
 
     useEffect(() => {
         if (should_subscribe) getBotList();
+
+        window.addEventListener('focus', getBotList);
+        return () => {
+            window.removeEventListener('focus', getBotList);
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

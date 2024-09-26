@@ -492,6 +492,7 @@ export default class ServerBotStore {
 
     subscribeToBotNotification = async (bot_id: string) => {
         try {
+            if (this.subscriptions[bot_id]) return;
             const { subscription } = await api_base.api.send({ bot_notification: 1, bot_id, subscribe: 1 });
 
             this.subscriptions = {
@@ -565,6 +566,10 @@ export default class ServerBotStore {
                 msg: bot_remove.message || localize('Bot deleted successfully'),
                 bot_id,
             });
+
+            const subscriptions = { ...this.subscriptions };
+            delete subscriptions[bot_id];
+            this.subscriptions = subscriptions;
         } catch (error) {
             // eslint-disable-next-line no-console
             console.dir(error);
