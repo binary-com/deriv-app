@@ -652,6 +652,7 @@ const CFDPasswordModal = observer(({ form_error, platform }: TCFDPasswordModalPr
         product,
         setMigratedMT5Accounts,
         is_mt5_password_changed_modal_visible,
+        setIsMt5PasswordChangedModalVisible,
         is_mt5_password_invalid_format_modal_visible,
         setIsMt5PasswordInvalidFormatModalVisible,
         is_sent_email_modal_enabled,
@@ -763,6 +764,8 @@ const CFDPasswordModal = observer(({ form_error, platform }: TCFDPasswordModalPr
     };
 
     const closeModal = () => {
+        setIsMt5PasswordChangedModalVisible(false);
+        setIsMt5PasswordInvalidFormatModalVisible(false);
         updateMT5Status();
         closeDialogs();
         disableCFDPasswordModal();
