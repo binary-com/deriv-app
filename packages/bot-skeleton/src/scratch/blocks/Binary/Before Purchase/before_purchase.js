@@ -66,7 +66,7 @@ Blockly.Blocks.before_purchase = {
     },
     meta() {
         return {
-            display_name: localize('Purchase conditions'),
+            display_name: localize('Purchase conditionss'),
             description: localize(
                 'This block is mandatory. Only one copy of this block is allowed. You can place the Purchase block (see below) here as well as conditional blocks to define your purchase conditions.'
             ),
