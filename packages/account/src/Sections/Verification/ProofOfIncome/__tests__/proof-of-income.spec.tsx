@@ -36,12 +36,16 @@ jest.mock('@deriv/shared', () => ({
                 })
             ),
         },
-        getSocket: jest.fn(() => Promise.resolve()),
     },
 }));
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     Redirect: jest.fn(() => <div>Redirect</div>),
+}));
+
+jest.mock('@deriv/api', () => ({
+    ...jest.requireActual('@deriv/api'),
+    useDocumentUpload: jest.fn(() => ({ mutate: jest.fn() })),
 }));
 
 describe('ProofOfIncome', () => {

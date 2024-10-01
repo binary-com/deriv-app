@@ -9,7 +9,6 @@ import {
     MobileWrapper,
     SelectNative,
 } from '@deriv/components';
-import { useFileUploader } from '@deriv/hooks';
 import { localize, Localize } from '@deriv/translations';
 import { isEqualArray, WS } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
@@ -22,6 +21,7 @@ import { getFileUploaderDescriptions } from '../../../Constants/file-uploader';
 import { isServerError } from 'Helpers/utils';
 import { income_status_codes, getPoincDocumentsList } from 'Sections/Verification/ProofOfIncome/proof-of-income-utils';
 import { useDevice } from '@deriv-com/ui';
+import { useDocumentUpload } from '@deriv/api';
 
 type TProofOfIncomeForm = {
     onSubmit: (status: typeof income_status_codes[keyof typeof income_status_codes]) => void;
@@ -42,7 +42,30 @@ const ProofOfIncomeForm = observer(({ onSubmit }: TProofOfIncomeForm) => {
     const { addNotificationMessageByKey, removeNotificationMessage, removeNotificationByKey } = notifications;
     const { isMobile, isDesktop } = useDevice();
 
-    const { upload } = useFileUploader();
+    const { upload, data, documentUploadStatus } = useDocumentUpload();
+
+    React.useEffect(() => {
+        const fetchAccountStatus = async () => {
+            if (documentUploadStatus === 'success') {
+                const get_account_status_response: DeepRequired<AccountStatusResponse> =
+                    await WS.authorized.getAccountStatus();
+                const { income, needs_verification } =
+                    get_account_status_response?.get_account_status?.authentication || {};
+                const needs_poinc =
+                    needs_verification.includes('income') &&
+                    [income_status_codes.REJECTED, income_status_codes.NONE].some(status => status === income?.status);
+                removeNotificationMessage({ key: 'needs_poinc' });
+                removeNotificationByKey({ key: 'needs_poinc' });
+                removeNotificationMessage({ key: 'poinc_upload_limited' });
+                removeNotificationByKey({ key: 'poinc_upload_limited' });
+                onSubmit(income?.status);
+                if (needs_poinc) {
+                    addNotificationMessageByKey('needs_poinc');
+                }
+            }
+        };
+        fetchAccountStatus();
+    }, [documentUploadStatus]);
 
     const initial_form_values: TInitialValues = {
         document_type: '',
@@ -69,28 +92,10 @@ const ProofOfIncomeForm = observer(({ onSubmit }: TProofOfIncomeForm) => {
         if (uploading_value) {
             setSubmitting(true);
             try {
-                const api_response = await upload(document_file, { document_type: uploading_value });
-                if (api_response.warning) {
-                    setStatus({ msg: api_response.message });
-                } else {
-                    const get_account_status_response: DeepRequired<AccountStatusResponse> =
-                        await WS.authorized.getAccountStatus();
+                await upload({ file: document_file[0], document_type: uploading_value });
 
-                    const { income, needs_verification } =
-                        get_account_status_response?.get_account_status?.authentication || {};
-                    const needs_poinc =
-                        needs_verification.includes('income') &&
-                        [income_status_codes.REJECTED, income_status_codes.NONE].some(
-                            status => status === income?.status
-                        );
-                    removeNotificationMessage({ key: 'needs_poinc' });
-                    removeNotificationByKey({ key: 'needs_poinc' });
-                    removeNotificationMessage({ key: 'poinc_upload_limited' });
-                    removeNotificationByKey({ key: 'poinc_upload_limited' });
-                    onSubmit(income?.status);
-                    if (needs_poinc) {
-                        addNotificationMessageByKey('needs_poinc');
-                    }
+                if ('warning' in data) {
+                    setStatus({ msg: data.status });
                 }
             } catch (error) {
                 if (isServerError(error)) {
