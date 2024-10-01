@@ -78,19 +78,14 @@ const initDatadog = (is_datadog_enabled: boolean) => {
             enableExperimentalFeatures: ['clickmap'],
             beforeSend: event => {
                 if (event.type === 'resource') {
+                    // Mask Telegram token
                     event.resource.url = event.resource.url.replace(
-                        /^https:\/\/api\.telegram\.org\/[a-zA-Z0-9]+(\?[a-zA-Z0-9_=&]+)?$/,
-                        'telegram token=REDACTED'
+                        /^(https:\/\/api\.telegram\.org\/)[a-zA-Z0-9]+(\?[a-zA-Z0-9_=&]+)?$/,
+                        '$1REDACTED$2'
                     );
 
-                    if (event.resource.url.match(/^https:\/\/eu\.deriv\.com\/ctrader-login[a-zA-Z0-9&?=]*$/)) {
-                        const url = event.resource.url;
-                        const accnt = getAcct1Value(url);
-                        event.resource.url = event.resource.url.replace(
-                            /^https:\/\/eu\.deriv\.com\/ctrader-login[a-zA-Z0-9&?=]*$/,
-                            `https://eu.deriv.com/ctrader-login?acct1=${accnt}&token1=redacted`
-                        );
-                    }
+                    // Mask acct{number}=, token{number}=, and token= values from any URL
+                    event.resource.url = event.resource.url.replace(/(acct\d+=|token\d+=|token=)[^&]+/g, '$1REDACTED');
                 }
                 /* We must return true to resolve the related TS error. true means the event is not discarded, and false means the event is discarded. 
                 See https://docs.datadoghq.com/real_user_monitoring/guide/browser-sdk-upgrade/#beforesend-return-type */
