@@ -8,7 +8,7 @@ type TErrorMessageProps = {
 };
 
 const VerifyPersonalDetailsErrorMessage: React.FC<TErrorMessageProps> = ({ error }) => {
-    const handleOnClickLink = () => window.LC_API.open_chat_window();
+    const handleOnClickLink = () => window.LiveChatWidget.call('maximize');
 
     if (error === 'DuplicateAccount') {
         return (

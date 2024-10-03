@@ -16,7 +16,11 @@ const CashierOnboardingSideNoteFiat: React.FC = observer(() => {
                         is_from_derivgo ? (
                             <span />
                         ) : (
-                            <a key={0} className='link link--orange' onClick={() => window.LC_API.open_chat_window()} />
+                            <a
+                                key={0}
+                                className='link link--orange'
+                                onClick={() => window.LiveChatWidget.call('maximize')}
+                            />
                         ),
                     ]}
                 />

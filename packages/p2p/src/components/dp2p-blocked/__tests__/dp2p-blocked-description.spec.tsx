@@ -9,6 +9,13 @@ jest.mock('Stores', () => ({
     useStores: jest.fn(),
 }));
 
+window.LiveChatWidget = {
+    call: jest.fn(),
+    get: jest.fn(),
+    init: jest.fn(),
+    on: jest.fn(),
+};
+
 describe('<Dp2pBlockedDescription />', () => {
     it('it should return `P2P transactions are locked. This feature is not available for payment agents.`', () => {
         (useStores as jest.Mock).mockReturnValue({
@@ -45,11 +52,6 @@ describe('<Dp2pBlockedDescription />', () => {
             },
         });
 
-        window.LC_API = {
-            open_chat_window: jest.fn(),
-            on_chat_ended: jest.fn(),
-        };
-
         render(<Dp2pBlockedDescription />);
         expect(screen.getByText(/to contact our Customer Support team for help./)).toBeInTheDocument();
 
@@ -57,6 +59,7 @@ describe('<Dp2pBlockedDescription />', () => {
         expect(live_chat_text).toBeInTheDocument();
 
         userEvent.click(live_chat_text);
-        expect(window.LC_API.open_chat_window).toHaveBeenCalledTimes(1);
+        expect(window.LiveChatWidget.call).toHaveBeenCalledTimes(1);
+        expect(window.LiveChatWidget.call).toHaveBeenCalledWith('maximize');
     });
 });

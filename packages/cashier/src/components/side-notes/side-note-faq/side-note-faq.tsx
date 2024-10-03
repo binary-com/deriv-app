@@ -14,7 +14,7 @@ const SideNoteFAQ = ({ transaction_type }: TSideNoteFAQProps) => {
     const { isMobile } = useDevice();
     const { is_eu } = client;
 
-    const onClickHandler = () => window.LC_API?.open_chat_window?.();
+    const onClickHandler = () => window.LiveChatWidget.call('maximize');
 
     const deposit_faq_list = useMemo(() => {
         return [

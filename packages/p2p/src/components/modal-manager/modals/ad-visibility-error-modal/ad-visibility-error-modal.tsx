@@ -49,7 +49,7 @@ const AdVisibilityErrorModal = ({ error_code }: TAdVisibilityErrorModalProps) =>
                                 <a
                                     key={2}
                                     className='link link--orange'
-                                    onClick={() => window.LC_API.open_chat_window()}
+                                    onClick={() => window.LiveChatWidget.call('maximize')}
                                 />,
                             ]}
                         />

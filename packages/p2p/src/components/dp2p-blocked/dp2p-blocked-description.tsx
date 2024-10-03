@@ -31,7 +31,11 @@ const Dp2pBlockedDescription = () => {
             <Localize
                 i18n_default_text='Please use <0>live chat</0> to contact our Customer Support team for help.'
                 components={[
-                    <span key={0} className='link link--orange' onClick={() => window.LC_API.open_chat_window()} />,
+                    <span
+                        key={0}
+                        className='link link--orange'
+                        onClick={() => window.LiveChatWidget.call('maximize')}
+                    />,
                 ]}
             />
         );
