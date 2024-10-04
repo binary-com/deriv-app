@@ -1287,6 +1287,9 @@ export default class ClientStore extends BaseStore {
         const is_samoa_account = this.root_store.ui.real_account_signup_target === 'samoa';
         let currency = '';
         form_values.residence = this.residence;
+        if (!form_values.tax_residence) {
+            form_values.tax_residence = this.residence;
+        }
         if (is_maltainvest_account) {
             currency = form_values.currency;
         }

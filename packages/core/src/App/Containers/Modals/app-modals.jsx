@@ -71,16 +71,6 @@ const OneTimeDepositModal = React.lazy(() =>
     import(/* webpackChunkName: "one-time-deposit-modal" */ '../OneTimeDepositModal')
 );
 
-const AdditionalKycInfoModal = React.lazy(() =>
-    import(
-        /* webpackChunkName: "additional-kyc-info-modal" */ '@deriv/account/src/Components/additional-kyc-info-modal'
-    )
-);
-
-const InformationSubmittedModal = React.lazy(() =>
-    import(/* webpackChunkName: "information-submitted-modal" */ './information-submitted-modal')
-);
-
 const TncStatusUpdateModal = React.lazy(() =>
     import(/* webpackChunkName: "tnc-status-update-modal" */ './tnc-status-update-modal')
 );
@@ -109,8 +99,6 @@ const AppModals = observer(() => {
         is_ready_to_deposit_modal_visible,
         is_need_real_account_for_cashier_modal_visible,
         should_show_risk_accept_modal,
-        is_additional_kyc_info_modal_open,
-        is_kyc_information_submitted_modal_open,
         is_verification_modal_visible,
         is_verification_submitted,
         isUrlUnavailableModalVisible,
@@ -243,13 +231,6 @@ const AppModals = observer(() => {
 
         if (should_show_account_success_modal) {
             ComponentToLoad = <ReadyToVerifyModal />;
-        }
-        if (is_additional_kyc_info_modal_open) {
-            ComponentToLoad = <AdditionalKycInfoModal />;
-        }
-
-        if (is_kyc_information_submitted_modal_open) {
-            ComponentToLoad = <InformationSubmittedModal />;
         }
 
         if (should_show_same_dob_phone_modal) {

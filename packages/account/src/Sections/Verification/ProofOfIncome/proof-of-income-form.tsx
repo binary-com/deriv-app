@@ -1,16 +1,9 @@
 import React from 'react';
 import { Field, Formik, Form, FormikErrors, FormikHelpers, FormikValues } from 'formik';
 import { AccountStatusResponse, DocumentUploadRequest } from '@deriv/api-types';
-import {
-    Autocomplete,
-    Button,
-    DesktopWrapper,
-    FormSubmitErrorMessage,
-    MobileWrapper,
-    SelectNative,
-} from '@deriv/components';
+import { Autocomplete, Button, FormSubmitErrorMessage, SelectNative } from '@deriv/components';
 import { useFileUploader } from '@deriv/hooks';
-import { localize, Localize } from '@deriv/translations';
+import { useTranslations, Localize } from '@deriv-com/translations';
 import { isEqualArray, WS } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import FilesDescription from 'Components/file-uploader-container/files-descriptions';
@@ -34,15 +27,15 @@ type TInitialValues = {
 const ProofOfIncomeForm = observer(({ onSubmit }: TProofOfIncomeForm) => {
     const [document_file, setDocumentFile] = React.useState<File[]>([]);
     const [file_selection_error, setFileSelectionError] = React.useState<string | null>(null);
-
-    const poinc_documents_list = React.useMemo(() => getPoincDocumentsList(), []);
-    const poinc_uploader_files_descriptions = React.useMemo(() => getFileUploaderDescriptions('poinc'), []);
-
+    const { localize } = useTranslations();
     const { notifications } = useStore();
     const { addNotificationMessageByKey, removeNotificationMessage, removeNotificationByKey } = notifications;
     const { isMobile, isDesktop } = useDevice();
 
     const { upload } = useFileUploader();
+
+    const poinc_documents_list = React.useMemo(() => getPoincDocumentsList(), []);
+    const poinc_uploader_files_descriptions = React.useMemo(() => getFileUploaderDescriptions('poinc'), []);
 
     const initial_form_values: TInitialValues = {
         document_type: '',
@@ -126,7 +119,7 @@ const ProofOfIncomeForm = observer(({ onSubmit }: TProofOfIncomeForm) => {
                             <Field name='document_type'>
                                 {({ field }: FormikValues) => (
                                     <React.Fragment>
-                                        <DesktopWrapper>
+                                        {isDesktop ? (
                                             <Autocomplete
                                                 {...field}
                                                 name='document_type'
@@ -148,8 +141,7 @@ const ProofOfIncomeForm = observer(({ onSubmit }: TProofOfIncomeForm) => {
                                                 }}
                                                 required
                                             />
-                                        </DesktopWrapper>
-                                        <MobileWrapper>
+                                        ) : (
                                             <SelectNative
                                                 name='document_type'
                                                 placeholder={localize('Select your document*')}
@@ -166,7 +158,7 @@ const ProofOfIncomeForm = observer(({ onSubmit }: TProofOfIncomeForm) => {
                                                 required
                                                 hide_top_placeholder
                                             />
-                                        </MobileWrapper>
+                                        )}
                                     </React.Fragment>
                                 )}
                             </Field>

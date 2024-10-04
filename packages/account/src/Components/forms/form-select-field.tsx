@@ -1,8 +1,7 @@
 import { FC, Fragment } from 'react';
 import { Autocomplete, SelectNative } from '@deriv/components';
 import { Field, FieldProps, FormikErrors } from 'formik';
-import { TGetField } from '../additional-kyc-info-modal/form-config';
-import { TListItem } from 'Types';
+import { TListItem, TGetField } from '../../Types';
 import { useDevice } from '@deriv-com/ui';
 
 type TFormSelectField = TGetField & {
@@ -40,9 +39,9 @@ const FormSelectField: FC<TFormSelectField> = ({
                     {!isDesktop ? (
                         <SelectNative
                             {...field}
-                            // @ts-expect-error This needs to fixed in SelectNative component
+                            // @ts-expect-error This needs to fixed in AutoComplete component
                             list_items={list_items}
-                            // @ts-expect-error This needs to fixed in SelectNative component
+                            // @ts-expect-error This needs to fixed in AutoComplete component
                             label={label}
                             required={required}
                             disabled={disabled}
@@ -65,8 +64,7 @@ const FormSelectField: FC<TFormSelectField> = ({
                             // @ts-expect-error This needs to fixed in AutoComplete component
                             onItemSelection={onItemSelection ?? onSelect(field.name, setFieldValue)}
                             data-testid={`dt_${field.name}`}
-                            // @ts-expect-error This needs to fixed in AutoComplete component
-                            list_height={list_height}
+                            list_height={list_height as string}
                         />
                     )}
                 </Fragment>

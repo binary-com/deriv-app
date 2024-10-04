@@ -1,10 +1,10 @@
 import React from 'react';
 import { Formik } from 'formik';
-
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import PersonalDetailsForm from '../personal-details-form';
+import { APIProvider } from '@deriv/api';
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
@@ -22,9 +22,11 @@ describe('PersonalDetailsForm', () => {
 
     const renderComponent = () => {
         render(
-            <Formik initialValues={{ salutation: '' }} onSubmit={jest.fn()}>
-                <PersonalDetailsForm {...mock_props} />
-            </Formik>
+            <APIProvider>
+                <Formik initialValues={{ salutation: '' }} onSubmit={jest.fn()}>
+                    <PersonalDetailsForm {...mock_props} />
+                </Formik>
+            </APIProvider>
         );
     };
 
@@ -51,23 +53,5 @@ describe('PersonalDetailsForm', () => {
         userEvent.click(ms_radio_input);
         expect(mr_radio_input).not.toBeChecked();
         expect(ms_radio_input).toBeChecked();
-    });
-
-    it('should display crs confirmation checkbox if tax residence & tin fields are filled', () => {
-        render(
-            <Formik
-                initialValues={{ tax_residence: '', tax_identification_number: '', crs_confirmation: false }}
-                onSubmit={jest.fn()}
-            >
-                <PersonalDetailsForm is_svg />
-            </Formik>
-        );
-
-        fireEvent.change(screen.getByTestId('tax_residence'), { target: { value: 'Afghanistan' } });
-        fireEvent.change(screen.getByTestId('tax_identification_number'), { target: { value: '1234567890' } });
-
-        expect(
-            screen.queryByLabelText(/i confirm that my tax information is accurate and complete/i)
-        ).toBeInTheDocument();
     });
 });

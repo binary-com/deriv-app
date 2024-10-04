@@ -5,15 +5,7 @@ import {
 } from '../validation';
 
 describe('getPersonalDetailsValidationSchema', () => {
-    const non_eu_valid_data = {
-        first_name: 'John',
-        last_name: 'Doe',
-        phone: '+123456789',
-        address_line_1: 'Kuala Lumpur',
-        address_city: 'Kuala Lumpur',
-        citizen: 'Malaysian',
-    };
-    const eu_valid_data = {
+    const valid_data = {
         first_name: 'John',
         last_name: 'Doe',
         phone: '+123456789',
@@ -23,8 +15,11 @@ describe('getPersonalDetailsValidationSchema', () => {
         tax_identification_number: '123123123',
         tax_residence: 'Germany',
         employment_status: 'Employed',
+        date_of_birth: '1990-01-01',
+        tax_identification_confirm: true,
     };
-    const non_eu_invalid_data = {
+
+    const invalid_data = {
         first_name: 'John',
         last_name: 'Doe123',
         phone: 'wrong',
@@ -32,19 +27,17 @@ describe('getPersonalDetailsValidationSchema', () => {
         address_city: '',
         citizen: '',
     };
-    const non_eu = false;
-    const is_eu = true;
 
     it('should validate a valid input for non-eu users', async () => {
-        const validationSchema = getPersonalDetailsValidationSchema(non_eu);
-        const isValid = await validationSchema.isValid(non_eu_valid_data);
+        const validationSchema = getPersonalDetailsValidationSchema();
+        const isValid = await validationSchema.isValid(valid_data);
         expect(isValid).toBe(true);
     });
 
     it('should not validate an invalid input for non-eu users', async () => {
-        const validationSchema = getPersonalDetailsValidationSchema(non_eu);
+        const validationSchema = getPersonalDetailsValidationSchema();
         try {
-            await validationSchema.isValid(non_eu_invalid_data);
+            await validationSchema.isValid(invalid_data);
         } catch (error) {
             // @ts-expect-error [TODO]: Fix type for error
             expect(error.errors.length).toBeGreaterThan(0);
@@ -52,19 +45,13 @@ describe('getPersonalDetailsValidationSchema', () => {
     });
 
     it('should validate a valid input for eu users', async () => {
-        const validationSchema = getPersonalDetailsValidationSchema(is_eu);
-        const isValid = await validationSchema.isValid(eu_valid_data);
+        const validationSchema = getPersonalDetailsValidationSchema();
+        const isValid = await validationSchema.isValid(valid_data);
         expect(isValid).toBe(true);
     });
 
-    it('should not validate a non-eu input for eu users', async () => {
-        const validationSchema = getPersonalDetailsValidationSchema(is_eu);
-        const isValid = await validationSchema.isValid(non_eu_valid_data);
-        expect(isValid).toBe(false);
-    });
-
     it('should return empty object for virtual account', () => {
-        const validationSchema = getPersonalDetailsValidationSchema(false, true);
+        const validationSchema = getPersonalDetailsValidationSchema(true);
         expect(validationSchema.fields).toEqual({});
     });
 });

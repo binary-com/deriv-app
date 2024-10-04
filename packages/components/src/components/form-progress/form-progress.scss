@@ -19,9 +19,9 @@
         display: flex;
         flex-direction: column;
         height: 6rem;
-        justify-content: space-around;
-        width: 160px;
+        width: 134px;
         z-index: 2;
+        gap: 1rem;
 
         & .identifier {
             border-radius: 50%;
@@ -29,6 +29,7 @@
             width: 24px;
             background-color: var(--text-less-prominent);
             border: 1px solid var(--text-less-prominent);
+            margin-top: 4px;
 
             &--active {
                 background-color: var(--brand-red-coral) !important;

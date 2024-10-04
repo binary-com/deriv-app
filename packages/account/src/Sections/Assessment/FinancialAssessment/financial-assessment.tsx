@@ -21,7 +21,6 @@ import {
     getAccountTurnoverList,
     getEducationLevelList,
     getEmploymentIndustryList,
-    getEmploymentStatusList,
     getEstimatedWorthList,
     getIncomeSourceList,
     getNetIncomeList,
@@ -34,12 +33,14 @@ import {
     getForexTradingFrequencyList,
     getOtherInstrumentsTradingExperienceList,
     getOtherInstrumentsTradingFrequencyList,
-} from './financial-information-list';
+} from '../../../Constants/financial-information-list';
 import type { TCoreStores } from '@deriv/stores/types';
 import { GetFinancialAssessment, GetFinancialAssessmentResponse } from '@deriv/api-types';
 import { getFormattedOccupationList } from 'Configs/financial-details-config';
 import { TFinancialInformationForm } from 'Types';
+import { EmploymentStatusField } from 'Components/forms/form-fields';
 import { useDevice } from '@deriv-com/ui';
+import NavigateToPersonalDetails from './NavigateToPersonalDetails';
 
 type TConfirmationPage = {
     toggleModal: (prop: boolean) => void;
@@ -194,6 +195,7 @@ const FinancialAssessment = observer(() => {
         updateAccountStatus,
         is_authentication_needed,
         is_financial_information_incomplete,
+        account_settings,
     } = client;
     const { isMobile, isTablet, isDesktop } = useDevice();
     const { platform, routeBackInApp } = common;
@@ -390,6 +392,15 @@ const FinancialAssessment = observer(() => {
         return form_data;
     };
 
+    if (
+        !employment_status ||
+        !account_settings.account_opening_reason ||
+        !account_settings.tax_residence ||
+        !account_settings.tax_identification_number
+    ) {
+        return <NavigateToPersonalDetails />;
+    }
+
     return (
         <Formik initialValues={setInitialFormData()} enableReinitialize validate={validateFields} onSubmit={onSubmit}>
             {({
@@ -475,45 +486,7 @@ const FinancialAssessment = observer(() => {
                                     </fieldset>
                                     {!is_mf && (
                                         <fieldset className='account-form__fieldset'>
-                                            {isDesktop ? (
-                                                <Dropdown
-                                                    placeholder={localize('Employment status')}
-                                                    is_align_text_left
-                                                    name='employment_status'
-                                                    list={getEmploymentStatusList()}
-                                                    value={values.employment_status}
-                                                    onChange={e => {
-                                                        handleChange(e);
-                                                        setFieldValue(
-                                                            'occupation',
-                                                            '',
-                                                            !shouldHideOccupationField(e.target.value)
-                                                        );
-                                                    }}
-                                                    handleBlur={handleBlur}
-                                                    error={touched.employment_status && errors.employment_status}
-                                                />
-                                            ) : (
-                                                <SelectNative
-                                                    placeholder={localize('Please select')}
-                                                    name='employment_status'
-                                                    label={localize('Employment status')}
-                                                    list_items={getEmploymentStatusList()}
-                                                    value={values.employment_status}
-                                                    error={
-                                                        touched.employment_status ? errors.employment_status : undefined
-                                                    }
-                                                    onChange={e => {
-                                                        setFieldTouched('employment_status', true);
-                                                        setFieldValue(
-                                                            'occupation',
-                                                            '',
-                                                            !shouldHideOccupationField(e.target.value)
-                                                        );
-                                                        handleChange(e);
-                                                    }}
-                                                />
-                                            )}
+                                            <EmploymentStatusField is_disabled />
                                         </fieldset>
                                     )}
                                     <fieldset className='account-form__fieldset'>

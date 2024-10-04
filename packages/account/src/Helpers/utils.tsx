@@ -158,7 +158,7 @@ export const isDocumentTypeValid = (document_type: FormikValues) => {
 export const isAdditionalDocumentValid = (document_type: FormikValues, additional_document_value?: string) => {
     const error_message = documentAdditionalError(additional_document_value, document_type?.additional);
     if (error_message) {
-        return localize(error_message) + getExampleFormat(document_type.additional?.example_format);
+        return error_message + getExampleFormat(document_type?.additional?.example_format);
     }
     return undefined;
 };

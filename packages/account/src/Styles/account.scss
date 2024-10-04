@@ -451,6 +451,12 @@ $MIN_HEIGHT_FLOATING: calc(
                 }
             }
 
+            .account-form__fieldset {
+                .dropdown-field {
+                    margin-bottom: 3.2rem;
+                }
+            }
+
             @include tablet-screen {
                 .dc-form-submit-error-message {
                     width: 100%;

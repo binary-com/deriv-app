@@ -2406,6 +2406,73 @@ type ChangeEmailResponse = {
     msg_type: 'change_email';
     req_id?: number;
 };
+
+/**
+ * Get the validations for Tax Identification Numbers (TIN)
+ */
+export interface TINValidationRequest {
+    /**
+     * Must be `1`
+     */
+    tin_validations: 1;
+    /**
+     * The tax residence selected by the client.
+     */
+    tax_residence: string;
+    /**
+     * [Optional] Used to pass data through the websocket, which may be retrieved via the `echo_req` output field.
+     */
+    passthrough?: {
+        [k: string]: unknown;
+    };
+    /**
+     * [Optional] Used to map request to response.
+     */
+    req_id?: number;
+}
+
+/**
+ * A message with validations for Tax Identification Numbers (TIN)
+ */
+export type TINValidationResponse = {
+    tin_validations?: TinValidations;
+    /**
+     * Echo of the request made.
+     */
+    echo_req: {
+        [k: string]: unknown;
+    };
+    /**
+     * Action name of the request made.
+     */
+    msg_type: 'tin_validations';
+    /**
+     * Optional field sent in request to map to response, present only when request contains `req_id`.
+     */
+    req_id?: number;
+    [k: string]: unknown;
+};
+/**
+ * Validations for Tax Identification Numbers (TIN)
+ */
+export type TinValidations = {
+    /**
+     * List of employment statuses that bypass TIN requirements for the selected country
+     */
+    tin_employment_status_bypass?: string[];
+    /**
+     * Whether the TIN is mandatory for the selected country
+     */
+    is_tin_mandatory?: boolean;
+    /**
+     * Country tax identifier formats.
+     */
+    tin_format?: string[];
+    /**
+     * Invalid regex patterns for tin validation
+     */
+    invalid_patterns?: string[];
+};
 /**
  * Get list of platform and their server status
  */
@@ -2870,6 +2937,10 @@ type TSocketEndpoints = {
     time: {
         request: ServerTimeRequest;
         response: ServerTimeResponse;
+    };
+    tin_validations: {
+        request: TINValidationRequest;
+        response: TINValidationResponse;
     };
     tnc_approval: {
         request: TermsAndConditionsApprovalRequest;

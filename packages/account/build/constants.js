@@ -30,6 +30,7 @@ const ALIASES = {
     Stores: path.resolve(__dirname, '../src/Stores'),
     Styles: path.resolve(__dirname, '../src/Styles'),
     Types: path.resolve(__dirname, '../src/Types'),
+    'react/jsx-runtime': 'react/jsx-runtime.js',
 };
 
 const rules = (is_test_env = false) => [

@@ -1043,3 +1043,8 @@
         margin-bottom: 1.6rem;
     }
 }
+
+.focus-field {
+    border-radius: $BORDER_RADIUS;
+    border: 1px solid var(--text-prominent);
+}

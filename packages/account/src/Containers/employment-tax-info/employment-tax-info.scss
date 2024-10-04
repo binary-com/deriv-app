@@ -1,0 +1,18 @@
+.employment-tax-info {
+    &__form {
+        padding: 0 16rem;
+
+        .account-form__fieldset:first-child {
+            margin-top: 1rem;
+        }
+    }
+
+    &__layout {
+        display: flex;
+        flex-direction: column;
+
+        .details-form {
+            display: flex;
+        }
+    }
+}

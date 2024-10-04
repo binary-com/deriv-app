@@ -5,6 +5,7 @@ import { StoreProvider, mockStore } from '@deriv/stores';
 import { isDocumentNumberValid } from 'Helpers/utils';
 import IdvDocumentSubmit from '../idv-document-submit';
 import { useDevice } from '@deriv-com/ui';
+import { APIProvider } from '@deriv/api';
 
 const mock_store = mockStore({
     client: {
@@ -93,9 +94,11 @@ describe('<IdvDocumentSubmit/>', () => {
 
     const renderComponent = () => {
         render(
-            <StoreProvider store={mock_store}>
-                <IdvDocumentSubmit {...mock_props} />
-            </StoreProvider>
+            <APIProvider>
+                <StoreProvider store={mock_store}>
+                    <IdvDocumentSubmit {...mock_props} />
+                </StoreProvider>
+            </APIProvider>
         );
     };
 

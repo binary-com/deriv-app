@@ -1,0 +1,16 @@
+.employment_tax_detail_field {
+    &-checkbox {
+        align-items: flex-start;
+        margin: 1.6rem auto;
+        &__box {
+            align-self: baseline;
+        }
+
+        &__label {
+            text-align: justify;
+        }
+        .dc-checkbox__box {
+            margin-inline-start: unset;
+        }
+    }
+}

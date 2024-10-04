@@ -1,10 +1,11 @@
 import classNames from 'classnames';
 import React from 'react';
 import { Button, Icon, Text } from '@deriv/components';
-import { isEmptyObject, toTitleCase } from '@deriv/shared';
+import { isEmptyObject, toTitleCase, TRoute } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { Analytics } from '@deriv-com/analytics';
 import { BinaryLink } from 'App/Components/Routes';
+import { useHistory } from 'react-router-dom';
 import EmptyNotification from 'App/Components/Elements/Notifications/empty-notification';
 
 type TActionProps = ReturnType<typeof useStore>['notifications']['notifications'][0]['action'];
@@ -13,6 +14,7 @@ type TNotificationMessage = ReturnType<typeof useStore>['notifications']['notifi
 const NotificationsList = observer(() => {
     const { notifications } = useStore();
     const { notifications: notifications_array, toggleNotificationsModal } = notifications;
+    const history = useHistory();
 
     const getNotificationItemIcon = (item: TNotificationMessage) => {
         const { type } = item;
@@ -70,7 +72,7 @@ const NotificationsList = observer(() => {
                         <div className='notifications-item__action'>
                             {!!getButtonSettings(item) && (
                                 <React.Fragment>
-                                    {getButtonSettings(item)?.route ? (
+                                    {getButtonSettings(item)?.route && !getButtonSettings(item)?.onClick ? (
                                         <BinaryLink
                                             onClick={() => {
                                                 const buttonSettings = getButtonSettings(item);
@@ -101,6 +103,9 @@ const NotificationsList = observer(() => {
                                             onClick={() => {
                                                 getButtonSettings(item)?.onClick();
                                                 onActionTrackEvent(item.key);
+                                                if (getButtonSettings(item)?.route) {
+                                                    history.push(getButtonSettings(item)?.route as string);
+                                                }
                                             }}
                                         >
                                             <Text weight='bold' size='xxs'>

@@ -58,8 +58,9 @@ export const VerifyButton = observer(
             e.preventDefault();
             setVerificationCode('', 'phone_number_verification');
             setShouldShowPhoneNumberOTP(false);
+            // @ts-expect-error GetSettings types doesn't match updated set_settings payload types
             const request = makeSettingsRequest({ ...values }, residence_list, states_list, is_virtual);
-            //@ts-expect-error GetSettings types doesn't match updated set_settings payload types
+            // @ts-expect-error GetSettings types doesn't match updated set_settings payload types
             updateSettings({ payload: request })
                 .then(() => {
                     sendPhoneNumberVerifyEmail();

@@ -1,26 +1,22 @@
-import { useState, Fragment, useCallback, useMemo, useEffect } from 'react';
+import { Fragment, useCallback, useMemo, useEffect } from 'react';
 import clsx from 'clsx';
-import { Form, Formik, FormikErrors } from 'formik';
+import { Form, Formik } from 'formik';
 import { Analytics, TEvents } from '@deriv-com/analytics';
 import { AutoHeightWrapper, Div100vhContainer, FormSubmitButton, Modal, ThemedScrollbars } from '@deriv/components';
+import { getIDVNotApplicableOption } from '@deriv/shared';
 import { useDevice } from '@deriv-com/ui';
-import { getIDVNotApplicableOption, removeEmptyPropertiesFromObject } from '@deriv/shared';
 import { Localize, localize } from '@deriv/translations';
 import { useStore, observer } from '@deriv/stores';
-import {
-    isAdditionalDocumentValid,
-    isDocumentNumberValid,
-    isDocumentTypeValid,
-    shouldShowIdentityInformation,
-} from '../../Helpers/utils';
+import { shouldShowIdentityInformation } from '../../Helpers/utils';
 import { DerivLightNameDobPoiIcon } from '@deriv/quill-icons';
 import FormSubHeader from '../form-sub-header';
 import IDVForm from '../forms/idv-form';
 import PersonalDetailsForm from '../forms/personal-details-form';
-import { splitValidationResultTypes } from '../real-account-signup/helpers/utils';
 import ScrollToFieldWithError from '../forms/scroll-to-field-with-error';
 import { TIDVFormValues, TListItem, TPersonalDetailsBaseForm } from '../../Types';
 import { GetAccountStatus, GetSettings, ResidenceList } from '@deriv/api-types';
+import { getPersonalDetailsBaseValidationSchema } from '../../Configs/user-profile-validation-config';
+import { getIDVFormValidationSchema } from '../../Configs/kyc-validation-config';
 
 type TPersonalDetailsSectionForm = Partial<TIDVFormValues & TPersonalDetailsBaseForm> & {
     confirmation_checkbox?: boolean;
@@ -82,8 +78,6 @@ const PersonalDetails = observer(
             traders_hub: { is_eu_user },
         } = useStore();
         const { account_status, account_settings, residence, real_account_signup_target } = props;
-        const [should_close_tooltip, setShouldCloseTooltip] = useState(false);
-        const [no_confirmation_needed, setNoConfirmationNeeded] = useState(false);
 
         const { isDesktop } = useDevice();
         const handleCancel = (values: TPersonalDetailsSectionForm) => {
@@ -127,43 +121,15 @@ const PersonalDetails = observer(
 
         const IDV_NOT_APPLICABLE_OPTION = useMemo(() => getIDVNotApplicableOption(), []);
 
-        const validateIDV = (values: TPersonalDetailsSectionForm) => {
-            const errors: FormikErrors<TPersonalDetailsSectionForm> = {};
-            const { document_type, document_number, document_additional } = values;
-            if (document_type?.id === IDV_NOT_APPLICABLE_OPTION.id) return errors;
-            /* eslint-disable @typescript-eslint/ban-ts-comment */
-            // @ts-expect-error Error is tring but Formik value was an object
-            errors.document_type = isDocumentTypeValid(document_type);
-
-            const needs_additional_document = !!document_type?.additional;
-
-            if (needs_additional_document) {
-                errors.document_additional = isAdditionalDocumentValid(document_type, document_additional);
-            }
-
-            errors.document_number = isDocumentNumberValid(document_number, document_type);
-
-            if (document_type?.id !== IDV_NOT_APPLICABLE_OPTION.id && !values?.confirmation_checkbox) {
-                errors.confirmation_checkbox = 'error';
-            }
-            return removeEmptyPropertiesFromObject(errors);
-        };
-
-        const handleValidate = (values: TPersonalDetailsSectionForm) => {
-            const current_step = getCurrentStep() - 1;
-            onSave(current_step, values);
-
-            setNoConfirmationNeeded(values?.document_type?.id === IDV_NOT_APPLICABLE_OPTION.id);
-            let idv_error = {};
-            if (is_rendered_for_idv) {
-                idv_error = validateIDV(values);
-            }
-            const { errors } = splitValidationResultTypes(validate(values));
-            const error_data = { ...idv_error, ...errors };
-            return error_data;
-        };
-
-        const closeToolTip = () => setShouldCloseTooltip(true);
+        const schema = useMemo(
+            () =>
+                is_rendered_for_idv
+                    ? getPersonalDetailsBaseValidationSchema(real_account_signup_target).concat(
+                          getIDVFormValidationSchema()
+                      )
+                    : getPersonalDetailsBaseValidationSchema(real_account_signup_target),
+            [is_rendered_for_idv, real_account_signup_target]
+        );
 
         /*
     In most modern browsers, setting autocomplete to "off" will not prevent a password manager from asking the user if they would like to save username and password information, or from automatically filling in those values in a site's login form.
@@ -188,14 +154,16 @@ const PersonalDetails = observer(
         return (
             <Formik
                 initialValues={{ ...value }}
-                validate={handleValidate}
+                validationSchema={schema}
                 validateOnMount
                 onSubmit={(values, actions) => {
                     trackEvent({
                         action: 'save',
                         user_choice: JSON.stringify(values),
                     });
-                    onSubmit(getCurrentStep() - 1, values, actions.setSubmitting, goToNextStep);
+                    const current_step = getCurrentStep() - 1;
+                    onSave(current_step, values);
+                    onSubmit(current_step, values, actions.setSubmitting, goToNextStep);
                 }}
             >
                 {({ handleSubmit, isSubmitting, values }) => (
@@ -206,7 +174,6 @@ const PersonalDetails = observer(
                                 ref={setRef}
                                 onSubmit={handleSubmit}
                                 autoComplete='off'
-                                onClick={closeToolTip}
                                 data-testid='personal_details_form'
                             >
                                 <ScrollToFieldWithError
@@ -221,11 +188,7 @@ const PersonalDetails = observer(
                                     height_offset='100px'
                                     is_disabled={isDesktop}
                                 >
-                                    <ThemedScrollbars
-                                        height={height}
-                                        onScroll={closeToolTip}
-                                        testId='dt_personal_details_container'
-                                    >
+                                    <ThemedScrollbars height={height} testId='dt_personal_details_container'>
                                         <div className={clsx('details-form__elements', 'personal-details-form')}>
                                             {is_rendered_for_idv && (
                                                 <Fragment>
@@ -246,7 +209,7 @@ const PersonalDetails = observer(
                                                 is_virtual={is_virtual}
                                                 is_svg={is_svg}
                                                 is_eu_user={is_eu_user}
-                                                side_note={<DerivLightNameDobPoiIcon height='195px' width='285px' />}
+                                                side_note={<DerivLightNameDobPoiIcon height='200px' />}
                                                 is_rendered_for_idv={is_rendered_for_idv}
                                                 editable_fields={getEditableFields(
                                                     values?.confirmation_checkbox,
@@ -258,15 +221,15 @@ const PersonalDetails = observer(
                                                 closeRealAccountSignup={closeRealAccountSignup}
                                                 salutation_list={salutation_list}
                                                 account_opening_reason_list={account_opening_reason_list}
-                                                should_close_tooltip={should_close_tooltip}
-                                                setShouldCloseTooltip={setShouldCloseTooltip}
                                                 inline_note_text={
                                                     <Localize
                                                         i18n_default_text='To avoid delays, enter your <0>name</0> and <0>date of birth</0> exactly as they appear on your identity document.'
                                                         components={[<strong key={0} />]}
                                                     />
                                                 }
-                                                no_confirmation_needed={no_confirmation_needed}
+                                                no_confirmation_needed={
+                                                    values?.document_type?.id === IDV_NOT_APPLICABLE_OPTION.id
+                                                }
                                             />
                                         </div>
                                     </ThemedScrollbars>

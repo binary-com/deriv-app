@@ -2,26 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { Field, useFormikContext } from 'formik';
-import {
-    Autocomplete,
-    Checkbox,
-    Dropdown,
-    InlineMessage,
-    Popover,
-    RadioGroup,
-    SelectNative,
-    Text,
-} from '@deriv/components';
-import { getLegalEntityName, routes, validPhone } from '@deriv/shared';
+import { Autocomplete, Checkbox, InlineMessage, RadioGroup, SelectNative, Text } from '@deriv/components';
+import { routes, validPhone } from '@deriv/shared';
 import { Localize, localize } from '@deriv/translations';
 import { isFieldImmutable, verifyFields } from '../../Helpers/utils';
-import { getEmploymentStatusList } from '../../Sections/Assessment/FinancialAssessment/financial-information-list';
 import FormBodySection from '../form-body-section';
 import { DateOfBirthField, FormInputField } from './form-fields';
 import FormSubHeader from '../form-sub-header';
 import InlineNoteWithIcon from '../inline-note-with-icon';
+import { useResidenceList } from '@deriv/hooks';
 import { useDevice } from '@deriv-com/ui';
-import { OECD_TIN_FORMAT_URL } from '../../Constants/external-urls';
+import AccountOpeningReasonField from './form-fields/account-opening-reason';
 
 const PersonalDetailsForm = props => {
     const { isDesktop } = useDevice();
@@ -33,15 +24,12 @@ const PersonalDetailsForm = props => {
         is_rendered_for_idv,
         editable_fields = [],
         has_real_account,
-        residence_list,
         is_fully_authenticated,
         account_opening_reason_list,
         closeRealAccountSignup,
         salutation_list,
         is_rendered_for_onfido,
         is_qualified_for_poa,
-        should_close_tooltip,
-        setShouldCloseTooltip,
         class_name,
         states_list,
         side_note,
@@ -52,26 +40,9 @@ const PersonalDetailsForm = props => {
     // need to put this check related to DIEL clients
     const is_svg_only = is_svg && !is_eu_user;
 
-    const [is_tax_residence_popover_open, setIsTaxResidencePopoverOpen] = React.useState(false);
-    const [is_tin_popover_open, setIsTinPopoverOpen] = React.useState(false);
+    const { errors, touched, values, setFieldValue, handleChange, handleBlur } = useFormikContext();
 
-    const { errors, touched, values, setFieldValue, handleChange, handleBlur, setFieldTouched } = useFormikContext();
-
-    const handleToolTipStatus = React.useCallback(() => {
-        if (is_tax_residence_popover_open) {
-            setIsTaxResidencePopoverOpen(false);
-        }
-        if (is_tin_popover_open) {
-            setIsTinPopoverOpen(false);
-        }
-    }, [is_tax_residence_popover_open, is_tin_popover_open]);
-
-    React.useEffect(() => {
-        if (should_close_tooltip) {
-            handleToolTipStatus();
-            setShouldCloseTooltip(false);
-        }
-    }, [should_close_tooltip, handleToolTipStatus, setShouldCloseTooltip]);
+    const { data: residence_list } = useResidenceList();
 
     const getNameAndDobLabels = () => {
         const is_asterisk_needed = is_svg || is_eu_user || is_rendered_for_onfido || is_rendered_for_idv;
@@ -416,100 +387,6 @@ const PersonalDetailsForm = props => {
                                 required
                             />
                         )}
-                        {!is_svg_only && ('tax_residence' in values || 'tax_identification_number' in values) && (
-                            <React.Fragment>
-                                <FormSubHeader title={localize('Tax information')} />
-                                {'tax_residence' in values && (
-                                    <TaxResidenceField
-                                        setFieldValue={setFieldValue}
-                                        disabled={isFieldImmutable('tax_residence', editable_fields)}
-                                        residence_list={residence_list}
-                                        required
-                                        setIsTaxResidencePopoverOpen={setIsTaxResidencePopoverOpen}
-                                        setIsTinPopoverOpen={setIsTinPopoverOpen}
-                                        is_tax_residence_popover_open={is_tax_residence_popover_open}
-                                    />
-                                )}
-                                {'tax_identification_number' in values && (
-                                    <TaxIdentificationNumberField
-                                        is_tin_popover_open={is_tin_popover_open}
-                                        setIsTinPopoverOpen={setIsTinPopoverOpen}
-                                        setIsTaxResidencePopoverOpen={setIsTaxResidencePopoverOpen}
-                                        disabled={isFieldImmutable('tax_identification_number', editable_fields)}
-                                        required
-                                    />
-                                )}
-                                {'employment_status' in values && (
-                                    <fieldset className={clsx('account-form__fieldset', 'emp-status')}>
-                                        {isDesktop ? (
-                                            <Dropdown
-                                                placeholder={
-                                                    is_eu_user
-                                                        ? localize('Employment status*')
-                                                        : localize('Employment status')
-                                                }
-                                                is_align_text_left
-                                                name='employment_status'
-                                                list={getEmploymentStatusList()}
-                                                value={values.employment_status}
-                                                onChange={e => {
-                                                    setFieldValue('occupation', '', true);
-                                                    handleChange(e);
-                                                }}
-                                                handleBlur={handleBlur}
-                                                error={touched.employment_status && errors.employment_status}
-                                                disabled={isFieldImmutable('employment_status', editable_fields)}
-                                            />
-                                        ) : (
-                                            <SelectNative
-                                                placeholder={localize('Please select')}
-                                                name='employment_status'
-                                                label={
-                                                    is_eu_user
-                                                        ? localize('Employment status*')
-                                                        : localize('Employment status')
-                                                }
-                                                list_items={getEmploymentStatusList()}
-                                                value={values.employment_status}
-                                                error={touched.employment_status && errors.employment_status}
-                                                onChange={e => {
-                                                    setFieldTouched('employment_status', true);
-                                                    setFieldValue('occupation', '', true);
-                                                    handleChange(e);
-                                                }}
-                                                disabled={isFieldImmutable('employment_status', editable_fields)}
-                                            />
-                                        )}
-                                    </fieldset>
-                                )}
-                                {'tax_identification_confirm' in values && (
-                                    <Checkbox
-                                        name='tax_identification_confirm'
-                                        className='details-form__tin-confirm'
-                                        data-lpignore
-                                        onChange={() =>
-                                            setFieldValue(
-                                                'tax_identification_confirm',
-                                                !values.tax_identification_confirm,
-                                                true
-                                            )
-                                        }
-                                        value={values.tax_identification_confirm}
-                                        label={localize(
-                                            'I hereby confirm that the tax information I provided is true and complete. I will also inform {{legal_entity_name}} about any changes to this information.',
-                                            {
-                                                legal_entity_name: getLegalEntityName('maltainvest'),
-                                            }
-                                        )}
-                                        withTabIndex={0}
-                                        data-testid='tax_identification_confirm'
-                                        has_error={
-                                            !!(touched.tax_identification_confirm && errors.tax_identification_confirm)
-                                        }
-                                    />
-                                )}
-                            </React.Fragment>
-                        )}
                         {!is_svg_only && 'account_opening_reason' in values && (
                             <AccountOpeningReasonField
                                 required
@@ -560,27 +437,8 @@ const PersonalDetailsForm = props => {
                                 required
                             />
                         )}
-                        {'tax_residence' in values && (
-                            <TaxResidenceField
-                                setFieldValue={setFieldValue}
-                                disabled={isFieldImmutable('tax_residence', editable_fields)}
-                                residence_list={residence_list}
-                                setIsTaxResidencePopoverOpen={setIsTaxResidencePopoverOpen}
-                                setIsTinPopoverOpen={setIsTinPopoverOpen}
-                                is_tax_residence_popover_open={is_tax_residence_popover_open}
-                            />
-                        )}
-                        {'tax_identification_number' in values && (
-                            <TaxIdentificationNumberField
-                                is_tin_popover_open={is_tin_popover_open}
-                                setIsTinPopoverOpen={setIsTinPopoverOpen}
-                                setIsTaxResidencePopoverOpen={setIsTaxResidencePopoverOpen}
-                                disabled={isFieldImmutable('tax_identification_number', editable_fields)}
-                            />
-                        )}
                         {'account_opening_reason' in values && (
                             <AccountOpeningReasonField
-                                no_header
                                 account_opening_reason_list={account_opening_reason_list}
                                 setFieldValue={setFieldValue}
                                 disabled={
@@ -588,21 +446,7 @@ const PersonalDetailsForm = props => {
                                     (values?.account_opening_reason && has_real_account)
                                 }
                                 required
-                            />
-                        )}
-                        {values?.tax_residence && values?.tax_identification_number && (
-                            <Checkbox
-                                name='crs_confirmation'
-                                value={values?.crs_confirmation}
-                                label={
-                                    <Localize i18n_default_text='I confirm that my tax information is accurate and complete.' />
-                                }
-                                label_font_size={isDesktop ? 'xs' : 'xxs'}
-                                onChange={e => {
-                                    setFieldValue('crs_confirmation', e.target.checked, true);
-                                    setFieldTouched('crs_confirmation', true);
-                                }}
-                                has_error={!!(touched?.crs_confirmation && errors?.crs_confirmation)}
+                                is_modal
                             />
                         )}
                     </React.Fragment>
@@ -674,182 +518,5 @@ const PlaceOfBirthField = ({ handleChange, setFieldValue, disabled, residence_li
                 </React.Fragment>
             )}
         </Field>
-    );
-};
-
-const TaxResidenceField = ({
-    setFieldValue,
-    residence_list,
-    required = false,
-    setIsTaxResidencePopoverOpen,
-    setIsTinPopoverOpen,
-    is_tax_residence_popover_open,
-    disabled,
-}) => {
-    const { isDesktop } = useDevice();
-    return (
-        <Field name='tax_residence'>
-            {({ field, meta }) => (
-                <div className='details-form__tax'>
-                    {isDesktop ? (
-                        <Autocomplete
-                            {...field}
-                            data-lpignore='true'
-                            autoComplete='none' // prevent chrome autocomplete
-                            type='text'
-                            label={required ? localize('Tax residence*') : localize('Tax residence')}
-                            error={meta.touched && meta.error}
-                            list_items={residence_list}
-                            onItemSelection={({ value, text }) =>
-                                setFieldValue('tax_residence', value ? text : '', true)
-                            }
-                            list_portal_id='modal_root'
-                            data-testid='tax_residence'
-                            disabled={disabled}
-                            required={required}
-                        />
-                    ) : (
-                        <SelectNative
-                            placeholder={required ? localize('Tax residence*') : localize('Tax residence')}
-                            name={field.name}
-                            label={required ? localize('Tax residence*') : localize('Tax residence')}
-                            list_items={residence_list}
-                            value={field.value}
-                            use_text
-                            error={meta.touched && meta.error}
-                            onChange={e => {
-                                field.onChange(e);
-                                setFieldValue('tax_residence', e.target.value, true);
-                            }}
-                            {...field}
-                            required={required}
-                            data_testid='tax_residence_mobile'
-                            disabled={disabled}
-                        />
-                    )}
-                    <div
-                        data-testid='tax_residence_pop_over'
-                        onClick={e => {
-                            setIsTaxResidencePopoverOpen(true);
-                            setIsTinPopoverOpen(false);
-                            e.stopPropagation();
-                        }}
-                    >
-                        <Popover
-                            alignment={isDesktop ? 'right' : 'left'}
-                            icon='info'
-                            message={localize(
-                                'The country in which you meet the criteria for paying taxes. Usually the country in which you physically reside.'
-                            )}
-                            zIndex={9998}
-                            disable_message_icon
-                            is_open={is_tax_residence_popover_open}
-                        />
-                    </div>
-                </div>
-            )}
-        </Field>
-    );
-};
-
-const TaxIdentificationNumberField = ({
-    is_tin_popover_open,
-    setIsTinPopoverOpen,
-    setIsTaxResidencePopoverOpen,
-    disabled,
-    required = false,
-}) => {
-    const { isDesktop } = useDevice();
-    return (
-        <div className='details-form__tax'>
-            <FormInputField
-                name='tax_identification_number'
-                label={required ? localize('Tax Identification Number*') : localize('Tax Identification Number')}
-                placeholder={localize('Tax Identification Number')}
-                data-testid='tax_identification_number'
-                disabled={disabled}
-                required={required}
-            />
-            <div
-                data-testid='tax_identification_number_pop_over'
-                onClick={e => {
-                    setIsTaxResidencePopoverOpen(false);
-                    setIsTinPopoverOpen(true);
-                    if (e.target.tagName !== 'A') e.stopPropagation();
-                }}
-            >
-                <Popover
-                    alignment={isDesktop ? 'right' : 'left'}
-                    icon='info'
-                    is_open={is_tin_popover_open}
-                    message={
-                        <Localize
-                            i18n_default_text={
-                                "Don't know your tax identification number? Click <0>here</0> to learn more."
-                            }
-                            components={[
-                                <a
-                                    key={0}
-                                    className='link link--red'
-                                    rel='noopener noreferrer'
-                                    target='_blank'
-                                    href={OECD_TIN_FORMAT_URL}
-                                />,
-                            ]}
-                        />
-                    }
-                    zIndex={9998}
-                    disable_message_icon
-                />
-            </div>
-        </div>
-    );
-};
-
-const AccountOpeningReasonField = ({ no_header, required, account_opening_reason_list, setFieldValue, disabled }) => {
-    const { isDesktop } = useDevice();
-    return (
-        <React.Fragment>
-            {!no_header && <FormSubHeader title={localize('Account opening reason')} />}
-            <Field name='account_opening_reason'>
-                {({ field, meta }) => (
-                    <React.Fragment>
-                        {isDesktop ? (
-                            <Dropdown
-                                placeholder={
-                                    required ? localize('Account opening reason*') : localize('Account opening reason')
-                                }
-                                name={field.name}
-                                disabled={disabled}
-                                is_align_text_left
-                                list={account_opening_reason_list}
-                                {...field}
-                                error={meta.touched && meta.error}
-                                list_portal_id='modal_root'
-                                required
-                            />
-                        ) : (
-                            <SelectNative
-                                placeholder={localize('Please select')}
-                                name={field.name}
-                                label={
-                                    required ? localize('Account opening reason*') : localize('Account opening reason')
-                                }
-                                list_items={account_opening_reason_list}
-                                error={meta.touched && meta.error}
-                                onChange={e => {
-                                    field.onChange(e);
-                                    setFieldValue('account_opening_reason', e.target.value, true);
-                                }}
-                                {...field}
-                                required
-                                data_testid='account_opening_reason_mobile'
-                                disabled={disabled}
-                            />
-                        )}
-                    </React.Fragment>
-                )}
-            </Field>
-        </React.Fragment>
     );
 };

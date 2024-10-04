@@ -1589,9 +1589,10 @@ export default class NotificationStore extends BaseStore {
                     text: localize('Update now'),
                     onClick: () => {
                         if (this.is_notifications_visible) this.toggleNotificationsModal();
-                        ui.toggleAdditionalKycInfoModal();
+                        ui.setFieldRefToFocus('account-opening-reason');
                         this.markNotificationMessage({ key: 'additional_kyc_info' });
                     },
+                    route: routes.personal_details,
                 },
                 type: 'warning',
             },
