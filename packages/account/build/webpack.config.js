@@ -1,4 +1,5 @@
 const path = require('path');
+const DefinePlugin = require('webpack').DefinePlugin;
 const { ALIASES, IS_RELEASE, MINIMIZERS, plugins, rules } = require('./constants');
 
 module.exports = function (env) {
@@ -92,6 +93,13 @@ module.exports = function (env) {
             /^@deriv\/translations\/.+$/,
         ],
         target: 'web',
-        plugins: plugins(base, false),
+        plugins: [
+            ...plugins(base, false),
+            new DefinePlugin({
+                'process.env.SID_CALLBACK_URL': JSON.stringify(process.env.SID_CALLBACK_URL),
+                'process.env.SID_PARTNER_ID': JSON.stringify(process.env.SID_PARTNER_ID),
+                'process.env.SID_SANDBOX_URL': JSON.stringify(process.env.SID_SANDBOX_URL),
+            }),
+        ],
     };
 };

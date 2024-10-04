@@ -7,6 +7,7 @@ import { Localize, localize } from '@deriv/translations';
 import FormFooter from '../../form-footer';
 import { useDevice } from '@deriv-com/ui';
 import { useResidenceList } from '@deriv/api';
+import { useScript, useSmileId } from '../../../hooks'
 
 type TCountrySelector = {
     handleSelectionNext?: () => void;
@@ -17,6 +18,8 @@ type TCountrySelector = {
 const CountrySelector = ({ handleSelectionNext, is_from_external, mismatch_status }: TCountrySelector) => {
     const { setSelectedCountry } = React.useContext(POIContext);
     const { data: country_list, isLoading } = useResidenceList();
+    const scriptStatus = useScript('https://cdn.smileidentity.com/inline/v1/js/script.min.js');
+    const { initSmileIdentity } = useSmileId();
 
     const initial_form_values: FormikValues = {
         country_input: '',
@@ -50,6 +53,15 @@ const CountrySelector = ({ handleSelectionNext, is_from_external, mismatch_statu
     };
 
     const failed_message: React.ReactNode = mismatch_status ? IDV_ERROR_STATUS[mismatch_status]?.message ?? null : null;
+
+    const handleClick = () => {
+        if (scriptStatus === 'ready') {
+            initSmileIdentity({
+                product: 'doc_verification',
+            });
+        }
+    };
+
 
     return (
         <Formik initialValues={initial_form_values} validate={validateFields} onSubmit={submitHandler}>
@@ -157,6 +169,10 @@ const CountrySelector = ({ handleSelectionNext, is_from_external, mismatch_statu
                                 )}
                             </Field>
                         </fieldset>
+
+                        <p className='small-id-wrapper'>
+                            <button onClick={handleClick}>initialize smile identity</button>
+                        </p>
                     </div>
                     <FormFooter className={clsx('proof-of-identity__footer', { 'external-footer': is_from_external })}>
                         <Button
