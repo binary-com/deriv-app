@@ -8,7 +8,7 @@ import useExchangeRates from './useExchangeRates';
 
 /** A custom hook that gets the list created MT5 accounts of the user. */
 const useMT5AccountsList = () => {
-    const { data: authorize_data, isSuccess } = useAuthorize();
+    const { isSuccess } = useAuthorize();
     const { getConfig } = useCurrencyConfig();
     const { fiat_account } = useTradingAccountsList();
     const { getExchangeRate } = useExchangeRates();
@@ -34,9 +34,7 @@ const useMT5AccountsList = () => {
                 /** The id of the account */
                 loginid: account.login,
                 /** The balance of the account in currency format. */
-                display_balance: displayMoney(account.balance || 0, account.currency || 'USD', {
-                    preferred_language: authorize_data?.preferred_language,
-                }),
+                display_balance: displayMoney(account.balance || 0, account.currency || 'USD'),
                 /** indicating whether the account is a virtual-money account. */
                 is_virtual: account.account_type === 'demo',
                 /** The platform of the account */
@@ -45,7 +43,7 @@ const useMT5AccountsList = () => {
                 converted_balance: getExchangeRate(fiat_account, account.currency ?? 'USD') * balance,
             };
         });
-    }, [authorize_data?.preferred_language, fiat_account, getConfig, getExchangeRate, mt5_accounts?.mt5_login_list]);
+    }, [fiat_account, getConfig, getExchangeRate, mt5_accounts?.mt5_login_list]);
 
     return {
         /** The list of created MT5 accounts */

@@ -108,7 +108,7 @@ const PersonalDetailsForm = props => {
     };
 
     const poa_clarification_message = (
-        <Localize i18n_default_text='For faster verification, input the same address here as in your proof of address document (see section below)' />
+        <Localize i18n_default_text='Use the same address that appears on your proof of address (utility bill, bank statement, etc.).' />
     );
 
     // need to disable the checkbox if the user has not filled in the name and dob fields initially

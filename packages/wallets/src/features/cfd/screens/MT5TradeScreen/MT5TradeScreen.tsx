@@ -35,7 +35,7 @@ const MT5TradeScreen: FC<MT5TradeScreenProps> = ({ mt5Account }) => {
     const platform = getModalState('platform') ?? mt5Platform;
 
     const { icon: platformIcon, title: platformTitle } = PlatformDetails[platform as keyof typeof PlatformDetails];
-    const { icon: marketTypeIcon, title: marketTypeTitle } = getMarketTypeDetails(mt5Account?.product)[
+    const { icon: marketTypeIcon, title: marketTypeTitle } = getMarketTypeDetails(localize, mt5Account?.product)[
         marketType ?? 'all'
     ];
 
@@ -101,7 +101,7 @@ const MT5TradeScreen: FC<MT5TradeScreenProps> = ({ mt5Account }) => {
                             type='outlined'
                             variant='warning'
                         >
-                            <Text color='warning' size='2xs' weight='bold'>
+                            <Text align='start' color='warning' size='2xs' weight='bold'>
                                 <Localize i18n_default_text='No new positions' />
                             </Text>
                         </InlineMessage>
@@ -113,7 +113,7 @@ const MT5TradeScreen: FC<MT5TradeScreenProps> = ({ mt5Account }) => {
                             type='outlined'
                             variant='warning'
                         >
-                            <Text color='warning' size='2xs' weight='bold'>
+                            <Text align='start' color='warning' size='2xs' weight='bold'>
                                 <Localize i18n_default_text='Account closed' />
                             </Text>
                         </InlineMessage>
@@ -134,7 +134,7 @@ const MT5TradeScreen: FC<MT5TradeScreenProps> = ({ mt5Account }) => {
                         </div>
                         <div className='wallets-mt5-trade-screen__description-details'>
                             <div className='wallets-mt5-trade-screen__label'>
-                                <Text lineHeight='3xs' size={isDesktop ? 'sm' : 'md'}>
+                                <Text align='start' lineHeight='3xs' size={isDesktop ? 'sm' : 'md'}>
                                     {platform === mt5Platform ? marketTypeTitle : platformTitle}{' '}
                                 </Text>
                                 {!activeWalletData?.is_virtual && (
@@ -142,7 +142,7 @@ const MT5TradeScreen: FC<MT5TradeScreenProps> = ({ mt5Account }) => {
                                 )}
                                 {activeWalletData?.is_virtual && <WalletListCardBadge />}
                             </div>
-                            <Text color='less-prominent' size='xs'>
+                            <Text align='start' color='less-prominent' size='xs'>
                                 {platform !== ctraderPlatform && loginId}
                             </Text>
                         </div>
@@ -190,7 +190,7 @@ const MT5TradeScreen: FC<MT5TradeScreenProps> = ({ mt5Account }) => {
                     {getModalState('platform') === ctraderPlatform && (
                         <MT5TradeDetailsItem
                             value={localize(
-                                ' Use your Deriv account email and password to login into the cTrader platform.'
+                                'Use your Deriv account email and password to login into the cTrader platform.'
                             )}
                             variant='info'
                         />
@@ -199,9 +199,14 @@ const MT5TradeScreen: FC<MT5TradeScreenProps> = ({ mt5Account }) => {
 
                 <div className='wallets-mt5-trade-screen__content-maintenance'>
                     <LabelPairedCircleExclamationMdFillIcon fill='#FFAD3A' />
-                    <Text color='less-prominent' size={isDesktop ? '2xs' : 'xs'}>
+                    <Text
+                        align='start'
+                        className='wallets-mt5-trade-screen__content-text'
+                        color='less-prominent'
+                        size={isDesktop ? '2xs' : 'xs'}
+                    >
                         {
-                            getServiceMaintenanceMessages()[
+                            getServiceMaintenanceMessages(localize)[
                                 (platform as keyof ReturnType<typeof getServiceMaintenanceMessages>) ??
                                     PlatformDetails.mt5.platform
                             ]

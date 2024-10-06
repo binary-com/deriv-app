@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useFormikContext } from 'formik';
 import { Link } from 'react-router-dom';
+import { getInitialLanguage } from '@deriv-com/translations';
 import { Button } from '@deriv-com/ui';
 import { FadedAnimatedList, WalletAlertMessage } from '../../../../../../components';
 import useTransferMessages from '../../hooks/useTransferMessages';
@@ -12,6 +13,7 @@ const TransferMessages: React.FC = () => {
     const { setFieldValue, values } = useFormikContext<TInitialTransferFormValues>();
 
     const { USDExchangeRates, accountLimits, activeWalletExchangeRates } = useTransfer();
+    const language = getInitialLanguage();
 
     const messages = useTransferMessages({
         accountLimits,
@@ -37,7 +39,11 @@ const TransferMessages: React.FC = () => {
                                 <Button borderWidth='sm' size='sm' type='button' variant='contained'>
                                     <Link
                                         className='wallets-transfer-messages__link'
-                                        to={action.navigateTo}
+                                        to={
+                                            language === 'EN'
+                                                ? action.navigateTo
+                                                : `${action.navigateTo}?lang=${language}`
+                                        }
                                         {...(action?.shouldOpenInNewTab && {
                                             rel: 'noopener noreferrer',
                                             target: '_blank',

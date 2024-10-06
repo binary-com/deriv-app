@@ -26,8 +26,9 @@ const StatsRow = ({
                     size='sm'
                     bold
                     className={animation_class}
-                    key={animationKey}
                     data-testid='accumulator-first-stat'
+                    color='quill-typography__color--prominent'
+                    key={animationKey}
                 >
                     {rows[0]}
                 </Text>

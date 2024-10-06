@@ -1,4 +1,3 @@
-import moment from 'moment';
 import * as Yup from 'yup';
 import { TTranslations } from '../../../../../../types';
 
@@ -21,7 +20,10 @@ export const getExpiryDateValidator = (localize: TTranslations['localize']) => {
         .test({
             name: 'test-min-expiry-date',
             test: (value, context) => {
-                if (moment(value).isBefore(new Date())) {
+                const currentDate = new Date();
+                const expiryDate = new Date(value || '');
+
+                if (expiryDate < currentDate || isNaN(expiryDate.getTime())) {
                     return context.createError({
                         message: localize('Expiry date cannot be today date or in the past'),
                     });

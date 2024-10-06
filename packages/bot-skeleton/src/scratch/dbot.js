@@ -12,6 +12,7 @@ import DBotStore from './dbot-store';
 import { isAllRequiredBlocksEnabled, updateDisabledBlocks, validateErrorOnBlockDelete } from './utils';
 
 import { loadBlockly } from './blockly';
+import { forgetAccumulatorsProposalRequest } from './accumulators-proposal-handler';
 
 class DBot {
     constructor() {
@@ -53,6 +54,8 @@ class DBot {
                     const symbol = market_block.getFieldValue('SYMBOL_LIST');
                     const category = this.getFieldValue('TRADETYPECAT_LIST');
                     const trade_type = this.getFieldValue('TRADETYPE_LIST');
+                    const is_trade_type_accumulator = trade_type === 'accumulator';
+                    if (!is_trade_type_accumulator) forgetAccumulatorsProposalRequest(that);
 
                     if (is_symbol_list_change) {
                         contracts_for.getTradeTypeCategories(market, submarket, symbol).then(categories => {
@@ -367,6 +370,7 @@ class DBot {
         this.interpreter = null;
         this.interpreter = Interpreter();
         await this.interpreter.bot.tradeEngine.watchTicks(this.symbol);
+        forgetAccumulatorsProposalRequest(this);
     }
 
     /**
@@ -400,11 +404,10 @@ class DBot {
      * Disable blocks outside of any main or independent blocks.
      */
     disableStrayBlocks() {
-        const isMainBlock = block_type => config.mainBlocks.indexOf(block_type) >= 0;
         const top_blocks = this.workspace.getTopBlocks();
 
         top_blocks.forEach(block => {
-            if (!isMainBlock() && !block.isIndependentBlock()) {
+            if (!block.isMainBlock() && !block.isIndependentBlock()) {
                 this.disableBlocksRecursively(block);
             }
         });
@@ -416,8 +419,9 @@ class DBot {
      * Disable blocks and their optional children.
      */
     disableBlocksRecursively(block) {
-        if (block.nextConnection?.targetConnection) {
-            this.disableBlocksRecursively(block.nextConnection.targetConnection.sourceBlock_);
+        block.setDisabled(true);
+        if (block?.outputConnection?.targetConnection) {
+            this.disableBlocksRecursively(block?.outputConnection?.sourceBlock_);
         }
     }
 

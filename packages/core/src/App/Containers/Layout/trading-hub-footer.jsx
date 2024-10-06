@@ -15,7 +15,7 @@ import NetworkStatus, {
 import LiveChat from 'App/Components/Elements/LiveChat';
 import WhatsApp from 'App/Components/Elements/WhatsApp/index.ts';
 import ServerTime from '../server-time.jsx';
-import { routes, useIsMounted, isTabletOs } from '@deriv/shared';
+import { routes, isTabletOs } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import DarkModeToggleIcon from 'Assets/SvgComponents/footer/ic-footer-light-theme.svg';
 import LightModeToggleIcon from 'Assets/SvgComponents/footer/ic-footer-dark-theme.svg';
@@ -67,10 +67,8 @@ const TradingHubFooter = observer(() => {
         setDarkMode(!is_dark_mode);
     };
 
-    const isMounted = useIsMounted();
-
     const location = window.location.pathname;
-    const { data } = useRemoteConfig(isMounted());
+    const { data } = useRemoteConfig(true);
     const { cs_chat_livechat, cs_chat_whatsapp } = data;
 
     const showPopover = !isTabletOs;
@@ -134,14 +132,12 @@ const TradingHubFooter = observer(() => {
                         showPopover={showPopover}
                     />
                 )}
-                {!has_wallet && (
-                    <ToggleLanguageSettings
-                        is_settings_visible={is_language_settings_modal_on}
-                        toggleSettings={toggleLanguageSettingsModal}
-                        lang={current_language}
-                        showPopover={showPopover}
-                    />
-                )}
+                <ToggleLanguageSettings
+                    is_settings_visible={is_language_settings_modal_on}
+                    toggleSettings={toggleLanguageSettingsModal}
+                    lang={current_language}
+                    showPopover={showPopover}
+                />
                 <ToggleFullScreen showPopover={showPopover} />
             </div>
         </footer>

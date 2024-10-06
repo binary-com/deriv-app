@@ -13,7 +13,7 @@ import { useHistory } from 'react-router-dom';
 import OnboardingGuide from 'AppV2/Components/OnboardingGuide/GuideForPages';
 
 const Positions = observer(() => {
-    const [hasButtonsDemo, setHasButtonsDemo] = React.useState(true);
+    const [hasButtonsDemo, setHasButtonsDemo] = React.useState(false);
     const [activeTab, setActiveTab] = React.useState(getPositionsV2TabIndexFromURL());
     const [guide_dtrader_v2] = useLocalStorageData<Record<string, boolean>>('guide_dtrader_v2', {
         trade_types_selection: false,
@@ -50,6 +50,10 @@ const Positions = observer(() => {
     React.useEffect(() => {
         setPositionURLParams(tabs[activeTab].id);
 
+        if (guide_dtrader_v2?.positions_page) {
+            setHasButtonsDemo(true);
+        }
+
         return () => {
             const is_contract_details = history.location.pathname.startsWith('/contract/');
             if (!is_contract_details) onUnmount();
@@ -79,7 +83,9 @@ const Positions = observer(() => {
                     </Tab.Content>
                 </Tab.Container>
             </div>
-            {!guide_dtrader_v2?.positions_page && is_logged_in && <OnboardingGuide type='positions_page' />}
+            {!guide_dtrader_v2?.positions_page && is_logged_in && (
+                <OnboardingGuide type='positions_page' callback={() => setHasButtonsDemo(true)} />
+            )}
         </BottomNav>
     );
 });

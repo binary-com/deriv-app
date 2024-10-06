@@ -58,7 +58,7 @@ $COLOR_LIGHT_BLACK_1: rgba(0, 0, 0, 0.8);
 $COLOR_DARK_BLUE_1: #0b0e18;
 ```
 
-Keep all common variables in the [constants.scss](https://github.com/binary-com/deriv-app/blob/master/src/sass/app/_common/base/constants.scss) file.
+Keep all common variables in the [constants.scss](https://github.com/deriv-com/deriv-app/blob/master/src/sass/app/_common/base/constants.scss) file.
 
 ---
 
@@ -128,7 +128,7 @@ import SomeIconSvg from 'Assets/SvgComponents/folder_name/some_icon.svg';
 ```
 
 <a id="svg-theme"></a>
-**[Theme:](#svg-theme)** Use declared classes such as `color1-fill` to handle colouring of SVGs between different themes instead of adding extra Sass for each new image. If the existing classes don't cover what you need, create more [here](https://github.com/binary-com/deriv-app/blob/master/src/sass/app/_common/inline_icons.scss#L1-L10).
+**[Theme:](#svg-theme)** Use declared classes such as `color1-fill` to handle colouring of SVGs between different themes instead of adding extra Sass for each new image. If the existing classes don't cover what you need, create more [here](https://github.com/deriv-com/deriv-app/blob/master/src/sass/app/_common/inline_icons.scss#L1-L10).
 
 ---
 

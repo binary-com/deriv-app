@@ -49,7 +49,7 @@ const getAccountCardTitle = (shortCode: TMarketWithShortCode | TPlatforms.OtherA
         case MARKET_TYPE_SHORTCODE.FINANCIAL_VANUATU:
             return localize('Financial - Vanuatu');
         case MARKET_TYPE_SHORTCODE.FINANCIAL_LABUAN:
-            return 'Financial - Labuan';
+            return localize('Financial - Labuan');
         case MARKET_TYPE_SHORTCODE.ALL_SWAP_FREE_SVG:
             return isDemo ? localize('Swap-Free Demo') : localize('Swap-Free - SVG');
         case MARKET_TYPE_SHORTCODE.ALL_ZERO_SPREAD_BVI:

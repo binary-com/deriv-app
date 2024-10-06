@@ -357,15 +357,23 @@
                 color: var(--text-prominent);
                 font-size: var(--text-size-xxs);
                 line-height: 1.5;
-                text-align: right;
+                display: flex;
+                justify-content: end;
+                align-items: center;
                 min-width: 27.6rem;
                 max-width: 36.6rem;
                 height: 3.6rem;
 
+                @include mobile {
+                    justify-content: start;
+                }
+
+                @include tablet-screen {
+                    justify-content: center;
+                }
+
                 @include mobile-or-tablet-screen {
-                    width: auto;
-                    text-align: center;
-                    align-self: center;
+                    width: 100%;
 
                     &--dashboard {
                         margin: 0 1.6rem;

@@ -33,7 +33,7 @@ const CFDPlatformsList: React.FC = () => {
                                 <Localize i18n_default_text='Compare accounts' />
                             </Button>
                         </div>
-                        <Text size='md'>
+                        <Text align='start' size='md'>
                             <Localize
                                 components={[<WalletLink key={0} staticUrl='/trade-types/cfds/' />]}
                                 i18n_default_text='Trade bigger positions with less capital on a wide range of global markets. <0>Learn more</0>'
@@ -42,7 +42,7 @@ const CFDPlatformsList: React.FC = () => {
                     </React.Fragment>
                 ) : (
                     <div className='wallets-cfd-list__header-description'>
-                        <Text size='sm'>
+                        <Text align='start' size='sm'>
                             <Localize
                                 components={[
                                     <a

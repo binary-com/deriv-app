@@ -19,15 +19,22 @@ const TakeProfitHistory = ({ history = [], currency }: TContractHistory) => {
     const [currentPage, setCurrentPage] = useState(0);
     const itemsPerPage = 4;
     const totalPages = Math.ceil(history.length / itemsPerPage);
+    const currentItems = history.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+    const has_tp = currentItems.some(item => item.order_type === 'take_profit' || item.display_name === 'Take profit');
+    const has_sl = currentItems.some(item => item.order_type === 'stop_loss' || item.display_name === 'Stop loss');
+
+    const getHistoryTitle = () => {
+        if (has_tp && has_sl) return <Localize i18n_default_text='TP & SL history' />;
+        if (has_tp) return <Localize i18n_default_text='TP history' />;
+        if (has_sl) return <Localize i18n_default_text='SL history' />;
+    };
 
     const handlePageChange = (pagination: TPagination) => {
         setCurrentPage(pagination.currentPage - 1);
     };
 
-    const currentItems = history.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
-
     return (
-        <CardWrapper title={<Localize i18n_default_text='TP & SL history' />} className='take-profit-history'>
+        <CardWrapper title={getHistoryTitle()} className='take-profit-history'>
             <div
                 className={clsx('take-profit-history__table', {
                     'take-profit-history__table--fixed-height': history.length > itemsPerPage,

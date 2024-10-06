@@ -23,6 +23,12 @@ Blockly.Gesture.prototype.updateIsDraggingFromFlyout = function () {
             Blockly.Events.setGroup(true);
         }
 
+        // This is done because when this flag is set to true inside Blockly,
+        // the handleMove function is called, which also triggers handleTouchMove
+        // if the flag is false. This method wont be called everything will be handled in handleMove.
+        const is_mobile = window.innerWidth < 768;
+        if (is_mobile) this.isMultiTouch_ = false;
+
         // The start block is no longer relevant, because this is a drag.
         this.startBlock.workspace.clearGesture();
         this.startBlock = null;

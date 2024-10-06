@@ -18,7 +18,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/binary-com/deriv-app.git"
+        "url": "https://github.com/deriv-com/deriv-app.git"
     },
     "keywords": [
         "deriv"
@@ -26,12 +26,12 @@
     "author": "Deriv",
     "license": "Apache-2.0",
     "bugs": {
-        "url": "https://github.com/binary-com/deriv-app/issues"
+        "url": "https://github.com/deriv-com/deriv-app/issues"
     },
     "engines": {
         "node": "18.x"
     },
-    "homepage": "https://github.com/binary-com/deriv-app",
+    "homepage": "https://github.com/deriv-com/deriv-app",
     "devDependencies": {
         "@babel/eslint-parser": "^7.17.0",
         "@babel/plugin-proposal-private-property-in-object": "^7.12.1",
@@ -59,7 +59,7 @@
         "eslint-plugin-react-hooks": "^4.2.0",
         "file-loader": "^6.2.0",
         "history": "^5.0.0",
-        "gh-pages": "^2.1.1",
+        "gh-pages": "^6.1.1",
         "git-revision-webpack-plugin": "^5.0.0",
         "html-loader": "^1.3.2",
         "html-webpack-plugin": "^5.0.0-beta.5",
@@ -97,11 +97,11 @@
         "@babel/polyfill": "^7.4.4",
         "@datadog/browser-rum": "^5.11.0",
         "@deriv-com/analytics": "1.14.0",
-        "@deriv-com/quill-tokens": "^2.0.4",
-        "@deriv-com/quill-ui": "1.16.9",
+        "@deriv-com/quill-tokens": "2.0.4",
+        "@deriv-com/quill-ui": "1.16.20",
         "@deriv-com/translations": "1.3.9",
         "@deriv-com/ui": "1.35.0",
-        "@deriv-com/utils": "^0.0.25",
+        "@deriv-com/utils": "^0.0.34",
         "@deriv/account": "^1.0.0",
         "@deriv/api": "^1.0.0",
         "@deriv/appstore": "^0.0.4",

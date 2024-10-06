@@ -143,7 +143,7 @@ const SentEmailContent: FC<SentEmailContentProps> = ({
                             return (
                                 <div className='wallets-sent-email-content__reasons' key={emailReason.key}>
                                     {emailReason.icon}
-                                    <Text lineHeight='sm' size={emailReasonsSize}>
+                                    <Text align='start' lineHeight='sm' size={emailReasonsSize}>
                                         {emailReason.content}
                                     </Text>
                                 </div>

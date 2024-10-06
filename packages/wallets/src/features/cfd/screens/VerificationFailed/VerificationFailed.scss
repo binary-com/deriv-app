@@ -24,7 +24,7 @@
     }
 
     & li {
-        left: 1rem;
+        inset-inline-start: 1rem;
         position: relative;
         list-style-type: disc;
     }

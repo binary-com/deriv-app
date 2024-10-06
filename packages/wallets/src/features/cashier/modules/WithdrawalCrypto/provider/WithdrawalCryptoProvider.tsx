@@ -161,7 +161,7 @@ const WithdrawalCryptoProvider: React.FC<React.PropsWithChildren<TWithdrawalCryp
                 const fractionalDigits = activeWallet?.currency_config?.fractional_digits ?? 0;
                 setWithdrawalReceipt({
                     address,
-                    amount: amount?.toFixed(fractionalDigits),
+                    amount: Number(amount),
                     amountReceived: estimatedFeeUniqueId
                         ? (Number(amount) - Number(cryptoEstimationsFee)).toFixed(fractionalDigits)
                         : amount?.toFixed(fractionalDigits),

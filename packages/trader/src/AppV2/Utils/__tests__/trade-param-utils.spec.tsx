@@ -306,47 +306,55 @@ describe('getOptionPerUnit', () => {
     };
 
     test('returns correct options for minutes (m)', () => {
-        const result = getOptionPerUnit('m');
+        const result = getOptionPerUnit('m', false);
         const view = renderOptions(result[0]);
         expect(result).toHaveLength(1);
         expect(view).toEqual([...Array(59)].map((_, i) => `${i + 1} min`));
     });
 
     test('returns correct options for seconds (s)', () => {
-        const result = getOptionPerUnit('s');
+        const result = getOptionPerUnit('s', false);
         const view = renderOptions(result[0]);
         expect(result).toHaveLength(1);
         expect(view).toEqual([...Array(45)].map((_, i) => `${i + 15} sec`));
     });
 
     test('returns correct options for days (d)', () => {
-        const result = getOptionPerUnit('d');
+        const result = getOptionPerUnit('d', false);
         const view = renderOptions(result[0]);
         expect(result).toHaveLength(1);
         expect(view).toEqual([...Array(365)].map((_, i) => `${i + 1} days`));
     });
 
     test('returns correct options for ticks (t)', () => {
-        const result = getOptionPerUnit('t');
+        const result = getOptionPerUnit('t', false);
         const view = renderOptions(result[0]);
+
         expect(result).toHaveLength(1);
         expect(view).toEqual([...Array(10)].map((_, i) => `${i + 1} tick`));
     });
 
+    test('returns correct options for ticks (t) when 5 ticks are required', () => {
+        const result = getOptionPerUnit('t', true);
+        const view = renderOptions(result[0]);
+        expect(result).toHaveLength(1);
+        expect(view).toEqual([...Array(6)].map((_, i) => `${i + 5} tick`));
+    });
+
     test('returns correct options for hours (h)', () => {
-        const result = getOptionPerUnit('h');
+        const result = getOptionPerUnit('h', false);
         // eslint-disable-next-line testing-library/render-result-naming-convention
         const hourView = renderOptions(result[0]);
         // eslint-disable-next-line testing-library/render-result-naming-convention
         const minuteView = renderOptions(result[1]);
 
         expect(result).toHaveLength(2);
-        expect(hourView).toEqual([...Array(23)].map((_, i) => `${i + 1} h`));
+        expect(hourView).toEqual([...Array(24)].map((_, i) => `${i + 1} h`));
         expect(minuteView).toEqual([...Array(60)].map((_, i) => `${i} min`));
     });
 
     test('returns empty array for invalid unit', () => {
-        const result = getOptionPerUnit('invalid');
+        const result = getOptionPerUnit('invalid', false);
         expect(result).toEqual([[]]);
     });
 });

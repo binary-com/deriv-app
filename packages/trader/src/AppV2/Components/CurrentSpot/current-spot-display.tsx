@@ -99,12 +99,12 @@ const CurrentSpotDisplay = ({ has_tick_count, spot, tick }: TCurrentSpotDisplayP
     return (
         <div className='current-spot__display'>
             {has_tick_count && (
-                <Text size='xl'>
+                <Text size='xl' color='quill-typography__color--prominent'>
                     <Localize i18n_default_text='Tick {{current_tick}}' values={{ current_tick: tick }} />
                 </Text>
             )}
             <div className='current-spot'>
-                <Text size='xl' bold>
+                <Text size='xl' bold color='quill-typography__color--prominent'>
                     {spot.slice(0, -1)}
                 </Text>
                 <div className='current-spot__last-digit-container'>
@@ -117,11 +117,17 @@ const CurrentSpotDisplay = ({ has_tick_count, spot, tick }: TCurrentSpotDisplayP
                         )}
                     >
                         {should_enter_from_top && (
-                            <Heading.H2 className='current-spot__last-digit'>{next_displayed_last_digit}</Heading.H2>
+                            <Heading.H2 color='quill-typography__color--prominent' className='current-spot__last-digit'>
+                                {next_displayed_last_digit}
+                            </Heading.H2>
                         )}
-                        <Heading.H2 className='current-spot__last-digit'>{displayed_last_digit}</Heading.H2>
+                        <Heading.H2 color='quill-typography__color--prominent' className='current-spot__last-digit'>
+                            {displayed_last_digit}
+                        </Heading.H2>
                         {should_enter_from_bottom && (
-                            <Heading.H2 className='current-spot__last-digit'>{next_displayed_last_digit}</Heading.H2>
+                            <Heading.H2 color='quill-typography__color--prominent' className='current-spot__last-digit'>
+                                {next_displayed_last_digit}
+                            </Heading.H2>
                         )}
                     </div>
                 </div>

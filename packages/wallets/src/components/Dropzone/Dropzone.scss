@@ -85,7 +85,7 @@
     &__remove-file {
         position: absolute;
         top: 0.8rem;
-        right: 0.8rem;
+        inset-inline-end: 0.8rem;
         border-radius: 50%;
         background-color: var(--system-light-5-active-background, #d6dadb);
 

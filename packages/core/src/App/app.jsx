@@ -26,7 +26,6 @@ import { initializeI18n, TranslationProvider, getInitialLanguage } from '@deriv-
 import { CFD_TEXT } from '../Constants/cfd-text';
 import { FORM_ERROR_MESSAGES } from '../Constants/form-error-messages';
 import AppContent from './AppContent';
-import initHotjar from '../Utils/Hotjar';
 import 'Sass/app.scss';
 
 const AppWithoutTranslation = ({ root_store }) => {
@@ -69,9 +68,6 @@ const AppWithoutTranslation = ({ root_store }) => {
 
             await delay(3000);
             window.LiveChatWidget.init();
-
-            await delay(2000);
-            initHotjar(root_store.client);
         };
 
         initializeTranslations();

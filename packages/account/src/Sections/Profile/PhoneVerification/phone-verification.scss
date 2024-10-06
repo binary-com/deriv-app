@@ -1,0 +1,149 @@
+.phone-verification {
+    &__get-code-modal,
+    &__verified-modal,
+    &__cancel-modal {
+        &--contents {
+            display: flex;
+            flex-direction: column;
+            gap: 3.2rem;
+            &__buttons {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                gap: 0.8rem;
+                margin-top: 2.4rem;
+            }
+        }
+    }
+
+    &__cancel-modal--header {
+        background-color: var(--core-color-solid-red-100);
+    }
+    &__verified-modal--header {
+        background-color: var(--core-color-solid-green-100);
+    }
+
+    &__redirect_button {
+        display: flex;
+        align-items: center;
+
+        &--text {
+            padding-inline-start: 1.6rem;
+        }
+
+        &--icon {
+            cursor: pointer;
+        }
+    }
+
+    &__card {
+        width: 60rem;
+        height: 60rem;
+        border: 1px solid var(--core-color-solid-slate-100, #ebecef);
+        border-radius: 2 * $BORDER_RADIUS;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.6rem;
+        margin-top: 2.4rem;
+
+        &--small-card {
+            height: 40rem;
+        }
+
+        &--session-timeout-component {
+            display: flex;
+            width: 100%;
+            justify-content: end;
+            margin-bottom: 2.4rem;
+        }
+
+        &--inputfield {
+            width: 60%;
+            margin-top: 2.4rem;
+            margin-bottom: 4.4rem;
+            @include mobile-or-tablet-screen {
+                margin-top: 3.2rem;
+            }
+            @include tablet-screen {
+                width: 80%;
+            }
+            @include mobile-screen {
+                width: 100%;
+            }
+
+            &__livechat {
+                color: var(--core-color-solid-red-900, $color-red-12);
+                font-weight: bold;
+                text-decoration: underline;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        &--buttons_container {
+            width: 100%;
+            display: flex;
+            gap: 1.6rem;
+            margin-top: 0.8rem;
+
+            @include mobile {
+                flex-direction: column-reverse;
+                position: fixed;
+                padding: 0 1.6rem;
+                bottom: 1.6rem;
+            }
+        }
+
+        &--email-verification {
+            &-content {
+                width: 100%;
+                margin-top: 2.4rem;
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            &-otp-container {
+                display: flex;
+                flex-direction: column;
+                gap: 1.6rem;
+                width: 60%;
+                margin-top: 1.6rem;
+                align-items: flex-start;
+                @include mobile-or-tablet-screen {
+                    gap: 3.2rem;
+                }
+                @include tablet-screen {
+                    width: 80%;
+                }
+                @include mobile-screen {
+                    width: 100%;
+                }
+            }
+        }
+
+        .quill-snackbar {
+            z-index: 1;
+        }
+
+        @include mobile {
+            width: 100vw;
+            border: none;
+            margin-top: 0.8rem;
+
+            .dc-input {
+                width: 100%;
+            }
+        }
+
+        @include desktop {
+            .quill-snackbar {
+                margin-bottom: 3.2rem;
+                width: fit-content;
+            }
+        }
+    }
+}

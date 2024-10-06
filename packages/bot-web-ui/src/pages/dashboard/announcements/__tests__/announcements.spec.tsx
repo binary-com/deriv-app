@@ -41,7 +41,7 @@ describe('Announcements', () => {
         );
     });
 
-    it('should decrease the indicator count and remove it, the list of announcements should be displayed, and redirect to tutorial page upon clicking on the announcement item.', async () => {
+    it('should decrease the indicator count, the list of announcements should be displayed, and redirect to tutorial page upon clicking on the accumulator announcement item.', async () => {
         const { container } = render(<Announcements handleTabChange={mockHandleTabChange} is_mobile={true} />, {
             wrapper,
         });
@@ -50,14 +50,15 @@ describe('Announcements', () => {
 
         await waitFor(() => {
             // eslint-disable-next-line testing-library/no-node-access, testing-library/no-container
-            const notification_button = container.querySelector('.notification__button');
+            const notification_button = container.querySelectorAll('.notification__button')[2];
 
             expect(notification_button).toBeInTheDocument();
 
             userEvent.click(notification_button);
         });
         await waitFor(() => {
-            expect(screen.queryByTestId('announcements__amount')).not.toBeInTheDocument();
+            const amount = screen.getByTestId('announcements__amount').textContent;
+            expect(amount).toBe(`${BOT_ANNOUNCEMENTS_LIST.length - 1}`);
 
             const button_cancel = screen.getByRole('button', { name: /Learn more/i });
             userEvent.click(button_cancel);
@@ -67,7 +68,7 @@ describe('Announcements', () => {
         });
     });
 
-    it('should decrease the indicator count and remove it, the list of announcements should be displayed, and redirect to bot builder page upon clicking on the accumulator announcement item.', async () => {
+    it('should decrease the indicator count, the list of announcements should be displayed, and redirect to bot builder page upon clicking on the accumulator announcement item.', async () => {
         const { container } = render(<Announcements handleTabChange={mockHandleTabChange} is_mobile={true} />, {
             wrapper,
         });
@@ -76,14 +77,16 @@ describe('Announcements', () => {
 
         await waitFor(() => {
             // eslint-disable-next-line testing-library/no-node-access, testing-library/no-container
-            const notification_button = container.querySelector('.notification__button');
+            const notification_button = container.querySelectorAll('.notification__button')[2];
 
             expect(notification_button).toBeInTheDocument();
 
             userEvent.click(notification_button);
         });
         await waitFor(() => {
-            expect(screen.queryByTestId('announcements__amount')).not.toBeInTheDocument();
+            const amount = screen.getByTestId('announcements__amount').textContent;
+            expect(amount).toBe(`${BOT_ANNOUNCEMENTS_LIST.length - 1}`);
+
             const buttonConfirm = screen.getByRole('button', { name: /Try now/i });
             userEvent.click(buttonConfirm);
         });

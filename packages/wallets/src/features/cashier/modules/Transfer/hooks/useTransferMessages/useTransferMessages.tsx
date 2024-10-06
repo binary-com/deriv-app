@@ -1,11 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import {
-    useActiveWalletAccount,
-    useAuthorize,
-    usePOI,
-    useTradingPlatformStatus,
-    useWalletAccountsList,
-} from '@deriv/api-v2';
+import { useActiveWalletAccount, usePOI, useTradingPlatformStatus, useWalletAccountsList } from '@deriv/api-v2';
 import { displayMoney as displayMoney_ } from '@deriv/api-v2/src/utils';
 import { THooks } from '../../../../../../types';
 import { MT5_ACCOUNT_STATUS, TRADING_PLATFORM_STATUS } from '../../../../../cfd/constants';
@@ -36,10 +30,8 @@ const useTransferMessages = ({
     fromAccount,
     toAccount,
 }: TProps) => {
-    const { data: authorizeData } = useAuthorize();
     const { data: activeWallet } = useActiveWalletAccount();
     const { data: walletAccounts } = useWalletAccountsList();
-    const { preferred_language: preferredLanguage } = authorizeData;
     const { data: poi } = usePOI();
     const { getPlatformStatus } = useTradingPlatformStatus();
 
@@ -58,11 +50,8 @@ const useTransferMessages = ({
 
     const displayMoney = useCallback(
         (amount: number, currency: string, fractionalDigits: number) =>
-            displayMoney_(amount, currency, {
-                fractional_digits: fractionalDigits,
-                preferred_language: preferredLanguage,
-            }),
-        [preferredLanguage]
+            displayMoney_(amount, currency, { fractional_digits: fractionalDigits }),
+        []
     );
 
     const memoizedMessages = useMemo(() => {

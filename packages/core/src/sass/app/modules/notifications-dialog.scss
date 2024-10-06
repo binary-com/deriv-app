@@ -124,6 +124,9 @@
             opacity: 0;
             transform: translate3d(0, -20px, 0);
         }
+        &--shifted {
+            left: calc(-50% - 18rem);
+        }
         @include mobile-screen {
             opacity: unset;
             transform: none;
@@ -134,13 +137,6 @@
             height: 100%;
             width: 100%;
             background: var(--general-main-2);
-        }
-        &--pre-appstore {
-            left: calc(-50% - 18rem);
-
-            @include mobile-screen {
-                left: calc(3% - 1rem);
-            }
         }
     }
 

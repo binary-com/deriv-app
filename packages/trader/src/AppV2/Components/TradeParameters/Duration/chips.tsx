@@ -11,16 +11,13 @@ const DurationChips = ({
     onChangeUnit: (arg: string) => void;
     unit: string;
 }) => {
-    const list =
-        duration_units_list.length == 1 && duration_units_list[0].value == 't'
-            ? duration_units_list
-            : duration_units_list.concat({ value: 'et', text: localize('End Time') });
+    const list = duration_units_list.concat({ value: 'et', text: localize('End Time') });
 
     return (
         <div className='duration-container__chips'>
-            {list.map(item => (
+            {list.map((item, index) => (
                 <Chip.Selectable
-                    key={item.text}
+                    key={`${item.text}-${index}`}
                     selected={unit == item.value}
                     className='duration-container__chips__chip'
                     onClick={() => onChangeUnit(item.value)}

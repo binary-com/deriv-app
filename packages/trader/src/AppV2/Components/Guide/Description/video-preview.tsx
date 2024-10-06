@@ -32,7 +32,7 @@ const VideoPreview = ({ contract_type, toggleVideoPlayer, video_src }: TVideoPre
                 <Localize i18n_default_text='How to trade ' />
                 {contract_type}?
             </CaptionText>
-            <CaptionText>
+            <CaptionText color='quill-typography__color--default'>
                 <Localize i18n_default_text='Watch this video to learn about this trade type.' />
             </CaptionText>
         </div>

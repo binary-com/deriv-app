@@ -41,14 +41,20 @@ module.exports = function (env) {
         },
         externals: [
             {
+                '@deriv/quill-icons': `@deriv/quill-icons`,
+                '@deriv/shared': '@deriv/shared',
+                '@deriv/utils': '@deriv/utils',
                 '@deriv-com/analytics': '@deriv-com/analytics',
                 '@deriv-com/translations': '@deriv-com/translations',
+                '@deriv-com/utils': '@deriv-com/utils',
                 classnames: true,
-                moment: true,
                 react: true,
+                'react/jsx-runtime': true,
                 'react-dom': true,
                 'react-router-dom': true,
             },
+            /^@deriv\/shared\/.+$/,
+            /^@deriv\/translations\/.+$/,
         ],
         mode: is_release ? 'production' : 'development',
         module: {

@@ -92,7 +92,10 @@ const AccumulatorStats = observer(() => {
                         />
                     </div>
                     <button className='accumulators-stats__container__expand' onClick={() => setIsOpen(true)}>
-                        <LabelPairedChevronUpSmBoldIcon data-testid='expand-stats-icon' />
+                        <LabelPairedChevronUpSmBoldIcon
+                            data-testid='expand-stats-icon'
+                            fill='var(--semantic-color-monochrome-textIcon-normal-high)'
+                        />
                     </button>
                 </div>
             </div>

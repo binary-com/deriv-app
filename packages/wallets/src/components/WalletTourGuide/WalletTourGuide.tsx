@@ -9,6 +9,7 @@ import {
     useSortedMT5Accounts,
 } from '@deriv/api-v2';
 import { useDevice } from '@deriv-com/ui';
+import useIsRtl from '../../hooks/useIsRtl';
 import useWalletAccountSwitcher from '../../hooks/useWalletAccountSwitcher';
 import { useModal } from '../ModalProvider';
 import {
@@ -23,6 +24,7 @@ const WalletTourGuide = () => {
     const [run, setRun] = useState(false);
     const { isDesktop } = useDevice();
     const modal = useModal();
+    const isRtl = useIsRtl();
 
     const switchWalletAccount = useWalletAccountSwitcher();
     const { isFetching, isLoading, isSuccess } = useAuthorize();
@@ -67,7 +69,9 @@ const WalletTourGuide = () => {
             floaterProps={{ disableAnimation: true }}
             run={run}
             scrollOffset={isDesktop ? 80 : 100}
-            steps={isDesktop ? desktopStepTourGuide(allWalletsAreAdded) : mobileStepTourGuide(allWalletsAreAdded)}
+            steps={
+                isDesktop ? desktopStepTourGuide(allWalletsAreAdded, isRtl) : mobileStepTourGuide(allWalletsAreAdded)
+            }
             tooltipComponent={TooltipComponent}
         />
     );

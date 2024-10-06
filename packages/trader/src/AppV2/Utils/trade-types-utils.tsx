@@ -10,6 +10,17 @@ import {
 import { useTraderStore } from 'Stores/useTraderStores';
 import { getTradeTypeTabsList } from './trade-params-utils';
 
+type TContractType = {
+    text?: string;
+    value: string;
+};
+
+type TCategories = {
+    id: string;
+    title: string;
+    icon?: React.ReactNode;
+};
+
 const getSortedIndex = (type: string) =>
     getContractTypePosition(type as keyof ReturnType<typeof getSupportedContracts>) === 'bottom' ? 1 : 0;
 
@@ -66,3 +77,11 @@ export const getDisplayedContractTypes = (
     Object.keys(trade_types)
         .filter(type => !getTradeTypeTabsList(contract_type).length || type === trade_type_tab)
         .sort((a, b) => getSortedIndex(a) - getSortedIndex(b));
+
+export const sortCategoriesInTradeTypeOrder = (trade_types: TContractType[], categories: TCategories[]) => {
+    return trade_types
+        .map((item: { value: string }) => {
+            return categories.find(category => category.id === item.value);
+        })
+        .filter(item => item) as TCategories[];
+};

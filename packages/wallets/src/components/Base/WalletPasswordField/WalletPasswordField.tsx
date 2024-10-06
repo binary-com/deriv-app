@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ValidationError } from 'yup';
+import { useTranslations } from '@deriv-com/translations';
 import { zxcvbn, zxcvbnOptions } from '@zxcvbn-ts/core';
 import { dictionary } from '@zxcvbn-ts/language-common';
 import { getPasswordErrorMessage, getWarningMessages } from '../../../constants/password';
@@ -19,7 +20,11 @@ import PasswordMeter from './PasswordMeter';
 import PasswordViewerIcon from './PasswordViewerIcon';
 import './WalletPasswordField.scss';
 
-export const validatePassword = (password: string, mt5Policy: boolean) => {
+export const validatePassword = (
+    password: string,
+    mt5Policy: boolean,
+    localize: ReturnType<typeof useTranslations>['localize']
+) => {
     const score = mt5Policy ? calculateScoreMT5(password) : calculateScoreCFD(password);
     let validationErrorMessage = '';
 
@@ -29,11 +34,11 @@ export const validatePassword = (password: string, mt5Policy: boolean) => {
     const { feedback } = zxcvbn(password);
     try {
         if (mt5Policy) {
-            mt5Schema.validateSync(password);
+            mt5Schema(localize).validateSync(password);
         } else {
-            cfdSchema.validateSync(password);
+            cfdSchema(localize).validateSync(password);
         }
-        validationErrorMessage = getWarningMessages()[feedback.warning as passwordKeys] ?? '';
+        validationErrorMessage = getWarningMessages(localize)[feedback.warning as passwordKeys] ?? '';
     } catch (err) {
         if (err instanceof ValidationError) {
             validationErrorMessage = err?.message;
@@ -55,14 +60,15 @@ const WalletPasswordField: React.FC<WalletPasswordFieldProps> = ({
     shouldDisablePasswordMeter = false,
     showMessage,
 }) => {
+    const { localize } = useTranslations();
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isTouched, setIsTouched] = useState(false);
     const [showErrorMessage, setShowErrorMessage] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
     const { score, validationErrorMessage } = useMemo(
-        () => validatePassword(password, mt5Policy),
-        [password, mt5Policy]
+        () => validatePassword(password, mt5Policy, localize),
+        [password, mt5Policy, localize]
     );
     const passwordValidation = mt5Policy ? !validPasswordMT5(password) : !validPassword(password);
 
@@ -85,8 +91,8 @@ const WalletPasswordField: React.FC<WalletPasswordFieldProps> = ({
 
     useEffect(() => {
         setShowErrorMessage(!!passwordError);
-        setErrorMessage(passwordError ? getPasswordErrorMessage().PasswordError : validationErrorMessage);
-    }, [passwordError, validationErrorMessage]);
+        setErrorMessage(passwordError ? getPasswordErrorMessage(localize).PasswordError : validationErrorMessage);
+    }, [passwordError, validationErrorMessage, localize]);
 
     return (
         <div className='wallets-password'>

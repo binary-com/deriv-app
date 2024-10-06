@@ -54,7 +54,7 @@
 
         .wallets-transaction-status {
             margin-top: -2.4rem;
-            margin-right: 2.4rem;
+            margin-inline-end: 2.4rem;
 
             @include mobile-or-tablet-screen {
                 margin: 0;

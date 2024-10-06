@@ -24,15 +24,23 @@
             @include mobile-or-tablet-screen {
                 rotate: 90deg;
                 margin-bottom: 2.2rem;
+
+                @include rtl {
+                    rotate: -90deg;
+                }
             }
         }
 
-        &--rtl {
+        &--inverted {
             & > svg {
                 rotate: 180deg;
 
                 @include mobile-or-tablet-screen {
                     rotate: -90deg;
+
+                    @include rtl {
+                        rotate: 90deg;
+                    }
                 }
             }
         }

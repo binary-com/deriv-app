@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import classNames from 'classnames';
-import { Localize } from '@deriv-com/translations';
+import { Localize, useTranslations } from '@deriv-com/translations';
 import { Divider, Text } from '@deriv-com/ui';
 import { useModal } from '../../../../../components/ModalProvider';
 import IdCardIcon from '../../../../../public/images/ic-id-card.svg';
@@ -58,6 +58,7 @@ const JurisdictionCard: React.FC<TJurisdictionCardProps> = ({ isAdded, isSelecte
     const [isFlipped, setIsFlipped] = useState(false);
     const { toggleDynamicLeverage } = useDynamicLeverageModalState();
     const { getModalState } = useModal();
+    const { localize } = useTranslations();
     const verificationDocs = useVerificationDocs(jurisdiction);
 
     const descriptionClickHandler = (tag?: string) => (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -70,8 +71,8 @@ const JurisdictionCard: React.FC<TJurisdictionCardProps> = ({ isAdded, isSelecte
     };
 
     const { contents, header, isOverHeaderAvailable, overHeader } = useMemo<TJurisdictionCardItems>(
-        () => getJurisdictionContents()[jurisdiction],
-        [jurisdiction]
+        () => getJurisdictionContents(localize)[jurisdiction],
+        [jurisdiction, localize]
     );
     const marketType = getModalState('marketType') || 'all';
     const rows = contents[marketType] || [];
@@ -154,7 +155,7 @@ const JurisdictionCard: React.FC<TJurisdictionCardProps> = ({ isAdded, isSelecte
                                                             row.titleIndicators?.displayTextSkinColor || ''
                                                         }`}
                                                     >
-                                                        <Text color='white' size='xs' weight='bold'>
+                                                        <Text align='start' color='white' size='xs' weight='bold'>
                                                             {row.titleIndicators.displayText}
                                                         </Text>
                                                     </div>

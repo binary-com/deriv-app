@@ -20,12 +20,13 @@
         &-content {
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
         }
     }
 
     &__button {
         all: unset;
-        right: 1.6rem;
+        inset-inline-end: 1.6rem;
         transform: rotate(0);
         transform-origin: 50%;
         transition: transform 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);

@@ -1,0 +1,21 @@
+@import '../../../../styles/mixins.scss';
+
+.dc-dialog__delete-strategy--delete {
+    .dc-dialog {
+        &__footer {
+            @include mobile-or-tablet-screen {
+                flex-wrap: unset;
+                @include flex-center(flex-end, flex-start);
+                width: 100%;
+
+                button {
+                    flex-basis: unset;
+                    &:first-child {
+                        margin-inline-end: 0.8rem;
+                    }
+                    margin-bottom: unset;
+                }
+            }
+        }
+    }
+}

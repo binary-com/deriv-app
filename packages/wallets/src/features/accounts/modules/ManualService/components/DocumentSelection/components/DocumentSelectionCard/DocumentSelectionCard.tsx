@@ -1,6 +1,7 @@
 import React from 'react';
+import { LabelPairedChevronLeftCaptionBoldIcon, LabelPairedChevronRightCaptionBoldIcon } from '@deriv/quill-icons';
 import { Text, useDevice } from '@deriv-com/ui';
-import RightArrow from '../../../../../../../../public/images/navigation-chevron-right.svg';
+import useIsRtl from '../../../../../../../../hooks/useIsRtl';
 import { TManualDocumentType } from '../../../../utils';
 import './DocumentSelectionCard.scss';
 
@@ -17,6 +18,8 @@ const DocumentSelectionCard: React.FC<TDocumentSelectionCardProps> = ({
     value,
 }) => {
     const { isDesktop } = useDevice();
+    const isRtl = useIsRtl();
+
     return (
         <button className='wallets-document-selection-card' data-testid={`dt_${value}`} onClick={() => onClick(value)}>
             <div className='wallets-document-selection-card__content'>
@@ -28,7 +31,11 @@ const DocumentSelectionCard: React.FC<TDocumentSelectionCardProps> = ({
                     <Text size={!isDesktop ? '2xs' : 'xs'}>{description}</Text>
                 </div>
             </div>
-            <RightArrow />
+            {isRtl ? (
+                <LabelPairedChevronLeftCaptionBoldIcon width={16} />
+            ) : (
+                <LabelPairedChevronRightCaptionBoldIcon width={16} />
+            )}
         </button>
     );
 };

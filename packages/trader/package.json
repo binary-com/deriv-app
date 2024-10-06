@@ -23,7 +23,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/binary-com/deriv-app.git"
+        "url": "https://github.com/deriv-com/deriv-app.git"
     },
     "keywords": [
         "deriv"
@@ -31,9 +31,9 @@
     "author": "Deriv",
     "license": "Apache-2.0",
     "bugs": {
-        "url": "https://github.com/binary-com/deriv-app/issues"
+        "url": "https://github.com/deriv-com/deriv-app/issues"
     },
-    "homepage": "https://github.com/binary-com/deriv-app",
+    "homepage": "https://github.com/deriv-com/deriv-app",
     "devDependencies": {
         "@babel/eslint-parser": "^7.17.0",
         "@babel/preset-react": "^7.16.7",
@@ -89,9 +89,9 @@
     },
     "dependencies": {
         "@deriv-com/analytics": "1.14.0",
-        "@deriv-com/quill-tokens": "^2.0.4",
-        "@deriv-com/quill-ui": "1.16.9",
-        "@deriv-com/utils": "^0.0.25",
+        "@deriv-com/quill-tokens": "2.0.4",
+        "@deriv-com/quill-ui": "1.16.20",
+        "@deriv-com/utils": "^0.0.34",
         "@deriv-com/ui": "1.35.0",
         "@deriv/api-types": "1.0.172",
         "@deriv/components": "^1.0.0",

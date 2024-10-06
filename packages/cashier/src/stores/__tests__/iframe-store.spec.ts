@@ -118,7 +118,7 @@ describe('IframeStore', () => {
 
         const spyOnIframeLoaded = jest.spyOn(iframe_store, 'onIframeLoaded');
 
-        spyOnIframeLoaded({ origin: 'cashier' });
+        spyOnIframeLoaded({ origin: 'https://cashier.deriv.com' });
         expect(iframe_store.iframe_height).toBe(window.innerHeight - 190);
     });
 
@@ -133,7 +133,7 @@ describe('IframeStore', () => {
 
         const spyOnIframeLoaded = jest.spyOn(iframe_store, 'onIframeLoaded');
 
-        spyOnIframeLoaded({ origin: 'cashier' });
+        spyOnIframeLoaded({ origin: 'https://cashier.deriv.com' });
         expect(iframe_store.iframe_height).toBe(window.innerHeight - 100);
     });
 });

@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
-import { useAccountLimits, useAuthorize, useGetExchangeRate, useTransferBetweenAccounts } from '@deriv/api-v2';
+import { useAccountLimits, useGetExchangeRate, useTransferBetweenAccounts } from '@deriv/api-v2';
 import type { THooks } from '../../../../../types';
 import { useExtendedTransferAccountProperties, useSortedTransferAccounts } from '../hooks';
 import type { TInitialTransferFormValues } from '../types';
@@ -20,7 +20,6 @@ export type TTransferContext = {
     activeWalletExchangeRates?: THooks.ExchangeRate;
     error: ReturnType<typeof useTransferBetweenAccounts>['error'];
     isLoading: boolean;
-    preferredLanguage: Intl.LocalesArgument;
     receipt?: TReceipt;
     refetchAccountLimits: ReturnType<typeof useAccountLimits>['refetch'];
     refetchExchangeRates: ReturnType<typeof useGetExchangeRate>['refetch'];
@@ -43,13 +42,12 @@ type TProps = {
 };
 
 const TransferProvider: React.FC<React.PropsWithChildren<TProps>> = ({ accounts: transferAccounts, children }) => {
-    const { data: authorizeData, isLoading: isAuthorizeLoading } = useAuthorize();
     const { data, error, isLoading: isTransferAccountsLoading, mutate, mutateAsync } = useTransferBetweenAccounts();
     const {
         accounts,
         activeWallet,
         isLoading: isModifiedAccountsLoading,
-    } = useExtendedTransferAccountProperties(data?.accounts ?? transferAccounts, authorizeData);
+    } = useExtendedTransferAccountProperties(data?.accounts ?? transferAccounts);
     const [receipt, setReceipt] = useState<TReceipt>();
     const sortedAccounts = useSortedTransferAccounts(accounts);
 
@@ -72,11 +70,7 @@ const TransferProvider: React.FC<React.PropsWithChildren<TProps>> = ({ accounts:
         return updatedActiveWalletExchangeRates;
     }, [refetchUSDExchangeRates, refetchActiveWalletExchangeRates]);
 
-    const isLoading =
-        (!data?.accounts && !transferAccounts) ||
-        isTransferAccountsLoading ||
-        isModifiedAccountsLoading ||
-        isAuthorizeLoading;
+    const isLoading = (!data?.accounts && !transferAccounts) || isTransferAccountsLoading || isModifiedAccountsLoading;
 
     const requestTransferAccounts = useCallback(() => mutate({ accounts: 'all' }), [mutate]);
 
@@ -131,7 +125,6 @@ const TransferProvider: React.FC<React.PropsWithChildren<TProps>> = ({ accounts:
                 activeWalletExchangeRates,
                 error,
                 isLoading,
-                preferredLanguage: authorizeData.preferred_language ?? 'en-US',
                 receipt,
                 refetchAccountLimits,
                 refetchExchangeRates,

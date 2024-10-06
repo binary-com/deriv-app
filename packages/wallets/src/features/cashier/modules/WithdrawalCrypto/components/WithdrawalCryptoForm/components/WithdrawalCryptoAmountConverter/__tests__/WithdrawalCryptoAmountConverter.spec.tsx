@@ -1,11 +1,11 @@
 import React from 'react';
 import { Formik } from 'formik';
+import { APIProvider } from '@deriv/api-v2';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import WalletsAuthProvider from '../../../../../../../../../AuthProvider';
 import { useWithdrawalCryptoContext } from '../../../../../provider';
 import { validateCryptoInput, validateFiatInput } from '../../../../../utils';
 import WithdrawalCryptoAmountConverter from '../WithdrawalCryptoAmountConverter';
-import { APIProvider } from '@deriv/api-v2';
 
 jest.mock('../../../../../utils', () => ({
     ...jest.requireActual('../../../../../utils'),
@@ -155,7 +155,7 @@ describe('WithdrawalCryptoAmountConverter', () => {
         });
 
         expect(screen.queryByTestId('dt_withdrawal_crypto_amount_converter_arrow')).not.toHaveClass(
-            'wallets-withdrawal-crypto-amount-converter__arrow--rtl'
+            'wallets-withdrawal-crypto-amount-converter__arrow--inverted'
         );
     });
 
@@ -168,7 +168,7 @@ describe('WithdrawalCryptoAmountConverter', () => {
         });
 
         expect(screen.getByTestId('dt_withdrawal_crypto_amount_converter_arrow')).toHaveClass(
-            'wallets-withdrawal-crypto-amount-converter__arrow--rtl'
+            'wallets-withdrawal-crypto-amount-converter__arrow--inverted'
         );
     });
 });

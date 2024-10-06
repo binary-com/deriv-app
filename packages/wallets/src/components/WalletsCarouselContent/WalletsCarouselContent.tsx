@@ -6,6 +6,7 @@ import { displayMoney } from '@deriv/api-v2/src/utils';
 import { Localize } from '@deriv-com/translations';
 import { Text } from '@deriv-com/ui';
 import useAllBalanceSubscription from '../../hooks/useAllBalanceSubscription';
+import useIsRtl from '../../hooks/useIsRtl';
 import useWalletAccountSwitcher from '../../hooks/useWalletAccountSwitcher';
 import { THooks } from '../../types';
 import { ProgressBar } from '../Base';
@@ -31,6 +32,7 @@ const TRANSITION_FACTOR_SCALE = 1 - 25.6 / 28.8;
  */
 const WalletsCarouselContent: React.FC<TProps> = ({ accountsActiveTabIndex }) => {
     const switchWalletAccount = useWalletAccountSwitcher();
+    const isRtl = useIsRtl();
     const history = useHistory();
 
     const { data: walletAccountsList, isLoading: isWalletAccountsListLoading } = useMobileCarouselWalletsList();
@@ -123,6 +125,7 @@ const WalletsCarouselContent: React.FC<TProps> = ({ accountsActiveTabIndex }) =>
 
     const [walletsCarouselEmblaRef, walletsCarouselEmblaApi] = useEmblaCarousel({
         containScroll: false,
+        direction: isRtl ? 'rtl' : 'ltr',
         skipSnaps: true,
     });
 

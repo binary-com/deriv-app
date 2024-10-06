@@ -77,7 +77,7 @@ export const categorizeSymbols = (symbols: ActiveSymbols): Record<string, Market
     categorizedSymbols = {
         favorites: {
             market: 'favorites',
-            market_display_name: localize('Favorites'),
+            market_display_name: localize('Favourites'),
             subgroups: {},
         },
         all: {

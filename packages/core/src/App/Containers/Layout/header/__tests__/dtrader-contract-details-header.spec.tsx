@@ -7,6 +7,9 @@ import { StoreProvider, mockStore } from '@deriv/stores';
 
 jest.mock('@deriv-com/quill-ui', () => ({
     Text: () => <div>Contract Details</div>,
+    IconButton: ({ icon, onClick }: { icon: React.ReactNode; onClick: () => void }) => (
+        <button onClick={onClick}>{icon}</button>
+    ),
 }));
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
@@ -37,7 +40,6 @@ describe('DTraderV2Header', () => {
         );
 
         expect(screen.getByText('Contract Details')).toBeInTheDocument();
-
         const icon = screen.getByTestId('arrow');
         expect(icon).toBeInTheDocument();
     });

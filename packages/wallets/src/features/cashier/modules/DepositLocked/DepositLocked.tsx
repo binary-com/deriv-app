@@ -5,7 +5,6 @@ import {
     useAuthentication,
     useCashierValidation,
     useSettings,
-    useWebsiteStatus,
 } from '@deriv/api-v2';
 import { Localize } from '@deriv-com/translations';
 import { ActionScreen, Loader } from '@deriv-com/ui';
@@ -15,7 +14,6 @@ import './DepositLocked.scss';
 const DepositLocked: React.FC<React.PropsWithChildren> = ({ children }) => {
     const { data: activeWallet } = useActiveWalletAccount();
     const { data: settings } = useSettings();
-    const { data: websiteStatus } = useWebsiteStatus();
     const { data: authentication } = useAuthentication();
     const { data: cashierValidation } = useCashierValidation();
     const { data: accountStatus } = useAccountStatus();
@@ -24,8 +22,9 @@ const DepositLocked: React.FC<React.PropsWithChildren> = ({ children }) => {
     const excludedUntil = activeWallet?.excluded_until;
     const isMFAccount = activeWallet?.loginid?.startsWith('MF') || false;
 
-    const clientTncStatus = settings?.client_tnc_status;
-    const websiteTncVersion = websiteStatus?.website_status?.terms_conditions_version;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore, NOTE: no tnc_status in settings type
+    const isTNCNeeded = settings?.tnc_status?.[activeWallet?.landing_company_name] === 0;
 
     const poaNeedsVerification = authentication?.is_poa_needed;
     const poiNeedsVerification = authentication?.is_poa_needed;
@@ -50,10 +49,10 @@ const DepositLocked: React.FC<React.PropsWithChildren> = ({ children }) => {
                 <ActionScreen
                     description={getDepositLockedDesc({
                         askFixDetails,
-                        clientTncStatus,
                         excludedUntil,
                         financialInformationNotComplete,
                         isMFAccount,
+                        isTNCNeeded,
                         poaNeedsVerification,
                         poaStatus,
                         poiNeedsVerification,
@@ -61,7 +60,6 @@ const DepositLocked: React.FC<React.PropsWithChildren> = ({ children }) => {
                         selfExclusion,
                         tradingExperienceNotComplete,
                         unwelcomeStatus,
-                        websiteTncVersion,
                     })}
                     title={
                         <Localize

@@ -3,7 +3,8 @@ import classNames from 'classnames';
 import { Stream, StreamPlayerApi } from '@cloudflare/stream-react';
 import { useIsRtl } from '@deriv/hooks';
 import { isSafariBrowser, mobileOSDetect } from '@deriv/shared';
-import debounce from 'lodash.debounce';
+import throttle from 'lodash.throttle';
+import { useDebounceCallback } from 'usehooks-ts';
 import VideoOverlay from './video-overlay';
 import VideoControls from './video-controls';
 
@@ -12,11 +13,26 @@ type TVideoPlayerProps = {
     data_testid?: string;
     height?: string;
     is_mobile?: boolean;
+    increased_drag_area?: boolean;
     muted?: boolean;
     src: string;
 };
+type TSupportedEvent = React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement> | TouchEvent | MouseEvent;
 
-const VideoPlayer = ({ className, data_testid, height, is_mobile, muted = false, src }: TVideoPlayerProps) => {
+const dragMoveHandlerThrottled = throttle(
+    (e: TSupportedEvent, callback: (e: TSupportedEvent) => void) => callback(e),
+    50
+);
+
+const VideoPlayer = ({
+    className,
+    data_testid,
+    height,
+    is_mobile,
+    increased_drag_area,
+    muted = false,
+    src,
+}: TVideoPlayerProps) => {
     const is_rtl = useIsRtl();
 
     const should_autoplay =
@@ -47,13 +63,7 @@ const VideoPlayer = ({ className, data_testid, height, is_mobile, muted = false,
     const is_dragging = React.useRef(false);
     const is_ended = React.useRef(false);
 
-    const calculateNewWidth = (
-        e:
-            | React.MouseEvent<HTMLDivElement | HTMLSpanElement>
-            | React.TouchEvent<HTMLDivElement | HTMLSpanElement>
-            | TouchEvent
-            | MouseEvent
-    ) => {
+    const calculateNewWidth = (e: TSupportedEvent) => {
         const full_width = 100;
         const progress_bar = progress_bar_ref.current;
         const client_X =
@@ -92,9 +102,7 @@ const VideoPlayer = ({ className, data_testid, height, is_mobile, muted = false,
         if (is_mobile) setHasEnlargedDot(true);
     };
 
-    const dragMoveHandler = (
-        e: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement> | TouchEvent | MouseEvent
-    ) => {
+    const dragMoveHandler = (e: TSupportedEvent) => {
         if (e.type === 'mousemove') e.preventDefault();
         e.stopPropagation();
 
@@ -156,11 +164,12 @@ const VideoPlayer = ({ className, data_testid, height, is_mobile, muted = false,
         debouncedRewind();
     };
 
-    const debouncedRewind = debounce(() => {
+    const debouncedRewind = useDebounceCallback(() => {
         if (!video_ref.current) return;
 
         const is_rewind_to_the_end = Math.round(new_time_ref.current) === Math.round(video_ref.current?.duration);
         if (!video_ref.current?.ended || !is_rewind_to_the_end) {
+            cancelAnimationFrame(animation_ref.current);
             setIsAnimated(true);
             video_ref.current.currentTime = new_time_ref.current;
             animation_ref.current = requestAnimationFrame(repeat);
@@ -191,6 +200,7 @@ const VideoPlayer = ({ className, data_testid, height, is_mobile, muted = false,
     const repeat = () => {
         if (!video_ref.current || !progress_bar_filled_ref.current) return;
         if (should_check_time_ref.current && new_time_ref.current !== video_ref.current.currentTime) {
+            cancelAnimationFrame(animation_ref.current);
             animation_ref.current = requestAnimationFrame(repeat);
             return;
         }
@@ -240,26 +250,27 @@ const VideoPlayer = ({ className, data_testid, height, is_mobile, muted = false,
     );
 
     React.useEffect(() => {
+        const dragMoveHandlerThrottledWrapper = (e: TSupportedEvent) => dragMoveHandlerThrottled(e, dragMoveHandler);
+
         if (is_mobile) {
-            document.addEventListener('touchmove', dragMoveHandler);
+            document.addEventListener('touchmove', dragMoveHandlerThrottledWrapper);
             document.addEventListener('touchend', dragEndHandler);
             document.addEventListener('touchcancel', dragEndHandler);
         } else {
-            document.addEventListener('mousemove', dragMoveHandler);
+            document.addEventListener('mousemove', dragMoveHandlerThrottledWrapper);
             document.addEventListener('mouseup', dragEndHandler);
         }
 
         return () => {
             if (is_mobile) {
-                document.removeEventListener('touchmove', dragMoveHandler);
+                document.removeEventListener('touchmove', dragMoveHandlerThrottledWrapper);
                 document.removeEventListener('touchend', dragEndHandler);
                 document.removeEventListener('touchcancel', dragEndHandler);
             } else {
-                document.removeEventListener('mousemove', dragMoveHandler);
+                document.removeEventListener('mousemove', dragMoveHandlerThrottledWrapper);
                 document.removeEventListener('mouseup', dragEndHandler);
             }
             cancelAnimationFrame(animation_ref.current);
-            debouncedRewind.cancel();
             clearTimeout(replay_animation_timeout.current);
             clearTimeout(toggle_animation_timeout.current);
         };
@@ -286,6 +297,8 @@ const VideoPlayer = ({ className, data_testid, height, is_mobile, muted = false,
                 onEnded={onEnded}
                 onPlay={() => setIsPlaying(true)}
                 onLoadedMetaData={onLoadedMetaData}
+                onSeeked={() => (should_check_time_ref.current = true)}
+                onSeeking={() => (should_check_time_ref.current = true)}
                 playbackRate={playback_rate}
                 volume={volume}
             />
@@ -304,6 +317,7 @@ const VideoPlayer = ({ className, data_testid, height, is_mobile, muted = false,
                 is_playing={is_playing}
                 is_mobile={is_mobile}
                 is_muted={is_muted}
+                increased_drag_area={increased_drag_area}
                 onRewind={onRewind}
                 onVolumeChange={setVolume}
                 onPlaybackRateChange={setPlaybackRate}

@@ -14,21 +14,25 @@ const CompareAccountsHeader = ({ isDemo, isEuRegion }: TCompareAccountsHeader) =
     const history = useHistory();
     const { localize } = useTranslations();
 
+    let headerText;
+    if (isEuRegion) {
+        headerText = (
+            <Localize
+                i18n_default_text='Deriv MT5 CFDs {{demoTitle}} account'
+                values={{ demoTitle: isDemo ? localize('Demo') : localize('real') }}
+            />
+        );
+    } else if (isDemo) {
+        headerText = <Localize i18n_default_text='Compare CFDs demo accounts' />;
+    } else {
+        headerText = <Localize i18n_default_text='Compare CFDs accounts' />;
+    }
+
     return (
         <div className='wallets-compare-accounts-header'>
             <div className='wallets-compare-accounts-header__title'>
                 <Text size='xl' weight='bold'>
-                    {isEuRegion ? (
-                        <Localize
-                            i18n_default_text='Deriv MT5 CFDs {{demoTitle}} account'
-                            values={{ demoTitle: isDemo ? localize('Demo') : localize('real') }}
-                        />
-                    ) : (
-                        <Localize
-                            i18n_default_text='Compare CFDs{{demoTitle}} accounts'
-                            values={{ demoTitle: isDemo ? localize(' demo') : '' }}
-                        />
-                    )}
+                    {headerText}
                 </Text>
             </div>
             <LegacyClose2pxIcon

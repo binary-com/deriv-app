@@ -9,7 +9,7 @@ import './AppCard.scss';
 type TProps = {
     activeWalletCurrency?: THooks.ActiveWalletAccount['currency'];
     appName?: JSX.Element | string;
-    balance?: string;
+    balance?: JSX.Element | string;
     cardSize: Extract<TGenericSizes, 'lg' | 'md' | 'sm'>;
     device: 'desktop' | 'mobile';
     isDemoWallet?: THooks.ActiveWalletAccount['is_virtual'];

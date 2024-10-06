@@ -29,7 +29,6 @@ const TradingDatePicker = observer(({ id, is_24_hours_contract, mode, name }: TT
         duration_units_list,
         expiry_type,
         onChange,
-        sendTradeParamsAnalytics,
         start_date,
         start_time,
         symbol,
@@ -119,15 +118,6 @@ const TradingDatePicker = observer(({ id, is_24_hours_contract, mode, name }: TT
                     value,
                 },
             });
-            sendTradeParamsAnalytics(
-                {
-                    action: 'change_parameter_value',
-                    parameter_field_type: 'date_picker',
-                    parameter_type: 'date_picker',
-                    parameter_value: `${value}`,
-                },
-                true
-            );
         }
     };
 

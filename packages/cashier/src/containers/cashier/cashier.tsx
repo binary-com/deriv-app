@@ -62,7 +62,7 @@ const Cashier = observer(({ history, location, routes: routes_config }: TCashier
         isSuccess: is_payment_agent_transfer_visible_is_success,
     } = usePaymentAgentTransferVisible();
     const { current_language, is_from_derivgo } = common;
-    const { is_cashier_visible: is_visible, is_mobile, toggleCashier, toggleReadyToDepositModal } = ui;
+    const { is_cashier_visible: is_visible, toggleCashier, toggleReadyToDepositModal } = ui;
     const { account_settings, currency, is_account_setting_loaded, is_logged_in, is_logging_in, is_svg, is_virtual } =
         client;
     const {
@@ -127,7 +127,7 @@ const Cashier = observer(({ history, location, routes: routes_config }: TCashier
     const is_default_route = !!selected_route.default;
 
     const getHeaderTitle = () => {
-        if (!is_mobile || (is_default_route && (is_loading || is_cashier_onboarding))) return localize('Cashier');
+        if (isDesktop || (is_default_route && (is_loading || is_cashier_onboarding))) return localize('Cashier');
 
         return selected_route.getTitle?.();
     };

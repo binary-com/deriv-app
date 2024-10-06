@@ -324,3 +324,8 @@ export type TListItem = {
      */
     value?: string;
 };
+
+export type TPOAFormState = Record<
+    'is_btn_loading' | 'is_submit_success' | 'should_allow_submit' | 'should_show_form',
+    boolean
+>;

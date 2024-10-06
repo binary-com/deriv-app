@@ -5,8 +5,6 @@ import { CFDPlatformsList } from '../../features';
 import { OptionsAndMultipliersListing } from '../OptionsAndMultipliersListing';
 import './AccountsList.scss';
 
-const tabs = ['CFDs', 'Options'];
-
 type TProps = {
     accountsActiveTabIndex?: number;
     onTabClickHandler?: React.Dispatch<React.SetStateAction<number>>;
@@ -15,6 +13,7 @@ type TProps = {
 const AccountsList: FC<TProps> = ({ accountsActiveTabIndex, onTabClickHandler }) => {
     const { isDesktop } = useDevice();
     const { localize } = useTranslations();
+    const tabs = [localize('CFDs'), localize('Options')];
 
     const onChangeTabHandler = useCallback((activeTab: number) => onTabClickHandler?.(activeTab), [onTabClickHandler]);
 

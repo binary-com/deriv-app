@@ -16,6 +16,7 @@ type TVideoControls = {
     is_playing?: boolean;
     is_mobile?: boolean;
     is_muted?: boolean;
+    increased_drag_area?: boolean;
     onRewind: (e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>) => void;
     onVolumeChange: (new_value: number) => void;
     onPlaybackRateChange: (new_value: number) => void;
@@ -40,6 +41,7 @@ const VideoControls = ({
     is_playing,
     is_mobile,
     is_muted,
+    increased_drag_area,
     onRewind,
     onVolumeChange,
     onPlaybackRateChange,
@@ -84,6 +86,7 @@ const VideoControls = ({
                         <span
                             className={classNames('player__progress-dot', {
                                 'player__progress-dot--enlarged': has_enlarged_dot,
+                                'player__progress-dot--increased-drag-area': increased_drag_area,
                             })}
                             onMouseDown={dragStartHandler}
                             onTouchStart={dragStartHandler}

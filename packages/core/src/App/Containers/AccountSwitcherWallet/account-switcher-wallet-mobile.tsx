@@ -4,7 +4,7 @@ import { Button, Icon, MobileDialog, Text } from '@deriv/components';
 import { routes } from '@deriv/shared';
 import { Localize } from '@deriv/translations';
 import { AccountSwitcherWalletList } from './account-switcher-wallet-list';
-import { useStoreWalletAccountsList } from '@deriv/hooks';
+import { useIsRtl, useStoreWalletAccountsList } from '@deriv/hooks';
 import { observer } from '@deriv/stores';
 import './account-switcher-wallet-mobile.scss';
 
@@ -16,6 +16,7 @@ type TAccountSwitcherWalletMobile = {
 
 export const AccountSwitcherWalletMobile = observer(({ is_visible, toggle, loginid }: TAccountSwitcherWalletMobile) => {
     const history = useHistory();
+    const isRtl = useIsRtl();
     const { data: wallet_list } = useStoreWalletAccountsList();
 
     const dtrade_account_wallets = wallet_list?.filter(wallet => wallet.dtrade_loginid);
@@ -41,7 +42,7 @@ export const AccountSwitcherWalletMobile = observer(({ is_visible, toggle, login
                 <Text weight='normal' size='xs'>
                     <Localize i18n_default_text='Looking for CFDs? Go to Trader’s Hub' />
                 </Text>
-                <Icon icon='IcChevronRightBold' />
+                <Icon icon={isRtl ? 'IcChevronLeftBold' : 'IcChevronRightBold'} />
             </button>
         </React.Fragment>
     );

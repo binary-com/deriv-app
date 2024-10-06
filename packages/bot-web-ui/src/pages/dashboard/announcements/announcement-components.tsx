@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from '@deriv/components';
+import { Icon, Text } from '@deriv/components';
 import { LabelPairedCircleInfoCaptionBoldIcon } from '@deriv/quill-icons';
 
 export const IconAnnounce = ({ announce }: { announce: boolean }) => (
@@ -35,3 +35,19 @@ export const MessageAnnounce = ({ message, date, announce }: { message: string; 
         </Text>
     </>
 );
+
+export const IconAnnounceModal = ({ announce_id }: { announce_id: string }) => {
+    switch (announce_id) {
+        case 'MOVING_STRATEGIES_ANNOUNCE': {
+            return <Icon icon='IcMigrateStrategy' className='category-type' color='brand' height='100' width='140' />;
+        }
+        case 'BLOCKLY_ANNOUNCE': {
+            return <Icon icon='IcUpgradeBlockly' className='category-type' color='brand' size='120' />;
+        }
+        case 'ACCUMULATOR_ANNOUNCE': {
+            return <Icon icon='IcTradetypeAccu' className='category-type' color='brand' size='80' />;
+        }
+        default:
+            return null;
+    }
+};

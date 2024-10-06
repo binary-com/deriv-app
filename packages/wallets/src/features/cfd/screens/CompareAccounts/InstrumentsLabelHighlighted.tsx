@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import { useTranslations } from '@deriv-com/translations';
 import { THooks, TPlatforms } from '../../../../types';
 import { getHighlightedIconLabel } from './compareAccountsConfig';
 import InstrumentsIconWithLabel from './InstrumentsIconWithLabel';
@@ -22,7 +23,8 @@ const InstrumentsLabelHighlighted = ({
     product,
     shortCode,
 }: TInstrumentsLabelHighlighted) => {
-    const iconData = [...getHighlightedIconLabel(platform, isEuRegion, marketType, shortCode, product)];
+    const { localize } = useTranslations();
+    const iconData = [...getHighlightedIconLabel(platform, isEuRegion, localize, marketType, shortCode, product)];
 
     return (
         <div

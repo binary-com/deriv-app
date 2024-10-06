@@ -5,9 +5,10 @@ import GuideDescriptionModal from '../guide-description-modal';
 import userEvent from '@testing-library/user-event';
 
 const mockProps = {
+    contract_list: AVAILABLE_CONTRACTS,
     is_open: true,
-    onClose: jest.fn(),
     onChipSelect: jest.fn(),
+    onClose: jest.fn(),
     onTermClick: jest.fn(),
     selected_contract_type: CONTRACT_LIST.ACCUMULATORS,
     show_guide_for_selected_contract: false,

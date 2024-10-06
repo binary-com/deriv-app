@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, useStore } from '@deriv/stores';
-import { Text } from '@deriv-com/quill-ui';
+import { Text, IconButton } from '@deriv-com/quill-ui';
 import { LabelPairedArrowLeftSmBoldIcon } from '@deriv/quill-icons';
 import { Localize } from '@deriv/translations';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -22,14 +22,14 @@ const DTraderContractDetailsHeader = observer(() => {
     return (
         <header className='header contract-details-header-v2'>
             <React.Suspense fallback={<div />}>
-                <LabelPairedArrowLeftSmBoldIcon
-                    height='22px'
-                    width='13px'
+                <IconButton
+                    variant='tertiary'
+                    icon={<LabelPairedArrowLeftSmBoldIcon height='22px' width='13px' data-testid='arrow' />}
                     className='arrow'
-                    data-testid='arrow'
+                    color='black-white'
                     onClick={handleBack}
                 />
-                <Text size='md' bold>
+                <Text size='md' bold color='quill-typography__color--prominent'>
                     <Localize i18n_default_text='Contract Details' />
                 </Text>
             </React.Suspense>

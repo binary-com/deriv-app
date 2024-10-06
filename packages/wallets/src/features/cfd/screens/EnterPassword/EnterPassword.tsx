@@ -51,7 +51,9 @@ const EnterPassword: React.FC<TProps> = ({
     const accountType = data?.is_virtual ? localize('Demo') : localize('Real');
     const title = PlatformDetails[platform].title;
     const marketTypeTitle =
-        platform === PlatformDetails.dxtrade.platform ? accountType : getMarketTypeDetails(product)[marketType].title;
+        platform === PlatformDetails.dxtrade.platform
+            ? accountType
+            : getMarketTypeDetails(localize, product)[marketType].title;
     const passwordErrorHints = localize(
         'Hint: You may have entered your Deriv password, which is different from your {{title}} password.',
         { title }
@@ -66,12 +68,12 @@ const EnterPassword: React.FC<TProps> = ({
     return (
         <div className='wallets-enter-password'>
             {isDesktop && (
-                <Text lineHeight='xl' weight='bold'>
+                <Text align='start' lineHeight='xl' weight='bold'>
                     {modalTitle}
                 </Text>
             )}
             <div className='wallets-enter-password__content'>
-                <Text size={isDesktop ? 'sm' : 'md'}>
+                <Text align='start' size={isDesktop ? 'sm' : 'md'}>
                     <Localize
                         i18n_default_text='Enter your {{title}} password to add a {{accountTitle}} {{marketTypeTitle}} account'
                         values={{
@@ -85,13 +87,17 @@ const EnterPassword: React.FC<TProps> = ({
                     />
                 </Text>
                 <WalletPasswordFieldLazy
-                    label={`${title} password`}
+                    label={localize('{{title}} password', { title })}
                     onChange={onPasswordChange}
                     password={password}
                     passwordError={passwordError}
                     shouldDisablePasswordMeter
                 />
-                {passwordError && <Text size={isDesktop ? 'sm' : 'md'}>{passwordErrorHints}</Text>}
+                {passwordError && (
+                    <Text align='start' size={isDesktop ? 'sm' : 'md'}>
+                        {passwordErrorHints}
+                    </Text>
+                )}
                 {product === PRODUCT.ZEROSPREAD && !isVirtual && (
                     <CFDPasswordModalTnc
                         checked={isTncChecked}

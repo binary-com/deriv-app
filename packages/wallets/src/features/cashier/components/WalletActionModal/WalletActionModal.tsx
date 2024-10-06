@@ -25,10 +25,10 @@ const WalletActionModal: React.FC<TWalletActionModal> = ({
     return (
         <ModalWrapper hideCloseButton={hideCloseButton}>
             <div className='wallets-action-modal'>
-                <Text lineHeight={isDesktop ? 'xl' : 'md'} weight='bold'>
+                <Text align='start' lineHeight={isDesktop ? 'xl' : 'md'} weight='bold'>
                     {title}
                 </Text>
-                <Text lineHeight={isDesktop ? 'lg' : 'sm'} size='sm'>
+                <Text align='start' lineHeight={isDesktop ? 'lg' : 'sm'} size='sm'>
                     {description}
                 </Text>
                 {!!actionButtonsOptions.length && (

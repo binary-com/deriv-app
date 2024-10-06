@@ -8,6 +8,7 @@ import {
     AccountsDmt5ZrsIcon,
     PartnersProductDerivCtraderBrandLightLogoHorizontalIcon,
 } from '@deriv/quill-icons';
+import { useTranslations } from '@deriv-com/translations';
 import { CFD_PLATFORMS, MARKET_TYPE, PRODUCT } from '../../constants';
 
 export const ACCOUNT_ICONS = {
@@ -44,12 +45,12 @@ export const JURISDICTION = {
     VANUATU: 'vanuatu',
 } as const;
 
-export const platformLabel = {
+export const platformLabel = (localize: ReturnType<typeof useTranslations>['localize']) => ({
     CTrader: 'Deriv cTrader',
     DerivX: 'Deriv X',
-    MT5: 'MT5 Platform',
-    OtherCFDs: 'Other CFDs Platform',
-} as const;
+    MT5: localize('MT5 Platform'),
+    OtherCFDs: localize('Other CFDs Platform'),
+});
 
 export const headerColor = {
     CTrader: 'orange',

@@ -6,7 +6,7 @@ on:
 
 jobs:
   generate_and_push_deriv_api_types:
-    if: github.repository == 'binary-com/deriv-app'
+    if: github.repository == 'deriv-com/deriv-app'
     runs-on: "ubuntu-latest"
     steps:
       - name: Setup node
@@ -112,5 +112,5 @@ jobs:
             sudo apt install gh
             gh auth login --with-token <<< ${{ github.token }}
             gh pr close "$package_name" || true
-            gh pr create --title "Bump $package_name from $safe_old_version to $new_version" --body "Diff url: $diff_url\n \`\`\`diff ${pr_body:0:5000} \`\`\`" --base "master" --head "binary-com:$package_name"
+            gh pr create --title "Bump $package_name from $safe_old_version to $new_version" --body "Diff url: $diff_url\n \`\`\`diff ${pr_body:0:5000} \`\`\`" --base "master" --head "deriv-com:$package_name"
           fi

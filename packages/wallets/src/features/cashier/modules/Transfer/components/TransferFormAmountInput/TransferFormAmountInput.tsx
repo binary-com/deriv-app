@@ -22,14 +22,8 @@ const TransferFormAmountInput: React.FC<TProps> = ({ fieldName }) => {
     const { fromAccount, fromAmount, toAccount, toAmount } = values;
     const { localize } = useTranslations();
 
-    const {
-        USDExchangeRates,
-        activeWallet,
-        activeWalletExchangeRates,
-        preferredLanguage,
-        refetchAccountLimits,
-        refetchExchangeRates,
-    } = useTransfer();
+    const { USDExchangeRates, activeWallet, activeWalletExchangeRates, refetchAccountLimits, refetchExchangeRates } =
+        useTransfer();
 
     const refetchExchangeRatesAndLimits = useCallback(() => {
         refetchAccountLimits();
@@ -189,7 +183,6 @@ const TransferFormAmountInput: React.FC<TProps> = ({ fieldName }) => {
                 fractionDigits={fractionDigits}
                 isError={values.isError}
                 label={amountLabel}
-                locale={preferredLanguage}
                 maxDigits={maxDigits}
                 onBlur={onBlurHandler}
                 onChange={onChangeHandler}

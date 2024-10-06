@@ -3,12 +3,12 @@
     "version": "1.0.0",
     "description": "Deriv Indicators",
     "author": "Deriv",
-    "homepage": "https://github.com/binary-com/deriv-app#readme",
+    "homepage": "https://github.com/deriv-com/deriv-app#readme",
     "license": "Apache-2.0",
     "main": "src/index.js",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/binary-com/deriv-app.git"
+        "url": "git+https://github.com/deriv-com/deriv-app.git"
     },
     "engines": {
         "node": "18.x"
@@ -29,7 +29,7 @@
         "deploy:production": "echo \"No deploy:production specified\""
     },
     "bugs": {
-        "url": "https://github.com/binary-com/deriv-app/issues"
+        "url": "https://github.com/deriv-com/deriv-app/issues"
     },
     "devDependencies": {
         "@babel/eslint-parser": "^7.17.0",

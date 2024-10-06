@@ -24,10 +24,10 @@ const FiatOnRampDisclaimer: React.FC<TFiatOnRampDisclaimer> = ({ handleDisclaime
 
     return (
         <div className='wallets-fiat-onramp-disclaimer'>
-            <Text color='prominent' size='xs' weight='bold'>
+            <Text align='start' color='prominent' size='xs' weight='bold'>
                 <Localize i18n_default_text='Disclaimer' />
             </Text>
-            <Text size='xs'>
+            <Text align='start' size='xs'>
                 <Localize
                     components={[<strong key={0} />]}
                     i18n_default_text="By clicking <0>Continue</0>, you'll be redirected to Banxa, a third-party payment service provider. Please note that Deriv is not responsible for the content or services provided by Banxa. If you encounter any issues related to Banxa services, you should contact Banxa directly."

@@ -76,6 +76,19 @@ const TradingAppCard = ({
         link_to: '',
     };
 
+    const getAppDescription = () => {
+        if (is_existing_real_ctrader_account) return '';
+        if (platform === CFD_PLATFORMS.DXTRADE) {
+            return (
+                <Localize
+                    components={[<strong key={0} />]}
+                    i18n_default_text='CFDs on financial and derived instruments, <0>powered by TradingView</0>.'
+                />
+            );
+        }
+        return app_desc;
+    };
+
     const { text: badge_text, icon: badge_icon } = getStatusBadgeConfig(
         mt5_acc_auth_status,
         openFailedVerificationModal,
@@ -204,7 +217,7 @@ const TradingAppCard = ({
                             action_type === 'get' || is_deriv_platform ? 'dt_platform-description' : 'dt_account-id'
                         }
                     >
-                        {is_existing_real_ctrader_account ? '' : app_desc}
+                        {getAppDescription()}
                     </Text>
                     {mt5_acc_auth_status && action_type === 'multi-action' && (
                         <StatusBadge

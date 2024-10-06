@@ -1,3 +1,4 @@
+import { localize } from '@deriv-com/translations';
 import { validateCryptoAddress, validateCryptoInput, validateFiatInput } from '../withdrawalCryptoValidators';
 
 describe('withdrawalCryptoValidator', () => {
@@ -27,7 +28,7 @@ describe('withdrawalCryptoValidator', () => {
     });
 
     it('should check if no errors are returned when valid inputs are provided for crypto address', () => {
-        const cryptoAddressMessages = validateCryptoAddress(mockCryptoAddress);
+        const cryptoAddressMessages = validateCryptoAddress(localize, mockCryptoAddress);
 
         expect(cryptoAddressMessages).toEqual(undefined);
     });
@@ -37,6 +38,7 @@ describe('withdrawalCryptoValidator', () => {
             mockActiveWallet,
             mockFractionalDigits,
             mockIsClientVerified,
+            localize,
             mockRemainder,
             mockValue,
             mockMinimumWithdrawal
@@ -46,21 +48,21 @@ describe('withdrawalCryptoValidator', () => {
     });
 
     it('should check if no errors are returned when valid inputs are provided for fiat amount', () => {
-        const fiatAmountMessages = validateFiatInput(mockFractionalDigits, mockValue);
+        const fiatAmountMessages = validateFiatInput(mockFractionalDigits, localize, mockValue);
 
         expect(fiatAmountMessages).toEqual(undefined);
     });
 
     it('should return error for invalid crypto address when length is lesser than 25 characters', () => {
         mockCryptoAddress = 'wrfie0493n0';
-        const cryptoAddressMessages = validateCryptoAddress(mockCryptoAddress);
+        const cryptoAddressMessages = validateCryptoAddress(localize, mockCryptoAddress);
 
         expect(cryptoAddressMessages).toEqual('Your wallet address should have 25 to 64 characters.');
     });
 
     it('should return error for invalid crypto address when length is greater than 64 characters', () => {
         mockCryptoAddress = 'moie0420349irn039fn09krf0n9r0f9n0r9fkn093nkf09k3n0f9n309fn09rkf09r0f9n93n0';
-        const cryptoAddressMessages = validateCryptoAddress(mockCryptoAddress);
+        const cryptoAddressMessages = validateCryptoAddress(localize, mockCryptoAddress);
 
         expect(cryptoAddressMessages).toEqual('Your wallet address should have 25 to 64 characters.');
     });
@@ -71,6 +73,7 @@ describe('withdrawalCryptoValidator', () => {
             mockActiveWallet,
             mockFractionalDigits,
             mockIsClientVerified,
+            localize,
             mockRemainder,
             mockValue,
             mockMinimumWithdrawal
@@ -83,6 +86,7 @@ describe('withdrawalCryptoValidator', () => {
             mockActiveWallet,
             mockFractionalDigits,
             mockIsClientVerified,
+            localize,
             mockRemainder,
             mockValue,
             mockMinimumWithdrawal
@@ -95,6 +99,7 @@ describe('withdrawalCryptoValidator', () => {
             mockActiveWallet,
             mockFractionalDigits,
             mockIsClientVerified,
+            localize,
             mockRemainder,
             mockValue,
             mockMinimumWithdrawal
@@ -107,6 +112,7 @@ describe('withdrawalCryptoValidator', () => {
             mockActiveWallet,
             mockFractionalDigits,
             mockIsClientVerified,
+            localize,
             mockRemainder,
             mockValue,
             mockMinimumWithdrawal
@@ -117,22 +123,22 @@ describe('withdrawalCryptoValidator', () => {
 
     it('should return "Should be a valid number." error for invalid fiat amount', () => {
         mockValue = 'aad';
-        let fiatAmountMessages = validateFiatInput(mockFractionalDigits, mockValue);
+        let fiatAmountMessages = validateFiatInput(mockFractionalDigits, localize, mockValue);
 
         expect(fiatAmountMessages).toEqual('Should be a valid number.');
 
         mockValue = '5.';
-        fiatAmountMessages = validateFiatInput(mockFractionalDigits, mockValue);
+        fiatAmountMessages = validateFiatInput(mockFractionalDigits, localize, mockValue);
 
         expect(fiatAmountMessages).toEqual('Should be a valid number.');
 
         mockValue = '.';
-        fiatAmountMessages = validateFiatInput(mockFractionalDigits, mockValue);
+        fiatAmountMessages = validateFiatInput(mockFractionalDigits, localize, mockValue);
 
         expect(fiatAmountMessages).toEqual('Should be a valid number.');
 
         mockValue = '5.03abcd';
-        fiatAmountMessages = validateFiatInput(mockFractionalDigits, mockValue);
+        fiatAmountMessages = validateFiatInput(mockFractionalDigits, localize, mockValue);
 
         expect(fiatAmountMessages).toEqual('Should be a valid number.');
     });
@@ -144,6 +150,7 @@ describe('withdrawalCryptoValidator', () => {
             mockActiveWallet,
             mockFractionalDigits,
             mockIsClientVerified,
+            localize,
             mockRemainder,
             mockValue,
             mockMinimumWithdrawal
@@ -157,6 +164,7 @@ describe('withdrawalCryptoValidator', () => {
             mockActiveWallet,
             mockFractionalDigits,
             mockIsClientVerified,
+            localize,
             mockRemainder,
             mockValue,
             mockMinimumWithdrawal
@@ -178,6 +186,7 @@ describe('withdrawalCryptoValidator', () => {
             mockActiveWallet,
             mockFractionalDigits,
             mockIsClientVerified,
+            localize,
             mockRemainder,
             mockValue,
             mockMinimumWithdrawal
@@ -196,6 +205,7 @@ describe('withdrawalCryptoValidator', () => {
             mockActiveWallet,
             mockFractionalDigits,
             mockIsClientVerified,
+            localize,
             mockRemainder,
             mockValue,
             mockMinimumWithdrawal
@@ -212,6 +222,7 @@ describe('withdrawalCryptoValidator', () => {
             mockActiveWallet,
             mockFractionalDigits,
             mockIsClientVerified,
+            localize,
             mockRemainder,
             mockValue,
             mockMinimumWithdrawal
@@ -228,6 +239,7 @@ describe('withdrawalCryptoValidator', () => {
             mockActiveWallet,
             mockFractionalDigits,
             mockIsClientVerified,
+            localize,
             mockRemainder,
             mockValue,
             mockMinimumWithdrawal
@@ -244,6 +256,7 @@ describe('withdrawalCryptoValidator', () => {
             mockActiveWallet,
             mockFractionalDigits,
             mockIsClientVerified,
+            localize,
             mockRemainder,
             mockValue,
             mockMinimumWithdrawal
@@ -253,7 +266,7 @@ describe('withdrawalCryptoValidator', () => {
     });
 
     it('should return "This field is required." if no value is passed to crypto address field', () => {
-        const cryptoAddressMessages = validateCryptoAddress('');
+        const cryptoAddressMessages = validateCryptoAddress(localize, '');
 
         expect(cryptoAddressMessages).toEqual('This field is required.');
     });

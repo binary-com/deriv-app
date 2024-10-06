@@ -5,8 +5,22 @@ import { fireEvent, render, screen, within } from '@testing-library/react';
 import { ModalProvider } from '../../../../../../../components/ModalProvider';
 import CryptoTransaction from '../CryptoTransaction';
 
+const mockCurrencyConfig = {
+    BTC: {
+        display_code: 'BTC',
+        fractional_digits: 8,
+    },
+    USD: {
+        display_code: 'USD',
+        fractional_digits: 2,
+    },
+};
+
 jest.mock('@deriv/api-v2', () => ({
     useCancelCryptoTransaction: jest.fn(),
+    useCurrencyConfig: jest.fn(() => ({
+        getConfig: (currency: 'BTC' | 'USD') => mockCurrencyConfig[currency],
+    })),
 }));
 
 const mockModalHide = jest.fn();
@@ -52,7 +66,7 @@ describe('CryptoTransaction', () => {
 
         render(
             <ModalProvider>
-                <CryptoTransaction currencyDisplayCode='BTC' transaction={mockTransaction} />
+                <CryptoTransaction currency='BTC' currencyDisplayCode='BTC' transaction={mockTransaction} />
             </ModalProvider>
         );
 
@@ -83,7 +97,7 @@ describe('CryptoTransaction', () => {
 
         render(
             <ModalProvider>
-                <CryptoTransaction currencyDisplayCode='BTC' transaction={mockDepositTransaction} />
+                <CryptoTransaction currency='BTC' currencyDisplayCode='BTC' transaction={mockDepositTransaction} />
             </ModalProvider>
         );
 
@@ -103,7 +117,7 @@ describe('CryptoTransaction', () => {
 
         render(
             <ModalProvider>
-                <CryptoTransaction currencyDisplayCode='BTC' transaction={mockTransaction} />
+                <CryptoTransaction currency='BTC' currencyDisplayCode='BTC' transaction={mockTransaction} />
             </ModalProvider>
         );
 
@@ -123,7 +137,7 @@ describe('CryptoTransaction', () => {
 
         render(
             <ModalProvider>
-                <CryptoTransaction currencyDisplayCode='BTC' transaction={mockTransaction} />
+                <CryptoTransaction currency='BTC' currencyDisplayCode='BTC' transaction={mockTransaction} />
             </ModalProvider>
         );
 
@@ -146,7 +160,7 @@ describe('CryptoTransaction', () => {
 
         render(
             <ModalProvider>
-                <CryptoTransaction currencyDisplayCode='BTC' transaction={mockTransaction} />
+                <CryptoTransaction currency='BTC' currencyDisplayCode='BTC' transaction={mockTransaction} />
             </ModalProvider>
         );
 

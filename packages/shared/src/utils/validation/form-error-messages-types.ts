@@ -3,6 +3,7 @@ type TParameter = string | number;
 
 export type TFormErrorMessagesTypes = Record<
     | 'empty_address'
+    | 'empty_barrier'
     | 'address'
     | 'barrier'
     | 'email'

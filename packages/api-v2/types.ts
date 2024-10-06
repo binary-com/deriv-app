@@ -246,6 +246,10 @@ type KycAuthStatus = {
          * Current POA status.
          */
         status?: 'none' | 'pending' | 'rejected' | 'verified' | 'expired';
+        /**
+         * Supported documents per document_type.
+         */
+        supported_documents?: string[];
     };
     /**
      * POI authentication status details.

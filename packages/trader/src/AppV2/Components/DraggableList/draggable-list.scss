@@ -9,6 +9,7 @@
 
         &__title {
             font-size: var(--core-fontSize-75);
+            color: var(--component-textIcon-normal-default);
         }
 
         &__left {
@@ -23,8 +24,7 @@
         }
 
         &--active {
-            border: var(--core-spacing-75) solid var(--core-color-solid-slate-75);
-            background-color: var(--core-color-solid-slate-75);
+            background-color: var(--semantic-color-slate-solid-surface-frame-mid);
         }
 
         button {
@@ -34,19 +34,23 @@
     }
 
     &-category {
-        border-bottom: var(--core-borderWidth-75) solid var(--core-color-opacity-black-100);
+        border-bottom: var(--core-borderWidth-75) solid var(--semantic-color-monochrome-surface-normal-low);
 
         &-header {
             margin-bottom: var(--core-spacing-500);
             display: flex;
             justify-content: space-between;
             padding: 0 var(--core-spacing-600) 0 var(--core-spacing-800);
+            &-button {
+                color: var(--component-textIcon-normal-prominent);
+            }
         }
 
         &__droppable-area {
             display: flex;
             flex-direction: column;
             padding: var(--core-spacing-500) 0;
+            overflow: auto;
         }
     }
 }

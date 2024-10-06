@@ -3,26 +3,27 @@ import { ActionSheet, Heading, Chip, Text } from '@deriv-com/quill-ui';
 import { VideoPlayer } from '@deriv/components';
 import { Localize } from '@deriv/translations';
 import { clickAndKeyEventHandler } from '@deriv/shared';
-import { AVAILABLE_CONTRACTS, CONTRACT_LIST } from 'AppV2/Utils/trade-types-utils';
 import { getDescriptionVideoIds } from 'AppV2/Utils/contract-description-utils';
 import TradeDescription from './Description/trade-description';
 import VideoPreview from './Description/video-preview';
 
 type TGuideDescriptionModal = {
-    is_open?: boolean;
+    contract_list: { tradeType: React.ReactNode; id: string }[];
     is_dark_mode_on?: boolean;
-    onClose: () => void;
+    is_open?: boolean;
     onChipSelect: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    onClose: () => void;
     onTermClick: (term: string) => void;
     selected_contract_type: string;
     show_guide_for_selected_contract?: boolean;
 };
 
 const GuideDescriptionModal = ({
-    is_open,
+    contract_list,
     is_dark_mode_on,
-    onClose,
+    is_open,
     onChipSelect,
+    onClose,
     onTermClick,
     selected_contract_type,
     show_guide_for_selected_contract,
@@ -31,27 +32,10 @@ const GuideDescriptionModal = ({
     const modal_ref = React.useRef<HTMLDialogElement>(null);
 
     const video_src = getDescriptionVideoIds(selected_contract_type, is_dark_mode_on);
-    //TODO: temporary, until we'll have ordered list, coming from contract type selection
-    const order = [
-        CONTRACT_LIST.RISE_FALL,
-        CONTRACT_LIST.ACCUMULATORS,
-        CONTRACT_LIST.MULTIPLIERS,
-        CONTRACT_LIST.VANILLAS,
-        CONTRACT_LIST.TURBOS,
-        CONTRACT_LIST.HIGHER_LOWER,
-        CONTRACT_LIST.TOUCH_NO_TOUCH,
-        CONTRACT_LIST.MATCHES_DIFFERS,
-        CONTRACT_LIST.EVEN_ODD,
-        CONTRACT_LIST.OVER_UNDER,
-    ];
 
     const toggleVideoPlayer = (e?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
         clickAndKeyEventHandler(() => setIsVideoPlayerOpened(!is_video_player_opened), e);
     };
-
-    const ordered_contract_list = [...AVAILABLE_CONTRACTS].sort(
-        (a, b) => order.findIndex(item => item === a.id) - order.findIndex(item => item === b.id)
-    );
 
     React.useEffect(() => {
         if (modal_ref.current) is_video_player_opened ? modal_ref.current.showModal() : modal_ref.current.close();
@@ -71,7 +55,7 @@ const GuideDescriptionModal = ({
                         </Heading.H4>
                         {!show_guide_for_selected_contract && (
                             <div className='guide__menu'>
-                                {ordered_contract_list.map(({ tradeType, id }) => (
+                                {contract_list.map(({ tradeType, id }: { tradeType: React.ReactNode; id: string }) => (
                                     <Chip.Selectable
                                         key={id}
                                         onChipSelect={onChipSelect}
@@ -114,6 +98,7 @@ const GuideDescriptionModal = ({
                             data_testid='dt_video_player'
                             height='180px'
                             is_mobile
+                            increased_drag_area
                             src={video_src}
                         />
                     </div>

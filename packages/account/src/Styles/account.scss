@@ -330,6 +330,10 @@ $MIN_HEIGHT_FLOATING: calc(
                 max-width: unset;
             }
 
+            &--phone-verification-livechat-link {
+                color: var(--text-general);
+            }
+
             &--2-cols {
                 display: grid;
                 grid-template-columns: 1fr 1fr;

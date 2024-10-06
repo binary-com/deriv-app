@@ -34,7 +34,6 @@ export type TDuration = {
     onChange: TTradeStore['onChange'];
     onChangeMultiple: TTradeStore['onChangeMultiple'];
     onChangeUiStore: TUIStore['onChangeUiStore'];
-    sendTradeParamsAnalytics: TTradeStore['sendTradeParamsAnalytics'];
     server_time?: moment.MomentInput;
     simple_duration_unit: TUIStore['simple_duration_unit'];
     start_date: TTradeStore['start_date'];
@@ -61,7 +60,6 @@ const Duration = ({
     onChange,
     onChangeMultiple,
     onChangeUiStore,
-    sendTradeParamsAnalytics,
     server_time,
     simple_duration_unit,
     start_date,
@@ -104,15 +102,6 @@ const Duration = ({
             duration_unit: value,
             duration: Number(duration_value),
         });
-
-        if (name === 'advanced_duration_unit') {
-            sendTradeParamsAnalytics({
-                action: 'change_parameter_value',
-                durationUnit: value,
-                parameter_field_type: 'dropdown',
-                parameter_type: 'duration_type',
-            });
-        }
     };
 
     const changeDurationValue = ({ target }: { target: { name: string; value: string | number; type?: string } }) => {
@@ -122,18 +111,6 @@ const Duration = ({
         // e.target.value returns string, we need to convert them to number
         onChangeUiStore({ name: duration_name, value: +value });
         onChange({ target: { name, value: +value } });
-        const displayedValue = max_value && +value > max_value ? max_value : +value;
-        const isTickDuration = duration_unit === 't';
-        sendTradeParamsAnalytics(
-            {
-                action: 'change_parameter_value',
-                parameter_field_type: isTickDuration ? 'tick_bar' : 'number',
-                parameter_type: isTickDuration ? 'tick_value' : 'duration_value',
-                parameter_value: `${displayedValue}`,
-                ...(isTickDuration ? {} : { input_type: target.type ? 'manual' : 'plus_minus' }),
-            },
-            true
-        );
     };
 
     const onToggleDurationType = ({ target }: { target: { name: string; value: boolean } }) => {

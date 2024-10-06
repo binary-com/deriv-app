@@ -145,7 +145,7 @@ const RiskManagementItem = observer(
                     />
                 )}
                 <ActionSheet.Root
-                    expandable
+                    expandable={false}
                     isOpen={isSheetOpen}
                     position='left'
                     onClose={() => {
@@ -153,7 +153,7 @@ const RiskManagementItem = observer(
                         setIsSheetOpen(false);
                     }}
                 >
-                    <ActionSheet.Portal>
+                    <ActionSheet.Portal shouldCloseOnDrag>
                         <ActionSheet.Header title={label} />
                         <ActionSheet.Content className='risk-management-item__action-sheet-content'>
                             {isSheetOpen && (

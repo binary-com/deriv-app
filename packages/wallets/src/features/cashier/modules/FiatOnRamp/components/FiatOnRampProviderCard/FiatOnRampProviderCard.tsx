@@ -23,10 +23,12 @@ const FiatOnRampProviderCard: React.FC<TFiatOnRampProvider> = ({
         <div className='wallets-fiat-onramp-provider'>
             <div className='wallets-fiat-onramp-provider__logo'>{icon}</div>
             <div className='wallets-fiat-onramp-provider__content'>
-                <Text color='prominent' size='md' weight='bold'>
+                <Text align='start' color='prominent' size='md' weight='bold'>
                     {name}
                 </Text>
-                <Text size='sm'>{description}</Text>
+                <Text align='start' size='sm'>
+                    {description}
+                </Text>
                 <div className='wallets-fiat-onramp-provider__icons'>
                     {paymentIcons.map(paymentIcon => (
                         <div

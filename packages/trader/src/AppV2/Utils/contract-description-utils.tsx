@@ -177,7 +177,7 @@ export const getContractDescription = (
                     key={text.props.i18n_default_text}
                     size='sm'
                     className={`description__${type}`}
-                    color='quill-typography__color--prominent'
+                    color='quill-typography__color--default'
                 >
                     {text}
                 </Text>

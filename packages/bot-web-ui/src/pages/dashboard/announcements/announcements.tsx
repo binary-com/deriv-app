@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from '@deriv/stores';
 import { Text } from '@deriv/components';
 import { Notifications as Announcement } from '@deriv-com/ui';
 import { StandaloneBullhornRegularIcon } from '@deriv/quill-icons';
@@ -10,6 +11,7 @@ import { BOT_ANNOUNCEMENTS_LIST, TAnnouncement, TNotifications } from './config'
 import './announcements.scss';
 import { MessageAnnounce, TitleAnnounce } from './announcement-components';
 import { performButtonAction } from './utils/accumulator-helper-functions';
+import { useDBotStore } from 'Stores/useDBotStore';
 
 type TAnnouncements = {
     is_mobile?: boolean;
@@ -17,7 +19,10 @@ type TAnnouncements = {
     handleTabChange: (item: number) => void;
 };
 
-const Announcements = ({ is_mobile, is_tablet, handleTabChange }: TAnnouncements) => {
+const Announcements = observer(({ is_mobile, is_tablet, handleTabChange }: TAnnouncements) => {
+    const {
+        load_modal: { toggleLoadModal },
+    } = useDBotStore();
     const [is_announce_dialog_open, setIsAnnounceDialogOpen] = React.useState(false);
     const [is_open_announce_list, setIsOpenAnnounceList] = React.useState(false);
     const [selected_announcement, setSelectedAnnouncement] = React.useState<TAnnouncement | null>(null);
@@ -99,6 +104,9 @@ const Announcements = ({ is_mobile, is_tablet, handleTabChange }: TAnnouncements
         if (selected_announcement?.switch_tab_on_confirm) {
             handleTabChange(selected_announcement.switch_tab_on_confirm);
         }
+        if (selected_announcement?.should_toggle_modal) {
+            toggleLoadModal();
+        }
         selected_announcement?.onConfirm?.();
         setSelectedAnnouncement(null);
     };
@@ -126,8 +134,8 @@ const Announcements = ({ is_mobile, is_tablet, handleTabChange }: TAnnouncements
                     </Text>
                 )}
                 {amount_active_announce !== 0 && (
-                    <div className='announcements__amount' data-testid='announcements__amount'>
-                        <p>{amount_active_announce}</p>
+                    <div className='announcements__amount'>
+                        <p data-testid='announcements__amount'>{amount_active_announce}</p>
                     </div>
                 )}
             </button>
@@ -156,13 +164,13 @@ const Announcements = ({ is_mobile, is_tablet, handleTabChange }: TAnnouncements
                     announcement={selected_announcement.announcement}
                     is_announce_dialog_open={is_announce_dialog_open}
                     setIsAnnounceDialogOpen={setIsAnnounceDialogOpen}
-                    handleOnCancel={handleOnCancel}
+                    handleOnCancel={!selected_announcement?.should_not_be_cancel ? handleOnCancel : null}
                     handleOnConfirm={handleOnConfirm}
                     is_tablet={is_tablet}
                 />
             )}
         </div>
     );
-};
+});
 
 export default Announcements;

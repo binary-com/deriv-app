@@ -57,7 +57,7 @@ eslint .
 
 ## Storybook
 
--   [`Storybook`](https://github.com/binary-com/deriv-app/blob/master/storybook/README.md)
+-   [`Storybook`](https://github.com/deriv-com/deriv-app/blob/master/storybook/README.md)
 
 The `npm run storybook` command is used to start storybook within the components package
 

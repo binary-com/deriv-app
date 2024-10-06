@@ -52,4 +52,10 @@ describe('MarketSelector', () => {
         expect(screen.getByText(mock_store.modules.trade.tick_data.quote)).toBeInTheDocument();
         expect(screen.getByText('CLOSED')).toBeInTheDocument();
     });
+    it('should render loader when current symbol exchange_is_open is not defined (is not among active symbols list)', () => {
+        mock_store.modules.trade.symbol = 'USDJPY';
+        render(MockedMarketSelector(mockStore(mock_store)));
+
+        expect(screen.getByTestId('square-skeleton')).toBeInTheDocument();
+    });
 });

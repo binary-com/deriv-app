@@ -11,13 +11,16 @@ const BinaryRoutes = observer(props => {
     const { promptFn, prompt_when } = ui;
     const { pushDataLayer } = gtm;
     const location = useLocation();
+    const is_dtrader_v2 =
+        isDTraderV2() && (location.pathname.startsWith(routes.trade) || location.pathname.startsWith('/contract/'));
+
     React.useEffect(() => {
         pushDataLayer({ event: 'page_load' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location]);
 
     const getLoader = () => {
-        if (isDTraderV2())
+        if (is_dtrader_v2)
             return (
                 <Loading.DTraderV2
                     initial_app_loading

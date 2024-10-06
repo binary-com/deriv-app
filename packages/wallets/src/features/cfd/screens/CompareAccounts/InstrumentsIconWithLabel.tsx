@@ -23,7 +23,7 @@ const InstrumentsIconWithLabel = ({ highlighted, icon, isAsterisk, text }: TInst
         >
             {getInstrumentsIcons(!isDesktop)[icon]}
             <div className='wallets-compare-accounts-trading-instruments__text'>
-                <Text align='left' as='p' lineHeight='xs' size='xs' weight={isDesktop ? 'bold' : 'normal'}>
+                <Text align='start' as='p' lineHeight='xs' size='xs' weight={isDesktop ? 'bold' : 'normal'}>
                     {text}
                 </Text>
             </div>

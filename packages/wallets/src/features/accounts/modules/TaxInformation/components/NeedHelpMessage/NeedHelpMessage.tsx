@@ -8,7 +8,7 @@ const NeedHelpMessage = () => {
     return (
         <div className='wallets-tax-information__message'>
             <InlineMessage variant='info'>
-                <Text size='xs'>
+                <Text align='start' size='xs'>
                     <Localize
                         components={[
                             <button

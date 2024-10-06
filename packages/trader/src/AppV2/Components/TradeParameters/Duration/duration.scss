@@ -46,3 +46,11 @@
         }
     }
 }
+
+// Temp Solution for hiding the current date will remove once the flag for disabling
+// current date is functional
+.duration-datepicker {
+    .quill-date-picker .react-calendar__tile--now:after {
+        display: none;
+    }
+}

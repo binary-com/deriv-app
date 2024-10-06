@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { PropsWithChildren } from 'react';
 import { APIProvider } from '@deriv/api-v2';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import WalletsAuthProvider from '../../../../../../../AuthProvider';
 import { TransferProvider } from '../../../provider';
@@ -47,8 +47,22 @@ const ACCOUNTS = [
     },
 ] as NonNullable<TAccount>[];
 
+const mockCurrencyConfig = {
+    BTC: {
+        display_code: 'BTC',
+        fractional_digits: 8,
+    },
+    USD: {
+        display_code: 'USD',
+        fractional_digits: 2,
+    },
+};
+
 jest.mock('@deriv/api-v2', () => ({
     ...jest.requireActual('@deriv/api-v2'),
+    useCurrencyConfig: jest.fn(() => ({
+        getConfig: (currency: 'BTC' | 'USD') => mockCurrencyConfig[currency],
+    })),
     useTransferBetweenAccounts: jest.fn(() => ({
         data: { accounts: ACCOUNTS },
     })),
@@ -118,10 +132,10 @@ const wrapper = ({ children }: PropsWithChildren<unknown>) => {
 
 describe('TransferReceipt', () => {
     it('Should render the correct fee message and label', () => {
-        render(<TransferReceipt />, { wrapper });
+        const { container } = render(<TransferReceipt />, { wrapper });
 
-        expect(screen.queryByText('10000.00 USD (100.00000000 BTC)')).toBeInTheDocument();
-        expect(screen.queryByText('Transfer fees: 100 USD')).toBeInTheDocument();
+        expect(container).toHaveTextContent('10,000.00 USD (100.00000000 BTC)');
+        expect(container).toHaveTextContent('Transfer fees: 100 USD');
     });
     it('Should render the correct from and to card labels', () => {
         render(<TransferReceipt />, { wrapper });
@@ -129,8 +143,8 @@ describe('TransferReceipt', () => {
         const fromCard = screen.getByTestId('dt_wallets_app_card');
         const toCard = screen.getByTestId('dt_wallets_wallet_card');
 
-        expect(within(fromCard).getByText('-10000.00 USD')).toBeInTheDocument();
-        expect(within(toCard).queryByText('+100.00000000 BTC')).toBeInTheDocument();
+        expect(fromCard).toHaveTextContent('-10,000.00 USD');
+        expect(toCard).toHaveTextContent('+100.00000000 BTC');
     });
     it('Should invoke reset transfer when the reset button is clicked', () => {
         render(<TransferReceipt />, { wrapper });

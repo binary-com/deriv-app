@@ -10,7 +10,6 @@ import {
 
 jest.mock('@deriv/api-v2', () => ({
     useActiveWalletAccount: jest.fn(() => ({ data: { mockWallets } })),
-    useAuthorize: jest.fn(() => ({ data: { preferred_language: 'en' } })),
     usePOI: jest.fn(() => ({ data: { is_verified: true } })),
     useTradingPlatformStatus: jest.fn(() => ({
         data: [{ platform: 'mt5', status: 'active' }],

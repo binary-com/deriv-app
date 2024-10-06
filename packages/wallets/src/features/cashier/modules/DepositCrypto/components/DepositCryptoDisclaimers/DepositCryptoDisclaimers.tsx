@@ -27,8 +27,7 @@ const DepositCryptoDisclaimers = () => {
         <li>
             <Localize
                 components={[<strong key={0} />]}
-                i18n_default_text='A minimum deposit value of <0>{{formattedMinimumDepositValue}}</0> {{currency}} is required.
-            Otherwise, a fee is applied.'
+                i18n_default_text='A minimum deposit value of <0>{{formattedMinimumDepositValue}}</0> {{currency}} is required. Otherwise, a fee is applied.'
                 values={{ currency, formattedMinimumDepositValue }}
             />
         </li>
@@ -36,8 +35,7 @@ const DepositCryptoDisclaimers = () => {
         <li>
             <Localize
                 components={[<strong key={0} />]}
-                i18n_default_text='A minimum deposit value of <0>{{formattedMinimumDepositValue}}</0> {{currency}} is required.
-            Otherwise, the funds will be lost and cannot be recovered.'
+                i18n_default_text='A minimum deposit value of <0>{{formattedMinimumDepositValue}}</0> {{currency}} is required. Otherwise, the funds will be lost and cannot be recovered.'
                 values={{ currency, formattedMinimumDepositValue }}
             />
         </li>

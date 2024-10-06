@@ -13,24 +13,28 @@ import {
     PartnersProductDerivCtraderBrandDarkWordmarkHorizontalIcon,
     PartnersProductDerivMt5BrandLightLogoHorizontalIcon,
 } from '@deriv/quill-icons';
-import { localize } from '@deriv-com/translations';
+import { localize, useTranslations } from '@deriv-com/translations';
 import { THooks, TPlatforms } from '../../types';
 import { ctraderLinks, whiteLabelLinks } from './screens/MT5TradeScreen/MT5TradeLink/urlConfig';
 
-const zeroSpreadDetails = {
+const zeroSpreadDetails = (localize: ReturnType<typeof useTranslations>['localize']) => ({
     description: localize('Zero spread CFDs on financial and derived instruments'),
     icon: <AccountsDmt5ZrsIcon height={48} width={48} />,
     title: 'Zero Spread',
-};
-const swapFreeDetails = {
+});
+
+const swapFreeDetails = (localize: ReturnType<typeof useTranslations>['localize']) => ({
     description: localize('Swap-free CFDs on selected financial and derived instruments'),
     icon: <AccountsDmt5SwfIcon height={48} width={48} />,
     title: 'Swap-Free',
-};
+});
 
-export const getMarketTypeDetails = (product?: THooks.AvailableMT5Accounts['product']) =>
+export const getMarketTypeDetails = (
+    localize: ReturnType<typeof useTranslations>['localize'],
+    product?: THooks.AvailableMT5Accounts['product']
+) =>
     ({
-        all: product === PRODUCT.ZEROSPREAD ? zeroSpreadDetails : swapFreeDetails,
+        all: product === PRODUCT.ZEROSPREAD ? zeroSpreadDetails(localize) : swapFreeDetails(localize),
         financial: {
             description: localize('CFDs on financial instruments'),
             icon: <AccountsDmt5FinancialIcon height={48} width={48} />,
@@ -66,7 +70,7 @@ export const PlatformDetails = {
         icon: <AccountsDmt5StandardIcon height={48} width={48} />,
         link: 'https://onelink.to/xf26jx',
         platform: 'mt5' as TPlatforms.MT5,
-        title: 'Deriv MT5 investor',
+        title: localize('Deriv MT5 Investor'),
     },
 } as const;
 
@@ -82,7 +86,7 @@ export const companyNamesAndUrls = {
     vanuatu: { name: 'Deriv (V) Ltd', shortcode: 'Vanuatu', tncUrl: 'tnc/general-terms.pdf' },
 } as const;
 
-export const getAppToContentMapper = () =>
+export const getAppToContentMapper = (localize: ReturnType<typeof useTranslations>['localize']) =>
     ({
         ctrader: {
             icon: <LabelPairedWindowsXlIcon />,
@@ -121,7 +125,7 @@ export const PlatformToLabelIconMapper = {
     dxtrade: <DerivProductDerivXBrandDarkWordmarkIcon height={10} width={35} />,
 } as const;
 
-export const getServiceMaintenanceMessages = () =>
+export const getServiceMaintenanceMessages = (localize: ReturnType<typeof useTranslations>['localize']) =>
     ({
         ctrader: localize(
             'Server maintenance occurs every first Saturday of the month from 7 to 10 GMT time. You may experience service disruption during this time.'

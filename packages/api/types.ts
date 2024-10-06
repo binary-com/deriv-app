@@ -244,6 +244,10 @@ type KycAuthStatus = {
          * Current POA status.
          */
         status?: 'none' | 'pending' | 'rejected' | 'verified' | 'expired';
+        /**
+         * Supported documents per document_type.
+         */
+        supported_documents?: string[];
     };
     /**
      * POI authentication status details.
@@ -2300,6 +2304,89 @@ type PasskeysRenameResponse = {
     [k: string]: unknown;
 };
 
+// TODO: remove these mock phone number challenge types after implementing them inside api-types
+type PhoneNumberChallengeRequest = {
+    /**
+     * Must be `1`
+     */
+    phone_number_challenge: 1;
+    /**
+     * The carrier sending the email code.
+     */
+    email_code: string;
+    /**
+     * The carrier sending the OTP.
+     */
+    carrier?: 'whatsapp' | 'sms';
+    /**
+     * [Optional] The login id of the user. If left unspecified, it defaults to the initial authorized token's login id.
+     */
+    loginid?: string;
+    /**
+     * [Optional] Used to pass data through the websocket, which may be retrieved via the `echo_req` output field.
+     */
+    passthrough?: {
+        [k: string]: unknown;
+    };
+    /**
+     * [Optional] Used to map request to response.
+     */
+    req_id?: number;
+};
+
+type PhoneNumberChallengeResponse = {
+    phone_number_challenge?: number;
+    /**
+     * Echo of the request made.
+     */
+    echo_req: {
+        [k: string]: unknown;
+    };
+    /**
+     * Action name of the request made.
+     */
+    msg_type: 'phone_number_challenge';
+    /**
+     * Optional field sent in request to map to response, present only when request contains `req_id`.
+     */
+    req_id?: number;
+    [k: string]: unknown;
+};
+
+// TODO: remove these mock phone number challenge types after implementing them inside api-types
+type PhoneNumberVerifyRequest = {
+    /**
+     * Must be `1`
+     */
+    phone_number_verify: 1;
+    /**
+     * The carrier sending the OTP.
+     */
+    otp: string;
+    /**
+     * [Optional] Used to map request to response.
+     */
+    req_id?: number;
+};
+
+type PhoneNumberVerifyResponse = {
+    /**
+     * Echo of the request made.
+     */
+    echo_req: {
+        [k: string]: unknown;
+    };
+    /**
+     * Action name of the request made.
+     */
+    msg_type: 'phone_number_verify';
+    /**
+     * Optional field sent in request to map to response, present only when request contains `req_id`.
+     */
+    req_id?: number;
+    [k: string]: unknown;
+};
+
 type ChangeEmailRequest = {
     change_email: 'verify' | 'update';
     new_email: string;
@@ -2695,6 +2782,14 @@ type TSocketEndpoints = {
     payout_currencies: {
         request: PayoutCurrenciesRequest;
         response: PayoutCurrenciesResponse;
+    };
+    phone_number_challenge: {
+        request: PhoneNumberChallengeRequest;
+        response: PhoneNumberChallengeResponse;
+    };
+    phone_number_verify: {
+        request: PhoneNumberVerifyRequest;
+        response: PhoneNumberVerifyResponse;
     };
     ping: {
         request: PingRequest;

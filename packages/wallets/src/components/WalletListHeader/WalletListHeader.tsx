@@ -38,7 +38,7 @@ const WalletListHeader: React.FC = () => {
                 <Localize i18n_default_text="Trader's Hub" />
             </Text>
             {shouldShowSwitcher && (
-                <div>
+                <div className='wallets-list-header__switcher-container'>
                     <div className='wallets-list-header__label'>
                         <div className='wallets-list-header__label-item'>
                             <Text size='sm'>

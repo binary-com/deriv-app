@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, Fragment } from 'react';
+import { useState, useRef, useEffect, Fragment, ChangeEvent } from 'react';
 import clsx from 'clsx';
 import { Formik, Form, FormikHelpers } from 'formik';
 import { useHistory } from 'react-router';
@@ -11,6 +11,7 @@ import {
     HintBox,
     Input,
     Loading,
+    OpenLiveChatLink,
     SelectNative,
     Text,
 } from '@deriv/components';
@@ -29,8 +30,15 @@ import { getEmploymentStatusList } from 'Sections/Assessment/FinancialAssessment
 import InputGroup from './input-group';
 import { getPersonalDetailsInitialValues, getPersonalDetailsValidationSchema, makeSettingsRequest } from './validation';
 import FormSelectField from 'Components/forms/form-select-field';
+import { VerifyButton } from './verify-button';
 import { useInvalidateQuery } from '@deriv/api';
-import { useStatesList, useResidenceList } from '@deriv/hooks';
+import {
+    useStatesList,
+    useResidenceList,
+    useGrowthbookGetFeatureValue,
+    usePhoneNumberVerificationSetTimer,
+    useIsPhoneNumberVerified,
+} from '@deriv/hooks';
 
 type TRestState = {
     show_form: boolean;
@@ -44,12 +52,17 @@ const PersonalDetailsForm = observer(() => {
     const [is_submit_success, setIsSubmitSuccess] = useState(false);
     const invalidate = useInvalidateQuery();
     const history = useHistory();
+    const [isPhoneNumberVerificationEnabled] = useGrowthbookGetFeatureValue({
+        featureFlag: 'phone_number_verification',
+    });
+    const { next_email_otp_request_timer, is_email_otp_timer_loading } = usePhoneNumberVerificationSetTimer();
 
     const {
         client,
         notifications,
         common: { is_language_changing },
     } = useStore();
+    const { is_phone_number_verified } = useIsPhoneNumberVerified();
 
     const {
         account_settings,
@@ -104,14 +117,35 @@ const PersonalDetailsForm = observer(() => {
         }
     }, [invalidate, is_language_changing]);
 
+    const hintMessage = () => {
+        if (isPhoneNumberVerificationEnabled) {
+            if (is_phone_number_verified) {
+                return (
+                    <Localize
+                        i18n_default_text='To change your verified phone number, contact us via <0></0>.'
+                        components={[
+                            <OpenLiveChatLink
+                                text_size='xxs'
+                                key={0}
+                                className='account-form__fieldset--phone-verification-livechat-link'
+                            />,
+                        ]}
+                    />
+                );
+            }
+        } else {
+            return null;
+        }
+    };
+
     const onSubmit = async (values: GetSettings, { setStatus, setSubmitting }: FormikHelpers<GetSettings>) => {
-        setStatus({ msg: '' });
+        setStatus({ msg: '', code: '' });
         const request = makeSettingsRequest({ ...values }, residence_list, states_list, is_virtual);
         setIsBtnLoading(true);
         const data = await WS.authorized.setSettings(request);
 
         if (data.error) {
-            setStatus({ msg: data.error.message });
+            setStatus({ msg: data.error.message, code: data.error.code });
             setIsBtnLoading(false);
             setSubmitting(false);
         } else {
@@ -189,6 +223,8 @@ const PersonalDetailsForm = observer(() => {
 
     const is_account_verified = is_poa_verified && is_poi_verified;
 
+    const stripped_phone_number = `+${account_settings.phone?.replace(/\D/g, '')}`;
+
     //Generate Redirection Link to user based on verification status
     const getRedirectionLink = () => {
         if (!is_poi_verified) {
@@ -197,6 +233,24 @@ const PersonalDetailsForm = observer(() => {
             return '/account/proof-of-address';
         }
         return undefined;
+    };
+
+    const displayErrorMessage = (status: any) => {
+        if (status?.code === 'PhoneNumberTaken') {
+            return (
+                <FormSubmitErrorMessage
+                    message={
+                        <Localize
+                            i18n_default_text='Number already exists in our system. Enter a new one or contact us via <0></0> for help'
+                            components={[<OpenLiveChatLink text_size='xxs' key={0} />]}
+                        />
+                    }
+                    text_color='loss-danger'
+                    weight='none'
+                />
+            );
+        }
+        return <FormSubmitErrorMessage message={status?.msg} />;
     };
 
     const PersonalDetailSchema = getPersonalDetailsValidationSchema(is_eu, is_virtual);
@@ -213,6 +267,7 @@ const PersonalDetailsForm = observer(() => {
             {({
                 values,
                 errors,
+                setStatus,
                 status,
                 touched,
                 handleChange,
@@ -362,13 +417,38 @@ const PersonalDetailsForm = observer(() => {
                                             label={localize('Phone number*')}
                                             //@ts-expect-error type of residence should not be null: needs to be updated in GetSettings type
                                             value={values.phone}
-                                            onChange={handleChange}
+                                            hint={hintMessage()}
+                                            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                                let phone_number = e.target.value.replace(/\D/g, '');
+                                                phone_number = phone_number.length === 0 ? '+' : `+${phone_number}`;
+                                                setFieldValue('phone', phone_number, true);
+                                                setStatus('');
+                                            }}
                                             onBlur={handleBlur}
                                             required
                                             error={errors.phone}
-                                            disabled={isFieldDisabled('phone')}
+                                            disabled={
+                                                isFieldDisabled('phone') ||
+                                                !!next_email_otp_request_timer ||
+                                                is_email_otp_timer_loading
+                                            }
                                             data-testid='dt_phone'
                                         />
+                                        {isPhoneNumberVerificationEnabled && (
+                                            <VerifyButton
+                                                is_verify_button_disabled={
+                                                    isFieldDisabled('phone') ||
+                                                    !isValid ||
+                                                    !stripped_phone_number ||
+                                                    is_email_otp_timer_loading
+                                                }
+                                                values={values}
+                                                residence_list={residence_list}
+                                                states_list={states_list}
+                                                next_email_otp_request_timer={next_email_otp_request_timer}
+                                                setStatus={setStatus}
+                                            />
+                                        )}
                                     </fieldset>
                                 )}
                                 <Fragment>
@@ -642,7 +722,7 @@ const PersonalDetailsForm = observer(() => {
                                 </Fragment>
                             </FormBody>
                             <FormFooter>
-                                {status?.msg && <FormSubmitErrorMessage message={status?.msg} />}
+                                {status?.msg && displayErrorMessage(status)}
                                 {!is_virtual && !(isSubmitting || is_submit_success || status?.msg) && (
                                     <Text
                                         className='account-form__footer-note'
@@ -650,9 +730,7 @@ const PersonalDetailsForm = observer(() => {
                                         color='prominent'
                                         align={isDesktop ? 'right' : 'center'}
                                     >
-                                        {localize(
-                                            'Please make sure your information is correct or it may affect your trading experience.'
-                                        )}
+                                        <Localize i18n_default_text='Ensure your information is correct.' />
                                     </Text>
                                 )}
                                 <Button
@@ -666,7 +744,7 @@ const PersonalDetailsForm = observer(() => {
                                     has_effect
                                     is_loading={is_btn_loading}
                                     is_submit_success={is_submit_success}
-                                    text={localize('Submit')}
+                                    text={localize('Save changes')}
                                     large
                                     primary
                                 />

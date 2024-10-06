@@ -2,13 +2,13 @@ $TABS_HEIGHT: var(--core-size-2400);
 
 .positions-page {
     height: 100%;
-    background-color: var(--core-color-solid-slate-75);
+    background-color: var(--semantic-color-slate-solid-surface-frame-mid);
     position: relative;
 
     .tab-list--container {
         display: block;
         justify-content: unset;
-        background-color: var(--core-color-solid-slate-50);
+        background-color: var(--semantic-color-slate-solid-surface-frame-low);
         height: $TABS_HEIGHT;
 
         button {

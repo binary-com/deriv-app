@@ -3,6 +3,17 @@ import * as Yup from 'yup';
 import { address_permitted_special_characters_message, getLocation, toMoment } from '@deriv/shared';
 import { GetSettings, ResidenceList, StatesList } from '@deriv/api-types';
 
+Yup.addMethod(Yup.string, 'validatePhoneNumberLength', function (message) {
+    return this.test('is-valid-phone-number-length', message || localize('You should enter 9-20 numbers.'), value => {
+        if (typeof value === 'string') {
+            // Remove the leading '+' symbol before validation
+            const phoneNumber = value.startsWith('+') ? value.slice(1) : value;
+            return /^[0-9]{9,20}$/.test(phoneNumber);
+        }
+        return false;
+    });
+});
+
 const getBaseSchema = () =>
     Yup.object().shape({
         first_name: Yup.string()
@@ -22,10 +33,10 @@ const getBaseSchema = () =>
                 localize('Letters, spaces, periods, hyphens, apostrophes only.')
             ),
         phone: Yup.string()
+            //@ts-expect-error yup validation giving type error
+            .validatePhoneNumberLength(localize('You should enter 9-20 numbers.'))
             .required(localize('Phone is required.'))
-            .min(9, localize('You should enter 9-35 numbers.'))
-            .max(35, localize('You should enter 9-35 characters.'))
-            .matches(/^\+?([0-9-]+\s)*[0-9-]+$/, localize('Please enter a valid phone number (e.g. +15417541234).')),
+            .matches(/^\+?([0-9-]+\s)*[0-9-]+$/, localize('Enter a valid phone number (e.g. +15417541234).')),
         address_line_1: Yup.string()
             .trim()
             .required(localize('First line of address is required.'))
@@ -81,7 +92,7 @@ export const getPersonalDetailsInitialValues = (
         date_of_birth: account_settings.date_of_birth,
         first_name: account_settings.first_name,
         last_name: account_settings.last_name,
-        phone: account_settings.phone,
+        phone: `+${account_settings.phone?.replace(/\D/g, '')}`,
         tax_identification_number: account_settings.tax_identification_number ?? '',
     };
 

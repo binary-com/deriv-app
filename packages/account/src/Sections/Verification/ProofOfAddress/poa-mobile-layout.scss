@@ -1,0 +1,59 @@
+.poa-mobile-layout {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.poa-header {
+    display: flex;
+    flex-direction: column;
+
+    &--non-modal {
+        margin-bottom: 1.6rem;
+    }
+}
+
+.timeline {
+    background-color: var(--general-section-1);
+    padding: 0.4rem 1.6rem;
+    align-items: center;
+    height: 5.2rem;
+    column-gap: 1.6rem;
+    display: flex;
+    &-item {
+        display: flex;
+    }
+}
+
+.poa-error-banner {
+    margin-top: 2.4rem;
+}
+
+.progress-container {
+    height: 0.2rem;
+    width: 80%;
+    background-color: var(--general-hover);
+    border-radius: 96px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+    width: 0;
+    height: 100%;
+    background-color: var(--brand-red-coral);
+    border-radius: 96px;
+
+    &--animate {
+        animation: progressAnimation 0.8s ease-in-out forwards;
+    }
+}
+
+@keyframes progressAnimation {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}

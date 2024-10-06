@@ -38,7 +38,7 @@ const STEPS = [
                 display: 'none',
             },
         },
-        target: '.react-joyride__overlay',
+        target: '#react-joyride-portal',
         title: 'scroll-icon',
     },
     {

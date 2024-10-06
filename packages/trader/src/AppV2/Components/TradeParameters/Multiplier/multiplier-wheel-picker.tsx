@@ -3,6 +3,7 @@ import { ActionSheet, Text, WheelPicker, Skeleton } from '@deriv-com/quill-ui';
 import { Localize } from '@deriv/translations';
 import { useTraderStore } from 'Stores/useTraderStores';
 import debounce from 'lodash.debounce';
+import { formatMoney } from '@deriv/shared';
 
 type TMultiplierWheelPickerProps = {
     multiplier: ReturnType<typeof useTraderStore>['multiplier'];
@@ -68,7 +69,7 @@ const MultiplierWheelPicker = ({
                     <Text size='sm' as='div' className='multiplier__commission-value'>
                         {commission ? (
                             <React.Fragment>
-                                {commission} {currency}
+                                {formatMoney(currency, commission, true)} {currency}
                             </React.Fragment>
                         ) : (
                             <Skeleton.Square width={60} height={14} />

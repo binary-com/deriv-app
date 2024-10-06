@@ -114,7 +114,7 @@ const MT5ResetPasswordModal: React.FC<TProps> = ({
                                     />
                                 </div>
                                 <ul className='wallets-mt5-reset__requirements'>
-                                    {getPasswordRequirements().map(requirement => (
+                                    {getPasswordRequirements(localize).map(requirement => (
                                         <li key={requirement}>
                                             <Text size='sm'>{requirement}</Text>
                                         </li>

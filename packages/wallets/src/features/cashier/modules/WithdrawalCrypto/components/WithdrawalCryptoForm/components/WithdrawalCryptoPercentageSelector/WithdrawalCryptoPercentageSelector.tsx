@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormikContext } from 'formik';
 import { displayMoney } from '@deriv/api-v2/src/utils';
-import { Localize } from '@deriv-com/translations';
+import { Localize, useTranslations } from '@deriv-com/translations';
 import { Text } from '@deriv-com/ui';
 import { WalletsPercentageSelector } from '../../../../../../../../components';
 import useAllBalanceSubscription from '../../../../../../../../hooks/useAllBalanceSubscription';
@@ -14,6 +14,7 @@ const WithdrawalCryptoPercentageSelector: React.FC = () => {
     const { setValues, values } = useFormikContext<TWithdrawalForm>();
     const { accountLimits, activeWallet, cryptoConfig, fractionalDigits, getConvertedFiatAmount, isClientVerified } =
         useWithdrawalCryptoContext();
+    const { localize } = useTranslations();
 
     const { data: balanceData } = useAllBalanceSubscription();
     const activeWalletBalance = balanceData?.[activeWallet?.loginid ?? '']?.balance ?? 0;
@@ -49,10 +50,11 @@ const WithdrawalCryptoPercentageSelector: React.FC = () => {
             },
             fractionalDigits,
             isClientVerified,
+            localize,
             accountLimits?.remainder ?? 0,
             values.cryptoAmount,
             cryptoConfig?.minimum_withdrawal
-        ) && !validateFiatInput(fractionalDigits, values.fiatAmount);
+        ) && !validateFiatInput(fractionalDigits, localize, values.fiatAmount);
 
     return (
         <div className='wallets-withdrawal-crypto-percentage__selector'>
@@ -77,6 +79,7 @@ const WithdrawalCryptoPercentageSelector: React.FC = () => {
                             },
                             fractionalDigits,
                             isClientVerified,
+                            localize,
                             accountLimits?.remainder ?? 0,
                             cryptoAmount,
                             cryptoConfig?.minimum_withdrawal

@@ -18,7 +18,10 @@ const CustomDateFilterButton = ({ customTimeRangeFilter, setShowDatePicker }: TC
                 {customTimeRangeFilter}
             </Text>
         )}
-        <LabelPairedChevronRightSmBoldIcon className='custom-time-filter__icon' />
+        <LabelPairedChevronRightSmBoldIcon
+            className='custom-time-filter__icon'
+            fill='var(--component-textIcon-normal-default)'
+        />
     </button>
 );
 

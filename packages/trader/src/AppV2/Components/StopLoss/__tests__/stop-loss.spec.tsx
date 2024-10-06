@@ -37,7 +37,7 @@ describe('StopLoss component', () => {
     it('passes correct props to RiskManagementItem component when stop loss is visible', () => {
         render(<StopLoss />);
         expect(screen.getByText('Risk Management Item Mock')).toBeInTheDocument();
-        expect(screen.getByText('Stop Loss')).toBeInTheDocument();
+        expect(screen.getByText('Stop loss')).toBeInTheDocument();
         expect(
             screen.getByText(
                 'When your loss reaches or exceeds the set amount, your trade will be closed automatically.'

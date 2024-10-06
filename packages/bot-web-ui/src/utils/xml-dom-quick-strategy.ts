@@ -20,7 +20,7 @@ export const addDynamicBlockToDOM = (
         shadow_block.appendChild(field_block);
         block.appendChild(shadow_block);
 
-        const amount_block = strategy_dom.querySelector('value[name="AMOUNT"]');
+        const amount_block = strategy_dom?.querySelector('value[name="AMOUNT"]');
         if (amount_block) {
             const parent_node = amount_block.parentNode;
             if (parent_node) {

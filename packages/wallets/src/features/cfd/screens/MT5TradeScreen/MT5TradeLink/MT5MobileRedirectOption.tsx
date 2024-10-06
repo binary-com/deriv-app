@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
 import {
+    LabelPairedChevronLeftLgFillIcon,
     LabelPairedChevronRightLgFillIcon,
     LegacyMonitorIcon,
     StandaloneMobileNotchRegularIcon,
 } from '@deriv/quill-icons';
 import { Localize } from '@deriv-com/translations';
 import { Text } from '@deriv-com/ui';
+import useIsRtl from '../../../../../hooks/useIsRtl';
 import { THooks } from '../../../../../types';
 import { getDeeplinkUrl, getMobileAppInstallerUrl, getWebtraderUrl } from './constants';
 import './MT5MobileRedirectOption.scss';
@@ -15,6 +17,8 @@ type TMT5MobileRedirectOptionProps = {
 };
 
 const MT5MobileRedirectOption: FC<TMT5MobileRedirectOptionProps> = ({ mt5TradeAccount }) => {
+    const isRtl = useIsRtl();
+
     const mobileURLSet = async () => {
         window.location.replace(getDeeplinkUrl({ mt5TradeAccount }));
         const mobileAppURL = await getMobileAppInstallerUrl({ mt5TradeAccount });
@@ -48,11 +52,11 @@ const MT5MobileRedirectOption: FC<TMT5MobileRedirectOptionProps> = ({ mt5TradeAc
             >
                 <LegacyMonitorIcon iconSize='sm' />
                 <div className='wallets-mobile-redirect-option__button__content'>
-                    <Text align='left' size='xs' weight='bold'>
+                    <Text align='start' size='xs' weight='bold'>
                         <Localize i18n_default_text='MetaTrader5 web terminal' />
                     </Text>
                 </div>
-                <LabelPairedChevronRightLgFillIcon />
+                {isRtl ? <LabelPairedChevronLeftLgFillIcon /> : <LabelPairedChevronRightLgFillIcon />}
             </a>
             <button
                 className='wallets-mobile-redirect-option__button wallets-mobile-redirect-option__button--blue'
@@ -60,13 +64,17 @@ const MT5MobileRedirectOption: FC<TMT5MobileRedirectOptionProps> = ({ mt5TradeAc
             >
                 <StandaloneMobileNotchRegularIcon fill='#FFF' />
                 <div className='wallets-mobile-redirect-option__button__content'>
-                    <Text align='left' color='white' size='xs' weight='bold'>
+                    <Text align='start' color='white' size='xs' weight='bold'>
                         <Localize i18n_default_text='Trade with MT5 mobile app' />
                     </Text>
                 </div>
-                <LabelPairedChevronRightLgFillIcon fill='#FFF' />
+                {isRtl ? (
+                    <LabelPairedChevronLeftLgFillIcon fill='#FFF' />
+                ) : (
+                    <LabelPairedChevronRightLgFillIcon fill='#FFF' />
+                )}
             </button>
-            <Text as='p' size='xs'>
+            <Text align='start' as='p' size='xs'>
                 <Localize
                     components={[<strong key={0} />]}
                     i18n_default_text="Note: Don't have the MT5 app? Tap the <0>Trade with MT5 mobile app</0> button to download. Once you have installed the app, return to this screen and hit the same button to log in."

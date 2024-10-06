@@ -16,7 +16,6 @@ import WhatsApp from 'App/Components/Elements/WhatsApp/index.ts';
 import ServerTime from '../server-time.jsx';
 import { observer, useStore } from '@deriv/stores';
 import { useRemoteConfig } from '@deriv/api';
-import { useIsMounted } from '@deriv/shared';
 
 const FooterIconSeparator = () => <div className='footer-icon-separator' />;
 
@@ -33,7 +32,7 @@ const FooterExtensionRenderer = (footer_extension, idx) => {
 
 const Footer = observer(() => {
     const { client, common, ui, traders_hub } = useStore();
-    const { has_wallet, is_logged_in, landing_company_shortcode, is_eu, is_virtual } = client;
+    const { is_logged_in, landing_company_shortcode, is_eu, is_virtual } = client;
     const { current_language } = common;
     const {
         enableApp,
@@ -47,8 +46,7 @@ const Footer = observer(() => {
         toggleSettingsModal,
         toggleLanguageSettingsModal,
     } = ui;
-    const isMounted = useIsMounted();
-    const { data } = useRemoteConfig(isMounted());
+    const { data } = useRemoteConfig(true);
     const { cs_chat_livechat, cs_chat_whatsapp } = data;
     const { show_eu_related_content } = traders_hub;
 
@@ -96,13 +94,11 @@ const Footer = observer(() => {
                     enableApp={enableApp}
                     settings_extension={settings_extension}
                 />
-                {!has_wallet && (
-                    <ToggleLanguageSettings
-                        is_settings_visible={is_language_settings_modal_on}
-                        toggleSettings={toggleLanguageSettingsModal}
-                        lang={current_language}
-                    />
-                )}
+                <ToggleLanguageSettings
+                    is_settings_visible={is_language_settings_modal_on}
+                    toggleSettings={toggleLanguageSettingsModal}
+                    lang={current_language}
+                />
                 <ToggleFullScreen />
             </div>
         </footer>

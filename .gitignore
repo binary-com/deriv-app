@@ -26,9 +26,6 @@ packages/wallets/src/translations/messages.json
 .env
 .env.*
 *.env
-test-results/
-playwright-report/
-playwright/.cache/
 .nx
 packages/*/stats.json
 packages/*/report.json

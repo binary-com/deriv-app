@@ -79,7 +79,6 @@ const Amount = observer(({ is_minimized = false }: { is_minimized?: boolean }) =
         is_vanilla,
         has_equals_only,
         has_open_accu_contract,
-        sendTradeParamsAnalytics,
         stake_boundary,
         onChange,
         validation_errors,
@@ -109,29 +108,11 @@ const Amount = observer(({ is_minimized = false }: { is_minimized?: boolean }) =
     const getBasisList = () => basis_list.map(item => ({ text: item.text, value: item.value }));
 
     const changeAmount = ({ target }: { target: { name: string; value: string | number; type?: string } }) => {
-        const { value } = target;
         onChange({ target });
-        sendTradeParamsAnalytics(
-            {
-                action: 'change_parameter_value',
-                input_type: target.type ? 'manual' : 'plus_minus',
-                parameter_field_type: 'number',
-                parameter_type: basis === 'payout' ? 'payout_value' : 'stake_value',
-                parameter_value: `${value}`,
-            },
-            true
-        );
     };
 
     const changeAllowEquals = ({ target }: { target: { name: string; value: number } }) => {
-        const { value } = target;
         onChange({ target });
-        sendTradeParamsAnalytics({
-            action: 'change_parameter_value',
-            parameter_field_type: 'checkbox',
-            parameter_type: 'allow_equals_mode',
-            parameter_value: value ? 'yes' : 'no',
-        });
     };
 
     return (

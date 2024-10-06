@@ -4,10 +4,11 @@ import { LabelPairedPresentationScreenSmRegularIcon } from '@deriv/quill-icons';
 import { Localize } from '@deriv/translations';
 import { observer, useStore } from '@deriv/stores';
 import { useTraderStore } from 'Stores/useTraderStores';
-import { CONTRACT_LIST } from 'AppV2/Utils/trade-types-utils';
+import { AVAILABLE_CONTRACTS, CONTRACT_LIST } from 'AppV2/Utils/trade-types-utils';
 import GuideDefinitionModal from './guide-definition-modal';
 import GuideDescriptionModal from './guide-description-modal';
 import { getContractTypesConfig } from '@deriv/shared';
+import useContractsForCompany from 'AppV2/Hooks/useContractsForCompany';
 
 type TGuide = {
     has_label?: boolean;
@@ -20,11 +21,30 @@ const Guide = observer(({ has_label, show_guide_for_selected_contract }: TGuide)
     } = useStore();
     const { contract_type, is_vanilla } = useTraderStore();
     const contract_type_title = is_vanilla ? CONTRACT_LIST.VANILLAS : getContractTypesConfig()[contract_type]?.title;
+    const { trade_types } = useContractsForCompany();
+    const order = [
+        CONTRACT_LIST.RISE_FALL,
+        CONTRACT_LIST.ACCUMULATORS,
+        CONTRACT_LIST.MULTIPLIERS,
+        CONTRACT_LIST.VANILLAS,
+        CONTRACT_LIST.TURBOS,
+        CONTRACT_LIST.HIGHER_LOWER,
+        CONTRACT_LIST.TOUCH_NO_TOUCH,
+        CONTRACT_LIST.MATCHES_DIFFERS,
+        CONTRACT_LIST.EVEN_ODD,
+        CONTRACT_LIST.OVER_UNDER,
+    ];
+
+    const filtered_contract_list = AVAILABLE_CONTRACTS.filter(contract =>
+        trade_types.some((trade: { text?: string }) => trade.text === contract.id)
+    );
+
+    const ordered_contract_list = [...filtered_contract_list].sort(
+        (a, b) => order.findIndex(item => item === a.id) - order.findIndex(item => item === b.id)
+    );
 
     const [is_description_opened, setIsDescriptionOpened] = React.useState(false);
-    const [selected_contract_type, setSelectedContractType] = React.useState(
-        show_guide_for_selected_contract ? contract_type_title : CONTRACT_LIST.RISE_FALL
-    );
+    const [selected_contract_type, setSelectedContractType] = React.useState(contract_type_title);
     const [selected_term, setSelectedTerm] = React.useState<string>('');
 
     const onChipSelect = React.useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -40,7 +60,7 @@ const Guide = observer(({ has_label, show_guide_for_selected_contract }: TGuide)
     return (
         <React.Fragment>
             <Button
-                color='black'
+                color={is_dark_mode_on ? 'white' : 'black'}
                 icon={<LabelPairedPresentationScreenSmRegularIcon key='guide-button-icon' />}
                 onClick={() => setIsDescriptionOpened(true)}
                 variant={has_label ? 'secondary' : 'tertiary'}
@@ -52,10 +72,11 @@ const Guide = observer(({ has_label, show_guide_for_selected_contract }: TGuide)
                 )}
             </Button>
             <GuideDescriptionModal
-                is_open={is_description_opened}
+                contract_list={ordered_contract_list}
                 is_dark_mode_on={is_dark_mode_on}
-                onClose={onClose}
+                is_open={is_description_opened}
                 onChipSelect={onChipSelect}
+                onClose={onClose}
                 onTermClick={setSelectedTerm}
                 selected_contract_type={selected_contract_type}
                 show_guide_for_selected_contract={show_guide_for_selected_contract}

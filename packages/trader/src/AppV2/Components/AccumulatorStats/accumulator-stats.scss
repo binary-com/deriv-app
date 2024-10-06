@@ -35,11 +35,11 @@
 }
 
 .accumulators-stats {
-    background: var(--general-main-1);
+    background: var(--semantic-color-slate-solid-surface-frame-low);
     padding: var(--core-spacing-400);
     margin-top: calc(var(--core-spacing-600) * -1);
-    border-bottom-left-radius: var(--core-borderWidth-300);
-    border-bottom-right-radius: var(--core-borderWidth-300);
+    border-bottom-left-radius: var(--core-borderRadius-400);
+    border-bottom-right-radius: var(--core-borderRadius-400);
     &__container {
         display: flex;
         justify-content: space-between;
@@ -47,11 +47,11 @@
             margin: var(--core-spacing-300) var(--core-spacing-400);
             background: transparent;
             border: none;
-            border-bottom: var(--core-spacing-75) dashed;
+            border-bottom: var(--core-spacing-75) dashed var(--component-textIcon-normal-default);
             padding: var(--core-spacing-50);
         }
         &__divider {
-            border-right: var(--core-spacing-75) solid var(--core-color-opacity-black-100);
+            border-right: var(--core-spacing-75) solid var(--semantic-color-monochrome-surface-normal-low);
             margin: var(--core-spacing-50) var(--core-spacing-400);
         }
         .slide-right {
@@ -129,7 +129,7 @@
             margin-bottom: var(--core-spacing-1200);
         }
         &__caption {
-            margin-bottom: var(--core-spacing-400);
+            margin-bottom: var(--core-spacing-1200);
         }
         &__moving {
             display: flex;
@@ -139,8 +139,8 @@
         &__stats {
             display: flex;
             padding: var(--core-spacing-600) var(--core-spacing-75);
+            border-bottom: var(--core-spacing-75) solid var(--semantic-color-monochrome-border-normal-mid);
             justify-content: space-between;
-            border-bottom: var(--core-spacing-75) solid var(--core-color-opacity-black-100);
             &__moving {
                 display: flex;
                 align-items: center;

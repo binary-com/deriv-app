@@ -11,10 +11,12 @@
         "@deriv/stores": "^1.0.0",
         "@deriv/utils": "^1.0.0",
         "@deriv/shared": "^1.0.0",
+        "@deriv/translations": "^1.0.0",
         "usehooks-ts": "^2.7.0",
         "react-i18next": "^11.11.0",
         "@simplewebauthn/browser": "^8.3.4",
         "@simplewebauthn/typescript-types": "^8.3.4",
+        "dayjs": "^1.11.11",
         "react": "^17.0.2"
     },
     "devDependencies": {

@@ -27,9 +27,18 @@
         }
 
         &__content {
-            padding: 1.5rem;
+            padding: 2.4rem;
             max-width: 44rem;
             margin-bottom: 0.5rem;
+
+            .open-livechat {
+                &__link {
+                    .dc-text {
+                        color: var(--text-general);
+                        text-decoration: underline;
+                    }
+                }
+            }
         }
 
         &__footer {
@@ -44,8 +53,13 @@
             }
         }
 
+        &__footer:empty {
+            border: none;
+            padding: 0;
+        }
+
         &__button {
-            width: 50%;
+            width: 100%;
 
             &:not(:last-child) {
                 @include mobile-or-tablet-screen {
@@ -64,32 +78,53 @@
     }
 
     &__body-icon {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 1rem;
-        width: 40.8rem;
-        height: 12.5rem;
-        border-radius: 0.8rem;
-        background-color: var(--general-active);
+        &--accumulator_announce,
+        &--moving_strategies_announce,
+        &--blockly_announce {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+            height: 12.5rem;
 
-        @include mobile-or-tablet-screen {
-            width: 100%;
+            @include mobile-or-tablet-screen {
+                width: 100%;
+            }
         }
+
+        &--accumulator_announce {
+            border-radius: 0.8rem;
+            background-color: var(--general-section-1);
+        }
+    }
+
+    &__body-main-content {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
     }
 
     &__body-item {
         display: flex;
-        flex-direction: row;
         gap: 1rem;
-        margin: 0 2rem 0.5rem;
 
         svg {
             margin-top: 0.4rem;
         }
+
+        &--numbered {
+            margin-left: 2rem;
+
+            @include rtl {
+                margin-right: 2rem;
+                margin-left: 0;
+            }
+        }
     }
 
     &__title {
-        margin-bottom: 0.5rem;
+        &--accumulator_announce {
+            text-align: center;
+        }
     }
 }

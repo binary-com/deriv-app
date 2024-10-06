@@ -68,7 +68,7 @@ describe('categorizeSymbols', () => {
     const expectedOutput = {
         favorites: {
             market: 'favorites',
-            market_display_name: 'Favorites',
+            market_display_name: 'Favourites',
             subgroups: {},
         },
         all: {

@@ -26,7 +26,7 @@ export const getCFDAvailableAccount = () => [
     },
     {
         name: 'Deriv X',
-        description: localize('CFDs on financial and derived instruments via a customisable platform.'),
+        description: localize('CFDs on financial and derived instruments, powered by TradingView.'),
         platform: CFD_PLATFORMS.DXTRADE,
         market_type: 'all',
         product: 'derivx',

@@ -27,11 +27,6 @@ describe('ContractCardStatusTimer', () => {
 
         expect(screen.getByText('2/10 ticks')).toBeInTheDocument();
     });
-    it('should render Ongoing status if hasNoAutoExpiry === true', () => {
-        render(<ContractCardStatusTimer {...mockProps} hasNoAutoExpiry />);
-
-        expect(screen.getByText('Ongoing')).toBeInTheDocument();
-    });
     it('should render Closed status if isSold === true', () => {
         render(<ContractCardStatusTimer {...mockProps} isSold />);
 

@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import moment from 'moment';
 import { useLocalStorage, useReadLocalStorage } from 'usehooks-ts';
 import { useCreateNewRealAccount, useCreateWallet, useMutation, useSettings } from '@deriv/api-v2';
 import { getAccountsFromLocalStorage } from '@deriv/utils';
@@ -40,7 +39,7 @@ const useSyncLocalStorageClientAccounts = () => {
                     landing_company_shortcode: newAccount.landing_company_shortcode,
                     linked_to: account.linked_to,
                     residence: settingsData.citizen || settingsData.country_code,
-                    session_start: moment().utc().valueOf() / 1000,
+                    session_start: Math.floor(Date.now() / 1000),
                     token: newAccount.oauth_token,
                 };
 
@@ -77,7 +76,7 @@ const useSyncLocalStorageClientAccounts = () => {
                     landing_company_shortcode: newAccount.landing_company_shortcode,
                     linked_to: account.linked_to,
                     residence: settingsData.citizen || settingsData.country_code,
-                    session_start: moment().utc().valueOf() / 1000,
+                    session_start: Math.floor(Date.now() / 1000),
                     token: newAccount.oauth_token,
                 };
 

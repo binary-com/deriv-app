@@ -104,29 +104,34 @@ const DraggableCategoryItems: React.FC<{
     items: TDraggableListItem[];
     draggedItemId: string | null;
     onRightIconClick: (item: TDraggableListItem) => void;
-}> = ({ items, draggedItemId, onRightIconClick }) => (
-    <>
-        {items.map((item, index) => (
-            <Draggable key={item.id} draggableId={item.id} index={index}>
-                {provided => (
-                    <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className='draggable-list-category__item'
-                    >
-                        <DraggableListItem
-                            title={item.title}
-                            onRightIconClick={() => onRightIconClick(item)}
-                            active={draggedItemId === item.id}
-                            disabled={items.length === 1}
-                        />
-                    </div>
-                )}
-            </Draggable>
-        ))}
-    </>
-);
+}> = ({ items, draggedItemId, onRightIconClick }) => {
+    return (
+        <>
+            {items.map(
+                (item, index) =>
+                    item.id && (
+                        <Draggable key={item.id} draggableId={item.id} index={index}>
+                            {provided => (
+                                <div
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                    className='draggable-list-category__item'
+                                >
+                                    <DraggableListItem
+                                        title={item.title}
+                                        onRightIconClick={() => onRightIconClick(item)}
+                                        active={draggedItemId === item.id}
+                                        disabled={items.length === 1}
+                                    />
+                                </div>
+                            )}
+                        </Draggable>
+                    )
+            )}
+        </>
+    );
+};
 
 const updateCategoriesWithDragResult = (
     category_list: TDraggableListCategory[],

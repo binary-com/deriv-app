@@ -34,7 +34,8 @@ const TradeTypesSelectionGuide = () => {
             isOpened={is_modal_open}
             isNonExpandable
             isMobile
-            showHandleBar={false}
+            showHandleBar
+            shouldCloseModalOnSwipeDown
             toggleModal={onFinishGuide}
             primaryButtonLabel={<Localize i18n_default_text='Got it' />}
             primaryButtonCallback={onFinishGuide}

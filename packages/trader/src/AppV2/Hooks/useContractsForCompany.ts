@@ -145,7 +145,10 @@ const useContractsForCompany = () => {
                         available_contract_types[type] = cloneObject(contract_types[type]);
                     }
                     const config: TConfig = available_contract_types[type].config || {};
-                    config.barrier_category = contract.barrier_category as TConfig['barrier_category'];
+                    config.barrier_category =
+                        contract_types[type].barrier_count === 0
+                            ? 'euro_atm'
+                            : (contract.barrier_category as TConfig['barrier_category']);
 
                     available_contract_types[type].config = config;
                 });

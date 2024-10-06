@@ -9,14 +9,14 @@
 
     &__icon-container {
         position: relative;
-        margin-right: 0.4rem;
+        margin-inline-end: 0.4rem;
 
         &__line {
             border: 1px solid var(--light-5-active-background, #d6dadb);
             position: absolute;
             height: 100%;
             top: 50%;
-            left: 50%;
+            inset-inline-start: 50%;
             transform: translate(-50%, -50%);
         }
 

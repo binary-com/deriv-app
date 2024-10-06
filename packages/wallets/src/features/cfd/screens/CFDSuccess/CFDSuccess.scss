@@ -16,9 +16,10 @@
     &__badge {
         position: absolute;
         top: 0;
-        right: 0;
+        inset-inline-end: 0;
         font-weight: 700;
-        border-radius: 0 1rem 0rem;
+        border-start-end-radius: 1rem;
+        border-end-start-radius: 1rem;
         display: grid;
         place-items: center;
         color: #ffffff;
@@ -37,6 +38,7 @@
     &__info {
         display: flex;
         flex-direction: column;
+        align-items: flex-start;
     }
 
     &__gradient {

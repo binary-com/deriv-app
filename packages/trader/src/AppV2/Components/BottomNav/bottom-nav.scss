@@ -4,10 +4,11 @@ $BOTTOM_NAV_HEIGHT: var(--core-spacing-2800);
     display: flex;
     flex-direction: column;
     height: 100%;
+
     &-container {
         padding: var(--core-spacing-200);
         width: 100%;
-        border-top: 1px solid var(--core-color-opacity-black-100);
+        border-top: 1px solid var(--component-navigationBar-border-color);
         height: $BOTTOM_NAV_HEIGHT;
         z-index: 30;
     }
@@ -19,16 +20,25 @@ $BOTTOM_NAV_HEIGHT: var(--core-spacing-2800);
     }
     &-item {
         font-size: var(--core-fontSize-50);
+
+        .quill-navigation-bottom-bar__action-label {
+            color: var(--component-navigationBar-label-color-default);
+        }
+
+        svg {
+            fill: var(--component-navigationBar-icon-default);
+        }
+
         &__position-badge {
             z-index: 1;
         }
         &--active {
             .quill-navigation-bottom-bar__action-label {
-                color: var(--core-color-opacity-coral-600);
+                color: var(--component-navigationBar-label-color-selected);
             }
 
             svg {
-                fill: var(--core-color-opacity-coral-600);
+                fill: var(--component-navigationBar-icon-selected);
             }
         }
         &--positions {

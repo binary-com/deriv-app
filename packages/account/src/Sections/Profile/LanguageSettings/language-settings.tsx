@@ -9,12 +9,12 @@ import { useDevice } from '@deriv-com/ui';
 const LanguageSettings = observer(() => {
     const { client, common } = useStore();
     const { switchLanguage, currentLang, localize } = useTranslations();
-    const { has_wallet } = client;
     // [TODO]: Remove changeSelectedLanguage() when whole app starts to use @deriv-com/translations
     const { changeSelectedLanguage } = common;
+    const { has_wallet } = client;
     const { isDesktop } = useDevice();
 
-    if (!isDesktop || has_wallet) {
+    if (!isDesktop) {
         return <Redirect to={routes.traders_hub} />;
     }
 
@@ -25,7 +25,14 @@ const LanguageSettings = observer(() => {
         switchLanguage(language_key);
     };
 
-    const allowed_languages: Record<string, string> = getAllowedLanguages(UNSUPPORTED_LANGUAGES);
+    let allowed_languages: Record<string, string> = getAllowedLanguages(UNSUPPORTED_LANGUAGES);
+
+    if (has_wallet) {
+        allowed_languages = Object.fromEntries(
+            Object.entries(allowed_languages).filter(([language_key]) => ['EN', 'AR'].includes(language_key))
+        );
+    }
+
     return (
         <div className='settings-language'>
             <FormSubHeader title={localize('Select language')} />

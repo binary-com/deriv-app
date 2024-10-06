@@ -17,8 +17,6 @@
 
     &__actions {
         display: flex;
-        padding-left: 2.4rem;
-        padding-right: 2.4rem;
         gap: 3.2rem;
         justify-content: center;
         padding-inline: 2.4rem;
@@ -53,6 +51,10 @@
             overflow: hidden;
             transform: translateX(calc(50% - 14.4rem));
             height: 18rem;
+
+            @include rtl {
+                transform: translateX(calc(-50% + 14.4rem));
+            }
         }
     }
 

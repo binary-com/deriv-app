@@ -50,13 +50,17 @@ const CTraderSuccessModal = ({ createdAccount, isDemo, walletCurrencyType }: TCT
                     marketType='all'
                     platform={PlatformDetails.ctrader.platform}
                     title={
-                        <Localize
-                            i18n_default_text='Your {{ctraderTitle}}{{demoTitle}} account is ready'
-                            values={{
-                                ctraderTitle: PlatformDetails.ctrader.title,
-                                demoTitle: isDemo ? localize(' demo') : '',
-                            }}
-                        />
+                        isDemo ? (
+                            <Localize
+                                i18n_default_text='Your {{ctraderTitle}} demo account is ready'
+                                values={{ ctraderTitle: PlatformDetails.ctrader.title }}
+                            />
+                        ) : (
+                            <Localize
+                                i18n_default_text='Your {{ctraderTitle}} account is ready'
+                                values={{ ctraderTitle: PlatformDetails.ctrader.title }}
+                            />
+                        )
                     }
                 />
             </ModalWrapper>
@@ -82,7 +86,7 @@ const CTraderSuccessModal = ({ createdAccount, isDemo, walletCurrencyType }: TCT
                         i18n_default_text='Your {{ctraderTitle}}{{demoTitle}} account is ready'
                         values={{
                             ctraderTitle: PlatformDetails.ctrader.title,
-                            demoTitle: isDemo ? localize(' demo') : '',
+                            demoTitle: isDemo ? localize('demo') : '',
                         }}
                     />
                 }

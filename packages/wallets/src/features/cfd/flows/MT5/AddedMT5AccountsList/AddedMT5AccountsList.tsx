@@ -2,14 +2,16 @@ import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import { useJurisdictionStatus, useTradingPlatformStatus } from '@deriv/api-v2';
 import {
+    LabelPairedChevronLeftCaptionRegularIcon,
     LabelPairedChevronRightCaptionRegularIcon,
     LabelPairedCircleExclamationLgBoldIcon,
     LabelPairedTriangleExclamationMdBoldIcon,
 } from '@deriv/quill-icons';
-import { Localize } from '@deriv-com/translations';
+import { Localize, useTranslations } from '@deriv-com/translations';
 import { InlineMessage, Text } from '@deriv-com/ui';
 import { useModal } from '../../../../../components/ModalProvider';
 import { TradingAccountCard } from '../../../../../components/TradingAccountCard';
+import useIsRtl from '../../../../../hooks/useIsRtl';
 import { THooks } from '../../../../../types';
 import { PlatformStatusBadge } from '../../../components/PlatformStatusBadge';
 import {
@@ -29,11 +31,13 @@ type TProps = {
 
 const AddedMT5AccountsList: React.FC<TProps> = ({ account }) => {
     const { getVerificationStatus } = useJurisdictionStatus();
+    const { localize } = useTranslations();
+    const isRtl = useIsRtl();
     const jurisdictionStatus = useMemo(
         () => getVerificationStatus(account.landing_company_short || JURISDICTION.SVG, account.status),
         [account.landing_company_short, account.status, getVerificationStatus]
     );
-    const { title } = getMarketTypeDetails(account.product)[account.market_type ?? MARKET_TYPE.ALL];
+    const { title } = getMarketTypeDetails(localize, account.product)[account.market_type ?? MARKET_TYPE.ALL];
     const { show } = useModal();
 
     const { getPlatformStatus } = useTradingPlatformStatus();
@@ -72,19 +76,19 @@ const AddedMT5AccountsList: React.FC<TProps> = ({ account }) => {
             }}
         >
             <TradingAccountCard.Icon className='wallets-added-mt5__icon'>
-                {getMarketTypeDetails(account.product)[account.market_type || MARKET_TYPE.ALL].icon}
+                {getMarketTypeDetails(localize, account.product)[account.market_type || MARKET_TYPE.ALL].icon}
             </TradingAccountCard.Icon>
             <TradingAccountCard.Content className='wallets-added-mt5__details'>
                 <div className='wallets-added-mt5__details-title'>
                     <Text size='sm'>{title}</Text>
                 </div>
                 {!(jurisdictionStatus.is_failed || jurisdictionStatus.is_pending) && (
-                    <Text size='sm' weight='bold'>
+                    <Text align='start' size='sm' weight='bold'>
                         {account.display_balance}
                     </Text>
                 )}
 
-                <Text as='p' size='xs'>
+                <Text align='start' as='p' size='xs'>
                     {account.display_login}
                 </Text>
                 {jurisdictionStatus.is_pending && (
@@ -97,7 +101,7 @@ const AddedMT5AccountsList: React.FC<TProps> = ({ account }) => {
                             />
                         }
                     >
-                        <Text color='warning' size='2xs' weight='bold'>
+                        <Text align='start' color='warning' size='2xs' weight='bold'>
                             <Localize i18n_default_text='Pending verification' />
                         </Text>
                     </InlineMessage>
@@ -113,7 +117,7 @@ const AddedMT5AccountsList: React.FC<TProps> = ({ account }) => {
                             />
                         }
                     >
-                        <Text color='error' size='2xs' weight='bold'>
+                        <Text align='start' color='error' size='2xs' weight='bold'>
                             <Localize
                                 components={[
                                     <a
@@ -150,7 +154,11 @@ const AddedMT5AccountsList: React.FC<TProps> = ({ account }) => {
                     />
                 ) : (
                     <div className='wallets-available-mt5__icon'>
-                        <LabelPairedChevronRightCaptionRegularIcon width={16} />
+                        {isRtl ? (
+                            <LabelPairedChevronLeftCaptionRegularIcon width={16} />
+                        ) : (
+                            <LabelPairedChevronRightCaptionRegularIcon width={16} />
+                        )}
                     </div>
                 )}
             </TradingAccountCard.Button>

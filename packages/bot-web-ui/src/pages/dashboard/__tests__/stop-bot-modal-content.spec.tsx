@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import { mock_ws } from 'Utils/mock';
 import RootStore from 'Stores/index';
 import { DBotStoreProvider, mockDBotStore } from 'Stores/useDBotStore';
-import StopBotModalContent from '../stop-bot-modal-content';
+import StopBotModalContent from '../../bot-builder/stop-bot-modal-content';
 
 jest.mock('@deriv/bot-skeleton/src/scratch/blockly', () => jest.fn());
 jest.mock('@deriv/bot-skeleton/src/scratch/dbot', () => ({

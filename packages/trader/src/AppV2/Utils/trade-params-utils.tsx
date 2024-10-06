@@ -211,7 +211,7 @@ export const getSnackBarText = ({
         return <Localize i18n_default_text='DC has been turned off.' />;
 };
 
-export const getOptionPerUnit = (unit: string): { value: number; label: ReactNode }[][] => {
+export const getOptionPerUnit = (unit: string, show_tick_from_5: boolean): { value: number; label: ReactNode }[][] => {
     const unitConfig: Record<
         string,
         { start: number; end: number; label: ReactNode } | (() => { value: number; label: ReactNode }[][])
@@ -219,9 +219,9 @@ export const getOptionPerUnit = (unit: string): { value: number; label: ReactNod
         m: { start: 1, end: 59, label: <Localize i18n_default_text='min' /> },
         s: { start: 15, end: 59, label: <Localize i18n_default_text='sec' /> },
         d: { start: 1, end: 365, label: <Localize i18n_default_text='days' /> },
-        t: { start: 1, end: 10, label: <Localize i18n_default_text='tick' /> },
+        t: { start: show_tick_from_5 ? 5 : 1, end: 10, label: <Localize i18n_default_text='tick' /> },
         h: () => {
-            const hour_options = generateOptions(1, 23, 'h');
+            const hour_options = generateOptions(1, 24, 'h');
             const minute_options = generateOptions(0, 59, 'min');
             return [hour_options, minute_options];
         },
@@ -231,7 +231,7 @@ export const getOptionPerUnit = (unit: string): { value: number; label: ReactNod
         return Array.from({ length: end - start + 1 }, (_, i) => ({
             value: start + i,
             label: (
-                <React.Fragment>
+                <React.Fragment key={start + i}>
                     {start + i} {label}
                 </React.Fragment>
             ),

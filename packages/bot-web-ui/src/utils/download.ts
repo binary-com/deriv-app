@@ -33,7 +33,7 @@ export type TExtra = {
     current_currency?: string;
 };
 
-const getCurrentDateTimeLocale = () => {
+export const getCurrentDateTimeLocale = () => {
     const date = new Date(); // This will be the current date and time
 
     const year = date.getUTCFullYear();

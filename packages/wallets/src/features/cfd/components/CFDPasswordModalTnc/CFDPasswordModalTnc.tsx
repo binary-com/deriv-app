@@ -1,5 +1,5 @@
 import React from 'react';
-import { Localize } from '@deriv-com/translations';
+import { Localize, useTranslations } from '@deriv-com/translations';
 import { Checkbox, InlineMessage, Text, useDevice } from '@deriv-com/ui';
 import { WalletLink } from '../../../../components/Base';
 import { useModal } from '../../../../components/ModalProvider';
@@ -17,15 +17,16 @@ export type TCFDPasswordModalTncProps = {
 const CFDPasswordModalTnc = ({ checked, onChange, platform, product }: TCFDPasswordModalTncProps) => {
     const { isDesktop } = useDevice();
     const { getModalState } = useModal();
+    const { localize } = useTranslations();
     const selectedJurisdiction = getModalState('selectedJurisdiction');
     const selectedCompany = companyNamesAndUrls[selectedJurisdiction as keyof typeof companyNamesAndUrls];
     const platformTitle = PlatformDetails[platform].title;
-    const productTitle = getMarketTypeDetails(product).all.title;
+    const productTitle = getMarketTypeDetails(localize, product).all.title;
 
     return (
         <div className='wallets-cfd-modal-tnc'>
             <InlineMessage iconPosition='top' variant='info'>
-                <Text data-testid='dt_wallets_tnc_inline_message' size={isDesktop ? '2xs' : 'xs'}>
+                <Text align='start' data-testid='dt_wallets_tnc_inline_message' size={isDesktop ? '2xs' : 'xs'}>
                     <Localize
                         i18n_default_text='You are adding your {{platformTitle}} {{productTitle}} account under {{company}}, regulated by the British Virgin Islands Financial Services Commission (licence no. SIBA/L/18/1114).'
                         values={{ company: selectedCompany.name, platformTitle, productTitle }}

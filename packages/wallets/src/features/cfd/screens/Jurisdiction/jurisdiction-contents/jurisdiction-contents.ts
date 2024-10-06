@@ -1,3 +1,4 @@
+import { useTranslations } from '@deriv-com/translations';
 import { getJurisdictionMaltainvestContents } from './jurisdiction_maltainvest_contents';
 import { getJurisdictionBviContents } from './jurisdiction-bvi-contents';
 import { getJurisdictionLabuanContents } from './jurisdiction-labuan-contents';
@@ -13,10 +14,12 @@ export type TJurisdictionContent = {
     vanuatu: TJurisdictionCardItems;
 };
 
-export const getJurisdictionContents = (): Record<string, TJurisdictionCardItems> => ({
-    bvi: getJurisdictionBviContents(),
-    labuan: getJurisdictionLabuanContents(),
-    maltainvest: getJurisdictionMaltainvestContents(),
-    svg: getJurisdictionSvgContents(),
-    vanuatu: getJurisdictionVanuatuContents(),
+export const getJurisdictionContents = (
+    localize: ReturnType<typeof useTranslations>['localize']
+): Record<string, TJurisdictionCardItems> => ({
+    bvi: getJurisdictionBviContents(localize),
+    labuan: getJurisdictionLabuanContents(localize),
+    maltainvest: getJurisdictionMaltainvestContents(localize),
+    svg: getJurisdictionSvgContents(localize),
+    vanuatu: getJurisdictionVanuatuContents(localize),
 });

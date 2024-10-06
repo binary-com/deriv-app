@@ -4,13 +4,7 @@
 
 module.exports = {
     collectCoverage: false,
-    collectCoverageFrom: [
-        '**/*.{js,jsx,ts,tsx}',
-        '!**/node_modules/**',
-        '!**/dist/**',
-        '!/integration-tests/',
-        '!/component-tests/',
-    ],
+    collectCoverageFrom: ['**/*.{js,jsx,ts,tsx}', '!**/node_modules/**', '!**/dist/**'],
     coverageReporters: ['lcov'],
     coverageDirectory: './coverage/',
     testRegex: '(/__tests__/.*|(\\.)(test|spec))\\.(js|jsx|tsx|ts)?$',
@@ -20,5 +14,4 @@ module.exports = {
     ],
     setupFiles: ['<rootDir>/../../jest.setup.js'],
     setupFilesAfterEnv: ['<rootDir>/../../setupTests.js'],
-    testPathIgnorePatterns: ['/integration-tests/', '/component-tests/'],
 };

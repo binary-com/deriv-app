@@ -23,7 +23,6 @@ type TAccountProps = RouteComponentProps & {
 const Account = observer(({ history, location, routes }: TAccountProps) => {
     const { client, ui } = useStore();
     const {
-        has_wallet,
         is_virtual,
         is_logged_in,
         is_logging_in,
@@ -69,10 +68,6 @@ const Account = observer(({ history, location, routes }: TAccountProps) => {
 
                 if (route.path === shared_routes.passkeys) {
                     route.is_hidden = should_remove_passkeys_route;
-                }
-
-                if (route.path === shared_routes.languages) {
-                    route.is_hidden = has_wallet;
                 }
             });
         }

@@ -60,4 +60,16 @@ describe('<VideoControls />', () => {
 
         expect(screen.getByTestId(progress_bar_dot)).toBeInTheDocument();
     });
+
+    it('should apply specific className if is_mobile and has_enlarged_dot === true', () => {
+        render(<VideoControls {...mocked_props} is_mobile has_enlarged_dot />);
+
+        expect(screen.getByTestId(progress_bar_dot)).toHaveClass('player__progress-dot--enlarged');
+    });
+
+    it('should apply specific className if is_mobile and increased_drag_area === true', () => {
+        render(<VideoControls {...mocked_props} is_mobile increased_drag_area />);
+
+        expect(screen.getByTestId(progress_bar_dot)).toHaveClass('player__progress-dot--increased-drag-area');
+    });
 });

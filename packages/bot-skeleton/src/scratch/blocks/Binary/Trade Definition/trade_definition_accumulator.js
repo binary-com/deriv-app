@@ -4,6 +4,7 @@ import DBotStore from '../../../dbot-store';
 import { modifyContextMenu, runGroupedEvents, runIrreversibleEvents } from '../../../utils';
 import { config } from '../../../../constants/config';
 import ApiHelpers from '../../../../services/api/api-helpers';
+import { handleProposalRequestForAccumulators } from '../../../accumulators-proposal-handler';
 
 Blockly.Blocks.trade_definition_accumulator = {
     init() {
@@ -101,7 +102,7 @@ Blockly.Blocks.trade_definition_accumulator = {
         if (!this.workspace || Blockly.derivWorkspace.isFlyoutVisible || this.workspace.isDragging()) {
             return;
         }
-
+        handleProposalRequestForAccumulators(this);
         const trade_definition_block = this.workspace
             .getAllBlocks(true)
             .find(block => block.type === 'trade_definition');

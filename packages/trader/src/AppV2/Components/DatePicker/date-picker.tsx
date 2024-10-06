@@ -62,6 +62,7 @@ const DateRangePicker = ({
                         onChange={setChosenRange}
                         optionsConfig={DEFAULT_DATE_FORMATTING_CONFIG}
                         tileDisabled={({ date }) => Date.parse(date.toDateString()) > Date.parse(toMoment().toString())}
+                        maxDate={new Date()}
                     />
                 </ActionSheet.Content>
                 <ActionSheet.Footer

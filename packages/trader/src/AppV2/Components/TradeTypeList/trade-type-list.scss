@@ -9,14 +9,15 @@
         background-color: transparent;
         border: none;
         width: 100%;
+        color: var(--component-textIcon-normal-default);
 
         &__title {
             font-size: var(--core-fontSize-75);
         }
 
         &--selected {
-            background-color: var(--core-color-solid-slate-1400);
-            color: var(--core-color-solid-slate-50);
+            background-color: var(--semantic-color-slate-solid-surface-inverse-lowest);
+            color: var(--component-textIcon-inverse-prominent);
         }
 
         button {
@@ -35,6 +36,7 @@
 
             &-title,
             &-button {
+                color: var(--component-textIcon-normal-prominent);
                 margin-bottom: var(--core-spacing-100);
             }
         }
@@ -48,7 +50,7 @@
         }
 
         &__border {
-            border-bottom: var(--core-borderWidth-75) solid var(--core-color-opacity-black-100);
+            border-bottom: var(--core-borderWidth-75) solid var(--semantic-color-monochrome-surface-normal-low);
         }
     }
 }

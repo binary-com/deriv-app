@@ -4,7 +4,7 @@ import StatusLoss from '../../../../../../public/images/status-loss.svg';
 import './CommonMistakesExamples.scss';
 
 type TCommonMistakeExamplePartialsProps = {
-    description: React.ReactNode;
+    description: string;
     image: React.ReactElement;
 };
 
@@ -13,7 +13,9 @@ const CommonMistakesExamples = ({ description, image }: TCommonMistakeExamplePar
         {image}
         <div className='wallets-common-mistakes__content-description'>
             <StatusLoss />
-            <Text size='xs'>{description}</Text>
+            <Text align='start' size='xs'>
+                {description}
+            </Text>
         </div>
     </div>
 );

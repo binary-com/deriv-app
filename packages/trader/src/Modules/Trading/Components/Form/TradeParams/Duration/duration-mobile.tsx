@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tabs, RelativeDatepicker } from '@deriv/components';
-import { getDurationMinMaxValues, toMoment } from '@deriv/shared';
+import { getDurationMinMaxValues } from '@deriv/shared';
 import { localize } from '@deriv/translations';
 import { observer } from '@deriv/stores';
 import { useTraderStore } from 'Stores/useTraderStores';
@@ -48,12 +48,7 @@ const DurationMobile = observer(
         t_duration,
         toggleModal,
     }: TDurationMobile) => {
-        const {
-            duration_units_list,
-            duration_min_max,
-            basis: trade_basis,
-            sendTradeParamsAnalytics,
-        } = useTraderStore();
+        const { duration_units_list, duration_min_max, basis: trade_basis } = useTraderStore();
         const duration_values = {
             t_duration,
             s_duration,
@@ -64,12 +59,6 @@ const DurationMobile = observer(
         const [min, max] = getDurationMinMaxValues(duration_min_max, 'daily', 'd');
         const handleRelativeChange = (date: number) => {
             setSelectedDuration('d', date);
-            sendTradeParamsAnalytics({
-                action: 'change_parameter_value',
-                parameter_field_type: 'date_picker',
-                parameter_type: 'date_picker',
-                parameter_value: toMoment().add(date, 'd').format('YYYY-MM-DD'),
-            });
         };
         const selected_basis_option = () => {
             if (amount_tab_idx === 0) {

@@ -15,7 +15,6 @@ import RoutePromptDialogStore from './route-prompt-dialog-store';
 import RunPanelStore from './run-panel-store';
 import SaveModalStore from './save-modal-store';
 import SelfExclusionStore from './self-exclusion-store';
-import ServerBotStore from './server-side-bot-store';
 import SummaryCardStore from './summary-card-store';
 import ToolbarStore from './toolbar-store';
 import ToolboxStore from './toolbox-store';
@@ -46,8 +45,6 @@ export default class RootStore {
     public blockly_store: BlocklyStore;
     public data_collection_store: DataCollectionStore;
 
-    public server_bot: ServerBotStore;
-
     constructor(core: TStores, ws: TWebSocket, dbot: TDbot) {
         this.ws = ws;
         this.dbot = dbot;
@@ -72,6 +69,5 @@ export default class RootStore {
         this.chart_store = new ChartStore(this);
         this.blockly_store = new BlocklyStore(this);
         this.data_collection_store = new DataCollectionStore(this, core);
-        this.server_bot = new ServerBotStore(core.client);
     }
 }

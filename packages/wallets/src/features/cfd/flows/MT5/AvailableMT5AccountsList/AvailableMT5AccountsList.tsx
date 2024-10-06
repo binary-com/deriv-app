@@ -1,9 +1,14 @@
 import React, { lazy, Suspense, useCallback, useEffect, useState } from 'react';
 import { useActiveWalletAccount, useMT5AccountsList, useTradingPlatformStatus } from '@deriv/api-v2';
-import { LabelPairedChevronRightCaptionRegularIcon } from '@deriv/quill-icons';
+import {
+    LabelPairedChevronLeftCaptionRegularIcon,
+    LabelPairedChevronRightCaptionRegularIcon,
+} from '@deriv/quill-icons';
+import { Localize, useTranslations } from '@deriv-com/translations';
 import { Loader, Text } from '@deriv-com/ui';
 import { TradingAccountCard } from '../../../../../components';
 import { useModal } from '../../../../../components/ModalProvider';
+import useIsRtl from '../../../../../hooks/useIsRtl';
 import { THooks } from '../../../../../types';
 import { getMarketTypeDetails, MARKET_TYPE, PRODUCT, TRADING_PLATFORM_STATUS } from '../../../constants';
 import { JurisdictionModal, MT5PasswordModal, TradingPlatformStatusModal } from '../../../modals';
@@ -20,8 +25,12 @@ type TProps = {
 const AvailableMT5AccountsList: React.FC<TProps> = ({ account }) => {
     const { data: activeWallet } = useActiveWalletAccount();
     const { getPlatformStatus } = useTradingPlatformStatus();
+    const { localize } = useTranslations();
+    const isRtl = useIsRtl();
     const { setModalState, show } = useModal();
-    const { description, title } = getMarketTypeDetails(account.product)[account.market_type || MARKET_TYPE.ALL];
+    const { description, title } = getMarketTypeDetails(localize, account.product)[
+        account.market_type || MARKET_TYPE.ALL
+    ];
     const [showMt5PasswordModal, setShowMt5PasswordModal] = useState(false);
     const { data: mt5Accounts } = useMT5AccountsList();
     const platformStatus = getPlatformStatus(account.platform);
@@ -93,25 +102,31 @@ const AvailableMT5AccountsList: React.FC<TProps> = ({ account }) => {
     return (
         <TradingAccountCard onClick={onButtonClick}>
             <TradingAccountCard.Icon className='wallets-available-mt5__icon'>
-                {getMarketTypeDetails(account.product)[account.market_type || MARKET_TYPE.ALL].icon}
+                {getMarketTypeDetails(localize, account.product)[account.market_type || MARKET_TYPE.ALL].icon}
             </TradingAccountCard.Icon>
             <TradingAccountCard.Content className='wallets-available-mt5__details'>
                 <div className='wallets-available-mt5__title'>
-                    <Text className='' size='sm'>
+                    <Text align='start' size='sm'>
                         {title}
                     </Text>
                     {account.product === PRODUCT.ZEROSPREAD && (
                         <div className='wallets-available-mt5__badge'>
-                            <Text size='xs' weight='bold'>
-                                NEW
+                            <Text align='start' size='xs' weight='bold'>
+                                <Localize i18n_default_text='NEW' />
                             </Text>
                         </div>
                     )}
                 </div>
-                <Text size='xs'>{description}</Text>
+                <Text align='start' size='xs'>
+                    {description}
+                </Text>
             </TradingAccountCard.Content>
             <TradingAccountCard.Button className='wallets-available-mt5__icon'>
-                <LabelPairedChevronRightCaptionRegularIcon width={16} />
+                {isRtl ? (
+                    <LabelPairedChevronLeftCaptionRegularIcon width={16} />
+                ) : (
+                    <LabelPairedChevronRightCaptionRegularIcon width={16} />
+                )}
             </TradingAccountCard.Button>
         </TradingAccountCard>
     );

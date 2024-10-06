@@ -8,4 +8,20 @@ export type TAddressDetails = {
     zipCodeLine: THooks.AccountSettings['address_postcode'];
 };
 
-export type TDocumentSubmission = { poaFile?: File };
+export type TPoaValues = TAddressDetails & TDocumentSubmission;
+
+export type TAddressSectionProps = {
+    hasError?: boolean;
+};
+
+export type TDocumentSubmission = { documentType?: string; poaFile?: File };
+
+export type TDocumentSubmissionProps = {
+    countryCode: string;
+};
+
+/** Type for the list of items in a dropdown or select */
+export type TListItem = {
+    text?: string;
+    value?: string;
+};

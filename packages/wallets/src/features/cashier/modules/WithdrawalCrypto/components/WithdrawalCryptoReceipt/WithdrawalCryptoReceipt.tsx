@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { LegacyArrowDown2pxIcon } from '@deriv/quill-icons';
 import { Localize } from '@deriv-com/translations';
 import { Button, Text } from '@deriv-com/ui';
-import { WalletCard } from '../../../../../../components';
+import { WalletCard, WalletMoney } from '../../../../../../components';
 import { TWithdrawalReceipt } from '../../types';
 import { WithdrawalCryptoDestinationAddress } from './components';
 import './WithdrawalCryptoReceipt.scss';
@@ -15,12 +15,16 @@ type TProps = {
 
 const WithdrawalCryptoReceipt: React.FC<TProps> = ({ onClose, withdrawalReceipt }) => {
     const history = useHistory();
-    const { address, amount, amountReceived, currency, transactionFee } = withdrawalReceipt;
+    const { address, amount = 0, amountReceived, currency, transactionFee } = withdrawalReceipt;
 
     return (
         <div className='wallets-withdrawal-crypto-receipt'>
             <div className='wallets-withdrawal-crypto-receipt__accounts-info'>
-                <WalletCard balance={`-${amount} ${currency}`} currency={currency ?? ''} iconSize='md' />
+                <WalletCard
+                    balance={<WalletMoney amount={-amount} currency={currency} hasSign />}
+                    currency={currency ?? ''}
+                    iconSize='md'
+                />
                 <LegacyArrowDown2pxIcon iconSize='xs' />
                 <WithdrawalCryptoDestinationAddress address={address} />
             </div>

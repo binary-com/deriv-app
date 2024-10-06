@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import moment from 'moment';
 import { useActiveWalletAccount, useAllAccountsList, useTransactions } from '@deriv/api-v2';
 import { Loader, Text } from '@deriv-com/ui';
+import { getFormattedDateString } from '../../../../../../utils/utils';
 import { TransactionsCompletedRow } from '../TransactionsCompletedRow';
 import { TransactionsNoDataState } from '../TransactionsNoDataState';
 import { TransactionsTable } from '../TransactionsTable';
@@ -41,7 +41,14 @@ const TransactionsCompletedDemoResetBalance: React.FC = () => {
         <TransactionsTable
             columns={[
                 {
-                    accessorFn: row => row.transaction_time && moment.unix(row.transaction_time).format('DD MMM YYYY'),
+                    accessorFn: row =>
+                        row.transaction_time &&
+                        getFormattedDateString(
+                            row.transaction_time,
+                            { day: '2-digit', month: 'short', year: 'numeric' },
+                            'DD MMM YYYY',
+                            true
+                        ),
                     accessorKey: 'date',
                     header: 'Date',
                 },
@@ -52,7 +59,12 @@ const TransactionsCompletedDemoResetBalance: React.FC = () => {
                 <div className='wallets-transactions-completed-demo-reset-balance__group-title'>
                     <Text color='primary' size='2xs'>
                         {transaction.transaction_time &&
-                            moment.unix(transaction.transaction_time).format('DD MMM YYYY')}
+                            getFormattedDateString(
+                                transaction.transaction_time,
+                                { day: '2-digit', month: 'short', year: 'numeric' },
+                                'DD MMM YYYY',
+                                true
+                            )}
                     </Text>
                 </div>
             )}

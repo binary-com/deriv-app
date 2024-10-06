@@ -4,8 +4,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 0 var(--core-spacing-2400);
-        margin-block: auto;
+        margin: var(--core-spacing-800) var(--core-spacing-2400) 0 var(--core-spacing-2400);
     }
     &__content {
         display: flex;

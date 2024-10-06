@@ -1,7 +1,7 @@
-import { localize } from '@deriv-com/translations';
+import { useTranslations } from '@deriv-com/translations';
 import { getStaticUrl, getUrlSmartTrader } from '../helpers/urls';
 
-export const getOptionsAndMultipliersContent = () => [
+export const getOptionsAndMultipliersContent = (localize: ReturnType<typeof useTranslations>['localize']) => [
     {
         description: localize('The options and multipliers trading platform.'),
         key: 'trader',

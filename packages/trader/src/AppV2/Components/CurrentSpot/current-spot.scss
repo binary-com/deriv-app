@@ -1,7 +1,7 @@
 .trade__current-spot {
     position: relative;
     border-radius: var(--core-borderRadius-400);
-    background-color: var(--core-color-solid-slate-50);
+    background-color: var(--semantic-color-slate-solid-surface-frame-low);
     height: var(--core-size-2400);
     overflow: hidden;
     display: flex;
@@ -13,9 +13,6 @@
         display: flex;
         gap: var(--core-spacing-100);
 
-        p {
-            color: var(--core-color-opacity-black-800);
-        }
         &__wrapper {
             position: absolute;
             bottom: 0;
@@ -74,25 +71,25 @@
     }
     &--winning,
     &--won {
-        border: var(--core-borderWidth-75) solid var(--core-color-solid-green-700);
+        border: var(--core-borderWidth-75) solid var(--semantic-color-green-solid-border-normal-highest);
 
         .current-spot__last-digit {
-            color: var(--core-color-solid-green-700);
+            color: var(--semantic-color-green-solid-textIcon-normal-mid);
         }
     }
     &--losing,
     &--lost {
-        border: var(--core-borderWidth-75) solid var(--core-color-solid-red-700);
+        border: var(--core-borderWidth-75) solid var(--semantic-color-red-solid-border-normal-highest);
 
         .current-spot__last-digit {
-            color: var(--core-color-solid-red-700);
+            color: var(--semantic-color-red-solid-textIcon-normal-mid);
         }
     }
     &--won {
-        background-color: var(--core-color-solid-green-100);
+        background-color: var(--semantic-color-green-solid-surface-normal-lowest);
     }
     &--lost {
-        background-color: var(--core-color-solid-red-100);
+        background-color: var(--semantic-color-red-solid-surface-normal-lowest);
     }
     &--has-contract {
         .current-spot {

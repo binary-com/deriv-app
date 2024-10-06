@@ -8,7 +8,7 @@ import useExchangeRates from './useExchangeRates';
 
 /** A custom hook that gets the list of created Deriv X accounts. */
 const useDxtradeAccountsList = () => {
-    const { data: authorize_data, isSuccess } = useAuthorize();
+    const { isSuccess } = useAuthorize();
     const { data: dxtrade_accounts, ...rest } = useQuery('trading_platform_accounts', {
         payload: { platform: 'dxtrade' },
         options: { enabled: isSuccess },
@@ -27,9 +27,7 @@ const useDxtradeAccountsList = () => {
                     /** Account's currency config information */
                     currency_config: account.currency ? getConfig(account.currency) : undefined,
                     /** The balance of the account in currency format. */
-                    display_balance: displayMoney(account?.balance || 0, account?.currency || 'USD', {
-                        preferred_language: authorize_data?.preferred_language,
-                    }),
+                    display_balance: displayMoney(account?.balance || 0, account?.currency || 'USD'),
                     /** indicating whether the account is a virtual-money account. */
                     is_virtual: account.account_type === 'demo',
                     /** Landing company shortcode the account belongs to. */
@@ -42,13 +40,7 @@ const useDxtradeAccountsList = () => {
                     converted_balance: getExchangeRate(fiat_account, account.currency ?? 'USD') * balance,
                 };
             }),
-        [
-            authorize_data?.preferred_language,
-            dxtrade_accounts?.trading_platform_accounts,
-            fiat_account,
-            getConfig,
-            getExchangeRate,
-        ]
+        [dxtrade_accounts?.trading_platform_accounts, fiat_account, getConfig, getExchangeRate]
     );
 
     return {

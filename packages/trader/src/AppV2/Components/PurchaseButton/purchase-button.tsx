@@ -20,6 +20,7 @@ import { getTradeTypeTabsList } from 'AppV2/Utils/trade-params-utils';
 import { StandaloneStopwatchRegularIcon } from '@deriv/quill-icons';
 import { CSSTransition } from 'react-transition-group';
 import { getDisplayedContractTypes } from 'AppV2/Utils/trade-types-utils';
+import { usePrevious } from '@deriv/components';
 
 const PurchaseButton = observer(() => {
     const [loading_button_index, setLoadingButtonIndex] = React.useState<number | null>(null);
@@ -27,7 +28,7 @@ const PurchaseButton = observer(() => {
     const { addBanner } = useNotifications();
     const {
         contract_replay: { is_market_closed },
-        portfolio: { all_positions, onClickSell },
+        portfolio: { all_positions, onClickSell, open_accu_contract, active_positions },
         client: { is_logged_in },
     } = useStore();
     const {
@@ -50,6 +51,13 @@ const PurchaseButton = observer(() => {
     } = useTraderStore();
 
     const [is_sell_button_visible, setIsSellButtonVisibile] = React.useState(is_accumulator && has_open_accu_contract);
+    const [animation_duration, setAnimationDuration] = React.useState(450);
+    const prev_has_open_accu_contract = usePrevious(
+        !!open_accu_contract &&
+            !!active_positions.find(
+                ({ contract_info, type }) => isAccumulatorContract(type) && contract_info.underlying === symbol
+            )
+    );
 
     /*TODO: add error handling when design will be ready. validation_errors can be taken from useTraderStore
     const hasError = (info: TTradeStore['proposal_info'][string]) => {
@@ -112,16 +120,20 @@ const PurchaseButton = observer(() => {
     }, [is_purchase_enabled]);
 
     React.useEffect(() => {
-        if (is_accumulator) {
-            setIsSellButtonVisibile(has_open_accu_contract);
-        }
+        const is_animated =
+            (!prev_has_open_accu_contract && has_open_accu_contract) ||
+            (prev_has_open_accu_contract && !has_open_accu_contract && is_accumulator);
+        setAnimationDuration(is_animated ? 450 : 0);
+
+        setIsSellButtonVisibile(is_accumulator ? has_open_accu_contract : false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [is_accumulator, has_open_accu_contract]);
 
     return (
         <React.Fragment>
             <CSSTransition
                 in={!is_sell_button_visible}
-                timeout={450}
+                timeout={animation_duration}
                 classNames='slide'
                 key='purchase-button'
                 unmountOnExit
@@ -199,7 +211,7 @@ const PurchaseButton = observer(() => {
             </CSSTransition>
             <CSSTransition
                 in={is_sell_button_visible}
-                timeout={450}
+                timeout={animation_duration}
                 classNames='slide'
                 key='sell-button'
                 unmountOnExit
@@ -207,7 +219,7 @@ const PurchaseButton = observer(() => {
             >
                 <div className='purchase-button__wrapper'>
                     <Button
-                        color='black'
+                        color='black-white'
                         size='lg'
                         label={
                             is_accu_sell_disabled

@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { useTranslations } from '@deriv-com/translations';
 import { getPasswordErrorMessage, passwordRegex, passwordValues } from '../constants/password';
 
 export type Score = 0 | 1 | 2 | 3 | 4;
@@ -74,13 +75,15 @@ export const calculateScoreMT5 = (password: string) => {
 };
 
 // Password Schemas
-export const mt5Schema = Yup.string()
-    .required(getPasswordErrorMessage().invalidLengthMT5)
-    .matches(passwordRegex.isMT5LengthValid, getPasswordErrorMessage().invalidLengthMT5)
-    .matches(passwordRegex.isPasswordValid, getPasswordErrorMessage().missingCharacter)
-    .matches(passwordRegex.isMT5PasswordValid, getPasswordErrorMessage().missingCharacterMT5);
+export const mt5Schema = (localize: ReturnType<typeof useTranslations>['localize']) =>
+    Yup.string()
+        .required(getPasswordErrorMessage(localize).invalidLengthMT5)
+        .matches(passwordRegex.isMT5LengthValid, getPasswordErrorMessage(localize).invalidLengthMT5)
+        .matches(passwordRegex.isPasswordValid, getPasswordErrorMessage(localize).missingCharacter)
+        .matches(passwordRegex.isMT5PasswordValid, getPasswordErrorMessage(localize).missingCharacterMT5);
 
-export const cfdSchema = Yup.string()
-    .required(getPasswordErrorMessage().invalidLength)
-    .matches(passwordRegex.isLengthValid, getPasswordErrorMessage().invalidLength)
-    .matches(passwordRegex.isPasswordValid, getPasswordErrorMessage().missingCharacter);
+export const cfdSchema = (localize: ReturnType<typeof useTranslations>['localize']) =>
+    Yup.string()
+        .required(getPasswordErrorMessage(localize).invalidLength)
+        .matches(passwordRegex.isLengthValid, getPasswordErrorMessage(localize).invalidLength)
+        .matches(passwordRegex.isPasswordValid, getPasswordErrorMessage(localize).missingCharacter);

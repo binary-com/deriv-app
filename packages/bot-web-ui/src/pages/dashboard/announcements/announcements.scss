@@ -97,6 +97,18 @@
             }
         }
 
+        &--mobile {
+            .deriv-modal {
+                &__header {
+                    border-bottom: 1px solid var(--general-section-6);
+                }
+
+                &__footer {
+                    border-top: 1px solid var(--general-section-6);
+                }
+            }
+        }
+
         .deriv-text {
             font-weight: bold;
         }

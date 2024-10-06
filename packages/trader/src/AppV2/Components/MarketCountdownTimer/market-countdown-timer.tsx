@@ -23,7 +23,7 @@ const MarketCountdownTimer = ({ time_left }: TMarketCountDownTimer) => {
 
     return (
         <div className='market-countdown-timer'>
-            <LabelPairedStopwatchMdBoldIcon fill='var(--semantic-color-slate-solid-surface-normal-lowest)' />
+            <LabelPairedStopwatchMdBoldIcon fill='var(--component-textIcon-static-prominentDark)' />
             <Text bold size='md' className='market-countdown-timer-text'>
                 {timer_components}
             </Text>

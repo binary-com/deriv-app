@@ -1,0 +1,29 @@
+.banner {
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--core-spacing-800);
+        background-color: var(--semantic-color-slate-solid-surface-inverse-highest);
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        margin-inline-start: calc(var(--core-spacing-400) * -1);
+        width: 100vw;
+    }
+    &__content {
+        &--left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    }
+    &__text,
+    &__timer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--component-textIcon-static-prominentDark);
+        gap: var(--core-spacing-200);
+    }
+}

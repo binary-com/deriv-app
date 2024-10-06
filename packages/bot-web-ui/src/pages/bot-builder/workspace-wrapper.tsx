@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from '@deriv/stores';
 import Flyout from 'Components/flyout';
 import { useDBotStore } from 'Stores/useDBotStore';
-import StopBotModal from '../dashboard/load-bot-preview/stop-bot-modal';
+import StopBotModal from './stop-bot-modal';
 import Toolbar from './toolbar';
 import Toolbox from './toolbox';
 import './workspace.scss';

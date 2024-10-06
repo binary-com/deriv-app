@@ -4,7 +4,7 @@
     height: 3.2rem;
     justify-content: space-between;
     background-color: #f2f3f4;
-    padding: 0.5rem 0 0.5rem 0.8rem;
+    padding: 0.5rem 0.8rem;
 
     &--info {
         padding: 0.4rem 0.8rem;
@@ -20,7 +20,6 @@
         display: flex;
         align-items: center;
         gap: 0.8rem;
-        padding-right: 0.8rem;
 
         & .wallets-clipboard {
             border: none;

@@ -10,10 +10,10 @@ describe('DepositLockedContent', () => {
     it('should render title and description as undefined when deposit is not locked', () => {
         const result = getDepositLockedDesc({
             askFixDetails: false,
-            clientTncStatus: 'latest',
             excludedUntil: undefined,
             financialInformationNotComplete: false,
             isMFAccount: false,
+            isTNCNeeded: false,
             poaNeedsVerification: false,
             poaStatus: 'none',
             poiNeedsVerification: false,
@@ -21,7 +21,6 @@ describe('DepositLockedContent', () => {
             selfExclusion: false,
             tradingExperienceNotComplete: false,
             unwelcomeStatus: false,
-            websiteTncVersion: 'latest',
         });
 
         expect(result).toBeFalsy();
@@ -30,10 +29,10 @@ describe('DepositLockedContent', () => {
     it('should render correct message when POI has not been verified', () => {
         const result = getDepositLockedDesc({
             askFixDetails: false,
-            clientTncStatus: 'latest',
             excludedUntil: undefined,
             financialInformationNotComplete: false,
             isMFAccount: false,
+            isTNCNeeded: false,
             poaNeedsVerification: false,
             poaStatus: 'none',
             poiNeedsVerification: true,
@@ -41,7 +40,6 @@ describe('DepositLockedContent', () => {
             selfExclusion: false,
             tradingExperienceNotComplete: false,
             unwelcomeStatus: false,
-            websiteTncVersion: 'latest',
         });
 
         if (result) render(result);
@@ -54,10 +52,10 @@ describe('DepositLockedContent', () => {
     it('should render correct message when POA has not been verified', () => {
         const result = getDepositLockedDesc({
             askFixDetails: false,
-            clientTncStatus: 'latest',
             excludedUntil: undefined,
             financialInformationNotComplete: false,
             isMFAccount: false,
+            isTNCNeeded: false,
             poaNeedsVerification: true,
             poaStatus: 'pending',
             poiNeedsVerification: false,
@@ -65,7 +63,6 @@ describe('DepositLockedContent', () => {
             selfExclusion: false,
             tradingExperienceNotComplete: false,
             unwelcomeStatus: false,
-            websiteTncVersion: 'latest',
         });
 
         if (result) render(result);
@@ -76,10 +73,10 @@ describe('DepositLockedContent', () => {
     it('should render correct message when latest TnC has not been accepted', () => {
         const result = getDepositLockedDesc({
             askFixDetails: false,
-            clientTncStatus: 'not latest',
             excludedUntil: undefined,
             financialInformationNotComplete: false,
             isMFAccount: false,
+            isTNCNeeded: true,
             poaNeedsVerification: false,
             poaStatus: 'none',
             poiNeedsVerification: false,
@@ -87,7 +84,6 @@ describe('DepositLockedContent', () => {
             selfExclusion: false,
             tradingExperienceNotComplete: false,
             unwelcomeStatus: false,
-            websiteTncVersion: 'latest',
         });
 
         if (result) render(result);
@@ -98,10 +94,10 @@ describe('DepositLockedContent', () => {
     it('should render correct message when financial information is pending for MF accounts', () => {
         const result = getDepositLockedDesc({
             askFixDetails: false,
-            clientTncStatus: 'latest',
             excludedUntil: undefined,
             financialInformationNotComplete: true,
             isMFAccount: true,
+            isTNCNeeded: false,
             poaNeedsVerification: false,
             poaStatus: 'none',
             poiNeedsVerification: false,
@@ -109,7 +105,6 @@ describe('DepositLockedContent', () => {
             selfExclusion: false,
             tradingExperienceNotComplete: false,
             unwelcomeStatus: false,
-            websiteTncVersion: 'latest',
         });
 
         if (result) render(result);
@@ -120,10 +115,10 @@ describe('DepositLockedContent', () => {
     it('should render correct message when trading experience information is pending for MF accounts', () => {
         const result = getDepositLockedDesc({
             askFixDetails: false,
-            clientTncStatus: 'latest',
             excludedUntil: undefined,
             financialInformationNotComplete: false,
             isMFAccount: true,
+            isTNCNeeded: false,
             poaNeedsVerification: false,
             poaStatus: 'none',
             poiNeedsVerification: false,
@@ -131,7 +126,6 @@ describe('DepositLockedContent', () => {
             selfExclusion: false,
             tradingExperienceNotComplete: true,
             unwelcomeStatus: false,
-            websiteTncVersion: 'latest',
         });
 
         if (result) render(result);
@@ -142,10 +136,10 @@ describe('DepositLockedContent', () => {
     it('should render correct message when askFixDetails status received', () => {
         const result = getDepositLockedDesc({
             askFixDetails: true,
-            clientTncStatus: 'latest',
             excludedUntil: undefined,
             financialInformationNotComplete: false,
             isMFAccount: false,
+            isTNCNeeded: false,
             poaNeedsVerification: false,
             poaStatus: 'none',
             poiNeedsVerification: false,
@@ -153,7 +147,6 @@ describe('DepositLockedContent', () => {
             selfExclusion: false,
             tradingExperienceNotComplete: false,
             unwelcomeStatus: false,
-            websiteTncVersion: 'latest',
         });
 
         if (result) render(result);
@@ -166,10 +159,10 @@ describe('DepositLockedContent', () => {
     it('should render correct message when selfExclusion status received', () => {
         const result = getDepositLockedDesc({
             askFixDetails: false,
-            clientTncStatus: 'latest',
             excludedUntil: new Date('01/01/2100'),
             financialInformationNotComplete: false,
             isMFAccount: false,
+            isTNCNeeded: false,
             poaNeedsVerification: false,
             poaStatus: 'none',
             poiNeedsVerification: false,
@@ -177,7 +170,6 @@ describe('DepositLockedContent', () => {
             selfExclusion: true,
             tradingExperienceNotComplete: false,
             unwelcomeStatus: false,
-            websiteTncVersion: 'latest',
         });
 
         if (result) render(result);
@@ -193,10 +185,10 @@ describe('DepositLockedContent', () => {
     it('should render correct message when unwelcomeStatus status received', () => {
         const result = getDepositLockedDesc({
             askFixDetails: false,
-            clientTncStatus: 'latest',
             excludedUntil: undefined,
             financialInformationNotComplete: false,
             isMFAccount: false,
+            isTNCNeeded: false,
             poaNeedsVerification: false,
             poaStatus: 'none',
             poiNeedsVerification: false,
@@ -204,7 +196,6 @@ describe('DepositLockedContent', () => {
             selfExclusion: false,
             tradingExperienceNotComplete: false,
             unwelcomeStatus: true,
-            websiteTncVersion: 'latest',
         });
 
         if (result) render(result);

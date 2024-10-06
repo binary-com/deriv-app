@@ -47,7 +47,7 @@ const DatePicker = ({
                     <div className='wallets-datepicker' ref={datePickerRef}>
                         <WalletTextField
                             autoComplete='off'
-                            defaultValue={field.value ? getFormattedDateString(field.value, displayFormat) : ''}
+                            defaultValue={field.value ? getFormattedDateString(field.value, {}, displayFormat) : ''}
                             disabled={disabled}
                             errorMessage={hasTouched && form.errors[name] ? form.errors[name] : undefined}
                             inputMode='none'
@@ -70,7 +70,7 @@ const DatePicker = ({
                             )}
                             showMessage
                             type='text'
-                            value={field.value ? getFormattedDateString(field.value, displayFormat) : ''}
+                            value={field.value ? getFormattedDateString(field.value, {}, displayFormat) : ''}
                         />
                         {isCalendarOpen && (
                             <div
@@ -87,7 +87,7 @@ const DatePicker = ({
                                         setIsCalendarOpen(false);
                                         form.setFieldValue(
                                             name,
-                                            getFormattedDateString(calendarSelectedDate as Date, 'YYYY-MM-DD')
+                                            getFormattedDateString(calendarSelectedDate as Date, {}, 'YYYY-MM-DD')
                                         );
                                     }}
                                     value={field.value ? getFormattedDateString(field.value) : ''}

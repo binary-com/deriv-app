@@ -79,7 +79,7 @@ const ModalTradeWrapper: FC<PropsWithChildren<TModalTradeWrapper>> = ({ children
                                 <QRCode size={80} value={link} />
                                 <Text align='center' size='xs'>
                                     <Localize
-                                        i18n_default_text=' Scan the QR code to download {{title}}'
+                                        i18n_default_text='Scan the QR code to download {{title}}'
                                         values={{ title }}
                                     />
                                 </Text>

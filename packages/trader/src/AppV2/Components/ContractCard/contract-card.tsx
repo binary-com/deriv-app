@@ -1,26 +1,33 @@
 import React from 'react';
 import clsx from 'clsx';
-import { CaptionText, Text } from '@deriv-com/quill-ui';
+import { CaptionText, Tag, Text } from '@deriv-com/quill-ui';
 import { useSwipeable } from 'react-swipeable';
 import { IconTradeTypes, Money, RemainingTime } from '@deriv/components';
 import {
     TContractInfo,
+    formatDate,
+    formatTime,
     getCardLabels,
     getCurrentTick,
     getMarketName,
+    getStartTime,
     getTradeTypeName,
+    hasForwardContractStarted,
     isCryptoContract,
     isEnded,
+    isForwardStarting,
     isHighLow,
     isMultiplierContract,
     isValidToCancel,
     isValidToSell,
+    toMoment,
 } from '@deriv/shared';
 import { ContractCardStatusTimer, TContractCardStatusTimerProps } from './contract-card-status-timer';
 import { NavLink } from 'react-router-dom';
 import { TClosedPosition } from 'AppV2/Containers/Positions/positions-content';
 import { TRootStore } from 'Types';
 import { getProfit } from 'AppV2/Utils/positions-utils';
+import ForwardStartingTag from './forward-starting-tag';
 
 type TContractCardProps = TContractCardStatusTimerProps & {
     className?: string;
@@ -61,7 +68,9 @@ const ContractCard = ({
     const [isClosing, setIsClosing] = React.useState(false);
     const [isCanceling, setIsCanceling] = React.useState(false);
     const [shouldShowButtons, setShouldShowButtons] = React.useState(false);
-    const { buy_price, contract_type, display_name, sell_time, shortcode } = contractInfo;
+    const { buy_price, contract_type, display_name, purchase_time, sell_time, shortcode, limit_order } =
+        contractInfo as TContractInfo;
+    const { take_profit, stop_loss } = limit_order ?? { take_profit: {}, stop_loss: {} };
     const is_high_low = isHighLow({ shortcode });
     const contract_main_title = getTradeTypeName(contract_type ?? '', {
         isHighLow: is_high_low,
@@ -82,6 +91,12 @@ const ContractCard = ({
     const validToSell = isValidToSell(contractInfo as TContractInfo) && !isSellRequested;
     const isCancelButtonPressed = isSellRequested && isCanceling;
     const isCloseButtonPressed = isSellRequested && isClosing;
+    const has_no_auto_expiry = isMultiplier && !is_crypto;
+    const is_forward_starting = isForwardStarting(shortcode ?? '', purchase_time);
+    const start_time = getStartTime(shortcode ?? '');
+    const has_forward_contract_started = hasForwardContractStarted(shortcode ?? '');
+    const show_tag_forward_starting = is_forward_starting && !!start_time && !has_forward_contract_started && !isSold;
+    const show_status_timer_tag = (!has_no_auto_expiry || (has_no_auto_expiry && isSold)) && !show_tag_forward_starting;
     const Component = redirectTo ? NavLink : 'div';
 
     const handleSwipe = (direction: string) => {
@@ -107,6 +122,16 @@ const ContractCard = ({
         }
     };
 
+    const getRiskManagementLabels = () => {
+        const labels: string[] = [];
+        if (take_profit?.order_amount) labels.push('TP');
+        if (stop_loss?.order_amount) labels.push('SL');
+        if (validToCancel) labels.push('DC');
+        return labels;
+    };
+    const risk_management_labels = getRiskManagementLabels();
+    const show_risk_management_labels = !!risk_management_labels.length && !isSold;
+
     React.useEffect(() => {
         if (isSold && hasActionButtons) {
             setIsDeleted(true);
@@ -130,31 +155,46 @@ const ContractCard = ({
             >
                 <div className={`${className}__body`}>
                     <div className={`${className}__details`}>
-                        <IconTradeTypes
-                            className='trade-type-icon'
-                            type={is_high_low ? `${contract_type}_barrier` : contract_type}
-                            size={32}
-                        />
-                        <div className={`${className}__title`}>
-                            <Text className='trade-type' size='sm'>
-                                {tradeTypeName}
-                            </Text>
-                            <CaptionText className='symbol' size='sm'>
-                                {symbolName}
-                            </CaptionText>
+                        <IconTradeTypes type={is_high_low ? `${contract_type}_barrier` : contract_type} size={16} />
+                        <div className='tag__wrapper'>
+                            {show_risk_management_labels &&
+                                risk_management_labels.map(label => (
+                                    <Tag
+                                        className='risk-management'
+                                        label={label}
+                                        key={label}
+                                        variant='custom'
+                                        size='sm'
+                                    />
+                                ))}
+                            {show_status_timer_tag && (
+                                <ContractCardStatusTimer
+                                    currentTick={currentTick}
+                                    isSold={isSold}
+                                    serverTime={serverTime}
+                                    {...contractInfo}
+                                />
+                            )}
+                            {show_tag_forward_starting && (
+                                <ForwardStartingTag
+                                    formatted_date={formatDate(toMoment(parseInt(start_time || '')), 'DD MMM YYYY')}
+                                    formatted_time={formatTime(parseInt(start_time || ''), 'HH:mm [GMT]')}
+                                />
+                            )}
                         </div>
-                        <CaptionText className='stake' size='sm'>
-                            <Money amount={buy_price} currency={currency} show_currency />
-                        </CaptionText>
                     </div>
-                    <div className='status-and-profit'>
-                        <ContractCardStatusTimer
-                            currentTick={currentTick}
-                            hasNoAutoExpiry={isMultiplier && !is_crypto}
-                            isSold={isSold}
-                            serverTime={serverTime}
-                            {...contractInfo}
-                        />
+                    <div className={`${className}__details`}>
+                        <Text className='trade-type' size='sm'>
+                            {tradeTypeName}
+                        </Text>
+                        <Text size='sm' color='quill-typography__color--subtle'>
+                            <Money amount={buy_price} currency={currency} show_currency />
+                        </Text>
+                    </div>
+                    <div className={`${className}__details`}>
+                        <Text size='sm' className='symbol' color='quill-typography__color--subtle'>
+                            {symbolName}
+                        </Text>
                         <Text className='profit' size='sm'>
                             <Money amount={totalProfit} currency={currency} has_sign show_currency />
                         </Text>
@@ -172,11 +212,21 @@ const ContractCard = ({
                                     <div className='circle-loader' data-testid='dt_button_loader' />
                                 ) : (
                                     <>
-                                        <CaptionText bold as='div' className='label'>
+                                        <CaptionText
+                                            bold
+                                            as='div'
+                                            className='label'
+                                            color='quill-typography__color--prominent'
+                                        >
                                             {getCardLabels().CANCEL}
                                         </CaptionText>
                                         {cancellation_date_expiry && (
-                                            <CaptionText bold as='div' className='label'>
+                                            <CaptionText
+                                                bold
+                                                as='div'
+                                                className='label'
+                                                color='quill-typography__color--prominent'
+                                            >
                                                 <RemainingTime
                                                     end_time={cancellation_date_expiry}
                                                     format='mm:ss'
@@ -197,7 +247,12 @@ const ContractCard = ({
                             {isCloseButtonPressed ? (
                                 <div className='circle-loader' data-testid='dt_button_loader' />
                             ) : (
-                                <CaptionText bold as='div' className='label'>
+                                <CaptionText
+                                    bold
+                                    as='div'
+                                    className='label'
+                                    color='var(--component-textIcon-static-prominentDark)'
+                                >
                                     {getCardLabels().CLOSE}
                                 </CaptionText>
                             )}

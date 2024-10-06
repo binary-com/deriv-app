@@ -12,7 +12,7 @@
         "checks_limit": 40
     },
     "circleci": {
-        "project_slug": "gh/binary-com/deriv-app",
+        "project_slug": "gh/deriv-com/deriv-app",
         "branch": "master",
         "workflow_name": "release_staging"
     },

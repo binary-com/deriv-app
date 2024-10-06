@@ -299,7 +299,6 @@ const AccountWizard = observer(props => {
     const submitForm = (payload = undefined) => {
         let clone = { ...form_values() };
         delete clone?.tax_identification_confirm;
-        delete clone?.agreed_tnc;
         delete clone?.agreed_tos;
         delete clone?.confirmation_checkbox;
         delete clone?.crs_confirmation;
@@ -315,6 +314,9 @@ const AccountWizard = observer(props => {
             delete clone.tax_identification_number;
         }
 
+        if (clone?.tnc_acceptance) {
+            clone.tnc_acceptance = 1;
+        }
         clone = processInputData(clone);
         modifiedProps.setRealAccountFormData(clone);
         if (payload) {

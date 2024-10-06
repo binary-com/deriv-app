@@ -48,7 +48,7 @@
         backface-visibility: hidden;
         transform-style: preserve-3d;
         top: 0;
-        left: 0;
+        inset-inline-start: 0;
         z-index: 2;
         transform: rotateY(0deg);
         display: flex;
@@ -111,7 +111,7 @@
         position: absolute;
         width: 100%;
         bottom: 0;
-        left: 0;
+        inset-inline-start: 0;
         padding: 0.8rem;
         text-align: center;
         border-radius: 0 0 1.3rem 1.3rem;

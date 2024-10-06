@@ -6,11 +6,11 @@
     width: 100%;
     align-self: stretch;
     background-color: var(--general-main-1, #ffffff);
-    min-height: calc(100vh - 8.4rem); // 100vh - (4.8rem header + 3.6rem footer)
+    height: calc(100vh - 8.4rem); // 100vh - (4.8rem header + 3.6rem footer)
+    /* stylelint-disable-next-line declaration-no-important */
+    overflow-y: auto !important; //override overflow: initial from core app content
 
     @include mobile-or-tablet-screen {
-        /* stylelint-disable-next-line declaration-no-important */
-        overflow-y: auto !important; // Override styles from Wrapper from Core
         height: calc(var(--wallets-vh, 1vh) * 100 - 4rem); // 100vh - 4rem (header)
         min-height: calc(var(--wallets-vh, 1vh) * 100 - 8.4rem); // 100vh - (4.8rem header + 3.6rem footer)
     }

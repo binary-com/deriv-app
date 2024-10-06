@@ -4,7 +4,7 @@ import { useRemoteConfig } from '@deriv/api';
 
 const useIsGrowthbookIsLoaded = () => {
     const [isGBLoaded, setIsGBLoaded] = useState(false);
-    const { data } = useRemoteConfig();
+    const { data } = useRemoteConfig(true);
 
     useEffect(() => {
         let analytics_interval: NodeJS.Timeout;

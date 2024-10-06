@@ -3,10 +3,24 @@ import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { getCardLabels, getContractPath, toMoment } from '@deriv/shared';
+import {
+    getCardLabels,
+    getStartTime,
+    getContractPath,
+    hasForwardContractStarted,
+    isForwardStarting,
+    toMoment,
+} from '@deriv/shared';
 import { TPortfolioPosition } from '@deriv/stores/types';
 import { TClosedPosition } from 'AppV2/Containers/Positions/positions-content';
 import ContractCard from '../contract-card';
+
+jest.mock('@deriv/shared', () => ({
+    ...jest.requireActual('@deriv/shared'),
+    isForwardStarting: jest.fn(),
+    getStartTime: jest.fn(),
+    hasForwardContractStarted: jest.fn(),
+}));
 
 const mockedNow = Math.floor(Date.now() / 1000);
 
@@ -137,6 +151,12 @@ const openPositions = [
                     order_amount: -9,
                     order_date: 1716220583,
                     value: '614.26',
+                },
+                stop_loss: {
+                    order_amount: -1,
+                },
+                take_profit: {
+                    order_amount: 5,
                 },
             },
             longcode:
@@ -333,7 +353,7 @@ describe('ContractCard', () => {
         expect(screen.getByRole('button', { name: CLOSE })).toBeEnabled();
         expect(screen.queryByRole('button', { name: CANCEL })).not.toBeInTheDocument();
     });
-    it('should render a card for an open Multiplier position with Cancel & Close buttons and with Ongoing status instead of remaining time', () => {
+    it('should render a card for an open Multiplier position with Cancel & Close buttons and with tags for risk management (if it is active) instead of remaining time', () => {
         render(
             mockedContractCard({
                 ...mockProps,
@@ -343,10 +363,21 @@ describe('ContractCard', () => {
         expect(screen.getByText('Multipliers Up')).toBeInTheDocument();
         expect(screen.getByText(symbolName)).toBeInTheDocument();
         expect(screen.getByText('9.39 USD')).toBeInTheDocument();
-        expect(screen.getByText('Ongoing')).toBeInTheDocument();
+        expect(screen.getByText('TP')).toBeInTheDocument();
+        expect(screen.getByText('SL')).toBeInTheDocument();
+        expect(screen.getByText('DC')).toBeInTheDocument();
         expect(screen.getByText('0.49 USD')).toBeInTheDocument();
         expect(screen.getByRole('button', { name: CANCEL })).toBeEnabled();
         expect(screen.getByRole('button', { name: CLOSE })).toBeDisabled();
+    });
+    it('should render specific tag if it is a forward starting contract', () => {
+        (isForwardStarting as jest.Mock).mockReturnValueOnce(true);
+        (hasForwardContractStarted as jest.Mock).mockReturnValueOnce(false);
+        (getStartTime as jest.Mock).mockReturnValueOnce(124525522);
+
+        render(mockedContractCard());
+
+        expect(screen.getByTestId('dt_forward-starting')).toBeInTheDocument();
     });
     it('should render a card for an open Accumulators position with a Close button only and ticks progress', () => {
         render(

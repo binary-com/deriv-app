@@ -4,6 +4,7 @@ import { fileValidator } from '../../ManualService/components/utils';
 
 export const getPoaValidationSchema = (localize: TTranslations['localize']) =>
     Yup.object().shape({
+        documentType: Yup.string().required(localize('Document type is required.')),
         firstLine: Yup.string()
             .trim()
             .required(localize('First line of address is required.'))

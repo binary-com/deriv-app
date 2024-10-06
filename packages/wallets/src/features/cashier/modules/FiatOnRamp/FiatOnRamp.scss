@@ -13,7 +13,7 @@
     &__actions {
         position: absolute;
         top: -2.4rem;
-        left: 0.4rem;
+        inset-inline-start: 0.4rem;
 
         @include mobile-or-tablet-screen {
             top: -0.8rem;

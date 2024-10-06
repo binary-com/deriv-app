@@ -5,12 +5,17 @@
     max-width: 123.2rem;
     height: max-content;
     width: 100%;
-    padding: 1.6rem 0 0;
+    padding-block-start: 1.6rem;
+
+    &__switcher-container {
+        display: grid;
+    }
 
     &__label {
+        grid-column: 1;
+        grid-row: 1;
         display: flex;
-        position: absolute;
-        margin-left: 2rem;
+        margin-inline-start: 2rem;
         margin-top: 1rem;
         z-index: 1;
         pointer-events: none;
@@ -23,11 +28,13 @@
     }
 
     &__switcher {
+        grid-column: 1;
+        grid-row: 1;
         position: relative;
         display: flex;
         width: 12rem;
         height: 4rem;
-        margin-left: 1.6rem;
+        margin: 0 1.6rem;
         background-color: var(--header-footer-bg-color, #0000000a);
         border-radius: 0.8rem;
 
@@ -74,4 +81,11 @@
     -ms-transform: translateX(6rem);
     transform: translateX(6rem);
     margin-left: 0;
+
+    @include rtl {
+        -webkit-transform: translateX(-6rem);
+        -ms-transform: translateX(-6rem);
+        transform: translateX(-6rem);
+        margin: 0.4rem 0;
+    }
 }

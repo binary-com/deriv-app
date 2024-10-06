@@ -17,23 +17,42 @@ const Duration = observer(({ is_minimized }: TDurationProps) => {
     const duration_unit_text = name_plural ?? name;
     const [selected_hour, setSelectedHour] = useState<number[]>([]);
     const [is_open, setOpen] = useState(false);
+    const [unit, setUnit] = useState(expiry_time ? 'et' : duration_unit);
+
+    const handleHour = React.useCallback(() => {
+        if (expiry_time) {
+            setUnit('et');
+        } else {
+            // eslint-disable-next-line no-lonely-if
+            if (duration_unit === 'm' && duration > 59) {
+                const hour = Math.floor(duration / 60);
+                const minutes = duration % 60;
+                setUnit('h');
+                setSelectedHour([hour, minutes]);
+            } else {
+                setSelectedHour([]);
+                setUnit(duration_unit);
+            }
+        }
+    }, [duration, duration_unit, expiry_time]);
 
     useEffect(() => {
-        if (duration_unit === 'm' && duration > 59) {
-            const hour = Math.floor(duration / 60);
-            const minutes = duration % 60;
-            setSelectedHour([hour, minutes]);
-        }
-    }, [duration, duration_unit]);
+        handleHour();
+    }, [handleHour, is_open]);
 
     const getInputValues = () => {
         if (expiry_type == 'duration') {
-            if (selected_hour.length > 0) {
-                return `${selected_hour[0]} ${localize('hours')} ${selected_hour[1]} ${localize('minutes')} `;
+            if (duration_unit === 'm' && duration > 59) {
+                const hours = Math.floor(duration / 60);
+                const minutes = duration % 60;
+                return `${hours} ${localize('hours')} ${minutes ? `${minutes} ${localize('minutes')}` : ''} `;
             }
             return `${duration} ${duration_unit_text}`;
         }
-        return `${localize('Ends at')} ${expiry_time} GMT`;
+        if (expiry_time) {
+            return `${localize('Ends at')} ${expiry_time} GMT`;
+        }
+        return '';
     };
 
     return (
@@ -55,7 +74,12 @@ const Duration = observer(({ is_minimized }: TDurationProps) => {
                 expandable={false}
             >
                 <ActionSheet.Portal shouldCloseOnDrag>
-                    <DurationActionSheetContainer selected_hour={selected_hour} setSelectedHour={setSelectedHour} />
+                    <DurationActionSheetContainer
+                        unit={unit}
+                        setUnit={setUnit}
+                        selected_hour={selected_hour}
+                        setSelectedHour={setSelectedHour}
+                    />
                 </ActionSheet.Portal>
             </ActionSheet.Root>
         </>

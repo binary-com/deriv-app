@@ -378,6 +378,8 @@ export const ToolboxItems = ReactDomServer.renderToStaticMarkup(
                 <Block type='tick_analysis' />
                 <Block type='tick' />
                 <Block type='last_digit' />
+                <Block type='stat' />
+                <Block type='stat_list' />
                 <Block type='ticks' />
                 <Block type='lastDigitList' />
                 <Block type='check_direction' />
@@ -472,6 +474,7 @@ export const ToolboxItems = ReactDomServer.renderToStaticMarkup(
             <Category name={localize('Time')} id='time'>
                 <Block type='epoch' />
                 <Block type='timeout' />
+                <Block type='tick_delay' />
                 <Block type='totimestamp'>
                     <Value name='DATETIME'>
                         <Shadow type='text'>

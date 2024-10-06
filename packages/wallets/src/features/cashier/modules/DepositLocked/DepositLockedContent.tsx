@@ -5,10 +5,10 @@ import { WalletLink } from '../../../../components';
 
 type TDepositLockedDescProps = {
     askFixDetails?: boolean;
-    clientTncStatus?: string | null;
     excludedUntil?: Date;
     financialInformationNotComplete?: boolean;
     isMFAccount: boolean;
+    isTNCNeeded: boolean;
     poaNeedsVerification?: boolean;
     poaStatus: string;
     poiNeedsVerification?: boolean;
@@ -16,15 +16,14 @@ type TDepositLockedDescProps = {
     selfExclusion?: boolean;
     tradingExperienceNotComplete?: boolean;
     unwelcomeStatus?: boolean;
-    websiteTncVersion?: string;
 };
 
 const getDepositLockedDesc = ({
     askFixDetails,
-    clientTncStatus,
     excludedUntil,
     financialInformationNotComplete,
     isMFAccount,
+    isTNCNeeded,
     poaNeedsVerification,
     poaStatus,
     poiNeedsVerification,
@@ -32,7 +31,6 @@ const getDepositLockedDesc = ({
     selfExclusion,
     tradingExperienceNotComplete,
     unwelcomeStatus,
-    websiteTncVersion,
 }: TDepositLockedDescProps) => {
     let description = null;
 
@@ -54,7 +52,7 @@ const getDepositLockedDesc = ({
                 />
             </Text>
         );
-    } else if (clientTncStatus !== websiteTncVersion) {
+    } else if (isTNCNeeded) {
         description = (
             <Text align='center'>
                 <Localize

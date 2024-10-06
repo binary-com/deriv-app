@@ -6,10 +6,17 @@
     flex-grow: 1;
 
     &__group-title {
-        margin: 0 0 0.8rem 1.6rem;
+        margin-bottom: 0.8rem;
+        margin-inline-start: 1.6rem;
 
         @include mobile-or-tablet-screen {
-            margin-left: 0;
+            margin-inline-start: 0;
+        }
+
+        @include rtl {
+            direction: ltr;
+            display: flex;
+            justify-content: flex-end;
         }
     }
 }

@@ -25,6 +25,7 @@ const Trade = observer(() => {
     const chart_ref = React.useRef<HTMLDivElement>(null);
     const {
         client: { is_logged_in },
+        ui: { is_dark_mode_on },
     } = useStore();
     const {
         active_symbols,
@@ -90,6 +91,7 @@ const Trade = observer(() => {
                             contract_type={contract_type}
                             onTradeTypeSelect={onTradeTypeSelect}
                             trade_types={trade_types}
+                            is_dark_mode_on={is_dark_mode_on}
                         />
                         <MarketSelector />
                         {isDigitTradeType(contract_type) && <CurrentSpot />}
@@ -98,7 +100,7 @@ const Trade = observer(() => {
                         </TradeParametersContainer>
                         <div className='trade__chart-tooltip'>
                             <section
-                                className='trade__chart'
+                                className={clsx('trade__chart', { 'trade__chart--with-borderRadius': !is_accumulator })}
                                 style={{
                                     height: getChartHeight({ is_accumulator, symbol, has_cancellation, contract_type }),
                                 }}

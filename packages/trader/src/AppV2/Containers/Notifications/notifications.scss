@@ -1,22 +1,13 @@
 .trade-notification {
-    .details {
-        p {
-            color: var(--component-textIcon-normal-default);
-            &.title {
-                color: var(--component-textIcon-normal-prominent);
-            }
-        }
-    }
-
     &--purchase {
         fill: var(--component-textIcon-statusNormal-information);
     }
 
     &--success {
-        fill: var(--core-color-solid-green-900);
+        fill: var(--component-textIcon-statusNormal-success);
     }
 
     &--error {
-        fill: var(--core-color-solid-red-900);
+        fill: var(--component-textIcon-statusNormal-danger);
     }
 }

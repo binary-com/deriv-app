@@ -56,6 +56,7 @@ const PurchaseButtonContent = ({
                         as='span'
                         size='sm'
                         className={clsx(!has_open_accu_contract && 'purchase-button__information__item')}
+                        color='quill-typography__color--prominent'
                     >
                         {!error && text_basis}
                     </CaptionText>
@@ -63,6 +64,7 @@ const PurchaseButtonContent = ({
                         as='span'
                         size='sm'
                         className={clsx(!has_open_accu_contract && 'purchase-button__information__item')}
+                        color='quill-typography__color--prominent'
                     >
                         {error || (
                             <Money

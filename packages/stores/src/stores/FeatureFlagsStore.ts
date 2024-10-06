@@ -2,7 +2,6 @@ import BaseStore from './BaseStore';
 
 const FLAGS = {
     dtrader_v2: false,
-    next_server_bot: false,
     sharkfin: false,
     wallet: false,
 } satisfies Record<string, boolean>;

@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
+import { APIProvider } from '@deriv/api-v2';
 import { render, screen } from '@testing-library/react';
+import WalletsAuthProvider from '../../../../../../../AuthProvider';
 import { THooks } from '../../../../../../../types';
 import TransactionsCompletedRow from '../TransactionsCompletedRow';
 
@@ -44,9 +46,19 @@ const mockTransaction: THooks.Transactions = {
     },
 };
 
+const wrapper = ({ children }: PropsWithChildren<unknown>) => {
+    return (
+        <APIProvider>
+            <WalletsAuthProvider>{children}</WalletsAuthProvider>
+        </APIProvider>
+    );
+};
+
 describe('TransactionsCompletedRow', () => {
     it('renders deposit transaction details correctly', () => {
-        render(<TransactionsCompletedRow accounts={mockAccounts} transaction={mockTransaction} wallet={mockWallet} />);
+        render(<TransactionsCompletedRow accounts={mockAccounts} transaction={mockTransaction} wallet={mockWallet} />, {
+            wrapper,
+        });
 
         expect(screen.getByText('+100.00')).toBeInTheDocument();
         expect(screen.getByText('Balance: 200.00')).toBeInTheDocument();
@@ -60,7 +72,8 @@ describe('TransactionsCompletedRow', () => {
         };
 
         render(
-            <TransactionsCompletedRow accounts={mockAccounts} transaction={transferTransaction} wallet={mockWallet} />
+            <TransactionsCompletedRow accounts={mockAccounts} transaction={transferTransaction} wallet={mockWallet} />,
+            { wrapper }
         );
 
         expect(screen.getByText('Balance: 200.00')).toBeInTheDocument();
@@ -86,7 +99,8 @@ describe('TransactionsCompletedRow', () => {
                 accounts={mockAccounts}
                 transaction={withdrawalTransaction}
                 wallet={mockWithdrawalWallet}
-            />
+            />,
+            { wrapper }
         );
 
         expect(screen.getByText('-50.00')).toBeInTheDocument();
@@ -102,7 +116,12 @@ describe('TransactionsCompletedRow', () => {
         };
 
         const { container } = render(
-            <TransactionsCompletedRow accounts={mockAccounts} transaction={incompleteTransaction} wallet={mockWallet} />
+            <TransactionsCompletedRow
+                accounts={mockAccounts}
+                transaction={incompleteTransaction}
+                wallet={mockWallet}
+            />,
+            { wrapper }
         );
 
         expect(container).toBeEmptyDOMElement();

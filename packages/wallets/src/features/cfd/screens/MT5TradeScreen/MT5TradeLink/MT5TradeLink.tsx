@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useCtraderServiceToken } from '@deriv/api-v2';
-import { Localize } from '@deriv-com/translations';
+import { Localize, useTranslations } from '@deriv-com/translations';
 import { Button, Divider, Text } from '@deriv-com/ui';
 import { getPlatformFromUrl } from '../../../../../helpers/urls';
 import { THooks, TPlatforms } from '../../../../../types';
@@ -16,7 +16,8 @@ type TMT5TradeLinkProps = {
 
 const MT5TradeLink: FC<TMT5TradeLinkProps> = ({ app = 'linux', isDemo = false, platform }) => {
     const { mutateAsync: requestToken } = useCtraderServiceToken();
-    const { icon, link, text, title } = getAppToContentMapper()[app];
+    const { localize } = useTranslations();
+    const { icon, link, text, title } = getAppToContentMapper(localize)[app];
 
     const getCtraderToken = () => {
         const cTraderTokenResponse = requestToken({

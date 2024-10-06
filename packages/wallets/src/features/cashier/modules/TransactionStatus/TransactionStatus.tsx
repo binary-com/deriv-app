@@ -47,7 +47,7 @@ const TransactionStatus: React.FC<TTransactionStatus> = ({ transactionType }) =>
     return (
         <div className='wallets-transaction-status'>
             <div className='wallets-transaction-status__header'>
-                <Text size='sm' weight='bold'>
+                <Text align='start' size='sm' weight='bold'>
                     <Localize i18n_default_text='Transaction status' />
                 </Text>
                 {isError && <LegacyWarningIcon iconSize='xs' />}

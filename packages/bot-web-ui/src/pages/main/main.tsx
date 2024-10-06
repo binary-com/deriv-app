@@ -5,7 +5,6 @@ import dbot from '@deriv/bot-skeleton/src/scratch/dbot';
 import { api_base } from '@deriv/bot-skeleton/src/services/api/api-base';
 import { isDbotRTL } from '@deriv/bot-skeleton/src/utils/workspace';
 import { Dialog, Tabs } from '@deriv/components';
-import { useFeatureFlags } from '@deriv/hooks';
 import { observer, useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
 import TradingViewModal from 'Components/trading-view-chart/trading-view-modal';
@@ -16,7 +15,6 @@ import Chart from '../chart';
 import ChartModal from '../chart/chart-modal';
 import Dashboard from '../dashboard';
 import RunStrategy from '../dashboard/run-strategy';
-import ServerSideBot from '../server-side-bot';
 import Tutorial from '../tutorials';
 import { tour_list } from '../tutorials/dbot-tours/utils';
 
@@ -40,16 +38,10 @@ const AppWrapper = observer(() => {
     const { clear } = summary_card;
     const { DASHBOARD, BOT_BUILDER } = DBOT_TABS;
     const init_render = React.useRef(true);
-    const { ui, client } = useStore();
-    const { is_next_server_bot_enabled } = useFeatureFlags();
+    const { ui } = useStore();
     const { url_hashed_values, is_desktop } = ui;
-    const { account_settings } = client;
 
     const hash = ['dashboard', 'bot_builder', 'chart', 'tutorial'];
-
-    // SERVER BOT VISIBILITY SET HERE //
-    const should_show_server_bot = is_next_server_bot_enabled && account_settings?.country_code?.toLowerCase() === 'aq';
-    if (should_show_server_bot) hash.push('server_bot');
 
     let tab_value: number | string = active_tab;
     const GetHashedValue = (tab: number) => {
@@ -100,7 +92,7 @@ const AppWrapper = observer(() => {
 
     React.useEffect(() => {
         const trashcan_init_id = setTimeout(() => {
-            if (active_tab === BOT_BUILDER && Blockly?.derivWorkspace?.trashcan) {
+            if (active_tab === BOT_BUILDER && window.Blockly?.derivWorkspace?.trashcan) {
                 const trashcanY = window.innerHeight - 250;
                 let trashcanX;
                 if (is_drawer_open) {
@@ -108,7 +100,7 @@ const AppWrapper = observer(() => {
                 } else {
                     trashcanX = isDbotRTL() ? 20 : window.innerWidth - 100;
                 }
-                Blockly?.derivWorkspace?.trashcan?.setTrashcanPosition(trashcanX, trashcanY);
+                window.Blockly?.derivWorkspace?.trashcan?.setTrashcanPosition(trashcanX, trashcanY);
             }
         }, 100);
 
@@ -183,7 +175,7 @@ const AppWrapper = observer(() => {
                                     : 'id-charts'
                             }
                         >
-                            <Chart />
+                            <Chart show_digits_stats={false} />
                         </div>
                         <div
                             icon='IcTutorialsTabs'
@@ -194,20 +186,6 @@ const AppWrapper = observer(() => {
                                 <Tutorial handleTabChange={handleTabChange} />
                             </div>
                         </div>
-                        {should_show_server_bot ? (
-                            <div
-                                icon='IcServerBot'
-                                label={
-                                    <Localize
-                                        i18n_default_text='Server Bot <0>Beta</0'
-                                        components={[<span key={0} className='beta-server-bot' />]}
-                                    />
-                                }
-                                id='id-server-bot'
-                            >
-                                <ServerSideBot />
-                            </div>
-                        ) : null}
                     </Tabs>
                 </div>
             </div>

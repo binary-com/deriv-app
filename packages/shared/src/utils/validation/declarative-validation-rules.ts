@@ -64,7 +64,15 @@ export const validLength = (value = '', options: TOptions) =>
     (options.max ? value.length <= Number(options.max) : true);
 export const validPassword = (value: string) => /^(?=.*[a-z])(?=.*\d)(?=.*[A-Z])[!-~]{8,25}$/.test(value);
 export const validEmail = (value: string) => /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$/.test(value);
-const validBarrier = (value: string) => /^[+-]?\d+\.?\d*$/.test(value);
+const validBarrier = (value: string) => {
+    if (value === '+' || value === '-') {
+        return {
+            is_ok: false,
+            message: form_error_messages?.empty_barrier(),
+        };
+    }
+    return { is_ok: /^[+-]?\d+(\.\d+)?$/.test(value) };
+};
 const validGeneral = (value: string) => !/[`~!@#$%^&*)(_=+[}{\]\\/";:?><|]+/.test(value);
 const validRegular = (value: string, options: TOptions) => options.regex?.test(value);
 const confirmRequired = (value: string) => !!value;

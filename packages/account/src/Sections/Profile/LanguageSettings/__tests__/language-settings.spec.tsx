@@ -42,6 +42,9 @@ describe('LanguageSettings', () => {
             common: {
                 current_language: 'lang_1',
             },
+            client: {
+                has_wallet: false,
+            },
         });
         (useTranslations as jest.Mock).mockReturnValue({
             currentLang: 'EN',
@@ -56,7 +59,7 @@ describe('LanguageSettings', () => {
         });
     };
 
-    it('should render LanguageSettings', () => {
+    it('should render LanguageSettings with all allowed languages for non-wallets accounts', () => {
         renderLanguageSettings();
 
         expect(screen.getByText('Select language')).toBeInTheDocument();
@@ -68,6 +71,22 @@ describe('LanguageSettings', () => {
         expect(screen.getByText(/Language 2 Flag/)).toBeInTheDocument();
         expect(lang_1).toBeInTheDocument();
         expect(lang_2).toBeInTheDocument();
+    });
+
+    it('should render LanguageSettings with only wallets-allowed languages for wallets accounts', () => {
+        mockRootStore.client.has_wallet = true;
+
+        renderLanguageSettings();
+
+        expect(screen.getByText('Select language')).toBeInTheDocument();
+
+        const lang_1 = screen.getByText('English');
+        const lang_2 = screen.queryByText('Tiếng Việt');
+
+        expect(screen.getByText(/Language 1 Flag/)).toBeInTheDocument();
+        expect(screen.queryByText(/Language 2 Flag/)).not.toBeInTheDocument();
+        expect(lang_1).toBeInTheDocument();
+        expect(lang_2).not.toBeInTheDocument();
     });
 
     it('should trigger language change', () => {

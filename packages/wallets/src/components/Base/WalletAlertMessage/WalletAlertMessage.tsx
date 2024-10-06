@@ -44,7 +44,7 @@ const WalletAlertMessage: React.FC<TProps> = ({ children, message, type }) => {
                 <Icon className='wallets-alert-message__icon-container__icon' fill={fill} iconSize='xs' />
             </div>
             <div className='wallets-alert-message__message-container'>
-                <Text color={color} size='xs'>
+                <Text align='start' color={color} size='xs'>
                     {message}
                 </Text>
             </div>

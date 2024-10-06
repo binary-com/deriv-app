@@ -3,13 +3,15 @@
     align-items: center;
     justify-content: flex-start;
     flex-grow: 1;
+
     &--badge {
         border: 1px solid var(--status-warning, #ffad3a);
         border-radius: 1rem;
     }
+
     &--is-input {
         .wallets-transfer-form-account-card__icon {
-            margin-right: 0.8rem;
+            margin-inline-end: 0.8rem;
 
             .wallets-market-currency-icon {
                 margin-bottom: 0.4rem;
@@ -23,7 +25,7 @@
 
     &--is-modal {
         .wallets-transfer-form-account-card__icon {
-            margin-right: 1.6rem;
+            margin-inline-end: 1.6rem;
 
             .wallets-market-currency-icon {
                 margin-bottom: 0.4rem;
@@ -42,7 +44,7 @@
             gap: 0.4rem;
 
             .wallets-transfer-form-account-card__icon {
-                margin-right: 0.4rem;
+                margin-inline-end: 0.4rem;
             }
         }
 
@@ -51,7 +53,7 @@
             align-items: center;
 
             .wallets-transfer-form-account-card__icon {
-                margin-right: 0.8rem;
+                margin-inline-end: 0.8rem;
             }
         }
     }
@@ -65,10 +67,11 @@
         display: flex;
         flex-direction: column;
         flex-grow: 1;
+        align-items: flex-start;
     }
 
     &__modal-badge {
-        margin-left: 1rem;
+        margin-inline-start: 1rem;
     }
 
     .wallets-market-currency-icon {

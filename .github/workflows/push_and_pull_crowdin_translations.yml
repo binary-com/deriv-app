@@ -16,7 +16,7 @@ on:
 
 jobs:
   push_and_pull_crowdin_translations:
-    if: github.repository == 'binary-com/deriv-app'
+    if: github.repository == 'deriv-com/deriv-app'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -153,5 +153,5 @@ jobs:
             sudo apt install gh
             gh auth login --with-token <<< ${{ github.token }}
             gh pr close "$branch_name" || true
-            gh pr create --base "master" --title "Sync Crowdin Translations 📚" --head "binary-com:$branch_name" --body "This is an automated Pull Request designed to synchronize our project's translations with Crowdin. It pushes new strings for translation and pulls completed translations, ensuring our project remains multilingual and up-to-date."
+            gh pr create --base "master" --title "Sync Crowdin Translations 📚" --head "deriv-com:$branch_name" --body "This is an automated Pull Request designed to synchronize our project's translations with Crowdin. It pushes new strings for translation and pulls completed translations, ensuring our project remains multilingual and up-to-date."
           fi

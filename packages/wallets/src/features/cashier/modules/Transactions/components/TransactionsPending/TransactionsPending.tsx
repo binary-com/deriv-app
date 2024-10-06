@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import moment from 'moment';
 import { useCryptoTransactions } from '@deriv/api-v2';
 import { Loader, Text } from '@deriv-com/ui';
+import { getFormattedDateString } from '../../../../../../utils/utils';
 import { TransactionsNoDataState } from '../TransactionsNoDataState';
 import { TransactionsPendingRow } from '../TransactionsPendingRow';
 import { TransactionsTable } from '../TransactionsTable';
@@ -32,7 +32,13 @@ const TransactionsPending: React.FC<TProps> = ({ filter = 'all' }) => {
             <TransactionsTable
                 columns={[
                     {
-                        accessorFn: row => moment.unix(row.submit_date).format('DD MMM YYYY'),
+                        accessorFn: row =>
+                            getFormattedDateString(
+                                row.submit_date,
+                                { day: '2-digit', month: 'short', year: 'numeric' },
+                                'DD MMM YYYY',
+                                true
+                            ),
                         accessorKey: 'date',
                         header: 'Date',
                     },
@@ -42,7 +48,13 @@ const TransactionsPending: React.FC<TProps> = ({ filter = 'all' }) => {
                 rowGroupRender={transaction => (
                     <div className='wallets-transactions-pending__group-title'>
                         <Text color='primary' size='2xs'>
-                            {transaction.submit_date && moment.unix(transaction.submit_date).format('DD MMM YYYY')}
+                            {transaction.submit_date &&
+                                getFormattedDateString(
+                                    transaction.submit_date,
+                                    { day: '2-digit', month: 'short', year: 'numeric' },
+                                    'DD MMM YYYY',
+                                    true
+                                )}
                         </Text>
                     </div>
                 )}

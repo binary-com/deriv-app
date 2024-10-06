@@ -46,4 +46,6 @@ const localize = mockFn;
 
 const getAllowedLanguages = jest.fn(() => ({ EN: 'English', VI: 'Tiếng Việt' }));
 
-export { Localize, localize, useTranslations, getAllowedLanguages };
+const getInitialLanguage = jest.fn(() => 'EN');
+
+export { Localize, localize, useTranslations, getAllowedLanguages, getInitialLanguage };

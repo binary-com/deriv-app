@@ -1,6 +1,6 @@
 .trade-params {
     border-radius: var(--core-borderRadius-400);
-    background-color: var(--core-color-solid-slate-50);
+    background-color: var(--semantic-color-slate-solid-surface-frame-low);
     padding: var(--core-spacing-800);
     display: flex;
     flex-direction: column;
@@ -60,6 +60,9 @@
         }
         .input {
             padding-inline-start: 0;
+            padding-block: 1px;
+            padding-inline-end: 2px;
+            height: unset;
         }
     }
     &--minimized {

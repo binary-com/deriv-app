@@ -42,7 +42,6 @@ export default class SaveModalStore implements ISaveModalStore {
             validateBotName: action.bound,
             onConfirmSave: action.bound,
             updateBotName: action.bound,
-            onDriveConnect: action.bound,
             setButtonStatus: action.bound,
         });
 
@@ -172,16 +171,6 @@ export default class SaveModalStore implements ISaveModalStore {
 
     updateBotName = (bot_name: string): void => {
         this.bot_name = bot_name;
-    };
-
-    onDriveConnect = async () => {
-        const { google_drive } = this.root_store;
-
-        if (google_drive.is_authorised) {
-            google_drive.signOut();
-        } else {
-            google_drive.signIn();
-        }
     };
 
     setButtonStatus = (status: { [key: string]: string } | string | number) => {

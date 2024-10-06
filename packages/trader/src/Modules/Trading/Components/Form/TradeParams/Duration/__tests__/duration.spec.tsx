@@ -61,7 +61,6 @@ describe('<DurationMobile />', () => {
             onChange: jest.fn(),
             onChangeMultiple: jest.fn(),
             onChangeUiStore: jest.fn(),
-            sendTradeParamsAnalytics: jest.fn(),
             server_time: moment('2023-11-21T14:30:00'),
             simple_duration_unit: '',
             start_date: 0,

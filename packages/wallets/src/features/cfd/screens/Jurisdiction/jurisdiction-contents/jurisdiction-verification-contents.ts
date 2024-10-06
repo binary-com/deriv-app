@@ -1,4 +1,4 @@
-import { localize } from '@deriv-com/translations';
+import { useTranslations } from '@deriv-com/translations';
 import { TJurisdictionVerificationItems, TJurisdictionVerificationStatus } from './props.types';
 
 type TJurisdictionVerificationContents = {
@@ -6,7 +6,9 @@ type TJurisdictionVerificationContents = {
     shortDescription: string;
     statusReferences: TJurisdictionVerificationStatus[];
 };
-export const jurisdictionVerificationContents = (): TJurisdictionVerificationContents => ({
+export const jurisdictionVerificationContents = (
+    localize: ReturnType<typeof useTranslations>['localize']
+): TJurisdictionVerificationContents => ({
     requiredVerificationDocs: {
         documentNumber: {
             icon: 'IcDocumentNumberVerification',

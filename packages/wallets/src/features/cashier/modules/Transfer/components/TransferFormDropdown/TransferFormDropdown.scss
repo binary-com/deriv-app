@@ -3,8 +3,8 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-    padding-left: 0.8rem;
-    border-left: 0.1rem solid var(--light-5-active-background, #d6dadb);
+    padding-inline-start: 0.8rem;
+    border-inline-start: 0.1rem solid var(--light-5-active-background, #d6dadb);
 
     @include mobile-or-tablet-screen {
         flex-direction: column;
@@ -38,14 +38,14 @@
     }
 
     &__icon-dropdown {
-        margin-left: 1rem;
+        margin-inline-start: 1rem;
 
         @include mobile-or-tablet-screen {
-            margin-right: 0;
+            margin-inline-end: 0;
         }
     }
 
     &__badge {
-        margin-left: 1rem;
+        margin-inline-start: 1rem;
     }
 }

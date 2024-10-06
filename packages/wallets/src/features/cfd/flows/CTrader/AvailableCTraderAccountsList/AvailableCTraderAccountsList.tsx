@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react';
 import { useActiveWalletAccount, useCreateOtherCFDAccount } from '@deriv/api-v2';
-import { LabelPairedChevronRightCaptionRegularIcon } from '@deriv/quill-icons';
+import {
+    LabelPairedChevronLeftCaptionRegularIcon,
+    LabelPairedChevronRightCaptionRegularIcon,
+} from '@deriv/quill-icons';
 import { Localize, useTranslations } from '@deriv-com/translations';
 import { Text } from '@deriv-com/ui';
 import { TradingAccountCard, WalletError } from '../../../../../components';
 import { useModal } from '../../../../../components/ModalProvider';
+import useIsRtl from '../../../../../hooks/useIsRtl';
 import { PlatformDetails } from '../../../constants';
 import { CTraderSuccessModal } from '../../../modals/CTraderSuccessModal';
 
@@ -19,6 +23,7 @@ const AvailableCTraderAccountsList: React.FC = () => {
         status,
     } = useCreateOtherCFDAccount();
     const { data: activeWallet } = useActiveWalletAccount();
+    const isRtl = useIsRtl();
     const { localize } = useTranslations();
 
     const accountType = activeWallet?.is_virtual ? 'demo' : 'real';
@@ -59,13 +64,19 @@ const AvailableCTraderAccountsList: React.FC = () => {
         <TradingAccountCard disabled={isCFDAccountCreationLoading || isCFDAccountCreationSuccess} onClick={onSubmit}>
             <TradingAccountCard.Icon>{PlatformDetails.ctrader.icon}</TradingAccountCard.Icon>
             <TradingAccountCard.Content>
-                <Text size='sm'>{PlatformDetails.ctrader.title}</Text>
-                <Text size='xs'>
+                <Text align='start' size='sm'>
+                    {PlatformDetails.ctrader.title}
+                </Text>
+                <Text align='start' size='xs'>
                     <Localize i18n_default_text='CFDs on financial and derived instruments with copy trading.' />
                 </Text>
             </TradingAccountCard.Content>
             <TradingAccountCard.Button>
-                <LabelPairedChevronRightCaptionRegularIcon width={16} />
+                {isRtl ? (
+                    <LabelPairedChevronLeftCaptionRegularIcon width={16} />
+                ) : (
+                    <LabelPairedChevronRightCaptionRegularIcon width={16} />
+                )}
             </TradingAccountCard.Button>
         </TradingAccountCard>
     );

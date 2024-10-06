@@ -46,7 +46,7 @@ const TransactionsPendingRowField: React.FC<TProps> = ({ className, hint, name, 
 
     return (
         <div className={classNames('wallets-transactions-pending-row-field', className)} key={name}>
-            <Text color='primary' size='xs'>
+            <Text align='start' color='primary' size='xs'>
                 {name}
             </Text>
             {hint ? (
@@ -56,7 +56,7 @@ const TransactionsPendingRowField: React.FC<TProps> = ({ className, hint, name, 
                     tooltipContent={hint.text}
                     tooltipPosition={hint.tooltipAlignment}
                 >
-                    <Text {...{ color: 'red', size: 'xs', weight: 'bold', ...valueTextProps }}>
+                    <Text {...{ align: 'start', color: 'red', size: 'xs', weight: 'bold', ...valueTextProps }}>
                         {isDesktop ? (
                             <a
                                 className='wallets-transactions-pending-row-field__link'
@@ -74,7 +74,7 @@ const TransactionsPendingRowField: React.FC<TProps> = ({ className, hint, name, 
                     </Text>
                 </Tooltip>
             ) : (
-                <Text color='red' size='xs' weight='bold' {...valueTextProps}>
+                <Text align='start' color='red' size='xs' weight='bold' {...valueTextProps}>
                     {value}
                 </Text>
             )}

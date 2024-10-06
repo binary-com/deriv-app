@@ -45,7 +45,7 @@
         .wallets-transaction-status {
             @include desktop-screen {
                 margin-top: -2.4rem;
-                margin-right: 2.4rem;
+                margin-inline-end: 2.4rem;
             }
         }
     }

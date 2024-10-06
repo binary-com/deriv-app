@@ -1,13 +1,14 @@
 .wallets-atm-amount-input {
     display: flex;
     flex-direction: column;
-    padding-right: 0.8rem;
+    padding-inline-end: 0.8rem;
     width: 100%;
 
     &__input {
         all: unset;
         position: absolute;
         inset: 0;
+        text-align: start;
         color: var(--system-light-2-general-text, #333);
 
         @include mobile-or-tablet-screen {

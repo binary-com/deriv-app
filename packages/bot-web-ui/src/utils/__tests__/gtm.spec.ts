@@ -59,6 +59,20 @@ describe('GTM Module', () => {
         );
     });
 
+    it('should directly push data layer', () => {
+        const mockPushDataLayer = jest.fn();
+        mock_store.gtm.pushDataLayer = mockPushDataLayer;
+
+        const sampleData = {
+            event: 'test_event',
+            data: { key: 'value' },
+        };
+
+        GTM.pushDataLayer(sampleData);
+
+        expect(mockPushDataLayer).toHaveBeenCalledWith(sampleData);
+    });
+
     it('should fail on sending null for init', () => {
         // eslint-disable-next-line no-console
         console.warn = jest.fn();

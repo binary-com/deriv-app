@@ -4,11 +4,12 @@ $ONE_BUTTON_FOOTER_HEIGHT: var(--core-size-3200);
 $TWO_BUTTONS_FOOTER_HEIGHT: 120px;
 
 .contract-details {
-    background-color: var(--core-color-solid-slate-75);
+    background-color: var(--semantic-color-slate-solid-surface-frame-mid);
     padding: 0 var(--core-spacing-400);
     display: flex;
     flex-direction: column;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     gap: var(--semantic-spacing-general-sm);
     height: 100%;
     padding-bottom: var(--semantic-spacing-general-sm);
@@ -30,20 +31,17 @@ $TWO_BUTTONS_FOOTER_HEIGHT: 120px;
             height: min(360px, calc(100vh - $HEADER_HEIGHT - $FIXED_PADDING_HEIGHT - $ONE_BUTTON_FOOTER_HEIGHT));
         }
     }
-    .contract-card-wrapper {
-        margin-top: var(--core-spacing-200);
+    &:not(:has(.banner__wrapper)) {
+        .contract-card-wrapper {
+            margin-top: var(--core-spacing-200);
+        }
     }
-}
-
-.placeholder {
-    background-color: var(--core-color-solid-slate-50);
 }
 
 .contract-card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: var(--core-color-solid-slate-50);
     border-radius: var(--core-borderRadius-500);
     padding: var(--core-spacing-800);
 

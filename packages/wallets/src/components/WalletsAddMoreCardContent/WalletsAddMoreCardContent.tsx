@@ -34,11 +34,13 @@ const WalletsAddMoreCardContent: React.FC<TProps> = ({ currency }) => {
     const walletDescriptionMapper = getWalletDescriptionMapper();
     return (
         <div className='wallets-add-more__content'>
-            <Text size='md' weight='bold'>
+            <Text align='start' size='md' weight='bold'>
                 {currency} Wallet
             </Text>
 
-            <Text size='sm'>{walletDescriptionMapper[currency as keyof typeof walletDescriptionMapper]}</Text>
+            <Text align='start' size='sm'>
+                {walletDescriptionMapper[currency as keyof typeof walletDescriptionMapper]}
+            </Text>
         </div>
     );
 };

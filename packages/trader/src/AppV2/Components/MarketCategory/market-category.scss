@@ -17,9 +17,7 @@
     &-subtitle {
         padding: var(--core-spacing-200) var(--core-spacing-800);
         margin: var(--core-spacing-400) 0;
-        color: var(
-            --semantic-color-slate-solid-textIcon-normal-low
-        ); //theres an issue with setting color for CaptionText component hence not working in themes
+        color: var(--component-textIcon-normal-default);
     }
     &-items {
         margin: 0 var(--core-spacing-400);

@@ -2,7 +2,6 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { getPlatformType } from '../compareAccountsConfig';
 import CompareAccountsPlatformLabel from '../CompareAccountsPlatformLabel';
-import { platformLabel } from '../constants';
 
 jest.mock('../compareAccountsConfig', () => ({
     getPlatformType: jest.fn(),
@@ -19,7 +18,7 @@ describe('CompareAccountsPlatformLabel', () => {
         render(<CompareAccountsPlatformLabel platform={mockPlatform} />);
 
         const labelElement = screen.getByTestId('dt_wallets_compare_accounts_platform_label');
-        expect(labelElement).toHaveTextContent(platformLabel.MT5);
+        expect(labelElement).toHaveTextContent('MT5 Platform');
     });
 
     it('calls getPlatformType with the correct platform', () => {
@@ -34,6 +33,6 @@ describe('CompareAccountsPlatformLabel', () => {
         render(<CompareAccountsPlatformLabel platform={'dxtrade' as const} />);
 
         const labelElement = screen.getByTestId('dt_wallets_compare_accounts_platform_label');
-        expect(labelElement).toHaveTextContent(platformLabel.DerivX);
+        expect(labelElement).toHaveTextContent('Deriv X');
     });
 });

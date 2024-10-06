@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { localize } from '@deriv-com/translations';
+import { useTranslations } from '@deriv-com/translations';
 import { Text, Tooltip } from '@deriv-com/ui';
 import InfoIcon from '../../../../public/images/ic-info-outline.svg';
 import { THooks, TPlatforms } from '../../../../types';
@@ -26,11 +26,12 @@ const CompareAccountsDescription = ({
     product,
     shortCode,
 }: TCompareAccountsDescription) => {
+    const { localize } = useTranslations();
     const marketTypeShortCode =
         platform === CFD_PLATFORMS.MT5 && marketType === 'all'
             ? `${marketType}_${product}_${shortCode}`
             : marketType?.concat('_', shortCode ?? '');
-    const jurisdictionData = getJurisdictionDescription(marketTypeShortCode ?? '');
+    const jurisdictionData = getJurisdictionDescription(localize, marketTypeShortCode ?? '');
 
     return (
         <div

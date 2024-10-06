@@ -11,4 +11,15 @@
         bottom: 0;
         z-index: 2; // chart has z-index: 1, it should not overlap buttons if screen height is small
     }
+
+    &-button__wrapper {
+        background-color: var(--semantic-color-slate-solid-surface-frame-low);
+        width: 100%;
+
+        button {
+            .dc-remaining-time {
+                font-size: var(--core-fontSize-100);
+            }
+        }
+    }
 }

@@ -16,18 +16,12 @@ type TMarketCategory = {
 
 const MarketCategory = ({ category, selectedSymbol, setSelectedSymbol, setIsOpen, isOpen }: TMarketCategory) => {
     const itemRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
-    const timerRef = useRef<ReturnType<typeof setTimeout>>();
     const prevSymbol = usePrevious(selectedSymbol);
 
     useEffect(() => {
         if (isOpen && category.market === 'all' && selectedSymbol && itemRefs.current[selectedSymbol] && !prevSymbol) {
-            timerRef.current = setTimeout(() => {
-                itemRefs.current[selectedSymbol]?.scrollIntoView({ block: 'center' });
-            }, 50);
+            itemRefs.current[selectedSymbol]?.scrollIntoView({ block: 'center' });
         }
-        return () => {
-            clearTimeout(timerRef.current);
-        };
     }, [isOpen, category.market, selectedSymbol, prevSymbol]);
 
     return (

@@ -13,10 +13,11 @@
         margin-bottom: 1.6rem;
 
         @include mobile-or-tablet-screen {
-            padding-left: 1.6rem;
+            padding: 0 1.6rem;
             margin-bottom: 0;
         }
     }
+
     &__carousel {
         overflow: hidden;
         background-color: #fff;
@@ -26,7 +27,8 @@
         height: 100%;
 
         @include mobile-or-tablet-screen {
-            padding: 1.6rem 0 2.4rem 1.6rem;
+            padding-block: 1.6rem 2.4rem;
+            padding-inline-start: 1.6rem;
             border-radius: unset;
         }
 
@@ -42,14 +44,17 @@
             position: absolute;
             top: 45%;
             box-shadow: 0px 24px 24px 0px rgba(0, 0, 0, 0.08), 0px 0px 24px 0px rgba(0, 0, 0, 0.08);
+
             &:disabled {
                 display: none;
             }
+
             &--prev {
-                left: 1.6rem;
+                inset-inline-start: 1.6rem;
             }
+
             &--next {
-                right: 1.6rem;
+                inset-inline-end: 1.6rem;
             }
         }
     }

@@ -5,16 +5,27 @@ import Text from '../text';
 
 type TFormSubmitErrorMessage = {
     className?: string;
-    message: string;
+    message: React.ReactNode;
+    weight?: string;
+    text_color?: string;
 };
 
-const FormSubmitErrorMessage = ({ className, message }: TFormSubmitErrorMessage) => (
-    <div className={classNames('dc-form-submit-error-message', className)}>
-        <Icon icon='IcAlertDanger' data_testid='form_submit_error' />
-        <Text as='p' size='xxs' weight='bold' color='prominent'>
-            {message}
-        </Text>
-    </div>
-);
+const FormSubmitErrorMessage = ({
+    className,
+    message,
+    text_color = 'prominent',
+    weight = 'bold',
+}: TFormSubmitErrorMessage) => {
+    return (
+        <div className={classNames('dc-form-submit-error-message', className)}>
+            <Icon icon='IcAlertDanger' data_testid='form_submit_error' />
+            {
+                <Text as='p' size='xxs' weight={weight} color={text_color}>
+                    {message}
+                </Text>
+            }
+        </div>
+    );
+};
 
 export default FormSubmitErrorMessage;

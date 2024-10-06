@@ -5,6 +5,7 @@ import { useAllWalletAccounts, useAuthorize } from '@deriv/api-v2';
 import { LabelPairedChevronLeftLgFillIcon, LabelPairedChevronRightLgFillIcon } from '@deriv/quill-icons';
 import { Localize } from '@deriv-com/translations';
 import { Text, useDevice } from '@deriv-com/ui';
+import useIsRtl from '../../hooks/useIsRtl';
 import { IconButton } from '../Base';
 import { WalletsAddMoreLoader } from '../SkeletonLoader';
 import WalletsAddMoreCard from '../WalletsAddMoreCard';
@@ -14,12 +15,14 @@ const WalletsAddMoreCarousel: React.FC = () => {
     const { isDesktop } = useDevice();
     const { data: wallets, isLoading } = useAllWalletAccounts();
     const { isInitializing } = useAuthorize();
+    const isRtl = useIsRtl();
 
     const showLoader = isInitializing || isLoading;
 
     const [walletsAddMoreEmblaRef, walletsAddMoreEmblaAPI] = useEmblaCarousel({
         align: 0,
         containScroll: 'trimSnaps',
+        direction: isRtl ? 'rtl' : 'ltr',
     });
     const hoverRef = useRef<HTMLDivElement>(null);
     const isHover = useHover(hoverRef);
@@ -77,7 +80,13 @@ const WalletsAddMoreCarousel: React.FC = () => {
                             className='wallets-add-more__carousel-btn wallets-add-more__carousel-btn--prev'
                             color='white'
                             disabled={!prevBtnEnabled}
-                            icon={<LabelPairedChevronLeftLgFillIcon fill='#333333' />}
+                            icon={
+                                isRtl ? (
+                                    <LabelPairedChevronRightLgFillIcon fill='#333333' />
+                                ) : (
+                                    <LabelPairedChevronLeftLgFillIcon fill='#333333' />
+                                )
+                            }
                             isRound
                             onClick={scrollPrev}
                             size='lg'
@@ -86,7 +95,13 @@ const WalletsAddMoreCarousel: React.FC = () => {
                             className='wallets-add-more__carousel-btn wallets-add-more__carousel-btn--next'
                             color='white'
                             disabled={!nextBtnEnabled}
-                            icon={<LabelPairedChevronRightLgFillIcon fill='#333333' />}
+                            icon={
+                                isRtl ? (
+                                    <LabelPairedChevronLeftLgFillIcon fill='#333333' />
+                                ) : (
+                                    <LabelPairedChevronRightLgFillIcon fill='#333333' />
+                                )
+                            }
                             isRound
                             onClick={scrollNext}
                             size='lg'

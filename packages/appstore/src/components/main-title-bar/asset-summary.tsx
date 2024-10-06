@@ -17,7 +17,14 @@ import { isRatesLoaded } from '../../helpers';
 
 const AssetSummary = observer(() => {
     const { isDesktop } = useDevice();
-    const { traders_hub, client, common, modules } = useStore();
+    const {
+        traders_hub,
+        client,
+        common,
+        modules,
+        gtm: { pushDataLayer },
+    } = useStore();
+
     const { selected_account_type, is_eu_user, no_CR_account, no_MF_account } = traders_hub;
     const {
         is_logging_in,
@@ -69,6 +76,16 @@ const AssetSummary = observer(() => {
         is_transfer_confirm ||
         is_still_waiting_for_loading_accounts ||
         !isRatesLoaded(is_real, total_assets_real_currency, platform_real_accounts, cfd_real_accounts, exchange_rates);
+
+    React.useEffect(() => {
+        if (!should_show_loader && is_real) {
+            if (real_total_balance == 0) {
+                pushDataLayer({ event: 'balance', value: false });
+            } else if (real_total_balance > 0) {
+                pushDataLayer({ event: 'balance', value: true });
+            }
+        }
+    }, [should_show_loader, is_real, pushDataLayer, real_total_balance]);
 
     if (should_show_loader) {
         return (

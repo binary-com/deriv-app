@@ -48,7 +48,7 @@ const MT5AccountAdded: FC<TProps> = ({ account, marketType, platform, product })
     const marketTypeTitle =
         marketType === MARKET_TYPE.ALL && platform in PlatformDetails && platform !== CFD_PLATFORMS.MT5
             ? PlatformDetails[platform].title
-            : getMarketTypeDetails(product)[marketType].title;
+            : getMarketTypeDetails(localize, product)[marketType].title;
     const selectedJurisdiction = getModalState('selectedJurisdiction');
     const landingCompanyName = `(${
         companyNamesAndUrls?.[selectedJurisdiction as keyof typeof companyNamesAndUrls]?.shortcode

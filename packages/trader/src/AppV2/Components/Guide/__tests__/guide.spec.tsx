@@ -11,8 +11,72 @@ import Guide from '../guide';
 
 const trade_types = 'Trade types';
 
+const mock_contract_data = {
+    contracts_for_company: [
+        {
+            value: 'accumulator',
+            text: 'Accumulators',
+            barrier_category: 'american',
+        },
+        {
+            value: 'vanillalongcall',
+            text: 'Vanillas',
+            barrier_category: 'euro_atm',
+        },
+        {
+            value: 'turboslong',
+            text: 'Turbos',
+            barrier_category: 'american',
+        },
+        {
+            value: 'multiplier',
+            text: 'Multipliers',
+            barrier_category: 'american',
+        },
+        {
+            value: 'rise_fall',
+            text: 'Rise/Fall',
+            barrier_category: 'euro_atm',
+        },
+        {
+            value: 'high_low',
+            text: 'Higher/Lower',
+            barrier_category: 'euro_atm',
+        },
+        {
+            value: 'touch',
+            text: 'Touch/No Touch',
+            barrier_category: 'american',
+        },
+        {
+            value: 'match_diff',
+            text: 'Matches/Differs',
+            barrier_category: 'non_financial',
+        },
+        {
+            value: 'even_odd',
+            text: 'Even/Odd',
+            barrier_category: 'non_financial',
+        },
+        {
+            value: 'over_under',
+            text: 'Over/Under',
+            barrier_category: 'non_financial',
+        },
+    ],
+};
+
 jest.mock('@lottiefiles/dotlottie-react', () => ({
     DotLottieReact: jest.fn(() => <div>DotLottieReact</div>),
+}));
+
+jest.mock('AppV2/Hooks/useContractsForCompany', () => ({
+    __esModule: true,
+    default: jest.fn(() => ({
+        contracts_for_company: mock_contract_data,
+        is_fetching_ref: { current: false },
+        trade_types: mock_contract_data.contracts_for_company,
+    })),
 }));
 
 Loadable.preloadAll();

@@ -37,11 +37,11 @@ const VerificationFailed: FC<TVerificationFailedProps> = ({ selectedJurisdiction
 
     return (
         <div className='wallets-verification-failed'>
-            <Text size='md' weight='bold'>
+            <Text align='start' size='md' weight='bold'>
                 <Localize i18n_default_text='Why did my verification fail?' />
             </Text>
             <div className='wallets-verification-failed__content'>
-                <Text size='sm'>
+                <Text align='start' size='sm'>
                     <Localize
                         i18n_default_text='Your {{documentTitle}} did not pass our verification checks. This could be due to reasons such as:'
                         values={{ documentTitle: getDocumentTitle(isPOIFailed, isPOAFailed) }}
@@ -49,22 +49,22 @@ const VerificationFailed: FC<TVerificationFailedProps> = ({ selectedJurisdiction
                 </Text>
                 <ul>
                     <li>
-                        <Text size='sm'>
+                        <Text align='start' size='sm'>
                             <Localize i18n_default_text='Document details do not match profile details' />
                         </Text>
                     </li>
                     <li>
-                        <Text size='sm'>
+                        <Text align='start' size='sm'>
                             <Localize i18n_default_text='Expired documents' />
                         </Text>
                     </li>
                     <li>
-                        <Text size='sm'>
+                        <Text align='start' size='sm'>
                             <Localize i18n_default_text='Poor image quality' />
                         </Text>
                     </li>
                 </ul>
-                <Text size='sm'>
+                <Text align='start' size='sm'>
                     <Localize
                         components={[<strong key={0} />]}
                         i18n_default_text='Click <0>Resubmit documents</0> to find out more and try again.'

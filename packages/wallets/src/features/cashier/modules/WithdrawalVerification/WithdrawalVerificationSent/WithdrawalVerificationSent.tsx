@@ -56,9 +56,9 @@ const WithdrawalVerificationSent: React.FC<TProps> = ({ counter, sendEmail }) =>
                                 )}
                             </Button>
                         }
-                        description={
-                            <Localize i18n_default_text="Check your spam or junk folder. If it's not there, try resending the email." />
-                        }
+                        description={localize(
+                            "Check your spam or junk folder. If it's not there, try resending the email."
+                        )}
                         title={<Localize i18n_default_text="Didn't receive the email?" />}
                     />
                 )}

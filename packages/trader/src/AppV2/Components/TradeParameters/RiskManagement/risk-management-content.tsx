@@ -37,9 +37,7 @@ const RiskManagementContent = ({ should_show_deal_cancellation }: TRiskManagemen
                 ({ definition, is_displayed, label }) =>
                     is_displayed && (
                         <React.Fragment key={definition.props.i18n_default_text}>
-                            <Text bold color='quill-typography__color--prominent'>
-                                {label}
-                            </Text>
+                            <Text bold>{label}</Text>
                             <Text className='risk-management__description__definition'>{definition}</Text>
                         </React.Fragment>
                     )

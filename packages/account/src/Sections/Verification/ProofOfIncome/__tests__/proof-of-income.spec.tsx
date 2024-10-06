@@ -3,8 +3,9 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { WS } from '@deriv/shared';
 import { StoreProvider, mockStore } from '@deriv/stores';
-import ProofOfIncome from 'Sections/Verification/ProofOfIncome';
-import { income_status_codes } from 'Sections/Verification/ProofOfIncome/proof-of-income-utils';
+import ProofOfIncome from '../proof-of-income';
+import { income_status_codes } from '../proof-of-income-utils';
+import { APIProvider } from '@deriv/api';
 
 const mocked_account_status = {
     authentication: {
@@ -22,6 +23,16 @@ const mocked_account_status = {
         needs_verification: [],
     },
     status: [],
+};
+
+const mock_kyc_auth_status_response = {
+    kyc_auth_status: {
+        address: {
+            supported_documents: ['utility_bill', 'affidavit', 'poa_others'],
+        },
+    },
+    isLoading: false,
+    isSuccess: false,
 };
 
 jest.mock('@binary-com/binary-document-uploader');
@@ -44,6 +55,10 @@ jest.mock('react-router-dom', () => ({
     Redirect: jest.fn(() => <div>Redirect</div>),
 }));
 
+jest.mock('../../../../hooks', () => ({
+    useKycAuthStatus: jest.fn(() => mock_kyc_auth_status_response),
+}));
+
 describe('ProofOfIncome', () => {
     const files_descriptions_title = 'The document must be recent and include your name and address:';
     const files_descriptions = [
@@ -62,7 +77,11 @@ describe('ProofOfIncome', () => {
 
     const componentTestRender = (mock_store: ReturnType<typeof mockStore>) => {
         render(<ProofOfIncome />, {
-            wrapper: ({ children }) => <StoreProvider store={mock_store}>{children}</StoreProvider>,
+            wrapper: ({ children }) => (
+                <APIProvider>
+                    <StoreProvider store={mock_store}>{children}</StoreProvider>
+                </APIProvider>
+            ),
         });
     };
 

@@ -1,7 +1,9 @@
-import { localize } from '@deriv-com/translations';
+import { useTranslations } from '@deriv-com/translations';
 import { TJurisdictionCardItems } from './props.types';
 
-export const getJurisdictionSvgContents = (): TJurisdictionCardItems => ({
+export const getJurisdictionSvgContents = (
+    localize: ReturnType<typeof useTranslations>['localize']
+): TJurisdictionCardItems => ({
     contents: {
         all: [
             {

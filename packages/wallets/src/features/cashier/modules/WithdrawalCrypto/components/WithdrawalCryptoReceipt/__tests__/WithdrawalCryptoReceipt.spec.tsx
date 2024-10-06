@@ -13,7 +13,7 @@ jest.mock('react-router-dom', () => ({
 
 const mockWithdrawalReceipt = {
     address: 'test_crypto_address',
-    amount: '100',
+    amount: 100,
     currency: 'BTC',
 };
 

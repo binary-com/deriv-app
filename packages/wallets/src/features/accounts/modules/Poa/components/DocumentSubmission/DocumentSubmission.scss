@@ -58,11 +58,12 @@
             gap: 1.6rem;
             align-self: stretch;
 
-            &__list {
+            &-list {
                 list-style-type: disc;
-                padding-left: 2rem;
+                padding-inline-start: 2rem;
             }
         }
+
         &__upload {
             display: flex;
             flex-direction: column;
@@ -111,8 +112,20 @@
         &__common-mistakes {
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
             gap: 1.6rem;
             width: 100%;
+        }
+    }
+
+    &__type-selection {
+        display: flex;
+        flex-direction: column;
+        gap: 1.6rem;
+        align-self: stretch;
+        label {
+            /* stylelint-disable-next-line declaration-no-important */
+            text-transform: none !important;
         }
     }
 }

@@ -77,7 +77,7 @@ const DealCancellation = observer(({ closeActionSheet }: TDealCancellationProps)
                 </div>
             </div>
             <Button
-                color='black'
+                color='black-white'
                 size='lg'
                 label={<Localize i18n_default_text='Save' />}
                 fullWidth

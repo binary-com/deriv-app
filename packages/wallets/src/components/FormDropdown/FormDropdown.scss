@@ -1,7 +1,28 @@
 .wallets-form-dropdown {
     height: 6.25rem; // 4.05rem (field) + 2.2rem (message)
+
     /* stylelint-disable-next-line selector-class-pattern */
     & .deriv-input__helper-message {
         min-height: 2.2rem;
+    }
+
+    /* stylelint-disable-next-line selector-class-pattern */
+    .deriv-input {
+        &__field {
+            text-align: start;
+        }
+
+        &__left-content {
+            margin-inline-end: 0.8rem;
+        }
+
+        &__right-content {
+            margin-inline-start: 1.6rem;
+        }
+
+        &__label {
+            inset-inline-start: 1.6rem;
+            inset-inline-end: unset;
+        }
     }
 }

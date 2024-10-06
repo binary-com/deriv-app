@@ -24,10 +24,7 @@ type AuthContextType = {
         name: T,
         payload?: TSocketRequestPayload<T>
     ) => {
-        subscribe: (
-            onData: (response: any) => void,
-            onError: (response: any) => void
-        ) => Promise<{ unsubscribe: () => Promise<void> }>;
+        subscribe: (onData: (response: any) => void) => Promise<{ unsubscribe: () => Promise<void> }>;
     };
 };
 

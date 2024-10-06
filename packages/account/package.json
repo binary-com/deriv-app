@@ -4,11 +4,11 @@
     "version": "1.0.0",
     "description": "Deriv account management module",
     "author": "Deriv.com",
-    "homepage": "https://github.com/binary-com/deriv-app",
+    "homepage": "https://github.com/deriv-com/deriv-app",
     "license": "Apache-2.0",
     "main": "dist/account/js/account.js",
     "bugs": {
-        "url": "https://github.com/binary-com/deriv-app/issues"
+        "url": "https://github.com/deriv-com/deriv-app/issues"
     },
     "engines": {
         "node": "18.x"
@@ -32,13 +32,12 @@
         "@binary-com/binary-document-uploader": "^2.4.8",
         "@deriv-com/analytics": "1.14.0",
         "@deriv-com/translations": "1.3.9",
-        "@deriv-com/utils": "^0.0.25",
+        "@deriv-com/utils": "^0.0.34",
         "@deriv-com/ui": "1.35.0",
         "@deriv/api": "^1.0.0",
-        "@deriv-com/quill-ui": "1.16.9",
+        "@deriv-com/quill-ui": "1.16.20",
         "@deriv/components": "^1.0.0",
         "@deriv/hooks": "^1.0.0",
-        "@deriv/integration": "1.0.0",
         "@deriv/quill-icons": "1.23.3",
         "@deriv/shared": "^1.0.0",
         "@deriv/stores": "^1.0.0",
@@ -61,7 +60,6 @@
         "@babel/preset-typescript": "^7.16.5",
         "@deriv/api-types": "1.0.172",
         "@jest/globals": "^26.5.3",
-        "@playwright/test": "^1.37.1",
         "@testing-library/react": "^12.0.0",
         "@testing-library/user-event": "^13.5.0",
         "@types/jest": "^27.4.1",

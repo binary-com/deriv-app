@@ -12,7 +12,7 @@ const useSubscription = <T extends TSocketSubscribableEndpointNames>(name: T, id
     const [isLoading, setIsLoading] = useState(false);
     const [isSubscribed, setSubscribed] = useState(false);
     const [isIdle, setIdle] = useState(false);
-    const [error, setError] = useState<TSocketError<T>>();
+    const [error, setError] = useState<TSocketError<T>['error']>();
     const [data, setData] = useState<TSocketResponseData<T>>();
     const subscriber = useRef<{ unsubscribe?: VoidFunction }>();
     const idle_timeout = useRef<NodeJS.Timeout>();
@@ -31,18 +31,12 @@ const useSubscription = <T extends TSocketSubscribableEndpointNames>(name: T, id
         }, idle_time);
 
         try {
-            subscriber.current = await _subscribe(name, payload).subscribe(
-                response => {
-                    setData(response);
-                    setIsLoading(false);
-                },
-                response => {
-                    setError(response.error);
-                    setIsLoading(false);
-                }
-            );
+            subscriber.current = await _subscribe(name, payload).subscribe(response => {
+                setData(response);
+                setIsLoading(false);
+            });
         } catch (e) {
-            setError(e as TSocketError<T>);
+            setError((e as TSocketError<T>).error);
         }
     }, []);
 

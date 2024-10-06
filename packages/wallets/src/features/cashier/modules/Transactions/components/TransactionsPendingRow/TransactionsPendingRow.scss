@@ -96,7 +96,7 @@
             }
 
             &-dot {
-                margin-right: 0.4rem;
+                margin-inline-end: 0.4rem;
                 width: 0.8rem;
                 height: 0.8rem;
                 border-radius: 0.4rem;
@@ -130,7 +130,7 @@
 
         &-cancel-button {
             display: flex;
-            margin-left: 0.8rem;
+            margin-inline-start: 0.8rem;
             padding: 0;
             border: none;
             cursor: pointer;

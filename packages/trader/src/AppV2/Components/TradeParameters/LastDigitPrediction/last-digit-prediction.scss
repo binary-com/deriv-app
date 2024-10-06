@@ -4,11 +4,11 @@
     gap: var(--core-spacing-400);
     padding: var(--core-spacing-400) var(--core-spacing-800);
     border-radius: var(--core-spacing-400);
-    background: var(--core-color-opacity-black-75);
+    background: var(--semantic-color-monochrome-surface-normal-lowest);
     width: 100%;
 
     &__title {
-        color: var(--core-color-opacity-black-600);
+        color: var(--component-field-label-color-default);
     }
     &__selector {
         display: flex;
@@ -35,24 +35,24 @@
                 justify-content: center;
                 align-items: center;
                 border-radius: var(--core-borderRadius-800);
-                border: var(--core-borderWidth-75) solid var(--core-color-opacity-black-100);
-                background-color: var(--core-color-solid-slate-50);
+                border: var(--core-borderWidth-75) solid var(--semantic-color-monochrome-border-normal-mid);
+                background-color: var(--semantic-color-slate-solid-surface-normal-lowest);
             }
             button.active {
-                background-color: var(--core-color-solid-slate-1400);
+                background-color: var(--semantic-color-slate-solid-surface-inverse-lowest);
 
                 p {
-                    color: var(--core-color-solid-slate-50);
+                    color: var(--component-textIcon-inverse-prominent);
                 }
             }
             .percentage {
-                color: var(--core-color-opacity-black-500);
+                color: var(--component-textIcon-normal-subtle);
 
                 &--max {
-                    color: var(--core-color-solid-green-800);
+                    color: var(--semantic-color-green-solid-textIcon-normal-mid);
                 }
                 &--min {
-                    color: var(--core-color-solid-red-700);
+                    color: var(--semantic-color-red-solid-textIcon-normal-mid);
                 }
             }
         }

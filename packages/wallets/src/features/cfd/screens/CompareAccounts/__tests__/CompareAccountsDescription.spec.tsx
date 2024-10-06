@@ -1,4 +1,5 @@
 import React from 'react';
+import { localize } from '@deriv-com/translations';
 import { render, screen } from '@testing-library/react';
 import { getJurisdictionDescription } from '../compareAccountsConfig';
 import CompareAccountsDescription from '../CompareAccountsDescription';
@@ -69,7 +70,7 @@ describe('CompareAccountsDescription', () => {
     it('calls getJurisdictionDescription with correct marketTypeShortCode', () => {
         render(<CompareAccountsDescription {...defaultProps} />);
 
-        expect(getJurisdictionDescription).toHaveBeenCalledWith('financial_SVG');
+        expect(getJurisdictionDescription).toHaveBeenCalledWith(localize, 'financial_SVG');
     });
 
     it('renders tooltip for zero spread', () => {

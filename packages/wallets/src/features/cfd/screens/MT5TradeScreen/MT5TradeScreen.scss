@@ -28,13 +28,13 @@
         }
 
         &-balance {
-            margin-left: auto;
+            margin-inline-start: auto;
         }
 
         &-details {
             display: flex;
             flex-direction: column;
-            padding-left: 0.8rem;
+            padding: 0 0.8rem;
         }
 
         &-icon {
@@ -83,8 +83,12 @@
         &-maintenance {
             display: grid;
             grid-template-columns: 1.6rem auto;
-            align-items: start;
+            align-items: center;
             gap: 0.8rem;
+        }
+
+        &-text {
+            text-align: start;
         }
     }
 

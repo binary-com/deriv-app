@@ -28,6 +28,10 @@
     &__arrow-icon {
         @include mobile-screen {
             rotate: 90deg;
+
+            @include rtl {
+                rotate: -90deg;
+            }
         }
     }
 
@@ -46,5 +50,9 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+    }
+
+    &__amount-conversion {
+        display: inline-flex;
     }
 }

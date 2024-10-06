@@ -10,14 +10,18 @@
     &:hover {
         box-shadow: 0 2px 8px 0 var(--shadow-menu);
     }
+
     @include mobile-or-tablet-screen {
         width: 18rem;
+        height: 66.6rem;
     }
+
     &__eu-clients {
         position: relative;
         top: 0.5rem;
         text-align: center;
     }
+
     &__banner {
         position: absolute;
         z-index: 1;
@@ -31,9 +35,17 @@
         color: var(--text-colored-background);
         transform: translateX(17rem) translateY(-2rem) rotate(45deg);
 
+        @include rtl {
+            transform: translateX(-17rem) translateY(-2rem) rotate(-45deg);
+        }
+
         @include mobile-or-tablet-screen {
             padding: 0.1rem;
             transform: translateX(8rem) translateY(-2rem) rotate(45deg);
+
+            @include rtl {
+                transform: translateX(-8rem) translateY(-2rem) rotate(-45deg);
+            }
         }
     }
 }

@@ -63,6 +63,6 @@ jobs:
             sudo apt install gh
             gh auth login --with-token <<< ${{ github.token }}
             gh pr close "$REMOTE_CONFIG_BRANCH" || true
-            gh pr create --base "master" --title "Sync Remote Config File 🤖" --head "binary-com:$REMOTE_CONFIG_BRANCH" --body "This is an automated Pull Request designed to synchronize our project's Remote Config from Its origin. It checks for the changes in the remote config URL and in case of any change, it will update it using this PR."
+            gh pr create --base "master" --title "Sync Remote Config File 🤖" --head "deriv-com:$REMOTE_CONFIG_BRANCH" --body "This is an automated Pull Request designed to synchronize our project's Remote Config from Its origin. It checks for the changes in the remote config URL and in case of any change, it will update it using this PR."
         fi
       shell: bash

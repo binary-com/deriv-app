@@ -8,8 +8,11 @@ import {
     getDurationTime,
     getDurationUnitText,
     getGrowthRatePercentage,
+    getStartTime,
     getUnitMap,
+    hasForwardContractStarted,
     isAccumulatorContract,
+    isForwardStarting,
     isResetContract,
     isUserCancelled,
     TContractInfo,
@@ -86,7 +89,9 @@ const transformMultiplierData = (data: TContractInfo) => {
         [CARD_LABELS.REFERENCE_ID]: commonFields[CARD_LABELS.REFERENCE_ID],
         [CARD_LABELS.MULTIPLIER]: data.multiplier ? `x${data.multiplier}` : '',
         [CARD_LABELS.STAKE]: commonFields[CARD_LABELS.STAKE],
-        [CARD_LABELS.COMMISSION]: data.commission ? `${data.commission} ${data.currency}` : '',
+        [CARD_LABELS.COMMISSION]: data.commission
+            ? `${formatMoney(data.currency as string, data.commission, true)} ${data.currency}`
+            : '',
         ...(dealCancelFee && { [CARD_LABELS.DEAL_CANCEL_FEE]: dealCancelFee }),
         [CARD_LABELS.TAKE_PROFIT]:
             data.limit_order?.take_profit?.order_amount && data.currency
@@ -105,11 +110,17 @@ const transformMultiplierData = (data: TContractInfo) => {
 
 // For Rise
 const transformCallPutData = (data: TContractInfo) => {
+    const { barrier, purchase_time, shortcode } = data;
+    const is_forward_starting = isForwardStarting(shortcode ?? '', purchase_time);
+    const start_time = getStartTime(shortcode ?? '');
+    const has_forward_contract_started = hasForwardContractStarted(shortcode ?? '');
+    const show_barrier_placeholder = is_forward_starting && !!start_time && !has_forward_contract_started;
+
     const commonFields = getCommonFields(data);
     return {
         [CARD_LABELS.REFERENCE_ID]: commonFields[CARD_LABELS.REFERENCE_ID],
         [CARD_LABELS.DURATION]: commonFields[CARD_LABELS.DURATION],
-        [CARD_LABELS.BARRIER]: data.barrier ?? '',
+        [CARD_LABELS.BARRIER]: (show_barrier_placeholder ? 'TBD' : barrier) ?? '',
         [CARD_LABELS.STAKE]: commonFields[CARD_LABELS.STAKE],
         [CARD_LABELS.POTENTIAL_PAYOUT]: commonFields[CARD_LABELS.POTENTIAL_PAYOUT],
     };

@@ -12,11 +12,6 @@ import Main from '../main';
 jest.mock('@deriv/bot-skeleton/src/scratch/xml/main.xml', () => '<xml>sample</xml>');
 jest.mock('@deriv/bot-skeleton/src/scratch/dbot', () => jest.fn());
 
-jest.mock('@deriv/hooks', () => ({
-    ...jest.requireActual('@deriv/hooks'),
-    useFeatureFlags: jest.fn(() => ({ is_next_server_bot_enabled: true })),
-}));
-
 jest.mock('@deriv/bot-skeleton/src/services/api/api-base', () => ({
     ...jest.requireActual('@deriv/bot-skeleton/src/services/api/api-base'),
     api_base: {
@@ -67,12 +62,6 @@ describe('<Main />', () => {
         mock_dbot_store?.dashboard.setActiveTour('bot_builder');
         const { container } = render(<Main />, { wrapper });
         expect(container).toBeDefined();
-    });
-
-    it('should render "Server Bot" tab', () => {
-        mock_store.client.account_settings.country_code = 'aq';
-        render(<Main />, { wrapper });
-        expect(screen.getByText(/Server Bot/)).toBeInTheDocument();
     });
 
     it('should check websocket state on focus to the window', async () => {

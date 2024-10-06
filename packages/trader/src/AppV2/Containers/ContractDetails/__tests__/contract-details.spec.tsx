@@ -21,6 +21,7 @@ import { getContractDetailsConfig } from 'AppV2/Utils/contract-details-config';
 
 jest.mock('AppV2/Hooks/useContractDetails', () => jest.fn());
 jest.mock('AppV2/Hooks/useOrderDetails', () => jest.fn());
+jest.mock('AppV2/Components/ForwardStartingBanner', () => jest.fn(() => <div>ForwardStartingBanner</div>));
 
 jest.mock('AppV2/Components/ContractCard', () => {
     const ContractCard = () => <div data-testid='contract-card'>ContractCard</div>;
@@ -178,6 +179,11 @@ describe('ContractDetails', () => {
             </TraderProviders>
         );
     };
+
+    it('should render the ForwardStartingBanner component', async () => {
+        await waitFor(() => renderContractDetails());
+        expect(screen.getByText('ForwardStartingBanner')).toBeInTheDocument();
+    });
 
     it('should render the ContractCard component', async () => {
         await waitFor(() => renderContractDetails());

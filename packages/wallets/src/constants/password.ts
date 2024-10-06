@@ -1,4 +1,4 @@
-import { localize } from '@deriv-com/translations';
+import { useTranslations } from '@deriv-com/translations';
 import { ValidationConstants } from '@deriv-com/utils';
 import { passwordKeys } from '../utils/password-validation';
 
@@ -31,7 +31,7 @@ export const passwordValues = {
     minLength: 8,
 };
 
-export const getPasswordErrorMessage = () => ({
+export const getPasswordErrorMessage = (localize: ReturnType<typeof useTranslations>['localize']) => ({
     invalidLength: localize('You should enter {{minLength}}-{{maxLength}} characters.', {
         maxLength: passwordValues.maxLength,
         minLength: passwordValues.minLength,
@@ -47,7 +47,9 @@ export const getPasswordErrorMessage = () => ({
     PasswordError: localize('That password is incorrect. Please try again.'),
 });
 
-export const getWarningMessages = (): Record<passwordKeys, string> => ({
+export const getWarningMessages = (
+    localize: ReturnType<typeof useTranslations>['localize']
+): Record<passwordKeys, string> => ({
     common: localize('This is a very common password.'),
     commonNames: localize('Common names and surnames are easy to guess.'),
     dates: localize('Dates are easy to guess.'),
@@ -67,7 +69,7 @@ export const getWarningMessages = (): Record<passwordKeys, string> => ({
 });
 
 // Display on MT5 Password Reset Modal for new password requirements
-export const getPasswordRequirements = () => [
+export const getPasswordRequirements = (localize: ReturnType<typeof useTranslations>['localize']) => [
     localize('8 to 16 characters'),
     localize('A special character such as ( _ @ ? ! / # )'),
     localize('An uppercase letter'),

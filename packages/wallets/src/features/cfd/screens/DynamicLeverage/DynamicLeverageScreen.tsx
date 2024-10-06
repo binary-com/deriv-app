@@ -25,7 +25,7 @@ const DynamicLeverageScreen = () => {
             })}
             data-testid='dt_dynamic_leverage_container'
         >
-            <Text>
+            <Text align='start'>
                 <Localize
                     components={[<strong key={0} />]}
                     i18n_default_text='Enjoy dynamic leverage of <0>up to 1:1500</0> when trading selected instruments in the forex, commodities, cryptocurrencies, and stock indices markets. Our dynamic leverage adjusts automatically to your trading position, based on asset type and trading volume.'

@@ -15,7 +15,7 @@ if ! [ -x "$(command -v crowdin)" ]; then
     fi
 fi
 
-if [[ $(git config --get remote.origin.url) =~ binary-com/deriv-app ]]; then
+if [[ $(git config --get remote.origin.url) =~ deriv-com/deriv-app ]]; then
     echo ${RED}"  > ERROR: "${RESET}"remote 'origin' should be your fork."
     exit 1
 fi

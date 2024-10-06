@@ -104,6 +104,7 @@ const AppNotificationMessages = observer(
                       'need_fa',
                       'needs_poinc',
                       'notify_financial_assessment',
+                      'phone_number_verification',
                       'poi_name_mismatch',
                       'poa_address_mismatch_failure',
                       'poa_address_mismatch_success',

@@ -467,6 +467,7 @@ export type TClientStore = {
     is_logged_in: boolean;
     is_logging_in: boolean;
     is_low_risk: boolean;
+    is_client_store_initialized: boolean;
     is_mt5_password_not_set: boolean;
     is_mt5_account_list_updated: boolean;
     is_p2p_enabled: boolean;
@@ -475,7 +476,6 @@ export type TClientStore = {
     is_populating_dxtrade_account_list: boolean;
     is_populating_ctrader_account_list: boolean;
     is_switching: boolean;
-    is_tnc_needed: boolean;
     is_high_risk: boolean;
     is_trading_experience_incomplete: boolean;
     is_virtual: boolean;
@@ -505,6 +505,7 @@ export type TClientStore = {
     setBalanceOtherAccounts: (balance: number) => void;
     selectCurrency: (currency: string) => void;
     setInitialized: (status?: boolean) => void;
+    setIsClientStoreInitialized: () => void;
     setLogout: (status?: boolean) => void;
     setP2pAdvertiserInfo: () => void;
     setPreSwitchAccount: (status?: boolean) => void;
@@ -518,6 +519,7 @@ export type TClientStore = {
     verification_code: {
         payment_agent_withdraw: string;
         payment_withdraw: string;
+        phone_number_verification: string;
         request_email: string;
         reset_password: string;
         signup: string;
@@ -541,6 +543,14 @@ export type TClientStore = {
     account_settings: GetSettings & {
         upload_file?: string;
         poi_state?: string;
+        tnc_status?: Record<string, number>;
+        phone_number_verification?: {
+            verified?: 0 | 1;
+            next_attempt?: number;
+            next_email_attempt?: number;
+            next_verify_attempt?: number;
+            session_timestamp?: number;
+        };
     };
     residence_list: ResidenceList;
     should_restrict_bvi_account_creation: boolean;
@@ -614,6 +624,8 @@ export type TClientStore = {
         icon?: string;
     }>;
     setIsPasskeySupported: (value: boolean) => void;
+    is_phone_number_verification_enabled: boolean;
+    setIsPhoneNumberVerificationEnabled: (value: boolean) => void;
     setPasskeysStatusToCookie: (status: 'available' | 'not_available') => void;
     should_show_passkey_notification: boolean;
     setShouldShowPasskeyNotification: (value: boolean) => void;
@@ -699,6 +711,9 @@ type TUiStore = {
     is_advanced_duration: boolean;
     is_cashier_visible: boolean;
     is_history_tab_active: boolean;
+    is_forced_to_exit_pnv: boolean;
+    is_phone_verification_completed: boolean;
+    is_redirected_from_email: boolean;
     is_wallet_modal_visible: boolean;
     is_chart_asset_info_visible?: boolean;
     is_chart_layout_default: boolean;
@@ -754,6 +769,9 @@ type TUiStore = {
     setCurrentFocus: (value: string | null) => void;
     setDarkMode: (is_dark_mode_on: boolean) => boolean;
     setIsWalletModalVisible: (value: boolean) => void;
+    setIsForcedToExitPnv: (value: boolean) => void;
+    setIsPhoneVerificationCompleted: (value: boolean) => void;
+    setRedirectFromEmail: (value: boolean) => void;
     setHasOnlyForwardingContracts: (has_only_forward_starting_contracts?: boolean) => void;
     setMobileLanguageMenuOpen: (is_mobile_language_menu_open: boolean) => void;
     setReportsTabIndex: (value: number) => void;
@@ -766,6 +784,8 @@ type TUiStore = {
     setRealAccountSignupEnd: (status: boolean) => void;
     setPurchaseState: (index: number) => void;
     simple_duration_unit: string;
+    should_show_phone_number_otp: boolean;
+    setShouldShowPhoneNumberOTP: (value: boolean) => void;
     sub_section_index: number;
     setPromptHandler: (
         condition: boolean,
@@ -846,6 +866,8 @@ type TUiStore = {
     setShouldShowSameDOBPhoneModal: (value: boolean) => void;
     setHashedValue: (value: string) => void;
     url_hashed_values: string;
+    is_tnc_update_modal_open: boolean;
+    toggleTncUpdateModal: (value: boolean) => void;
 };
 
 type TPortfolioStore = {

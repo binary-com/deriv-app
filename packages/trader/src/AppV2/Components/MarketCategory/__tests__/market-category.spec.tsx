@@ -63,7 +63,7 @@ describe('<MarketCategory />', () => {
             ...mocked_props,
             category: {
                 market: 'favorites',
-                market_display_name: 'Favorites',
+                market_display_name: 'Favourites',
                 subgroups: {},
             },
         };

@@ -2,6 +2,9 @@ import * as React from 'react';
 import { StoreProvider, mockStore } from '@deriv/stores';
 import { renderHook } from '@testing-library/react-hooks';
 import useDepositLocked from '../useDepositLocked';
+import useIsTNCNeeded from '../useIsTNCNeeded';
+
+jest.mock('../useIsTNCNeeded', () => jest.fn(() => false));
 
 describe('useDepositLocked', () => {
     test('should be false if none of the conditions are met', () => {
@@ -47,10 +50,11 @@ describe('useDepositLocked', () => {
         expect(result.current).toBe(true);
     });
 
-    test('should be true if is_need_tnc is true', async () => {
+    test('should be true if is_tnc_needed is true', async () => {
+        (useIsTNCNeeded as jest.Mock).mockReturnValue(true);
+
         const mock = mockStore({
             client: {
-                is_tnc_needed: true,
                 is_eu: true,
                 landing_company_shortcode: 'svg',
                 mt5_login_list: [

@@ -1,27 +1,62 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormikContext } from 'formik';
-import { useIsEuRegion } from '@deriv/api-v2';
+import { useIsEuRegion, useKycAuthStatus } from '@deriv/api-v2';
 import { LabelPairedArrowUpFromBracketXlFillIcon } from '@deriv/quill-icons';
 import { Localize, useTranslations } from '@deriv-com/translations';
 import { Text, useDevice } from '@deriv-com/ui';
-import { Dropzone } from '../../../../../../components';
-import { TDocumentSubmission } from '../../types';
-import { getExampleImagesConfig } from '../../utils';
+import { Dropzone, FormDropdown } from '../../../../../../components';
+import { TDocumentSubmission, TDocumentSubmissionProps, TListItem } from '../../types';
+import { getExampleImagesConfig, getSupportedProofOfAddressDocuments } from '../../utils';
 import { CommonMistakesExamples } from '../CommonMistakesExamples';
 import './DocumentSubmission.scss';
 
-const DocumentSubmission: React.FC = () => {
+const DocumentSubmission: React.FC<TDocumentSubmissionProps> = ({ countryCode }) => {
     const { localize } = useTranslations();
     const { isDesktop } = useDevice();
     const { data: isEuRegion } = useIsEuRegion();
+    const { isLoading, kyc_auth_status: kycAuthStatus } = useKycAuthStatus({ country: countryCode });
+    const [documentList, setDocumentList] = useState<Required<TListItem>[]>([]);
     const { setFieldValue, values } = useFormikContext<TDocumentSubmission>();
 
+    useEffect(() => {
+        if (!isLoading && kycAuthStatus) {
+            const { address } = kycAuthStatus;
+            const { supported_documents: supportedDocuments } = address;
+            const docList = getSupportedProofOfAddressDocuments().filter(doc =>
+                supportedDocuments?.includes(doc.value)
+            );
+            setDocumentList(docList);
+        }
+    }, [isLoading, kycAuthStatus]);
+
     const listItems = [
-        localize('Utility bill: electricity, water, gas, or landline phone bill.'),
-        localize(
-            'Financial, legal, or government document: recent bank statement, affidavit, or government-issued letter.'
-        ),
-        localize('Home rental agreement: valid and current agreement.'),
+        {
+            id: 'utility_bill',
+            value: (
+                <Localize
+                    components={[<strong key={0} />]}
+                    i18n_default_text='<0>Utility bill:</0> Electricity, water, gas, or landline phone bill.'
+                />
+            ),
+        },
+        {
+            id: 'financial_legal_government_document',
+            value: (
+                <Localize
+                    components={[<strong key={0} />]}
+                    i18n_default_text='<0>Financial, legal, or government document:</0> Recent bank statement, affidavit, or government-issued letter.'
+                />
+            ),
+        },
+        {
+            id: 'tenancy_agreement',
+            value: (
+                <Localize
+                    components={[<strong key={0} />]}
+                    i18n_default_text='<0>Tenancy agreement:</0> Valid and current agreement.'
+                />
+            ),
+        },
     ];
 
     useEffect(() => {
@@ -34,23 +69,23 @@ const DocumentSubmission: React.FC = () => {
         <div className='wallets-poa__document'>
             <div className='wallets-poa__document__title'>
                 <Text weight='bold'>
-                    <Localize i18n_default_text='Document submission' />
+                    <Localize i18n_default_text='Submit your document' />
                 </Text>
                 <div className='wallets-poa__document__title__divider' />
             </div>
             <div className='wallets-poa__document__container'>
                 <div className='wallets-poa__document__container__disclaimer'>
-                    <Text size='sm' weight='bold'>
+                    <Text align='start' size='sm' weight='bold'>
                         {localize(
-                            'We accept only these types of documents as proof of address. The document must be recent (issued within last {{timePeriod}} months) and include your name and address:',
+                            'We accept only the following documents as proof of address. The document must be issued within last {{timePeriod}} months and include your name and address:',
                             { timePeriod: isEuRegion ? '6' : '12' }
                         )}
                     </Text>
 
-                    <ul className='wallets-poa__document__container__disclaimer__list'>
+                    <ul className='wallets-poa__document__container__disclaimer-list'>
                         {listItems.map(item => (
-                            <li key={`list-item-${item}`}>
-                                <Text size='sm'>{item}</Text>
+                            <li key={`list-item-${item.id}`}>
+                                <Text size='sm'>{item.value}</Text>
                             </li>
                         ))}
                     </ul>
@@ -70,6 +105,20 @@ const DocumentSubmission: React.FC = () => {
                         ))}
                     </div>
                 </div>
+
+                <div className='wallets-poa__document__type-selection'>
+                    <Text size='sm' weight='bold'>
+                        <Localize i18n_default_text='Select the type of document:' />
+                    </Text>
+                    <FormDropdown
+                        isFullWidth
+                        label={localize('Type of document')}
+                        list={documentList}
+                        listHeight='sm'
+                        name='documentType'
+                    />
+                </div>
+
                 <div className='wallets-poa__document__container__upload'>
                     <Text size='sm' weight='bold'>
                         <Localize i18n_default_text='Upload file' />

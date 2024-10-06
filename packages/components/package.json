@@ -84,7 +84,7 @@
         "clsx": "^2.1.1",
         "embla-carousel-react": "8.0.0-rc12",
         "framer-motion": "^6.5.1",
-        "gh-pages": "^2.1.1",
+        "gh-pages": "^6.1.1",
         "glob": "^7.1.5",
         "lodash.debounce": "^4.0.8",
         "lodash.throttle": "^4.1.1",

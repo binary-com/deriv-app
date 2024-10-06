@@ -115,3 +115,5 @@ export type TProductForMarketDetails = NonNullable<
 >;
 
 export type TTranslations = ReturnType<typeof useTranslations>;
+
+export type TLanguageType = 'AR' | 'EN';

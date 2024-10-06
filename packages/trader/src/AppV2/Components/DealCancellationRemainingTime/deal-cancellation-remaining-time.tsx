@@ -24,7 +24,12 @@ const DealCancellationRemainingTime = observer(({ format = 'mm:ss' }: DealCancel
         <Tag
             className='deal-cancellation-badge'
             data-testid='dt_deal_cancellation_badge'
-            icon={<LabelPairedStopwatchCaptionRegularIcon key='open-contract-card' />}
+            icon={
+                <LabelPairedStopwatchCaptionRegularIcon
+                    key='open-contract-card'
+                    fill='var(--component-tag-label-color-default)'
+                />
+            }
             label={
                 <RemainingTime
                     end_time={end_time}

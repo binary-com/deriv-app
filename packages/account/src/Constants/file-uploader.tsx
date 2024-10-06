@@ -1,6 +1,6 @@
-import { Localize } from '@deriv/translations';
 import React from 'react';
-import { TFilesDescription } from '../Types';
+import { TFilesDescription, TListItem } from '../Types';
+import { localize, Localize } from '@deriv-com/translations';
 
 export const getFileUploaderDescriptions = (page: string, is_eu?: boolean): TFilesDescription => {
     const proof_of_income_descriptions = {
@@ -25,24 +25,37 @@ export const getFileUploaderDescriptions = (page: string, is_eu?: boolean): TFil
     const proof_of_address_descriptions = {
         title: (
             <Localize
-                i18n_default_text='We accept only these types of documents as proof of your address. The document must be recent (issued within last {{expiry_in_months}} months) and include your name and address:'
+                i18n_default_text='We accept only the following documents as proof of address. The document must be issued within the last {{expiry_in_months}} months and include your full name and address:'
                 values={{ expiry_in_months: is_eu ? 6 : 12 }}
             />
         ),
         descriptions: [
             {
                 id: 'utility_bill',
-                value: <Localize i18n_default_text='Utility bill: electricity, water, gas, or landline phone bill.' />,
+                value: (
+                    <Localize
+                        i18n_default_text='<0>Utility bill:</0> Electricity, water, gas, or landline phone bill.'
+                        components={[<strong key={0} />]}
+                    />
+                ),
             },
             {
                 id: 'financial_legal_government_document',
                 value: (
-                    <Localize i18n_default_text='Financial, legal, or government document: recent bank statement, affidavit, or government-issued letter.' />
+                    <Localize
+                        i18n_default_text='<0>Financial, legal, or government document:</0> Recent bank statement, affidavit, or government-issued letter.'
+                        components={[<strong key={0} />]}
+                    />
                 ),
             },
             {
-                id: 'home_rental_agreement',
-                value: <Localize i18n_default_text='Home rental agreement: valid and current agreement.' />,
+                id: 'tenancy_agreement',
+                value: (
+                    <Localize
+                        i18n_default_text='<0>Tenancy agreement:</0> Valid and current agreement.'
+                        components={[<strong key={0} />]}
+                    />
+                ),
             },
         ],
     };
@@ -50,4 +63,37 @@ export const getFileUploaderDescriptions = (page: string, is_eu?: boolean): TFil
     if (page === 'poinc') return proof_of_income_descriptions;
     if (page === 'poa') return proof_of_address_descriptions;
     return { title: '', descriptions: [] };
+};
+
+export const getSupportedProofOfAddressDocuments = (): Required<TListItem>[] => {
+    return [
+        {
+            value: 'utility_bill',
+            text: localize('Utility bill (electricity, water, gas)'),
+        },
+        {
+            value: 'phone_bill',
+            text: localize('Landline phone bill'),
+        },
+        {
+            value: 'bank_statement',
+            text: localize('Bank statement'),
+        },
+        {
+            value: 'affidavit',
+            text: localize('Official residence declaration or affidavit'),
+        },
+        {
+            value: 'official_letter',
+            text: localize('Official letter issued by the government or solicitor'),
+        },
+        {
+            value: 'rental_agreement',
+            text: localize('Rental/tenancy agreement'),
+        },
+        {
+            text: localize('Others'),
+            value: 'poa_others',
+        },
+    ];
 };

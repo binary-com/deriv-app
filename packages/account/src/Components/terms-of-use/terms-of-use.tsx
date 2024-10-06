@@ -21,7 +21,7 @@ import { useDevice } from '@deriv-com/ui';
 
 type TTermsOfUseFormProps = {
     agreed_tos: boolean;
-    agreed_tnc: boolean;
+    tnc_acceptance: boolean;
     fatca_declaration?: '0' | '1';
     resident_self_declaration?: boolean;
 };
@@ -132,8 +132,8 @@ const TermsOfUse = observer(
                                                 component={CheckboxField}
                                                 label_font_size={isDesktop ? 'xs' : 'xxs'}
                                                 className='terms-of-use__checkbox'
-                                                name='agreed_tnc'
-                                                id='agreed_tnc'
+                                                name='tnc_acceptance'
+                                                id='tnc_acceptance'
                                                 label={
                                                     <Localize
                                                         i18n_default_text='I agree to the <0>terms and conditions</0>.'
@@ -171,7 +171,7 @@ const TermsOfUse = observer(
                                         is_disabled={
                                             isSubmitting ||
                                             !values.agreed_tos ||
-                                            !values.agreed_tnc ||
+                                            !values.tnc_acceptance ||
                                             !values.fatca_declaration ||
                                             !(is_residence_self_declaration_required
                                                 ? values.resident_self_declaration

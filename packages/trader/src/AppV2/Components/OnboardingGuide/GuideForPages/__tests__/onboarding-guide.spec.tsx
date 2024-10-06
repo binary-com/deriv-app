@@ -103,4 +103,22 @@ describe('OnboardingGuide', () => {
 
         jest.useRealTimers();
     });
+
+    it('should execute callback function after Modal is closed', async () => {
+        const callback = jest.fn();
+        jest.useFakeTimers();
+        render(<OnboardingGuide callback={callback} type='positions_page' />);
+
+        await waitFor(() => jest.advanceTimersByTime(800));
+
+        expect(screen.getByText(positions_modal_text)).toBeInTheDocument();
+        expect(screen.queryByText(guide_container)).not.toBeInTheDocument();
+
+        userEvent.click(screen.getByRole('button'));
+        await waitFor(() => jest.advanceTimersByTime(300));
+
+        expect(callback).toBeCalled();
+
+        jest.useRealTimers();
+    });
 });

@@ -6,10 +6,7 @@ import { PlatformDetails } from '../../../constants';
 import { getAccountName, getLandingCompanyNameOfMT5Account, getMarketType } from '../../../helpers';
 
 /** A custom hook that enhances the transfer accounts response by adding additional properties for convenient UI rendering. */
-const useExtendedTransferAccountProperties = (
-    accounts?: THooks.TransferAccount[],
-    authorizeData?: THooks.Authorize
-) => {
+const useExtendedTransferAccountProperties = (accounts?: THooks.TransferAccount[]) => {
     const { data: activeWallet, isLoading: isActiveWalletLoading } = useActiveWalletAccount();
     const { getConfig, isLoading: isCurrencyConfigLoading } = useCurrencyConfig();
 
@@ -29,7 +26,6 @@ const useExtendedTransferAccountProperties = (
             });
             const displayBalance = displayMoney(Number(account.balance), currencyConfig?.display_code, {
                 fractional_digits: currencyConfig?.fractional_digits,
-                preferred_language: authorizeData?.preferred_language,
             });
             const landingCompanyName =
                 account.account_type === PlatformDetails.mt5.name
@@ -49,7 +45,7 @@ const useExtendedTransferAccountProperties = (
         const walletAccounts = updatedAccounts?.filter(account => account.account_category === 'wallet') || [];
 
         return { tradingAccounts, walletAccounts };
-    }, [accounts, activeWallet?.landing_company_name, authorizeData?.preferred_language, getConfig]);
+    }, [accounts, activeWallet?.landing_company_name, getConfig]);
 
     const modifiedActiveWallet = useMemo(() => {
         return extendedTransferAccounts.walletAccounts.find(account => account.loginid === activeWallet?.loginid);

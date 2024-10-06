@@ -11,7 +11,6 @@ type TProps = {
     fractionDigits?: number;
     isError?: boolean;
     label: string;
-    locale?: Intl.LocalesArgument;
     maxDigits?: number;
     onBlur?: VoidFunction;
     onChange?: (value: number) => void;
@@ -25,7 +24,6 @@ const WalletTransferFormInputField: React.FC<TProps> = ({
     fractionDigits = 0,
     isError,
     label,
-    locale,
     maxDigits,
     onBlur,
     onChange,
@@ -43,13 +41,13 @@ const WalletTransferFormInputField: React.FC<TProps> = ({
         value: formattedValue,
     } = useInputATMFormatter(inputRef, value, {
         fractionDigits,
-        locale,
+        locale: 'en-US',
         maxDigits,
     });
 
     useEffect(() => {
-        onChange?.(Number(unFormatLocaleString(formattedValue, locale)));
-    }, [formattedValue, locale, onChange]);
+        onChange?.(Number(unFormatLocaleString(formattedValue, 'en-US')));
+    }, [formattedValue, onChange]);
 
     const onFocusHandler = useCallback(() => {
         setIsFocused(true);
@@ -63,9 +61,11 @@ const WalletTransferFormInputField: React.FC<TProps> = ({
 
     return (
         <div className='wallets-atm-amount-input'>
-            <Text size='sm'>{label}</Text>
+            <Text align='start' size='sm'>
+                {label}
+            </Text>
             <div className='wallets-atm-amount-input__input-container'>
-                <Text size='lg' weight='bold'>
+                <Text align='start' size='lg' weight='bold'>
                     <input
                         className={classnames('wallets-atm-amount-input__input', {
                             'wallets-atm-amount-input__input--error': isError,

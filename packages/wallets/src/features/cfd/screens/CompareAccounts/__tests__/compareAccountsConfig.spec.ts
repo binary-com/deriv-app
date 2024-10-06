@@ -1,3 +1,4 @@
+import { localize } from '@deriv-com/translations';
 import { CFD_PLATFORMS, MARKET_TYPE } from '../../../constants';
 import {
     getAccountVerificationStatus,
@@ -12,20 +13,16 @@ import {
 } from '../compareAccountsConfig';
 import { JURISDICTION, MARKET_TYPE_SHORTCODE } from '../constants';
 
-jest.mock('@deriv-com/translations', () => ({
-    localize: jest.fn(str => str),
-}));
-
 describe('compareAccountsConfig', () => {
     describe('getHighlightedIconLabel', () => {
         it('returns correct labels for synthetic market type', () => {
-            const result = getHighlightedIconLabel(CFD_PLATFORMS.MT5, false, MARKET_TYPE.SYNTHETIC, 'SVG');
+            const result = getHighlightedIconLabel(CFD_PLATFORMS.MT5, false, localize, MARKET_TYPE.SYNTHETIC, 'SVG');
             expect(result).toHaveLength(9);
             expect(result[0].text).toBe('Forex: standard');
         });
 
         it('returns correct labels for EU region', () => {
-            const result = getHighlightedIconLabel(CFD_PLATFORMS.MT5, true, MARKET_TYPE.SYNTHETIC, 'SVG');
+            const result = getHighlightedIconLabel(CFD_PLATFORMS.MT5, true, localize, MARKET_TYPE.SYNTHETIC, 'SVG');
             expect(result).toHaveLength(9);
             expect(result[0].text).toBe('Forex');
         });
@@ -34,6 +31,7 @@ describe('compareAccountsConfig', () => {
             const result = getHighlightedIconLabel(
                 CFD_PLATFORMS.MT5,
                 false,
+                localize,
                 MARKET_TYPE.FINANCIAL,
                 JURISDICTION.LABUAN
             );
@@ -45,6 +43,7 @@ describe('compareAccountsConfig', () => {
             const result = getHighlightedIconLabel(
                 CFD_PLATFORMS.MT5,
                 false,
+                localize,
                 MARKET_TYPE.FINANCIAL,
                 JURISDICTION.MALTAINVEST
             );
@@ -53,13 +52,13 @@ describe('compareAccountsConfig', () => {
         });
 
         it('returns correct labels for ALL market type with MT5 platform', () => {
-            const result = getHighlightedIconLabel(CFD_PLATFORMS.MT5, false, MARKET_TYPE.ALL, 'SVG');
+            const result = getHighlightedIconLabel(CFD_PLATFORMS.MT5, false, localize, MARKET_TYPE.ALL, 'SVG');
             expect(result).toHaveLength(9);
             expect(result[6].text).toBe('Synthetics indices');
         });
 
         it('returns correct labels for ALL market type with non-MT5 platform', () => {
-            const result = getHighlightedIconLabel(CFD_PLATFORMS.CTRADER, false, MARKET_TYPE.ALL, 'SVG');
+            const result = getHighlightedIconLabel(CFD_PLATFORMS.CTRADER, false, localize, MARKET_TYPE.ALL, 'SVG');
             expect(result).toHaveLength(9);
             expect(result[6].text).toBe('Synthetic indices');
         });
@@ -77,37 +76,37 @@ describe('compareAccountsConfig', () => {
 
     describe('getJurisdictionDescription', () => {
         it('returns correct description for synthetic BVI', () => {
-            const result = getJurisdictionDescription(MARKET_TYPE_SHORTCODE.SYNTHETIC_BVI);
+            const result = getJurisdictionDescription(localize, MARKET_TYPE_SHORTCODE.SYNTHETIC_BVI);
             expect(result.jurisdiction).toBe('British Virgin Islands');
         });
 
         it('returns correct description for financial BVI', () => {
-            const result = getJurisdictionDescription(MARKET_TYPE_SHORTCODE.FINANCIAL_BVI);
+            const result = getJurisdictionDescription(localize, MARKET_TYPE_SHORTCODE.FINANCIAL_BVI);
             expect(result.jurisdiction).toBe('British Virgin Islands');
         });
 
         it('returns correct description for synthetic Vanuatu', () => {
-            const result = getJurisdictionDescription(MARKET_TYPE_SHORTCODE.SYNTHETIC_VANUATU);
+            const result = getJurisdictionDescription(localize, MARKET_TYPE_SHORTCODE.SYNTHETIC_VANUATU);
             expect(result.jurisdiction).toBe('Vanuatu');
         });
 
         it('returns correct description for financial Vanuatu', () => {
-            const result = getJurisdictionDescription(MARKET_TYPE_SHORTCODE.FINANCIAL_VANUATU);
+            const result = getJurisdictionDescription(localize, MARKET_TYPE_SHORTCODE.FINANCIAL_VANUATU);
             expect(result.jurisdiction).toBe('Vanuatu');
         });
 
         it('returns correct description for financial Labuan', () => {
-            const result = getJurisdictionDescription(MARKET_TYPE_SHORTCODE.FINANCIAL_LABUAN);
+            const result = getJurisdictionDescription(localize, MARKET_TYPE_SHORTCODE.FINANCIAL_LABUAN);
             expect(result.jurisdiction).toBe('Labuan');
         });
 
         it('returns correct description for financial Maltainvest', () => {
-            const result = getJurisdictionDescription(MARKET_TYPE_SHORTCODE.FINANCIAL_MALTAINVEST);
+            const result = getJurisdictionDescription(localize, MARKET_TYPE_SHORTCODE.FINANCIAL_MALTAINVEST);
             expect(result.jurisdiction).toBe('Malta');
         });
 
         it('returns default description for DerivX', () => {
-            const result = getJurisdictionDescription(MARKET_TYPE_SHORTCODE.ALL_DXTRADE);
+            const result = getJurisdictionDescription(localize, MARKET_TYPE_SHORTCODE.ALL_DXTRADE);
             expect(result).toEqual(
                 expect.objectContaining({
                     jurisdiction: 'St. Vincent & Grenadines',
@@ -116,7 +115,7 @@ describe('compareAccountsConfig', () => {
         });
 
         it('returns default description for all SVG', () => {
-            const result = getJurisdictionDescription(MARKET_TYPE_SHORTCODE.ALL_SVG);
+            const result = getJurisdictionDescription(localize, MARKET_TYPE_SHORTCODE.ALL_SVG);
             expect(result).toEqual(
                 expect.objectContaining({
                     jurisdiction: 'St. Vincent & Grenadines',
@@ -125,7 +124,7 @@ describe('compareAccountsConfig', () => {
         });
 
         it('returns default description for synthetic SVG', () => {
-            const result = getJurisdictionDescription(MARKET_TYPE_SHORTCODE.SYNTHETIC_SVG);
+            const result = getJurisdictionDescription(localize, MARKET_TYPE_SHORTCODE.SYNTHETIC_SVG);
             expect(result).toEqual(
                 expect.objectContaining({
                     jurisdiction: 'St. Vincent & Grenadines',
@@ -134,7 +133,7 @@ describe('compareAccountsConfig', () => {
         });
 
         it('returns default description for financial SVG', () => {
-            const result = getJurisdictionDescription(MARKET_TYPE_SHORTCODE.FINANCIAL_SVG);
+            const result = getJurisdictionDescription(localize, MARKET_TYPE_SHORTCODE.FINANCIAL_SVG);
             expect(result).toEqual(
                 expect.objectContaining({
                     jurisdiction: 'St. Vincent & Grenadines',
@@ -143,7 +142,7 @@ describe('compareAccountsConfig', () => {
         });
 
         it('returns default description for unknown shortcode', () => {
-            const result = getJurisdictionDescription('unknown');
+            const result = getJurisdictionDescription(localize, 'unknown');
             expect(result).toEqual(
                 expect.objectContaining({
                     jurisdiction: 'St. Vincent & Grenadines',

@@ -1,7 +1,7 @@
 .trade {
     display: flex;
     flex-direction: column;
-    background-color: var(--core-color-solid-slate-75);
+    background-color: var(--semantic-color-slate-solid-surface-frame-mid);
     padding: 0 var(--core-spacing-400) var(--core-spacing-400);
     gap: var(--core-spacing-400);
 
@@ -10,7 +10,7 @@
         width: 100vw;
         inset-inline-start: calc(-1 * var(--core-spacing-400));
         padding: var(--core-spacing-400) var(--core-spacing-800);
-        background-color: var(--core-color-solid-slate-50);
+        background-color: var(--semantic-color-slate-solid-surface-frame-low);
         display: flex;
         gap: var(--core-spacing-400);
         overflow-x: auto;
@@ -45,8 +45,13 @@
         }
     }
     &__chart {
-        border-radius: var(--core-borderRadius-400);
+        border-top-left-radius: var(--core-borderRadius-400);
+        border-top-right-radius: var(--core-borderRadius-400);
         overflow: hidden;
+        &--with-borderRadius {
+            border-bottom-left-radius: var(--core-borderRadius-400);
+            border-bottom-right-radius: var(--core-borderRadius-400);
+        }
 
         .smartcharts {
             position: relative;
@@ -54,6 +59,7 @@
     }
     &__parameter {
         min-height: 7.2rem;
+        background-color: var(--semantic-color-slate-solid-surface-frame-low);
 
         &:has(.trade-params__options__wrapper--horizontal:not(:only-child)) {
             min-height: 10.4rem;

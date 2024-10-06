@@ -7,7 +7,8 @@
     flex-direction: row;
     gap: 1.6rem;
     max-width: 79.2rem;
-    padding: 1.6rem 3.2rem 1.6rem 1.6rem;
+    padding: 1.6rem;
+    padding-inline-end: 3.2rem;
 
     @include mobile-or-tablet-screen {
         align-items: flex-start;
@@ -21,6 +22,7 @@
     &__content {
         display: flex;
         flex-direction: column;
+        align-items: flex-start;
         gap: 0.8rem;
 
         @include mobile-or-tablet-screen {

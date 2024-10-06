@@ -1,6 +1,10 @@
 .payment-agent-transfer-form {
     width: 100%;
 
+    .dc-input__field {
+        text-align: start;
+    }
+
     &__container {
         padding: 0 13.2rem;
         gap: 2.4rem;

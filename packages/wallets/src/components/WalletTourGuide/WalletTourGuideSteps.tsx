@@ -11,14 +11,14 @@ const stepProps = {
     spotlightPadding: 0,
 };
 
-export const desktopStepTourGuide = (allWalletsAreAdded: boolean): Step[] => [
+export const desktopStepTourGuide = (allWalletsAreAdded: boolean, isRtl: boolean): Step[] => [
     {
         content: (
-            <Text size='sm'>
+            <Text align='start' size='sm'>
                 <Localize i18n_default_text='Manage your funds with Wallets.' />
             </Text>
         ),
-        placement: 'bottom-start',
+        placement: isRtl ? 'bottom-end' : 'bottom-start',
         styles: { spotlight: { borderRadius: '1.6rem' } },
         target: '.wallets-container__header',
         title: (
@@ -30,11 +30,11 @@ export const desktopStepTourGuide = (allWalletsAreAdded: boolean): Step[] => [
     },
     {
         content: (
-            <Text size='sm'>
+            <Text align='start' size='sm'>
                 <Localize i18n_default_text='Press the tab to switch between Demo or Real Wallets.' />
             </Text>
         ),
-        disableScrolling: true,
+        disableScrolling: false,
         placement: 'bottom',
         target: '.wallets-list-header__slider',
         title: (
@@ -46,7 +46,7 @@ export const desktopStepTourGuide = (allWalletsAreAdded: boolean): Step[] => [
     },
     {
         content: (
-            <Text size='sm'>
+            <Text align='start' size='sm'>
                 <Localize i18n_default_text='Switch to a Wallet from the drop-down menu.' />
             </Text>
         ),
@@ -63,7 +63,7 @@ export const desktopStepTourGuide = (allWalletsAreAdded: boolean): Step[] => [
     },
     {
         content: (
-            <Text size='sm'>
+            <Text align='start' size='sm'>
                 <Localize
                     components={[<strong key={0} />]}
                     i18n_default_text='Want Wallets in other currencies too? Press <0>Add</0>.'
@@ -71,7 +71,7 @@ export const desktopStepTourGuide = (allWalletsAreAdded: boolean): Step[] => [
             </Text>
         ),
         disableScrolling: false,
-        placement: 'right',
+        placement: isRtl ? 'left' : 'right',
         styles: { spotlight: { borderRadius: '1.6rem' } },
         target: allWalletsAreAdded ? 'null' : '.wallets-add-more__card',
         title: (
@@ -83,7 +83,7 @@ export const desktopStepTourGuide = (allWalletsAreAdded: boolean): Step[] => [
     },
     {
         content: (
-            <Text size='sm'>
+            <Text align='start' size='sm'>
                 <Localize i18n_default_text='Press here to repeat this tour.' />
             </Text>
         ),
@@ -103,7 +103,7 @@ export const desktopStepTourGuide = (allWalletsAreAdded: boolean): Step[] => [
 export const mobileStepTourGuide = (allWalletsAreAdded: boolean): Step[] => [
     {
         content: (
-            <Text size='sm'>
+            <Text align='start' size='sm'>
                 <Localize i18n_default_text='Manage your funds with Wallets.' />
             </Text>
         ),
@@ -119,7 +119,7 @@ export const mobileStepTourGuide = (allWalletsAreAdded: boolean): Step[] => [
     },
     {
         content: (
-            <Text size='sm'>
+            <Text align='start' size='sm'>
                 <Localize i18n_default_text='Swipe left or right to switch between Wallets.' />
             </Text>
         ),
@@ -136,7 +136,7 @@ export const mobileStepTourGuide = (allWalletsAreAdded: boolean): Step[] => [
     },
     {
         content: (
-            <Text size='sm'>
+            <Text align='start' size='sm'>
                 <Localize i18n_default_text='Press the tab to switch between CFDs and Options accounts.' />
             </Text>
         ),
@@ -153,7 +153,7 @@ export const mobileStepTourGuide = (allWalletsAreAdded: boolean): Step[] => [
     },
     {
         content: (
-            <Text size='sm'>
+            <Text align='start' size='sm'>
                 <Localize
                     components={[<strong key={0} />]}
                     i18n_default_text='Want Wallets in other currencies too? Press <0>Add</0>.'
@@ -173,7 +173,7 @@ export const mobileStepTourGuide = (allWalletsAreAdded: boolean): Step[] => [
     },
     {
         content: (
-            <Text size='sm'>
+            <Text align='start' size='sm'>
                 <Localize i18n_default_text='Press here to repeat this tour.' />
             </Text>
         ),

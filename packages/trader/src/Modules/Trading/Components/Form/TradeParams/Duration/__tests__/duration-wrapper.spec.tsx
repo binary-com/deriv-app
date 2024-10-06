@@ -73,7 +73,6 @@ describe('<DurationWrapper />', () => {
                     expiry_time: null,
                     onChange: jest.fn(),
                     onChangeMultiple: jest.fn(),
-                    sendTradeParamsAnalytics: jest.fn(),
                     start_date: 0,
                     market_close_times: [],
                     market_open_times: [],

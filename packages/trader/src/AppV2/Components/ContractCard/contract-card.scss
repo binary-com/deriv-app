@@ -3,7 +3,7 @@
     display: flex;
     width: 100%;
     cursor: pointer;
-    background-color: var(--component-modal-bg);
+    background-color: var(--semantic-color-slate-solid-surface-frame-low);
     padding: var(--semantic-spacing-general-md);
     justify-content: space-between;
     height: 10.4rem;
@@ -12,63 +12,49 @@
     text-decoration: none;
     color: unset;
 
-    .dc-icon {
-        display: flex;
-        flex-shrink: 0;
-        justify-content: center;
-        align-items: center;
-        width: var(--core-size-1600);
-        height: var(--core-size-1600);
-    }
     &__body {
         display: flex;
         flex-direction: column;
-        gap: var(--semantic-spacing-gap-md);
-    }
-    &__body,
-    &__title {
+        justify-content: space-between;
+        gap: var(--semantic-spacing-gap-sm);
         min-width: 0;
         flex-grow: 1;
     }
     &__details,
-    .status-and-profit {
+    .tag__wrapper {
         display: flex;
         gap: var(--core-spacing-400);
         align-items: center;
+        justify-content: space-between;
+    }
+    .tag__wrapper {
+        gap: var(--core-spacing-200);
+    }
+    .risk-management,
+    .timer {
+        color: var(--component-tag-label-color-default);
+    }
+    .forward-starting {
+        font-size: var(--core-fontSize-50);
     }
     .status,
+    .risk-management,
     .timer {
-        background-color: var(--core-color-opacity-black-75);
+        background-color: var(--component-tag-bg-default);
 
         &,
         .dc-remaining-time {
             font-size: var(--core-fontSize-50);
+            color: var(--component-tag-label-color-default);
         }
-    }
-    .status-and-profit {
-        justify-content: space-between;
-    }
-    &__title {
-        display: flex;
-        flex-direction: column;
     }
     .trade-type,
     .symbol {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
 
-        &-icon {
-            padding: var(--core-size-200);
-        }
-    }
-    .symbol,
-    .stake {
-        color: var(--component-textIcon-normal-subtle);
-    }
-    .stake {
-        align-self: flex-end;
-    }
     .buttons {
         display: flex;
         align-self: center;
@@ -92,15 +78,15 @@
             align-items: center;
             width: var(--core-size-3600);
             height: 100%;
+            color: var(--component-textIcon-static-prominentDark);
             cursor: pointer;
 
             .label,
             .dc-remaining-time {
-                color: var(--core-color-solid-slate-50);
                 font-size: var(--core-fontSize-50);
             }
             &:disabled:not(.loading) {
-                background-color: var(--core-color-opacity-black-200);
+                background-color: var(--semantic-color-monochrome-surface-normal-midLow);
 
                 .label {
                     color: var(--component-textIcon-normal-disabled);
@@ -111,8 +97,12 @@
                 height: var(--core-size-600);
                 display: grid;
                 border-radius: 50%;
-                mask: radial-gradient(farthest-side, #0000 50%, var(--core-color-solid-slate-1400) 51%);
-                background: linear-gradient(0deg, rgba(255, 255, 255, 0.5) 50%, var(--core-color-solid-slate-50) 0)
+                mask: radial-gradient(farthest-side, #0000 50%, var(--component-textIcon-static-prominentDark) 51%);
+                background: linear-gradient(
+                            0deg,
+                            rgba(255, 255, 255, 0.5) 50%,
+                            var(--component-button-bg-sell-primary-loading) 0
+                        )
                         center/1px 100%,
                     linear-gradient(90deg, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0.75) 0) center/100% 1px;
                 background-repeat: no-repeat;
@@ -195,6 +185,7 @@
         gap: var(--core-spacing-400);
         width: inherit;
         padding-inline: var(--core-spacing-400);
+        padding-block-end: var(--core-spacing-400);
 
         &--has-buttons-demo {
             .contract-card-wrapper:first-child {
@@ -248,7 +239,7 @@
             position: sticky;
             top: 0;
             z-index: 1;
-            background-color: var(--core-color-solid-slate-75);
+            background-color: var(--semantic-color-slate-solid-surface-frame-mid);
         }
     }
 }

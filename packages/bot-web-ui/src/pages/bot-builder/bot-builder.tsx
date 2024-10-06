@@ -7,7 +7,7 @@ import { notification_message } from 'Components/bot-notification/bot-notificati
 import { TBlocklyEvents } from 'Types';
 import LoadModal from '../../components/load-modal';
 import { useDBotStore } from '../../stores/useDBotStore';
-import SaveModal from '../dashboard/load-bot-preview/save-modal';
+import SaveModal from '../dashboard/bot-list/save-modal/save-modal';
 import BotBuilderTourHandler from '../tutorials/dbot-tours/bot-builder-tour';
 import QuickStrategy1 from './quick-strategy';
 import WorkspaceWrapper from './workspace-wrapper';

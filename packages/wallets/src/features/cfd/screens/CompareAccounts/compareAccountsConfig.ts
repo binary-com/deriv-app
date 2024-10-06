@@ -1,4 +1,4 @@
-import { localize } from '@deriv-com/translations';
+import { useTranslations } from '@deriv-com/translations';
 import getInstrumentsIcons from '../../../../public/images/tradingInstruments';
 import { THooks, TPlatforms } from '../../../../types';
 import { CFD_PLATFORMS, MARKET_TYPE, PRODUCT } from '../../constants';
@@ -17,6 +17,7 @@ type TShortCode = THooks.AvailableMT5Accounts['shortcode'];
 const getHighlightedIconLabel = (
     platform: TPlatforms.All,
     isEuRegion: boolean,
+    localize: ReturnType<typeof useTranslations>['localize'],
     marketType: TMarketTypes,
     shortCode: TShortCode,
     product?: THooks.AvailableMT5Accounts['product']
@@ -105,14 +106,14 @@ const getHighlightedIconLabel = (
                 if (product === PRODUCT.ZEROSPREAD) {
                     return [
                         { highlighted: true, icon: 'Forex', text: forexLabel },
-                        { highlighted: false, icon: 'Stocks', text: 'Stocks' },
-                        { highlighted: true, icon: 'StockIndices', text: 'Stock indices' },
-                        { highlighted: true, icon: 'Commodities', text: 'Commodities' },
-                        { highlighted: true, icon: 'Cryptocurrencies', text: 'Cryptocurrencies' },
-                        { highlighted: false, icon: 'ETF', text: 'ETFs' },
-                        { highlighted: true, icon: 'Synthetics', text: 'Synthetic indices' },
-                        { highlighted: true, icon: 'Baskets', text: 'Basket indices' },
-                        { highlighted: true, icon: 'DerivedFX', text: 'Derived FX' },
+                        { highlighted: false, icon: 'Stocks', text: localize('Stocks') },
+                        { highlighted: true, icon: 'StockIndices', text: localize('Stock indices') },
+                        { highlighted: true, icon: 'Commodities', text: localize('Commodities') },
+                        { highlighted: true, icon: 'Cryptocurrencies', text: localize('Cryptocurrencies') },
+                        { highlighted: false, icon: 'ETF', text: localize('ETFs') },
+                        { highlighted: true, icon: 'Synthetics', text: localize('Synthetic indices') },
+                        { highlighted: true, icon: 'Baskets', text: localize('Basket indices') },
+                        { highlighted: true, icon: 'DerivedFX', text: localize('Derived FX') },
                     ];
                 }
                 return [
@@ -154,7 +155,7 @@ const getPlatformType = (platform: TPlatforms.All) => {
     }
 };
 
-const cfdConfig = {
+const cfdConfig = (localize: ReturnType<typeof useTranslations>['localize']) => ({
     counterparty_company: localize('Deriv (SVG) LLC'),
     counterparty_company_description: localize('Counterparty company'),
     jurisdiction: localize('St. Vincent & Grenadines'),
@@ -166,14 +167,14 @@ const cfdConfig = {
     regulator_license: '',
     spread: localize('0.5 pips'),
     spread_description: localize('Spreads from'),
-};
+});
 
-const getJurisdictionDescription = (shortcode?: string) => {
+const getJurisdictionDescription = (localize: ReturnType<typeof useTranslations>['localize'], shortcode?: string) => {
     switch (shortcode) {
         case MARKET_TYPE_SHORTCODE.SYNTHETIC_BVI:
         case MARKET_TYPE_SHORTCODE.FINANCIAL_BVI:
             return {
-                ...cfdConfig,
+                ...cfdConfig(localize),
                 counterparty_company: localize('Deriv (BVI) Ltd'),
                 jurisdiction: localize('British Virgin Islands'),
                 regulator: localize('British Virgin Islands Financial Services Commission'),
@@ -183,7 +184,7 @@ const getJurisdictionDescription = (shortcode?: string) => {
         case MARKET_TYPE_SHORTCODE.SYNTHETIC_VANUATU:
         case MARKET_TYPE_SHORTCODE.FINANCIAL_VANUATU:
             return {
-                ...cfdConfig,
+                ...cfdConfig(localize),
                 counterparty_company: localize('Deriv (V) Ltd'),
                 jurisdiction: localize('Vanuatu'),
                 regulator: localize('Vanuatu Financial Services Commission'),
@@ -192,18 +193,18 @@ const getJurisdictionDescription = (shortcode?: string) => {
             };
         case MARKET_TYPE_SHORTCODE.FINANCIAL_LABUAN:
             return {
-                ...cfdConfig,
+                ...cfdConfig(localize),
                 counterparty_company: localize('Deriv (FX) Ltd'),
                 jurisdiction: localize('Labuan'),
                 leverage: localize('Up to 1:100'),
                 regulator: localize('Labuan Financial Services Authority'),
                 regulator_description: localize('Regulator/External dispute resolution'),
                 regulator_license: localize('(License no. MB/18/0024)'),
-                spread: '0.6 pips',
+                spread: localize('0.6 pips'),
             };
         case MARKET_TYPE_SHORTCODE.FINANCIAL_MALTAINVEST:
             return {
-                ...cfdConfig,
+                ...cfdConfig(localize),
                 counterparty_company: localize('Deriv Investments (Europe) Limited'),
                 jurisdiction: localize('Malta'),
                 leverage: localize('Up to 1:30'),
@@ -215,19 +216,19 @@ const getJurisdictionDescription = (shortcode?: string) => {
             };
         case MARKET_TYPE_SHORTCODE.ALL_ZERO_SPREAD_BVI:
             return {
-                ...cfdConfig,
-                counterparty_company: 'Deriv (BVI) Ltd',
-                jurisdiction: 'British Virgin Islands',
-                regulator: 'British Virgin Islands Financial Services Commission',
-                regulator_license: '(License no. SIBA/L/18/1114)',
-                spread: '0.0 pips',
+                ...cfdConfig(localize),
+                counterparty_company: localize('Deriv (BVI) Ltd'),
+                jurisdiction: localize('British Virgin Islands'),
+                regulator: localize('British Virgin Islands Financial Services Commission'),
+                regulator_license: localize('(License no. SIBA/L/18/1114)'),
+                spread: localize('0.0 pips'),
             };
         case MARKET_TYPE_SHORTCODE.ALL_DXTRADE:
         case MARKET_TYPE_SHORTCODE.ALL_SVG:
         case MARKET_TYPE_SHORTCODE.SYNTHETIC_SVG:
         case MARKET_TYPE_SHORTCODE.FINANCIAL_SVG:
         default:
-            return cfdConfig;
+            return cfdConfig(localize);
     }
 };
 

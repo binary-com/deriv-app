@@ -40,7 +40,7 @@ const WithdrawalCryptoForm: React.FC = () => {
                 return (
                     <form autoComplete='off' className='wallets-withdrawal-crypto-form' onSubmit={handleSubmit}>
                         <div className='wallets-withdrawal-crypto-address'>
-                            <Field name='cryptoAddress' validate={validateCryptoAddress}>
+                            <Field name='cryptoAddress' validate={validateCryptoAddress(localize)}>
                                 {({ field, meta }: FieldProps<string>) => (
                                     <WalletTextField
                                         {...field}

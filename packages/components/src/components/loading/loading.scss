@@ -68,7 +68,7 @@
         height: 100%;
     }
     &__trade {
-        background-color: var(--core-color-opacity-black-75);
+        background-color: var(--semantic-color-slate-solid-surface-frame-mid);
         padding: 0 var(--core-spacing-400);
         gap: var(--semantic-spacing-general-sm);
         position: relative;
@@ -123,7 +123,7 @@
     }
     &__positions {
         width: 100%;
-        background-color: var(--core-color-solid-slate-75);
+        background-color: var(--semantic-color-slate-solid-surface-frame-mid);
 
         .skeleton-box {
             &__filters,
@@ -153,7 +153,7 @@
         }
     }
     &__contract-details {
-        background-color: var(--core-color-solid-slate-75);
+        background-color: var(--semantic-color-slate-solid-surface-frame-mid);
         padding: var(--core-spacing-400);
         gap: var(--semantic-spacing-general-sm);
 

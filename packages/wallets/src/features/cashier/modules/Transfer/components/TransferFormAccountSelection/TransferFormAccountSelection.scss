@@ -77,7 +77,8 @@
     &__header {
         display: flex;
         height: 5.6rem;
-        padding: 1.6rem 1.6rem 1.6rem 2.4rem;
+        padding: 1.6rem;
+        padding-inline-start: 2.4rem;
         justify-content: space-between;
         align-items: center;
         gap: 1.6rem;
@@ -99,7 +100,7 @@
 
     &__label {
         @include mobile-or-tablet-screen {
-            padding-left: 0.8rem;
+            padding-inline-start: 0.8rem;
         }
     }
 
@@ -110,7 +111,7 @@
 
         @include mobile-or-tablet-screen {
             padding: 0;
-            padding-right: 0.8rem;
+            padding-inline-end: 0.8rem;
         }
     }
 
@@ -127,7 +128,7 @@
         flex-grow: 1;
         border-bottom: 1px solid var(--general-section-1, #f2f3f4);
         margin-block: 0.9rem;
-        margin-left: 1rem;
+        margin-inline-start: 1rem;
     }
 
     &__transfer-to-hint {

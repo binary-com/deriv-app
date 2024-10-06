@@ -30,7 +30,7 @@ const SelfieUpload: TManualDocumentComponent = ({ onClickBack, onCompletion }) =
             title={localize('Add a real MT5 account')}
         >
             <div className='wallets-selfie-upload'>
-                <Text weight='bold'>
+                <Text align='start' weight='bold'>
                     <Localize i18n_default_text='Upload your selfie' />
                 </Text>
                 <Dropzone
@@ -44,11 +44,8 @@ const SelfieUpload: TManualDocumentComponent = ({ onClickBack, onCompletion }) =
                     noClick
                     onFileChange={(file?: File) => setFieldValue('selfieFile', file)}
                 />
-                <Text color={isDesktop ? 'less-prominent' : 'general'}>
-                    <Localize
-                        i18n_default_text='Face forward and remove your glasses if necessary. Make sure your eyes are clearly visible and your
-                    face is within the frame.'
-                    />
+                <Text align='start' color={isDesktop ? 'less-prominent' : 'general'}>
+                    <Localize i18n_default_text='Face forward and remove your glasses if necessary. Make sure your eyes are clearly visible and your face is within the frame.' />
                 </Text>
             </div>
         </ModalStepWrapper>

@@ -101,12 +101,9 @@ export const personal_details_config = ({
                 ['phone', localize('Phone is not in a proper format.')],
                 [
                     (value: string) => {
-                        // phone_trim uses regex that trims non-digits
-                        const phone_trim = value.replace(/\D/g, '');
-                        // minimum characters required is 9 numbers (excluding +- signs or space)
-                        return validLength(phone_trim, { min: PHONE_NUMBER_LENGTH.MIN, max: PHONE_NUMBER_LENGTH.MAX });
+                        return validLength(value, { min: PHONE_NUMBER_LENGTH.MIN, max: PHONE_NUMBER_LENGTH.MAX });
                     },
-                    localize('You should enter {{min}}-{{max}} numbers.', {
+                    localize('You should enter {{min}}-{{max}} characters.', {
                         min: PHONE_NUMBER_LENGTH.MIN,
                         max: PHONE_NUMBER_LENGTH.MAX,
                     }),

@@ -22,7 +22,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/binary-com/deriv-app.git"
+        "url": "git+https://github.com/deriv-com/deriv-app.git"
     },
     "scripts": {
         "analyze:stats": "f () { NODE_OPTIONS='-r ts-node/register' webpack --progress --config \"./build/webpack.config.js\" --env base=$1 --profile --json=stats.json;}; f",
@@ -34,7 +34,7 @@
         "build": "f () { NODE_OPTIONS='-r ts-node/register' webpack --config \"./build/webpack.config.js\" --env base=$1;}; f"
     },
     "bugs": {
-        "url": "https://github.com/binary-com/deriv-app/issues"
+        "url": "https://github.com/deriv-com/deriv-app/issues"
     },
     "dependencies": {
         "@deriv-com/ui": "1.35.0",

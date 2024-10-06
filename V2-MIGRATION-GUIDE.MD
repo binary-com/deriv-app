@@ -58,7 +58,6 @@ https://drive.google.com/drive/folders/1XOCreZ6Zfd0uyh-Xmm6ux2_ak1Cqo2Hw?usp=dri
 
 All the informations should be within the above presentation. But to reiterate very briefly:
 - unit tests are the default ones. They are easy to write and quick to execute, so feel free to add as many as you need
-- component tests are slightly heavier (especially given our setup with PlayWright), so use when unit tests are no longer suitable
 - e2e tests are the slowest, and they are in separate repository, and they use actual backend (which makes them prone to flakiness), so use as a last resort in a daily work
 
 ## Css patterns:

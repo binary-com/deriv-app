@@ -1,16 +1,16 @@
 import React from 'react';
-import { Dialog, Icon, Text } from '@deriv/components';
-import { Localize } from '@deriv/translations';
+import { Dialog, Text } from '@deriv/components';
 import { LabelPairedCheckCaptionFillIcon } from '@deriv/quill-icons';
 import './announcement-dialog.scss';
 import { TAnnounce, TContentItem } from './config';
+import { IconAnnounceModal } from './announcement-components';
 
 type TAccumulatorAnnouncementDialog = {
     announcement: TAnnounce;
     is_announce_dialog_open: boolean;
     setIsAnnounceDialogOpen: (is_announce_dialog_open: boolean) => void;
     handleOnConfirm: () => void;
-    handleOnCancel: () => void;
+    handleOnCancel: (() => void) | null;
     is_tablet?: boolean;
 };
 
@@ -22,7 +22,17 @@ const AnnouncementDialog = ({
     setIsAnnounceDialogOpen,
     is_tablet,
 }: TAccumulatorAnnouncementDialog) => {
-    const { main_title, confirm_button_text, cancel_button_text, base_classname, title, content } = announcement;
+    const {
+        id,
+        main_title,
+        confirm_button_text,
+        cancel_button_text,
+        base_classname,
+        title,
+        content,
+        numbered_content,
+        plain_text,
+    } = announcement;
     return (
         <Dialog
             portal_element_id='modal_root_absolute'
@@ -38,19 +48,12 @@ const AnnouncementDialog = ({
             className={is_tablet ? `${base_classname} ${base_classname}--tablet` : base_classname}
         >
             <div className={`${base_classname}__body-text`}>
-                <div className={`${base_classname}__body-icon`}>
-                    <Icon icon='IcTradetypeAccu' className='category-type' color='brand' size='80' />
+                <div className={`${base_classname}__body-icon--${id.toLowerCase()}`}>
+                    <IconAnnounceModal announce_id={id} />
                 </div>
-                <div>
-                    <Text
-                        as='p'
-                        line_height='xl'
-                        size='xs'
-                        align='center'
-                        weight='bold'
-                        className={`${base_classname}__title`}
-                    >
-                        <Localize i18n_default_text={title} />
+                <div className={`${base_classname}__body-main-content`}>
+                    <Text as='p' size='xs' className={`${base_classname}__title--${id.toLowerCase()}`}>
+                        {title}
                     </Text>
                     {Array.isArray(content) &&
                         content.map((content_item: TContentItem) => {
@@ -59,12 +62,43 @@ const AnnouncementDialog = ({
                                     <div>
                                         <LabelPairedCheckCaptionFillIcon fill='var(--icon-black-plus)' />
                                     </div>
-                                    <Text as='p' line_height='xl' size='xs'>
-                                        <Localize i18n_default_text={content_item?.text} />
+                                    <Text as='p' line_height='l' size='xs'>
+                                        {content_item?.text}
                                     </Text>
                                 </div>
                             );
                         })}
+                    {Array.isArray(numbered_content) && (
+                        <ol className={`${base_classname}__body-item--numbered`}>
+                            {numbered_content.map((content: TContentItem) => (
+                                <Text
+                                    as='li'
+                                    line_height='xl'
+                                    size='xs'
+                                    key={content?.id}
+                                    styles={{ listStyle: 'auto' }}
+                                >
+                                    {content?.text}
+                                </Text>
+                            ))}
+                        </ol>
+                    )}
+                    {Array.isArray(plain_text) && (
+                        <div>
+                            {plain_text.map((plain_text_item: TContentItem) => (
+                                <span key={plain_text_item?.id}>
+                                    <Text
+                                        line_height='m'
+                                        size='xs'
+                                        key={plain_text_item.id}
+                                        styles={{ listStyle: 'auto' }}
+                                    >
+                                        {plain_text_item.text}
+                                    </Text>
+                                </span>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
         </Dialog>

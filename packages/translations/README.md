@@ -6,7 +6,7 @@
 
 <br />
 
-Push and pull Crowdin translations actions will automatically extract strings from the Deriv.app repo and upload them to Crowdin. It will also check whether Crowdin has new translations available, and if so, it will automatically download these translations and create a PR to Deriv.app's `master` branch to merge them in. For more information you can check [here](https://github.com/binary-com/deriv-app/blob/master/.github/workflows/push_and_pull_crowdin_translations.yml)
+Push and pull Crowdin translations actions will automatically extract strings from the Deriv.app repo and upload them to Crowdin. It will also check whether Crowdin has new translations available, and if so, it will automatically download these translations and create a PR to Deriv.app's `master` branch to merge them in. For more information you can check [here](https://github.com/deriv-com/deriv-app/blob/master/.github/workflows/push_and_pull_crowdin_translations.yml)
 
 <br />
 
@@ -26,7 +26,7 @@ Push and pull Crowdin translations actions will automatically extract strings fr
 -   Crowdin CLI: download here: https://support.crowdin.com/cli-tool/#installation
 -   `CROWDIN_API_KEY` environment variables to your `~/.bash_profile`
 -   remote `origin` should be your fork
--   remote `upstream` should be the source repository (e.g. `git@github.com:binary-com/deriv-app.git`)
+-   remote `upstream` should be the source repository (e.g. `git@github.com:deriv-com/deriv-app.git`)
 
 ## Extracting translations
 

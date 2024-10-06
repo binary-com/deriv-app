@@ -7,7 +7,7 @@ import { DBotStoreProvider, mockDBotStore } from 'Stores/useDBotStore';
 import WorkspaceWrapper from '../workspace-wrapper';
 
 jest.mock('@deriv/bot-skeleton/src/scratch/dbot', () => jest.fn());
-jest.mock('../../dashboard/load-bot-preview/stop-bot-modal', () => jest.fn(() => <div>StopBotModal</div>));
+jest.mock('../stop-bot-modal', () => jest.fn(() => <div>StopBotModal</div>));
 
 const mockTextToDom = jest.fn(() => {
     const xml_element = document.createElement('xml');

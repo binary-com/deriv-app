@@ -1,6 +1,6 @@
-import { localize } from '@deriv-com/translations';
+import { useTranslations } from '@deriv-com/translations';
 
-export const getTransactionLabels = () => ({
+export const getTransactionLabels = (localize: ReturnType<typeof useTranslations>['localize']) => ({
     all: localize('All'),
     deposit: localize('Deposit'),
     reset_balance: localize('Reset balance'),

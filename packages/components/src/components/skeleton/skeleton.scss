@@ -1,7 +1,7 @@
 .skeleton {
     width: 100%;
     height: 100%;
-    background-color: var(--core-color-opacity-black-75);
+    background-color: var(--semantic-color-monochrome-surface-normal-lowest);
     border-radius: var(--semantic-borderRadius-md);
 
     &.animated {
@@ -9,7 +9,7 @@
 
         @keyframes pulsate {
             to {
-                background-color: var(--core-color-opacity-black-100);
+                background-color: var(--semantic-color-monochrome-surface-normal-low);
             }
         }
     }

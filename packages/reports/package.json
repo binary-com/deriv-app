@@ -23,7 +23,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/binary-com/deriv-app.git"
+        "url": "https://github.com/deriv-com/deriv-app.git"
     },
     "keywords": [
         "deriv"
@@ -31,9 +31,9 @@
     "author": "Deriv",
     "license": "Apache-2.0",
     "bugs": {
-        "url": "https://github.com/binary-com/deriv-app/issues"
+        "url": "https://github.com/deriv-com/deriv-app/issues"
     },
-    "homepage": "https://github.com/binary-com/deriv-app",
+    "homepage": "https://github.com/deriv-com/deriv-app",
     "devDependencies": {
         "babel-eslint": "^10.1.0",
         "babel-loader": "^8.1.0",

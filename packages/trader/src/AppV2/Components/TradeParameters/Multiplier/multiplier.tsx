@@ -70,7 +70,7 @@ const Multiplier = observer(({ is_minimized }: TMultiplierProps) => {
                 onClick={() => setIsOpen(true)}
             />
             <ActionSheet.Root
-                expandable
+                expandable={false}
                 isOpen={isOpen}
                 position='left'
                 onClose={() => {

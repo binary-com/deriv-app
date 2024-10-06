@@ -347,10 +347,10 @@
             &__block {
                 @include flex-center;
                 flex-direction: column;
-                padding-inline-end: 4rem;
+                margin-inline-end: 4rem;
 
                 @include mobile-or-tablet-screen {
-                    padding: 1rem;
+                    margin: 1rem;
                 }
 
                 &:hover {
