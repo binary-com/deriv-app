@@ -47,7 +47,10 @@ export const exponentialMovingAverageArray = (data, config) => {
 
     let init_val = exponentialMovingAverage(data.slice(0, periods), config);
 
-    return data
-        .slice(periods - 1)
-        .map((x, i) => (!i ? init_val : (init_val = exponentialMovingAverage([x], config, init_val))));
+    return (
+        data
+            .slice(periods - 1)
+            // eslint-disable-next-line no-confusing-arrow
+            .map((x, i) => (!i ? init_val : (init_val = exponentialMovingAverage([x], config, init_val))))
+    );
 };

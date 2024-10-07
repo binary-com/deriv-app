@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { useFormikContext } from 'formik';
 import { APIProvider, AuthProvider } from '@deriv/api-v2';
-import { act, render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useWithdrawalCryptoContext, WithdrawalCryptoProvider } from '../../../../../provider';
 import WithdrawalCryptoPriority from '../WithdrawalCryptoPriority';
@@ -72,10 +72,10 @@ describe('WithdrawalCryptoForm', () => {
 
         const checkbox = screen.getByLabelText('Priority withdrawal');
 
-        await act(async () => {
-            userEvent.click(checkbox);
-        });
+        await userEvent.click(checkbox);
 
-        expect(screen.getByText('122.99770000')).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getByText('122.99770000')).toBeInTheDocument();
+        });
     });
 });

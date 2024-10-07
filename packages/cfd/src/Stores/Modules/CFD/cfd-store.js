@@ -176,6 +176,7 @@ export default class CFDStore extends BaseStore {
         const list = {};
         const show_eu_related_content = this.root_store.traders_hub.show_eu_related_content;
         this.root_store.client.mt5_login_list
+            // eslint-disable-next-line no-confusing-arrow
             .filter(acc =>
                 show_eu_related_content
                     ? acc.landing_company_short === 'maltainvest'

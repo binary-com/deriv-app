@@ -77,6 +77,7 @@ export const getDocumentData = (country_code: string, document_type: string) => 
         new_display_name: '',
         example_format: '',
     };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const IDV_DOCUMENT_DATA: any = getIDVDocuments(country_code);
     if (IDV_DOCUMENT_DATA) {
         return IDV_DOCUMENT_DATA[document_type] ?? DEFAULT_CONFIG;

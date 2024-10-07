@@ -116,6 +116,7 @@ const getDurationFromString = (duration_string: string) => {
 };
 
 // TODO will change this after the global stores types get ready
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getExpiryType = (store: any) => {
     const { duration_unit, expiry_date, expiry_type, duration_units_list } = store;
     const server_time = store.root_store.common.server_time;

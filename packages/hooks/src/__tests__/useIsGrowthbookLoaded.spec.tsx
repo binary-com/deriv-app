@@ -8,6 +8,11 @@ jest.mock('@deriv-com/analytics');
 
 describe('useIsGrowthbookIsLoaded', () => {
     beforeEach(() => {
+        jest.useFakeTimers();
+        jest.spyOn(global, 'setInterval');
+        jest.spyOn(global, 'clearInterval');
+        jest.spyOn(global, 'setTimeout');
+        jest.spyOn(global, 'clearTimeout');
         jest.clearAllMocks();
     });
 
@@ -31,7 +36,7 @@ describe('useIsGrowthbookIsLoaded', () => {
                         },
                     },
                     tracking: {},
-                } as any)
+                }) as any
         );
         const { result, rerender } = renderHook(() => useIsGrowthbookIsLoaded());
 
@@ -60,7 +65,7 @@ describe('useIsGrowthbookIsLoaded', () => {
                         },
                     },
                     tracking: {},
-                } as any)
+                }) as any
         );
 
         const { result } = renderHook(() => useIsGrowthbookIsLoaded());

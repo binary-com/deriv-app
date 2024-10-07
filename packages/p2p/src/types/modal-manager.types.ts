@@ -5,6 +5,7 @@ export type TModals = typeof Modals;
 export type TModalKeys = keyof TModals;
 
 export type TModalProps = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [T in TModalKeys]: Parameters<TModals[T]>[0] extends { [key: string]: any }
         ? Parameters<TModals[T]>[0]
         : Record<string, never>;

@@ -34,10 +34,10 @@ describe('DepositCryptoAddress', () => {
         expect(screen.getByTestId('dt_deposit-crypto-address-qr-code')).toBeInTheDocument();
     });
 
-    it('should show copy text when hovering', () => {
+    it('should show copy text when hovering', async () => {
         (useHover as jest.Mock).mockReturnValue(true);
         render(<DepositCryptoAddress depositCryptoAddress='1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa' />);
-        userEvent.hover(screen.getByRole('button'));
+        await userEvent.hover(screen.getByRole('button'));
         expect(screen.getByText('Copy')).toBeInTheDocument();
     });
 });

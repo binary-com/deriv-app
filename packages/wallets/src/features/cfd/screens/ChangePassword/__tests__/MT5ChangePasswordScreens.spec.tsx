@@ -84,10 +84,10 @@ describe('MT5ChangePasswordScreens', () => {
         expect(screen.getByText('Investor Password')).toBeInTheDocument();
     });
 
-    it('renders SentEmailContent when create or reset investor password button is clicked', () => {
+    it('renders SentEmailContent when create or reset investor password button is clicked', async () => {
         render(<MT5ChangePasswordScreens />);
 
-        userEvent.click(screen.getByText('Investor Password'));
+        await userEvent.click(screen.getByText('Investor Password'));
 
         const createOrResetInvestorPasswordButton = screen.getByRole('button', {
             name: 'Create or reset investor password',
@@ -95,7 +95,7 @@ describe('MT5ChangePasswordScreens', () => {
 
         expect(createOrResetInvestorPasswordButton).toBeInTheDocument();
 
-        userEvent.click(createOrResetInvestorPasswordButton);
+        await userEvent.click(createOrResetInvestorPasswordButton);
 
         expect(screen.getByText('Sent Email Content')).toBeInTheDocument();
         expect(screen.getByTestId('dt_change_password_sent_email_content_wrapper')).toBeInTheDocument();

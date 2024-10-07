@@ -95,7 +95,7 @@ describe('<VerificationFailed />', () => {
 
         expect(screen.getByText('Why did my verification fail?')).toBeInTheDocument();
 
-        userEvent.click(screen.getByText('Maybe later'));
+        await userEvent.click(screen.getByText('Maybe later'));
 
         await waitFor(() => {
             expect(mockHideModal).toBeCalled();
@@ -113,7 +113,7 @@ describe('<VerificationFailed />', () => {
 
         expect(screen.getByText('Why did my verification fail?')).toBeInTheDocument();
 
-        userEvent.click(screen.getAllByText('Resubmit documents')[1]);
+        await userEvent.click(screen.getAllByText('Resubmit documents')[1]);
 
         await waitFor(() => {
             expect(mockShowModal).toBeCalled();

@@ -101,6 +101,7 @@ const ContractTypeWidget = observer(
 
                 onChange({ target: { name, value: clicked_item.value } });
 
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 if ((window as any).hj) (window as any).hj('event', `selected_${clicked_item.value}_contract_type`);
                 if (subform_name === 'trade_type') {
                     Analytics.trackEvent('ce_trade_types_form', {

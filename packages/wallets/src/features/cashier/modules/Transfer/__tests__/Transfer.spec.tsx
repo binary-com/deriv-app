@@ -59,7 +59,7 @@ describe('Transfer', () => {
         expect(screen.getByRole('button', { name: 'Make another transfer' })).toBeInTheDocument();
     });
 
-    it('should call reset transfer when Make another transfer button is clicked', () => {
+    it('should call reset transfer when Make another transfer button is clicked', async () => {
         (useTransfer as jest.Mock).mockReturnValue({
             error: { error: { code: 'Error', message: 'Error message' } },
             receipt: undefined,
@@ -69,7 +69,7 @@ describe('Transfer', () => {
 
         const resetErrorButton = screen.getByRole('button', { name: 'Make another transfer' });
         expect(resetErrorButton).toBeInTheDocument();
-        userEvent.click(resetErrorButton);
+        await userEvent.click(resetErrorButton);
         expect(mockResetTransfer).toBeCalled();
     });
 });

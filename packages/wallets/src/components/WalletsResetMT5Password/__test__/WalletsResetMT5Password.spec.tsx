@@ -110,7 +110,7 @@ describe('WalletsResetMT5Password', () => {
         fireEvent.change(inputBox, { target: { value: 'Abcd1234!' } });
         expect(await inputBox).toHaveValue('Abcd1234!');
         expect(createButton).toBeEnabled();
-        await fireEvent.click(createButton);
+        fireEvent.click(createButton);
         expect(mockMutate).toHaveBeenCalledTimes(1);
     });
 
@@ -133,7 +133,7 @@ describe('WalletsResetMT5Password', () => {
         fireEvent.change(inputBox, { target: { value: 'Abcd1234!' } });
         expect(await inputBox).toHaveValue('Abcd1234!');
         expect(createButton).toBeEnabled();
-        await fireEvent.click(createButton);
+        fireEvent.click(createButton);
         expect(mockMutate).toHaveBeenCalledTimes(1);
     });
 
@@ -156,7 +156,7 @@ describe('WalletsResetMT5Password', () => {
         fireEvent.change(inputBox, { target: { value: 'Abcd1234!' } });
         expect(await inputBox).toHaveValue('Abcd1234!');
         expect(createButton).toBeEnabled();
-        await fireEvent.click(createButton);
+        fireEvent.click(createButton);
         expect(mockMutate).toHaveBeenCalledTimes(1);
         expect(mockShow).toBeCalled();
     });
@@ -180,7 +180,7 @@ describe('WalletsResetMT5Password', () => {
         fireEvent.change(inputBox, { target: { value: 'Abcd1234!' } });
         expect(await inputBox).toHaveValue('Abcd1234!');
         expect(createButton).toBeEnabled();
-        await fireEvent.click(createButton);
+        fireEvent.click(createButton);
         expect(mockMutate).toHaveBeenCalledTimes(1);
         expect(mockShow).toBeCalled();
     });
@@ -196,7 +196,7 @@ describe('WalletsResetMT5Password', () => {
     it('should cancel reset on click of Cancel button', async () => {
         render(<WalletsResetMT5Password {...defaultProps} />);
         const cancelButton = await screen.findByRole('button', { name: /Cancel/ });
-        await fireEvent.click(cancelButton);
+        fireEvent.click(cancelButton);
         expect(mockHide).toHaveBeenCalledTimes(1);
     });
 });

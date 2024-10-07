@@ -38,6 +38,7 @@ type TPositionDrawerCardItem = TPortfolioStore &
         is_new_row?: boolean;
         measure?: () => void;
         onClickRemove: ReturnType<typeof useStore>['portfolio']['removePositionById'];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         row?: TPortfolioPosition | { [key: string]: any };
         server_time: ReturnType<typeof useStore>['common']['server_time'];
         symbol: ReturnType<typeof useTraderStore>['symbol'];

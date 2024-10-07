@@ -39,11 +39,11 @@ describe('CFDPlatformsListEmptyState', () => {
         ).toBeInTheDocument();
     });
 
-    it('redirects to `wallet/account-transfer` route if the user is clicking on `Transfer` button', () => {
+    it('redirects to `wallet/account-transfer` route if the user is clicking on `Transfer` button', async () => {
         render(<CFDPlatformsListEmptyState />);
 
         const transferBtn = screen.getByRole('button', { name: 'Transfer' });
-        userEvent.click(transferBtn);
+        await userEvent.click(transferBtn);
 
         expect(mockPush).toHaveBeenCalledWith('/wallet/account-transfer', { shouldSelectDefaultWallet: true });
     });

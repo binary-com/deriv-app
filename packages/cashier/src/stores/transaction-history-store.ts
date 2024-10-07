@@ -2,7 +2,10 @@ import { action, observable, makeObservable } from 'mobx';
 import type { TWebSocket, TRootStore } from '../types';
 
 export default class TransactionHistoryStore {
-    constructor(public WS: TWebSocket, public root_store: TRootStore) {
+    constructor(
+        public WS: TWebSocket,
+        public root_store: TRootStore
+    ) {
         makeObservable(this, {
             is_transactions_crypto_cancel_modal_visible: observable,
             is_transactions_crypto_status_modal_visible: observable,

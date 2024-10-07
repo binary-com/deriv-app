@@ -17,6 +17,7 @@ type TABQuestionnaire = {
 };
 export type TQuestionnaireModal = {
     ab_questionnaire: TABQuestionnaire[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     handleSignup: (...args: any) => void;
 };
 

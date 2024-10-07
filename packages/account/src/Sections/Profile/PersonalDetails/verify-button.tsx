@@ -12,6 +12,7 @@ import './verify-button.scss';
 type TVerifyButton = {
     is_verify_button_disabled: boolean;
     next_email_otp_request_timer?: number;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setStatus: (status: any) => void;
     values: GetSettings;
     residence_list: ResidenceList;

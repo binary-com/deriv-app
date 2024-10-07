@@ -311,6 +311,7 @@ const transformHighLow = (data: TContractInfo) => {
 };
 
 // Map of contract types to their respective transform functions
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const transformFunctionMap: Record<string, (data: TContractInfo) => Record<string, any>> = {
     [CONTRACT_TYPES.TURBOS.LONG]: transformTurbosData,
     [CONTRACT_TYPES.TURBOS.SHORT]: transformTurbosData,

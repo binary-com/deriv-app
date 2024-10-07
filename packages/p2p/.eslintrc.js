@@ -7,4 +7,7 @@ module.exports = {
             webpack: { config: webpackConfig() },
         },
     },
+    rules: {
+        'simple-import-sort/imports': 'warn',
+    },
 };

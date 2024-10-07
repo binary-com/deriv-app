@@ -50,6 +50,7 @@ const ServerTime = (() => {
         update_time_interval = setInterval(updateTime, 1000);
     };
 
+    // eslint-disable-next-line no-confusing-arrow
     const get = () => (server_time ? server_time.clone() : undefined);
 
     return {

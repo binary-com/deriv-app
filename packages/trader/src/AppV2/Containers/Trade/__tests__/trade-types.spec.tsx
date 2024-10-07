@@ -53,7 +53,6 @@ const mockTradeTypes = (mocked_store = mockStore(default_mock_store)) => {
 };
 
 describe('TradeTypes', () => {
-    const originalScrollBy = HTMLElement.prototype.scrollBy;
     const scrollByMock = jest.fn();
     beforeEach(() => {
         mockGetTradeTypesList.mockReturnValue([
@@ -71,9 +70,7 @@ describe('TradeTypes', () => {
         });
     });
     afterAll(() => {
-        Object.defineProperty(HTMLElement.prototype, 'scrollBy', {
-            value: originalScrollBy,
-        });
+        jest.restoreAllMocks();
     });
 
     it('should render the TradeTypes component with pinned and other trade types', () => {

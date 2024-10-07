@@ -142,6 +142,7 @@ export const isCryptocurrency = (currency: string) => {
 };
 
 export const CryptoConfig = (() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let crypto_config: any;
 
     // TODO: [use-shared-i18n] - Use translate function shared among apps or pass in translated names externally.

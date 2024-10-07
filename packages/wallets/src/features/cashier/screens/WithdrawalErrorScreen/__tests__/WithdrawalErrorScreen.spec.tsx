@@ -38,7 +38,7 @@ describe('WithdrawalErrorScreen', () => {
         expect(screen.getByRole('button', { name: 'Resend email' })).toBeInTheDocument();
     });
 
-    it('should trigger proper callbacks when the user is clicking on `Resend email` button', () => {
+    it('should trigger proper callbacks when the user is clicking on `Resend email` button', async () => {
         const error = {
             code: 'InvalidToken',
             message: 'Error message',
@@ -48,7 +48,7 @@ describe('WithdrawalErrorScreen', () => {
 
         const resendEmailBtn = screen.getByRole('button', { name: 'Resend email' });
 
-        userEvent.click(resendEmailBtn);
+        await userEvent.click(resendEmailBtn);
         expect(resetError).toHaveBeenCalledTimes(1);
         expect(setResendEmail).toHaveBeenCalledTimes(1);
         expect(setResendEmail).toHaveBeenCalledWith(true);
@@ -127,7 +127,7 @@ describe('WithdrawalErrorScreen', () => {
         expect(screen.queryByText('Verify identity')).toBeInTheDocument();
     });
 
-    it('should show redirect the user to the account/proof-of-identity when the user clicks on `Verify identity` after receiving crypto age limit verified error', () => {
+    it('should show redirect the user to the account/proof-of-identity when the user clicks on `Verify identity` after receiving crypto age limit verified error', async () => {
         const mockHistoryPush = jest.fn();
         (useHistory as jest.Mock).mockReturnValueOnce({
             push: mockHistoryPush,
@@ -140,12 +140,12 @@ describe('WithdrawalErrorScreen', () => {
         render(<WithdrawalErrorScreen error={error} resetError={resetError} setResendEmail={setResendEmail} />);
 
         const verifyIdentityButton = screen.getByText('Verify identity');
-        userEvent.click(verifyIdentityButton);
+        await userEvent.click(verifyIdentityButton);
 
         expect(mockHistoryPush).toBeCalledWith('/account/proof-of-identity');
     });
 
-    it('should reload page when the user clicks on `Try again` button', () => {
+    it('should reload page when the user clicks on `Try again` button', async () => {
         const reloadMock = jest.fn();
         Object.defineProperty(window, 'location', {
             value: { reload: reloadMock },
@@ -162,11 +162,11 @@ describe('WithdrawalErrorScreen', () => {
         expect(screen.getByText('Error message')).toBeInTheDocument();
         const ReloadButton = screen.getByRole('button', { name: 'Try again' });
 
-        userEvent.click(ReloadButton);
+        await userEvent.click(ReloadButton);
         expect(reloadMock).toHaveBeenCalled();
     });
 
-    it('should reload page when the user clicks on `Try again` button for invalid crypto address error', () => {
+    it('should reload page when the user clicks on `Try again` button for invalid crypto address error', async () => {
         const error = {
             code: 'CryptoInvalidAddress',
             message: 'Crypto Invalid Address',
@@ -178,7 +178,7 @@ describe('WithdrawalErrorScreen', () => {
         expect(screen.getByText('Crypto Invalid Address')).toBeInTheDocument();
         const ReloadButton = screen.getByRole('button', { name: 'Try again' });
 
-        userEvent.click(ReloadButton);
+        await userEvent.click(ReloadButton);
         expect(resetError).toHaveBeenCalledTimes(1);
     });
 
@@ -196,7 +196,7 @@ describe('WithdrawalErrorScreen', () => {
         expect(screen.getByRole('button', { name: 'Try again' })).toBeInTheDocument();
     });
 
-    it('should render without crashing when optional parameters are not received', () => {
+    it('should render without crashing when optional parameters are not received', async () => {
         const error = {
             code: 'InvalidToken',
             message: 'Error message',
@@ -206,7 +206,7 @@ describe('WithdrawalErrorScreen', () => {
 
         const resendEmailBtn = screen.getByRole('button', { name: 'Resend email' });
 
-        userEvent.click(resendEmailBtn);
+        await userEvent.click(resendEmailBtn);
         expect(screen.getByText('Email verification failed')).toBeInTheDocument();
         expect(
             screen.getByText('The verification link you used is invalid or expired. Please request for a new one.')

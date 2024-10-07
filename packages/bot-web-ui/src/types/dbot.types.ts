@@ -24,8 +24,11 @@ export type TDbot = {
     centerAndHighlightBlock: (block_id: string, should_animate?: boolean) => void;
     unHighlightAllBlocks: () => void;
     checkForRequiredBlocks: () => boolean;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     valueInputLimitationsListener: (event: any, force_check?: boolean) => void | boolean;
     getStrategySounds: () => unknown[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     handleDragOver?: (event: any) => void;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     handleDropOver?: (event: any, handleFileChange: () => void) => void;
 };

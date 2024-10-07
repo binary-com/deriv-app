@@ -1,7 +1,18 @@
 module.exports = {
-    extends: ['@deriv/eslint-config-deriv'],
+    extends: ['@deriv-com/eslint-config-deriv'],
     rules: {
         'global-require': 'off',
+        indent: 'off',
+        'default-param-last': 'warn',
+        'no-confusing-arrow': 'warn',
+        'no-unsafe-optional-chaining': 'warn',
+        'class-methods-use-this': 'warn',
+        'prefer-regex-literals': 'warn',
+        'prefer-exponentiation-operator': 'warn',
+        'no-restricted-exports': 'warn',
+        'no-promise-executor-return': 'warn',
+        'import/no-relative-packages': 'warn',
+        'import/no-mutable-exports': 'warn',
     },
     overrides: [
         {
@@ -13,6 +24,18 @@ module.exports = {
         {
             files: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
             extends: ['plugin:testing-library/react'],
+            rules: {
+                'testing-library/await-async-events': 'warn',
+                'testing-library/no-wait-for-multiple-assertions': 'warn',
+                'testing-library/no-wait-for-side-effects': 'warn',
+                'testing-library/no-unnecessary-act': 'warn',
+                'testing-library/prefer-presence-queries': 'warn',
+                'testing-library/prefer-query-by-disappearance': 'warn',
+                'testing-library/no-render-in-lifecycle': 'warn',
+                'testing-library/no-manual-cleanup': 'warn',
+                'jest-dom/prefer-checked': 'warn',
+                'jest-dom/prefer-to-have-value': 'warn',
+            },
         },
         {
             files: ['*.{ts,tsx}'],
@@ -21,11 +44,26 @@ module.exports = {
             extends: [
                 'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
                 'prettier/@typescript-eslint', // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
-                'plugin:react/recommended',
                 'plugin:@typescript-eslint/recommended',
                 'plugin:prettier/recommended',
+                'plugin:react/recommended',
                 'plugin:react/jsx-runtime', // Enables the new JSX transform runtime
             ],
+            rules: {
+                '@typescript-eslint/no-unused-vars': [
+                    'warn',
+                    {
+                        args: 'all',
+                        argsIgnorePattern: '^_',
+                        caughtErrors: 'all',
+                        caughtErrorsIgnorePattern: '^_',
+                        destructuredArrayIgnorePattern: '^_',
+                        varsIgnorePattern: '^_',
+                        ignoreRestSiblings: true,
+                    },
+                ],
+                '@typescript-eslint/no-unsafe-declaration-merging': 'warn',
+            },
             parserOptions: {
                 ecmaversion: 2018,
                 sourceType: 'module',
@@ -60,6 +98,12 @@ module.exports = {
                         moduleDirectory: ['src', 'node_modules'],
                     },
                 },
+            },
+        },
+        {
+            files: ['**/*.spec.ts', '**/*.spec.tsx', '**/*.test.ts', '**/*.test.tsx'],
+            rules: {
+                '@typescript-eslint/no-explicit-any': 'warn',
             },
         },
     ],

@@ -17,5 +17,6 @@ module.exports = {
     },
     rules: {
         'no-underscore-dangle': 0,
-    }
+        'simple-import-sort/imports': 'warn',
+    },
 };

@@ -12,7 +12,11 @@ type TServerTime = typeof ServerTime;
 interface ExtendedOrderDetails extends P2POrderInfo {}
 
 class ExtendedOrderDetails {
-    constructor(public order_details: P2POrderInfo, public loginid: string, public server_time: TServerTime) {
+    constructor(
+        public order_details: P2POrderInfo,
+        public loginid: string,
+        public server_time: TServerTime
+    ) {
         Object.assign(this, order_details);
     }
 

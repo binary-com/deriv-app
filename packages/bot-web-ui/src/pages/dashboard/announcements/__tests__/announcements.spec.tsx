@@ -46,22 +46,22 @@ describe('Announcements', () => {
             wrapper,
         });
         const button = screen.getByTestId('btn-announcements');
-        userEvent.click(button);
+        await userEvent.click(button);
 
-        await waitFor(() => {
+        await waitFor(async () => {
             // eslint-disable-next-line testing-library/no-node-access, testing-library/no-container
             const notification_button = container.querySelectorAll('.notification__button')[2];
 
             expect(notification_button).toBeInTheDocument();
 
-            userEvent.click(notification_button);
+            await userEvent.click(notification_button);
         });
-        await waitFor(() => {
+        await waitFor(async () => {
             const amount = screen.getByTestId('announcements__amount').textContent;
             expect(amount).toBe(`${BOT_ANNOUNCEMENTS_LIST.length - 1}`);
 
             const button_cancel = screen.getByRole('button', { name: /Learn more/i });
-            userEvent.click(button_cancel);
+            await userEvent.click(button_cancel);
         });
         await waitFor(() => {
             expect(mock_DBot_store?.dashboard.setActiveTab(DBOT_TABS.TUTORIAL));
@@ -73,22 +73,22 @@ describe('Announcements', () => {
             wrapper,
         });
         const button = screen.getByTestId('btn-announcements');
-        userEvent.click(button);
+        await userEvent.click(button);
 
-        await waitFor(() => {
+        await waitFor(async () => {
             // eslint-disable-next-line testing-library/no-node-access, testing-library/no-container
             const notification_button = container.querySelectorAll('.notification__button')[2];
 
             expect(notification_button).toBeInTheDocument();
 
-            userEvent.click(notification_button);
+            await userEvent.click(notification_button);
         });
-        await waitFor(() => {
+        await waitFor(async () => {
             const amount = screen.getByTestId('announcements__amount').textContent;
             expect(amount).toBe(`${BOT_ANNOUNCEMENTS_LIST.length - 1}`);
 
             const buttonConfirm = screen.getByRole('button', { name: /Try now/i });
-            userEvent.click(buttonConfirm);
+            await userEvent.click(buttonConfirm);
         });
         await waitFor(() => {
             expect(mock_DBot_store?.dashboard.setActiveTab(DBOT_TABS.BOT_BUILDER));
@@ -101,24 +101,24 @@ describe('Announcements', () => {
         });
 
         const button_announcements = screen.getByTestId('btn-announcements');
-        userEvent.click(button_announcements);
+        await userEvent.click(button_announcements);
 
-        const button_mark_all_as_read = screen.getByRole('button', { name: /Mark all as read/i });
-        userEvent.click(button_mark_all_as_read);
+        const button_mark_all_as_read = await screen.findByRole('button', { name: /Mark all as read/i });
+        await userEvent.click(button_mark_all_as_read);
 
         await waitFor(() => {
             expect(screen.queryByTestId('announcements__amount')).not.toBeInTheDocument();
         });
     });
 
-    it('should display all active announcements when bot-announcements has already existed in local storage.', () => {
+    it('should display all active announcements when bot-announcements has already existed in local storage.', async () => {
         localStorage?.setItem('bot-announcements', JSON.stringify({ ...BOT_ANNOUNCEMENTS_LIST }));
         render(<Announcements handleTabChange={mockHandleTabChange} is_mobile={false} />, {
             wrapper,
         });
 
         const button = screen.getByTestId('btn-announcements');
-        userEvent.click(button);
+        await userEvent.click(button);
 
         expect(screen.getByTestId('announcements__amount')).toHaveTextContent(`${BOT_ANNOUNCEMENTS_LIST.length}`);
     });

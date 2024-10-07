@@ -141,7 +141,7 @@ export type TChartLayout = {
             symbol: string;
             symbolObject: ActiveSymbols[number];
             timeUnit: string;
-        }
+        },
     ];
     timeUnit: string;
     volumeUnderlay: boolean;
@@ -1138,8 +1138,10 @@ export default class TradeStore extends BaseStore {
                             }
                             const call_put_contract = is_high_low ? higher_lower_contact : rise_fall_contract;
 
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
                             if ((window as any).hj) {
                                 const event_string = `placed_${is_call || is_put ? call_put_contract : category}_trade`;
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                 (window as any).hj('event', event_string);
                             }
 

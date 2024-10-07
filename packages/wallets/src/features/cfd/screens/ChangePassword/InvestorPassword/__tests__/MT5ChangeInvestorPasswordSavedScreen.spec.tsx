@@ -12,12 +12,12 @@ describe('MT5ChangeInvestorPasswordSavedScreen', () => {
         expect(screen.getByRole('button', { name: /OK/i })).toBeInTheDocument();
     });
 
-    it('calls setNextScreen when OK button is clicked', () => {
+    it('calls setNextScreen when OK button is clicked', async () => {
         const setNextScreenMock = jest.fn();
 
         render(<MT5ChangeInvestorPasswordSavedScreen setNextScreen={setNextScreenMock} />);
 
-        userEvent.click(screen.getByRole('button', { name: /OK/i }));
+        await userEvent.click(screen.getByRole('button', { name: /OK/i }));
 
         expect(setNextScreenMock).toHaveBeenCalled();
     });

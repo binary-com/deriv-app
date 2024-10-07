@@ -60,10 +60,10 @@ describe('<WalletsErrorMT5InvestorPassword />', () => {
         expect(screen.getByRole('button', { name: 'Done' }));
     });
 
-    it('should execute function onClick when button is clicked', () => {
+    it('should execute function onClick when button is clicked', async () => {
         render(<WalletSuccessResetMT5Password {...props} />, { wrapper });
         expect(screen.getByRole('button', { name: 'Done' }));
-        userEvent.click(screen.getByRole('button', { name: 'Done' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Done' }));
         expect(props.onClick).toBeCalled();
     });
 

@@ -5,6 +5,7 @@ import GTM from 'Utils/gtm';
 import RootStore from './root-store';
 
 export interface IFlyoutStore {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     block_listeners: any[];
     block_workspaces: Element[];
     flyout_min_width: number;
@@ -33,6 +34,7 @@ export interface IFlyoutStore {
     setIsSearchFlyout: (is_search: boolean) => void;
     setSelectedCategory: (selected_category: Element | null) => void;
     getSelectedCategory: () => Element | null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onClickOutsideFlyout: (event: any) => void;
     refreshCategory: () => void;
     variables_blocks_count: number;

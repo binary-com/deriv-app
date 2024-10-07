@@ -30,10 +30,10 @@ describe('AvailableDxtradeAccountsList', () => {
         expect(screen.getByText('Deriv X')).toBeInTheDocument();
     });
 
-    it('shows DxtradeEnterPasswordModal upon clicking on the TradingAccountCard component', () => {
+    it('shows DxtradeEnterPasswordModal upon clicking on the TradingAccountCard component', async () => {
         render(<AvailableDxtradeAccountsList />, { wrapper });
         const tradingAccountCard = screen.getByTestId('dt_wallets_trading_account_card');
-        userEvent.click(tradingAccountCard);
+        await userEvent.click(tradingAccountCard);
         expect(mockShow).toHaveBeenCalled();
     });
 });

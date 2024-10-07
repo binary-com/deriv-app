@@ -51,7 +51,7 @@ jest.mock('@cloudflare/stream-react', () => ({
 }));
 
 describe('<VideoPlayer />', () => {
-    const original_user_agent = Object.getOwnPropertyDescriptor(window.navigator, 'userAgent');
+    const original_user_agent = window.navigator.userAgent;
 
     beforeAll(() => {
         Object.defineProperty(window.navigator, 'userAgent', {
@@ -61,46 +61,49 @@ describe('<VideoPlayer />', () => {
     });
 
     afterAll(() => {
-        Object.defineProperty(window.navigator, 'userAgent', original_user_agent as PropertyDescriptor);
+        Object.defineProperty(window.navigator, 'userAgent', {
+            value: original_user_agent,
+            configurable: true,
+        });
     });
 
-    it('should render the component on desktop', () => {
+    it('should render the component on desktop', async () => {
         render(<VideoPlayer {...mocked_props} />);
         const video = screen.getByTestId(video_data_testid);
         fireEvent.loadedData(video);
         expect(screen.getByTestId(player_data_testid)).toBeInTheDocument();
 
         const playback_rate = screen.getByText(default_playback_rate);
-        userEvent.click(playback_rate);
+        await userEvent.click(playback_rate);
         const new_playback_rate = screen.getByText(faster_playback_rate);
-        userEvent.click(new_playback_rate);
+        await userEvent.click(new_playback_rate);
         expect(screen.getAllByText(faster_playback_rate)).toHaveLength(2);
 
         const pause_button = screen.getByText(icon_pause);
-        userEvent.click(pause_button);
+        await userEvent.click(pause_button);
         expect(screen.queryByText(icon_pause)).not.toBeInTheDocument();
         expect(screen.getByText(icon_play)).toBeInTheDocument();
 
         const player_progress_bar = screen.getByTestId('dt_progress_bar');
         expect(player_progress_bar).toBeInTheDocument();
-        userEvent.click(player_progress_bar);
+        await userEvent.click(player_progress_bar);
         expect(screen.getByText(icon_play)).toBeInTheDocument();
     });
-    it('should render the component for mobile browsers except for Safari', () => {
+    it('should render the component for mobile browsers except for Safari', async () => {
         render(<VideoPlayer {...mocked_props} is_mobile />);
         const video = screen.getByTestId(video_data_testid);
         fireEvent.loadedData(video);
         expect(screen.getByTestId(player_data_testid)).toBeInTheDocument();
 
         const pause_button = screen.getByText(icon_pause);
-        userEvent.click(pause_button);
+        await userEvent.click(pause_button);
         expect(screen.queryByText(icon_pause)).not.toBeInTheDocument();
         expect(screen.getByText(icon_play)).toBeInTheDocument();
 
         // a tap upon replay overlay on mobile should not resume playing while the video is not ended:
         const replay_button = screen.getByText(icon_replay);
         expect(replay_button).toBeInTheDocument();
-        userEvent.click(replay_button);
+        await userEvent.click(replay_button);
         expect(screen.getByText(icon_play)).toBeInTheDocument();
     });
     it('should render the component on mobile for Safari', () => {
@@ -116,16 +119,16 @@ describe('<VideoPlayer />', () => {
         const play_button = screen.getByText(icon_play);
         expect(play_button).toBeInTheDocument();
     });
-    it('should not resume playing if user taps upon replay overlay while the video is not ended', () => {
+    it('should not resume playing if user taps upon replay overlay while the video is not ended', async () => {
         render(<VideoPlayer {...mocked_props} />);
         const video = screen.getByTestId(video_data_testid);
         fireEvent.loadedData(video);
-        userEvent.click(video);
+        await userEvent.click(video);
         expect(screen.getByText(icon_play)).toBeInTheDocument();
 
         const replay_button = screen.getByText(icon_replay);
         expect(replay_button).toBeInTheDocument();
-        userEvent.click(replay_button);
+        await userEvent.click(replay_button);
         expect(screen.getByText(icon_play)).toBeInTheDocument();
     });
 });

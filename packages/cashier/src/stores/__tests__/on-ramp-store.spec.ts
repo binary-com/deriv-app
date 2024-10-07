@@ -14,6 +14,12 @@ let banxa_provider: TOnRampProvider,
     WS: DeepPartial<TWebSocket>;
 
 beforeEach(() => {
+    jest.useFakeTimers();
+    jest.spyOn(global, 'setInterval');
+    jest.spyOn(global, 'clearInterval');
+    jest.spyOn(global, 'setTimeout');
+    jest.spyOn(global, 'clearTimeout');
+
     root_store = mockStore({
         client: {
             is_virtual: false,
@@ -63,13 +69,13 @@ describe('OnRampStore', () => {
         onramp_store.setOnrampProviders(onramp_providers);
         onramp_store.root_store.client.currency = 'USD';
 
-        expect(onramp_store.filtered_onramp_providers.length).toBe(1);
+        expect(onramp_store.filtered_onramp_providers).toHaveLength(1);
     });
 
     it('should return three providers for BTC cryptocurrency', () => {
         onramp_store.setOnrampProviders(onramp_providers);
 
-        expect(onramp_store.filtered_onramp_providers.length).toBe(1);
+        expect(onramp_store.filtered_onramp_providers).toHaveLength(1);
     });
 
     it('should return proper onramp popup modal title if should_show_widget = true', () => {

@@ -88,7 +88,7 @@ describe('FlowTextField', () => {
         });
 
         const input = screen.getByDisplayValue('default');
-        userEvent.type(input, 'test');
+        await userEvent.type(input, 'test');
         expect(mockValidate).toHaveBeenCalled();
         expect(input).toHaveValue('defaulttest');
     });
@@ -115,7 +115,7 @@ describe('FlowTextField', () => {
         });
 
         const input = screen.getByDisplayValue('default');
-        userEvent.type(input, 'test');
+        await userEvent.type(input, 'test');
         expect(mockValidate).toHaveBeenCalled();
     });
 
@@ -142,7 +142,7 @@ describe('FlowTextField', () => {
         });
 
         const input = screen.getByDisplayValue('default');
-        userEvent.type(input, 'test');
+        await userEvent.type(input, 'test');
         expect(screen.getByText('Field is required')).toBeInTheDocument();
     });
 
@@ -163,7 +163,7 @@ describe('FlowTextField', () => {
         });
 
         const input = screen.getByDisplayValue('default');
-        userEvent.type(input, 'test');
+        await userEvent.type(input, 'test');
         expect(input).toHaveValue('default');
     });
 });

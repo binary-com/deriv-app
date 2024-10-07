@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-mutable-exports
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export let WS: Record<string, any>;
 
 export const setWebsocket = (websocket: object) => {

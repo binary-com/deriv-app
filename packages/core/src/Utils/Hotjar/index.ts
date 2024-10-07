@@ -10,6 +10,7 @@ const initHotjar = (client: TCoreStores['client']) => {
     /**
      * Inject: External Script - Hotjar
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (function (h: any, o, t, j) {
         /* eslint-disable */
         h.hj =
@@ -32,6 +33,7 @@ const initHotjar = (client: TCoreStores['client']) => {
         const account_type = client.is_virtual ? 'Demo' : 'Real';
         const account_open_date = client.account_open_date ? epochToMoment(client.account_open_date) : undefined;
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (window as any).hj('identify', user_id, {
             'Account created': account_open_date ? toMoment(account_open_date).format('YYYY-MM-DD') : '',
             'Account type': account_type,

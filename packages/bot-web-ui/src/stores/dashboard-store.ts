@@ -140,6 +140,7 @@ export default class DashboardStore implements IDashboardStore {
                 .join(' ')}`;
         });
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const getQSDescriptionContent = (strategy: any) => {
             if (!strategy) return [];
             const content: string[] = [];

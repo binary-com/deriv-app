@@ -121,7 +121,7 @@ const ChatMessages = observer(() => {
                                     )}
                                     {chat_message.message_type === ChatMessage.TYPE_FILE &&
                                         getMessageFormat(chat_message, message_color)}
-                                    <div className={`order-chat__messages-item-timestamp`}>
+                                    <div className={'order-chat__messages-item-timestamp'}>
                                         <Text color='less-prominent' line_height='s' size='xxxs'>
                                             {formatMilliseconds(chat_message.created_at, 'HH:mm', true)}
                                         </Text>

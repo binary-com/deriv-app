@@ -58,7 +58,7 @@ describe('MT5ChangeInvestorPasswordScreens', () => {
 
         render(<MT5ChangeInvestorPasswordScreens setShowEmailSentScreen={setShowEmailSentScreen} />);
 
-        userEvent.click(screen.getByRole('button', { name: 'Send Email' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Send Email' }));
 
         await waitFor(() => {
             expect(mutate).toHaveBeenCalled();
@@ -67,21 +67,21 @@ describe('MT5ChangeInvestorPasswordScreens', () => {
         });
     });
 
-    it('switches to saved screen on next screen button click', () => {
+    it('switches to saved screen on next screen button click', async () => {
         render(<MT5ChangeInvestorPasswordScreens />);
 
-        userEvent.click(screen.getByRole('button', { name: 'Next Screen' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Next Screen' }));
 
         expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument();
     });
 
-    it('calls hide modal on close button click in saved screen', () => {
+    it('calls hide modal on close button click in saved screen', async () => {
         const { hide } = useModal();
 
         render(<MT5ChangeInvestorPasswordScreens />);
 
-        userEvent.click(screen.getByRole('button', { name: 'Next Screen' }));
-        userEvent.click(screen.getByRole('button', { name: 'Close' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Next Screen' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Close' }));
 
         expect(hide).toHaveBeenCalled();
     });

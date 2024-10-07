@@ -16,10 +16,10 @@ describe('Dropzone', () => {
         const file = new File(['foo'], 'foo.txt', { type: 'text/plain' });
         render(<Dropzone buttonText='Find file' icon={<i data-testid='dt_dropzone-icon'>icon</i>} />);
         const input: HTMLInputElement = screen.getByTestId('dt_dropzone-input');
+        await userEvent.upload(input, file);
         await waitFor(() => {
-            userEvent.upload(input, file);
+            expect(input.files).toHaveLength(1);
         });
-        expect(input.files).toHaveLength(1);
     });
 
     it('should remove file when clicking on the remove button', () => {
@@ -45,10 +45,10 @@ describe('Dropzone', () => {
             />
         );
         const input = screen.getByTestId('dt_dropzone-input');
+        await userEvent.upload(input, file);
         await waitFor(() => {
-            userEvent.upload(input, file);
+            expect(screen.getByText('File uploaded is not supported')).toBeInTheDocument();
         });
-        expect(screen.getByText('File uploaded is not supported')).toBeInTheDocument();
     });
 
     it('should call onFileChange when file is changed', async () => {
@@ -63,47 +63,46 @@ describe('Dropzone', () => {
             />
         );
         const input = screen.getByTestId('dt_dropzone-input');
+        await userEvent.upload(input, file);
         await waitFor(() => {
-            userEvent.upload(input, file);
+            expect(onFileChange).toHaveBeenCalled();
         });
-        expect(onFileChange).toHaveBeenCalled();
     });
 
     it('should show error message if file size is invalid', async () => {
         const file = new File(['foo'], 'foo.txt', { type: 'text/plain' });
         render(<Dropzone buttonText='Find file' icon={<i data-testid='dt_dropzone-icon'>icon</i>} maxSize={1} />);
         const input = screen.getByTestId('dt_dropzone-input');
+        await userEvent.upload(input, file);
         await waitFor(() => {
-            userEvent.upload(input, file);
+            expect(screen.getByText('File size should be 8MB or less')).toBeInTheDocument();
         });
-        expect(screen.getByText('File size should be 8MB or less')).toBeInTheDocument();
     });
 
     it('should show hover message when dragging the file', async () => {
         const file = new File(['foo'], 'foo.txt', { type: 'text/plain' });
         render(<Dropzone buttonText='Find file' icon={<i data-testid='dt_dropzone-icon'>icon</i>} />);
         const input: HTMLInputElement = screen.getByTestId('dt_dropzone-input');
-        await waitFor(() => {
-            Object.defineProperty(input, 'files', {
-                value: [file],
-            });
-            fireEvent.dragEnter(input);
-            fireEvent.dragLeave(input);
+        Object.defineProperty(input, 'files', {
+            value: [file],
         });
-        expect(screen.getByText('Drop file here')).toBeInTheDocument();
+        fireEvent.dragEnter(input);
+        fireEvent.dragLeave(input);
+        await waitFor(() => {
+            expect(screen.getByText('Drop file here')).toBeInTheDocument();
+        });
     });
 
     it('should be able to drop the file', async () => {
         const file = new File(['foo'], 'foo.txt', { type: 'text/plain' });
         render(<Dropzone buttonText='Find file' icon={<i data-testid='dt_dropzone-icon'>icon</i>} />);
         const input: HTMLInputElement = screen.getByTestId('dt_dropzone-input');
-        await waitFor(() => {
-            Object.defineProperty(input, 'files', {
-                value: [file],
-            });
-            fireEvent.drop(input);
+        Object.defineProperty(input, 'files', {
+            value: [file],
         });
-
-        expect(input.files).toHaveLength(1);
+        fireEvent.drop(input);
+        await waitFor(() => {
+            expect(input.files).toHaveLength(1);
+        });
     });
 });

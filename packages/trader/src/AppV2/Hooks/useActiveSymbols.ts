@@ -40,6 +40,7 @@ const useActiveSymbols = () => {
         return getContractTypesConfig()[contract_type]?.trade_types ?? [];
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { barrier_category } = (available_contract_types?.[contract_type]?.config || {}) as any;
 
     const isQueryEnabled = useCallback(() => {

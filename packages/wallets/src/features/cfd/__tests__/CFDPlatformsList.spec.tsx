@@ -63,13 +63,13 @@ describe('CFDPlatformsList', () => {
             expect(learnMoreEl).toHaveAttribute('href', 'https://deriv.com/trade-types/cfds/');
         });
 
-        it('redirects to `/compare-accounts` route when the user is clicking on `Compare accounts` button', () => {
+        it('redirects to `/compare-accounts` route when the user is clicking on `Compare accounts` button', async () => {
             //@ts-expect-error we only need partial action types
             mockUseDevice.mockReturnValueOnce({ isMobile: true });
             render(<CFDPlatformsList />);
 
             const compareAccountsBtn = screen.getByText('Compare accounts');
-            userEvent.click(compareAccountsBtn);
+            await userEvent.click(compareAccountsBtn);
 
             expect(mockPush).toHaveBeenCalledWith('/compare-accounts');
         });
@@ -95,11 +95,11 @@ describe('CFDPlatformsList', () => {
             expect(learnMoreEl).toHaveAttribute('href', 'https://deriv.com/trade-types/cfds');
         });
 
-        it('redirects to `/compare-accounts` route when the user is clicking on `Compare accounts` button', () => {
+        it('redirects to `/compare-accounts` route when the user is clicking on `Compare accounts` button', async () => {
             render(<CFDPlatformsList />);
 
             const compareAccountsBtn = screen.getByText('Compare accounts');
-            userEvent.click(compareAccountsBtn);
+            await userEvent.click(compareAccountsBtn);
 
             expect(mockPush).toHaveBeenCalledWith('/compare-accounts');
         });

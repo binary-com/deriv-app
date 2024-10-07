@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { APIProvider, AuthProvider, useGrowthbookIsOn } from '@deriv/api-v2';
-import { act, render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useWithdrawalCryptoContext, WithdrawalCryptoProvider } from '../../../provider';
 import WithdrawalCryptoForm from '../WithdrawalCryptoForm';
@@ -80,16 +80,16 @@ describe('WithdrawalCryptoForm', () => {
         const cryptoAmountInput = screen.getByTestId('dt_withdrawal_crypto_amount_input');
         const submitButton = screen.getByText('Withdraw');
 
-        await act(async () => {
-            await userEvent.type(cryptoAddressInput, 'SampleAddress', { delay: 1 });
-            userEvent.type(cryptoAmountInput, '123');
-            userEvent.click(submitButton);
-        });
+        await userEvent.type(cryptoAddressInput, 'SampleAddress', { delay: 1 });
+        await userEvent.type(cryptoAmountInput, '123');
+        await userEvent.click(submitButton);
 
-        expect(mockValues.requestCryptoWithdrawal).toBeCalledWith({
-            address: 'SampleAddress',
-            amount: 123,
-            estimated_fee_unique_id: undefined,
+        await waitFor(() => {
+            expect(mockValues.requestCryptoWithdrawal).toBeCalledWith({
+                address: 'SampleAddress',
+                amount: 123,
+                estimated_fee_unique_id: undefined,
+            });
         });
     });
 
@@ -105,12 +105,12 @@ describe('WithdrawalCryptoForm', () => {
         const cryptoAmountInput = screen.getByTestId('dt_withdrawal_crypto_amount_input');
         const checkbox = screen.getByLabelText('Priority withdrawal');
 
-        await act(async () => {
-            await userEvent.type(cryptoAddressInput, 'SampleAddress', { delay: 1 });
-            userEvent.type(cryptoAmountInput, '123');
-            userEvent.click(checkbox);
-        });
+        await userEvent.type(cryptoAddressInput, 'SampleAddress', { delay: 1 });
+        await userEvent.type(cryptoAmountInput, '123');
+        await userEvent.click(checkbox);
 
-        expect(screen.getByText('122.99770000')).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getByText('122.99770000')).toBeInTheDocument();
+        });
     });
 });

@@ -105,32 +105,32 @@ describe('Guide', () => {
         jest.clearAllMocks();
     });
 
-    it('should render component with label and if user clicks on it, should show available contract information', () => {
+    it('should render component with label and if user clicks on it, should show available contract information', async () => {
         renderGuide();
 
         expect(screen.getByText('Guide')).toBeInTheDocument();
 
-        userEvent.click(screen.getByRole('button'));
+        await userEvent.click(screen.getByRole('button'));
 
         expect(screen.getByText(trade_types)).toBeInTheDocument();
         AVAILABLE_CONTRACTS.forEach(({ id }) => expect(screen.getByText(id)).toBeInTheDocument());
     });
 
-    it('should render component without label if has_label === false and if user clicks on it, should show available contract information', () => {
+    it('should render component without label if has_label === false and if user clicks on it, should show available contract information', async () => {
         renderGuide({ has_label: false });
 
         expect(screen.queryByText('Guide')).not.toBeInTheDocument();
 
-        userEvent.click(screen.getByRole('button'));
+        await userEvent.click(screen.getByRole('button'));
 
         expect(screen.getByText(trade_types)).toBeInTheDocument();
         AVAILABLE_CONTRACTS.forEach(({ id }) => expect(screen.getByText(id)).toBeInTheDocument());
     });
 
-    it('should render component with description for only for selected trade type if show_guide_for_selected_contract === true', () => {
+    it('should render component with description for only for selected trade type if show_guide_for_selected_contract === true', async () => {
         renderGuide({ show_guide_for_selected_contract: true });
 
-        userEvent.click(screen.getByRole('button'));
+        await userEvent.click(screen.getByRole('button'));
 
         expect(screen.queryByText(trade_types)).not.toBeInTheDocument();
         expect(screen.getByText(CONTRACT_LIST.RISE_FALL)).toBeInTheDocument();
@@ -142,13 +142,13 @@ describe('Guide', () => {
         );
     });
 
-    it('should render component with correct title description for Vanillas if show_guide_for_selected_contract === true and is_vanilla === true', () => {
+    it('should render component with correct title description for Vanillas if show_guide_for_selected_contract === true and is_vanilla === true', async () => {
         default_mock_store.modules.trade.is_vanilla = true;
         default_mock_store.modules.trade.contract_type = TRADE_TYPES.VANILLA;
 
         renderGuide({ show_guide_for_selected_contract: true });
 
-        userEvent.click(screen.getByRole('button'));
+        await userEvent.click(screen.getByRole('button'));
 
         expect(screen.queryByText(trade_types)).not.toBeInTheDocument();
         expect(screen.getByText(CONTRACT_LIST.VANILLAS)).toBeInTheDocument();
@@ -160,16 +160,16 @@ describe('Guide', () => {
         );
     });
 
-    it('should render term definition if user clicked on it', () => {
+    it('should render term definition if user clicked on it', async () => {
         renderGuide();
 
         const term_definition = 'You can choose a growth rate with values of 1%, 2%, 3%, 4%, and 5%.';
         expect(screen.queryByText(term_definition)).not.toBeInTheDocument();
 
-        userEvent.click(screen.getByText('Guide'));
-        userEvent.click(screen.getByText(CONTRACT_LIST.ACCUMULATORS));
-        userEvent.click(screen.getByRole('button', { name: getTerm().GROWTH_RATE.toLowerCase() }));
+        await userEvent.click(screen.getByText('Guide'));
+        await userEvent.click(screen.getByText(CONTRACT_LIST.ACCUMULATORS));
+        await userEvent.click(screen.getByRole('button', { name: getTerm().GROWTH_RATE.toLowerCase() }));
 
-        expect(screen.getByText(term_definition)).toBeInTheDocument();
+        expect(await screen.findByText(term_definition)).toBeInTheDocument();
     });
 });

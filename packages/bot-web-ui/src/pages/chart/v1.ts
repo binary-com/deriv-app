@@ -1,6 +1,7 @@
 import React from 'react';
 import { getUrlBase, moduleLoader } from '@deriv/shared';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let module: Promise<any> | undefined;
 
 const init = () => {

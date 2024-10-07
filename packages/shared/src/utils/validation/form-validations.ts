@@ -6,6 +6,7 @@ import fromEntries from 'object.fromentries';
 type TConfig = {
     default_value: string | boolean | number;
     supported_in: string[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     rules?: Array<(TOptions | any)[]>;
     values?: Record<string, string | boolean>;
 };

@@ -6,7 +6,10 @@ import BaseStore from './base-store';
 import type { TWebSocket, TRootStore, TOnRampProvider, TServerError } from '../types';
 
 export default class OnRampStore extends BaseStore {
-    constructor(public WS: TWebSocket, public root_store: TRootStore) {
+    constructor(
+        public WS: TWebSocket,
+        public root_store: TRootStore
+    ) {
         super({ root_store });
 
         makeObservable(this, {

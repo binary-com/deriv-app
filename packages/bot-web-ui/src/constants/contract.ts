@@ -190,6 +190,7 @@ export type TValidationRuleIndex =
     | 'has_contract_update_take_profit'
     | 'contract_update_take_profit';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ValidationRuleFunc = (value: number, options: any, contract_store: TContractStore) => boolean;
 
 type ValidationConditionFunc = (contract_store: TContractStore) => boolean;
@@ -200,14 +201,14 @@ type Rule =
           {
               condition: ValidationConditionFunc;
               message: string;
-          }
+          },
       ]
     | [
           'custom',
           {
               func: ValidationRuleFunc;
               message: string;
-          }
+          },
       ];
 
 type Rules = {

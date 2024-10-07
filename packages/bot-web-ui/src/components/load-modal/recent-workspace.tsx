@@ -7,6 +7,7 @@ import { observer } from '@deriv/stores';
 import { useDBotStore } from 'Stores/useDBotStore';
 
 type TRecentWorkspaceProps = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     workspace: { [key: string]: any };
 };
 

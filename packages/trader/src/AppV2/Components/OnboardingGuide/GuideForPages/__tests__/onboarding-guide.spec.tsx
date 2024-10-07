@@ -19,7 +19,7 @@ describe('OnboardingGuide', () => {
     });
 
     it('should render Modal with correct content for trading page after 800ms after mounting', async () => {
-        jest.useFakeTimers();
+        jest.useFakeTimers('legacy');
         render(<OnboardingGuide />);
 
         await waitFor(() => jest.advanceTimersByTime(800));
@@ -32,7 +32,7 @@ describe('OnboardingGuide', () => {
     });
 
     it('should render Modal with correct content for positions page after 800ms after mounting', async () => {
-        jest.useFakeTimers();
+        jest.useFakeTimers('legacy');
         render(<OnboardingGuide type='positions_page' />);
 
         await waitFor(() => jest.advanceTimersByTime(800));
@@ -45,7 +45,7 @@ describe('OnboardingGuide', () => {
     });
 
     it('should close the Modal for trading page and start the guide after user clicks on "Let\'s begin" button', async () => {
-        jest.useFakeTimers();
+        jest.useFakeTimers('legacy');
         render(<OnboardingGuide />);
 
         await waitFor(() => jest.advanceTimersByTime(800));
@@ -53,7 +53,7 @@ describe('OnboardingGuide', () => {
         expect(screen.getByText(trading_modal_text)).toBeInTheDocument();
         expect(screen.queryByText(guide_container)).not.toBeInTheDocument();
 
-        userEvent.click(screen.getByRole('button'));
+        await userEvent.click(screen.getByRole('button'));
         await waitFor(() => jest.advanceTimersByTime(300));
 
         expect(screen.queryByText(trading_modal_text)).not.toBeInTheDocument();
@@ -64,7 +64,7 @@ describe('OnboardingGuide', () => {
 
     it('should close the Modal for positions page, set flag to localStorage equal to true and do NOT start the guide after user clicks on "Got it" button', async () => {
         const field = 'positions_page';
-        jest.useFakeTimers();
+        jest.useFakeTimers('legacy');
         render(<OnboardingGuide type='positions_page' />);
 
         await waitFor(() => jest.advanceTimersByTime(800));
@@ -73,7 +73,7 @@ describe('OnboardingGuide', () => {
         expect(screen.queryByText(guide_container)).not.toBeInTheDocument();
         expect(JSON.parse(localStorage.getItem(localStorage_key) as string)[field]).toBe(false);
 
-        userEvent.click(screen.getByRole('button'));
+        await userEvent.click(screen.getByRole('button'));
         await waitFor(() => jest.advanceTimersByTime(300));
 
         expect(screen.queryByText(positions_modal_text)).not.toBeInTheDocument();
@@ -85,7 +85,7 @@ describe('OnboardingGuide', () => {
 
     it('should close the Modal for trading page and set flag to localStorage equal to true if user clicks on overlay and do NOT start the guide', async () => {
         const field = 'trade_page';
-        jest.useFakeTimers();
+        jest.useFakeTimers('legacy');
         render(<OnboardingGuide />);
 
         await waitFor(() => jest.advanceTimersByTime(800));
@@ -94,7 +94,7 @@ describe('OnboardingGuide', () => {
         expect(screen.queryByText(guide_container)).not.toBeInTheDocument();
         expect(JSON.parse(localStorage.getItem(localStorage_key) as string)[field]).toBe(false);
 
-        userEvent.click(screen.getByTestId('dt-actionsheet-overlay'));
+        await userEvent.click(screen.getByTestId('dt-actionsheet-overlay'));
         await waitFor(() => jest.advanceTimersByTime(300));
 
         expect(screen.queryByText(trading_modal_text)).not.toBeInTheDocument();
@@ -106,7 +106,7 @@ describe('OnboardingGuide', () => {
 
     it('should execute callback function after Modal is closed', async () => {
         const callback = jest.fn();
-        jest.useFakeTimers();
+        jest.useFakeTimers('legacy');
         render(<OnboardingGuide callback={callback} type='positions_page' />);
 
         await waitFor(() => jest.advanceTimersByTime(800));
@@ -114,7 +114,7 @@ describe('OnboardingGuide', () => {
         expect(screen.getByText(positions_modal_text)).toBeInTheDocument();
         expect(screen.queryByText(guide_container)).not.toBeInTheDocument();
 
-        userEvent.click(screen.getByRole('button'));
+        await userEvent.click(screen.getByRole('button'));
         await waitFor(() => jest.advanceTimersByTime(300));
 
         expect(callback).toBeCalled();

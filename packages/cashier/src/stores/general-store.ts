@@ -6,7 +6,10 @@ import PaymentAgentStore from './payment-agent-store';
 import type { TRootStore, TWebSocket } from '../types';
 
 export default class GeneralStore extends BaseStore {
-    constructor(public WS: TWebSocket, public root_store: TRootStore) {
+    constructor(
+        public WS: TWebSocket,
+        public root_store: TRootStore
+    ) {
         super({ root_store });
 
         makeObservable(this, {

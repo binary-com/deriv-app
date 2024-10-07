@@ -9,6 +9,12 @@ module.exports = {
                 'react/prop-types': 'off',
             },
         },
+        {
+            files: ['./src/components/icon/icons-manifest.js'],
+            rules: {
+                quotes: 'off',
+            },
+        },
     ],
     settings: {
         react: {
@@ -17,5 +23,8 @@ module.exports = {
         'import/resolver': {
             webpack: { config: webpackConfig({}) },
         },
+    },
+    rules: {
+        'simple-import-sort/imports': 'warn',
     },
 };

@@ -3,5 +3,6 @@ module.exports = {
     rules: {
         'import/no-unresolved': 'off',
         'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+        'simple-import-sort/imports': 'warn',
     },
 };

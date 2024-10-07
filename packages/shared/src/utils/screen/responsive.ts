@@ -4,6 +4,7 @@ declare global {
     }
     interface Window {
         // TODO DocumentTouch been removed from the standards, we need to change this with Touch and TouchList later
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         DocumentTouch: any;
     }
 }

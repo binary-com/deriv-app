@@ -5,6 +5,10 @@ module.exports = {
     settings: {
         'import/resolver': {
             webpack: { config: webpackConfig({}) },
-        }
+        },
+    },
+    rules: {
+        'simple-import-sort/imports': 'warn',
+        'prettier/prettier': 'warn',
     },
 };

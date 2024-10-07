@@ -421,7 +421,7 @@ describe('AccountTransferStore', () => {
     });
 
     it('should not sort and set accounts if there is an error in transfer_between_accounts response when calling sortAccountsTransfer method', async () => {
-        const spySetAccounts = spyOn(account_transfer_store, 'setAccounts');
+        const spySetAccounts = jest.spyOn(account_transfer_store, 'setAccounts');
         (account_transfer_store.WS.authorized.transferBetweenAccounts as jest.Mock).mockResolvedValueOnce({
             error: 'Transfer error',
         });
@@ -720,8 +720,8 @@ describe('AccountTransferStore', () => {
     });
 
     it('should reset account transfer', () => {
-        const spySetIsTransferConfirm = spyOn(account_transfer_store, 'setIsTransferConfirm');
-        const spySetTransferLimit = spyOn(account_transfer_store, 'setTransferLimit');
+        const spySetIsTransferConfirm = jest.spyOn(account_transfer_store, 'setIsTransferConfirm');
+        const spySetTransferLimit = jest.spyOn(account_transfer_store, 'setTransferLimit');
         account_transfer_store.resetAccountTransfer();
 
         expect(spySetIsTransferConfirm).toHaveBeenCalledWith(false);

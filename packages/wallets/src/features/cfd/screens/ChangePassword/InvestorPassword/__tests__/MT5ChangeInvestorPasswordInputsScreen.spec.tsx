@@ -88,9 +88,9 @@ describe('MT5ChangeInvestorPasswordInputsScreen', () => {
     it('validates current password field', async () => {
         render(<MT5ChangeInvestorPasswordInputsScreen />);
 
-        userEvent.click(screen.getByText('Current investor password'));
-        userEvent.tab();
-        userEvent.click(screen.getByText(/Change investor password/));
+        await userEvent.click(screen.getByText('Current investor password'));
+        await userEvent.tab();
+        await userEvent.click(screen.getByText(/Change investor password/));
 
         await waitFor(() => {
             expect(screen.getByText('The field is required')).toBeInTheDocument();
@@ -107,11 +107,11 @@ describe('MT5ChangeInvestorPasswordInputsScreen', () => {
 
         render(<MT5ChangeInvestorPasswordInputsScreen setNextScreen={jest.fn()} />);
 
-        userEvent.type(screen.getByLabelText(/Current investor password/), oldPassword);
+        await userEvent.type(screen.getByLabelText(/Current investor password/), oldPassword);
         const newInvestorPasswordInput = await screen.findByText('New investor password');
-        userEvent.type(newInvestorPasswordInput, newPassword);
+        await userEvent.type(newInvestorPasswordInput, newPassword);
 
-        userEvent.click(screen.getByText(/Change investor password/));
+        await userEvent.click(screen.getByText(/Change investor password/));
 
         await waitFor(() => {
             expect(mockChangePassword).toHaveBeenCalledWith({
@@ -148,13 +148,13 @@ describe('MT5ChangeInvestorPasswordInputsScreen', () => {
         ).toBeInTheDocument();
     });
 
-    it('displays the password when the viewer icon is clicked', () => {
+    it('displays the password when the viewer icon is clicked', async () => {
         render(<MT5ChangeInvestorPasswordInputsScreen />);
 
         const currentPasswordInput = screen.getByPlaceholderText('Current investor password');
         expect(currentPasswordInput).toHaveAttribute('type', 'password');
 
-        userEvent.click(screen.getAllByRole('button', { name: 'PasswordViewerIcon' })[0]);
+        await userEvent.click(screen.getAllByRole('button', { name: 'PasswordViewerIcon' })[0]);
 
         expect(currentPasswordInput).toHaveAttribute('type', 'text');
     });

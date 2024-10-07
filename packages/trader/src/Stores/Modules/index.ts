@@ -8,6 +8,7 @@ export default class ModulesStore {
     positions: PositionsStore;
     markets: MarketsStore;
     trade: TradeStore;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     cashier: any;
 
     constructor(root_store: TRootStore, core_store: TCoreStores) {

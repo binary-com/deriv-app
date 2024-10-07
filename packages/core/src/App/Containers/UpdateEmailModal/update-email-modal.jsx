@@ -65,7 +65,7 @@ const UpdateEmailModal = observer(() => {
             {is_email_updated ? (
                 <div className='change-email-update'>
                     {!update_email_error && (
-                        <Icon className='change-email-update__modal-icon' icon={`IcEmailVerified`} size={128} />
+                        <Icon className='change-email-update__modal-icon' icon={'IcEmailVerified'} size={128} />
                     )}
                     <Text className='change-email-update__modal-title' weight='bold' size='s'>
                         {update_email_error ? (

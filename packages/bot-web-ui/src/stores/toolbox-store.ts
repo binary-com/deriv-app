@@ -284,6 +284,7 @@ export default class ToolboxStore {
             })
             .flat();
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const pushIfNotExists = (array: any[] = [], element_to_push = {}) => {
             if (!array.some(element => element === element_to_push)) {
                 array.push(element_to_push);

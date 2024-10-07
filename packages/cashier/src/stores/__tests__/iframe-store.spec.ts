@@ -8,6 +8,11 @@ configure({ safeDescriptors: false });
 let iframe_store: IframeStore, root_store: TRootStore;
 
 beforeEach(() => {
+    jest.useFakeTimers();
+    jest.spyOn(global, 'setInterval');
+    jest.spyOn(global, 'clearInterval');
+    jest.spyOn(global, 'setTimeout');
+    jest.spyOn(global, 'clearTimeout');
     root_store = mockStore({
         client: {
             setVerificationCode: jest.fn(),

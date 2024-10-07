@@ -180,28 +180,28 @@ describe('TransferFormAmountInput', () => {
         expect(field).toHaveValue('0.00000000');
     });
 
-    it('has 8 max digits restriction in case of USD', () => {
+    it('has 8 max digits restriction in case of USD', async () => {
         renderField('fromAmount', 'USD');
 
         const field = getField();
-        userEvent.type(field, '9999999999999999999999999999');
+        await userEvent.type(field, '9999999999999999999999999999');
         expect(field).toHaveValue('999,999.99');
     });
 
-    it('has 9 max digits restriction in case of BTC', () => {
+    it('has 9 max digits restriction in case of BTC', async () => {
         renderField('fromAmount', 'BTC');
 
         const field = getField();
-        userEvent.type(field, '9999999999999999999999999999');
+        await userEvent.type(field, '9999999999999999999999999999');
         expect(field).toHaveValue('9.99999999');
     });
 
-    it('should not react to pasting when exceeding max value in case of USD', () => {
+    it('should not react to pasting when exceeding max value in case of USD', async () => {
         renderField('fromAmount', 'USD');
 
         const field = getField();
         const pastedVal = '9999999';
-        userEvent.paste(field, pastedVal, {
+        await userEvent.paste(field, pastedVal, {
             clipboardData: {
                 getData: (format: string) => (format === 'Text' ? pastedVal : ''),
             } as DataTransfer,
@@ -209,12 +209,12 @@ describe('TransferFormAmountInput', () => {
         expect(field).toHaveValue('0.00');
     });
 
-    it('should not react to pasting when exceeding max value in case of BTC', () => {
+    it('should not react to pasting when exceeding max value in case of BTC', async () => {
         renderField('fromAmount', 'BTC');
 
         const field = getField();
         const pastedVal = '9999999999';
-        userEvent.paste(field, pastedVal, {
+        await userEvent.paste(field, pastedVal, {
             clipboardData: {
                 getData: (format: string) => (format === 'Text' ? pastedVal : ''),
             } as DataTransfer,
@@ -222,12 +222,12 @@ describe('TransferFormAmountInput', () => {
         expect(field).toHaveValue('0.00000000');
     });
 
-    it('should paste an integer value as an integer in case of fiat (USD)', () => {
+    it('should paste an integer value as an integer in case of fiat (USD)', async () => {
         renderField('fromAmount', 'USD');
 
         const field = getField();
         const pastedVal = '123';
-        userEvent.paste(field, pastedVal, {
+        await userEvent.paste(field, pastedVal, {
             clipboardData: {
                 getData: (format: string) => (format === 'Text' ? pastedVal : ''),
             } as DataTransfer,
@@ -235,17 +235,17 @@ describe('TransferFormAmountInput', () => {
         expect(field).toHaveValue('123.00');
     });
 
-    it('should paste an integer value as a fraction in case of crypto (BTC)', () => {
+    it('should paste an integer value as a fraction in case of crypto (BTC)', async () => {
         renderField('fromAmount', 'BTC');
 
         const field = getField();
         const pastedVal = '123';
-        userEvent.paste(field, pastedVal, {
+        await userEvent.paste(field, pastedVal, {
             clipboardData: {
                 getData: (format: string) => (format === 'Text' ? pastedVal : ''),
             } as DataTransfer,
         });
-        userEvent.tab();
+        await userEvent.tab();
         expect(field).toHaveValue('0.00000123');
     });
 

@@ -27,6 +27,7 @@ module.exports = {
         'lines-around-comment': ['error', { allowObjectStart: true }],
         'local-rules/no-react-namespace': 'error',
         'no-unneeded-ternary': 'error',
+        'no-unsafe-optional-chaining': 'warn',
         'no-useless-return': 'error',
         'object-shorthand': 'error',
         'prefer-const': 'error',

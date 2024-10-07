@@ -18,7 +18,7 @@
     "devDependencies": {
         "@deriv-com/analytics": "1.14.0",
         "@deriv/api-types": "1.0.172",
-        "@testing-library/react": "^12.0.0",
+        "@testing-library/react": "^12.1.5",
         "@testing-library/react-hooks": "^7.0.2",
         "@testing-library/user-event": "^13.5.0",
         "@types/md5": "^2.3.5",

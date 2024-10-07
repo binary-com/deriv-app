@@ -90,6 +90,7 @@ InScriptStore.prototype = {
         return getPropertyValue(this.store, key);
     },
     set(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this: { store: any; set: (key: string | string[], value: string, obj: string[]) => void },
         k: string | string[],
         value: string,
@@ -129,6 +130,7 @@ InScriptStore.prototype = {
     },
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const State = new (InScriptStore as any)();
 State.prototype = InScriptStore.prototype;
 /**
@@ -226,8 +228,12 @@ export const removeCookies = (...cookie_names: string[]) => {
 };
 
 export const LocalStore = isStorageSupported(window.localStorage)
-    ? new (Store as any)(window.localStorage)
-    : new (InScriptStore as any)();
+    ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      new (Store as any)(window.localStorage)
+    : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      new (InScriptStore as any)();
 export const SessionStore = isStorageSupported(window.sessionStorage)
-    ? new (Store as any)(window.sessionStorage)
-    : new (InScriptStore as any)();
+    ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      new (Store as any)(window.sessionStorage)
+    : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      new (InScriptStore as any)();

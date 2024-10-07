@@ -146,14 +146,14 @@ describe('TransferReceipt', () => {
         expect(fromCard).toHaveTextContent('-10,000.00 USD');
         expect(toCard).toHaveTextContent('+100.00000000 BTC');
     });
-    it('Should invoke reset transfer when the reset button is clicked', () => {
+    it('Should invoke reset transfer when the reset button is clicked', async () => {
         render(<TransferReceipt />, { wrapper });
 
         const resetBtn = screen.getByRole('button', {
             name: 'Make a new transfer',
         });
 
-        userEvent.click(resetBtn);
+        await userEvent.click(resetBtn);
         expect(mockResetTransfer).toBeCalled();
     });
 });

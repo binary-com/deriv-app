@@ -323,6 +323,7 @@ export default class LoadModalStore {
 
     refreshStrategiesTheme = async () => {
         if (this.recent_workspace) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (this.recent_workspace as any).RTL = isDbotRTL();
         }
         await load({
@@ -524,6 +525,7 @@ export default class LoadModalStore {
         const ref_preview = document?.getElementById('load-strategy__blockly-container');
 
         if (!this.recent_workspace) this.recent_workspace = window.Blockly.inject(ref_preview, inject_options);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (this.recent_workspace as any).RTL = isDbotRTL();
 
         const convertedDom = window.Blockly?.utils?.xml?.textToDom(this.selected_strategy?.xml);
@@ -544,6 +546,7 @@ export default class LoadModalStore {
         load_options.workspace = this.local_workspace;
 
         if (load_options.workspace) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (load_options.workspace as any).RTL = isDbotRTL();
         }
 

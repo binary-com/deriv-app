@@ -99,11 +99,11 @@ describe('<WalletCashierHeader/>', () => {
         expect(screen.getByText('Transactions')).toBeInTheDocument();
     });
 
-    it('redirects to the root route with `accountsActiveTabIndex` history state, when the user closes cashier overlay', () => {
+    it('redirects to the root route with `accountsActiveTabIndex` history state, when the user closes cashier overlay', async () => {
         render(<WalletCashierHeader hideWalletDetails={false} />, { wrapper });
 
         const closeBtn = screen.getByTestId('dt_close_btn');
-        userEvent.click(closeBtn);
+        await userEvent.click(closeBtn);
 
         expect(mockPush).toHaveBeenCalledWith('/', { accountsActiveTabIndex: 0 });
     });

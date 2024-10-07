@@ -2,6 +2,7 @@ import { ElementType } from 'react';
 import { Redirect } from 'react-router-dom';
 
 export type TRoute = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     component?: ((routes?: TRoute[]) => JSX.Element) | typeof Redirect | ElementType<any> | null | undefined;
     default?: boolean;
     exact?: boolean;

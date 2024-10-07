@@ -235,6 +235,7 @@ const PersonalDetailsForm = observer(() => {
         return undefined;
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const displayErrorMessage = (status: any) => {
         if (status?.code === 'PhoneNumberTaken') {
             return (

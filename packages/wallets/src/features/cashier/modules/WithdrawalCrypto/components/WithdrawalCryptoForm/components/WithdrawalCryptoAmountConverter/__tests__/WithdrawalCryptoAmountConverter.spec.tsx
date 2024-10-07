@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { APIProvider } from '@deriv/api-v2';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import WalletsAuthProvider from '../../../../../../../../../AuthProvider';
 import { useWithdrawalCryptoContext } from '../../../../../provider';
 import { validateCryptoInput, validateFiatInput } from '../../../../../utils';
@@ -75,10 +75,10 @@ describe('WithdrawalCryptoAmountConverter', () => {
 
         const cryptoInput = screen.getByTestId('dt_withdrawal_crypto_amount_input');
 
-        await act(async () => {
-            await fireEvent.change(cryptoInput, { target: { value: '10' } });
+        fireEvent.change(cryptoInput, { target: { value: '10' } });
+        await waitFor(() => {
+            expect(screen.getByText('Crypto Input Error')).toBeInTheDocument();
         });
-        expect(screen.getByText('Crypto Input Error')).toBeInTheDocument();
     });
 
     it('should change value of fiat input field when value of crypto input changes', async () => {
@@ -88,10 +88,10 @@ describe('WithdrawalCryptoAmountConverter', () => {
 
         const cryptoInput = screen.getByTestId('dt_withdrawal_crypto_amount_input');
         const fiatInput = screen.getByTestId('dt_withdrawal_fiat_amount_input');
-        await act(async () => {
-            await fireEvent.change(cryptoInput, { target: { value: '10' } });
+        fireEvent.change(cryptoInput, { target: { value: '10' } });
+        await waitFor(() => {
+            expect(fiatInput).toHaveValue('10');
         });
-        expect(fiatInput).toHaveValue('10');
     });
 
     it('should empty fiat input field if crypto input field has errors', async () => {
@@ -101,10 +101,10 @@ describe('WithdrawalCryptoAmountConverter', () => {
 
         const cryptoInput = screen.getByTestId('dt_withdrawal_crypto_amount_input');
         const fiatInput = screen.getByTestId('dt_withdrawal_fiat_amount_input');
-        await act(async () => {
-            await fireEvent.change(cryptoInput, { target: { value: '10' } });
+        fireEvent.change(cryptoInput, { target: { value: '10' } });
+        await waitFor(() => {
+            expect(fiatInput).toHaveValue('');
         });
-        expect(fiatInput).toHaveValue('');
     });
 
     it('should display error below fiat input field if fiat input is invalid', async () => {
@@ -113,11 +113,10 @@ describe('WithdrawalCryptoAmountConverter', () => {
         render(<WithdrawalCryptoAmountConverter />, { wrapper });
 
         const fiatInput = screen.getByTestId('dt_withdrawal_fiat_amount_input');
-
-        await act(async () => {
-            await fireEvent.change(fiatInput, { target: { value: '10' } });
+        fireEvent.change(fiatInput, { target: { value: '10' } });
+        await waitFor(() => {
+            expect(screen.getByText('Fiat Input Error')).toBeInTheDocument();
         });
-        expect(screen.getByText('Fiat Input Error')).toBeInTheDocument();
     });
 
     it('should change value of crypto input field when value of fiat input changes', async () => {
@@ -127,10 +126,10 @@ describe('WithdrawalCryptoAmountConverter', () => {
 
         const cryptoInput = screen.getByTestId('dt_withdrawal_crypto_amount_input');
         const fiatInput = screen.getByTestId('dt_withdrawal_fiat_amount_input');
-        await act(async () => {
-            await fireEvent.change(fiatInput, { target: { value: '10' } });
+        fireEvent.change(fiatInput, { target: { value: '10' } });
+        await waitFor(() => {
+            expect(cryptoInput).toHaveValue('10');
         });
-        expect(cryptoInput).toHaveValue('10');
     });
 
     it('should empty crypto input field if fiat input field has errors', async () => {
@@ -140,35 +139,33 @@ describe('WithdrawalCryptoAmountConverter', () => {
 
         const cryptoInput = screen.getByTestId('dt_withdrawal_crypto_amount_input');
         const fiatInput = screen.getByTestId('dt_withdrawal_fiat_amount_input');
-        await act(async () => {
-            await fireEvent.change(fiatInput, { target: { value: '10' } });
+        fireEvent.change(fiatInput, { target: { value: '10' } });
+        await waitFor(() => {
+            expect(cryptoInput).toHaveValue('');
         });
-        expect(cryptoInput).toHaveValue('');
     });
 
     it('should handle onFocus for crypto input field', async () => {
         render(<WithdrawalCryptoAmountConverter />, { wrapper });
 
         const cryptoInput = screen.getByTestId('dt_withdrawal_crypto_amount_input');
-        await act(async () => {
-            await fireEvent.focus(cryptoInput);
+        fireEvent.focus(cryptoInput);
+        await waitFor(() => {
+            expect(screen.queryByTestId('dt_withdrawal_crypto_amount_converter_arrow')).not.toHaveClass(
+                'wallets-withdrawal-crypto-amount-converter__arrow--inverted'
+            );
         });
-
-        expect(screen.queryByTestId('dt_withdrawal_crypto_amount_converter_arrow')).not.toHaveClass(
-            'wallets-withdrawal-crypto-amount-converter__arrow--inverted'
-        );
     });
 
     it('should handle onFocus for fiat input field', async () => {
         render(<WithdrawalCryptoAmountConverter />, { wrapper });
 
         const fiatInput = screen.getByTestId('dt_withdrawal_fiat_amount_input');
-        await act(async () => {
-            await fireEvent.focus(fiatInput);
+        fireEvent.focus(fiatInput);
+        await waitFor(() => {
+            expect(screen.getByTestId('dt_withdrawal_crypto_amount_converter_arrow')).toHaveClass(
+                'wallets-withdrawal-crypto-amount-converter__arrow--inverted'
+            );
         });
-
-        expect(screen.getByTestId('dt_withdrawal_crypto_amount_converter_arrow')).toHaveClass(
-            'wallets-withdrawal-crypto-amount-converter__arrow--inverted'
-        );
     });
 });

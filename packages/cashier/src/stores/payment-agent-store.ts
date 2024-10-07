@@ -19,7 +19,10 @@ import {
 } from '../types';
 
 export default class PaymentAgentStore {
-    constructor(public WS: TWebSocket, public root_store: TRootStore) {
+    constructor(
+        public WS: TWebSocket,
+        public root_store: TRootStore
+    ) {
         makeObservable(this, {
             list: observable,
             agents: observable,

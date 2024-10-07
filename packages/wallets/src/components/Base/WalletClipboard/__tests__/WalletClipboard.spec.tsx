@@ -23,6 +23,11 @@ describe('WalletClipboard', () => {
         (useDevice as jest.Mock).mockReturnValue({ isDesktop: true });
         mockCopy = jest.fn();
         mockUseCopyToClipboard.mockReturnValue([null, mockCopy]);
+        jest.useFakeTimers();
+        jest.spyOn(global, 'setInterval');
+        jest.spyOn(global, 'clearInterval');
+        jest.spyOn(global, 'setTimeout');
+        jest.spyOn(global, 'clearTimeout');
     });
 
     afterEach(() => {
@@ -50,7 +55,7 @@ describe('WalletClipboard', () => {
     describe('when hovered', () => {
         it('shows tooltip with "Copy" message', async () => {
             renderComponent();
-            userEvent.hover(screen.getByRole('button'));
+            await userEvent.hover(screen.getByRole('button'));
 
             await waitFor(() => {
                 expect(screen.queryByText('Copy')).toBeInTheDocument();
@@ -62,7 +67,7 @@ describe('WalletClipboard', () => {
         const renderScenario = async () => {
             const { unmount } = renderComponent();
             const button = await screen.findByRole('button');
-            userEvent.hover(button);
+            await userEvent.hover(button);
             await userEvent.click(button);
 
             return { unmount };

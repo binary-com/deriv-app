@@ -85,10 +85,10 @@ describe('TradingPlatformChangePasswordScreens', () => {
         expect(screen.getByText('Change password')).toBeInTheDocument();
     });
 
-    it('renders confirmation screen when Change password is clicked', () => {
+    it('renders confirmation screen when Change password is clicked', async () => {
         render(<TradingPlatformChangePasswordScreens platform='mt5' />);
 
-        userEvent.click(screen.getByRole('button', { name: 'Change password' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Change password' }));
 
         expect(screen.getByText('Confirm to change your Deriv MT5 password')).toBeInTheDocument();
         expect(
@@ -101,19 +101,19 @@ describe('TradingPlatformChangePasswordScreens', () => {
     it('renders email verification screen when Confirm is clicked', async () => {
         render(<TradingPlatformChangePasswordScreens platform='mt5' />);
 
-        userEvent.click(screen.getByRole('button', { name: 'Change password' }));
-        userEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Change password' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Confirm' }));
 
         expect(screen.getByText('SentEmailContent')).toBeInTheDocument();
     });
 
-    it('calls handleSendEmail when Confirm is clicked and the platform is mt5', () => {
+    it('calls handleSendEmail when Confirm is clicked and the platform is mt5', async () => {
         (useDevice as jest.Mock).mockReturnValue({ isMobile: true });
 
         render(<TradingPlatformChangePasswordScreens platform='mt5' />);
 
-        userEvent.click(screen.getByRole('button', { name: 'Change password' }));
-        userEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Change password' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Confirm' }));
 
         expect(mockUseVerifyEmail).toHaveBeenCalledWith({
             type: 'trading_platform_mt5_password_reset',
@@ -124,11 +124,11 @@ describe('TradingPlatformChangePasswordScreens', () => {
         });
     });
 
-    it('calls handleSendEmail when Confirm is clicked and the platform is dxtrade', () => {
+    it('calls handleSendEmail when Confirm is clicked and the platform is dxtrade', async () => {
         render(<TradingPlatformChangePasswordScreens platform='dxtrade' />);
 
-        userEvent.click(screen.getByRole('button', { name: 'Change password' }));
-        userEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Change password' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Confirm' }));
 
         expect(mockUseVerifyEmail).toHaveBeenCalledWith({
             type: 'trading_platform_dxtrade_password_reset',
@@ -139,13 +139,13 @@ describe('TradingPlatformChangePasswordScreens', () => {
         });
     });
 
-    it('hides modal when Cancel is clicked', () => {
+    it('hides modal when Cancel is clicked', async () => {
         const { hide } = useModal();
 
         render(<TradingPlatformChangePasswordScreens platform='mt5' />);
 
-        userEvent.click(screen.getByRole('button', { name: 'Change password' }));
-        userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Change password' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
 
         expect(hide).toHaveBeenCalled();
     });

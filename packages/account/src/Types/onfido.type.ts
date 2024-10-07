@@ -568,6 +568,7 @@ export declare type SdkResponse = {
     document_back?: DocumentResponse;
     document_video?: DocumentVideoResponse;
     face?: FaceResponse;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data?: any;
     poa?: DocumentResponse;
 };

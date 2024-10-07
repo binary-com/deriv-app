@@ -20,7 +20,7 @@ export const getDocumentNumberValidator = (
                 if (document.pattern) {
                     try {
                         pattern = new RegExp(document.pattern);
-                    } catch (err) {
+                    } catch (_err) {
                         // Passport pattern has (?i) which is not supported in RegExp
                         // Replace the (?i) flag with the 'i' flag
                         const match = document.pattern?.match(/(\(\?i\))/);

@@ -7,7 +7,10 @@ import ErrorStore from './error-store';
 import { TWebSocket, TRootStore } from '../types';
 
 export default class WithdrawStore {
-    constructor(public WS: TWebSocket, public root_store: TRootStore) {
+    constructor(
+        public WS: TWebSocket,
+        public root_store: TRootStore
+    ) {
         makeObservable(this, {
             blockchain_address: observable,
             crypto_estimations_fee_unique_id: observable,

@@ -128,10 +128,8 @@ describe('<TransferForm />', () => {
 
         render(<TransferForm />, { wrapper });
 
-        await waitFor(() => {
-            const transferSubmitButton = within(screen.getByTestId('dt_transfer_form_submit_btn')).getByRole('button');
-            userEvent.click(transferSubmitButton);
-        });
+        const transferSubmitButton = within(screen.getByTestId('dt_transfer_form_submit_btn')).getByRole('button');
+        await userEvent.click(transferSubmitButton);
 
         await waitFor(() => {
             expect(dummyRequest).toBeCalledWith({

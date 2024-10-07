@@ -99,7 +99,7 @@ describe('JurisdictionScreen', () => {
         expect(screen.getByText('JurisdictionTncSection')).toBeInTheDocument();
     });
 
-    it('handles jurisdiction selection when the clicked item is not the same as the selectedJurisdiction', () => {
+    it('handles jurisdiction selection when the clicked item is not the same as the selectedJurisdiction', async () => {
         (useAvailableMT5Accounts as jest.Mock).mockReturnValue({
             data: [{ market_type: 'forex', product: 'standard', shortcode: 'bvi' }],
             isLoading: false,
@@ -123,12 +123,12 @@ describe('JurisdictionScreen', () => {
             />
         );
 
-        userEvent.click(screen.getByText('JurisdictionCard: bvi'));
+        await userEvent.click(screen.getByText('JurisdictionCard: bvi'));
 
         expect(setSelectedJurisdiction).toHaveBeenCalledWith('bvi');
     });
 
-    it('handles jurisdiction selection when the clicked item is the same as the selectedJurisdiction', () => {
+    it('handles jurisdiction selection when the clicked item is the same as the selectedJurisdiction', async () => {
         (useAvailableMT5Accounts as jest.Mock).mockReturnValue({
             data: [{ market_type: 'forex', product: 'standard', shortcode: 'bvi' }],
             isLoading: false,
@@ -152,7 +152,7 @@ describe('JurisdictionScreen', () => {
             />
         );
 
-        userEvent.click(screen.getByText('JurisdictionCard: bvi'));
+        await userEvent.click(screen.getByText('JurisdictionCard: bvi'));
 
         expect(setSelectedJurisdiction).toHaveBeenCalledWith('');
     });

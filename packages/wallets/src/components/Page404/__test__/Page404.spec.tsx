@@ -42,11 +42,11 @@ describe('Page404', () => {
         expect(screen.getByRole('img', { name: '404' })).toHaveAttribute('height', '200px');
     });
 
-    it('navigates to home page when button is clicked', () => {
+    it('navigates to home page when button is clicked', async () => {
         render(<Page404 />);
 
         const button = screen.getByRole('button', { name: "Return to Trader's Hub" });
-        userEvent.click(button);
+        await userEvent.click(button);
 
         expect(mockHistoryPush).toHaveBeenCalledWith('/');
     });

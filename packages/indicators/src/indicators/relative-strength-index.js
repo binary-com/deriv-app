@@ -1,7 +1,9 @@
 import { sequence } from '@deriv/shared';
 import { takeField } from '../utils/math';
 
+// eslint-disable-next-line no-confusing-arrow
 const calcGain = (q1, q2) => (q2 > q1 ? q2 - q1 : 0);
+// eslint-disable-next-line no-confusing-arrow
 const calcLoss = (q1, q2) => (q2 < q1 ? q1 - q2 : 0);
 
 const calcFirstAvgDiff = (vals, comp, periods) => {

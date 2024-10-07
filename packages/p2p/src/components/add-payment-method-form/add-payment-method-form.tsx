@@ -61,6 +61,7 @@ const AddPaymentMethodForm = ({ should_show_separated_footer = false }: TAddPaym
 
     const createPaymentMethod = async (
         values: TPaymentMethodValues,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         { setSubmitting }: FormikBag<any, TPaymentMethodValues>
     ) => {
         await create({ ...values, method: payment_method_value || selected_payment_method });

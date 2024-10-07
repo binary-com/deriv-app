@@ -242,6 +242,7 @@ export const getFormConfig = (options: {
         /** typing fields_config as any as this current config has different structure
          * and generateValidationFunction should have generic types
          * */
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         validate: generateValidationFunction('', fields_config as any),
         initialValues: generateInitialValues(fields_config),
     };

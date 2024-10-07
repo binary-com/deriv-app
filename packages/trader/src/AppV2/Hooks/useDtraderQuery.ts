@@ -15,13 +15,16 @@ type QueryOptions = {
 };
 
 // Cache object to store the results
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const cache: Record<string, any> = {};
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ongoing_requests: Record<string, Promise<any> | undefined> = {};
 
 const getKey = (keys: string | string[]) => (Array.isArray(keys) ? keys.join('-') : keys);
 
 export const useDtraderQuery = <Response>(
     keys: string | string[],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     request: Record<string, any>,
     options: QueryOptions = {}
 ): QueryResult<Response> => {
@@ -46,6 +49,7 @@ export const useDtraderQuery = <Response>(
     const fetchData = useCallback(() => {
         setIsFetching(true);
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let send_promise: Promise<any> | undefined;
 
         if (ongoing_requests[key]) {

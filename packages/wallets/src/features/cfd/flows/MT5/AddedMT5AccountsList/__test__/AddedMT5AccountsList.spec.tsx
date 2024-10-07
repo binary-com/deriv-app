@@ -51,7 +51,7 @@ describe('AddedMT5AccountsList', () => {
         // @ts-expect-error - since this is a mock, we only need partial properties of the account
         render(<AddedMT5AccountsList account={mockAccount} />);
 
-        userEvent.click(screen.getByTestId('dt_wallets_trading_account_card'));
+        await userEvent.click(screen.getByTestId('dt_wallets_trading_account_card'));
 
         await waitFor(() => {
             expect(mockShow).toHaveBeenCalledWith(
@@ -69,7 +69,7 @@ describe('AddedMT5AccountsList', () => {
         // @ts-expect-error - since this is a mock, we only need partial properties of the account
         render(<AddedMT5AccountsList account={mockAccount} />);
 
-        userEvent.click(screen.getByTestId('dt_wallets_trading_account_card'));
+        await userEvent.click(screen.getByTestId('dt_wallets_trading_account_card'));
 
         await waitFor(() => {
             expect(mockShow).toHaveBeenCalledWith(<TradingPlatformStatusModal isServerMaintenance={true} />, {
@@ -85,7 +85,7 @@ describe('AddedMT5AccountsList', () => {
         // @ts-expect-error - since this is a mock, we only need partial properties of the account
         render(<AddedMT5AccountsList account={mockAccount} />);
 
-        userEvent.click(screen.getByTestId('dt_wallets_trading_account_card'));
+        await userEvent.click(screen.getByTestId('dt_wallets_trading_account_card'));
 
         await waitFor(() => {
             expect(mockShow).toHaveBeenCalledWith(<VerificationFailedModal selectedJurisdiction='svg' />, {
@@ -125,7 +125,7 @@ describe('AddedMT5AccountsList', () => {
         render(<AddedMT5AccountsList account={mockAccount} />);
 
         const link = screen.getByText('Why?');
-        userEvent.click(link);
+        await userEvent.click(link);
 
         await waitFor(() => {
             expect(mockShow).toHaveBeenCalledWith(<VerificationFailedModal selectedJurisdiction='svg' />, {

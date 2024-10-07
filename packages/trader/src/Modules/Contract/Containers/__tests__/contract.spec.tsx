@@ -22,6 +22,7 @@ const defaultProps = {
     match: { params: { contract_id: '123' } },
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const MockContract = ({ store, props }: { store: any; props: any }) => {
     const history = createMemoryHistory();
     history.push('/contract/123');

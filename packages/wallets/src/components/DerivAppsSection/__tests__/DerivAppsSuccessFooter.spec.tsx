@@ -24,14 +24,14 @@ describe('DerivAppsSuccessFooter', () => {
         expect(screen.getByRole('button', { name: 'Maybe later' })).toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'Transfer funds' })).toBeInTheDocument();
     });
-    it('hides the modal when Maybe later button is clicked', () => {
+    it('hides the modal when Maybe later button is clicked', async () => {
         render(<DerivAppsSuccessFooter />);
-        userEvent.click(screen.getByRole('button', { name: 'Maybe later' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Maybe later' }));
         expect(mockHide).toHaveBeenCalled();
     });
-    it('navigates to /wallet/account-transfer when Transfer funds button is clicked', () => {
+    it('navigates to /wallet/account-transfer when Transfer funds button is clicked', async () => {
         render(<DerivAppsSuccessFooter />);
-        userEvent.click(screen.getByRole('button', { name: 'Transfer funds' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Transfer funds' }));
         expect(mockHistoryPush).toHaveBeenCalledWith('/wallet/account-transfer');
     });
 });

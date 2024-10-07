@@ -28,7 +28,7 @@ describe('TransferNotAvailableProvider', () => {
         jest.clearAllMocks();
     });
 
-    it('returns correct message when no accounts are available for transfer', () => {
+    it('returns correct message when no accounts are available for transfer', async () => {
         const result = getMessage({
             currency: 'USD',
             hasAccountsForTransfer: false,
@@ -53,7 +53,7 @@ describe('TransferNotAvailableProvider', () => {
             screen.getByText("Add a trading account or Wallet in Trader's hub to receive funds from this Wallet.")
         ).toBeInTheDocument();
         const button = screen.getByText("Back to Trader's hub");
-        userEvent.click(button);
+        await userEvent.click(button);
         expect(mockHistory.push).toHaveBeenCalledWith('/');
     });
 
@@ -84,7 +84,7 @@ describe('TransferNotAvailableProvider', () => {
         ).toBeInTheDocument();
     });
 
-    it('returns correct message when no accounts have funds', () => {
+    it('returns correct message when no accounts have funds', async () => {
         const result = getMessage({
             currency: 'USD',
             hasAccountsForTransfer: true,
@@ -106,11 +106,11 @@ describe('TransferNotAvailableProvider', () => {
         expect(screen.getByText('No funds in any trading accounts or wallets')).toBeInTheDocument();
         expect(screen.getByText('Please make a deposit to your USD Wallet to make a transfer.')).toBeInTheDocument();
         const button = screen.getByText('Deposit');
-        userEvent.click(button);
+        await userEvent.click(button);
         expect(mockHistory.push).toHaveBeenCalledWith('/wallet/deposit');
     });
 
-    it('returns correct message for virtual account when no accounts have funds', () => {
+    it('returns correct message for virtual account when no accounts have funds', async () => {
         const result = getMessage({
             currency: 'USD',
             hasAccountsForTransfer: true,
@@ -134,7 +134,7 @@ describe('TransferNotAvailableProvider', () => {
             screen.getByText('Please reset the balance of your Demo Wallet to make a transfer.')
         ).toBeInTheDocument();
         const button = screen.getByText('Reset balance');
-        userEvent.click(button);
+        await userEvent.click(button);
         expect(mockHistory.push).toHaveBeenCalledWith('/wallet/reset-balance');
     });
 

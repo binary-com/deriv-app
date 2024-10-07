@@ -9,5 +9,7 @@ module.exports = {
     },
     rules: {
         'import/no-extraneous-dependencies': ['off', { devDependencies: ['**/*.spec.*'] }],
+        'simple-import-sort/imports': 'warn',
+        'prettier/prettier': 'warn',
     },
 };

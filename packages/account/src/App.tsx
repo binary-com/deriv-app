@@ -10,6 +10,7 @@ import { POIProvider } from '@deriv/shared';
 type TAppProps = {
     passthrough: {
         root_store: TCoreStores;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         WS: Record<string, any>;
     };
 };

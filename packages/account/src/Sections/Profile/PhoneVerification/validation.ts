@@ -18,6 +18,7 @@ export const validatePhoneNumber = (
             setErrorMessage('');
             setIsDisabledRequestButton(false);
         })
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .catch(({ errors }: any) => {
             setErrorMessage(errors);
             setIsDisabledRequestButton(true);

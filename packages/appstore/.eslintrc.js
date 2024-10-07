@@ -10,6 +10,20 @@ module.exports = {
     plugins: ['@typescript-eslint'],
     rules: {
         '@typescript-eslint/no-var-requires': 0,
+        'simple-import-sort/imports': 'warn',
+        'prettier/prettier': 'warn',
+        '@typescript-eslint/no-unused-vars': [
+            'warn',
+            {
+                args: 'all',
+                argsIgnorePattern: '^_',
+                caughtErrors: 'all',
+                caughtErrorsIgnorePattern: '^_',
+                destructuredArrayIgnorePattern: '^_',
+                varsIgnorePattern: '^_',
+                ignoreRestSiblings: true,
+            },
+        ],
     },
     settings: {
         'import/resolver': {

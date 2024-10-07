@@ -8,6 +8,7 @@ export type TRoute = {
     is_invisible?: boolean;
     path?: string;
     to?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     component?: React.FC<any>; // Using `any` as the prop type of the component since at this point we don't know what the component is.
     getTitle: () => string;
     routes?: TRoute[];
