@@ -48,7 +48,7 @@ describe('RealAccountSwitcher', () => {
         expect(container).toBeInTheDocument();
     });
 
-    it('should render AccountNeedsVerification component with the correct pending status', () => {
+    it('renders AccountNeedsVerification component with the correct pending status', () => {
         const mock = mockStore({
             traders_hub: {
                 is_eu_user: true,
