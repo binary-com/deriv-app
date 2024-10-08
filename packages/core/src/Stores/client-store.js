@@ -1828,7 +1828,7 @@ export default class ClientStore extends BaseStore {
     }
 
     broadcastAccountChangeAfterAuthorize() {
-        return BinarySocket.wait('authorize').then(() => {
+        return BinarySocket?.wait('authorize')?.then(() => {
             this.broadcastAccountChange();
         });
     }
@@ -1879,7 +1879,7 @@ export default class ClientStore extends BaseStore {
 
         if (should_switch_socket_connection) {
             BinarySocket.closeAndOpenNewConnection();
-            await BinarySocket.wait('authorize');
+            await BinarySocket?.wait('authorize');
         } else {
             await WS.forgetAll('balance');
             await BinarySocket.authorize(this.getToken());

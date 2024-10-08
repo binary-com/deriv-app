@@ -44,9 +44,15 @@ const AccountTransfer = observer(({ onClickDeposit, onClickNotes, onClose }: TAc
 
     React.useEffect(() => {
         onMount();
-        WS.wait('authorize', 'website_status', 'get_settings', 'paymentagent_list').then(() => {
-            setIsLoadingStatus(false);
-        });
+        (async () => {
+            try {
+                await WS.wait('authorize', 'website_status', 'get_settings', 'paymentagent_list');
+                setIsLoadingStatus(false);
+            } catch (e) {
+                // eslint-disable-next-line no-console
+                console.error(e);
+            }
+        })();
 
         return () => {
             setAccountTransferAmount('');

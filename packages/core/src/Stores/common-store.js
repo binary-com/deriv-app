@@ -122,7 +122,7 @@ export default class CommonStore extends BaseStore {
         if (key === 'EN') {
             window.localStorage.setItem('i18n_language', key);
         }
-        await WS.wait('authorize');
+        await WS?.wait('authorize');
         return new Promise((resolve, reject) => {
             WS.setSettings({
                 set_settings: 1,

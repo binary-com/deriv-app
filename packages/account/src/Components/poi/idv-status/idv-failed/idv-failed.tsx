@@ -127,7 +127,7 @@ const IdvFailed = ({
 
     React.useEffect(() => {
         const initializeFormValues = async (required_fields: string[]) => {
-            await WS.wait('get_settings');
+            await WS?.wait('get_settings');
             const form_data = filterObjProperties(account_settings, required_fields);
             if (form_data.date_of_birth) {
                 form_data.date_of_birth = toMoment(form_data.date_of_birth).format('YYYY-MM-DD');

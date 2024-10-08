@@ -148,7 +148,7 @@ const BinarySocketGeneral = (() => {
     };
 
     const setBalanceActiveAccount = flow(function* (obj_balance) {
-        yield BinarySocket.wait('website_status');
+        yield BinarySocket?.wait('website_status');
         client_store.setBalanceActiveAccount(obj_balance);
     });
 

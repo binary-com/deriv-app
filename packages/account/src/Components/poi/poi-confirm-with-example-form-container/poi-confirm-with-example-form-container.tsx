@@ -54,8 +54,9 @@ const PoiConfirmWithExampleFormContainer = ({
     const side_note_image = <DerivLightNameDobPoiIcon height='195px' width='285px' />;
 
     React.useEffect(() => {
-        const initializeFormValues = () => {
-            WS.wait('get_settings').then(() => {
+        const initializeFormValues = async () => {
+            try {
+                await WS?.wait('get_settings');
                 const visible_settings = ['first_name', 'last_name', 'date_of_birth'];
                 const form_initial_values = filterObjProperties(account_settings, visible_settings);
                 if (form_initial_values.date_of_birth) {
@@ -69,7 +70,10 @@ const PoiConfirmWithExampleFormContainer = ({
                     form_initial_values,
                 });
                 setIsLoading(false);
-            });
+            } catch (e) {
+                // eslint-disable-next-line no-console
+                console.error(e);
+            }
         };
 
         initializeFormValues();

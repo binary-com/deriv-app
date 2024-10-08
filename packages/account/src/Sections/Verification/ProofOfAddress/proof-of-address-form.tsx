@@ -65,7 +65,7 @@ const ProofOfAddressForm = observer(
         const { localize } = useTranslations();
 
         React.useEffect(() => {
-            fetchResidenceList?.().then(() => {
+            fetchResidenceList?.().then(async () => {
                 Promise.all([fetchStatesList(), WS.wait('get_settings')]).then(() => {
                     setFormValues({
                         address_line_1: account_settings.address_line_1 ?? '',

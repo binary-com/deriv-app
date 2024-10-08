@@ -237,8 +237,9 @@ const FinancialAssessment = observer(() => {
             setIsLoading(false);
             history.push(routes.personal_details);
         } else {
-            WS.authorized.storage.getFinancialAssessment().then((data: GetFinancialAssessmentResponse) => {
-                WS.wait('get_account_status').then(() => {
+            WS.authorized.storage.getFinancialAssessment().then(async (data: GetFinancialAssessmentResponse) => {
+                try {
+                    await WS.wait('get_account_status');
                     setHasTradingExperience(
                         (is_financial_account || is_trading_experience_incomplete) && !is_svg && !is_mf
                     );
@@ -255,7 +256,10 @@ const FinancialAssessment = observer(() => {
                     }
                     if (data?.get_financial_assessment) setInitialFormValues(data.get_financial_assessment);
                     setIsLoading(false);
-                });
+                } catch (e) {
+                    // eslint-disable-next-line no-console
+                    console.error(e);
+                }
             });
         }
 
