@@ -7,7 +7,7 @@ import { isEuCountry } from '@deriv/shared';
 import { Localize } from '@deriv/translations';
 import Disclaimer from 'Components/disclaimer';
 import OrderedPlatformSections from 'Components/ordered-platform-sections';
-import GetStartedTradingBanner from 'Components/get-started-trading-banner';
+import GetStartedTradingBanner from 'Components/banners/get-started-trading-banner';
 import TabsOrTitle from 'Components/tabs-or-title';
 import './traders-hub-logged-out.scss';
 

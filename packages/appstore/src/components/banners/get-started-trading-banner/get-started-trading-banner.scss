@@ -1,0 +1,70 @@
+.get-started-trading-banner {
+    border: 1px solid var(--general-section-5);
+    border-radius: $BORDER_RADIUS * 4;
+
+    &__content {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+
+        border-radius: $BORDER_RADIUS * 4 $BORDER_RADIUS * 4 0 0;
+        background: var(--traders-hub-logged-out-banner-bg-color);
+        height: 18rem;
+        background-image: url('./../../../public/images/traders-hub-logged-out-banner-bg-desktop.svg');
+        background-repeat: no-repeat;
+
+        @include mobile-or-tablet-screen {
+            height: 14.4rem;
+            background-image: url('./../../../public/images/traders-hub-logged-out-banner-bg-responsive.svg');
+            background-repeat: no-repeat;
+        }
+    }
+
+    &__description {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        align-self: center;
+        gap: 1.6rem;
+        margin-inline-start: 4.8rem;
+
+        .dc-text {
+            font-weight: 500;
+        }
+
+        @include mobile-or-tablet-screen {
+            margin-inline-start: 1.6rem;
+        }
+    }
+
+    &__button {
+        min-width: 20rem;
+        padding: 1.2rem 1.6rem;
+        border-radius: $BORDER_RADIUS * 3;
+
+        .dc-btn__text {
+            font-size: 1.6rem;
+        }
+
+        @include mobile-or-tablet-screen {
+            min-width: 6.4rem;
+            padding: 0.5rem 1.2rem;
+        }
+    }
+
+    &__image {
+        position: absolute;
+        inset-inline-end: 0;
+        margin-inline-end: 1.2rem;
+
+        @include rtl {
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+        }
+
+        @include mobile-or-tablet-screen {
+            margin-inline-end: 0;
+            align-self: flex-end;
+        }
+    }
+}

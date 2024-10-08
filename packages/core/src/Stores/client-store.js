@@ -106,7 +106,7 @@ export default class ClientStore extends BaseStore {
     ctrader_accounts_list = [];
     dxtrade_accounts_list_error = null;
     dxtrade_disabled_signup_types = { real: false, demo: false };
-    statement = [];
+    statement = {};
     obj_total_balance = {
         amount_real: undefined,
         amount_mt5: undefined,
