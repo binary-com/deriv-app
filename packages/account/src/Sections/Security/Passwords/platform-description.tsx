@@ -39,7 +39,7 @@ const PlatformDescription = ({
         return (
             <Localize
                 i18n_default_text={
-                    'Use the <0>Deriv password</0> to log in to {{brand_website_name}} and {{platform_name_trader}}.'
+                    'Use your <0>Deriv password</0> to log in to {{brand_website_name}} and {{platform_name_trader}}.'
                 }
                 components={[<strong key={0} />]}
                 values={{
@@ -52,7 +52,7 @@ const PlatformDescription = ({
         return (
             <Localize
                 i18n_default_text={
-                    'Use the <0>Deriv password</0> to log in to {{brand_website_name}}, {{platform_name_trader}} and {{platform_name_go}}.'
+                    'Use your <0>Deriv password</0> to log in to {{brand_website_name}}, {{platform_name_trader}} and {{platform_name_go}}.'
                 }
                 components={[<strong key={0} />]}
                 values={{
@@ -66,7 +66,7 @@ const PlatformDescription = ({
     return (
         <Localize
             i18n_default_text={
-                'Use the <0>Deriv password</0> to log in to {{brand_website_name}}, {{platform_name_go}}, {{platform_name_trader}}, {{platform_name_smarttrader}}, {{platform_name_dbot}} and {{platform_name_ctrader}}.'
+                'Use your <0>Deriv password</0> to log in to {{brand_website_name}}, {{platform_name_go}}, {{platform_name_trader}}, {{platform_name_smarttrader}}, {{platform_name_dbot}} and {{platform_name_ctrader}}.'
             }
             components={[<strong key={0} />]}
             values={{
