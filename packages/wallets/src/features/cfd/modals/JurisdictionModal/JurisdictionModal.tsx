@@ -5,10 +5,8 @@ import { Button, Loader, useDevice } from '@deriv-com/ui';
 import { ModalStepWrapper } from '../../../../components/Base';
 import { useModal } from '../../../../components/ModalProvider';
 import { DynamicLeverageContext } from '../../components/DynamicLeverageContext';
-import { PlatformDetails } from '../../constants';
 import { DynamicLeverageScreen, DynamicLeverageTitle } from '../../screens/DynamicLeverage';
 import { JurisdictionScreen } from '../../screens/Jurisdiction';
-import { MT5PasswordModal } from '..';
 import './JurisdictionModal.scss';
 
 const LazyVerification = lazy(
@@ -23,32 +21,19 @@ const JurisdictionModal = () => {
     const [isDynamicLeverageVisible, setIsDynamicLeverageVisible] = useState(false);
     const [isCheckBoxChecked, setIsCheckBoxChecked] = useState(false);
 
-    const { getModalState, setModalState, show } = useModal();
+    const { setModalState, show } = useModal();
     const { isLoading } = useAvailableMT5Accounts();
     const { isDesktop } = useDevice();
     const { localize } = useTranslations();
-
-    const marketType = getModalState('marketType') ?? 'all';
-    const platform = getModalState('platform') ?? PlatformDetails.mt5.platform;
 
     const toggleDynamicLeverage = useCallback(() => {
         setIsDynamicLeverageVisible(!isDynamicLeverageVisible);
     }, [isDynamicLeverageVisible, setIsDynamicLeverageVisible]);
 
     const JurisdictionFlow = () => {
-        const [showMt5PasswordModal, setShowMt5PasswordModal] = useState(false);
-        if (selectedJurisdiction === 'svg' || showMt5PasswordModal) {
-            return <MT5PasswordModal marketType={marketType} platform={platform} />;
-        }
-
         return (
             <Suspense fallback={<Loader />}>
-                <LazyVerification
-                    onCompletion={() => {
-                        setShowMt5PasswordModal(true);
-                    }}
-                    selectedJurisdiction={selectedJurisdiction}
-                />
+                <LazyVerification selectedJurisdiction={selectedJurisdiction} />
             </Suspense>
         );
     };

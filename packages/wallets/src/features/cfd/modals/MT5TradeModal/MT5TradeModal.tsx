@@ -6,7 +6,7 @@ import { MT5TradeScreen } from '../../screens';
 
 type TMT5TradeModalProps = {
     marketType?: TMarketTypes.All;
-    mt5Account?: THooks.MT5AccountsList;
+    mt5Account?: THooks.SortedMT5Accounts;
     platform: TPlatforms.All;
 };
 

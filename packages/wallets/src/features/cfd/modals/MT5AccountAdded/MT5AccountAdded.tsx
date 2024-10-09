@@ -31,8 +31,8 @@ const MT5AccountAdded: FC<TProps> = ({ account, marketType, platform, product })
 
     const history = useHistory();
     const { isDesktop } = useDevice();
-    const { getModalState, hide } = useModal();
     const { localize } = useTranslations();
+    const { getModalState, hide } = useModal();
 
     const addedAccount = mt5Accounts?.find(acc => acc.login === account?.login);
 
@@ -97,7 +97,7 @@ const MT5AccountAdded: FC<TProps> = ({ account, marketType, platform, product })
                 </div>
             );
         },
-        [hide, isDesktop, history, addedAccount?.loginid]
+        [hide, buttonSize, history, addedAccount?.loginid]
     );
 
     const renderSuccessDescription = useMemo(() => {

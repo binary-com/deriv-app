@@ -1,135 +1,173 @@
 import React from 'react';
-import { useJurisdictionStatus, useTradingPlatformStatus } from '@deriv/api-v2';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { useModal } from '../../../../../../components/ModalProvider';
-import { MT5TradeModal, TradingPlatformStatusModal, VerificationFailedModal } from '../../../../modals';
+import { ModalProvider } from '../../../../../../components/ModalProvider';
+import { PlatformDetails } from '../../../../constants';
 import AddedMT5AccountsList from '../AddedMT5AccountsList';
+import { useAddedMT5Account } from '../hooks';
 
-jest.mock('@deriv/api-v2', () => ({
-    useJurisdictionStatus: jest.fn(),
-    useTradingPlatformStatus: jest.fn(),
+// mock function to check if correct props are passed to the modal components
+const mockPropsFn = jest.fn();
+
+jest.mock('../hooks', () => ({
+    useAddedMT5Account: jest.fn(),
 }));
 
-jest.mock('../../../../../../components/ModalProvider', () => ({
-    useModal: jest.fn(),
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useHistory: jest.fn(() => ({
+        push: jest.fn(),
+    })),
 }));
+
+jest.mock('../../../../components', () => ({
+    ...jest.requireActual('../../../../components'),
+    ClientVerificationStatusBadge: jest.fn(props => {
+        mockPropsFn(props);
+        return <div>ClientVerificationStatusBadge</div>;
+    }),
+    PlatformStatusBadge: jest.fn(props => {
+        mockPropsFn(props);
+        return <div>PlatformStatusBadge</div>;
+    }),
+}));
+
+jest.mock('../../../../modals', () => ({
+    ...jest.requireActual('../../../../modals'),
+    ClientVerificationModal: jest.fn(props => {
+        mockPropsFn(props);
+        return <div>ClientVerificationModal</div>;
+    }),
+    MT5TradeModal: jest.fn(props => {
+        mockPropsFn(props);
+        return <div>MT5TradeModal</div>;
+    }),
+    TradingPlatformStatusModal: jest.fn(props => {
+        mockPropsFn(props);
+        return <div>TradingPlatformStatusModal</div>;
+    }),
+}));
+
+const mockAccount = {
+    display_balance: 'USD 1000.00',
+    display_login: '12345678',
+    landing_company_short: 'svg',
+    market_type: 'financial',
+    platform: 'mt5',
+    product: 'financial',
+    status: 'active',
+};
+
+const mockUseAddedMT5AccountData = {
+    accountDetails: {
+        icon: (
+            <>
+                icon-{mockAccount.platform}-{mockAccount.product}
+            </>
+        ),
+        title: 'Financial',
+    },
+    isServerMaintenance: false,
+    showClientVerificationModal: false,
+    showMT5TradeModal: true,
+    showPlatformStatus: false,
+};
+
+const wrapper: React.FC<React.PropsWithChildren> = ({ children }) => (
+    <>
+        <ModalProvider>{children}</ModalProvider>
+    </>
+);
 
 describe('AddedMT5AccountsList', () => {
-    const mockAccount = {
-        display_balance: 'USD 1000.00',
-        display_login: '12345678',
-        landing_company_short: 'svg',
-        market_type: 'financial',
-        platform: 'mt5',
-        product: 'standard',
-        status: 'active',
-    };
+    // const mockShow = jest.fn();
 
-    const mockShow = jest.fn();
-
+    beforeAll(() => {
+        const modalRoot = document.createElement('div');
+        modalRoot.setAttribute('id', 'wallets_modal_root');
+        document.body.appendChild(modalRoot);
+    });
     beforeEach(() => {
-        (useJurisdictionStatus as jest.Mock).mockReturnValue({
-            getVerificationStatus: jest.fn().mockReturnValue({ is_failed: false, is_pending: false }),
-        });
-        (useTradingPlatformStatus as jest.Mock).mockReturnValue({
-            getPlatformStatus: jest.fn().mockReturnValue('active'),
-        });
-        (useModal as jest.Mock).mockReturnValue({ show: mockShow });
+        (useAddedMT5Account as jest.Mock).mockReturnValue(mockUseAddedMT5AccountData);
     });
 
-    it('renders added mt5 accounts list with correct account details', () => {
+    it('displays added mt5 account with correct account details', () => {
         // @ts-expect-error - since this is a mock, we only need partial properties of the account
-        render(<AddedMT5AccountsList account={mockAccount} />);
+        render(<AddedMT5AccountsList account={mockAccount} />, { wrapper });
 
+        expect(screen.getByText('icon-mt5-financial')).toBeInTheDocument();
         expect(screen.getByText('Financial')).toBeInTheDocument();
         expect(screen.getByText('USD 1000.00')).toBeInTheDocument();
         expect(screen.getByText('12345678')).toBeInTheDocument();
     });
 
+    it('displays ClientVerificationStatusBadge with correct props', () => {
+        (useAddedMT5Account as jest.Mock).mockReturnValue({
+            ...mockUseAddedMT5AccountData,
+            kycStatus: 'mockKycStatus',
+        });
+
+        // @ts-expect-error - since this is a mock, we only need partial properties of the account
+        render(<AddedMT5AccountsList account={mockAccount} />, { wrapper });
+
+        expect(screen.getByText('ClientVerificationStatusBadge')).toBeInTheDocument();
+        expect(mockPropsFn).toBeCalledWith({
+            underlined: true,
+            variant: 'mockKycStatus',
+        });
+    });
+
     it('shows MT5TradeModal when list is clicked and status is active', async () => {
         // @ts-expect-error - since this is a mock, we only need partial properties of the account
-        render(<AddedMT5AccountsList account={mockAccount} />);
+        render(<AddedMT5AccountsList account={mockAccount} />, { wrapper });
 
         userEvent.click(screen.getByTestId('dt_wallets_trading_account_card'));
 
         await waitFor(() => {
-            expect(mockShow).toHaveBeenCalledWith(
-                // @ts-expect-error - since this is a mock, we only need partial properties of the account
-                <MT5TradeModal marketType='financial' mt5Account={mockAccount} platform='mt5' />
-            );
+            expect(screen.getByText('MT5TradeModal')).toBeInTheDocument();
+            expect(mockPropsFn).toBeCalledWith({
+                marketType: mockAccount.market_type,
+                mt5Account: mockAccount,
+                platform: PlatformDetails.mt5.platform,
+            });
+        });
+    });
+
+    it('shows ClientVerificationModal when verification has failed', async () => {
+        (useAddedMT5Account as jest.Mock).mockReturnValue({
+            ...mockUseAddedMT5AccountData,
+            showClientVerificationModal: true,
+        });
+
+        // @ts-expect-error - since this is a mock, we only need partial properties of the account
+        render(<AddedMT5AccountsList account={mockAccount} />, { wrapper });
+
+        userEvent.click(screen.getByTestId('dt_wallets_trading_account_card'));
+
+        await waitFor(() => {
+            expect(screen.getByText('ClientVerificationModal')).toBeInTheDocument();
+            expect(mockPropsFn).toBeCalledWith({
+                account: mockAccount,
+            });
         });
     });
 
     it('shows TradingPlatformStatusModal when platform is under maintenance', async () => {
-        (useTradingPlatformStatus as jest.Mock).mockReturnValue({
-            getPlatformStatus: jest.fn().mockReturnValue('maintenance'),
+        (useAddedMT5Account as jest.Mock).mockReturnValue({
+            ...mockUseAddedMT5AccountData,
+            isServerMaintenance: true,
+            showPlatformStatus: true,
         });
 
         // @ts-expect-error - since this is a mock, we only need partial properties of the account
-        render(<AddedMT5AccountsList account={mockAccount} />);
+        render(<AddedMT5AccountsList account={mockAccount} />, { wrapper });
 
         userEvent.click(screen.getByTestId('dt_wallets_trading_account_card'));
 
         await waitFor(() => {
-            expect(mockShow).toHaveBeenCalledWith(<TradingPlatformStatusModal isServerMaintenance={true} />, {
-                defaultRootId: 'wallets_modal_root',
-            });
-        });
-    });
-
-    it('shows VerificationFailedModal when verification has failed', async () => {
-        (useJurisdictionStatus as jest.Mock).mockReturnValue({
-            getVerificationStatus: jest.fn().mockReturnValue({ is_failed: true, is_pending: false }),
-        });
-        // @ts-expect-error - since this is a mock, we only need partial properties of the account
-        render(<AddedMT5AccountsList account={mockAccount} />);
-
-        userEvent.click(screen.getByTestId('dt_wallets_trading_account_card'));
-
-        await waitFor(() => {
-            expect(mockShow).toHaveBeenCalledWith(<VerificationFailedModal selectedJurisdiction='svg' />, {
-                defaultRootId: 'wallets_modal_root',
-            });
-        });
-    });
-
-    it('displays pending verification message when status is pending', () => {
-        (useJurisdictionStatus as jest.Mock).mockReturnValue({
-            getVerificationStatus: jest.fn().mockReturnValue({ is_failed: false, is_pending: true }),
-        });
-
-        // @ts-expect-error - since this is a mock, we only need partial properties of the account
-        render(<AddedMT5AccountsList account={mockAccount} />);
-
-        expect(screen.getByText('Pending verification')).toBeInTheDocument();
-    });
-
-    it('displays verification failed message when verification has failed', () => {
-        (useJurisdictionStatus as jest.Mock).mockReturnValue({
-            getVerificationStatus: jest.fn().mockReturnValue({ is_failed: true, is_pending: false }),
-        });
-        // @ts-expect-error - since this is a mock, we only need partial properties of the account
-        render(<AddedMT5AccountsList account={mockAccount} />);
-
-        expect(screen.getByText('Verification failed')).toBeInTheDocument();
-        expect(screen.getByText('Why?')).toBeInTheDocument();
-    });
-
-    it('displays VerificationFailedModal when "Why?" link is clicked', async () => {
-        (useJurisdictionStatus as jest.Mock).mockReturnValue({
-            getVerificationStatus: jest.fn().mockReturnValue({ is_failed: true, is_pending: false }),
-        });
-
-        // @ts-expect-error - since this is a mock, we only need partial properties of the account
-        render(<AddedMT5AccountsList account={mockAccount} />);
-
-        const link = screen.getByText('Why?');
-        userEvent.click(link);
-
-        await waitFor(() => {
-            expect(mockShow).toHaveBeenCalledWith(<VerificationFailedModal selectedJurisdiction='svg' />, {
-                defaultRootId: 'wallets_modal_root',
+            expect(screen.getByText('TradingPlatformStatusModal')).toBeInTheDocument();
+            expect(mockPropsFn).toBeCalledWith({
+                isServerMaintenance: true,
             });
         });
     });

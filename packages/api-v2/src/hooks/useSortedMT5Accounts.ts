@@ -28,79 +28,65 @@ const useSortedMT5Accounts = (regulation?: string) => {
                     : account.landing_company_short !== 'maltainvest')
         );
 
-        return filtered_available_accounts?.map(available_account => {
+        const combined_accounts = filtered_available_accounts?.map(available_account => {
             const created_account = filtered_mt5_accounts?.find(account => {
                 return (
-                    available_account.market_type === account.market_type &&
+                    available_account.product === account.product &&
                     available_account.shortcode === account.landing_company_short
                 );
             });
 
-            if (created_account)
-                return {
-                    ...created_account,
-                    /** Determine if the account is added or not */
-                    is_added: true,
-                } as const;
-
             return {
                 ...available_account,
+                ...created_account,
                 /** Determine if the account is added or not */
-                is_added: false,
-            } as const;
+                is_added: Boolean(created_account),
+            };
         });
+
+        return Array.from(
+            // filter out only one account per product type
+            combined_accounts
+                .reduce(
+                    (
+                        acc: Map<typeof combined_accounts[number]['product'], typeof combined_accounts[number]>,
+                        cur: typeof combined_accounts[number]
+                    ) => {
+                        const existingItem = acc.get(cur.product);
+
+                        // Note: 'stp' product type account is not available for creation but we still support existing 'stp' accounts
+                        // @ts-expect-error type for is_default_jurisdiction is unavailable in mt5_login_list and trading_platform_available_accounts
+                        if (!existingItem && cur.is_default_jurisdiction === 'true' && cur.product !== 'stp') {
+                            // No existing item for this product, add it directly
+                            acc.set(cur.product, cur);
+                        } else if (cur.is_added) {
+                            // If `is_added` is true, replace the older entry (prioritization)
+                            acc.set(cur.product, cur);
+                        }
+
+                        return acc;
+                    },
+                    new Map<typeof combined_accounts[number]['product'], typeof combined_accounts[number]>()
+                )
+                .values()
+        );
     }, [activeAccount?.is_virtual, all_available_mt5_accounts, isEU, mt5_accounts]);
 
-    // // Reduce out the added and non added accounts to make sure only one of each market_type is shown for not added
-    const filtered_data = useMemo(() => {
+    const sorted_data = useMemo(() => {
+        const sorting_order = ['standard', 'financial', 'swap_free', 'zero_spread'];
+
         if (!modified_data) return;
 
-        const added_accounts = modified_data.filter(account => account.is_added);
-        const non_added_accounts = modified_data.filter(account => !account.is_added);
-
-        const filtered_non_added_accounts = non_added_accounts.reduce((acc, account) => {
-            const { market_type, product } = account;
-            const key = product === 'zero_spread' ? `${market_type}_${product}` : market_type;
-
-            const existing_account = acc.find(acc_account =>
-                acc_account.product === 'zero_spread'
-                    ? `${acc_account.market_type}_${acc_account.product}` === key
-                    : acc_account.market_type === key
-            );
-            const added_account = added_accounts.find(acc_account =>
-                acc_account.product === 'zero_spread'
-                    ? `${acc_account.market_type}_${acc_account.product}` === key
-                    : acc_account.market_type === key
-            );
-            if (existing_account || added_account) return acc;
-
-            return [...acc, account];
-        }, [] as typeof non_added_accounts);
-
-        return [...added_accounts, ...filtered_non_added_accounts];
-    }, [modified_data]);
-
-    // Sort the data by market_type and product to make sure the order is 'synthetic', 'financial', 'swap_free' and 'zero_spread'
-    const sorted_data = useMemo(() => {
-        const sorting_order = ['synthetic', 'financial', 'swap_free', 'zero_spread'];
-
-        if (!filtered_data) return;
-
         const sorted_data = sorting_order.reduce((acc, sort_order) => {
-            const accounts = filtered_data.filter(account => {
-                if (account.market_type === 'all') {
-                    return account.product === sort_order;
-                }
-                return account.market_type === sort_order;
-            });
+            const accounts = modified_data.filter(account => account.product === sort_order);
             if (!accounts.length) return acc;
             return [...acc, ...accounts];
-        }, [] as typeof filtered_data);
+        }, [] as typeof modified_data);
 
         return sorted_data;
-    }, [filtered_data]);
+    }, [modified_data]);
 
-    const areAllAccountsCreated = sorted_data?.length === all_available_mt5_accounts?.length;
+    const areAllAccountsCreated = modified_data?.length === all_available_mt5_accounts?.length;
 
     return {
         data: sorted_data,

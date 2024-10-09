@@ -1,3 +1,4 @@
+export * from './ClientVerificationModal';
 export * from './DxtradeEnterPasswordModal';
 export * from './JurisdictionModal';
 export * from './MT5PasswordModal';

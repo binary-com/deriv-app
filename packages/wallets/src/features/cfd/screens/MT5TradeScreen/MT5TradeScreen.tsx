@@ -15,7 +15,7 @@ import { MT5TradeLink } from './MT5TradeLink';
 import './MT5TradeScreen.scss';
 
 type MT5TradeScreenProps = {
-    mt5Account?: THooks.MT5AccountsList;
+    mt5Account?: THooks.SortedMT5Accounts;
 };
 
 const MT5TradeScreen: FC<MT5TradeScreenProps> = ({ mt5Account }) => {

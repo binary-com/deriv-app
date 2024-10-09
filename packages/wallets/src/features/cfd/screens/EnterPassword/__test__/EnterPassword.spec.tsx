@@ -1,11 +1,17 @@
 import React from 'react';
 import { useActiveWalletAccount } from '@deriv/api-v2';
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MARKET_TYPE, PlatformDetails } from '../../../constants';
 import EnterPassword from '../EnterPassword';
 
 jest.mock('@deriv/api-v2');
+
+jest.mock('../../components', () => ({
+    ...jest.requireActual('../../components'),
+    MT5LicenceMessage: jest.fn(() => <div>MT5LicenceMessage</div>),
+    MT5PasswordModalTnc: jest.fn(() => <div>MT5PasswordModalTnc</div>),
+}));
 
 describe('EnterPassword', () => {
     const mockUseActiveWalletAccount = useActiveWalletAccount as jest.Mock;
@@ -13,6 +19,8 @@ describe('EnterPassword', () => {
     beforeEach(() => {
         mockUseActiveWalletAccount.mockReturnValue({ data: { is_virtual: false } });
     });
+
+    afterEach(cleanup);
 
     const title = `Enter your ${PlatformDetails.mt5.title} password`;
     const shortPassword = 'abcd';
@@ -82,6 +90,12 @@ describe('EnterPassword', () => {
         expect(addAccountButton).toBeDisabled();
     });
 
+    it('disables the "Add account" button when tnc is not checked', () => {
+        renderComponent({ isTncChecked: false });
+        const addAccountButton = screen.getByRole('button', { name: 'Add account' });
+        expect(addAccountButton).toBeDisabled();
+    });
+
     it('shows password error hints when passwordError is true', () => {
         renderComponent({ passwordError: true });
         expect(
@@ -89,5 +103,30 @@ describe('EnterPassword', () => {
                 `Hint: You may have entered your Deriv password, which is different from your ${PlatformDetails.mt5.title} password.`
             )
         ).toBeInTheDocument();
+    });
+
+    it('shows the mt5 licence message component for real MT5 accounts', () => {
+        renderComponent({ account: { shortcode: 'svg' } });
+
+        expect(screen.getByText('MT5LicenceMessage')).toBeInTheDocument();
+    });
+
+    it('hides the mt5 licence message for virtual accounts', () => {
+        mockUseActiveWalletAccount.mockReturnValue({ data: { is_virtual: true } });
+        renderComponent();
+
+        expect(screen.queryByText('MT5LicenceMessage')).not.toBeInTheDocument();
+    });
+
+    it('shows the mt5 tnc checkbox for regulated real accounts', () => {
+        renderComponent({ account: { shortcode: 'bvi' } });
+
+        expect(screen.getByText('MT5PasswordModalTnc')).toBeInTheDocument();
+    });
+
+    it('hides the mt5 tnc checkbox for non-regulated real accounts', () => {
+        renderComponent({ account: { shortcode: 'svg' } });
+
+        expect(screen.queryByText('MT5PasswordModalTnc')).not.toBeInTheDocument();
     });
 });
