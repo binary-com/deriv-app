@@ -5,9 +5,12 @@ import { PasskeyCreated } from './passkey-created';
 import { PASSKEY_STATUS_CODES, TPasskeysStatus } from '../passkeys-configs';
 import { PasskeysLearnMore } from './passkeys-learn-more';
 import { PasskeysList } from './passkeys-list';
-import { PasskeyRename } from './passkey-rename';
+import { PasskeyRemove } from './passkey-remove';
 import { PasskeyRemoved } from './passkey-removed';
+import { PasskeyRename } from './passkey-rename';
+import { PasskeyRemoveWithEmail } from './passkey-remove-with-email';
 import { TPasskeysButtonOnClicks } from './passkeys-status-layout';
+import { PasskeyRemoveRetry } from './passkey-remove-retry';
 
 type TPasskeysStatusContainer = {
     current_managed_passkey: TCurrentManagedPasskey;
@@ -19,6 +22,7 @@ type TPasskeysStatusContainer = {
 export const PasskeysStatusContainer = observer(
     ({
         current_managed_passkey,
+        onBackButtonClick,
         onPrimaryButtonClick,
         onSecondaryButtonClick,
         passkeys_list,
@@ -36,8 +40,8 @@ export const PasskeysStatusContainer = observer(
             case PASSKEY_STATUS_CODES.LEARN_MORE:
                 return (
                     <PasskeysLearnMore
+                        onBackButtonClick={onBackButtonClick}
                         onPrimaryButtonClick={onPrimaryButtonClick}
-                        onSecondaryButtonClick={onSecondaryButtonClick}
                     />
                 );
             case PASSKEY_STATUS_CODES.NO_PASSKEY:
@@ -57,6 +61,29 @@ export const PasskeysStatusContainer = observer(
                 );
             case PASSKEY_STATUS_CODES.REMOVED:
                 return <PasskeyRemoved onPrimaryButtonClick={onPrimaryButtonClick} />;
+            case PASSKEY_STATUS_CODES.REMOVING:
+                return (
+                    <PasskeyRemove
+                        onBackButtonClick={onBackButtonClick}
+                        onPrimaryButtonClick={onPrimaryButtonClick}
+                        onSecondaryButtonClick={onSecondaryButtonClick}
+                    />
+                );
+            case PASSKEY_STATUS_CODES.REMOVING_RETRY:
+                return (
+                    <PasskeyRemoveRetry
+                        onBackButtonClick={onBackButtonClick}
+                        onPrimaryButtonClick={onPrimaryButtonClick}
+                        onSecondaryButtonClick={onSecondaryButtonClick}
+                    />
+                );
+            case PASSKEY_STATUS_CODES.REMOVING_WITH_EMAIL:
+                return (
+                    <PasskeyRemoveWithEmail
+                        onBackButtonClick={onBackButtonClick}
+                        onPrimaryButtonClick={onPrimaryButtonClick}
+                    />
+                );
             default:
                 return (
                     <PasskeysList

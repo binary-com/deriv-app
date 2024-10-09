@@ -22,7 +22,7 @@ export const PasskeyRename = ({
     };
 
     const onSubmitValues = (values: TInitialValues) => {
-        onPrimaryButtonClick({ name: values.passkey_name });
+        onPrimaryButtonClick?.(values.passkey_name);
     };
 
     return (

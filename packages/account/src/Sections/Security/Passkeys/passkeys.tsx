@@ -8,13 +8,11 @@ import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv-com/translations';
 import { PasskeyErrorModal } from './components/passkey-error-modal';
 import { PasskeyReminderModal } from './components/passkey-reminder-modal';
-import { PasskeyRemoveConfirmationModal } from './components/passkey-remove-confirmation-modal';
 import { PasskeysStatusContainer } from './components/passkeys-status-container';
 import {
     clearRefTimeOut,
     excluded_error_codes,
     excluded_error_names,
-    isNotExistedPasskey,
     PASSKEY_STATUS_CODES,
     passkeysMenuActionEventTrack,
     TPasskeysStatus,
@@ -90,7 +88,10 @@ const Passkeys = observer(() => {
     };
 
     const { passkeys_list, is_passkeys_list_loading, passkeys_list_error, refetchPasskeysList } = useGetPasskeysList();
-    const { passkey_removing_error, removePasskey } = useRemovePasskey({ onSuccess: onSuccessPasskeyRemove });
+    const { is_removing_in_progress, passkey_removing_error, removePasskey, removePasskeyWithEmailCode } =
+        useRemovePasskey({
+            onSuccess: onSuccessPasskeyRemove,
+        });
     const { passkey_renaming_error, renamePasskey } = useRenamePasskey({ onSuccess: onSuccessPasskeyRename });
     const { createPasskey, startPasskeyRegistration, passkey_registration_error } = useRegisterPasskey({
         onSuccess: onSuccessPasskeyRegister,
@@ -98,6 +99,8 @@ const Passkeys = observer(() => {
 
     const should_show_passkeys = is_passkey_supported && isMobile;
     const error = passkeys_list_error || passkey_registration_error || passkey_renaming_error || passkey_removing_error;
+
+    const main_screen_status_code = passkeys_list?.length ? PASSKEY_STATUS_CODES.LIST : PASSKEY_STATUS_CODES.NO_PASSKEY;
 
     useEffect(() => {
         const should_not_render_main_page =
@@ -121,15 +124,16 @@ const Passkeys = observer(() => {
         if (error) {
             passkeysMenuActionEventTrack('error', { error_message: (error as TServerError)?.message });
 
+            if (passkey_status === PASSKEY_STATUS_CODES.REMOVING) {
+                setPasskeyStatus(PASSKEY_STATUS_CODES.REMOVING_RETRY);
+                return;
+            }
+
             const should_hide_error =
                 excluded_error_names.some(name => name === (error as TServerError).name) ||
                 excluded_error_codes.some(code => code === (error as TServerError).code);
 
             if (should_hide_error) return;
-
-            if (passkey_status === PASSKEY_STATUS_CODES.REMOVING) {
-                setPasskeyStatus(passkeys_list?.length ? PASSKEY_STATUS_CODES.LIST : PASSKEY_STATUS_CODES.NO_PASSKEY);
-            }
 
             is_reminder_modal_open && setIsReminderModalOpen(false);
             clearRefTimeOut(error_modal_timeout);
@@ -142,11 +146,19 @@ const Passkeys = observer(() => {
         return <Redirect to={routes.traders_hub} />;
     }
 
-    if ((is_passkeys_list_loading && passkey_status === PASSKEY_STATUS_CODES.LIST) || !is_network_on) {
+    if (
+        (is_passkeys_list_loading && passkey_status === PASSKEY_STATUS_CODES.LIST) ||
+        !is_network_on ||
+        is_removing_in_progress
+    ) {
         return <Loading is_fullscreen={false} className='account__initial-loader' />;
     }
 
     const onCloseErrorModal = () => {
+        if (passkey_status === PASSKEY_STATUS_CODES.REMOVING) {
+            setIsErrorModalOpen(false);
+            return;
+        }
         history.push(routes.traders_hub);
     };
 
@@ -162,6 +174,22 @@ const Passkeys = observer(() => {
         setIsReminderModalOpen(false);
     };
 
+    const onBackButtonClick = () => {
+        if (passkey_status === PASSKEY_STATUS_CODES.LEARN_MORE) {
+            passkeysMenuActionEventTrack('info_back');
+            setPasskeyStatus(main_screen_status_code);
+        }
+        if (passkey_status === PASSKEY_STATUS_CODES.REMOVING_WITH_EMAIL) {
+            setPasskeyStatus(PASSKEY_STATUS_CODES.REMOVING);
+        }
+        if (
+            passkey_status === PASSKEY_STATUS_CODES.REMOVING ||
+            passkey_status === PASSKEY_STATUS_CODES.REMOVING_RETRY
+        ) {
+            setPasskeyStatus(main_screen_status_code);
+        }
+    };
+
     const onPasskeyMenuClick = (passkey_managing_status: TPasskeysStatus, passkey_data: TCurrentManagedPasskey) => {
         if (passkey_managing_status !== PASSKEY_STATUS_CODES.LIST && is_snackbar_open) {
             setIsSnackbarOpen(false);
@@ -170,7 +198,8 @@ const Passkeys = observer(() => {
         setPasskeyStatus(passkey_managing_status);
     };
 
-    const onPrimaryButtonClick = (passkey_data?: Partial<TCurrentManagedPasskey>) => {
+    // value is either passkey new name or email code
+    const onPrimaryButtonClick = (value?: string) => {
         if (
             passkey_status === PASSKEY_STATUS_CODES.NO_PASSKEY ||
             passkey_status === PASSKEY_STATUS_CODES.LIST ||
@@ -186,15 +215,20 @@ const Passkeys = observer(() => {
             history.push(routes.traders_hub);
         }
         if (passkey_status === PASSKEY_STATUS_CODES.RENAMING) {
-            renamePasskey(current_managed_passkey.id, passkey_data?.name ?? current_managed_passkey.name);
+            renamePasskey(current_managed_passkey.id, value);
         }
         if (passkey_status === PASSKEY_STATUS_CODES.REMOVED) {
-            setPasskeyStatus(passkeys_list?.length ? PASSKEY_STATUS_CODES.LIST : PASSKEY_STATUS_CODES.NO_PASSKEY);
+            setPasskeyStatus(main_screen_status_code);
         }
-        // next condition is for future additional verification screen
-        // if (passkey_status === PASSKEY_STATUS_CODES.REMOVING) {
-        //     removePasskey(current_managed_passkey?.id);
-        // }
+        if (
+            passkey_status === PASSKEY_STATUS_CODES.REMOVING ||
+            passkey_status === PASSKEY_STATUS_CODES.REMOVING_RETRY
+        ) {
+            removePasskey(current_managed_passkey?.id, current_managed_passkey?.passkey_id);
+        }
+        if (passkey_status === PASSKEY_STATUS_CODES.REMOVING_WITH_EMAIL) {
+            removePasskeyWithEmailCode(current_managed_passkey.id, Number(value));
+        }
     };
 
     const onSecondaryButtonClick = () => {
@@ -202,10 +236,7 @@ const Passkeys = observer(() => {
             passkeysMenuActionEventTrack('info_open');
             setPasskeyStatus(PASSKEY_STATUS_CODES.LEARN_MORE);
         }
-        if (passkey_status === PASSKEY_STATUS_CODES.LEARN_MORE || passkey_status === PASSKEY_STATUS_CODES.REMOVING) {
-            passkeysMenuActionEventTrack('info_back');
-            setPasskeyStatus(passkeys_list?.length ? PASSKEY_STATUS_CODES.LIST : PASSKEY_STATUS_CODES.NO_PASSKEY);
-        }
+
         if (passkey_status === PASSKEY_STATUS_CODES.CREATED) {
             passkeysMenuActionEventTrack('add_more_passkeys');
             setPasskeyStatus(PASSKEY_STATUS_CODES.LIST);
@@ -214,11 +245,18 @@ const Passkeys = observer(() => {
             passkeysMenuActionEventTrack('passkey_rename_back');
             setPasskeyStatus(PASSKEY_STATUS_CODES.LIST);
         }
+        if (
+            passkey_status === PASSKEY_STATUS_CODES.REMOVING ||
+            passkey_status === PASSKEY_STATUS_CODES.REMOVING_RETRY
+        ) {
+            setPasskeyStatus(PASSKEY_STATUS_CODES.REMOVING_WITH_EMAIL);
+        }
     };
 
     return (
         <Fragment>
             <PasskeysStatusContainer
+                onBackButtonClick={onBackButtonClick}
                 current_managed_passkey={current_managed_passkey}
                 onPasskeyMenuClick={onPasskeyMenuClick}
                 onPrimaryButtonClick={onPrimaryButtonClick}
@@ -241,18 +279,6 @@ const Passkeys = observer(() => {
                 toggleModal={onCloseReminderModal}
             />
             <PasskeyErrorModal error={error} is_modal_open={is_error_modal_open} onButtonClick={onCloseErrorModal} />
-            {/* TODO: Remove confirmation modal, when verification page is implemented*/}
-            <PasskeyRemoveConfirmationModal
-                is_modal_open={passkey_status === PASSKEY_STATUS_CODES.REMOVING && !is_error_modal_open}
-                onSecondaryButtonClick={() => {
-                    setPasskeyStatus(
-                        passkeys_list?.length ? PASSKEY_STATUS_CODES.LIST : PASSKEY_STATUS_CODES.NO_PASSKEY
-                    );
-                }}
-                onPrimaryButtonClick={() => {
-                    removePasskey(current_managed_passkey?.id);
-                }}
-            />
         </Fragment>
     );
 });

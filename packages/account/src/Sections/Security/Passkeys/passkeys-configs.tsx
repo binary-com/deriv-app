@@ -13,8 +13,9 @@ export const PASSKEY_STATUS_CODES = {
     NO_PASSKEY: 'no_passkey',
     REMOVED: 'removed',
     REMOVING: 'removing',
+    REMOVING_RETRY: 'removing_retry',
+    REMOVING_WITH_EMAIL: 'removing_with_email',
     RENAMING: 'renaming',
-    VERIFYING: 'verifying',
 } as const;
 
 export type TPasskeysStatus = typeof PASSKEY_STATUS_CODES[keyof typeof PASSKEY_STATUS_CODES];
@@ -32,6 +33,15 @@ export const getPasskeyRenameValidationSchema = () =>
             .min(3, localize('Only 3-30 characters allowed.'))
             .max(30, localize('Only 3-30 characters allowed.'))
             .matches(/^[A-Za-z0-9][A-Za-z0-9\s-]*$/, localize('Only letters, numbers, space, and hyphen are allowed.')),
+    });
+
+export const getEmailCodeValidationSchema = () =>
+    Yup.object().shape({
+        email_code: Yup.string()
+            .required('Must be only digits')
+            .min(6, 'Must be exactly 6 digits')
+            .max(6, 'Must be exactly 6 digits')
+            .matches(/^[0-9]+$/, 'Must be only digits'),
     });
 
 export const clearRefTimeOut = (timeout_ref: MutableRefObject<NodeJS.Timeout | null>) => {

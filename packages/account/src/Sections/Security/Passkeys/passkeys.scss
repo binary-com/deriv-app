@@ -33,6 +33,10 @@
                     }
                 }
             }
+
+            .quill-input__container {
+                min-height: 9.8rem;
+            }
         }
 
         &__title {
@@ -106,6 +110,14 @@
                         }
                     }
                 }
+            }
+
+            &-code-input {
+                margin-top: 2rem;
+            }
+
+            &-resend-code-button {
+                margin-inline-end: auto;
             }
         }
 
