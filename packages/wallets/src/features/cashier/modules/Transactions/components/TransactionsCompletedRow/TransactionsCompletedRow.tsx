@@ -3,9 +3,9 @@ import classNames from 'classnames';
 import { useDebounceCallback } from 'usehooks-ts';
 import { Localize, useTranslations } from '@deriv-com/translations';
 import { Divider, Text } from '@deriv-com/ui';
+import { FormatUtils } from '@deriv-com/utils';
 import { WalletClipboard, WalletMoney } from '../../../../../../components';
 import { THooks } from '../../../../../../types';
-import parseCryptoLongcode from '../../../../../../utils/parse-crypto-longcode';
 import { getTransactionLabels } from '../../constants';
 import { TransactionsCompletedRowAccountDetails, TransactionsCompletedRowTransferAccountDetails } from './components';
 import './TransactionsCompletedRow.scss';
@@ -34,7 +34,7 @@ const TransactionsCompletedRowContent: React.FC<TTransactionsCompletedRowContent
 }) => {
     const { action_type: actionType, longcode = '', transaction_id: transactionId } = transaction;
     const { account_type: accountType = '', currency = 'USD', is_virtual: isVirtual } = wallet;
-    const { addressHash, blockchainHash, splitLongcode } = parseCryptoLongcode(longcode);
+    const { addressHash, blockchainHash, splitLongcode } = FormatUtils.parseCryptoLongcode(longcode);
     let descriptions = [longcode];
 
     if (addressHash || blockchainHash) {

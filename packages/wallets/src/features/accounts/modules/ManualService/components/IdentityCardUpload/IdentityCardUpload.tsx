@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Formik, FormikValues } from 'formik';
 import { Localize, useTranslations } from '@deriv-com/translations';
 import { Divider, Loader, Text } from '@deriv-com/ui';
+import { FormatUtils } from '@deriv-com/utils';
 import { DatePicker, Dropzone, FormField, ModalStepWrapper } from '../../../../../../components';
 import IdentityCardBack from '../../../../../../public/images/accounts/document-back.svg';
 import IdentityCardFront from '../../../../../../public/images/accounts/identity-card-front.svg';
 import { THooks } from '../../../../../../types';
-import { getAdjustedDate } from '../../../../../../utils/utils';
 import { Footer } from '../../../components';
 import { getGeneralDocumentRules, TManualDocumentComponent } from '../../utils';
 import { DocumentRules } from '../DocumentRules';
@@ -108,7 +108,7 @@ const IdentityCardUpload: TManualDocumentComponent = ({ documentIssuingCountryCo
                                     />
                                     <DatePicker
                                         label={localize('Expiry date*')}
-                                        minDate={getAdjustedDate(2, 'days')}
+                                        minDate={FormatUtils.getAdjustedDate(2, 'days')}
                                         name='identityCardExpiryDate'
                                     />
                                 </div>

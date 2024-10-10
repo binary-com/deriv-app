@@ -5,7 +5,7 @@
     "main": "src/index.ts",
     "sideEffects": false,
     "dependencies": {
-        "@deriv-com/utils": "^0.0.34",
+        "@deriv-com/utils": "^0.0.36",
         "@deriv/deriv-api": "^1.0.15",
         "@deriv/shared": "^1.0.0",
         "@deriv/utils": "^1.0.0",

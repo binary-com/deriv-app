@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FormikValues } from 'formik';
 import { useSettings } from '@deriv/api-v2';
 import { TSocketError } from '@deriv/api-v2/types';
-import { getFormattedDateString } from '../../../../../../../utils/utils';
+import { FormatUtils } from '@deriv-com/utils';
 import type { TVerifyPersonalDetailsValues } from '../types';
 
 const useVerifyPersonalDetails = () => {
@@ -11,7 +11,7 @@ const useVerifyPersonalDetails = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [error, setError] = useState<TSocketError<'set_settings'>>();
 
-    const formattedDateOfBirth = getFormattedDateString(new Date((settings.date_of_birth ?? 0) * 1000));
+    const formattedDateOfBirth = FormatUtils.getFormattedDateString(new Date((settings.date_of_birth ?? 0) * 1000));
 
     const initialValues = {
         dateOfBirth: formattedDateOfBirth,

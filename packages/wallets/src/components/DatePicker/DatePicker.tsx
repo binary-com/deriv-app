@@ -3,7 +3,7 @@ import { Field, FieldProps } from 'formik';
 import Calendar from 'react-calendar';
 import { useOnClickOutside } from 'usehooks-ts';
 import { LegacyCalendar1pxIcon } from '@deriv/quill-icons';
-import { getFormattedDateString } from '../../utils/utils';
+import { FormatUtils } from '@deriv-com/utils';
 import { WalletTextField } from '../Base';
 import type { TFormFieldProps } from '../FormField';
 import customFormatShortWeekday from './utils';
@@ -11,7 +11,7 @@ import 'react-calendar/dist/Calendar.css';
 import './DatePicker.scss';
 
 interface TDatePickerProps extends TFormFieldProps {
-    displayFormat?: string;
+    displayFormat?: 'DD MMM YYYY' | 'DD-MM-YYYY' | 'MMM DD YYYY' | 'YYYY-MM-DD';
     maxDate?: Date;
     minDate?: Date;
     mobileAlignment?: 'above' | 'below';
@@ -47,7 +47,11 @@ const DatePicker = ({
                     <div className='wallets-datepicker' ref={datePickerRef}>
                         <WalletTextField
                             autoComplete='off'
-                            defaultValue={field.value ? getFormattedDateString(field.value, {}, displayFormat) : ''}
+                            defaultValue={
+                                field.value
+                                    ? FormatUtils.getFormattedDateString(field.value, { format: displayFormat })
+                                    : ''
+                            }
                             disabled={disabled}
                             errorMessage={hasTouched && form.errors[name] ? form.errors[name] : undefined}
                             inputMode='none'
@@ -70,7 +74,11 @@ const DatePicker = ({
                             )}
                             showMessage
                             type='text'
-                            value={field.value ? getFormattedDateString(field.value, {}, displayFormat) : ''}
+                            value={
+                                field.value
+                                    ? FormatUtils.getFormattedDateString(field.value, { format: displayFormat })
+                                    : ''
+                            }
                         />
                         {isCalendarOpen && (
                             <div
@@ -87,10 +95,12 @@ const DatePicker = ({
                                         setIsCalendarOpen(false);
                                         form.setFieldValue(
                                             name,
-                                            getFormattedDateString(calendarSelectedDate as Date, {}, 'YYYY-MM-DD')
+                                            FormatUtils.getFormattedDateString(calendarSelectedDate as Date, {
+                                                format: 'YYYY-MM-DD',
+                                            })
                                         );
                                     }}
-                                    value={field.value ? getFormattedDateString(field.value) : ''}
+                                    value={field.value ? FormatUtils.getFormattedDateString(field.value) : ''}
                                 />
                             </div>
                         )}

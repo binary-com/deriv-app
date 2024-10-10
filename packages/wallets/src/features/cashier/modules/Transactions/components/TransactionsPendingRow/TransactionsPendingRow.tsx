@@ -5,11 +5,11 @@ import { LegacyClose1pxIcon } from '@deriv/quill-icons';
 import { getTruncatedString } from '@deriv/utils';
 import { Localize, useTranslations } from '@deriv-com/translations';
 import { Button, Divider, Text, Tooltip, useDevice } from '@deriv-com/ui';
+import { FormatUtils } from '@deriv-com/utils';
 import { WalletCurrencyCard, WalletMoney } from '../../../../../../components';
 import { useModal } from '../../../../../../components/ModalProvider';
 import useIsRtl from '../../../../../../hooks/useIsRtl';
 import { THooks } from '../../../../../../types';
-import { getFormattedDateString, getFormattedTimeString } from '../../../../../../utils/utils';
 import { WalletActionModal } from '../../../../components/WalletActionModal';
 import {
     getFormattedConfirmations,
@@ -158,12 +158,10 @@ const TransactionsPendingRow: React.FC<TProps> = ({ transaction }) => {
                             />
                             <TransactionsPendingRowField
                                 name={localize('Date')}
-                                value={getFormattedDateString(
-                                    transaction.submit_date,
-                                    { day: '2-digit', month: 'short', year: 'numeric' },
-                                    undefined,
-                                    true
-                                )}
+                                value={FormatUtils.getFormattedDateString(transaction.submit_date, {
+                                    dateOptions: { day: '2-digit', month: 'short', year: 'numeric' },
+                                    unix: true,
+                                })}
                                 valueTextProps={{
                                     color: 'general',
                                 }}
@@ -174,8 +172,9 @@ const TransactionsPendingRow: React.FC<TProps> = ({ transaction }) => {
                         className={{ 'wallets-transactions-pending-row__transaction-time': isDesktop }}
                         name={localize('Time')}
                         value={`${
-                            isDesktop && `${getFormattedDateString(transaction.submit_date, {}, undefined, true)} `
-                        }${getFormattedTimeString(transaction.submit_date, true)}`}
+                            isDesktop &&
+                            `${FormatUtils.getFormattedDateString(transaction.submit_date, { unix: true })} `
+                        }${FormatUtils.getFormattedTimeString(transaction.submit_date, true)}`}
                         valueTextProps={{
                             color: 'general',
                             size: isDesktop ? '2xs' : 'xs',

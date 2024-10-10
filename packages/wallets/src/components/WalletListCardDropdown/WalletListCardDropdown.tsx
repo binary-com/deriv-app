@@ -9,7 +9,6 @@ import { Text } from '@deriv-com/ui';
 import useAllBalanceSubscription from '../../hooks/useAllBalanceSubscription';
 import useWalletAccountSwitcher from '../../hooks/useWalletAccountSwitcher';
 import { THooks } from '../../types';
-import reactNodeToString from '../../utils/react-node-to-string';
 import { WalletTextField } from '../Base';
 import { WalletCurrencyIcon } from '../WalletCurrencyIcon';
 import './WalletListCardDropdown.scss';
@@ -18,7 +17,7 @@ type WalletList = {
     currency: THooks.WalletAccountsList['currency'];
     currencyConfig: THooks.WalletAccountsList['currency_config'];
     loginid: THooks.WalletAccountsList['loginid'];
-    text: React.ReactNode;
+    text: string;
 }[];
 
 const WalletListCardDropdown = () => {
@@ -120,7 +119,7 @@ const WalletListCardDropdown = () => {
                                     })}
                                     id={`wallets-listcard-dropdown__item-${index}`}
                                     key={wallet.loginid}
-                                    onClick={() => handleItemClick(wallet.loginid, reactNodeToString(wallet.text))}
+                                    onClick={() => handleItemClick(wallet.loginid, wallet.text)}
                                 >
                                     <div className='wallets-listcard-dropdown__list-item'>
                                         <WalletCurrencyIcon currency={wallet.currency ?? 'USD'} rounded />
