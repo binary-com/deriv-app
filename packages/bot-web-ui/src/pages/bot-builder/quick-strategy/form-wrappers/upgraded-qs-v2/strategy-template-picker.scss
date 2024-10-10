@@ -1,0 +1,130 @@
+.strategy-template-picker {
+    margin: 1.6rem 3.2rem;
+    max-width: 40rem;
+
+    &__icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 3.2rem;
+        width: 3.2rem;
+        padding: 0.7rem;
+        border: 1px solid var(--general-section-1);
+        border-radius: 2rem;
+        background-color: unset;
+        cursor: pointer;
+    }
+
+    &__panel {
+        display: flex;
+        justify-content: center;
+        column-gap: 1rem;
+        height: 3.2rem;
+        margin-bottom: 1.6rem;
+
+        .quill-input {
+            &__container {
+                width: 36rem;
+                background-color: var(--general-section-1);
+                border-radius: 1rem;
+            }
+
+            &__wrapper__variant--outline {
+                background-color: unset;
+                border: none;
+            }
+        }
+    }
+
+    &__chips {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 0.8rem;
+        column-gap: 0.8rem;
+    }
+
+    &__strategies {
+        display: flex;
+        flex-direction: column;
+
+        .quill-link {
+            display: flex;
+            justify-content: space-between;
+            text-decoration: none;
+            border-bottom: 1px solid var(--general-section-1);
+        }
+
+        .quill-typography {
+            margin: 0.8rem 0;
+        }
+    }
+
+    &__strategy {
+        margin-bottom: 0.8rem;
+    }
+
+    &__links {
+        margin: 0 0.8rem;
+    }
+
+    &__title {
+        margin: 0.8rem 0;
+    }
+}
+
+.qs {
+    &__body__content {
+        padding: 0 !important;
+
+        .deriv-linear-progress-bar {
+            margin: 0;
+
+            &__track {
+                position: fixed;
+                z-index: 1;
+                margin: 0;
+            }
+        }
+
+        &__footer {
+            // &--mobile-fixed { // if we need fixed position
+            //     height: 4rem;
+            //     position: fixed;
+            //     bottom: 1px;
+            //     width: 100%;
+            // }
+
+            .dc-btn--transparent {
+                @include desktop-screen {
+                    left: 2.4rem;
+                    position: absolute;
+                }
+            }
+        }
+    }
+
+    &__selected-options {
+        display: flex;
+        flex-direction: column;
+        gap: 1.6rem;
+        width: 90%;
+        margin: 1.6rem auto;
+        padding: 0.8rem var(--group-outer-padding) 1.6rem;
+        background-color: var(--general-section-1);
+        border-radius: 0.8rem;
+
+        &__item {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+}
+
+.quick-strategy {
+    &__wrapper .dc-page-overlay {
+        &__header-title {
+            text-align: left;
+            margin-left: 1.6rem;
+        }
+    }
+}

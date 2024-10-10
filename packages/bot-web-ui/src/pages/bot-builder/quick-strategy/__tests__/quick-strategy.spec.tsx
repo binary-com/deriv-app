@@ -178,6 +178,21 @@ jest.mock('../config', () => ({
                 [],
             ],
         },
+        D_ALEMBERT: {
+            label: 'D’Alembert',
+        },
+        OSCARS_GRIND: {
+            label: 'Oscar’s Grind',
+        },
+        REVERSE_MARTINGALE: {
+            label: 'Reverse Martingale',
+        },
+        REVERSE_D_ALEMBERT: {
+            label: 'Reverse D’Alembert',
+        },
+        STRATEGY_1_3_2_6: {
+            label: '1-3-2-6',
+        },
     },
 }));
 
