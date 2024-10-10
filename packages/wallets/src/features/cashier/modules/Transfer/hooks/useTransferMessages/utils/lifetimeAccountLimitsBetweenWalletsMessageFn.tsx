@@ -51,6 +51,12 @@ const lifetimeAccountLimitsBetweenWalletsMessageFn = ({
         sourceAccount.currencyConfig.fractional_digits
     );
 
+    const formattedSourceCurrencyLimitInUSD = displayMoney?.(
+        allowedSumActiveWalletCurrency * (activeWalletExchangeRates?.rates?.USD ?? 1),
+        activeWalletExchangeRates?.rates?.USD ? 'USD' : sourceAccount.currencyConfig.display_code,
+        activeWalletExchangeRates?.rates?.USD ? 2 : sourceAccount.currencyConfig.fractional_digits
+    );
+
     const formattedSourceCurrencyRemainder = displayMoney?.(
         availableSumActiveWalletCurrency,
         sourceAccount.currencyConfig.display_code,
@@ -63,7 +69,7 @@ const lifetimeAccountLimitsBetweenWalletsMessageFn = ({
         targetAccount.currencyConfig.fractional_digits
     );
 
-    const formattedSourceCurrencyReminderInUSD = displayMoney?.(
+    const formattedSourceCurrencyRemainderInUSD = displayMoney?.(
         availableSumActiveWalletCurrency * (activeWalletExchangeRates?.rates?.USD ?? 1),
         activeWalletExchangeRates?.rates?.USD ? 'USD' : sourceAccount.currencyConfig.display_code,
         activeWalletExchangeRates?.rates?.USD ? 2 : sourceAccount.currencyConfig.fractional_digits
@@ -78,8 +84,11 @@ const lifetimeAccountLimitsBetweenWalletsMessageFn = ({
                 />
             ) : (
                 <Localize
-                    i18n_default_text="You've reached the lifetime transfer limit from your {{sourceAccountName}} to any Wallet. Verify your account to upgrade the limit."
-                    values={{ sourceAccountName: sourceAccount.accountName }}
+                    i18n_default_text="You've reached the lifetime transfer limit from your {{sourceAccountName}} to {{targetAccountName}}. Verify your account to upgrade the limit."
+                    values={{
+                        sourceAccountName: sourceAccount.accountName,
+                        targetAccountName: targetAccount.accountName,
+                    }}
                 />
             );
 
@@ -107,8 +116,8 @@ const lifetimeAccountLimitsBetweenWalletsMessageFn = ({
             case 'crypto_to_crypto':
                 message = (
                     <Localize
-                        i18n_default_text='The lifetime transfer limit is up to {{formattedSourceCurrencyRemainder}} ({{formattedSourceCurrencyReminderInUSD}}). Verify your account to upgrade the limit.'
-                        values={{ formattedSourceCurrencyRemainder, formattedSourceCurrencyReminderInUSD }}
+                        i18n_default_text='The lifetime transfer limit is up to {{formattedSourceCurrencyRemainder}} ({{formattedSourceCurrencyRemainderInUSD}}). Verify your account to upgrade the limit.'
+                        values={{ formattedSourceCurrencyRemainder, formattedSourceCurrencyRemainderInUSD }}
                     />
                 );
 
@@ -134,8 +143,13 @@ const lifetimeAccountLimitsBetweenWalletsMessageFn = ({
                         />
                     ) : (
                         <Localize
-                            i18n_default_text='The lifetime transfer limit from {{sourceAccountName}} to any Wallet is up to {{formattedSourceCurrencyLimit}}.'
-                            values={{ formattedSourceCurrencyLimit, sourceAccountName: sourceAccount.accountName }}
+                            i18n_default_text='The lifetime transfer limit from {{sourceAccountName}} to {{targetAccountName}} is up to {{formattedSourceCurrencyLimit}} (Approximate to {{formattedSourceCurrencyLimitInUSD}}).'
+                            values={{
+                                formattedSourceCurrencyLimit,
+                                formattedSourceCurrencyLimitInUSD,
+                                sourceAccountName: sourceAccount.accountName,
+                                targetAccountName: targetAccount.accountName,
+                            }}
                         />
                     );
 
@@ -146,8 +160,8 @@ const lifetimeAccountLimitsBetweenWalletsMessageFn = ({
             case 'crypto_to_crypto':
                 message = (
                     <Localize
-                        i18n_default_text='The lifetime transfer limit between cryptocurrency Wallets is up to {{formattedSourceCurrencyLimit}}.'
-                        values={{ formattedSourceCurrencyLimit }}
+                        i18n_default_text='The lifetime transfer limit between cryptocurrency Wallets is up to {{formattedSourceCurrencyLimit}} (Approximate to {{formattedSourceCurrencyLimitInUSD}}).'
+                        values={{ formattedSourceCurrencyLimit, formattedSourceCurrencyLimitInUSD }}
                     />
                 );
 
@@ -170,8 +184,13 @@ const lifetimeAccountLimitsBetweenWalletsMessageFn = ({
                     />
                 ) : (
                     <Localize
-                        i18n_default_text='Your remaining lifetime transfer limit from {{sourceAccountName}} to any Wallet is {{formattedSourceCurrencyRemainder}}. Verify your account to upgrade the limit.'
-                        values={{ formattedSourceCurrencyRemainder, sourceAccountName: sourceAccount.accountName }}
+                        i18n_default_text='Your remaining lifetime transfer limit from {{sourceAccountName}} to {{targetAccountName}} is {{formattedSourceCurrencyRemainder}} (Approximate to {{formattedSourceCurrencyRemainderInUSD}}). Verify your account to upgrade the limit.'
+                        values={{
+                            formattedSourceCurrencyRemainder,
+                            formattedSourceCurrencyRemainderInUSD,
+                            sourceAccountName: sourceAccount.accountName,
+                            targetAccountName: targetAccount.accountName,
+                        }}
                     />
                 );
 
@@ -183,8 +202,8 @@ const lifetimeAccountLimitsBetweenWalletsMessageFn = ({
         case 'crypto_to_crypto':
             message = (
                 <Localize
-                    i18n_default_text='Your remaining lifetime transfer limit between cryptocurrency Wallets is {{formattedSourceCurrencyRemainder}}. Verify your account to upgrade the limit.'
-                    values={{ formattedSourceCurrencyRemainder }}
+                    i18n_default_text='Your remaining lifetime transfer limit between cryptocurrency Wallets is {{formattedSourceCurrencyRemainder}} (Approximate to {{formattedSourceCurrencyRemainderInUSD}}). Verify your account to upgrade the limit.'
+                    values={{ formattedSourceCurrencyRemainder, formattedSourceCurrencyRemainderInUSD }}
                 />
             );
 
