@@ -45,6 +45,7 @@ const default_plugins = [
     new Dotenv(),
     new DefinePlugin({
         'process.env.TRUSTPILOT_API_KEY': JSON.stringify(process.env.TRUSTPILOT_API_KEY),
+        'process.env.REMOTE_CONFIG_URL': JSON.stringify(process.env.REMOTE_CONFIG_URL),
     }),
     new IgnorePlugin({ resourceRegExp: /^\.\/locale$/, contextRegExp: /moment$/ }),
     new CircularDependencyPlugin({ exclude: /node_modules/, failOnError: true }),
