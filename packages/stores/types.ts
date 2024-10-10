@@ -643,6 +643,7 @@ export type TClientStore = {
     setTradersHubTracking: (value: boolean) => void;
     account_time_of_closure?: number;
     is_account_to_be_closed_by_residence: boolean;
+    should_show_trustpilot_notification: boolean;
 };
 
 type TCommonStoreError = {

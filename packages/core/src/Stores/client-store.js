@@ -433,6 +433,7 @@ export default class ClientStore extends BaseStore {
             setTradersHubTracking: action.bound,
             account_time_of_closure: computed,
             is_account_to_be_closed_by_residence: computed,
+            should_show_trustpilot_notification: computed,
         });
 
         reaction(
@@ -2928,5 +2929,9 @@ export default class ClientStore extends BaseStore {
 
     get is_account_to_be_closed_by_residence() {
         return this.account_time_of_closure && this.residence && this.residence === 'sn';
+    }
+
+    get should_show_trustpilot_notification() {
+        return this.account_status?.status?.includes('customer_review_eligible');
     }
 }
