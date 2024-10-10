@@ -31,7 +31,7 @@ const PhoneNumberVerifiedModal = observer(({ should_show_phone_number_verified_m
             account_settings: { phone },
         },
     } = useStore();
-    const { setIsPhoneVerificationCompleted } = ui;
+    const { setIsPhoneVerificationCompleted, setShouldShowPhoneNumberOTP } = ui;
     const { trackPhoneVerificationEvents } = usePhoneVerificationAnalytics();
 
     useEffect(() => {
@@ -40,6 +40,7 @@ const PhoneNumberVerifiedModal = observer(({ should_show_phone_number_verified_m
                 action: 'open',
                 subform_name: 'verification_successful',
             });
+            setShouldShowPhoneNumberOTP(false);
             setIsPhoneVerificationCompleted(true);
         }
     }, [should_show_phone_number_verified_modal, trackPhoneVerificationEvents]);
