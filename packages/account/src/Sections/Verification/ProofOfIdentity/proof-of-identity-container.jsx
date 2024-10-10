@@ -100,6 +100,7 @@ const ProofOfIdentityContainer = observer(
 
         const verification_status = populateVerificationStatus(account_status);
         const {
+            identity,
             idv,
             allow_poi_resubmission,
             identity_last_attempt,
@@ -174,7 +175,9 @@ const ProofOfIdentityContainer = observer(
         } else if (
             !identity_last_attempt ||
             // Prioritise verified status from back office. How we know this is if there is mismatch between current statuses (Should be refactored)
-            (identity_status === identity_status_codes.verified && identity_status !== identity_last_attempt.status)
+
+            (identity_status === identity_status_codes.verified &&
+                identity_status !== identity?.services[identity_last_attempt?.service].status)
         ) {
             switch (identity_status) {
                 case identity_status_codes.pending:
