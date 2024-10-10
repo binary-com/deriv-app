@@ -1,13 +1,33 @@
-import React, { FC, Fragment, useMemo } from 'react';
+import React, { FC, Fragment, useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useActiveWalletAccount, useCtraderAccountsList, useDxtradeAccountsList } from '@deriv/api-v2';
-import { LabelPairedArrowUpArrowDownMdBoldIcon, LabelPairedCircleExclamationMdFillIcon } from '@deriv/quill-icons';
+import {
+    useActiveWalletAccount,
+    useAvailableCTraderAccounts,
+    useCreateOtherCFDAccount,
+    useCtraderAccountsList,
+    useDxtradeAccountsList,
+} from '@deriv/api-v2';
+import { displayMoney } from '@deriv/api-v2/src/utils';
+import {
+    LabelPairedArrowUpArrowDownMdBoldIcon,
+    LabelPairedCircleExclamationMdFillIcon,
+    LabelPairedPlusMdFillIcon,
+} from '@deriv/quill-icons';
 import { Localize, useTranslations } from '@deriv-com/translations';
-import { Button, InlineMessage, Text, useDevice } from '@deriv-com/ui';
+import { Accordion, Button, InlineMessage, Text, useDevice } from '@deriv-com/ui';
 import { WalletBadge, WalletListCardBadge } from '../../../../components';
 import { useModal } from '../../../../components/ModalProvider';
 import { THooks } from '../../../../types';
-import { CFD_PLATFORMS, getMarketTypeDetails, getServiceMaintenanceMessages, PlatformDetails } from '../../constants';
+import { calculateTotalByKey } from '../../../../utils/calculate-total-by-key';
+import { sortArrayByKey } from '../../../../utils/sort-array-by-key';
+import {
+    CFD_PLATFORMS,
+    getMarketTypeDetails,
+    getServiceMaintenanceMessages,
+    MARKET_TYPE,
+    PlatformDetails,
+} from '../../constants';
+import { CTraderAddAccountSuccessModal } from '../../modals/CTraderAddAccountSuccessModal';
 import MT5DesktopRedirectOption from './MT5TradeLink/MT5DesktopRedirectOption';
 import MT5MobileRedirectOption from './MT5TradeLink/MT5MobileRedirectOption';
 import { MT5TradeDetailsItem } from './MT5TradeDetailsItem';
@@ -20,13 +40,14 @@ type MT5TradeScreenProps = {
 
 const MT5TradeScreen: FC<MT5TradeScreenProps> = ({ mt5Account }) => {
     const { isDesktop } = useDevice();
-    const { getModalState, hide } = useModal();
+    const { getModalState, hide, show } = useModal();
     const { localize } = useTranslations();
     const history = useHistory();
     const { data: dxtradeAccountsList } = useDxtradeAccountsList();
     const { data: ctraderAccountsList } = useCtraderAccountsList();
     const { data: activeWalletData } = useActiveWalletAccount();
-
+    const { data: availableCtraderAccounts } = useAvailableCTraderAccounts();
+    const { isSuccess: isAccountCreated, mutate: createAccount } = useCreateOtherCFDAccount();
     const mt5Platform = CFD_PLATFORMS.MT5;
     const dxtradePlatform = CFD_PLATFORMS.DXTRADE;
     const ctraderPlatform = CFD_PLATFORMS.CTRADER;
@@ -89,6 +110,44 @@ const MT5TradeScreen: FC<MT5TradeScreenProps> = ({ mt5Account }) => {
         return details?.login;
     }, [details, dxtradePlatform, mt5Platform, platform]);
 
+    const ctraderTotalBalance = useMemo(() => {
+        if (ctraderAccountsList) {
+            return calculateTotalByKey(ctraderAccountsList, 'display_balance');
+        }
+        return 0;
+    }, [ctraderAccountsList]);
+
+    const cTraderDisplayBalance = displayMoney(ctraderTotalBalance, activeWalletData?.currency || 'USD', {
+        fractional_digits: activeWalletData?.currency_config?.fractional_digits,
+    });
+
+    const sortedCtraderAccountList = useMemo(() => {
+        if (ctraderAccountsList) {
+            return sortArrayByKey(ctraderAccountsList, 'login');
+        }
+        return ctraderAccountsList;
+    }, [ctraderAccountsList]);
+
+    const { is_virtual: isDemo = false } = activeWalletData ?? {};
+
+    const onClickCtraderGetMoreButton = () => {
+        createAccount({
+            payload: {
+                account_type: isDemo ? 'demo' : 'real',
+                market_type: MARKET_TYPE.ALL,
+                platform: CFD_PLATFORMS.CTRADER,
+            },
+        });
+    };
+
+    useEffect(() => {
+        if (isAccountCreated) {
+            show(<CTraderAddAccountSuccessModal />);
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAccountCreated]);
+
     const migrationMessage = useMemo(() => {
         if (platform === mt5Platform && !activeWalletData?.is_virtual) {
             switch (
@@ -147,7 +206,16 @@ const MT5TradeScreen: FC<MT5TradeScreenProps> = ({ mt5Account }) => {
                             </Text>
                         </div>
                         <div className='wallets-mt5-trade-screen__description-balance'>
-                            {shouldShowAccountBalance && <Text weight='bold'>{details?.display_balance}</Text>}
+                            {platform !== ctraderPlatform && shouldShowAccountBalance ? (
+                                <Text weight='bold'>{details?.display_balance}</Text>
+                            ) : (
+                                <div className='wallets-mt5-trade-screen__details-description__balance-total'>
+                                    <Text as='p' lineHeight='3xs' size={isDesktop ? 'sm' : 'md'}>
+                                        Total balance:
+                                    </Text>
+                                    <Text weight='bold'>{cTraderDisplayBalance}</Text>
+                                </div>
+                            )}
                             {migrationMessage}
                         </div>
                     </div>
@@ -169,6 +237,81 @@ const MT5TradeScreen: FC<MT5TradeScreenProps> = ({ mt5Account }) => {
                     </div>
                 </div>
 
+                {platform === ctraderPlatform && (
+                    <Fragment>
+                        <ul className='wallets-mt5-trade-screen__ctrader-account-list'>
+                            {sortedCtraderAccountList?.map(account => (
+                                <li
+                                    className='wallets-mt5-trade-screen__ctrader-account-list__item'
+                                    key={account.login}
+                                >
+                                    <Text size='sm'>{account.login}</Text>
+                                    <Text size='sm' weight='bold'>
+                                        {account.display_balance}
+                                    </Text>
+                                </li>
+                            ))}
+                        </ul>
+                        {availableCtraderAccounts?.[0].available_count !== undefined &&
+                            availableCtraderAccounts[0].available_count > 0 && (
+                                <button
+                                    className='wallets-mt5-trade-screen__ctrader-get-more-button'
+                                    onClick={onClickCtraderGetMoreButton}
+                                    type='button'
+                                >
+                                    <span className='wallets-mt5-trade-screen__ctrader-get-more-button__icon'>
+                                        <LabelPairedPlusMdFillIcon fill='#000000' />
+                                    </span>
+                                    <Text size='xs'>Get another cTrader account</Text>
+                                </button>
+                            )}
+                        <Accordion
+                            className='wallets-mt5-trade-screen__accordion'
+                            headerClassName='wallets-mt5-trade-screen__accordion__header'
+                            title='See important notes'
+                            variant='bordered'
+                        >
+                            <ol className='wallets-mt5-trade-screen__notes'>
+                                <li className='wallets-mt5-trade-screen__notes__item'>
+                                    Use your Deriv account email and password to log in to cTrader.
+                                </li>
+                                <li className='wallets-mt5-trade-screen__notes__item'>
+                                    Manage up to 5 Deriv cTrader accounts. While you can convert any of your Deriv
+                                    cTrader accounts into a strategy account, please take note of the following:
+                                    <ul className='wallets-mt5-trade-screen__notes__inner-list'>
+                                        <li className='wallets-mt5-trade-screen__notes__item wallets-mt5-trade-screen__notes__inner-item'>
+                                            When setting up a strategy, you have the option to impose fees.
+                                        </li>
+                                        <li className='wallets-mt5-trade-screen__notes__item wallets-mt5-trade-screen__notes__inner-item'>
+                                            For strategies where you impose fees, you must assign one of your existing
+                                            accounts to process these fees. The same ‘Account For Fees’ can support
+                                            multiple fee-based strategies.
+                                        </li>
+                                        <li className='wallets-mt5-trade-screen__notes__item wallets-mt5-trade-screen__notes__inner-item'>
+                                            Free strategies do not require an ‘Account For Fees’.
+                                        </li>
+                                        <li className='wallets-mt5-trade-screen__notes__item wallets-mt5-trade-screen__notes__inner-item'>
+                                            An account designated as a strategy provider is irreversible unless it
+                                            remains inactive for 30 days.
+                                        </li>
+                                        <li className='wallets-mt5-trade-screen__notes__item wallets-mt5-trade-screen__notes__inner-item'>
+                                            An account cannot simultaneously be a strategy provider and serve as an
+                                            ‘Account For Fees’.
+                                        </li>
+                                        <li className='wallets-mt5-trade-screen__notes__item wallets-mt5-trade-screen__notes__inner-item'>
+                                            To ensure you can always create and manage strategies with fees,{' '}
+                                            <strong>
+                                                keep at least one account free from being a strategy provider
+                                            </strong>
+                                            . This way, you’ll always have an account ready for collecting fees,
+                                            allowing you to have up to four strategies where you may impose fees.
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </Accordion>
+                    </Fragment>
+                )}
                 <div className='wallets-mt5-trade-screen__content-clipboards'>
                     {getModalState('platform') === mt5Platform && details?.platform === mt5Platform && (
                         <Fragment>

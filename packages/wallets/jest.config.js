@@ -11,4 +11,5 @@ module.exports = {
         '\\.(ts|tsx)?$': '<rootDir>/jestTransformer.js',
         '^.+\\.jsx?$': 'babel-jest',
     },
+    transformIgnorePatterns: ['/node_modules/(?!(@deriv-com/ui)).+\\.js$'],
 };

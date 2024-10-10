@@ -12,7 +12,7 @@ type TModalState = {
     selectedJurisdiction?: THooks.AvailableMT5Accounts['shortcode'];
 };
 
-type TModalContext = {
+export type TModalContext = {
     getModalState: <T extends keyof TModalState>(key: T) => TModalState[T];
     hide: () => void;
     isOpen: boolean;

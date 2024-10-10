@@ -1617,6 +1617,10 @@ type TPrivateSocketEndpoints = {
             trading_platform_available_accounts?:
                 | {
                       /**
+                       * The number of accounts a user has already created on the trading platform.
+                       */
+                      available_count?: number;
+                      /**
                        * A list of Deriv landing companies that can work with this account type
                        */
                       linkable_landing_companies?: ('svg' | 'maltainvest')[];

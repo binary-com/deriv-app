@@ -1,3 +1,3 @@
-import ModalProvider, { useModal } from './ModalProvider';
+import ModalProvider, { type TModalContext, useModal } from './ModalProvider';
 
-export { ModalProvider, useModal };
+export { ModalProvider, TModalContext, useModal };

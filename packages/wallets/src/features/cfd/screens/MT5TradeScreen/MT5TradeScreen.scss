@@ -104,4 +104,65 @@
             padding: 1.6rem 2.4rem;
         }
     }
+    &__ctrader-account-list {
+        border-block-start: 1px solid #f2f3f4;
+        padding-block-start: 0.8rem;
+        &__item {
+            display: flex;
+            justify-content: space-between;
+            padding-block: 0.8rem;
+        }
+    }
+    &__ctrader-get-more-button {
+        display: flex;
+        align-items: center;
+        height: 4rem;
+        padding: 1.6rem;
+        gap: 1.6rem;
+        border-radius: 0.8rem;
+        border: 1px dashed #d6dadb;
+        background-color: transparent;
+        cursor: pointer;
+        &:hover {
+            background-color: transparent;
+        }
+        &__icon {
+            width: 2.4rem;
+            height: 2.4rem;
+            background-color: #d6dadb;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+    &__accordion {
+        --du-general-main-2: #f2f3f4;
+        --du-general-active: var(--du-general-main-2);
+        --padding-y: 1.6rem;
+        --content-bg-color: var(--du-general-main-2);
+        --content-margin-top: 0.8rem;
+        &__header {
+            font-size: 1.4rem;
+            font-weight: 700;
+            line-height: 1.43;
+        }
+    }
+    &__notes {
+        list-style: decimal;
+        padding-left: 1.4rem;
+        &__item {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            padding-block: 0.8rem;
+        }
+        &__inner-list {
+            list-style: disc;
+            padding-left: 1.8rem;
+            margin-block-start: 0.8rem;
+        }
+        &__inner-item {
+            padding-block-start: 0;
+        }
+    }
 }

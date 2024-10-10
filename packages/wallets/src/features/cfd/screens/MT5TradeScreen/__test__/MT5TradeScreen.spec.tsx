@@ -2,6 +2,8 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import {
     useActiveWalletAccount,
+    useAvailableCTraderAccounts,
+    useCreateOtherCFDAccount,
     useCtraderAccountsList,
     useCtraderServiceToken,
     useDxtradeAccountsList,
@@ -17,6 +19,8 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('@deriv/api-v2', () => ({
     useActiveWalletAccount: jest.fn(),
+    useAvailableCTraderAccounts: jest.fn(),
+    useCreateOtherCFDAccount: jest.fn(),
     useCtraderAccountsList: jest.fn(),
     useCtraderServiceToken: jest.fn(),
     useDxtradeAccountsList: jest.fn(),
@@ -62,7 +66,11 @@ describe('MT5TradeScreen', () => {
         (useCtraderAccountsList as jest.Mock).mockReturnValue({
             data: [{ account_id: 'CT234', display_balance: '1000', login: 'CT234' }],
         });
+        (useAvailableCTraderAccounts as jest.Mock).mockReturnValue({
+            data: [{ account_id: 'CT234', display_balance: '1000', login: 'CT234' }],
+        });
         (useCtraderServiceToken as jest.Mock).mockReturnValue({ mutateAsync: jest.fn() });
+        (useCreateOtherCFDAccount as jest.Mock).mockReturnValue({ mutateAsync: jest.fn() });
     });
 
     afterEach(() => {
