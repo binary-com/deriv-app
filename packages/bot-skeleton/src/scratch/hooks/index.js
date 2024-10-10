@@ -14,3 +14,4 @@ import './workspace_svg';
 import './scratch_block_comment';
 import './tooltip';
 import './variable';
+import './domtoworkspace';
