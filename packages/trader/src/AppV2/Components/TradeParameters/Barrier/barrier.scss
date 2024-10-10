@@ -40,5 +40,9 @@
         margin-top: var(--core-spacing-400);
         display: flex;
         justify-content: space-between;
+
+        p:first-child {
+            color: var(--component-textIcon-normal-subtle);
+        }
     }
 }
