@@ -37,8 +37,8 @@
         "url": "https://github.com/deriv-com/deriv-app/issues"
     },
     "dependencies": {
-        "@deriv-com/ui": "1.35.0",
         "@deriv-com/analytics": "1.14.0",
+        "@deriv-com/ui": "1.36.1",
         "@deriv/api": "^1.0.0",
         "@deriv/api-types": "1.0.172",
         "@deriv/components": "^1.0.0",
@@ -48,7 +48,6 @@
         "@deriv/shared": "^1.0.0",
         "@deriv/stores": "^1.0.0",
         "@deriv/translations": "^1.0.0",
-        "@deriv/ui": "^0.6.0",
         "classnames": "^2.2.6",
         "formik": "^2.1.4",
         "framer-motion": "^6.5.1",
