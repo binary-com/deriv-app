@@ -56,6 +56,7 @@ export const VerifyButton = observer(
 
         const redirectToPhoneVerification = (e: React.MouseEvent<HTMLElement>) => {
             e.preventDefault();
+            localStorage.setItem('routes_from_notification_to_pnv', routes.personal_details);
             setVerificationCode('', 'phone_number_verification');
             setShouldShowPhoneNumberOTP(false);
             const request = makeSettingsRequest({ ...values }, residence_list, states_list, is_virtual);
