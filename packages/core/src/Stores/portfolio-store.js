@@ -18,6 +18,7 @@ import {
     getEndTime,
     getTradeNotificationMessage,
     isAccumulatorContract,
+    isDtraderV2Enabled,
     isEmptyObject,
     isEnded,
     isValidToSell,
@@ -313,10 +314,13 @@ export default class PortfolioStore extends BaseStore {
         if (contract_id) {
             WS.cancelContract(contract_id).then(response => {
                 if (response.error) {
-                    this.root_store.common.setServicesError({
-                        type: response.msg_type,
-                        ...response.error,
-                    });
+                    this.root_store.common.setServicesError(
+                        {
+                            type: response.msg_type,
+                            ...response.error,
+                        },
+                        isDtraderV2Enabled(this.root_store.ui.is_mobile)
+                    );
                 } else if (window.location.pathname !== routes.trade || !this.root_store.ui.is_mobile) {
                     this.root_store.notifications.addNotificationMessage(contractCancelled());
                 }
@@ -343,10 +347,13 @@ export default class PortfolioStore extends BaseStore {
 
             // invalidToken error will handle in socket-general.js
             if (response.error.code !== 'InvalidToken') {
-                this.root_store.common.setServicesError({
-                    type: response.msg_type,
-                    ...response.error,
-                });
+                this.root_store.common.setServicesError(
+                    {
+                        type: response.msg_type,
+                        ...response.error,
+                    },
+                    isDtraderV2Enabled(this.root_store.ui.is_mobile)
+                );
             }
         } else if (!response.error && response.sell) {
             // update contract store sell info after sell

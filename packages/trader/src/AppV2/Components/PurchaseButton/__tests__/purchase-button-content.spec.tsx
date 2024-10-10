@@ -71,16 +71,4 @@ describe('PurchaseButtonContent', () => {
 
         expect(container).toBeEmptyDOMElement();
     });
-
-    it('should render error text as button content if error is not falsy', () => {
-        render(<PurchaseButtonContent {...mock_props} error='Mock error text' />);
-
-        expect(screen.getByText('Mock error text')).toBeInTheDocument();
-    });
-
-    it('should render error text as button content even if error is not falsy, but has_no_button_content === true', () => {
-        render(<PurchaseButtonContent {...mock_props} error='Mock error text' has_no_button_content />);
-
-        expect(screen.getByText('Mock error text')).toBeInTheDocument();
-    });
 });

@@ -6,7 +6,6 @@ import { getLocalizedBasis } from '@deriv/shared';
 import { Money } from '@deriv/components';
 
 type TPurchaseButtonContent = {
-    error?: React.ReactNode;
     has_no_button_content?: boolean;
     info: ReturnType<typeof useTraderStore>['proposal_info'][0] | Record<string, never>;
     is_reverse?: boolean;
@@ -17,7 +16,6 @@ type TPurchaseButtonContent = {
 
 const PurchaseButtonContent = ({
     currency,
-    error,
     has_open_accu_contract,
     has_no_button_content,
     info,
@@ -26,7 +24,7 @@ const PurchaseButtonContent = ({
     is_vanilla,
     is_reverse,
 }: TPurchaseButtonContent) => {
-    if (has_no_button_content && !error) return null;
+    if (has_no_button_content) return null;
 
     const { payout, stake } = getLocalizedBasis();
 
@@ -50,7 +48,7 @@ const PurchaseButtonContent = ({
             )}
             data-testid='dt_purchase_button_wrapper'
         >
-            {(!is_content_empty || error) && (
+            {!is_content_empty && (
                 <React.Fragment>
                     <CaptionText
                         as='span'
@@ -58,7 +56,7 @@ const PurchaseButtonContent = ({
                         className={clsx(!has_open_accu_contract && 'purchase-button__information__item')}
                         color='quill-typography__color--prominent'
                     >
-                        {!error && text_basis}
+                        {text_basis}
                     </CaptionText>
                     <CaptionText
                         as='span'
@@ -66,14 +64,12 @@ const PurchaseButtonContent = ({
                         className={clsx(!has_open_accu_contract && 'purchase-button__information__item')}
                         color='quill-typography__color--prominent'
                     >
-                        {error || (
-                            <Money
-                                amount={amount}
-                                currency={currency}
-                                should_format={!is_turbos && !is_vanilla}
-                                show_currency
-                            />
-                        )}
+                        <Money
+                            amount={amount}
+                            currency={currency}
+                            should_format={!is_turbos && !is_vanilla}
+                            show_currency
+                        />
                     </CaptionText>
                 </React.Fragment>
             )}

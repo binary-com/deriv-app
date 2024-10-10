@@ -1,3 +1,4 @@
+import { TCommonStoreServicesError } from '@deriv/stores/types';
 import { getTradeParams } from './trade-params-utils';
 
 export const HEIGHT = {
@@ -49,4 +50,24 @@ export const getChartHeight = ({
     )
         return height - HEIGHT.ADDITIONAL_INFO;
     return height;
+};
+
+export const checkIsServiceModalError = ({
+    services_error,
+    is_mf_verification_pending_modal_visible,
+}: {
+    services_error: TCommonStoreServicesError;
+    is_mf_verification_pending_modal_visible?: boolean;
+}) => {
+    const { code, type } = services_error || {};
+    // Error modal is shown only for next four types. For the rest - snackbar.
+    const is_insufficient_balance = code === 'InsufficientBalance' || code === 'InvalidContractProposal';
+    const is_authorization_required = code === 'AuthorizationRequired' && type === 'buy';
+    const is_account_verification_required = code === 'PleaseAuthenticate';
+    return (
+        is_insufficient_balance ||
+        is_authorization_required ||
+        is_account_verification_required ||
+        !!is_mf_verification_pending_modal_visible
+    );
 };

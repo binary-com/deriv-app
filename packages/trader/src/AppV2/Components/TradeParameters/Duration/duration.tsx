@@ -49,7 +49,8 @@ const Duration = observer(({ is_minimized }: TDurationProps) => {
         validation_errors.duration.length > 0;
     const { activeSymbols } = useActiveSymbols();
     const isInitialMount = useRef(true);
-    const { common } = useStore();
+    const { common, client } = useStore();
+    const { is_logged_in } = client;
     const { server_time } = common;
 
     useEffect(() => {
@@ -125,10 +126,14 @@ const Duration = observer(({ is_minimized }: TDurationProps) => {
             const error_obj = proposal_info[contract_type_object[0]] || validation_errors?.duration?.[0];
             if (error_obj?.error_field === 'duration') {
                 addSnackbar({
-                    message: <Localize i18n_default_text={error_obj.message} />,
+                    message: error_obj.message,
                     status: 'fail',
                     hasCloseButton: true,
-                    style: { marginBottom: '48px' },
+                    hasFixedHeight: false,
+                    style: {
+                        marginBottom: is_logged_in ? '48px' : '-8px',
+                        width: 'calc(100% - var(--core-spacing-800)',
+                    },
                 });
             }
         }

@@ -1,5 +1,13 @@
 import { action, observable, makeObservable, override } from 'mobx';
-import { routes, isEmptyObject, isForwardStarting, WS, contractCancelled, contractSold } from '@deriv/shared';
+import {
+    routes,
+    isDtraderV2Enabled,
+    isEmptyObject,
+    isForwardStarting,
+    WS,
+    contractCancelled,
+    contractSold,
+} from '@deriv/shared';
 import { Money } from '@deriv/components';
 import { Analytics } from '@deriv-com/analytics';
 import { localize } from '@deriv/translations';
@@ -223,10 +231,13 @@ export default class ContractReplayStore extends BaseStore {
         if (contract_id) {
             WS.cancelContract(contract_id).then(response => {
                 if (response.error) {
-                    this.root_store.common.setServicesError({
-                        type: response.msg_type,
-                        ...response.error,
-                    });
+                    this.root_store.common.setServicesError(
+                        {
+                            type: response.msg_type,
+                            ...response.error,
+                        },
+                        isDtraderV2Enabled(this.root_store.ui.is_mobile)
+                    );
                 } else {
                     this.root_store.notifications.addNotificationMessage(contractCancelled());
                 }
@@ -246,10 +257,13 @@ export default class ContractReplayStore extends BaseStore {
         if (response.error) {
             // If unable to sell due to error, give error via pop up if not in contract mode
             this.is_sell_requested = false;
-            this.root_store.common.setServicesError({
-                type: response.msg_type,
-                ...response.error,
-            });
+            this.root_store.common.setServicesError(
+                {
+                    type: response.msg_type,
+                    ...response.error,
+                },
+                isDtraderV2Enabled(this.root_store.ui.is_mobile)
+            );
         } else if (!response.error && response.sell) {
             this.is_sell_requested = false;
             // update contract store sell info after sell

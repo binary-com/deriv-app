@@ -5,10 +5,11 @@ import type { TCoreStores } from '@deriv/stores/types';
 import ModulesProvider from 'Stores/Providers/modules-providers';
 import TraderProviders from '../trader-providers';
 import { ReportsStoreProvider } from '../../../reports/src/Stores/useReportsStores';
-import { NotificationsProvider, SnackbarController, SnackbarProvider } from '@deriv-com/quill-ui';
+import { NotificationsProvider, SnackbarProvider } from '@deriv-com/quill-ui';
 import 'Sass/app.scss';
 import Notifications from './Containers/Notifications';
 import Router from './Routes/router';
+import ServicesErrorSnackbar from './Components/ServicesErrorSnackbar';
 
 type Apptypes = {
     passthrough: {
@@ -32,7 +33,7 @@ const App = ({ passthrough }: Apptypes) => {
                         <SnackbarProvider>
                             <Notifications />
                             <Router />
-                            <SnackbarController />
+                            <ServicesErrorSnackbar />
                         </SnackbarProvider>
                     </NotificationsProvider>
                 </ModulesProvider>
