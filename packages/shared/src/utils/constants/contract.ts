@@ -321,6 +321,7 @@ export const getCardLabelsV2 = () =>
         HIGH_BARRIER: localize('High Barrier'),
         LOW_BARRIER: localize('Low Barrier'),
         BUY_PRICE: localize('Buy price'),
+        BUY: localize('Buy'),
         CANCEL: localize('Cancel'),
         CLOSE: localize('Close'),
         CLOSED: localize('Closed'),

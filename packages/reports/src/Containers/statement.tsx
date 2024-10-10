@@ -136,7 +136,8 @@ export const getRowAction = (row_obj: TSource | TRow): TAction => {
 };
 
 const Statement = observer(({ component_icon }: TStatement) => {
-    const { client } = useStore();
+    const { client, common } = useStore();
+    const { current_language } = common;
     const { statement } = useReportsStore();
     const { currency, is_switching, is_virtual } = client;
     const {
@@ -247,7 +248,13 @@ const Statement = observer(({ component_icon }: TStatement) => {
 
     return (
         <React.Fragment>
-            <ReportsMeta className='reports__meta--statement' filter_component={<FilterComponent />} is_statement />
+            <ReportsMeta
+                className='reports__meta--statement'
+                filter_component={<FilterComponent />}
+                is_statement
+                // key param is needed to force rerendering of the ReportsMeta component on language change
+                key={current_language}
+            />
             {is_switching ? (
                 <PlaceholderComponent is_loading />
             ) : (

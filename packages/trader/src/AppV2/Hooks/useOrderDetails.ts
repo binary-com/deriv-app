@@ -22,7 +22,7 @@ import { isCancellationExpired } from 'Stores/Modules/Trading/Helpers/logic';
 import { Localize } from '@deriv/translations';
 import React from 'react';
 
-const CARD_LABELS = getCardLabelsV2();
+type TCardLabels = ReturnType<typeof getCardLabelsV2>;
 
 const formatTimestampToDateTime = (timestamp: number) => {
     const date = new Date(timestamp * 1000);
@@ -40,7 +40,7 @@ const formatTimestampToDateTime = (timestamp: number) => {
     return [formattedDate, formattedTime];
 };
 
-const getDealCancelFee = (data: TContractInfo) => {
+const getDealCancelFee = (data: TContractInfo, CARD_LABELS: TCardLabels) => {
     if (!data.cancellation?.ask_price || !data.currency) return undefined;
 
     let status;
@@ -56,7 +56,7 @@ const getDealCancelFee = (data: TContractInfo) => {
 };
 
 // Contains all key values that are used more than once in different transform objects
-const getCommonFields = (data: TContractInfo) => {
+const getCommonFields = (data: TContractInfo, CARD_LABELS: TCardLabels) => {
     const { tick_count, tick_passed, contract_type } = data;
     const ticks_label = Number(tick_count) < 2 ? CARD_LABELS.TICK : CARD_LABELS.TICKS;
     const ticks_duration_text = isAccumulatorContract(contract_type)
@@ -65,8 +65,8 @@ const getCommonFields = (data: TContractInfo) => {
 
     return {
         [CARD_LABELS.REFERENCE_ID]: [
-            data.transaction_ids?.buy ? `${data.transaction_ids.buy} (Buy)` : '',
-            data.transaction_ids?.sell ? `${data.transaction_ids.sell} (Sell)` : '',
+            data.transaction_ids?.buy ? `${data.transaction_ids.buy} (${CARD_LABELS.BUY})` : '',
+            data.transaction_ids?.sell ? `${data.transaction_ids.sell} (${CARD_LABELS.SELL})` : '',
         ],
         [CARD_LABELS.STAKE]:
             data.buy_price && data.currency
@@ -81,9 +81,9 @@ const getCommonFields = (data: TContractInfo) => {
     };
 };
 // For Multiplier
-const transformMultiplierData = (data: TContractInfo) => {
-    const commonFields = getCommonFields(data);
-    const dealCancelFee = getDealCancelFee(data);
+const transformMultiplierData = (data: TContractInfo, CARD_LABELS: TCardLabels) => {
+    const commonFields = getCommonFields(data, CARD_LABELS);
+    const dealCancelFee = getDealCancelFee(data, CARD_LABELS);
 
     return {
         [CARD_LABELS.REFERENCE_ID]: commonFields[CARD_LABELS.REFERENCE_ID],
@@ -109,14 +109,14 @@ const transformMultiplierData = (data: TContractInfo) => {
 };
 
 // For Rise
-const transformCallPutData = (data: TContractInfo) => {
+const transformCallPutData = (data: TContractInfo, CARD_LABELS: TCardLabels) => {
     const { barrier, purchase_time, shortcode } = data;
     const is_forward_starting = isForwardStarting(shortcode ?? '', purchase_time);
     const start_time = getStartTime(shortcode ?? '');
     const has_forward_contract_started = hasForwardContractStarted(shortcode ?? '');
     const show_barrier_placeholder = is_forward_starting && !!start_time && !has_forward_contract_started;
 
-    const commonFields = getCommonFields(data);
+    const commonFields = getCommonFields(data, CARD_LABELS);
     return {
         [CARD_LABELS.REFERENCE_ID]: commonFields[CARD_LABELS.REFERENCE_ID],
         [CARD_LABELS.DURATION]: commonFields[CARD_LABELS.DURATION],
@@ -127,8 +127,8 @@ const transformCallPutData = (data: TContractInfo) => {
 };
 
 // For Turbos
-const transformTurbosData = (data: TContractInfo) => {
-    const commonFields = getCommonFields(data);
+const transformTurbosData = (data: TContractInfo, CARD_LABELS: TCardLabels) => {
+    const commonFields = getCommonFields(data, CARD_LABELS);
     return {
         [CARD_LABELS.REFERENCE_ID]: commonFields[CARD_LABELS.REFERENCE_ID],
         [CARD_LABELS.DURATION]: commonFields[CARD_LABELS.DURATION],
@@ -143,8 +143,8 @@ const transformTurbosData = (data: TContractInfo) => {
 };
 
 // For Digits
-const transformDigitsData = (data: TContractInfo) => {
-    const commonFields = getCommonFields(data);
+const transformDigitsData = (data: TContractInfo, CARD_LABELS: TCardLabels) => {
+    const commonFields = getCommonFields(data, CARD_LABELS);
     const duration_time = getDurationTime(data) ?? '';
     return {
         [CARD_LABELS.REFERENCE_ID]: commonFields[CARD_LABELS.REFERENCE_ID],
@@ -158,8 +158,8 @@ const transformDigitsData = (data: TContractInfo) => {
 };
 
 // For Accumulators
-const transformAccumulatorData = (data: TContractInfo) => {
-    const commonFields = getCommonFields(data);
+const transformAccumulatorData = (data: TContractInfo, CARD_LABELS: TCardLabels) => {
+    const commonFields = getCommonFields(data, CARD_LABELS);
     return {
         [CARD_LABELS.REFERENCE_ID]: commonFields[CARD_LABELS.REFERENCE_ID],
         ...{
@@ -183,8 +183,8 @@ const transformAccumulatorData = (data: TContractInfo) => {
 };
 
 // For Vanillas
-const transformVanillaData = (data: TContractInfo) => {
-    const commonFields = getCommonFields(data);
+const transformVanillaData = (data: TContractInfo, CARD_LABELS: TCardLabels) => {
+    const commonFields = getCommonFields(data, CARD_LABELS);
     return {
         [CARD_LABELS.REFERENCE_ID]: commonFields[`${CARD_LABELS.REFERENCE_ID}`],
         [CARD_LABELS.DURATION]: `${getDurationTime(data) ?? ''} ${getDurationUnitText(getDurationPeriod(data)) ?? ''}`,
@@ -196,8 +196,8 @@ const transformVanillaData = (data: TContractInfo) => {
     };
 };
 
-const transformEndsBetween = (data: TContractInfo) => {
-    const commonFields = getCommonFields(data);
+const transformEndsBetween = (data: TContractInfo, CARD_LABELS: TCardLabels) => {
+    const commonFields = getCommonFields(data, CARD_LABELS);
     return {
         [CARD_LABELS.REFERENCE_ID]: commonFields[`${CARD_LABELS.REFERENCE_ID}`],
         [CARD_LABELS.DURATION]: `${getDurationTime(data) ?? ''} ${getDurationUnitText(getDurationPeriod(data)) ?? ''}`,
@@ -209,8 +209,8 @@ const transformEndsBetween = (data: TContractInfo) => {
     };
 };
 
-const transformAsian = (data: TContractInfo) => {
-    const commonFields = getCommonFields(data);
+const transformAsian = (data: TContractInfo, CARD_LABELS: TCardLabels) => {
+    const commonFields = getCommonFields(data, CARD_LABELS);
     return {
         [CARD_LABELS.REFERENCE_ID]: commonFields[CARD_LABELS.REFERENCE_ID],
         [CARD_LABELS.DURATION]: commonFields[CARD_LABELS.DURATION],
@@ -221,8 +221,8 @@ const transformAsian = (data: TContractInfo) => {
     };
 };
 
-const transformLooksback = (data: TContractInfo) => {
-    const commonFields = getCommonFields(data);
+const transformLooksback = (data: TContractInfo, CARD_LABELS: TCardLabels) => {
+    const commonFields = getCommonFields(data, CARD_LABELS);
     const is_call_contract = data.contract_type == CONTRACT_TYPES.LB_CALL;
     let spot_key;
 
@@ -241,8 +241,8 @@ const transformLooksback = (data: TContractInfo) => {
     };
 };
 
-const transformHighLowLookback = (data: TContractInfo) => {
-    const commonFields = getCommonFields(data);
+const transformHighLowLookback = (data: TContractInfo, CARD_LABELS: TCardLabels) => {
+    const commonFields = getCommonFields(data, CARD_LABELS);
     return {
         [CARD_LABELS.REFERENCE_ID]: commonFields[CARD_LABELS.REFERENCE_ID],
         [CARD_LABELS.DURATION]: commonFields[CARD_LABELS.DURATION],
@@ -257,8 +257,8 @@ const transformHighLowLookback = (data: TContractInfo) => {
     };
 };
 
-const transformReset = (data: TContractInfo) => {
-    const commonFields = getCommonFields(data);
+const transformReset = (data: TContractInfo, CARD_LABELS: TCardLabels) => {
+    const commonFields = getCommonFields(data, CARD_LABELS);
 
     return {
         [CARD_LABELS.REFERENCE_ID]: commonFields[CARD_LABELS.REFERENCE_ID],
@@ -288,8 +288,8 @@ const transformReset = (data: TContractInfo) => {
     };
 };
 
-const transformRunHigh = (data: TContractInfo) => {
-    const commonFields = getCommonFields(data);
+const transformRunHigh = (data: TContractInfo, CARD_LABELS: TCardLabels) => {
+    const commonFields = getCommonFields(data, CARD_LABELS);
     return {
         [CARD_LABELS.REFERENCE_ID]: commonFields[CARD_LABELS.REFERENCE_ID],
         [CARD_LABELS.DURATION]: commonFields[CARD_LABELS.DURATION],
@@ -298,8 +298,8 @@ const transformRunHigh = (data: TContractInfo) => {
             data.payout && data.currency ? `${formatMoney(data.currency, data.payout, true)} ${data.currency}` : '',
     };
 };
-const transformHighLow = (data: TContractInfo) => {
-    const commonFields = getCommonFields(data);
+const transformHighLow = (data: TContractInfo, CARD_LABELS: TCardLabels) => {
+    const commonFields = getCommonFields(data, CARD_LABELS);
     return {
         [CARD_LABELS.REFERENCE_ID]: commonFields[CARD_LABELS.REFERENCE_ID],
         [CARD_LABELS.DURATION]: commonFields[CARD_LABELS.DURATION],
@@ -311,7 +311,7 @@ const transformHighLow = (data: TContractInfo) => {
 };
 
 // Map of contract types to their respective transform functions
-const transformFunctionMap: Record<string, (data: TContractInfo) => Record<string, any>> = {
+const transformFunctionMap: Record<string, (data: TContractInfo, card_label: TCardLabels) => Record<string, any>> = {
     [CONTRACT_TYPES.TURBOS.LONG]: transformTurbosData,
     [CONTRACT_TYPES.TURBOS.SHORT]: transformTurbosData,
     [CONTRACT_TYPES.MULTIPLIER.DOWN]: transformMultiplierData,
@@ -354,7 +354,7 @@ const useOrderDetails = (contract_info: TContractInfo) => {
     const contractInfo = contract_info;
     if (!contractInfo.contract_type) return;
     const transformFunction = transformFunctionMap[contractInfo.contract_type];
-    const details = transformFunction ? transformFunction(contractInfo) : {};
+    const details = transformFunction ? transformFunction(contractInfo, getCardLabelsV2()) : {};
     return {
         details,
     };

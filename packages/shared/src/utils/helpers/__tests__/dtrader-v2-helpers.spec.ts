@@ -30,8 +30,18 @@ describe('getPositionsV2TabIndexFromURL', () => {
         expect(getPositionsV2TabIndexFromURL()).toBe(0);
     });
 
+    it('should return 0 if it is an open tab in location.search and URL has additional parameters', () => {
+        location.search = `?lang=KM&tab_name=${POSITIONS_V2_TAB_NAME.OPEN.toLowerCase()}`;
+        expect(getPositionsV2TabIndexFromURL()).toBe(0);
+    });
+
     it('should return 1 if it is a closed tab in location.search', () => {
         location.search = `?tab_name=${POSITIONS_V2_TAB_NAME.CLOSED.toLowerCase()}`;
+        expect(getPositionsV2TabIndexFromURL()).toBe(1);
+    });
+
+    it('should return 1 if it is a closed tab in location.search and URL has additional parameters', () => {
+        location.search = `?lang=PL&tab_name=${POSITIONS_V2_TAB_NAME.CLOSED.toLowerCase()}`;
         expect(getPositionsV2TabIndexFromURL()).toBe(1);
     });
 
