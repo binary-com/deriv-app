@@ -32,6 +32,7 @@ const LanguageLink = observer(({ is_clickable = false, lang, toggleModal }: TLan
     const handleLanguageChange = async (lang: string) => {
         await changeSelectedLanguage(lang);
         switchLanguage(lang);
+        window.fcWidget?.user.setLocale(lang.toLowerCase());
         toggleModal?.();
     };
 

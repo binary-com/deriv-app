@@ -6,6 +6,8 @@ export const requestLogout = () => WS.logout().then(doLogout);
 
 function endChat() {
     window.LC_API?.close_chat?.();
+    window.fcWidget?.close();
+    window.fcWidget?.user.clear();
 }
 
 const doLogout = response => {

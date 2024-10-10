@@ -1,19 +1,39 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Popover, Icon, Text } from '@deriv/components';
 import { useDevice } from '@deriv-com/ui';
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
+import { useGrowthbookGetFeatureValue } from '@deriv/hooks';
 import useLiveChat from 'App/Components/Elements/LiveChat/use-livechat';
+import useFreshChat from 'App/Components/Elements/LiveChat/use-freshchat';
 
 const LiveChat = observer(({ showPopover }: { showPopover?: boolean }) => {
     const { client } = useStore();
-    const { has_cookie_account, loginid } = client;
+    const { has_cookie_account, loginid, accounts } = client;
     const { isDesktop } = useDevice();
+
+    const active_account = accounts?.[loginid ?? ''];
+    const token = active_account ? active_account.token : null;
+    // const language = localStorage.getItem('i18n_language')?.toLowerCase() || 'en';
+
     const liveChat = useLiveChat(has_cookie_account, loginid);
+    const freshChat = useFreshChat(token);
 
-    if (!liveChat.isReady) return null;
+    const [enable_freshworks_live_chat] = useGrowthbookGetFeatureValue({
+        featureFlag: 'enable_freshworks_live_chat',
+        defaultValue: true,
+    });
 
-    const liveChatClickHandler = () => liveChat.widget?.call('maximize');
+    const chat = enable_freshworks_live_chat ? freshChat : liveChat;
+    // useEffect(() => {
+    //     //chat is ready
+    // }, [chat.isReady]);
+
+    if (!chat.isReady) return null;
+
+    const liveChatClickHandler = () => {
+        enable_freshworks_live_chat ? freshChat.widget.open() : liveChat.widget?.call('maximize');
+    };
 
     if (isDesktop)
         return (
