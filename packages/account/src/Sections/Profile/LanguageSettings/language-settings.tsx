@@ -1,5 +1,5 @@
 import { Redirect } from 'react-router-dom';
-import { UNSUPPORTED_LANGUAGES, routes } from '@deriv/shared';
+import { UNSUPPORTED_LANGUAGES, WALLETS_UNSUPPORTED_LANGUAGES, routes } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { useTranslations, getAllowedLanguages } from '@deriv-com/translations';
 import FormSubHeader from '../../../Components/form-sub-header';
@@ -25,13 +25,9 @@ const LanguageSettings = observer(() => {
         switchLanguage(language_key);
     };
 
-    let allowed_languages: Record<string, string> = getAllowedLanguages(UNSUPPORTED_LANGUAGES);
-
-    if (has_wallet) {
-        allowed_languages = Object.fromEntries(
-            Object.entries(allowed_languages).filter(([language_key]) => ['EN', 'AR'].includes(language_key))
-        );
-    }
+    const allowed_languages: Record<string, string> = getAllowedLanguages(
+        has_wallet ? WALLETS_UNSUPPORTED_LANGUAGES : UNSUPPORTED_LANGUAGES
+    );
 
     return (
         <div className='settings-language'>

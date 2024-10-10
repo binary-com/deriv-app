@@ -28,6 +28,10 @@ export const whatsappUrl = 'https://wa.me/35699578341';
 
 let defaultLanguage: string;
 
+export const setUrlLanguage = (lang: string) => {
+    defaultLanguage = lang;
+};
+
 /**
  * @deprecated Please use 'URLUtils.normalizePath' from '@deriv-com/utils' instead of this.
  */

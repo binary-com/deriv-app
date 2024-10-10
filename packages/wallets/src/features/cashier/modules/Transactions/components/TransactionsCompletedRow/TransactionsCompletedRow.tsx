@@ -120,7 +120,7 @@ const TransactionsCompletedRow: React.FC<TProps> = ({ accounts, transaction, wal
     if (!transaction.action_type || !transaction.amount) return null;
 
     const displayCurrency = wallet?.currency_config?.display_code || 'USD';
-    const displayWalletName = `${displayCurrency} Wallet`;
+    const displayWalletName = localize('{{currency}} Wallet', { currency: displayCurrency });
     const displayNonTransferActionType =
         wallet.is_virtual && ['deposit', 'withdrawal'].includes(transaction.action_type)
             ? getTransactionLabels(localize).reset_balance

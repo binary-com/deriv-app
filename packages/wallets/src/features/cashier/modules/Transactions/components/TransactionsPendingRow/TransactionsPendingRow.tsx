@@ -105,7 +105,7 @@ const TransactionsPendingRow: React.FC<TProps> = ({ transaction }) => {
                             {getTransactionLabels(localize)[transaction.transaction_type]}
                         </Text>
                         <Text align='start' color='general' size='xs' weight='bold'>
-                            {displayCode} Wallet
+                            <Localize i18n_default_text='{{currency}} Wallet' values={{ currency: displayCode }} />
                         </Text>
                     </div>
                 </div>

@@ -106,7 +106,10 @@ const WalletCashierHeader: React.FC<TProps> = ({ hideWalletDetails }) => {
                             })}
                         >
                             <Text color={isDemo ? 'system-dark-2-general-text' : 'general'} size='md'>
-                                {activeWallet?.currency} Wallet
+                                <Localize
+                                    i18n_default_text='{{currency}} Wallet'
+                                    values={{ currency: activeWallet?.currency }}
+                                />
                             </Text>
                             {isDemo && <WalletListCardBadge />}
                         </div>

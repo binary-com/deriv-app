@@ -2,7 +2,7 @@ import React from 'react';
 import { observer, useStore } from '@deriv/stores';
 import { getAllowedLanguages, useTranslations } from '@deriv-com/translations';
 import { LanguageLink } from 'App/Components/Routes';
-import { UNSUPPORTED_LANGUAGES } from '@deriv/shared';
+import { UNSUPPORTED_LANGUAGES, WALLETS_UNSUPPORTED_LANGUAGES } from '@deriv/shared';
 
 const isCurrentLanguage = (lang, current_language) => lang === current_language;
 
@@ -12,16 +12,14 @@ const LanguageSettings = observer(() => {
     const { toggleLanguageSettingsModal } = ui;
     const { currentLang } = useTranslations();
 
-    const allowed_languages = Object.keys(getAllowedLanguages(UNSUPPORTED_LANGUAGES));
-
-    const filtered_languages = has_wallet
-        ? allowed_languages.filter(lang => lang === 'EN' || lang === 'AR')
-        : allowed_languages;
+    const allowed_languages = Object.keys(
+        getAllowedLanguages(has_wallet ? WALLETS_UNSUPPORTED_LANGUAGES : UNSUPPORTED_LANGUAGES)
+    );
 
     return (
         <div className='settings-language'>
             <div className='settings-language__language-container'>
-                {filtered_languages.map(lang =>
+                {allowed_languages.map(lang =>
                     isCurrentLanguage(lang, currentLang) ? (
                         <LanguageLink key={lang} lang={lang} />
                     ) : (

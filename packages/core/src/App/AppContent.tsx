@@ -19,6 +19,7 @@ import { ThemeProvider } from '@deriv-com/quill-ui';
 import { useGrowthbookGetFeatureValue, useGrowthbookIsOn, useOauth2 } from '@deriv/hooks';
 import { useTranslations } from '@deriv-com/translations';
 import initHotjar from '../Utils/Hotjar';
+import { WALLETS_UNSUPPORTED_LANGUAGES } from '@deriv/shared';
 
 const AppContent: React.FC<{ passthrough: unknown }> = observer(({ passthrough }) => {
     const store = useStore();
@@ -41,7 +42,7 @@ const AppContent: React.FC<{ passthrough: unknown }> = observer(({ passthrough }
     const { data } = useRemoteConfig(true);
     const { tracking_datadog } = data;
     const is_passkeys_supported = browserSupportsWebAuthn();
-    const wallets_allowed_languages = current_language === 'EN' || current_language === 'AR';
+    const is_wallets_unsupported_language = WALLETS_UNSUPPORTED_LANGUAGES.includes(current_language);
 
     React.useEffect(() => {
         switchLanguage(current_language);
@@ -82,11 +83,11 @@ const AppContent: React.FC<{ passthrough: unknown }> = observer(({ passthrough }
             if (store.ui.is_dark_mode_on) {
                 store.ui.setDarkMode(false);
             }
-            if (!wallets_allowed_languages) {
+            if (is_wallets_unsupported_language) {
                 store.common.changeSelectedLanguage('EN');
             }
         }
-    }, [has_wallet, store.common, store.ui, wallets_allowed_languages]);
+    }, [has_wallet, store.common, store.ui, is_wallets_unsupported_language]);
 
     return (
         <ThemeProvider theme={store.ui.is_dark_mode_on ? 'dark' : 'light'}>

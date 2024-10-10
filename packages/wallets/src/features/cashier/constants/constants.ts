@@ -1,3 +1,4 @@
+import { localize } from '@deriv-com/translations';
 import {
     TMarketTypes,
     TMT5LandingCompanyName,
@@ -109,6 +110,6 @@ export const PlatformDetails = {
     },
     standard: {
         name: 'standard',
-        title: 'Options',
+        title: localize('Options'),
     },
 } as const;

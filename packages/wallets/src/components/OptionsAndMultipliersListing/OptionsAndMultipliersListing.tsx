@@ -33,7 +33,7 @@ const OptionsAndMultipliersListing = () => {
                         </Text>
                     )}
                     <Text align='start' size={isDesktop ? 'md' : 'sm'}>
-                        <Localize i18n_default_text='Predict the market, profit if you’re right, risk only what you put in. ' />
+                        <Localize i18n_default_text='Predict the market, profit if you’re right, risk only what you put in.' />{' '}
                         <WalletLink staticUrl='/trade-types/options/digital-options/up-and-down/'>
                             <Localize i18n_default_text='Learn more' />
                         </WalletLink>

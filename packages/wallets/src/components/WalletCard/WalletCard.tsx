@@ -1,6 +1,6 @@
 import React, { ComponentProps } from 'react';
 import classNames from 'classnames';
-import { useTranslations } from '@deriv-com/translations';
+import { Localize } from '@deriv-com/translations';
 import { Text } from '@deriv-com/ui';
 import useAllBalanceSubscription from '../../hooks/useAllBalanceSubscription';
 import { WalletCurrencyIcon } from '../WalletCurrencyIcon';
@@ -25,7 +25,7 @@ const WalletCard: React.FC<TProps> = ({
     onClick,
 }) => {
     const { isLoading: isBalanceLoading } = useAllBalanceSubscription();
-    const { localize } = useTranslations();
+    const isDemoCarouselContent = isDemo && isCarouselContent;
 
     return (
         <button
@@ -57,7 +57,11 @@ const WalletCard: React.FC<TProps> = ({
                         </div>
                         <div className='wallets-card__details-bottom'>
                             <Text color={isDemo ? 'white' : 'general'} size={isCarouselContent ? 'md' : '2xs'}>
-                                {currency} {isDemo && isCarouselContent ? localize('Demo') : ''} Wallet
+                                {isDemoCarouselContent ? (
+                                    <Localize i18n_default_text='{{currency}} Demo Wallet' values={{ currency }} />
+                                ) : (
+                                    <Localize i18n_default_text='{{currency}} Wallet' values={{ currency }} />
+                                )}
                             </Text>
                             {isBalanceLoading ? (
                                 <div

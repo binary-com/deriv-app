@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { useHistory } from 'react-router-dom';
 import { LabelPairedArrowUpArrowDownSmBoldIcon } from '@deriv/quill-icons';
-import { useTranslations } from '@deriv-com/translations';
+import { Localize, useTranslations } from '@deriv-com/translations';
 import { Text, useDevice } from '@deriv-com/ui';
 import { IconButton } from '../Base';
 import { WalletCurrencyCard } from '../WalletCurrencyCard';
@@ -27,7 +27,11 @@ const WalletsCarouselHeader: React.FC<TProps> = ({ balance, currency, hidden, is
                 <WalletCurrencyCard currency={currency} isDemo={isDemo} size='md' />
                 <div className='wallets-carousel-header__details'>
                     <Text color='general' size={isMobile ? 'sm' : 'xs'}>
-                        {currency} Wallet
+                        {isDemo ? (
+                            <Localize i18n_default_text='{{currency}} Demo Wallet' values={{ currency }} />
+                        ) : (
+                            <Localize i18n_default_text='{{currency}} Wallet' values={{ currency }} />
+                        )}
                     </Text>
                     {isBalanceLoading ? (
                         <div

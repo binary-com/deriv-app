@@ -1,3 +1,4 @@
+import { localize } from '@deriv-com/translations';
 import { THooks, TMarketTypes, TWalletLandingCompanyName } from '../../../types';
 import { PRODUCT } from '../../cfd/constants';
 import { LandingCompanyDetails, MT5MarketTypeDetails, PlatformDetails } from '../constants';
@@ -38,7 +39,7 @@ export const getAccountName = ({
 }: TGetAccountNameProps) => {
     switch (accountCategory) {
         case 'wallet':
-            return `${displayCurrencyCode} Wallet`;
+            return localize('{{currency}} Wallet', { currency: displayCurrencyCode });
         case 'trading': {
             switch (accountType) {
                 case PlatformDetails.standard.name:

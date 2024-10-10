@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import { LegacyClose2pxIcon } from '@deriv/quill-icons';
-import { Localize } from '@deriv-com/translations';
+import { Localize, useTranslations } from '@deriv-com/translations';
 import { Divider, Text, useDevice } from '@deriv-com/ui';
 import { useModal } from '../../../../../../components/ModalProvider';
 import type { TAccount, TAccountsList } from '../../types';
@@ -38,6 +38,7 @@ const TransferFormAccountSelection: React.FC<TProps> = ({
 }) => {
     const { isDesktop } = useDevice();
     const modal = useModal();
+    const { localize } = useTranslations();
 
     const transferToHint = useMemo(() => {
         const isTransferToHintVisible = !isFromAccountDropdown && toAccount?.loginid === activeWallet?.loginid;
@@ -91,7 +92,9 @@ const TransferFormAccountSelection: React.FC<TProps> = ({
                             <Localize
                                 i18n_default_text='Trading accounts linked with {{wallet}}'
                                 values={{
-                                    wallet: `${activeWallet?.currencyConfig?.display_code} Wallet`,
+                                    wallet: localize('{{currency}} Wallet', {
+                                        currency: activeWallet?.currencyConfig?.display_code,
+                                    }),
                                 }}
                             />
                         ) : (
