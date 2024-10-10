@@ -1,19 +1,14 @@
-import React from 'react';
 import { Popover, Icon, Text } from '@deriv/components';
 import { useDevice } from '@deriv-com/ui';
-import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
-import useLiveChat from 'App/Components/Elements/LiveChat/use-livechat';
+import { useIsLiveChatWidgetAvailable } from '@deriv/hooks';
 
-const LiveChat = observer(({ showPopover }: { showPopover?: boolean }) => {
-    const { client } = useStore();
-    const { has_cookie_account, loginid } = client;
+const LiveChat = ({ showPopover }: { showPopover?: boolean }) => {
     const { isDesktop } = useDevice();
-    const liveChat = useLiveChat(has_cookie_account, loginid);
+    const { is_livechat_available } = useIsLiveChatWidgetAvailable();
+    const liveChatClickHandler = () => window.LiveChatWidget.call('maximize');
 
-    if (!liveChat.isReady) return null;
-
-    const liveChatClickHandler = () => liveChat.widget?.call('maximize');
+    if (!is_livechat_available) return null;
 
     if (isDesktop)
         return (
@@ -46,6 +41,6 @@ const LiveChat = observer(({ showPopover }: { showPopover?: boolean }) => {
             </Text>
         </div>
     );
-});
+};
 
 export default LiveChat;

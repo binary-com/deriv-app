@@ -15,3 +15,7 @@
         }
     }
 }
+// avoid blinking of red LC widget during loading and calling 'hide'
+#chat-widget-minimized {
+    display: none !important;
+}

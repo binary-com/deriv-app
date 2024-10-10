@@ -20,7 +20,6 @@ jest.mock('react-router-dom', () => ({
         push: jest.fn(),
     })),
 }));
-jest.mock('App/Components/Elements/LiveChat/use-livechat.ts', () => () => ({ isReady: true }));
 
 describe('<ToggleMenuDrawer />', () => {
     const mockToggleMenuDrawer = () => {

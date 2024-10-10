@@ -361,7 +361,7 @@ const CFDPersonalDetailsForm = ({
                                                         <span
                                                             key={0}
                                                             className='link link--orange'
-                                                            onClick={() => window.LC_API.open_chat_window()}
+                                                            onClick={() => window.LiveChatWidget.call('maximize')}
                                                         />,
                                                     ]}
                                                 />
