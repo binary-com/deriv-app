@@ -26,7 +26,7 @@ describe('SessionTimeoutModal', () => {
     const renderComponent = () => {
         render(
             <StoreProvider store={mock_store}>
-                <SessionTimeoutModal />
+                <SessionTimeoutModal is_at_otp_verification />
             </StoreProvider>
         );
     };

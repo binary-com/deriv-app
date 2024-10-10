@@ -9,7 +9,6 @@ import { VERIFICATION_SERVICES } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { Button, Snackbar, Text, TextFieldAddon } from '@deriv-com/quill-ui';
 import { Localize, useTranslations } from '@deriv-com/translations';
-import PhoneVerificationCard from './phone-verification-card';
 import { validatePhoneNumber } from './validation';
 
 type TConfirmPhoneNumber = {
@@ -54,6 +53,12 @@ const ConfirmPhoneNumber = observer(({ show_confirm_phone_number, setOtpVerifica
 
     useEffect(() => {
         if (email_otp_error) {
+            trackPhoneVerificationEvents({
+                action: 'error',
+                subform_name: 'verify_phone_screen',
+                //@ts-expect-error will fix this later
+                error_code: email_otp_error.code,
+            });
             invalidate('get_settings').then(() => setIsButtonLoading(false));
         }
         if (is_email_verified) {
@@ -61,7 +66,7 @@ const ConfirmPhoneNumber = observer(({ show_confirm_phone_number, setOtpVerifica
             setOtpVerification({ show_otp_verification: true, phone_verification_type });
             setShouldShowPhoneNumberOTP(true);
         }
-    }, [is_email_verified, email_otp_error, invalidate]);
+    }, [is_email_verified, email_otp_error, invalidate, trackPhoneVerificationEvents]);
 
     const handleOnChangePhoneNumber = (e: ChangeEvent<HTMLInputElement>) => {
         setPhoneNumber(e.target.value);

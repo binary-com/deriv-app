@@ -3,6 +3,7 @@ import { useMutation } from '@deriv/api';
 import { getCarriers, getUseRequestPhoneNumberOTPErrorMessage, VERIFICATION_SERVICES } from '@deriv/shared';
 import useSettings from './useSettings';
 import { useStore } from '@deriv/stores';
+import usePhoneVerificationAnalytics from './usePhoneVerificationAnalytics';
 
 type TFormatError = {
     code: string;
@@ -27,6 +28,7 @@ const useRequestPhoneNumberOTP = () => {
     const {
         mutation: { mutateAsync: updateSettings },
     } = useSettings();
+    const { trackPhoneVerificationEvents } = usePhoneVerificationAnalytics();
 
     React.useEffect(() => {
         //@ts-expect-error will fix this later
@@ -72,6 +74,12 @@ const useRequestPhoneNumberOTP = () => {
                 payload: value,
             });
         } catch (err) {
+            trackPhoneVerificationEvents({
+                action: 'error',
+                subform_name: 'verify_phone_screen',
+                // @ts-expect-error will remove once solved
+                error_code: err.code,
+            });
             formatError(err as TFormatError);
             error = err;
         }

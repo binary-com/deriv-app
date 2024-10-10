@@ -101,7 +101,9 @@ const PhoneVerificationPage = observer(() => {
                 should_show_verification_link_expired_modal={should_show_verification_link_expired_modal}
                 setShouldShowVerificationLinkExpiredModal={setShouldShowVerificationLinkExpiredModal}
             />
-            {!should_show_verification_link_expired_modal && <SessionTimeoutModal />}
+            {!should_show_verification_link_expired_modal && (
+                <SessionTimeoutModal is_at_otp_verification={otp_verification.show_otp_verification} />
+            )}
             <CancelPhoneVerificationModal />
             {isDesktop && (
                 <div className='phone-verification__redirect_button'>

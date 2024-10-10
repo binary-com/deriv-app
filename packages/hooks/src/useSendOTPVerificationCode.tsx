@@ -5,6 +5,7 @@ import useRequestPhoneNumberOTP from './useRequestPhoneNumberOTP';
 import { useStore } from '@deriv/stores';
 import useSettings from './useSettings';
 import { emailOTPErrorMessage, phoneOTPErrorMessage } from '@deriv/shared';
+import usePhoneVerificationAnalytics from './usePhoneVerificationAnalytics';
 
 /** A hook for verifying Phone Number OTP and Email OTP */
 const useSendOTPVerificationCode = () => {
@@ -29,6 +30,7 @@ const useSendOTPVerificationCode = () => {
         requestOnSMS,
         requestOnWhatsApp,
     } = useRequestPhoneNumberOTP();
+    const { trackPhoneVerificationEvents } = usePhoneVerificationAnalytics();
 
     type OTPErrorCode =
         | 'PhoneCodeExpired'
@@ -69,6 +71,12 @@ const useSendOTPVerificationCode = () => {
     // Usage in useEffect
     useEffect(() => {
         if (phone_otp_error) {
+            trackPhoneVerificationEvents({
+                action: 'error',
+                subform_name: 'verify_phone_otp_screen',
+                // @ts-expect-error will remove once solved
+                error_code: phone_otp_error.code,
+            });
             // @ts-expect-error will remove once solved
             formatOtpError(phone_otp_error);
         } else if (email_otp_error) {
