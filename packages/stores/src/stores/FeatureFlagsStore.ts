@@ -1,7 +1,8 @@
 import BaseStore from './BaseStore';
 
 const FLAGS = {
-    dtrader_v2: false,
+    dtrader_v2: false, // redesigned dtrader
+    redirect_to_dtrader_standalone: false, // drives the redirection to standalone version of dtrader
     sharkfin: false,
     wallet: false,
 } satisfies Record<string, boolean>;

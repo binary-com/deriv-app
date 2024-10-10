@@ -1,6 +1,6 @@
-import React from 'react';
-import { Redirect as RouterRedirect } from 'react-router-dom';
-import { makeLazyLoader, routes, moduleLoader } from '@deriv/shared';
+import React, { useEffect } from 'react';
+import { Redirect as RouterRedirect, useLocation } from 'react-router-dom';
+import { makeLazyLoader, routes, moduleLoader, getDtraderStandaloneDomain , redirectToDTraderStandalone } from '@deriv/shared';
 import { Loading } from '@deriv/components';
 import { localize } from '@deriv/translations';
 import Redirect from 'App/Containers/Redirect';
@@ -63,6 +63,21 @@ const P2P = React.lazy(() =>
 
 const RedirectToNewTradersHub = () => {
     return <Redirect to={routes.traders_hub} />;
+};
+
+const RedirectToDtraderStandalone = () => {
+    const location = useLocation();
+    const dtraderStandaloneDomain = getDtraderStandaloneDomain();
+
+    useEffect(() => {
+        const currentPath = location.pathname + location.search + location.hash; // full path including query params and hash if any
+        const targetUrl = `https://${dtraderStandaloneDomain}${currentPath}`;
+
+        // Redirect to the constructed URL
+        window.location.href = targetUrl;
+    }, [location, dtraderStandaloneDomain]);
+
+    return null; // No need to render anything since we're redirecting
 };
 
 const getModules = () => {
@@ -340,12 +355,12 @@ const getModules = () => {
         },
         {
             path: routes.trade,
-            component: Trader,
+            component: redirectToDTraderStandalone() ? RedirectToDtraderStandalone : Trader,
             getTitle: () => localize('Trader'),
         },
         {
             path: routes.contract,
-            component: Trader,
+            component: redirectToDTraderStandalone() ? RedirectToDtraderStandalone : Trader,
             getTitle: () => localize('Contract Details'),
             is_authenticated: true,
         },

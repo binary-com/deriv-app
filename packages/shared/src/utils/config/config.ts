@@ -24,6 +24,8 @@ export const domain_app_ids = {
     'staging-app.deriv.be': 31186,
     'binary.com': 1,
     'test-app.deriv.com': 51072,
+    'staging-dtrader.deriv.com': 64333,
+    'dtrader.deriv.com': 64332,
 };
 
 export const platform_app_ids = {
@@ -132,4 +134,8 @@ export const getDebugServiceWorker = () => {
     if (debug_service_worker_flag) return !!parseInt(debug_service_worker_flag);
 
     return false;
+};
+
+export const getDtraderStandaloneDomain = () => {
+    return isProduction() ? 'dtrader.deriv.com' : 'staging-dtrader.deriv.com';
 };
