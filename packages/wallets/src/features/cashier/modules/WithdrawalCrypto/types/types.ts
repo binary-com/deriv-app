@@ -7,8 +7,8 @@ export type TWithdrawalForm = {
 export type TWithdrawalReceipt = {
     address?: string;
     amount?: number;
-    amountReceived?: string;
+    amountReceived?: number;
     currency?: string;
     landingCompany?: string;
-    transactionFee?: string;
+    transactionFee?: number;
 };

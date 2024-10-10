@@ -158,18 +158,13 @@ const WithdrawalCryptoProvider: React.FC<React.PropsWithChildren<TWithdrawalCryp
             verification_code: verificationCode,
         })
             .then(() => {
-                const fractionalDigits = activeWallet?.currency_config?.fractional_digits ?? 0;
                 setWithdrawalReceipt({
                     address,
                     amount: Number(amount),
-                    amountReceived: estimatedFeeUniqueId
-                        ? (Number(amount) - Number(cryptoEstimationsFee)).toFixed(fractionalDigits)
-                        : amount?.toFixed(fractionalDigits),
+                    amountReceived: estimatedFeeUniqueId ? Number(amount) - Number(cryptoEstimationsFee) : amount,
                     currency: activeWallet?.currency,
                     landingCompany: activeWallet?.landing_company_name,
-                    transactionFee: estimatedFeeUniqueId
-                        ? Number(cryptoEstimationsFee)?.toFixed(fractionalDigits)
-                        : undefined,
+                    transactionFee: estimatedFeeUniqueId ? Number(cryptoEstimationsFee) : undefined,
                 });
             })
             .catch((error: TSocketError<'cashier'>) => {

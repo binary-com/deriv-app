@@ -33,14 +33,14 @@ const WithdrawalCryptoReceipt: React.FC<TProps> = ({ onClose, withdrawalReceipt 
                     <Text align='center' as='p' size='sm'>
                         <Localize i18n_default_text='Amount received' />
                     </Text>
-                    <Text align='center' size='xl' weight='bold'>
-                        {transactionFee ? amountReceived : amount} {currency}
+                    <Text align='center' data-testid='dt_amount_received' size='xl' weight='bold'>
+                        <WalletMoney amount={transactionFee ? amountReceived : amount} currency={currency} />
                     </Text>
                     {transactionFee && (
                         <Text align='center' as='p' size='sm'>
                             <Localize
-                                i18n_default_text='(Transaction fee: {{transactionFee}} {{currency}})'
-                                values={{ currency, transactionFee }}
+                                components={[<WalletMoney amount={transactionFee} currency={currency} key={0} />]}
+                                i18n_default_text='(Transaction fee: <0/>)'
                             />
                         </Text>
                     )}
