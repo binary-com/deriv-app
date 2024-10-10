@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { observer, useStore } from '@deriv/stores';
 import { localize } from '@deriv/translations';
@@ -11,6 +11,8 @@ import SaveModal from '../dashboard/bot-list/save-modal/save-modal';
 import BotBuilderTourHandler from '../tutorials/dbot-tours/bot-builder-tour';
 import QuickStrategy1 from './quick-strategy';
 import WorkspaceWrapper from './workspace-wrapper';
+import { isSafari } from '@deriv/shared';
+import { getImageLocation } from '../../public-path';
 
 const BotBuilder = observer(() => {
     const { ui } = useStore();
@@ -21,7 +23,7 @@ const BotBuilder = observer(() => {
     const { is_loading } = blockly_store;
     const is_blockly_listener_registered = React.useRef(false);
     const is_blockly_delete_listener_registered = React.useRef(false);
-    const { is_desktop } = ui;
+    const { is_desktop, is_dark_mode_on } = ui;
     const { onMount, onUnmount } = app;
     const el_ref = React.useRef<HTMLInputElement | null>(null);
     let deleted_block_id: null | string = null;
@@ -100,6 +102,17 @@ const BotBuilder = observer(() => {
             },
         });
     };
+    useEffect(() => {
+        setTimeout(() => {
+            if (isSafari()) {
+                const images: NodeListOf<SVGImageElement> = document.querySelectorAll('.blocklyEditableText image');
+                images.forEach((img: SVGImageElement) => {
+                    const newIconUrl = getImageLocation(is_dark_mode_on ? 'arrow-down-white.svg' : 'arrow-down.svg');
+                    img?.setAttributeNS?.('http://www.w3.org/1999/xlink', 'xlink:href', newIconUrl);
+                });
+            }
+        }, 100);
+    }, [is_dark_mode_on]);
 
     return (
         <>
