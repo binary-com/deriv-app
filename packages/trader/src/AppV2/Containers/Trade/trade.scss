@@ -67,10 +67,6 @@
 
         &--with-button {
             min-height: 13.6rem;
-
-            &:has(.trade-params__options__wrapper--horizontal:not(:only-child)) {
-                min-height: 16.8rem;
-            }
         }
     }
 }

@@ -68,6 +68,11 @@
     &--minimized {
         min-height: var(--core-size-3600);
         width: 100%;
+        padding-bottom: 6.4rem;
+
+        &:has(.trade-params__options__wrapper--horizontal:only-child) {
+            padding-bottom: 0;
+        }
     }
 }
 

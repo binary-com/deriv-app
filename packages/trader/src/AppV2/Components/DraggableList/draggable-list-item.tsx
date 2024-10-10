@@ -51,7 +51,7 @@ const DraggableListItem: React.FC<TDraggableListItemProps> = ({
                     if (!is_moved) setIsMoved(true);
                 }}
                 onTouchEnd={() => {
-                    if (!is_moved && onRightIconClick) {
+                    if (!is_moved && onRightIconClick && !disabled) {
                         onRightIconClick();
                     }
                     setIsMoved(false);
