@@ -4,16 +4,8 @@ import userEvent from '@testing-library/user-event';
 import { mockStore } from '@deriv/stores';
 import ModulesProvider from 'Stores/Providers/modules-providers';
 import * as utils from 'AppV2/Utils/trade-params-utils';
-import { TTradeStore } from 'Types';
 import TraderProviders from '../../../../../trader-providers';
 import TakeProfitAndStopLossInput from '../take-profit-and-stop-loss-input';
-
-type TResponse = {
-    proposal: Record<string, unknown>;
-    echo_req: { contract_type: string };
-    subscription: Record<string, unknown>;
-    error?: Record<string, never> | { details: { field: string }; message: string };
-};
 
 const tp_data_testid = 'dt_tp_input';
 const sl_data_testid = 'dt_sl_input';
@@ -22,23 +14,21 @@ const accu_content = 'Note: Cannot be adjusted for ongoing accumulator contracts
 jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
     WS: {
-        forget: jest.fn(),
-        subscribeProposal: jest.fn(),
+        send: jest.fn(),
+        authorized: {
+            send: jest.fn(),
+        },
     },
 }));
-jest.mock('Stores/Modules/Trading/Helpers/proposal', () => ({
-    ...jest.requireActual('Stores/Modules/Trading/Helpers/proposal'),
-    createProposalRequests: jest.fn(() => ({ type1: {}, type2: {} })),
-}));
-let mockFunction: jest.Mock;
-jest.mock('lodash.debounce', () => (fn: jest.Mock) => {
-    if (!mockFunction) mockFunction = fn;
-    return mockFunction;
-});
-jest.mock('Stores/Modules/Trading/Helpers/preview-proposal', () => ({
-    ...jest.requireActual('Stores/Modules/Trading/Helpers/preview-proposal'),
-    previewProposal: (store: TTradeStore, fn: (param: TResponse) => void, new_store: Record<string, never>) =>
-        fn({ proposal: {}, echo_req: { contract_type: 'TURBOSLONG' }, subscription: { id: 'mock_id' }, error: {} }),
+jest.mock('AppV2/Hooks/useDtraderQuery', () => ({
+    ...jest.requireActual('AppV2/Hooks/useDtraderQuery'),
+    useDtraderQuery: jest.fn(() => ({
+        data: {
+            proposal: {},
+            echo_req: { contract_type: 'TURBOSLONG' },
+            error: {},
+        },
+    })),
 }));
 
 describe('TakeProfitAndStopLossInput', () => {

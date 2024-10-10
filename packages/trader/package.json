@@ -127,6 +127,7 @@
         "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0",
         "react-swipeable": "^6.2.1",
-        "react-transition-group": "4.4.2"
+        "react-transition-group": "4.4.2",
+        "usehooks-ts": "^2.7.0"
     }
 }

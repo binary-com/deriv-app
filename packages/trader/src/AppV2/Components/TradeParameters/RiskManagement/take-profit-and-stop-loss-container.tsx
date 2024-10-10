@@ -49,8 +49,8 @@ const TakeProfitAndStopLossContainer = observer(({ closeActionSheet }: TTakeProf
             sl_error_text: sl_error_text_current,
         } = sl_ref.current;
 
-        const is_tp_empty = take_profit_current === '' && has_take_profit_current;
-        const is_sl_empty = stop_loss_current === '' && has_stop_loss_current;
+        const is_tp_empty = !take_profit_current && has_take_profit_current;
+        const is_sl_empty = !stop_loss_current && has_stop_loss_current;
         if (is_tp_empty) setTPErrorText(localize('Please enter a take profit amount.'));
         if (is_sl_empty) setSLErrorText(localize('Please enter a stop loss amount.'));
         if ((tp_error_text_current && has_take_profit_current) || (sl_error_text_current && has_stop_loss_current))

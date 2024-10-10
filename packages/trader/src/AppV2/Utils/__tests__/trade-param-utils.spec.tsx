@@ -11,7 +11,9 @@ import {
     isDigitContractWinning,
     isSmallScreen,
     getOptionPerUnit,
+    getProposalRequestObject,
 } from '../trade-params-utils';
+import { mockStore } from '@deriv/stores';
 
 describe('getTradeParams', () => {
     it('should return correct object with keys for Rise/Fall', () => {
@@ -356,5 +358,138 @@ describe('getOptionPerUnit', () => {
     test('returns empty array for invalid unit', () => {
         const result = getOptionPerUnit('invalid', false);
         expect(result).toEqual([[]]);
+    });
+});
+
+describe('getProposalRequestObject', () => {
+    let default_mock_store: ReturnType<typeof mockStore>, mocked_args: Parameters<typeof getProposalRequestObject>[0];
+
+    beforeEach(() => {
+        default_mock_store = mockStore({
+            modules: {
+                trade: {
+                    ...mockStore({}).modules.trade,
+                    amount: '10',
+                    basis: 'stake',
+                    currency: 'USD',
+                    contract_type: TRADE_TYPES.TURBOS.LONG,
+                    symbol: '1HZ100V',
+                },
+            },
+        });
+        mocked_args = {
+            new_values: {
+                has_take_profit: true,
+                take_profit: '5',
+            },
+            trade_store: default_mock_store.modules.trade,
+            trade_type: TRADE_TYPES.TURBOS.LONG,
+        };
+    });
+
+    it('should return correct object for proposal for Turbos with TP', () => {
+        expect(getProposalRequestObject(mocked_args)).toEqual({
+            proposal: 1,
+            amount: 10,
+            basis: 'stake',
+            contract_type: TRADE_TYPES.TURBOS.LONG,
+            currency: 'USD',
+            symbol: '1HZ100V',
+            payout_per_point: 5,
+            limit_order: { take_profit: 5 },
+        });
+    });
+
+    it('should return correct object for proposal for Turbos without TP', () => {
+        mocked_args.new_values.has_take_profit = false;
+        mocked_args.new_values.take_profit = '';
+
+        expect(getProposalRequestObject(mocked_args)).toEqual({
+            proposal: 1,
+            amount: 10,
+            basis: 'stake',
+            contract_type: TRADE_TYPES.TURBOS.LONG,
+            currency: 'USD',
+            symbol: '1HZ100V',
+            payout_per_point: 5,
+            limit_order: undefined,
+        });
+    });
+
+    it('should return correct object for proposal for Multipliers with SL', () => {
+        default_mock_store.modules.trade.contract_type = TRADE_TYPES.MULTIPLIER;
+        mocked_args = {
+            new_values: {
+                has_stop_loss: true,
+                stop_loss: '5',
+            },
+            trade_store: default_mock_store.modules.trade,
+            trade_type: TRADE_TYPES.MULTIPLIER,
+        };
+
+        expect(getProposalRequestObject(mocked_args)).toEqual({
+            proposal: 1,
+            amount: 10,
+            basis: 'stake',
+            contract_type: 'multiplier',
+            currency: 'USD',
+            symbol: '1HZ100V',
+            barrier: 5,
+            limit_order: { stop_loss: 5 },
+            multiplier: 0,
+            cancellation: undefined,
+        });
+    });
+
+    it('should return correct object for proposal for Multipliers with SL if user have not typed anything', () => {
+        default_mock_store.modules.trade.contract_type = TRADE_TYPES.MULTIPLIER;
+        mocked_args = {
+            new_values: {
+                has_stop_loss: true,
+                stop_loss: '1',
+            },
+            trade_store: default_mock_store.modules.trade,
+            trade_type: TRADE_TYPES.MULTIPLIER,
+        };
+
+        expect(getProposalRequestObject(mocked_args)).toEqual({
+            proposal: 1,
+            amount: 10,
+            basis: 'stake',
+            contract_type: 'multiplier',
+            currency: 'USD',
+            symbol: '1HZ100V',
+            barrier: 5,
+            limit_order: { stop_loss: 1 },
+            multiplier: 0,
+            cancellation: undefined,
+        });
+    });
+
+    it('should return correct object for proposal for Multipliers with SL if should_subscribe === true', () => {
+        default_mock_store.modules.trade.contract_type = TRADE_TYPES.MULTIPLIER;
+        mocked_args = {
+            new_values: {
+                has_stop_loss: true,
+                stop_loss: '5',
+            },
+            should_subscribe: true,
+            trade_store: default_mock_store.modules.trade,
+            trade_type: TRADE_TYPES.MULTIPLIER,
+        };
+
+        expect(getProposalRequestObject(mocked_args)).toEqual({
+            proposal: 1,
+            subscribe: 1,
+            amount: 10,
+            basis: 'stake',
+            contract_type: 'multiplier',
+            currency: 'USD',
+            symbol: '1HZ100V',
+            barrier: 5,
+            limit_order: { stop_loss: 5 },
+            multiplier: 0,
+            cancellation: undefined,
+        });
     });
 });
