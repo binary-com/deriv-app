@@ -103,6 +103,7 @@
         --icon-black-plus: #{$color-black-7};
         --text-status-info-blue: #{$color-blue};
         --text-hint: #{$color-black-1};
+        --text-orange: #{$color-orange-2};
         // Purchase
         --purchase-main-1: #{$color-green-1};
         --purchase-section-1: #{$color-green-2};
@@ -158,8 +159,12 @@
         --status-default: #{$color-grey-3};
         --status-adjustment: #{$color-grey-1};
         --status-danger: #{$color-red-1};
+        --status-danger-transparent: #{$alpha-color-red-2};
         --status-success: #{$color-green-1};
+        --status-success-transparent: #{$alpha-color-green-3};
         --status-warning: #{$color-yellow};
+        --status-warning-dark: #{$color-yellow-1};
+        --status-info-transparent: #{$alpha-color-blue-1};
         --status-warning-transparent: #{$alpha-color-yellow-1};
         --status-transfer: #{$color-orange};
         --status-info: #{$color-blue};
@@ -319,8 +324,13 @@
         --status-success: #{$color-green-3};
         --status-transfer: #{$color-orange};
         --status-info: #{$color-blue};
+        --status-warning-dark: #{$color-yellow-1};
+        --status-danger-transparent: #{$alpha-color-red-1};
+        --status-success-transparent: #{$alpha-color-green-3};
         --status-colored-background: #{$color-white};
         --status-alert-background: #{$color-yellow-3};
+        --status-warning-dark: #{$color-yellow-1};
+        --status-info-transparent: #{$alpha-color-blue-1};
         // Transparentize
         --transparent-success: #{$alpha-color-green-2};
         --transparent-info: #{$alpha-color-blue-1};

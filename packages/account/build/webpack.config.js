@@ -16,7 +16,6 @@ module.exports = function (env) {
             'financial-details-config': 'Configs/financial-details-config',
             'get-status-badge-config': 'Configs/get-status-badge-config',
             'personal-details-config': 'Configs/personal-details-config',
-            'poi-poa-docs-submitted': 'Components/poi-poa-docs-submitted/poi-poa-docs-submitted',
             'risk-tolerance-warning-modal': 'Components/trading-assessment/risk-tolerance-warning-modal',
             'sent-email-modal': 'Components/sent-email-modal',
             'terms-of-use-config': 'Configs/terms-of-use-config',

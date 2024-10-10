@@ -35,10 +35,11 @@ describe('useGetMFAccountStatus', () => {
             wrapper,
         });
 
-        expect(result.current).toBe('needs_verification');
+        expect(result.current.mf_account_status).toBe('needs_verification');
+        expect(result.current.kyc_status).toStrictEqual({ poa_status: 'none', poi_status: 'verified', valid_tin: 1 });
     });
 
-    it('should return failed if either of none, pending or verified statuses are not present', () => {
+    it('should return failed if either POI or POA is failed', () => {
         const mock = mockStore({
             client: {
                 account_status: {
@@ -52,6 +53,7 @@ describe('useGetMFAccountStatus', () => {
                                     status: 'rejected',
                                 },
                             },
+                            status: 'rejected',
                         },
                         document: {
                             status: 'suspected',
@@ -69,10 +71,13 @@ describe('useGetMFAccountStatus', () => {
             wrapper,
         });
 
-        expect(result.current).toBe('failed');
+        expect(result.current).toStrictEqual({
+            kyc_status: { poa_status: 'suspected', poi_status: 'rejected', valid_tin: 1 },
+            mf_account_status: 'failed',
+        });
     });
 
-    it('should return pending if poa status is pending or verified status is not present in onfido or manual status', () => {
+    it('should return pending if POA status is verified and POI is pending', () => {
         const mock = mockStore({
             client: {
                 account_status: {
@@ -86,9 +91,10 @@ describe('useGetMFAccountStatus', () => {
                                     status: 'none',
                                 },
                             },
+                            status: 'pending',
                         },
                         document: {
-                            status: 'suspected',
+                            status: 'verified',
                         },
                     },
                 },
@@ -103,6 +109,9 @@ describe('useGetMFAccountStatus', () => {
             wrapper,
         });
 
-        expect(result.current).toBe('failed');
+        expect(result.current).toStrictEqual({
+            kyc_status: { poa_status: 'verified', poi_status: 'pending', valid_tin: 1 },
+            mf_account_status: 'pending',
+        });
     });
 });

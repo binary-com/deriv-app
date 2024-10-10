@@ -22,7 +22,6 @@ describe('<InstrumentsIconWithLabel />', () => {
         expect(iconElement).toHaveClass('trading-instruments__icon');
         expect(textElement).toBeInTheDocument();
         expect(asteriskElement).toBeInTheDocument();
-        expect(asteriskElement).toHaveClass('trading-instruments__span');
     });
 
     it('should not apply opacity if "highlighted" prop is true', () => {

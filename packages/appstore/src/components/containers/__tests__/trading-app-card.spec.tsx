@@ -36,7 +36,7 @@ describe('<TradingAppCard/>', () => {
             type: 'synthetic',
             jurisdiction: 'svg',
         },
-        openFailedVerificationModal: jest.fn(),
+        openVerificationDocsListModal: jest.fn(),
         market_type: 'synthetic',
     };
 
@@ -124,7 +124,7 @@ describe('<TradingAppCard/>', () => {
         };
         renderComponent({ props: new_mock_props });
 
-        expect(screen.queryByText(/Pending verification/)).not.toBeInTheDocument();
+        expect(screen.queryByText(/In review/)).not.toBeInTheDocument();
         expect(screen.queryByText(/No new positions/)).not.toBeInTheDocument();
         expect(screen.queryByText(/Account closed/)).not.toBeInTheDocument();
     });

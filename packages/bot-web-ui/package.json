@@ -81,7 +81,7 @@
         "@deriv/shared": "^1.0.0",
         "@deriv/stores": "^1.0.0",
         "@deriv/translations": "^1.0.0",
-        "@deriv/quill-icons": "1.23.3",
+        "@deriv/quill-icons": "1.23.14",
         "blockly": "^10.4.3",
         "@testing-library/user-event": "^13.5.0",
         "@types/react-router-dom": "^5.1.6",

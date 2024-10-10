@@ -58,7 +58,7 @@ const AccountOption = ({
         if (is_pending_verification) {
             return (
                 <Text color='warning' size='xs'>
-                    <Localize i18n_default_text='Pending verification' />
+                    <Localize i18n_default_text='In review' />
                 </Text>
             );
         } else if (is_verification_needed) {
@@ -70,7 +70,7 @@ const AccountOption = ({
         } else if (is_verification_failed) {
             return (
                 <Text color='red' size='xs'>
-                    <Localize i18n_default_text='Verification failed' />
+                    <Localize i18n_default_text='Failed' />
                 </Text>
             );
         } else if (is_server_maintenance) {

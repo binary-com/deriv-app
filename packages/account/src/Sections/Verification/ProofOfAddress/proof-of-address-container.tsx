@@ -5,7 +5,6 @@ import { WS, getPlatformRedirect, platforms, routes, AUTH_STATUS_CODES } from '@
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
 import Expired from '../../../Components/poa/status/expired';
-import NeedsReview from '../../../Components/poa/status/needs-review';
 import NotRequired from '../../../Components/poa/status/not-required';
 import ProofOfAddressForm from './proof-of-address-form';
 import Submitted from '../../../Components/poa/status/submitted';
@@ -192,7 +191,7 @@ const ProofOfAddressContainer = observer(({ onSubmit }: TProofOfAddressContainer
         case AUTH_STATUS_CODES.NONE:
             return <ProofOfAddressForm onSubmit={onSubmitDocument} />;
         case AUTH_STATUS_CODES.PENDING:
-            return <NeedsReview needs_poi={needs_poi} redirect_button={redirect_button} />;
+            return <Submitted needs_poi={needs_poi} redirect_button={redirect_button} />;
         case AUTH_STATUS_CODES.VERIFIED:
             return <Verified needs_poi={needs_poi} redirect_button={redirect_button} />;
         case AUTH_STATUS_CODES.EXPIRED:

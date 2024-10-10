@@ -90,10 +90,12 @@ export { default as useResidenceSelfDeclaration } from './useResidenceSelfDeclar
 export { default as useTotalAssetCurrency } from './useTotalAssetCurrency';
 export { default as useGrowthbookIsOn } from './useGrowthbookIsOn';
 export { default as useResidenceList } from './useResidenceList';
+export { default as useGetStatus } from './useGetStatus';
 export { default as usePhoneNumberVerificationSetTimer } from './usePhoneNumberVerificationSetTimer';
 export { default as usePhoneNumberVerificationSessionTimer } from './usePhoneNumberVerificationSessionTimer';
 export { default as useIsPhoneNumberVerified } from './useIsPhoneNumberVerified';
 export { default as usePhoneVerificationAnalytics } from './usePhoneVerificationAnalytics';
 export { default as useTradingPlatformStatus } from './useTradingPlatformStatus';
+export { default as useIsSelectedMT5AccountCreated } from './useIsSelectedMT5AccountCreated';
 export { default as useOauth2 } from './useOauth2';
 export type { TradingPlatformStatus } from './useTradingPlatformStatus';

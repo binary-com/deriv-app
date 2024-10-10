@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import getStatusBadgeConfig from '@deriv/account/src/Configs/get-status-badge-config';
+import getMT5StatusBadgeConfig from '@deriv/account/src/Configs/get-mt5-status-badge-config';
 import { Text, StatusBadge } from '@deriv/components';
 import { Localize } from '@deriv/translations';
 import { Analytics } from '@deriv-com/analytics';
@@ -42,22 +42,32 @@ const TradingAppCard = ({
     short_code_and_region,
     mt5_acc_auth_status,
     selected_mt5_jurisdiction,
-    openFailedVerificationModal,
     market_type,
     is_new = false,
 }: Actions & BrandConfig & AvailableAccount & TDetailsOfEachMT5Loginid) => {
     const {
         common,
         traders_hub,
-        ui,
         modules: { cfd },
-        client,
     } = useStore();
-    const { setIsVerificationModalVisible } = ui;
-    const { is_eu_user, is_demo_low_risk, content_flag, is_real, selected_account_type } = traders_hub;
+
+    const {
+        is_eu_user,
+        is_demo_low_risk,
+        content_flag,
+        is_real,
+        selected_account_type,
+        setVerificationModalOpen,
+        getMT5AccountKYCStatus,
+    } = traders_hub;
     const { current_language, setAppstorePlatform } = common;
-    const { is_account_being_created, setAccountUnavailableModal, setServerMaintenanceModal } = cfd;
-    const { account_status: { authentication } = {} } = client;
+    const {
+        is_account_being_created,
+        setAccountUnavailableModal,
+        setServerMaintenanceModal,
+        setJurisdictionSelectedShortcode,
+        setProduct,
+    } = cfd;
 
     const [is_traders_dashboard_tracking_enabled] = useGrowthbookGetFeatureValue({
         featureFlag: 'ce_tradershub_dashboard_tracking',
@@ -76,6 +86,8 @@ const TradingAppCard = ({
         link_to: '',
     };
 
+    const { text: badge_text, icon: badge_icon, icon_size: badge_size } = getMT5StatusBadgeConfig(mt5_acc_auth_status);
+
     const getAppDescription = () => {
         if (is_existing_real_ctrader_account) return '';
         if (platform === CFD_PLATFORMS.DXTRADE) {
@@ -89,14 +101,6 @@ const TradingAppCard = ({
         return app_desc;
     };
 
-    const { text: badge_text, icon: badge_icon } = getStatusBadgeConfig(
-        mt5_acc_auth_status,
-        openFailedVerificationModal,
-        selected_mt5_jurisdiction,
-        setIsVerificationModalVisible,
-        { poi_status: authentication?.identity?.status, poa_status: authentication?.document?.status }
-    );
-
     const handleStatusBadgeClick = (mt5_acc_auth_status: string) => {
         switch (mt5_acc_auth_status) {
             case MT5_ACCOUNT_STATUS.MIGRATED_WITH_POSITION:
@@ -106,6 +110,15 @@ const TradingAppCard = ({
                 return setServerMaintenanceModal(true);
             case TRADING_PLATFORM_STATUS.UNAVAILABLE:
                 return setAccountUnavailableModal(true);
+            case MT5_ACCOUNT_STATUS.PENDING:
+            case MT5_ACCOUNT_STATUS.FAILED:
+            case MT5_ACCOUNT_STATUS.NEEDS_VERIFICATION: {
+                setJurisdictionSelectedShortcode(selected_mt5_jurisdiction?.jurisdiction ?? '');
+                setProduct(selected_mt5_jurisdiction?.product ?? '');
+                getMT5AccountKYCStatus();
+                return setVerificationModalOpen(true);
+            }
+
             default:
         }
     };
@@ -146,11 +159,11 @@ const TradingAppCard = ({
             window.open(getStaticUrl(`trade-types/options/digital-options/up-and-down/`));
         else;
     };
+    const is_mt5_maintainance_status = [
+        TRADING_PLATFORM_STATUS.UNAVAILABLE,
+        MT5_ACCOUNT_STATUS.UNDER_MAINTENANCE,
+    ].includes(mt5_acc_auth_status);
 
-    const migration_status =
-        mt5_acc_auth_status === MT5_ACCOUNT_STATUS.MIGRATED_WITH_POSITION ||
-        mt5_acc_auth_status === MT5_ACCOUNT_STATUS.MIGRATED_WITHOUT_POSITION;
-    const is_disabled = !!(mt5_acc_auth_status && !migration_status) && !is_eu_user;
     const platform_name = is_account_being_created ? name : sub_title ?? name;
 
     const is_existing_real_ctrader_account =
@@ -225,6 +238,7 @@ const TradingAppCard = ({
                             account_status={mt5_acc_auth_status}
                             icon={badge_icon}
                             text={badge_text}
+                            icon_size={badge_size}
                             onClick={() => {
                                 setAppstorePlatform(platform);
                                 handleStatusBadgeClick(mt5_acc_auth_status);
@@ -245,10 +259,7 @@ const TradingAppCard = ({
                         onAction={onAction}
                         is_external={is_external}
                         new_tab={new_tab}
-                        is_buttons_disabled={
-                            //For MF, we enable the button even if account is not authenticated. Rest of jurisdictions, disable the button for pending, failed and needs verification
-                            is_disabled
-                        }
+                        is_buttons_disabled={is_mt5_maintainance_status}
                         is_account_being_created={!!is_account_being_created}
                         is_real={is_real}
                     />

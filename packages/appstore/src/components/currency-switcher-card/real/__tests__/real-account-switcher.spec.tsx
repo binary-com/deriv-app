@@ -18,7 +18,7 @@ jest.mock('../real-account-card', () => ({
 jest.mock('@deriv/account', () => ({
     __esModule: true,
     getStatusBadgeConfig: () => ({
-        text: 'Pending verification',
+        text: 'In review',
         icon: 'pending',
     }),
 }));
@@ -61,8 +61,8 @@ describe('RealAccountSwitcher', () => {
 
         const { container } = render(<RealAccountSwitcher />, { wrapper });
         expect(container).toBeInTheDocument();
-        expect(screen.getByText('Pending verification')).toBeInTheDocument();
-        expect(screen.getByText('Pending verification')).toHaveClass(
+        expect(screen.getByText('In review')).toBeInTheDocument();
+        expect(screen.getByText('In review')).toHaveClass(
             'switcher-status-badge__container switcher-status-badge__container--pending'
         );
     });

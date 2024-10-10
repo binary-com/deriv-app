@@ -18,7 +18,7 @@
         touch-action: pan-y;
         flex-direction: row;
         max-height: auto;
-        margin-left: calc(var(--slide-spacing) * -1);
+        margin: 1.6rem;
         transition: transform 0s ease-in-out;
         @include mobile-or-tablet-screen {
             justify-content: safe center;

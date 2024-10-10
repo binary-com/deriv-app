@@ -51,18 +51,12 @@ describe('<IdvSubmitComplete/>', () => {
 
         expect(screen.getByText('DerivLightWaitingPoiIcon')).toBeInTheDocument();
         expect(screen.getByText('Mock Redirect Button')).toBeInTheDocument();
-        expect(screen.getByText('Your documents were submitted successfully')).toBeInTheDocument();
-        expect(
-            screen.getByText('We’ll review your documents and notify you of its status within 5 minutes.')
-        ).toBeInTheDocument();
         expect(screen.queryByText('Your profile is updated')).not.toBeInTheDocument();
-        expect(screen.queryByText('Your document has been submitted')).not.toBeInTheDocument();
+        expect(screen.queryByText('Review in progress')).toBeInTheDocument();
         expect(
-            screen.queryByText(
-                "We'll review your proof of identity again and will give you an update as soon as possible."
-            )
-        ).not.toBeInTheDocument();
-        expect(screen.queryByText("Next, we'll need your proof of address.")).not.toBeInTheDocument();
+            screen.queryByText('Your proof of identity is under review. We’ll get back to you within 5 minutes.')
+        ).toBeInTheDocument();
+        expect(screen.queryByText('To start trading, you also need to verify your address.')).not.toBeInTheDocument();
     });
 
     it('should render IdvSubmitComplete component needs_poa not external, without mismatch_status and redirect_button', () => {
@@ -74,16 +68,12 @@ describe('<IdvSubmitComplete/>', () => {
         renderComponent({ props: new_props });
 
         expect(screen.getByText('DerivLightWaitingPoiIcon')).toBeInTheDocument();
-        expect(screen.getByText('Your documents were submitted successfully')).toBeInTheDocument();
-        expect(screen.getByText('Submit proof of address')).toBeInTheDocument();
-        expect(screen.getByText("Next, we'll need your proof of address.")).toBeInTheDocument();
-        expect(screen.queryByText('Your profile is updated')).not.toBeInTheDocument();
-        expect(screen.queryByText('Your document has been submitted')).not.toBeInTheDocument();
+        expect(screen.queryByText('Review in progress')).toBeInTheDocument();
         expect(
-            screen.queryByText(
-                "We'll review your proof of identity again and will give you an update as soon as possible."
-            )
-        ).not.toBeInTheDocument();
+            screen.queryByText('Your proof of identity is under review. We’ll get back to you within 5 minutes.')
+        ).toBeInTheDocument();
+        expect(screen.queryByText('To start trading, you also need to verify your address.')).toBeInTheDocument();
+        expect(screen.queryByText('Next')).toBeInTheDocument();
     });
 
     it('should render IdvSubmitComplete component with mismatch_status ', () => {

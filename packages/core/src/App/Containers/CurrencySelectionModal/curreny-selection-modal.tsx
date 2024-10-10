@@ -23,18 +23,12 @@ const CurrencySelectionModal = observer(({ is_visible }: CurrencySelectionModalP
         account_status,
         loginid: current_loginid,
     } = client;
-    const { closeModal, selected_region, openFailedVerificationModal } = traders_hub;
+    const { closeModal, selected_region } = traders_hub;
     const { openRealAccountSignup, toggleSetCurrencyModal } = ui;
-    const { authentication } = account_status || {};
 
     const mf_account_status = useMFAccountStatus();
-    const { text: badge_text, icon: badge_icon } = getStatusBadgeConfig(
-        mf_account_status,
-        openFailedVerificationModal,
-        'multipliers',
-        undefined,
-        { poi_status: authentication?.identity?.status, poa_status: authentication?.document?.status }
-    );
+
+    const { text: badge_text, icon: badge_icon } = getStatusBadgeConfig(mf_account_status);
 
     const hasSetCurrency = useHasSetCurrency();
     let timeout: ReturnType<typeof setTimeout>;

@@ -53,17 +53,15 @@
         width: 27rem;
         border: 1px solid var(--general-hover);
         border-radius: 2.4rem;
-        padding-bottom: 1.6rem;
         &:hover {
             box-shadow: 0 2px 8px 0 var(--shadow-menu);
         }
         @include mobile-or-tablet-screen {
-            width: 18rem;
+            width: 20rem;
         }
         &__eu-clients {
             position: relative;
             top: 0.5rem;
-            text-align: center;
         }
         &__banner {
             position: absolute;
@@ -85,17 +83,13 @@
     &-outline {
         display: flex;
         flex-direction: column;
-        padding: 4rem 2.4rem 0;
+        padding: 1.6rem 2.4rem 2.4rem;
         border-radius: 2.4rem;
-        @include mobile-or-tablet-screen {
-            padding: 7rem 1.5rem 1.5rem;
-        }
     }
     &-text-container {
         max-height: 25.5rem;
 
         @include mobile {
-            min-height: 32rem;
             height: fit-content;
         }
 
@@ -137,9 +131,9 @@
             position: relative;
             width: 62%;
             @include mobile-or-tablet-screen {
-                display: block;
+                display: flex;
                 position: fixed;
-                width: 15.2rem;
+                width: 13.4rem;
                 right: 0;
             }
         }
@@ -167,10 +161,21 @@
         &--other-cfds {
             background-color: var(--header-background-others);
         }
+        &--derivx {
+            background-color: var(--header-background-others);
+        }
+        &--ctrader {
+            background-color: #{$color-yellow-6};
+        }
     }
     &-underline {
-        border-top: 0.5rem solid var(--less-prominent);
-        width: 21.3rem;
+        height: 1px;
+        width: 75%;
+        background-color: var(--general-hover);
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: 0.4rem;
     }
     &__button {
         width: calc(100% - 4rem);

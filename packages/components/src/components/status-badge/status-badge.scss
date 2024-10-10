@@ -4,27 +4,56 @@
     }
 
     &__container {
-        display: inline-flex;
+        display: flex;
         padding: 2px 7px;
-        color: var(--status-info);
         border-radius: 4px;
-        border: 1.5px solid var(--status-info);
         align-items: center;
         white-space: nowrap;
+        font-size: var(--text-size-xxs);
 
         &--migrated_with_position,
         &--migrated_without_position,
-        &--pending,
         &--under_maintenance,
         &--unavailable {
-            border-color: var(--status-warning);
+            display: inline-flex;
+            border: 1.5px solid var(--status-warning);
             color: var(--status-warning);
             font-size: var(--text-size-xxxs);
             align-items: center;
         }
-        &--failed {
+
+        &--pending {
+            height: 2.4rem;
+            justify-content: center;
+            color: var(--status-warning-dark);
+            background-color: var(--status-warning-transparent);
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        &--needs_verification {
+            background-color: var(--status-info-transparent);
+            color: var(--status-info);
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        &--failed,
+        &--rejected,
+        &--suspected {
+            height: 2.4rem;
             border-color: var(--status-danger);
-            color: var(--status-danger);
+            color: $color-status-danger;
+            font-weight: bold;
+            text-decoration: underline;
+            background-color: var(--status-danger-transparent);
+        }
+
+        &--verified {
+            height: 2.4rem;
+            margin-top: 0.1rem;
+            color: $color-status-verified;
+            background-color: var(--status-success-transparent);
+            font-weight: bold;
         }
 
         &--icon {
@@ -35,21 +64,4 @@
             padding-left: 1rem;
         }
     }
-}
-
-.link-need-verification {
-    color: var(--status-info);
-    font-weight: bold;
-    cursor: pointer;
-    font-size: var(--text-size-xxxs);
-    padding-left: 0.3rem;
-    text-decoration: underline;
-}
-
-.link-verification-failed {
-    color: var(--status-danger);
-    font-weight: bold;
-    text-decoration: underline;
-    font-size: var(--text-size-xxxs);
-    cursor: pointer;
 }

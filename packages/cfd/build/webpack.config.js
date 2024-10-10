@@ -10,9 +10,7 @@ module.exports = function (env) {
         entry: {
             cfd: path.resolve(__dirname, '../src', 'index.tsx'),
             CFDStore: 'Stores/Modules/CFD/cfd-store',
-            JurisdictionModal: 'Containers/jurisdiction-modal/jurisdiction-modal.tsx',
             CFDPasswordModal: 'Containers/cfd-password-modal.tsx',
-            CFDDbviOnBoarding: 'Containers/cfd-dbvi-onboarding.tsx',
             CFDResetPasswordModal: 'Containers/cfd-reset-password-modal.tsx',
             CFDServerErrorDialog: 'Containers/cfd-server-error-dialog.tsx',
             CFDTopUpDemoModal: 'Containers/cfd-top-up-demo-modal.tsx',

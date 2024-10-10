@@ -16,7 +16,7 @@ import {
     TJurisdictionCardItemVerification,
     TJurisdictionCardSection,
     TJurisdictionCardSectionTitleIndicators,
-    TTradingPlatformAvailableAccount,
+    TModifiedTradingPlatformAvailableAccount,
 } from '../Components/props.types';
 import RootStore from '../Stores/index';
 
@@ -54,8 +54,6 @@ export type TCFDDashboardContainer = {
 export type TMT5AccountOpeningRealFinancialStpModal = {
     enableApp: () => void;
     disableApp: () => void;
-    toggleCFDVerificationModal: () => void;
-    is_cfd_verification_modal_visible: boolean;
 };
 
 export type TMissingRealAccount = {
@@ -207,14 +205,6 @@ export type TVerificationStatusBannerProps = {
     residence_list: ResidenceList;
 };
 
-export type TJurisdictionCheckBoxProps = {
-    class_name: string;
-    is_checked: boolean;
-    jurisdiction_selected_shortcode: string;
-    onCheck: () => void;
-    should_restrict_bvi_account_creation: boolean;
-    should_restrict_vanuatu_account_creation: boolean;
-};
 export type TOpenAccountTransferMeta = {
     category: string;
     type?: string;
@@ -234,10 +224,10 @@ export type TJurisdictionModalContentProps = {
     is_non_idv_design: boolean;
     jurisdiction_selected_shortcode: string;
     setJurisdictionSelectedShortcode: (card_type: string) => void;
-    synthetic_available_accounts: TTradingPlatformAvailableAccount[];
-    financial_available_accounts: TTradingPlatformAvailableAccount[];
-    all_market_type_available_accounts: TTradingPlatformAvailableAccount[];
-    swapfree_available_accounts: TTradingPlatformAvailableAccount[];
+    synthetic_available_accounts: TModifiedTradingPlatformAvailableAccount[];
+    financial_available_accounts: TModifiedTradingPlatformAvailableAccount[];
+    all_market_type_available_accounts: TModifiedTradingPlatformAvailableAccount[];
+    swapfree_available_accounts: TModifiedTradingPlatformAvailableAccount[];
     real_synthetic_accounts_existing_data: TExistingData;
     real_financial_accounts_existing_data: TExistingData;
     real_swapfree_accounts_existing_data: TExistingData;
@@ -307,23 +297,6 @@ export type TDMT5CompareModalContentProps = {
     should_show_derivx: boolean;
     show_eu_related_content: boolean;
     toggleCompareAccounts: () => void;
-};
-
-export type TCFDDbviOnboardingProps = {
-    account_status: GetAccountStatus;
-    context: RootStore;
-    disableApp: () => void;
-    enableApp: () => void;
-    fetchAccountSettings: () => void;
-    has_created_account_for_selected_jurisdiction: boolean;
-    has_submitted_cfd_personal_details: boolean;
-    is_cfd_verification_modal_visible: boolean;
-    is_virtual: boolean;
-    jurisdiction_selected_shortcode: string;
-    openPasswordModal: () => void;
-    toggleCFDVerificationModal: () => void;
-    updateAccountStatus: () => void;
-    updateMT5Status: () => void;
 };
 
 type TDynamicLeverage = {

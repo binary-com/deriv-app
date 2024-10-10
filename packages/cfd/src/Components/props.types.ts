@@ -1,4 +1,5 @@
 import { DetailsOfEachMT5Loginid } from '@deriv/api-types';
+import { TAdditionalDetailsOfEachMT5Loginid, TTradingPlatformAvailableAccount } from '@deriv/stores/types';
 
 import { TCFDPasswordReset } from '../Containers/props.types';
 
@@ -8,7 +9,7 @@ export type TCFDPlatform = 'dxtrade' | 'mt5' | 'ctrader';
 
 export type TCFDsPlatformType = 'dxtrade' | 'mt5' | 'ctrader' | '';
 
-export type TProducts = 'swap_free' | 'zero_spread' | 'ctrader' | 'derivx';
+export type TProducts = 'swap_free' | 'zero_spread' | 'ctrader' | 'derivx' | 'financial' | 'standard' | 'stp';
 
 export type TShortcode = DetailsOfEachMT5Loginid['landing_company_short'];
 
@@ -75,31 +76,11 @@ export type TCFDAccountCardActionProps = {
     setShouldShowCooldownModal: (value: boolean) => void;
 };
 
-export type TTradingPlatformAvailableAccount = {
-    market_type: 'financial' | 'gaming' | 'all';
-    name: string;
-    requirements: {
-        after_first_deposit: {
-            financial_assessment: string[];
-        };
-        compliance: {
-            mt5: string[];
-            tax_information: string[];
-        };
-        signup: string[];
-    };
-    shortcode?: TShortcode;
-    sub_account_type: string;
-    account_type?: 'real' | 'demo';
-    landing_company_short?: TShortcode;
-    max_count?: number;
-    available_count?: number;
-};
-
 export type TModifiedTradingPlatformAvailableAccount = Omit<TTradingPlatformAvailableAccount, 'market_type'> & {
     platform?: 'mt5' | 'dxtrade' | 'ctrader';
     market_type: TTradingPlatformAvailableAccount['market_type'] | 'synthetic';
-    product?: TProducts;
+    account_type?: 'real' | 'demo';
+    landing_company_short?: TShortcode;
 };
 
 export type TCardFlipStatus = {
@@ -264,7 +245,8 @@ export type TInstrumentsIcon = {
         | 'Cryptocurrencies'
         | 'ETF';
     text: string;
-    highlighted: boolean;
+    id?: string;
+    highlighted?: boolean;
     className?: string;
     is_asterisk?: boolean;
 };
@@ -279,7 +261,7 @@ export type TJurisdictionData = {
     jurisdiction?: 'bvi' | 'labuan' | 'svg' | 'vanuatu' | 'maltainvest' | 'malta';
 };
 
-export type TDetailsOfEachMT5Loginid = DetailsOfEachMT5Loginid & {
+export type TDetailsOfEachMT5Loginid = TAdditionalDetailsOfEachMT5Loginid & {
     display_login?: string;
     white_label_links?: {
         webtrader_url: string;
@@ -293,7 +275,6 @@ export type TDetailsOfEachMT5Loginid = DetailsOfEachMT5Loginid & {
     selected_mt5_jurisdiction?: TOpenAccountTransferMeta &
         TJurisdictionData & {
             platform?: string;
+            product?: string;
         };
-
-    openFailedVerificationModal?: (from_account: string) => void;
 };

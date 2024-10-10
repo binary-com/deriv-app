@@ -2,7 +2,7 @@ import React from 'react';
 import { DetailsOfEachMT5Loginid } from '@deriv/api-types';
 import { useDevice } from '@deriv-com/ui';
 import { Text, Icon, Money, StatusBadge } from '@deriv/components';
-import getStatusBadgeConfig from '@deriv/account/src/Configs/get-status-badge-config';
+import getMT5StatusBadgeConfig from '@deriv/account/src/Configs/get-mt5-status-badge-config';
 import { getCFDAccountKey, MT5_ACCOUNT_STATUS } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
@@ -70,16 +70,7 @@ const DMT5TradeModal = observer(
             return 'Financial';
         };
 
-        const { text: badge_text, icon: badge_icon } = getStatusBadgeConfig(
-            mt5_trade_account?.status,
-            undefined,
-            undefined,
-            undefined,
-            {
-                poi_status: authentication?.identity?.status,
-                poa_status: authentication?.document?.status,
-            }
-        );
+        const { text: badge_text, icon: badge_icon } = getMT5StatusBadgeConfig(mt5_trade_account?.status);
         const has_migration_status = [
             MT5_ACCOUNT_STATUS.MIGRATED_WITH_POSITION,
             MT5_ACCOUNT_STATUS.MIGRATED_WITHOUT_POSITION,

@@ -8,14 +8,26 @@ import { getJuridisctionDescription, getMarketType } from '../../Helpers/compare
 import { REGION, CFD_PLATFORMS, MARKET_TYPE_SHORTCODE } from '../../Helpers/cfd-config';
 
 const CFDCompareAccountsDescription = ({ trading_platforms, is_demo }: TCompareAccountsCard) => {
-    const market_type = getMarketType(trading_platforms);
-    const market_type_shortcode =
-        trading_platforms.platform === CFD_PLATFORMS.MT5 && market_type === 'all'
-            ? `${market_type}_${trading_platforms.product}_${trading_platforms.shortcode}`
-            : market_type.concat('_', trading_platforms.shortcode ?? '');
-    const juridisction_data = getJuridisctionDescription(market_type_shortcode);
     const { traders_hub } = useStore();
     const { selected_region } = traders_hub;
+
+    const getMarketTypeShortcode = () => {
+        if (
+            trading_platforms.platform === CFD_PLATFORMS.DXTRADE ||
+            trading_platforms.platform === CFD_PLATFORMS.CTRADER
+        ) {
+            return market_type.concat('_', trading_platforms.shortcode ?? '');
+        } else if (trading_platforms.platform === CFD_PLATFORMS.MT5 && market_type === 'all') {
+            return `${market_type}_${trading_platforms.product}_${trading_platforms.shortcode}`;
+        }
+        return market_type;
+    };
+
+    const market_type = getMarketType(trading_platforms);
+    const market_type_shortcode = getMarketTypeShortcode();
+
+    const juridisction_data = getJuridisctionDescription(market_type_shortcode, trading_platforms);
+
     const zero_spread_spread_message = localize('Commissions apply');
 
     return (
@@ -26,7 +38,7 @@ const CFDCompareAccountsDescription = ({ trading_platforms, is_demo }: TCompareA
         >
             <div className='compare-cfd-account-text-container__separator'>
                 <Text as='h1' weight='bold' size='m' align='center'>
-                    {localize('Up to')} {juridisction_data.leverage}
+                    {localize('Up to')} {juridisction_data.leverage ?? ''}
                 </Text>
                 <Text as='p' size='xxxs' align='center'>
                     {selected_region === REGION.NON_EU ? juridisction_data.leverage_description : localize('Leverage')}
@@ -55,39 +67,6 @@ const CFDCompareAccountsDescription = ({ trading_platforms, is_demo }: TCompareA
                         {juridisction_data.spread_description}
                     </Text>
                 </div>
-            )}
-            {!is_demo && (
-                <React.Fragment>
-                    <div className='compare-cfd-account-text-container__separator'>
-                        <Text as='h1' weight='bold' size='xs' align='center'>
-                            {juridisction_data.counterparty_company}
-                        </Text>
-                        <Text as='p' size='xxxs' align='center'>
-                            {juridisction_data.counterparty_company_description}
-                        </Text>
-                    </div>
-                    <div className='compare-cfd-account-text-container__separator'>
-                        <Text as='h1' weight='bold' size='xs' align='center'>
-                            {juridisction_data.jurisdiction}
-                        </Text>
-                        <Text as='p' size='xxxs' align='center'>
-                            {juridisction_data.jurisdiction_description}
-                        </Text>
-                    </div>
-                    <div className='compare-cfd-account-text-container__separator'>
-                        <Text as='h1' weight='bold' size='xs' align='center'>
-                            {juridisction_data.regulator}
-                        </Text>
-                        {juridisction_data.regulator_license && (
-                            <Text as='p' size='xxxs' align='center'>
-                                {juridisction_data.regulator_license}
-                            </Text>
-                        )}
-                        <Text as='p' size='xxxs' align='center'>
-                            {juridisction_data.regulator_description}
-                        </Text>
-                    </div>
-                </React.Fragment>
             )}
         </div>
     );

@@ -1,7 +1,7 @@
 import { DetailsOfEachMT5Loginid, GetAccountStatus, LandingCompany } from '@deriv/api-types';
 import { localize } from '@deriv/translations';
 import { CFD_PLATFORMS } from '../platform';
-import { AUTH_STATUS_CODES, Jurisdiction, JURISDICTION_MARKET_TYPES } from '../constants';
+import { Jurisdiction, JURISDICTION_MARKET_TYPES } from '../constants';
 
 let CFD_text_translated: { [key: string]: () => void };
 
@@ -26,6 +26,7 @@ export const CFD_text: { [key: string]: string } = {
     all_zero_spread_demo: 'Zero Spread Demo',
     all_swap_free_svg: 'Swap-Free SVG',
     all_zero_spread_bvi: 'Zero Spread BVI',
+    stp: 'Financial Labuan',
 } as const;
 
 export const CFD_PRODUCTS_TITLE = {
@@ -43,7 +44,7 @@ export const getMT5Title = (account_type: string) => {
     return CFD_text.financial;
 };
 
-type TProduct = 'financial' | 'synthetic' | 'swap_free' | 'zero_spread' | 'cTrader' | 'derivx';
+type TProduct = 'financial' | 'synthetic' | 'swap_free' | 'zero_spread' | 'cTrader' | 'derivx' | 'stp';
 export type TPlatform = 'dxtrade' | 'mt5' | 'ctrader';
 type TMarketType = 'financial' | 'synthetic' | 'gaming' | 'all' | undefined;
 type TShortcode = 'svg' | 'bvi' | 'labuan' | 'vanuatu' | 'malta' | 'maltainvest';
@@ -56,6 +57,16 @@ type TGetCFDAccountKey = TGetAccount & {
     shortcode?: TShortcode;
     product?: TProduct;
 };
+
+export const PRODUCT = {
+    SWAPFREE: 'swap_free',
+    ZEROSPREAD: 'zero_spread',
+    CTRADER: 'ctrader',
+    DERIVX: 'derivx',
+    STP: 'stp',
+    FINANCIAL: 'financial',
+    STANDARD: 'standard',
+} as const;
 
 // * mt5_login_list returns these:
 // market_type: "financial" | "gaming"
@@ -112,18 +123,15 @@ export const getCFDAccountKey = ({
         }
     }
     if (market_type === 'financial') {
-        if (
-            platform === CFD_PLATFORMS.DXTRADE ||
-            sub_account_type === 'financial' ||
-            sub_account_type === 'financial_stp'
-        ) {
+        if (product === PRODUCT.STP && sub_account_type === 'financial_stp') {
+            return 'stp';
+        } else if (platform === CFD_PLATFORMS.DXTRADE || sub_account_type === 'financial') {
             switch (shortcode) {
                 case 'svg':
                     return 'financial_svg';
                 case 'bvi':
                     return 'financial_bvi';
-                case 'labuan':
-                    return 'financial_fx';
+
                 case 'vanuatu':
                     return 'financial_v';
                 case 'maltainvest':
@@ -536,13 +544,4 @@ export const getMT5AccountTitle = ({ account_type, jurisdiction }: TGetMT5Accoun
     return `${getCFDPlatformNames(CFD_PLATFORMS.MT5)} ${getFormattedJurisdictionMarketTypes(
         account_type
     )} ${getFormattedJurisdictionCode(jurisdiction)}`;
-};
-
-export const isPOARequiredForMT5 = (account_status: GetAccountStatus, jurisdiction_shortcode: string) => {
-    const { document } = account_status?.authentication || {};
-    if (document?.status === AUTH_STATUS_CODES.PENDING) {
-        return false;
-    }
-    // @ts-expect-error as the prop verified_jurisdiction is not yet present in GetAccountStatu
-    return !document?.verified_jurisdiction[jurisdiction_shortcode];
 };

@@ -14,6 +14,8 @@ const CFDCompareAccountsPlatformLabel = ({ trading_platforms }: TCompareAccounts
                 'compare-cfd-account-platform-label--other-cfds':
                     platform_label === platformsHeaderLabel.other_cfds ||
                     platform_label === platformsHeaderLabel.ctrader,
+                'compare-cfd-account-platform-label--derivx': platform_label === platformsHeaderLabel.derivx,
+                'compare-cfd-account-platform-label--ctrader': platform_label === platformsHeaderLabel.ctrader,
             })}
         >
             <Text as='p' weight='bold' size='xxxs' align='center' color={header_color}>

@@ -17,6 +17,11 @@ describe('<CFDCompareAccountsPlatformLabel />', () => {
     it('should renders Deriv X platform label', () => {
         mocked_props.trading_platforms.platform = 'dxtrade';
         render(<CFDCompareAccountsPlatformLabel {...mocked_props} />);
-        expect(screen.getByText(platformsHeaderLabel.other_cfds)).toBeInTheDocument();
+        expect(screen.getByText(platformsHeaderLabel.derivx)).toBeInTheDocument();
+    });
+    it('should renders ctrader platform label', () => {
+        mocked_props.trading_platforms.platform = 'ctrader';
+        render(<CFDCompareAccountsPlatformLabel {...mocked_props} />);
+        expect(screen.getByText(platformsHeaderLabel.ctrader)).toBeInTheDocument();
     });
 });

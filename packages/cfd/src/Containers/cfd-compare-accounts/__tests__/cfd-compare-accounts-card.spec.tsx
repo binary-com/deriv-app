@@ -25,7 +25,6 @@ describe('<CFDCompareAccountsCard />', () => {
                 setAccountType: jest.fn(),
                 setJurisdictionSelectedShortcode: jest.fn(),
                 enableCFDPasswordModal: jest.fn(),
-                toggleCFDVerificationModal: jest.fn(),
             },
         },
     });
@@ -48,20 +47,6 @@ describe('<CFDCompareAccountsCard />', () => {
         render(<CFDCompareAccountsCard {...mocked_props} />, { wrapper });
 
         expect(screen.queryByText(/New!/i)).not.toBeInTheDocument();
-    });
-
-    it('should render the "Boom 300 and Crash 300 Index" for EU user', () => {
-        mocked_props.is_eu_user = true;
-        mocked_props.is_demo = false;
-
-        const wrapper = ({ children }: { children: JSX.Element }) => (
-            <StoreProvider store={mock}>{children}</StoreProvider>
-        );
-
-        render(<CFDCompareAccountsCard {...mocked_props} />, { wrapper });
-
-        expect(screen.queryByText(/New!/i)).not.toBeInTheDocument();
-        expect(screen.getByText(/Boom 300 and Crash 300 Index/i)).toBeInTheDocument();
     });
 
     it('should renders the component and not render the "New!" banner for MT5 demo', () => {

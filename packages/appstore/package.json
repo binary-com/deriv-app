@@ -37,6 +37,7 @@
         "@deriv/stores": "^1.0.0",
         "@deriv/translations": "^1.0.0",
         "@deriv/hooks": "^1.0.0",
+        "@deriv/quill-icons": "1.23.14",
         "@deriv/wallets": "^1.0.0",
         "classnames": "^2.2.6",
         "mobx": "^6.6.1",

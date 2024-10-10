@@ -1,0 +1,55 @@
+.verification-docs-list-modal {
+    &__content {
+        display: flex;
+        flex-direction: column;
+        padding: 2.4rem;
+        justify-content: center;
+        align-items: center;
+        &-list {
+            width: 100%;
+            &-item {
+                cursor: pointer;
+                display: flex;
+                min-height: 5.6rem;
+                align-items: center;
+                border-radius: 2 * $BORDER_RADIUS;
+                background: var(--icon-grey-background);
+                padding: 0.8rem 1.6rem;
+                justify-content: space-between;
+                margin: 1.6rem auto;
+
+                &:hover {
+                    background: var(--state-normal);
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                    transition-delay: 0.1s;
+                }
+
+                &--disabled {
+                    cursor: not-allowed;
+                    pointer-events: none;
+                }
+            }
+        }
+    }
+    &__card {
+        display: flex;
+        gap: 0.8rem;
+        align-items: center;
+        &--icon {
+            width: 2.4rem;
+            height: 2.4rem;
+        }
+    }
+    &__status-badge {
+        text-decoration: none;
+    }
+}
+
+.dc-modal__container_verification-docs-list-modal {
+    .dc-modal-body {
+        padding: 0 2.4rem;
+    }
+    .dc-modal-footer {
+        padding: 2.4rem;
+    }
+}

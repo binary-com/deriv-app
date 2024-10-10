@@ -11,7 +11,7 @@ import {
 } from '@deriv/hooks';
 import getMessage from './cashier-locked-provider';
 import './cashier-locked.scss';
-import { MT5_ACCOUNT_STATUS } from '@deriv/shared';
+import { ACCOUNT_BADGE_STATUS } from '@deriv/shared';
 
 const CashierLocked = observer(() => {
     const {
@@ -48,7 +48,7 @@ const CashierLocked = observer(() => {
         is_deposit_locked,
         is_withdrawal_locked,
         is_identity_verification_needed,
-        is_pending_verification: mf_account_status === MT5_ACCOUNT_STATUS.PENDING,
+        is_pending_verification: mf_account_status === ACCOUNT_BADGE_STATUS.PENDING,
         is_duplicate_dob_phone,
         is_account_to_be_closed_by_residence,
         account_time_of_closure,

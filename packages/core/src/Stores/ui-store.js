@@ -146,7 +146,6 @@ export default class UIStore extends BaseStore {
         target_label: '',
         target_dmt5_label: '',
     };
-    is_mt5_verification_failed_modal = false;
 
     manage_real_account_tab_index = 0;
 
@@ -268,7 +267,6 @@ export default class UIStore extends BaseStore {
             is_app_disabled: observable,
             is_cashier_visible: observable,
             is_cfd_page: observable,
-            is_mt5_verification_failed_modal: observable,
 
             is_closing_create_real_account_modal: observable,
             is_dark_mode_on: observable,
@@ -390,7 +388,6 @@ export default class UIStore extends BaseStore {
             toggleNeedRealAccountForCashierModal: action.bound,
             toggleShouldShowRealAccountsList: action.bound,
             shouldNavigateAfterChooseCrypto: action.bound,
-            setIsMT5VerificationFailedModal: action.bound,
             setShouldShowRiskWarningModal: action.bound,
             setRedirectFromEmail: action.bound,
             setIsWalletModalVisible: action.bound,
@@ -493,10 +490,6 @@ export default class UIStore extends BaseStore {
     init(notification_messages) {
         this.setHashedValue(window.location.hash);
         this.notification_messages_ui = notification_messages;
-    }
-
-    setIsMT5VerificationFailedModal(value) {
-        this.is_mt5_verification_failed_modal = value;
     }
 
     setAppContentsScrollRef(value) {
