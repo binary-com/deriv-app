@@ -22,11 +22,13 @@ const CFDsListingLoggedOut = observer(() => {
 
     return (
         <ListingContainer title={<CFDsTitle />} description={<CFDsDescription />}>
-            <div className='cfds-listing-logged-out__cfd-full-row'>
-                <Text line_height='m' weight='bold' color='prominent'>
-                    {localize('Deriv MT5')}
-                </Text>
-            </div>
+            {combined_cfd_mt5_accounts.length > 0 && (
+                <div className='cfds-listing-logged-out__cfd-full-row'>
+                    <Text line_height='m' weight='bold' color='prominent'>
+                        {localize('Deriv MT5')}
+                    </Text>
+                </div>
+            )}
             {combined_cfd_mt5_accounts.map((existing_account, index: number) => {
                 const list_size = combined_cfd_mt5_accounts.length;
                 return (
@@ -48,16 +50,17 @@ const CFDsListingLoggedOut = observer(() => {
                     />
                 );
             })}
-            {!is_eu_user && (
-                <div className='cfds-listing-logged-out__cfd-full-row'>
-                    <hr className='cfds-listing-logged-out__divider' />
-                </div>
+            {available_ctrader_accounts.length > 0 && (
+                <React.Fragment>
+                    <div className='cfds-listing-logged-out__cfd-full-row'>
+                        <hr className='cfds-listing-logged-out__divider' />
+                    </div>
+                    <div className='cfds-listing-logged-out__cfd-full-row'>
+                        <Text weight='bold'>{localize('Deriv cTrader')}</Text>
+                    </div>
+                </React.Fragment>
             )}
-            {!is_eu_user && (
-                <div className='cfds-listing-logged-out__cfd-full-row'>
-                    <Text weight='bold'>{localize('Deriv cTrader')}</Text>
-                </div>
-            )}
+
             {available_ctrader_accounts.map(account => (
                 <TradingAppCard
                     action_type='get'
@@ -74,9 +77,11 @@ const CFDsListingLoggedOut = observer(() => {
             ))}
             {!is_eu_user && (
                 <React.Fragment>
-                    <div className='cfds-listing-logged-out__cfd-full-row'>
-                        <hr className='cfds-listing-logged-out__divider' />
-                    </div>
+                    {(available_ctrader_accounts.length > 0 || combined_cfd_mt5_accounts.length > 0) && (
+                        <div className='cfds-listing-logged-out__cfd-full-row'>
+                            <hr className='cfds-listing-logged-out__divider' />
+                        </div>
+                    )}
 
                     <div className='cfds-listing-logged-out__cfd-full-row'>
                         <Text line_height='m' weight='bold' color='prominent'>

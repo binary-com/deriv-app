@@ -1,5 +1,4 @@
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
-
 import {
     CFD_PLATFORMS,
     ContentFlag,
@@ -129,6 +128,8 @@ export default class TradersHubStore extends BaseStore {
             setIsCFDRestrictedCountry: action.bound,
             setIsFinancialRestrictedCountry: action.bound,
             setIsSetupRealAccountOrGoToDemoModalVisible: action.bound,
+            dynamic_available_platforms: computed,
+            has_available_cfd_account: computed,
         });
 
         reaction(
@@ -145,6 +146,8 @@ export default class TradersHubStore extends BaseStore {
                 this.root_store.client.landing_companies,
                 this.root_store.common.current_language,
                 this.financial_restricted_countries,
+                this.root_store.client.trading_platform_available_accounts,
+                this.root_store.client.ctrader_trading_platform_available_accounts,
             ],
             () => {
                 this.getAvailablePlatforms();
@@ -486,27 +489,13 @@ export default class TradersHubStore extends BaseStore {
             );
             return;
         }
-
-        if (this.financial_restricted_countries) {
-            this.available_mt5_accounts = this.available_cfd_accounts.filter(
-                account => account.market_type === 'financial' && account.platform === CFD_PLATFORMS.MT5
-            );
+        if (Object.keys(this.dynamic_available_platforms).length > 0) {
+            this.available_mt5_accounts = this.available_cfd_accounts.filter(account => {
+                return account.platform === CFD_PLATFORMS.MT5 && this.dynamic_available_platforms[account.product];
+            });
             return;
         }
-
-        if (this.CFDs_restricted_countries) {
-            this.available_mt5_accounts = this.available_cfd_accounts.filter(
-                account =>
-                    account.market_type !== 'financial' &&
-                    account.market_type !== 'all' &&
-                    account.platform === CFD_PLATFORMS.MT5
-            );
-            return;
-        }
-
-        this.available_mt5_accounts = this.available_cfd_accounts.filter(
-            account => account.platform === CFD_PLATFORMS.MT5
-        );
+        this.available_mt5_accounts = [];
     }
 
     getAvailableDxtradeAccounts() {
@@ -529,11 +518,6 @@ export default class TradersHubStore extends BaseStore {
         );
     }
     getAvailableCTraderAccounts() {
-        if (this.CFDs_restricted_countries || this.financial_restricted_countries) {
-            this.available_ctrader_accounts = [];
-            return;
-        }
-
         if (this.is_eu_user && !this.is_demo_low_risk) {
             this.available_ctrader_accounts = this.available_cfd_accounts.filter(
                 account =>
@@ -542,9 +526,13 @@ export default class TradersHubStore extends BaseStore {
             );
             return;
         }
-        this.available_ctrader_accounts = this.available_cfd_accounts.filter(
-            account => account.platform === CFD_PLATFORMS.CTRADER
-        );
+        if (Object.keys(this.dynamic_available_platforms).length > 0) {
+            this.available_ctrader_accounts = this.available_cfd_accounts.filter(account => {
+                return account.platform === CFD_PLATFORMS.CTRADER && this.dynamic_available_platforms[account.product];
+            });
+            return;
+        }
+        this.available_ctrader_accounts = [];
     }
 
     getExistingAccounts(platform, market_type, product) {
@@ -877,5 +865,30 @@ export default class TradersHubStore extends BaseStore {
 
     setIsSetupRealAccountOrGoToDemoModalVisible(value) {
         this.is_setup_real_account_or_go_to_demo_modal_visible = value;
+    }
+
+    get dynamic_available_platforms() {
+        const available_accounts = {};
+        this.root_store.client.trading_platform_available_accounts.forEach(account => {
+            if (account.product === 'synthetic') {
+                // `trading_platform_available_accounts` does not have an entry for 'standard' accounts,
+                // so adding 'standard' sub-account type to the available accounts for synthetic products.
+                available_accounts[account.sub_account_type] = true;
+            } else {
+                available_accounts[account.product] = true;
+            }
+        });
+        if (this.root_store.client.ctrader_trading_platform_available_accounts?.length > 0) {
+            available_accounts.ctrader = true;
+        }
+        return available_accounts;
+    }
+
+    get has_available_cfd_account() {
+        return (
+            this.combined_cfd_mt5_accounts.length > 0 ||
+            this.available_ctrader_accounts.length > 0 ||
+            this.available_dxtrade_accounts.length > 0
+        );
     }
 }

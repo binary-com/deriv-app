@@ -35,14 +35,14 @@ const GetOrderedPlatformSections = observer(
 const OrderedPlatformSections = observer(({ isDesktop = false }: TOrderedPlatformSections) => {
     const { traders_hub, client } = useStore();
     const { is_mt5_allowed, is_logged_in } = client;
-    const { selected_platform_type } = traders_hub;
+    const { selected_platform_type, has_available_cfd_account } = traders_hub;
 
     if ((is_logged_in && is_mt5_allowed) || !is_logged_in) {
         return isDesktop ? (
-            <GetOrderedPlatformSections />
+            <GetOrderedPlatformSections is_cfd_visible={has_available_cfd_account} />
         ) : (
             <GetOrderedPlatformSections
-                is_cfd_visible={selected_platform_type === 'cfd'}
+                is_cfd_visible={has_available_cfd_account && selected_platform_type === 'cfd'}
                 is_options_and_multipliers_visible={selected_platform_type === 'options'}
             />
         );

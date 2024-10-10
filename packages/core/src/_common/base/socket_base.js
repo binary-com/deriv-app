@@ -273,10 +273,10 @@ const BinarySocketBase = (() => {
             ...payload,
         });
 
-    const tradingPlatformAvailableAccounts = platform =>
+    const tradingPlatformAvailableAccounts = payload =>
         deriv_api.send({
             trading_platform_available_accounts: 1,
-            platform,
+            ...payload,
         });
 
     const paymentAgentList = (country, currency) =>
