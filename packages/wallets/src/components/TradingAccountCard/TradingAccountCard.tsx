@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import TradingAccountCardButton from './TradingAccountCardButton';
 import TradingAccountCardContent from './TradingAccountCardContent';
 import TradingAccountCardIcon from './TradingAccountCardIcon';
+import TradingAccountCardSection from './TradingAccountCardSection';
 import './TradingAccountCard.scss';
 
 export type TCommonProps = {
@@ -43,5 +44,6 @@ const TradingAccountCard = ({ children, className, disabled, onClick }: PropsWit
 TradingAccountCard.Icon = TradingAccountCardIcon;
 TradingAccountCard.Content = TradingAccountCardContent;
 TradingAccountCard.Button = TradingAccountCardButton;
+TradingAccountCard.Section = TradingAccountCardSection;
 
 export default TradingAccountCard;

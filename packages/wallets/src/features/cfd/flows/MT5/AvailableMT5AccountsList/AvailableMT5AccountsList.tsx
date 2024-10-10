@@ -104,30 +104,32 @@ const AvailableMT5AccountsList: React.FC<TProps> = ({ account }) => {
             <TradingAccountCard.Icon className='wallets-available-mt5__icon'>
                 {getMarketTypeDetails(localize, account.product)[account.market_type || MARKET_TYPE.ALL].icon}
             </TradingAccountCard.Icon>
-            <TradingAccountCard.Content className='wallets-available-mt5__details'>
-                <div className='wallets-available-mt5__title'>
-                    <Text align='start' size='sm'>
-                        {title}
+            <TradingAccountCard.Section>
+                <TradingAccountCard.Content className='wallets-available-mt5__details'>
+                    <div className='wallets-available-mt5__title'>
+                        <Text align='start' size='sm'>
+                            {title}
+                        </Text>
+                        {account.product === PRODUCT.ZEROSPREAD && (
+                            <div className='wallets-available-mt5__badge'>
+                                <Text align='start' size='xs' weight='bold'>
+                                    <Localize i18n_default_text='NEW' />
+                                </Text>
+                            </div>
+                        )}
+                    </div>
+                    <Text align='start' size='xs'>
+                        {description}
                     </Text>
-                    {account.product === PRODUCT.ZEROSPREAD && (
-                        <div className='wallets-available-mt5__badge'>
-                            <Text align='start' size='xs' weight='bold'>
-                                <Localize i18n_default_text='NEW' />
-                            </Text>
-                        </div>
+                </TradingAccountCard.Content>
+                <TradingAccountCard.Button className='wallets-available-mt5__icon'>
+                    {isRtl ? (
+                        <LabelPairedChevronLeftCaptionRegularIcon width={16} />
+                    ) : (
+                        <LabelPairedChevronRightCaptionRegularIcon width={16} />
                     )}
-                </div>
-                <Text align='start' size='xs'>
-                    {description}
-                </Text>
-            </TradingAccountCard.Content>
-            <TradingAccountCard.Button className='wallets-available-mt5__icon'>
-                {isRtl ? (
-                    <LabelPairedChevronLeftCaptionRegularIcon width={16} />
-                ) : (
-                    <LabelPairedChevronRightCaptionRegularIcon width={16} />
-                )}
-            </TradingAccountCard.Button>
+                </TradingAccountCard.Button>
+            </TradingAccountCard.Section>
         </TradingAccountCard>
     );
 };

@@ -10,7 +10,7 @@ import { TLanguageType } from './types';
 import './styles/fonts.scss';
 import './index.scss';
 
-const App: React.FC = () => {
+const App: React.FC<{ logout: () => Promise<void> }> = ({ logout }) => {
     const [preferredLanguage, setPreferredLanguage] = useState<TLanguageType | null>(null);
     const language = useLanguage(preferredLanguage);
 
@@ -26,7 +26,7 @@ const App: React.FC = () => {
 
     return (
         <APIProvider standalone>
-            <WalletsAuthProvider>
+            <WalletsAuthProvider logout={logout}>
                 <TranslationProvider defaultLang={defaultLanguage} i18nInstance={i18nInstance}>
                     <React.Suspense fallback={<Loader />}>
                         <ModalProvider>

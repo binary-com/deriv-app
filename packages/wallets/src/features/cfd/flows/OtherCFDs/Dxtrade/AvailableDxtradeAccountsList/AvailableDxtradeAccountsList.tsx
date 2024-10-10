@@ -20,26 +20,28 @@ const AvailableDxtradeAccountsList: React.FC = () => {
             <TradingAccountCard.Icon data-testid='dt_icon_dxtrade'>
                 {PlatformDetails.dxtrade.icon}
             </TradingAccountCard.Icon>
-            <TradingAccountCard.Content>
-                <p className='wallets-available-dxtrade__details-title'>
-                    <Text align='start' size='sm'>
-                        Deriv X
+            <TradingAccountCard.Section>
+                <TradingAccountCard.Content>
+                    <p className='wallets-available-dxtrade__details-title'>
+                        <Text align='start' size='sm'>
+                            Deriv X
+                        </Text>
+                    </p>
+                    <Text size='xs'>
+                        <Localize
+                            components={[<strong key={0} />]}
+                            i18n_default_text='CFDs on financial and derived instruments, <0>powered by TradingView</0>.'
+                        />
                     </Text>
-                </p>
-                <Text size='xs'>
-                    <Localize
-                        components={[<strong key={0} />]}
-                        i18n_default_text='CFDs on financial and derived instruments, <0>powered by TradingView</0>.'
-                    />
-                </Text>
-            </TradingAccountCard.Content>
-            <TradingAccountCard.Button>
-                {isRtl ? (
-                    <LabelPairedChevronLeftCaptionRegularIcon width={16} />
-                ) : (
-                    <LabelPairedChevronRightCaptionRegularIcon width={16} />
-                )}
-            </TradingAccountCard.Button>
+                </TradingAccountCard.Content>
+                <TradingAccountCard.Button>
+                    {isRtl ? (
+                        <LabelPairedChevronLeftCaptionRegularIcon width={16} />
+                    ) : (
+                        <LabelPairedChevronRightCaptionRegularIcon width={16} />
+                    )}
+                </TradingAccountCard.Button>
+            </TradingAccountCard.Section>
         </TradingAccountCard>
     );
 };

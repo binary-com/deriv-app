@@ -24,24 +24,26 @@ const AddedCTraderAccountsList: React.FC = () => {
                     onClick={() => show(<MT5TradeModal platform={PlatformDetails.ctrader.platform} />)}
                 >
                     <TradingAccountCard.Icon>{PlatformDetails.ctrader.icon}</TradingAccountCard.Icon>
-                    <TradingAccountCard.Content>
-                        <Text align='start' size='sm'>
-                            {PlatformDetails.ctrader.title}
-                        </Text>
-                        <Text align='start' size='sm' weight='bold'>
-                            {account?.display_balance}
-                        </Text>
-                        <Text align='start' size='xs'>
-                            {account.login}
-                        </Text>
-                    </TradingAccountCard.Content>
-                    <TradingAccountCard.Button>
-                        {isRtl ? (
-                            <LabelPairedChevronLeftCaptionRegularIcon width={16} />
-                        ) : (
-                            <LabelPairedChevronRightCaptionRegularIcon width={16} />
-                        )}
-                    </TradingAccountCard.Button>
+                    <TradingAccountCard.Section>
+                        <TradingAccountCard.Content>
+                            <Text align='start' size='sm'>
+                                {PlatformDetails.ctrader.title}
+                            </Text>
+                            <Text align='start' size='sm' weight='bold'>
+                                {account?.display_balance}
+                            </Text>
+                            <Text align='start' size='xs'>
+                                {account.login}
+                            </Text>
+                        </TradingAccountCard.Content>
+                        <TradingAccountCard.Button>
+                            {isRtl ? (
+                                <LabelPairedChevronLeftCaptionRegularIcon width={16} />
+                            ) : (
+                                <LabelPairedChevronRightCaptionRegularIcon width={16} />
+                            )}
+                        </TradingAccountCard.Button>
+                    </TradingAccountCard.Section>
                 </TradingAccountCard>
             ))}
         </React.Fragment>

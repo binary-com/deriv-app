@@ -10,17 +10,21 @@ const WalletsAuthProvider = ({ children, ...rest }: Omit<ComponentProps<typeof A
         selectDefaultAccount={accountsObject => {
             const loginIds = Object.keys(accountsObject);
             const defaultFiatWallet = loginIds.filter((loginId: string) => {
-                const { account_category: accountCategory, account_type: accountType } = accountsObject[loginId];
+                const {
+                    account_category: accountCategory,
+                    account_type: accountType,
+                    is_disabled: isDisabled,
+                } = accountsObject[loginId];
                 const isWallet = accountCategory == 'wallet';
                 const isFiat = accountType == 'doughflow';
-                return isWallet && isFiat;
+                return isWallet && isFiat && !isDisabled;
             })[0];
 
             if (!defaultFiatWallet) {
                 const defaultWallet = loginIds.filter((loginId: string) => {
-                    const { account_category: accountCategory } = accountsObject[loginId];
+                    const { account_category: accountCategory, is_disabled: isDisabled } = accountsObject[loginId];
                     const isWallet = accountCategory == 'wallet';
-                    return isWallet;
+                    return isWallet && !isDisabled;
                 })[0];
                 return defaultWallet;
             }

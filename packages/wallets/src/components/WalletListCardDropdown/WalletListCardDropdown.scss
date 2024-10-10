@@ -15,6 +15,19 @@
         &-item {
             display: flex;
             gap: 1.6rem;
+            align-items: center;
+            width: 100%;
+        }
+
+        &-item--disabled {
+            & > :first-child,
+            & > :nth-child(2) {
+                opacity: 0.48;
+            }
+            & > :last-child {
+                margin-left: auto;
+                opacity: 1;
+            }
         }
 
         &-content {
@@ -72,13 +85,19 @@
         justify-content: flex-start;
         border-radius: 0.4rem;
 
-        &:hover:not(&--active) {
+        &:hover:not(&--active):not(&--disabled) {
             cursor: pointer;
             background: var(--system-light-6-hover-background, #e6e9e9);
         }
 
         &--active {
             background: var(--system-light-5-active-background, #d6dadb);
+        }
+        &--disabled {
+            cursor: not-allowed;
+            &:hover {
+                background: none;
+            }
         }
     }
 }

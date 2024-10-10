@@ -18,9 +18,16 @@ const Wallets = React.lazy(() =>
 
 const RootComponent = observer(props => {
     const { client } = useStore();
-    const { has_wallet } = client;
-
-    return has_wallet ? <Wallets /> : <AppStore {...props} />;
+    const { has_wallet, logout } = client;
+    return has_wallet ? (
+        <Wallets
+            logout={async () => {
+                await logout();
+            }}
+        />
+    ) : (
+        <AppStore {...props} />
+    );
 });
 
 export default RootComponent;

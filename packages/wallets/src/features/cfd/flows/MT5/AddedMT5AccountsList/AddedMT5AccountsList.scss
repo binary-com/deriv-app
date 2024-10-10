@@ -1,4 +1,15 @@
 .wallets-added-mt5 {
+    &__card--disabled {
+        cursor: pointer;
+        & > :first-child {
+            opacity: 0.48;
+        }
+        @include desktop {
+            &:hover {
+                background: none;
+            }
+        }
+    }
     &__actions {
         display: flex;
         flex-direction: column;
@@ -62,6 +73,13 @@
 
             & > .wallets-text {
                 opacity: 0.7;
+            }
+        }
+        &--disabled {
+            & > :first-child,
+            & > :nth-child(2),
+            & + [class*='__icon'] {
+                opacity: 0.48;
             }
         }
     }

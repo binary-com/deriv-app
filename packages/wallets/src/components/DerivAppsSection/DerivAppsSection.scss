@@ -1,7 +1,7 @@
 @import '../SkeletonLoader/SkeletonLoader.scss';
 
 .wallets-deriv-apps-section {
-    &:hover {
+    &:hover:not(&--disabled) {
         background: none;
         cursor: unset;
     }
@@ -13,6 +13,20 @@
     @include mobile-or-tablet-screen {
         width: 100%;
         padding-inline: 1.6rem;
+    }
+
+    &--disabled {
+        cursor: pointer;
+        @include desktop {
+            &:hover {
+                background: none;
+            }
+        }
+    }
+
+    &--disabled-icon,
+    &--disabled-content {
+        opacity: 0.48;
     }
 
     &__border {

@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { APIProvider, useActiveWalletAccount, useWalletAccountsList } from '@deriv/api-v2';
 import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import WalletsAuthProvider from '../../../AuthProvider';
 import useAllBalanceSubscription from '../../../hooks/useAllBalanceSubscription';
 import WalletListCardDropdown from '../WalletListCardDropdown';
@@ -145,5 +146,27 @@ describe('WalletListCardDropdown', () => {
 
         fireEvent.keyDown(document, { key: 'Escape' });
         expect(screen.queryByText('BTC Wallet')).not.toBeInTheDocument();
+    });
+
+    it('renders the disabled badge for a disabled wallet', () => {
+        (useWalletAccountsList as jest.Mock).mockReturnValue({
+            data: [
+                {
+                    currency: 'USD',
+                    currency_config: { fractional_digits: 2 },
+                    is_disabled: true,
+                    is_virtual: false,
+                    loginid: 'CR1',
+                },
+            ],
+        });
+
+        render(<WalletListCardDropdown />, { wrapper });
+
+        const input = screen.getByDisplayValue('USD Wallet');
+        userEvent.click(input);
+
+        expect(screen.getByText('USD Wallet')).toBeInTheDocument();
+        expect(screen.getByText('Disabled')).toBeInTheDocument();
     });
 });

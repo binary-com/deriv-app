@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import classNames from 'classnames';
-import { useActiveWalletAccount } from '@deriv/api-v2';
+import { useActiveWalletAccount, useWalletAccountsList } from '@deriv/api-v2';
+import { WalletsDisabledAccountsBanner } from '../WalletsDisabledAccountsBanner';
 import './WalletsContainer.scss';
 
 type TProps = {
@@ -8,11 +9,13 @@ type TProps = {
 };
 
 const WalletsContainer: React.FC<React.PropsWithChildren<TProps>> = ({ children, renderHeader }) => {
+    const { data: wallets } = useWalletAccountsList();
     const { data: activeWallet } = useActiveWalletAccount();
     const walletsCardRef = useRef<HTMLDivElement>(null);
 
     const isDemo = activeWallet?.is_virtual;
     const isOpen = activeWallet?.is_active;
+    const disabledWallets = wallets?.filter(wallet => wallet.is_disabled) ?? [];
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -32,6 +35,7 @@ const WalletsContainer: React.FC<React.PropsWithChildren<TProps>> = ({ children,
             data-testid='dt_wallets_container'
             ref={walletsCardRef}
         >
+            {disabledWallets.length > 0 ? <WalletsDisabledAccountsBanner disabledAccounts={disabledWallets} /> : null}
             <div
                 className={classNames('wallets-container__header', {
                     'wallets-container__header--virtual': isDemo,

@@ -24,6 +24,9 @@
             width: 5.6rem;
             display: flex;
             justify-content: center;
+            &--disabled {
+                opacity: 0.7;
+            }
         }
     }
 
@@ -54,6 +57,12 @@
                 opacity: unset;
                 border-radius: 0.4rem;
                 margin: 0.4rem;
+            }
+        }
+        &--disabled:hover {
+            cursor: not-allowed;
+            &:before {
+                background-color: transparent;
             }
         }
     }

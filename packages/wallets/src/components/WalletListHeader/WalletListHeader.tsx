@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import classNames from 'classnames';
 import { useActiveWalletAccount, useWalletAccountsList } from '@deriv/api-v2';
 import { Localize } from '@deriv-com/translations';
 import { Text, useDevice } from '@deriv-com/ui';
@@ -12,8 +13,9 @@ const WalletListHeader: React.FC = () => {
     const switchWalletAccount = useWalletAccountSwitcher();
 
     const demoAccount = wallets?.find(wallet => wallet.is_virtual)?.loginid;
-    const firstRealAccount = wallets?.find(wallet => !wallet.is_virtual)?.loginid;
-    const shouldShowSwitcher = demoAccount && firstRealAccount;
+    const firstRealAccount = wallets?.find(wallet => !wallet.is_virtual && !wallet.is_disabled)?.loginid;
+    const hasAnyActiveRealWallets = wallets?.some(wallet => !wallet.is_virtual && !wallet.is_disabled);
+    const shouldShowSwitcher = (demoAccount && firstRealAccount) || !hasAnyActiveRealWallets;
     const isDemo = activeWallet?.is_virtual;
     const [isChecked, setIsChecked] = useState(!isDemo);
 
@@ -34,28 +36,39 @@ const WalletListHeader: React.FC = () => {
 
     return (
         <div className='wallets-list-header'>
-            <Text size='xl' weight='bold'>
+            <Text align='start' size='xl' weight='bold'>
                 <Localize i18n_default_text="Trader's Hub" />
             </Text>
             {shouldShowSwitcher && (
                 <div className='wallets-list-header__switcher-container'>
                     <div className='wallets-list-header__label'>
                         <div className='wallets-list-header__label-item'>
-                            <Text size='sm'>
+                            <Text align='start' size='sm'>
                                 <Localize i18n_default_text='Demo' />
                             </Text>
                         </div>
-                        <div className='wallets-list-header__label-item'>
-                            <Text size='sm'>
+                        <div
+                            className={classNames('wallets-list-header__label-item', {
+                                'wallets-list-header__label-item--disabled': !hasAnyActiveRealWallets,
+                            })}
+                            data-testid='dt_wallets_list_header__label_item_real'
+                        >
+                            <Text align='start' size='sm'>
                                 <Localize i18n_default_text='Real' />
                             </Text>
                         </div>
                     </div>
-                    <label className='wallets-list-header__switcher' htmlFor='wallets-list-header__switcher'>
+                    <label
+                        className={classNames('wallets-list-header__switcher', {
+                            'wallets-list-header__switcher--disabled': !hasAnyActiveRealWallets,
+                        })}
+                        htmlFor='wallets-list-header__switcher'
+                    >
                         <input
                             checked={isChecked}
                             className='wallets-list-header__switcher-input'
                             data-testid='wallets_list_header__switcher_input'
+                            disabled={!hasAnyActiveRealWallets}
                             id='wallets-list-header__switcher'
                             onChange={handleToggle}
                             type='checkbox'

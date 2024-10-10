@@ -1,7 +1,7 @@
 .wallets-trading-account-card {
     display: grid;
     align-items: center;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto 1fr;
     gap: 1.6rem;
     height: 8.8rem;
     padding: 0;
@@ -10,18 +10,24 @@
 
     &--disabled {
         cursor: not-allowed;
+        opacity: 0.48;
+        @include desktop {
+            &:hover {
+                background: none;
+            }
+        }
     }
 
     @include desktop {
         padding-inline: 1.6rem;
         $columns: 3;
         $grid-last-row-children: '&:nth-last-child(-n+#{$columns})';
-        #{$grid-last-row-children} > &__content,
-        #{$grid-last-row-children} ~ & > &__content {
+        #{$grid-last-row-children} > &__section,
+        #{$grid-last-row-children} ~ & > &__section {
             border-bottom: none;
         }
 
-        &:hover {
+        &:hover:not(&--disabled) {
             cursor: pointer;
             background-color: var(--system-light-6-hover-background, #e6e9e9);
             border-radius: 0.8rem;
@@ -30,8 +36,8 @@
 
     @include mobile-or-tablet-screen {
         height: 8rem;
-        &:last-child > &__content,
-        &:last-child ~ & > &__content {
+        &:last-child > &__section,
+        &:last-child ~ & > &__section {
             border-bottom: none;
         }
     }
@@ -41,6 +47,13 @@
         justify-content: start;
         align-content: center;
         height: 100%;
+    }
+    &__section {
+        display: grid;
+        align-items: center;
+        grid-template-columns: 1fr auto;
+        gap: 1.6rem;
         border-bottom: 1px solid var(--system-light-6-hover-background, #e6e9e9);
+        height: 100%;
     }
 }

@@ -23,6 +23,7 @@ describe('AddedMT5AccountsList', () => {
         market_type: 'financial',
         platform: 'mt5',
         product: 'standard',
+        rights: { enabled: true },
         status: 'active',
     };
 
@@ -132,5 +133,28 @@ describe('AddedMT5AccountsList', () => {
                 defaultRootId: 'wallets_modal_root',
             });
         });
+    });
+
+    it('shows WalletStatusBadge when account is disabled', () => {
+        // @ts-expect-error - since this is a mock, we only need partial properties of the account
+        render(<AddedMT5AccountsList account={{ ...mockAccount, rights: { enabled: false } }} />);
+
+        expect(screen.getByText('Disabled')).toBeInTheDocument();
+    });
+
+    it('opens WalletDisabledAccountModal when disabled account card is clicked', async () => {
+        // @ts-expect-error - since this is a mock, we only need partial properties of the account
+        render(<AddedMT5AccountsList account={{ ...mockAccount, rights: { enabled: false } }} />);
+
+        const card = screen.getByTestId('dt_wallets_trading_account_card');
+        await userEvent.click(card);
+
+        expect(screen.getByText('Contact us via live chat for more details.')).toBeInTheDocument();
+
+        const closeButton = screen.getByTestId('dt-close-icon');
+        expect(closeButton).toBeInTheDocument();
+        await userEvent.click(closeButton);
+
+        expect(screen.queryByText('Contact us via live chat for more details.')).not.toBeInTheDocument();
     });
 });

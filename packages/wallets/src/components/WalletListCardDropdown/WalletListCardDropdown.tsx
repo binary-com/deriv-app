@@ -12,14 +12,8 @@ import { THooks } from '../../types';
 import reactNodeToString from '../../utils/react-node-to-string';
 import { WalletTextField } from '../Base';
 import { WalletCurrencyIcon } from '../WalletCurrencyIcon';
+import { WalletStatusBadge } from '../WalletStatusBadge';
 import './WalletListCardDropdown.scss';
-
-type WalletList = {
-    currency: THooks.WalletAccountsList['currency'];
-    currencyConfig: THooks.WalletAccountsList['currency_config'];
-    loginid: THooks.WalletAccountsList['loginid'];
-    text: React.ReactNode;
-}[];
 
 const WalletListCardDropdown = () => {
     const { data: wallets } = useWalletAccountsList();
@@ -37,13 +31,14 @@ const WalletListCardDropdown = () => {
         return `${wallet?.currency} Wallet`;
     }, []);
 
-    const walletList: WalletList = useMemo(() => {
+    const walletList = useMemo(() => {
         return (
             wallets
                 ?.filter(wallet => !wallet.is_virtual)
                 .map(wallet => ({
                     currency: wallet.currency,
                     currencyConfig: wallet.currency_config,
+                    isDisabled: wallet.is_disabled,
                     loginid: wallet.loginid,
                     text: generateTitleText(wallet),
                 })) ?? []
@@ -109,7 +104,7 @@ const WalletListCardDropdown = () => {
                     {isOpen && (
                         <ul className='wallets-listcard-dropdown__items'>
                             <div className='wallets-listcard-dropdown__items-header'>
-                                <Text size='sm' weight='bold'>
+                                <Text align='start' size='sm' weight='bold'>
                                     <Localize i18n_default_text='Select Wallet' />
                                 </Text>
                             </div>
@@ -117,33 +112,49 @@ const WalletListCardDropdown = () => {
                                 <li
                                     className={classNames('wallets-listcard-dropdown__item', {
                                         'wallets-listcard-dropdown__item--active': loginId === wallet.loginid,
+                                        'wallets-listcard-dropdown__item--disabled': wallet.isDisabled,
                                     })}
                                     id={`wallets-listcard-dropdown__item-${index}`}
                                     key={wallet.loginid}
-                                    onClick={() => handleItemClick(wallet.loginid, reactNodeToString(wallet.text))}
+                                    onClick={e => {
+                                        e.stopPropagation();
+                                        if (wallet.isDisabled) return;
+                                        handleItemClick(wallet.loginid, reactNodeToString(wallet.text));
+                                    }}
                                 >
-                                    <div className='wallets-listcard-dropdown__list-item'>
+                                    <div
+                                        className={classNames('wallets-listcard-dropdown__list-item', {
+                                            'wallets-listcard-dropdown__list-item--disabled': wallet.isDisabled,
+                                        })}
+                                    >
                                         <WalletCurrencyIcon currency={wallet.currency ?? 'USD'} rounded />
                                         <div className='wallets-listcard-dropdown__list-content'>
-                                            <Text size='2xs'>{wallet.currency} Wallet</Text>
+                                            <Text align='start' size='2xs'>
+                                                {wallet.currency} Wallet
+                                            </Text>
                                             {isBalanceLoading ? (
                                                 <div
                                                     className='wallets-skeleton wallets-list-card-dropdown__balance-loader'
                                                     data-testid='dt_wallets_list_card_dropdown_balance_loader'
                                                 />
                                             ) : (
-                                                <Text size='sm' weight='bold'>
-                                                    {displayMoney(
-                                                        balanceData?.[wallet.loginid]?.balance,
-                                                        wallet?.currency,
-                                                        {
-                                                            fractional_digits:
-                                                                wallet?.currencyConfig?.fractional_digits,
-                                                        }
-                                                    )}
-                                                </Text>
+                                                !wallet.isDisabled && (
+                                                    <Text align='start' size='sm' weight='bold'>
+                                                        {displayMoney(
+                                                            balanceData?.[wallet.loginid]?.balance,
+                                                            wallet?.currency,
+                                                            {
+                                                                fractional_digits:
+                                                                    wallet?.currencyConfig?.fractional_digits,
+                                                            }
+                                                        )}
+                                                    </Text>
+                                                )
                                             )}
                                         </div>
+                                        {wallet.isDisabled && (
+                                            <WalletStatusBadge badgeSize='md' padding='tight' status='disabled' />
+                                        )}
                                     </div>
                                 </li>
                             ))}

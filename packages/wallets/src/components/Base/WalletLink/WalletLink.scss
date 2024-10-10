@@ -19,5 +19,10 @@
                 text-decoration: underline;
             }
         }
+        &--dark {
+            font-weight: bold;
+            text-decoration: underline;
+            color: var(--du-text-black, #000000);
+        }
     }
 }

@@ -13,6 +13,7 @@ import { ProgressBar } from '../Base';
 import { WalletsCarouselLoader } from '../SkeletonLoader';
 import { WalletCard } from '../WalletCard';
 import { WalletListCardActions } from '../WalletListCardActions';
+import { WalletsDisabledAccountsBanner } from '../WalletsDisabledAccountsBanner';
 import './WalletsCarouselContent.scss';
 
 type TProps = {
@@ -35,7 +36,7 @@ const WalletsCarouselContent: React.FC<TProps> = ({ accountsActiveTabIndex }) =>
     const isRtl = useIsRtl();
     const history = useHistory();
 
-    const { data: walletAccountsList, isLoading: isWalletAccountsListLoading } = useMobileCarouselWalletsList();
+    const { data: walletAccountsListData, isLoading: isWalletAccountsListLoading } = useMobileCarouselWalletsList();
     const { data: activeWallet, isLoading: isActiveWalletLoading } = useActiveWalletAccount();
     const { data: balanceData } = useAllBalanceSubscription();
     const { isLoading: isCurrencyConfigLoading } = useCurrencyConfig();
@@ -43,6 +44,9 @@ const WalletsCarouselContent: React.FC<TProps> = ({ accountsActiveTabIndex }) =>
     const [selectedLoginId, setSelectedLoginId] = useState('');
     const [currentIndex, setCurrentIndex] = useState(-1);
     const [isInitialDataLoaded, setIsInitialDataLoaded] = useState(false);
+
+    const walletAccountsList = walletAccountsListData?.filter(wallet => !wallet.is_disabled);
+    const disabledWallets = walletAccountsListData?.filter(wallet => wallet.is_disabled) ?? [];
 
     // for the embla "on select" callback
     // to avoid unbinding / cleaning etc, just let it use up-to-date list
@@ -247,6 +251,9 @@ const WalletsCarouselContent: React.FC<TProps> = ({ accountsActiveTabIndex }) =>
                         <Localize i18n_default_text='Trader’s Hub' />
                     </Text>
                 </div>
+                {disabledWallets.length > 0 ? (
+                    <WalletsDisabledAccountsBanner disabledAccounts={disabledWallets} />
+                ) : null}
                 <div className='wallets-carousel-content__carousel' ref={walletsCarouselEmblaRef}>
                     <div className='wallets-carousel-content__cards'>
                         {walletAccountsList?.map((account, index) => (

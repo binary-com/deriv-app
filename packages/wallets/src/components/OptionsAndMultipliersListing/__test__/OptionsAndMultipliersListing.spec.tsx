@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { APIProvider, AuthProvider, useActiveLinkedToTradingAccount } from '@deriv/api-v2';
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { ModalProvider } from '../../ModalProvider';
 import OptionsAndMultipliersListing from '../OptionsAndMultipliersListing';
 
@@ -41,14 +42,38 @@ describe('OptionsAndMultipliersListing', () => {
         expect(screen.getAllByTestId('dt_label_paired_chevron')[0]).toBeInTheDocument();
     });
 
-    it('should change TradingAccountCard if loginid is undefined', () => {
+    it('handles onclick for the TradingAccountCard when loginid is undefined', () => {
         (useActiveLinkedToTradingAccount as jest.Mock).mockReturnValue({
             data: { loginid: undefined },
         });
         render(<OptionsAndMultipliersListing />, { wrapper });
         const tradingAccountCard = screen.getAllByTestId('dt_wallets_trading_account_card')[0];
+        userEvent.click(tradingAccountCard);
+        expect(screen.queryByTestId('dt_label_paired_chevron')).not.toBeInTheDocument();
+        expect(mockHistoryPush).not.toHaveBeenCalled();
+    });
+
+    it('handles onclick for the TradingAccountCard when loginid is defined', () => {
+        (useActiveLinkedToTradingAccount as jest.Mock).mockReturnValue({
+            data: { loginid: 'CR1' },
+        });
+        render(<OptionsAndMultipliersListing />, { wrapper });
+        const tradingAccountCard = screen.getAllByTestId('dt_wallets_trading_account_card')[0];
+        userEvent.click(tradingAccountCard);
+        const icon = within(tradingAccountCard).queryByTestId('dt_label_paired_chevron');
+        expect(icon).toBeInTheDocument();
+        expect(mockHistoryPush).toHaveBeenCalled();
+    });
+
+    it('renders the correct TradingAccountCard when the account is disabled', () => {
+        (useActiveLinkedToTradingAccount as jest.Mock).mockReturnValue({
+            data: { is_disabled: true, loginid: 'CR1' },
+        });
+        render(<OptionsAndMultipliersListing />, { wrapper });
+        const tradingAccountCard = screen.getAllByTestId('dt_wallets_trading_account_card')[0];
         expect(tradingAccountCard).toHaveAttribute('aria-disabled', 'true');
         expect(tradingAccountCard).toHaveClass('wallets-trading-account-card--disabled');
-        expect(screen.queryByTestId('dt_label_paired_chevron')).not.toBeInTheDocument();
+        const icon = within(tradingAccountCard).queryByTestId('dt_label_paired_chevron');
+        expect(icon).toBeInTheDocument();
     });
 });

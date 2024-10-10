@@ -1,4 +1,5 @@
 import React from 'react';
+import { useWalletAccountsList } from '@deriv/api-v2';
 import { useDevice } from '@deriv-com/ui';
 import { fireEvent, render, screen } from '@testing-library/react';
 import WalletListHeader from '../WalletListHeader';
@@ -11,12 +12,12 @@ jest.mock('@deriv-com/ui', () => ({
 
 jest.mock('@deriv/api-v2', () => ({
     useActiveWalletAccount: () => ({ data: { is_virtual: false, loginid: 'real1' } }),
-    useWalletAccountsList: () => ({
+    useWalletAccountsList: jest.fn(() => ({
         data: [
             { is_virtual: false, loginid: 'real1' },
             { is_virtual: true, loginid: 'demo123' },
         ],
-    }),
+    })),
 }));
 
 const mockSwitchWalletAccount = jest.fn();
@@ -56,5 +57,19 @@ describe('WalletListHeader', () => {
         const checkbox = screen.getByRole('checkbox');
         fireEvent.click(checkbox);
         expect(mockSwitchWalletAccount).toHaveBeenCalledWith('demo123');
+    });
+
+    it('renders the switcher with the correct class when all the real wallets are disabled', () => {
+        (useWalletAccountsList as jest.Mock).mockReturnValue({
+            data: [
+                { is_disabled: true, is_virtual: false, loginid: 'real1' },
+                { is_virtual: true, loginid: 'demo123' },
+            ],
+        });
+
+        render(<WalletListHeader />);
+
+        const switcher = screen.getByTestId('dt_wallets_list_header__label_item_real');
+        expect(switcher).toHaveClass('wallets-list-header__label-item--disabled');
     });
 });

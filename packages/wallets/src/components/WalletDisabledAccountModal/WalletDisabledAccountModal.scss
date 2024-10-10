@@ -1,0 +1,7 @@
+.wallets-disabled-account-modal {
+    @include mobile-or-tablet-screen {
+        width: auto;
+        height: auto;
+        border-radius: 8px;
+    }
+}

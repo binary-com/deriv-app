@@ -47,38 +47,41 @@ const OptionsAndMultipliersListing = () => {
                     return (
                         <TradingAccountCard
                             {...account}
-                            disabled={!activeLinkedToTradingAccount?.loginid}
+                            disabled={activeLinkedToTradingAccount?.is_disabled}
                             key={`trading-account-card-${title}`}
                             onClick={() => {
+                                if (!activeLinkedToTradingAccount?.loginid) return;
                                 account.isExternal ? window.open(redirect, '_blank') : history.push(redirect as TRoute);
                             }}
                         >
                             <TradingAccountCard.Icon>
                                 <LinkTitle platform={key} />
                             </TradingAccountCard.Icon>
-                            <TradingAccountCard.Content>
-                                <Text align='start' size='sm'>
-                                    {title}
-                                </Text>
-                                <Text align='start' size='xs'>
-                                    {description}
-                                </Text>
-                            </TradingAccountCard.Content>
-                            {activeLinkedToTradingAccount?.loginid && (
-                                <TradingAccountCard.Button>
-                                    {isRtl ? (
-                                        <LabelPairedChevronLeftCaptionRegularIcon
-                                            data-testid='dt_label_paired_chevron'
-                                            width={16}
-                                        />
-                                    ) : (
-                                        <LabelPairedChevronRightCaptionRegularIcon
-                                            data-testid='dt_label_paired_chevron'
-                                            width={16}
-                                        />
-                                    )}
-                                </TradingAccountCard.Button>
-                            )}
+                            <TradingAccountCard.Section>
+                                <TradingAccountCard.Content>
+                                    <Text align='start' size='sm'>
+                                        {title}
+                                    </Text>
+                                    <Text align='start' size='xs'>
+                                        {description}
+                                    </Text>
+                                </TradingAccountCard.Content>
+                                {activeLinkedToTradingAccount?.loginid && (
+                                    <TradingAccountCard.Button>
+                                        {isRtl ? (
+                                            <LabelPairedChevronLeftCaptionRegularIcon
+                                                data-testid='dt_label_paired_chevron'
+                                                width={16}
+                                            />
+                                        ) : (
+                                            <LabelPairedChevronRightCaptionRegularIcon
+                                                data-testid='dt_label_paired_chevron'
+                                                width={16}
+                                            />
+                                        )}
+                                    </TradingAccountCard.Button>
+                                )}
+                            </TradingAccountCard.Section>
                         </TradingAccountCard>
                     );
                 })}

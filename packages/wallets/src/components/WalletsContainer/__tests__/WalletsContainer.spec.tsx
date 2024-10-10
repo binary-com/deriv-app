@@ -1,11 +1,26 @@
-import React from 'react';
-import { useActiveWalletAccount } from '@deriv/api-v2';
+import React, { PropsWithChildren } from 'react';
+import { APIProvider, useActiveWalletAccount, useWalletAccountsList } from '@deriv/api-v2';
 import { render, screen, waitFor } from '@testing-library/react';
+import WalletsAuthProvider from '../../../AuthProvider';
+import { ModalProvider } from '../../ModalProvider';
 import WalletsContainer from '../WalletsContainer';
-import '@testing-library/jest-dom/extend-expect';
 
 jest.mock('@deriv/api-v2', () => ({
+    ...jest.requireActual('@deriv/api-v2'),
     useActiveWalletAccount: jest.fn(),
+    useWalletAccountsList: jest.fn(),
+}));
+
+const wrapper = ({ children }: PropsWithChildren) => (
+    <APIProvider>
+        <WalletsAuthProvider>
+            <ModalProvider>{children}</ModalProvider>
+        </WalletsAuthProvider>
+    </APIProvider>
+);
+
+jest.mock('../../WalletsDisabledAccountsBanner', () => ({
+    WalletsDisabledAccountsBanner: jest.fn(() => <div>mockDisabledWalletsBanner</div>),
 }));
 
 describe('WalletsContainer', () => {
@@ -14,6 +29,15 @@ describe('WalletsContainer', () => {
 
     beforeEach(() => {
         renderHeaderMock.mockClear();
+        (useWalletAccountsList as jest.Mock).mockReturnValue({
+            data: [
+                { is_disabled: false, is_virtual: false, loginid: 'real1' },
+                { is_virtual: true, loginid: 'demo123' },
+            ],
+        });
+        (useActiveWalletAccount as jest.Mock).mockReturnValue({
+            data: undefined,
+        });
     });
 
     it('should render the default component if no data available', () => {
@@ -21,7 +45,7 @@ describe('WalletsContainer', () => {
             data: undefined,
         });
 
-        render(<WalletsContainer renderHeader={renderHeaderMock}>{children}</WalletsContainer>);
+        render(<WalletsContainer renderHeader={renderHeaderMock}>{children}</WalletsContainer>, { wrapper });
 
         expect(screen.getByTestId('header')).toBeInTheDocument();
         expect(screen.getByTestId('children')).toBeInTheDocument();
@@ -37,7 +61,7 @@ describe('WalletsContainer', () => {
             },
         });
 
-        render(<WalletsContainer renderHeader={renderHeaderMock}>{children}</WalletsContainer>);
+        render(<WalletsContainer renderHeader={renderHeaderMock}>{children}</WalletsContainer>, { wrapper });
 
         expect(screen.getByTestId('dt_wallets_container_header')).toHaveClass('wallets-container__header--virtual');
         expect(screen.getByTestId('dt_wallets_container')).toHaveClass('wallets-container--virtual');
@@ -52,7 +76,7 @@ describe('WalletsContainer', () => {
             },
         });
 
-        render(<WalletsContainer renderHeader={renderHeaderMock}>{children}</WalletsContainer>);
+        render(<WalletsContainer renderHeader={renderHeaderMock}>{children}</WalletsContainer>, { wrapper });
 
         const containerElement = screen.getByTestId('dt_wallets_container');
         if (containerElement) {
@@ -64,5 +88,21 @@ describe('WalletsContainer', () => {
         });
 
         expect(containerElement).toHaveStyle('scroll-margin-top: 80px');
+    });
+
+    it('renders the disabled wallets banner if a user has any disabled wallets', () => {
+        (useWalletAccountsList as jest.Mock).mockReturnValue({
+            data: [
+                { is_disabled: true, is_virtual: false, loginid: 'real1' },
+                { is_virtual: true, loginid: 'demo123' },
+            ],
+        });
+        (useActiveWalletAccount as jest.Mock).mockReturnValue({
+            data: undefined,
+        });
+
+        render(<WalletsContainer renderHeader={renderHeaderMock}>{children}</WalletsContainer>, { wrapper });
+
+        expect(screen.getByText('mockDisabledWalletsBanner')).toBeInTheDocument();
     });
 });
