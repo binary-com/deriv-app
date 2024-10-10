@@ -1844,8 +1844,9 @@ export default class TradeStore extends BaseStore {
     }
 
     setChartModeFromURL() {
-        const { chartType: chartTypeParam, granularity: granularityParam } = getTradeURLParams();
+        const { chartType: chartTypeParam, granularity: granularityParam, contractType } = getTradeURLParams();
         const { chart_type, granularity, saveChartType, saveGranularity } = this.root_store.contract_trade;
+
         if (
             (!isNaN(Number(granularityParam)) && granularityParam !== granularity) ||
             (chartTypeParam && chartTypeParam !== chart_type)
@@ -1853,6 +1854,14 @@ export default class TradeStore extends BaseStore {
             chartTypeParam && saveChartType(chartTypeParam);
             granularityParam && saveGranularity(Number(granularityParam));
         }
+
+        this.contract_type = contractType ?? '';
+
+        setTradeURLParams({
+            chartType: chartTypeParam ?? chart_type,
+            granularity: granularityParam ?? Number(granularity),
+            contractType: contractType ?? '',
+        });
     }
 
     setChartStatus(status: boolean, isFromChart?: boolean) {

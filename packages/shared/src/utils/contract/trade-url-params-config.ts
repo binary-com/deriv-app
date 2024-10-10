@@ -68,7 +68,10 @@ export const getTradeURLParams = ({ active_symbols = [], contract_types_list = {
                 contract_types_list[key]?.categories || [];
             return [...acc, ...categories.map(contract => (contract as TTextValueStrings).value)];
         }, []);
-        const isTradeTypeValid = contractList.includes(trade_type ?? '');
+
+        const isTradeTypeValid =
+            (contractList.length === 0 && trade_type !== '') ||
+            (contractList.length > 0 && contractList.includes(trade_type ?? ''));
 
         if (validInterval) result.granularity = Number(validInterval.value);
         if (validChartType) result.chartType = chartTypeParam;
