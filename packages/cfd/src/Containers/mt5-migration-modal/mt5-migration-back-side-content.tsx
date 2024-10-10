@@ -1,6 +1,6 @@
 import { InlineMessage, Modal, Text, PasswordInput, FormSubmitButton } from '@deriv/components';
 import { useMT5SVGEligibleToMigrate } from '@deriv/hooks';
-import { CFD_PLATFORMS, WS, validLength, validPassword, getErrorMessages } from '@deriv/shared';
+import { CFD_PLATFORMS, WS, validLength, validMT5Password, getErrorMessages } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 import { Localize, localize } from '@deriv/translations';
 import React from 'react';
@@ -58,7 +58,7 @@ const MT5MigrationBackSideContent = observer(() => {
                 min_number: 8,
                 max_number: 25,
             });
-        } else if (!validPassword(values.password)) {
+        } else if (!validMT5Password(values.password)) {
             errors.password = getErrorMessages().password();
         }
         if (values.password?.toLowerCase() === email.toLowerCase()) {

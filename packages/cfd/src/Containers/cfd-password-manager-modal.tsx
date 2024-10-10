@@ -13,7 +13,7 @@ import {
 } from '@deriv/components';
 import { useDevice } from '@deriv-com/ui';
 import { localize, Localize } from '@deriv/translations';
-import { getCFDPlatformLabel } from '@deriv/shared';
+import { getCFDPlatformLabel, getErrorMessages, validMT5Password } from '@deriv/shared';
 import { FormikErrors } from 'formik';
 import CFDStore from '../Stores/Modules/CFD/cfd-store';
 import TradingPasswordManager from './trading-password-manager';
@@ -169,7 +169,9 @@ const CFDPasswordManagerTabContent = ({
             errors.new_password = localize('This field is required');
         }
 
-        if (validatePassword(values.new_password)) errors.new_password = validatePassword(values.new_password);
+        if (platform === CFD_PLATFORMS.MT5 && !validMT5Password(values.new_password)) {
+            errors.new_password = getErrorMessages().special_characters();
+        } else if (validatePassword(values.new_password)) errors.new_password = validatePassword(values.new_password);
 
         return errors;
     };

@@ -6,6 +6,7 @@ import {
     validPassword,
     validMT5Password,
     mobileOSDetectAsync,
+    hasBritishPound,
 } from '@deriv/shared';
 import { localize } from '@deriv/translations';
 import { TCFDsPlatformType, TDetailsOfEachMT5Loginid, TMobilePlatforms } from 'Components/props.types';
@@ -139,10 +140,10 @@ const validatePassword = (password: string): string | undefined => {
             min_number: 8,
             max_number: 16,
         });
-    } else if (!validPassword(password)) {
-        return getErrorMessages().password();
     } else if (!validMT5Password(password)) {
-        return localize('Please include at least 1 special character such as ( _ @ ? ! / # ) in your password.');
+        return getErrorMessages().special_characters();
+    } else if (!validPassword(password)) {
+        return hasBritishPound(password) ? getErrorMessages().special_characters() : getErrorMessages().password();
     }
 };
 

@@ -23,6 +23,7 @@ jest.mock('@deriv/shared', () => ({
     ...jest.requireActual('@deriv/shared'),
     getErrorMessages: jest.fn().mockReturnValue({
         password: jest.fn(),
+        special_chracters: jest.fn(),
         password_warnings: '',
     }),
     WS: {
@@ -119,7 +120,7 @@ describe('MT5MigrationBackSideContent', () => {
         renderComponent();
 
         const input_field = screen.getByLabelText('Deriv MT5 password');
-        userEvent.type(input_field, 'Abcd1234');
+        userEvent.type(input_field, 'Abcd1234!');
         const upgrade_button = screen.getByRole('button', { name: 'Upgrade' });
         userEvent.click(upgrade_button);
         await waitFor(() => {

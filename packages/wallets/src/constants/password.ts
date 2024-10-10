@@ -42,7 +42,7 @@ export const getPasswordErrorMessage = (localize: ReturnType<typeof useTranslati
     }),
     missingCharacter: localize('Password should have lower and uppercase English letters with numbers.'),
     missingCharacterMT5: localize(
-        'Please include at least 1 special character such as ( _ @ ? ! / # ) in your password.'
+        'Password must have at least one of these special characters: !&‘’*-“%+.#&(),:;?=@<>\\[]^_{}|~'
     ),
     PasswordError: localize('That password is incorrect. Please try again.'),
 });

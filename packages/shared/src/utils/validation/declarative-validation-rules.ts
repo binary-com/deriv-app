@@ -62,6 +62,7 @@ export const validName = (value: string) => /^(?!.*\s{2,})(?!\s)[\p{L}\s'.-]{1,5
 export const validLength = (value = '', options: TOptions) =>
     (options.min ? value.length >= Number(options.min) : true) &&
     (options.max ? value.length <= Number(options.max) : true);
+export const hasBritishPound = (value: string) => /£/.test(value);
 export const validPassword = (value: string) => /^(?=.*[a-z])(?=.*\d)(?=.*[A-Z])[!-~]{8,25}$/.test(value);
 export const validEmail = (value: string) => /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$/.test(value);
 const validBarrier = (value: string) => {
@@ -82,7 +83,8 @@ export const hasInvalidCharacters = (target_string: string) => /[^\dX\s]/.test(t
 export const isFormattedCardNumber = (target_string: string) =>
     /(^\d{4})\s(\d{2}X{2})\s(X{4})\s(\d{4}$)/.test(target_string);
 export const validFile = (file: File) => file?.type && /(image|application)\/(jpe?g|pdf|png)$/.test(file?.type);
-export const validMT5Password = (value: string) => /^(?=.*[!@#$%^&*()+\-=[\]{};':"|,.<>/?_~])[ -~]{8,16}$/.test(value);
+export const validMT5Password = (value: string) =>
+    /^(?=.*[!@#$%^&*()+\-=[\]{};':"|,.<>/?_~])[ -~]{8,16}$/.test(value) && !hasBritishPound(value);
 
 let pre_build_dvrs: TInitPreBuildDVRs, form_error_messages: TFormErrorMessagesTypes;
 

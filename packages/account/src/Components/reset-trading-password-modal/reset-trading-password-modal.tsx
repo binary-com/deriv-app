@@ -64,12 +64,10 @@ const ResetTradingPassword = ({
                 min_number: 8,
                 max_number: max_length,
             });
+        } else if (platform === CFD_PLATFORMS.MT5 && !validMT5Password(values.password)) {
+            errors.password = getErrorMessages().special_characters();
         } else if (!validPassword(values.password)) {
             errors.password = getErrorMessages().password();
-        } else if (platform === CFD_PLATFORMS.MT5 && !validMT5Password(values.password)) {
-            errors.password = localize(
-                'Please include at least 1 special character such as ( _ @ ? ! / # ) in your password.'
-            );
         }
 
         return errors;

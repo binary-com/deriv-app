@@ -2,7 +2,15 @@ import React from 'react';
 import classNames from 'classnames';
 import { Formik, Form, FormikHelpers, FormikErrors } from 'formik';
 import { Button, Dialog, PasswordInput, PasswordMeter, Text } from '@deriv/components';
-import { redirectToLogin, validPassword, validLength, getErrorMessages, WS, removeActionParam } from '@deriv/shared';
+import {
+    redirectToLogin,
+    validPassword,
+    validLength,
+    getErrorMessages,
+    WS,
+    removeActionParam,
+    validMT5Password,
+} from '@deriv/shared';
 import { getLanguage, localize, Localize } from '@deriv/translations';
 import { observer, useStore } from '@deriv/stores';
 import { TSocketError, TSocketRequest, TSocketResponse } from '@deriv/api/types';
@@ -84,6 +92,8 @@ const ResetPasswordModal = observer(() => {
                 min_number: 8,
                 max_number: 25,
             });
+        } else if (!validMT5Password(values.password)) {
+            errors.password = getErrorMessages().special_characters();
         } else if (!validPassword(values.password)) {
             errors.password = getErrorMessages().password();
         }

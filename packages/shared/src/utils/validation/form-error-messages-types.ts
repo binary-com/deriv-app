@@ -10,6 +10,7 @@ export type TFormErrorMessagesTypes = Record<
     | 'general'
     | 'name'
     | 'password'
+    | 'special_characters'
     | 'po_box'
     | 'phone'
     | 'postcode'
